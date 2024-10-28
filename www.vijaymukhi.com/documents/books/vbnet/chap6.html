@@ -1,0 +1,1888 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/vbnet/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:02:13 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap6_files/filelist.html">
+<link rel=Edit-Time-Data href="chap6_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Visual Basic.Net - The Basics - 6. XML and XSD</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>vmukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>7</o:Revision>
+  <o:TotalTime>20</o:TotalTime>
+  <o:Created>2002-02-17T01:43:00Z</o:Created>
+  <o:LastSaved>2002-02-18T19:59:00Z</o:LastSaved>
+  <o:Pages>19</o:Pages>
+  <o:Words>4788</o:Words>
+  <o:Characters>27297</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>227</o:Lines>
+  <o:Paragraphs>54</o:Paragraphs>
+  <o:CharactersWithSpaces>33522</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=101 height=75 id="_x0000_i1025" src=bpb.gif></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>6. XML and XSD</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now focus on XML, which
+seems to be the order of the day, since every developer worth his salt seems to
+be singing this new mantra! Though it is impossible to comprehend XML in a day,
+but we still are determined to give it a try.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We start by creating a new
+project called t6 in the c:\v1 subdirectory. For this, click on the
+File-New-Project menu option. Then, select Visual Basic Project in the first
+pane, and select Windows Application in the second pane. Click on OK to
+generate the smallest possible Windows application. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, to add a new file to this
+project, click on File-New, and select the option of File instead of Project,
+as shown in screen 6.1.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1027"
+  src="chap6/1.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The dialog box that emerges is shown
+in screen 6.2. It displays a long list of file types that can possibly be added
+to the project.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1028"
+  src="chap6/2.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Normally, most files that are
+vital for the project get added automatically. However, we are still rendered
+the flexibility of adding more files, if we so desire. Choose the option of XML
+file and click on Open. This brings up an editor, with a single line written in
+it, as revealed in screen 6.3.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1029"
+  src="chap6/3.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.3</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above stipulated line has to
+be the very first line of every XML document. XML stands for eXtensible Markup
+Language. It is not a programming language like Visual Basic.Net, but a
+language akin to English.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Had we created the file outside
+the Visual Studio.Net framework, the above line would have had to be inserted
+manually. This is all. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In future, you hold the
+prerogative of creating the above file in any word processor that you may
+fancy, since it is absurd to use Visual Studio.Net merely for editing purposes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every XML document adheres to
+certain rules. The first rule is that the first line in the document must begin
+with &lt;?xml and end with ?&gt;. Any line beginning with &lt;? is known as a
+Directive. Rules are meant to be followed, with no questions asked. The second
+rule is that the XML directive must have an attribute called version, with a
+value of 1.0.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An attribute is merely a word
+that is equated to some value. The value of the attribute version can only be
+1.0, since this is the only valid version of XML in existence. The second
+attribute to the XML directive is 'encoding'. This attribute is optional. The
+value of utf-8 assigned to it signifies that the words that appear in the file
+henceforth, belong to the English language, and not to any other language, such
+as Chinese, etc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now append some more lines as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On the next line, enter the word
+&lt;customerslist&gt;. Immediately after the 'greater than' sign, the same word
+is entered again within angle brackets, but this time with the / sign preceding
+it. This is represented in screen 6.4, where we see the following text:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;customerslist&gt;&lt;/customerslist&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1030"
+  src="chap6/4.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.4</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The code editor can surely read our
+minds! The rationale behind insertion of the above text by the code editor is
+that, any word that begins with an angle bracket, must also end with an angle
+bracket. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The words enclosed within angle
+brackets are called 'tags'. Thus, customerslist is a tag. Every start tag must
+have an end tag. An end tag is similar to the start tag, except that it has the
+/ sign placed before the tag name. The editor is smart enough to generate the
+end tag for us.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first tag that is
+encountered in the XML file is called the root tag. All other tags must be
+placed within this tag. The root tag is mandatory. It can be assigned any name,
+since there are no rules in XML governing this aspect. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have created the XML file to
+store a list of two customers. The basic information supplied for each customer
+is the name and the phone number. You have to enter the additional lines, so
+that the XML file finally represents the text given below in the specified
+format.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILprg>&lt;customerslist&gt;</p>
+
+<p class=ILprg>&lt;cust&gt;</p>
+
+<p class=ILprg>&lt;name&gt;Vijay Mukhi&lt;/name&gt;</p>
+
+<p class=ILprg>&lt;phone&gt;4964339&lt;/phone&gt;</p>
+
+<p class=ILprg>&lt;/cust&gt;</p>
+
+<p class=ILprg>&lt;cust&gt;</p>
+
+<p class=ILprg>&lt;name&gt;Sonal&lt;/name&gt;</p>
+
+<p class=ILprg>&lt;phone&gt;4964338&lt;/phone&gt;</p>
+
+<p class=ILprg>&lt;/cust&gt;</p>
+
+<p class=ILprg>&lt;/customerslist&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The details regarding each
+customer are enclosed within the tags of cust and /cust. Moreover, within the cust
+tags, there exist two child tags called name and phone, both of which follow
+the same rules. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Remember that the end tags get
+inserted automatically in the XML Editor. To save this file, click on 'File-
+Save XMLFIle1 As' menu option. This is shown in screen 6.5.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1031"
+  src="chap6/5.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.5</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This brings us to a dialog box
+as shown in screen 6.6, where we change the sub directory to point to the root directory,
+and name the XML file as yyy. This results in the above XML file being saved as
+yyy.xml in the root directory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1032"
+  src="chap6/6.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.6</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An alternate approach to achieve
+the above would be to simply fire up a word processor, enter the above lines
+manually, and then, save it in a file named yyy.xml. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the file has been created,
+bring in a DataGrid control, followed by a button. Then, double click on the
+button and enter the following lines of code:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e
+As System.EventArgs) Handles Button1.Click</p>
+
+<p class=ILprg>Dim d As DataSet</p>
+
+<p class=ILprg>d = New DataSet(&quot;zzz&quot;)</p>
+
+<p class=ILprg>d.ReadXml(&quot;c:/yyy.xml&quot;)</p>
+
+<p class=ILprg>DataGrid1.DataSource = d</p>
+
+<p class=ILprg>DataGrid1.DataMember = &quot;cust&quot;</p>
+
+<p class=ILprg>End Sub</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above code, a new DataSet
+object 'd' is created, with the constructor being assigned the name zzz. Naming
+the DataSet as zzz is optional. The ReadXml function from the dataset class is
+then employed, to populate the DataSet object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This function is furnished with
+the full path of the above XML file. The end result is that the function fills
+up the dataset with records from a table called Cust. This occurs because the
+customer data is enclosed within the cust tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataSource property of the
+DataGrid requires a DataSet object. Therefore, it is initialized to d, which is
+the freshly created dataset. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are alternative approaches
+to performing any task. Similarly, a dataset can also be populated by fetching
+data either from a database table, or from a file on disk. The DataMember
+property is set to the cust table in the DataSet. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Press F5 to run the program.
+Doing so will result in the display of a button labeled Button1 and an empty
+DataGrid. Click on the button to populate the grid with the two records from
+the XML file, as shown in screen 6.7. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1033"
+  src="chap6/7.gif"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.7</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The names of the tags become the
+field names. Therefore, two fields are visible, i.e. 'name' and 'phone'.
+Further, the details provided for each customer are represented as records in
+the table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This example illustrates the
+fact that a dataset can be filled up with records from an XML file, without
+letting the DataGrid control get a whiff of it. The Datagrid couldn't care less
+about the origin of the data, as long as it receives a dataset.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The same example can also be
+re-written, using one of the features in Visual Basic.Net.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e
+As System.EventArgs) Handles Button1.Click</p>
+
+<p class=ILprg>Dim d As DataSet</p>
+
+<p class=ILprg>d = New DataSet(&quot;zzz&quot;)</p>
+
+<p class=ILprg>d.ReadXml(&quot;c:/yyy.xml&quot;)</p>
+
+<p class=ILprg>With DataGrid1</p>
+
+<p class=ILprg>.DataSource = d</p>
+
+<p class=ILprg>.DataMember = &quot;cust&quot;</p>
+
+<p class=ILprg>End With</p>
+
+<p class=ILprg>End Sub</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Modify the code contained in the
+button, to the code stipulated above. The output however remains the same. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'With' statement calls for a
+name. Hence, we have provide the name of the DataGrid object to it, i.e.
+DataGrid1. In addition to this, all lines of code upto the 'End With', must
+begin with a dot. This approach precludes the need to use the object name,
+along with its properties, over and over again.<span style="mso-spacerun:
+yes">  </span>Hence, if you are handling multiple properties of the same
+object, enclose them within 'With' and 'End With'.<span style="mso-spacerun:
+yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above method is often
+encountered in the samples provided with Visual Studio.Net. Hence, we decided
+to implement it here. Finally, it is your prerogative to decide whether you
+wish to write the control name every time, or you would rather write it once
+and place dots before every property name thereafter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Click on the tab yyy.xml, and
+then, add the following lines of XML to the file:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILprg>&lt;customerslist&gt;</p>
+
+<p class=ILprg>&lt;cust&gt;</p>
+
+<p class=ILprg>&lt;name&gt;Vijay Mukhi&lt;/name&gt;</p>
+
+<p class=ILprg>&lt;phone&gt;4964339&lt;/phone&gt;</p>
+
+<p class=ILprg>&lt;/cust&gt;</p>
+
+<p class=ILprg>&lt;product&gt;</p>
+
+<p class=ILprg>&lt;productid&gt;10&lt;/productid&gt;</p>
+
+<p class=ILprg>&lt;productname&gt;vijay&lt;/productname&gt;</p>
+
+<p class=ILprg>&lt;price&gt;100&lt;/price&gt;</p>
+
+<p class=ILprg>&lt;/product&gt;</p>
+
+<p class=ILprg>&lt;cust&gt;</p>
+
+<p class=ILprg>&lt;name&gt;Sonal&lt;/name&gt;</p>
+
+<p class=ILprg>&lt;phone&gt;4964338&lt;/phone&gt;</p>
+
+<p class=ILprg>&lt;/cust&gt;</p>
+
+<p class=ILprg>&lt;/customerslist&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then we click on the tab Form1.vb
+Design, and bring in a textbox called TextBox1. The text property of the
+control is also blanked out. Then double click on the button and write out the
+following code:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e
+As System.EventArgs) Handles Button1.Click</p>
+
+<p class=ILprg>Dim d As DataSet</p>
+
+<p class=ILprg>d = New DataSet(&quot;zzz&quot;)</p>
+
+<p class=ILprg>d.ReadXml(&quot;c:/yyy.xml&quot;)</p>
+
+<p class=ILprg>With DataGrid1</p>
+
+<p class=ILprg>.DataSource = d</p>
+
+<p class=ILprg>.DataMember = TextBox1.Text</p>
+
+<p class=ILprg>End With</p>
+
+<p class=ILprg>End Sub </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Other than the modification in one
+of the lines, the rest of the code remains the same. The DataMember property
+that was earlier set to cust, is now initialized to the Text property of the
+TextBox. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, press F5 to run the
+program. In the textbox, enter the name of the table as Product. Then, click on
+the button. The output is depicted in screen 6.8.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1034"
+  src="chap6/8.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.8<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the XML file, another tag
+called Product has been added. Thus, the DataSet now contains two tables, i.e.
+cust and product. The user can either enter 'cust' or 'product' in the textbox.
+Depending on the name assigned to the DataMember property of the DataGrid, data
+from the selected table is displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Close the running application.
+Then, click on the textbox to select it, and press the delete key. To delete the
+DataGrid control, use the menu option, i.e. first select the Datagrid control,
+and then, click on the menu option of Edit-Delete. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, bring in a new textbox
+control. The only problem with a textbox is that, even though you can alter its
+size, by default it displays only a single line. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To incorporate multiple lines in
+the textbox, select the control and scroll down to the property named MultiLine
+in the properties window. The default value assigned to this control is False.
+Click on the drop down listbox, as shown in screen 6.9, and select the value of
+True. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1035"
+  src="chap6/9.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.9<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since this property now has a
+value of True, we are allowed to change the vertical height of the textbox, as
+shown in screen 6.10.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1036"
+  src="chap6/10.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.10<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Double click on the button, and
+replace the existing event handling code with the code specified below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e
+As System.EventArgs) Handles Button1.Click</p>
+
+<p class=ILprg>Dim s As New System.IO.StringWriter()</p>
+
+<p class=ILprg>Dim d As DataSet</p>
+
+<p class=ILprg>d = New DataSet(&quot;hi&quot;)</p>
+
+<p class=ILprg>d.WriteXmlSchema(s)</p>
+
+<p class=ILprg>TextBox1.Text = s.ToString</p>
+
+<p class=ILprg>End Sub</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, press F5 to run the
+program. When you click on the button, the textbox displays some text. This is
+seen in screen 6.11.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1037"
+  src="chap6/11.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.11<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The text entered in the textbox
+is shown below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-16&quot;?&gt;</p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;hi&quot; xmlns=&quot;&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;hi&quot; msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:choice
+maxOccurs=&quot;unbounded&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xs:element&gt;</p>
+
+<p class=ILprg>&lt;/xs:schema&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the click event of the
+button, the Dim statement is used to define and create an object 's' as an
+instance of the StringWriter class, from the System.IO namespace. The
+StringWriter class deals with large strings very effectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We then create a new DataSet
+object 'd', and call the function WriteXmlSchema from it. This function accepts
+a StringWriter parameter 's' and writes the XML schema to it. The Text property
+of the TextBox is then initialized to the ToString function from the TextWriter
+class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the .Net world, all classes
+normally have a ToString function, which returns the string representation of
+any object. In this case, the WriteXmlSchema function writes out the entire
+schema, which is then displayed in a String format.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now attempt to understand
+what an XML schema actually entails.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An XML schema file is an XML
+document, and hence, like all XML documents, it starts with the XML directive
+statement. The directive statement is followed by the root tag named 'schema'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An XML schema has to begin with
+a tag called 'schema'. However, all and sundry can create tags such as schema.
+So, to avoid any mis-match, the tag is prefixed with a namespace followed by a
+colon. The schema tag is prefixed with 'xs' and a colon. The name of the prefix
+is not very significant. What is more important is the attribute xs, which
+uniquely identifies the xs namespace, and thus, the schema tag. In this case,
+the xs namespace prefix points to the URI http://www.w3.org/2001/XMLSchema.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This file contains the rules for
+the elements that belong to the xs namespace. We shall explain each of these
+rules, one at a time. The xs namespace prefix belongs to the xmlns namespace
+prefix, which is not set to anything. The attribute of 'id' merely identifies
+the schema. It is assigned the name of the DataSet, i.e. &quot;hi&quot;. This
+part can be safely ignored for the time being. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Yet another namespace prefix of
+'msdata' is created. Thus, all tags prefaced with msdata belong to a namespace
+that is distinct from the tags prefaced with 'xs'. This concept of namespaces
+is identical to that of the namespaces in Visual Basic.Net. We utilize this
+concept to uniquely identify an entity. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The schema element starts with
+the element tag, with the name attribute initialized to &quot;hi&quot;. The
+attribute IsDataSet is set to True, to confirm the representation of the
+DataSet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The complexType tag is a child
+in the element tag. It defines the type for the element named &quot;hi&quot;.
+The complexType is followed by a choice element, which permits us to pick out
+our choice from amongst the options that it contains. We shall not explain this
+any further at this juncture, since there is nothing to choose from. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The maxOccurs attribute decides
+on the occurrence of the elements that follow. The value of 'Unbounded'
+indicated that there are no limits. The 'choice' tag is a single tag, as it
+ends with a /. The above Schema is incomplete, since there is absolutely no
+data in the DataSet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>Private Sub Button1_Click(ByVal sender As System.Object, ByVal e
+As System.EventArgs) Handles Button1.Click</p>
+
+<p class=ILprg>Dim s As New System.IO.StringWriter()</p>
+
+<p class=ILprg>Dim d As DataSet</p>
+
+<p class=ILprg>d = New DataSet(&quot;hi&quot;)</p>
+
+<p class=ILprg>d.ReadXml(&quot;C:\yyy.xml&quot;)</p>
+
+<p class=ILprg>d.WriteXmlSchema(s)</p>
+
+<p class=ILprg>TextBox1.Text = s.ToString</p>
+
+<p class=ILprg>End Sub</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This shortcoming is corrected in
+the code given above. The only change that has been augmented is the addition
+of the ReadXml function. This populates the XML schema with data from the file
+yyy.xml. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before executing the above
+program, select the textbox control, and then, scroll down the property window.
+Then, change the value for the ScrollBars property from None to Both. As an
+outcome of this, if and when the data in the textbox exceeds the horizontal or
+vertical boundaries, the system will automatically generate a scrollbar. Press
+F5 to run the program, and then, click on the button. The screen 6.12 shows a
+vertical scrollbar.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1038"
+  src="chap6/12.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.12<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The schema file that is listed
+in the textbox, is given below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-16&quot;?&gt;</p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;customerslist&quot; xmlns=&quot;&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;customerslist&quot; msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:choice
+maxOccurs=&quot;unbounded&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;cust&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;name&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;phone&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;/xs:element&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;product&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;productid&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot;
+/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;productname&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot;
+/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xs:element
+name=&quot;price&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;/xs:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xs:choice&gt;</p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xs:element&gt;</p>
+
+<p class=ILprg>&lt;/xs:schema&gt; </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Schema file incorporates
+many new lines. The element no longer uses the name &quot;hi&quot; as the name
+of the dataset; instead, it takes the root tag of customerslist specified in
+the XML file. The complexType contains data that describes itself better.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'choice' element contains
+two element tags, since the DataSet comprises of two tables of 'cust' and
+'product'. The maxOccurs attribute specifies that the two tables can occur as
+many times as is required. The 'cust' and 'product' tags should be permitted to
+occur infinite number of times, as there is no restriction on the number of
+records that these tables may contain. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next thing of importance is
+a description of the data structure of these tables, embodying the field names,
+their data types, etc. This is what the XML schema world is all about. It is
+used to describe entities, and to ensure that it replaces SQL while the data in
+the databases is being defined. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There exists an element called
+'cust', followed by the complexType element. A 'sequence element' basically
+lists out the order that is to be followed. The 'cust' table has two fields,
+viz. name and phone. Therefore, there are two elements representing the two
+fields. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The type attribute comprises of
+the data type of the fields, and the minOccurs has a value of 0. This indicates
+the fact that, for the field, the minimum number of occurrences is 0, i.e. the
+field is optional. The default value of maxOccurs is 1. Thus, the element need
+not be present, but if it is present, it can only occur once. Thereafter, the
+sequence, the complexType and the element tags are all closed. The same
+procedure is then repeated for the product table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Although the XML schema gives a
+description of the data, it actually contains no data at all. The newer
+versions of SQL Server have avoided using SQL. Instead, they store data in the
+XML format, thus allowing any entity to access this data. The very rationale
+behind using schemas is that, they are very expressive and they define rules,
+which the data in our XML files must follow.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence by creating our own
+XML schema file, using the Schema Painter provided by Visual Studio.Net.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As always, create a simple
+windows application by clicking on File-New-Project menu-option, and by
+selecting Visual Basic projects and Windows application, in their respective
+panes. Name the project as t7, and store it in the c:\v1 subdirectory. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>From here onwards, we do things
+differently. We add a new item to our project, but instead of choosing the New
+option, we opt for the 'Add New Item' from the File menu, as shown in screen
+6.13. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1039"
+  src="chap6/13.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.13<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This brings us to screen 6.14,
+where the dialog box contains a dozen things. The option that fascinates us is
+the XML Schema item. Therefore, we click on it and change its name to zzz.xsd. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1040"
+  src="chap6/14.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.14<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, we click on Open. This
+brings up the file zzz.xsd in the Solution Explorer, and it also kick starts
+the Schema Painter, as shown in screen 6.15.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1041"
+  src="chap6/15.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.15<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The toolbox also undergoes
+transformation, displaying a large number of elements that can be added to the
+painter. If we click on the XML option given at the bottom, it transports us to
+the XML code that gets generated, whenever the schema is changed. The screen
+6.16 shows the option.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1042"
+  src="chap6/16.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.16<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML schema file that gets
+created, is shown below:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;zzz&quot;
+targetNamespace=&quot;http://tempuri.org/zzz.xsd&quot;
+elementFormDefault=&quot;qualified&quot;
+xmlns=&quot;http://tempuri.org/zzz.xsd&quot;
+xmlns:mstns=&quot;http://tempuri.org/zzz.xsd&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILprg>&lt;/xs:schema&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file is very similar to the
+one we explained earlier. However, it now has some new attributes added to it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute targetNamespace
+contains the location of the elements that do not have a namespace prefix. The
+elementFormDefault attribute can take one of the two values of 'qualified' or
+'unqualified'. The default value is 'unqualified'. Since the value chosen is
+'qualified', all elements from the target namespaces that are referred to, have
+to be qualified with the namespace prefix. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Had we clung on to the default
+value, there would have been no need for qualifying the elements, provided that
+they belong to the target namespace.<span style="mso-spacerun: yes">  </span>In
+addition to these, yet another namespace prefix called 'mstns' is created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We will now switch back to the
+Schema tab at the bottom, and click on the simpleType control. A mere click on
+it does no wonders. The control must be dragged and dropped onto the form. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Change the name from simpleType1
+to 'vijay', and leave the data type string unchanged. Screen 6.17 exhibits the
+outcome of our actions. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1043"
+  src="chap6/17.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.17<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If you are also burning with
+curiosity as we were, you would click on the word 'string'. This will display a
+drop down listbox as seen in screen 6.18.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1044"
+  src="chap6/18.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.18<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, switch over to the XML tab
+to view some fresh XML code that has been incorporated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;zzz&quot;
+targetName_pace=&quot;http://tempuri.org/zzz.xsd&quot;
+elementFormDefault=&quot;qualified&quot;
+xmlns=&quot;http://tempuri.org/zzz.xsd&quot;
+xmlns:mstns=&quot;http://tempuri.org/zzz.xsd&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;</p>
+
+<p class=ILprg>&lt;/xs:schema&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Henceforth, only the newly
+generated sections of the file would be shown, since we see no point in
+repeating the explanation of the schema element, over and over again. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An element is the basic entity
+for a schema, since it represents a field or a DataSet. Every element needs a
+type. There are basically two types in the schema world, viz. complexType and
+simpleType.<span style="mso-spacerun: yes">  </span>To represent simple data, a
+simpleType is used, and to represent complex data, a complexType is used. The
+data types of string and integer are built-in types, which the schema world
+understands. Hence, for these types, the simple type is used. However, in the
+case of user-defined data types, normally the complexType is employed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>'Vijay' is a simpleType. It
+determines the actual data type of the data that the entity can represent. Now,
+since we have specified 'string', the framework ensures that any element using
+the type 'vijay', would only have string values. So, 'vijay' and 'string' do
+the same job, and can also be used interchangeably. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Furthermore, the 'restriction'
+element can be used to specify restrictions on the base type. So, let us now
+work towards restricting the types of strings, which can be used with the type
+'vijay'. Click on the row below the St word. This would display the varied
+options that can be used here. We see only the option of Facet, as seen in
+screen 6.19.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1045"
+  src="chap6/19.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.19<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Facet is the only option that
+can be used with simpleType. There are many more options that can be employed
+with the complexType.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We then click on the listbox on
+the right, and arrive at screen 6.20, which displays the options that are
+available. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1046"
+  src="chap6/20.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.20<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Select the option of 'pattern'
+and enter '\D{3}' in the textbox on the right, as seen in screen 6.21.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1047"
+  src="chap6/21.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.21<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Click on the XML tab to see the
+XML code generated for this action.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:pattUrn value=&quot;\D{3}&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;</p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We could have written the above
+XML ourselves, but the Schema Designer makes our life much simpler. The
+'pattern' option gets added as pattUrn, and the value of \D{3} that is entered,
+becomes the value of the attribute value. A pattern is a synonym for a regular
+expression.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For instance, when the user
+keys-in a value, the correct characters for the type specified must be entered
+for the element. For example, in an e-mail address, the @ sign must be inserted
+at the correct place. People have written volumes on 'regular expressions',
+which is worth a perusal in your spare time.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The character \D stands for any
+Non-Digit characters, and \d stands for a digit from 0 to 9. The curly braces
+expect a number, so we have specified 3 as the number, since we want 3
+non-digit characters. Thus, the type 'vijay' is a string, which can have any
+three non-digit characters. We may have as many facets as we desire. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1048"
+  src="chap6/22.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.22<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In screen 6.22, we have three
+facets, each of which is an enumeration, with the values of abc, pqr and xyz,
+respectively. Let us now examine the XML code that is generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;abc&quot; /&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;pqr&quot; /&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;xyz&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;</p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The enumeration facet empowers
+us to choose a single value from amongst numerous values. In the above case,
+the type 'vijay' has three enumerated values of abc, pqr and xyz. In this
+manner, we can restrict the values that the simpleType can represent. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now add a complexType to
+our designer. Click on the schema tab on the bottom to switch to the Schema
+Designer, and then, drag and drop the complexType onto it, from the toolbox.
+The name of the complexType is changed to Mukhi. You can click on the column
+next to Mukhi, to view the options that are provided. We prefer to leave it
+blank. Then, click on the row below Mukhi. This displays a series of elements,
+as seen in screen 6.23. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1051"
+  src="chap6/23.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.23<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we select sequence. Doing
+so automatically brings up a group box named group1, of type 'sequence'. The
+group must contain two fields. So, enter 'f1' in the row below group1, and
+then, select 'string' in the column besides it. To add the second field, click
+on the next row and enter the second field name as 'f2' with the type as
+'string'. This brings us to screen 6.24. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1052"
+  src="chap6/24.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.24<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first column has a value of
+E, which represents an element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;mukhi&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;f1&quot; type=&quot;xs:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;f2&quot; type=&quot;xs:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML code very clearly
+specifies a complexType element named Mukhi, which has two sequences. The
+second sequence has two fields, named f1 and f2. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first sequence is not
+required. However, we have included it to merely display the visual effect of
+the Schema Designer. The above XML is the same code that was revealed to you
+some time back.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, from the toolbox, select
+element, and drag and drop it into the form. Change the name of the element to
+'sonal'. For selecting the type, click on the right hand column. This will show
+the list of types available, including the type Mukhi. This is shown in screen
+6.25. Select the type Mukhi and witness the changes in the Designer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1053"
+  src="chap6/25.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.25<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The screen 6.26 shows us the
+linkages visually. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1054"
+  src="chap6/26.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.26<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the user-defined types,
+whether simple or complex, also get added to the list of types. Now,
+drag-and-drop one more element from the toolbox in the XML Designer, and name
+it as 'yyy', as shown in screen 6.27, leaving the type unchanged.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1055"
+  src="chap6/27.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.27<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Drag the element sonal that was
+created above, onto this default element. Screen 6.28 shows that the elements
+get bound to each other, beginning with yyy, followed by sonal and then,
+followed by the sequence named Mukhi.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1056"
+  src="chap6/28.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.28<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now examine the entire
+XML file that has been written out by the Schema Designer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;zzz&quot;
+targetNamespace=&quot;http://tempuri.org/zzz.xsd&quot;
+elementFormDefault=&quot;qualified&quot; xmlns=&quot;http://tempuri.org/zzz.xsd&quot;
+xmlns:mstns=&quot;http://tempuri.org/zzz.xsd&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;abc&quot; /&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;pqr&quot; /&gt;</p>
+
+<p class=ILprg>&lt;xs:enumeration value=&quot;xyz&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;</p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;</p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;mukhi&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;f1&quot; type=&quot;xs:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;f2&quot; type=&quot;xs:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;yyy&quot;&gt;</p>
+
+<p class=ILprg>&lt;xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;xs:element name=&quot;sonal&quot; type=&quot;mukhi&quot;&gt;</p>
+
+<p class=ILprg>&lt;/xs:element&gt;</p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;</p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;</p>
+
+<p class=ILprg>&lt;/xs:element&gt;</p>
+
+<p class=ILprg>&lt;/xs:schema&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XSD file contains a simple type
+named vijay, followed by a complex type named Mukhi. Then, there exists an
+element named yyy that starts with a complexType, followed by a sequence
+containing one more element called sonal, of type Mukhi. The tags are duly
+closed. Thus, you can see that the creation of schemas has been considerably
+simplified by the Schema Designer. Before proceeding any further, click on
+File-Save All menu option.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, to create a new XML file,
+click on File-New-File, and then, in the New File dialog box, choose XML file,
+as before. In the properties window, click on the listbox for the property
+targetSchema, as shown in screen 6.29.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1057"
+  src="chap6/29.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.29<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Select the schema as zzz.xsd or
+http://tempuri.org/zzz.xsd. The text in the XML file changes to the following:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILprg>&lt;yyy xmlns=&quot;http://tempuri.org/zzz.xsd&quot;&gt;</p>
+
+<p class=ILprg>&lt;/yyy&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since we named the element as
+yyy having no type, the root element becomes yyy. The default namespace is
+determined by the xmlns attribute, which points to the zzz.xsd file that we had
+created.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, we click in the XML editor
+and enter a &lt; sign, as shown in screen 6.30. This displays the element
+sonal. Here, we are permitted to enter only sonal, since it is the sole element
+in our file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1058"
+  src="chap6/30.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.30<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This corroborates the fact that
+the XML file constantly looks up the XSD file to ensure that the data that has
+been entered, complies with the rules of the Schema file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Select sonal, and as before, the
+ending tag gets created for us. Make sure that the end tag is placed on a new
+line. Insert one more blank line within the tags. Now, within the start and the
+end tag, enter the &lt; sign. As shown in screen 6.31, the two fields f1 and f2
+are depicted, because the element sonal is of the complexType mukhi, which
+contains only the two fields f1 and f2. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1059"
+  src="chap6/31.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.31<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Select the field f1. The end tag
+immediately shows up. Enter any text such as &quot;vij&quot; in the tag f1, and
+then enter the following lines: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt;</p>
+
+<p class=ILprg>&lt;yyy xmlns=&quot;http://tempuri.org/zzz.xsd&quot;&gt;</p>
+
+<p class=ILprg>&lt;sonall&gt;</p>
+
+<p class=ILprg>&lt;f1&gt;vij&lt;/f1&gt;</p>
+
+<p class=ILprg>&lt;ggg&gt;jo&lt;/ggg&gt;</p>
+
+<p class=ILprg>&lt;/sonall&gt;</p>
+
+<p class=ILprg>&lt;/yyy&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The end result is exhibited in
+screen 6.32.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=400 height=300 id="_x0000_i1060"
+  src="chap6/32.gif"><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.32<o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The tag ggg is not a part of the
+schema. Hence, it is underlined in red. Any tag that does not meet the schema
+rules is rejected, and this violation is indicated by a change in the color.
+Thus, the editor too points fingers at our mistakes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>By now, you must have realized
+that Visual Studio.Net makes life much simpler for all of us. However, it
+cannot be used to comprehend the Visual Basic language. So, henceforth, upto
+the end of this volume, we shall focus purely on programming concepts, without
+using the framework.<o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/vbnet/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:03:25 GMT -->
+</html>

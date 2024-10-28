@@ -1,0 +1,346 @@
+Site http://download.insecure.org/nmap/dist/nmap-3.81-win32.zip
+Site http://www.winpcap.org/install/bin/WinPcap_3_1_beta4.exe
+
+We unzipped this file in C:\ and then cded into directory c:\nmap-3.81. Before running the program nmap we downloaded WinPCap which is a network driver that nmap uses to create network packets. NMAP basically lets us scan large networks for open ports. It uses a large number of methods to scan ports like UDP, TCp conenct, TCP SYN ICMP etc. It also tells us the OS teh remote system uses.The ports status can be open, closed filtered or unfiltered. The open status tells us that the other side is waiting at the accept function and will accept our connection. Closed means that no server on the remote machine has asked the os to listen for packets with that port number. A Filtered port has a firewall or something else that prevents nmap for knowing whetehr the port is open or not. Unfiltered means that nmap is sure that the port is closed and no one is concered that nmap is trying to figure out the port status. 
+
+We ran nmap as
+
+nmap -v -v www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 11:27 India Standard Time
+Initiating SYN Stealth Scan against 207.46.19.30 [1663 ports] at 11:27
+Discovered open port 80/tcp on 207.46.19.30
+SYN Stealth Scan Timing: About 5.63% done; ETC: 11:36 (0:08:26 remaining)
+Discovered open port 443/tcp on 207.46.19.30
+The SYN Stealth Scan took 531.66s to scan 1663 total ports.
+Host 207.46.19.30 appears to be up ... good.
+Interesting ports on 207.46.19.30:
+(The 1661 ports scanned but not shown below are in state: filtered)
+PORT    STATE SERVICE
+80/tcp  open  http
+443/tcp open  https
+
+Nmap finished: 1 IP address (1 host up) scanned in 538.344 seconds
+               Raw packets sent: 6744 (270KB) | Rcvd: 393 (21.1KB)
+
+The -v option twice is to create the most verbose output nmap can produce. The other option is the name of the site we want nmap to scan. The most important thing nmap does is to tell us how many ports are open on the target machine. It is first and foremost a port scanner. To scan the 1024 ports take some time and hence we must have lots and lots of patience when using nmap. Each open port is therotically an entry point for someone into our systems. Thus the smart ones start with blocking all ports and only opening those that they cannot live without. A port is part of the TCP protocol and is used to let multiple applications or servers reside on the same machine. Thus all http packets use port 80 or have the first two bytes of the tcp protocol have the value 80. This is teh concept of the destination port. The source port is used to have multiple applications within the same protocol. E-Mail uses port 25 or SMTP for sending e-mail and port 110 for receiving e-mail or pop3. The first thing that a hacker does is use a port scanner to find out what services are running on a machines or what ports are open. This is where tools like nmap or port scanners come in. The output of the above command tells us the version number of namp that we use and the date and time. Then it will scan 1663 ports on www.microsoft.com or IP address 207.46.19.30. To scan all ports it uses the SYN Stealth scan where SYN stands for a TCP flag. Whenever we make a TCP connection we send a 40 byte packet 20 IP and 20 TCP with a flag called Synchnonize Sequence Number or SYN on. We also send across a arbirary number called a sequence number. The other side adds one to this number as an acknoledgement and also sends us another number. It sets two flags on, SYN and ACK. When the original sender receives this SYN-ACK  it also adds one to the number received and sends it across. This exchange is made before the rwo machines and talk to each other. A sequence number is used to number every byte send across so that issues like confirmation of packet delivery etc can be taken care off. The output shows us that microsoft has two ports open 80 for http and 443 for https. It also tells us the time taken as well as the number of packets send. If we supply a domain name, nmap converts it for us into a IP address. 
+
+nmap -O -v -v www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 11:40 India Standard Time
+Initiating SYN Stealth Scan against 207.46.19.30 [1663 ports] at 11:41
+Discovered open port 443/tcp on 207.46.19.30
+Discovered open port 80/tcp on 207.46.19.30
+SYN Stealth Scan Timing: About 3.81% done; ETC: 11:54 (0:12:46 remaining)
+SYN Stealth Scan Timing: About 10.60% done; ETC: 11:50 (0:08:30 remaining)
+SYN Stealth Scan Timing: About 24.61% done; ETC: 11:47 (0:04:37 remaining)
+The SYN Stealth Scan took 304.72s to scan 1663 total ports.
+Warning:  OS detection will be MUCH less reliable because we did not find at least 1 open and 1 closed TCP port
+For OSScan assuming port 80 is open, 41567 is closed, and neither are firewalled
+For OSScan assuming port 80 is open, 43044 is closed, and neither are firewalled
+For OSScan assuming port 80 is open, 31539 is closed, and neither are firewalled
+Host 207.46.19.30 appears to be up ... good.
+Interesting ports on 207.46.19.30:
+(The 1661 ports scanned but not shown below are in state: filtered)
+PORT    STATE SERVICE
+80/tcp  open  http
+443/tcp open  https
+Aggressive OS guesses: OpenBSD 3.5 (SPARC) (90%), Microsoft Windows 2003 Server (89%), NetBSD 1.5_ALPHA i386 (89%), Cisco 1601 (IOS 11.0) or DECbrouter90T1 (Runs Cisco IOS 10.2(5)) (88%), Cisco 4500 router running IOS 11.2(2) (88%), Microsoft Windows 98SE + IE5.5sp1 (88%), Cabletron Smart Switch Router 8600 (88%), NetBSD 1.6.2 (X86) (88%), HP-UX B11.00 U 9000/839 (85%), IBM AIX 4.3.2.0-4.3.3.0 on an IBM RS/* (85%)
+No exact OS matches for host (test conditions non-ideal).
+TCP/IP fingerprint:
+SInfo(V=3.81%P=i686-pc-windows-windows%D=5/18%Tm=428ADDC2%O=80%C=-1)
+TSeq(Class=TR%IPID=RD%TS=0)
+T1(Resp=Y%DF=N%W=4000%ACK=S++%Flags=AS%Ops=MNWNNT)
+T2(Resp=Y%DF=N%W=0%ACK=S%Flags=AR%Ops=)
+T3(Resp=N)
+T4(Resp=Y%DF=N%W=0%ACK=O%Flags=R%Ops=)
+T5(Resp=N)
+T6(Resp=N)
+T7(Resp=N)
+PU(Resp=N)
+
+TCP Sequence Prediction: Class=truly random
+                         Difficulty=9999999 (Good luck!)
+TCP ISN Seq. Numbers: 8FBB1D34 D7050B3E FFB2826B 251C8997 F9894D29 927CD084
+IPID Sequence Generation: Randomized
+
+Nmap finished: 1 IP address (1 host up) scanned in 338.176 seconds
+               Raw packets sent: 5096 (205KB) | Rcvd: 275 (14.8KB)
+
+The -O option enable OS detection uisng TCp finger printing. The TCP/IP RFC does not define how a TCP/IP stack should respond to packets that have not been defined. For example a packet with the FIN flag denotes a termination of a active connection. This packet can never be the first packet send by a client. If we send a FIN packet as the first packet how should the other side respond. Different oS's respond to these out of turn packets in their own unique way. For example if teh SYN and FIN flags are on, what should a TCP/IP stack do. The stack may or may not respond with a apcket. Collecting all this gives us an insight into what OS teh remote system is running. In our case as we did not have 1 open and closed port, a accurate guess could not be given by nmap. 
+
+nmap -v -v -sS www.microsoft.com
+
+The -s option lets us specify the type of scan. The S specifies a TCP SYN scan. This is also called a half open scan as send a syn packet across and wait for a SYN-ACK. If we get one we know taht there is a service or server listening or that the port is open. If we get a RST or reset we know that the port is closed. Windows 2000 onwards and all Linuxes allow us to use raw sockets to send these packets across where we create the 20 bytes IP and 20 bytes TCP ourselves. This is teh default scan option and it is called half open as we do not complete the connection by sending the final ACK to complete the three way handshake. This is the ideal way to port scan as a SYN packet is a legitimate or only way to connect to a TCP box. Thus most firewalls etc do not block or log a SYN scan. 
+
+
+nmap -v -v -sT www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 11:55 India Standard Time
+Initiating Connect() Scan against 207.46.20.30 [1663 ports] at 11:55
+Discovered open port 389/tcp on 207.46.20.30
+Connect() Scan Timing: About 3.67% done; ETC: 12:09 (0:13:17 remaining)
+Connect() Scan Timing: About 9.92% done; ETC: 12:06 (0:09:09 remaining)
+Connect() Scan Timing: About 22.01% done; ETC: 12:02 (0:05:21 remaining)
+Connect() Scan Timing: About 58.33% done; ETC: 11:59 (0:01:32 remaining)
+Discovered open port 1002/tcp on 207.46.20.30
+The Connect() Scan took 170.18s to scan 1663 total ports.
+Host 207.46.20.30 appears to be up ... good.
+Interesting ports on 207.46.20.30:
+(The 1661 ports scanned but not shown below are in state: filtered)
+PORT     STATE SERVICE
+389/tcp  open  ldap
+1002/tcp open  windows-icfw
+
+Nmap finished: 1 IP address (1 host up) scanned in 180.349 seconds
+               Raw packets sent: 4 (136B) | Rcvd: 7 (382B)
+
+The -sT option specifies a TCP connect scan. All network programming is done using what is called the sockets API. The function used to initiate a connection is called the connect function. It is this function that completes the three way handshake. If the port is open this connect function suceeds or else it returns -1 on failure or the port is closed. The problem with raw sockets on Unix is that you need to be root. Thus if nmap is run a root it uses the first method, for non root users the -T option is used. As we have successfully completed a connection but then immedialtely disconnect, most systems log such behaviour as this is suspisious activity. Also it takes longer as we send one extra packet before disconnecting. Different scan types give us different ports open. In this case we have ldap and windows-icfw. 
+
+
+nmap -v -v -sF www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 12:18 India Standard Time
+Initiating FIN Scan against 207.46.20.60 [1663 ports] at 12:18
+FIN Scan Timing: About 8.12% done; ETC: 12:25 (0:05:44 remaining)
+FIN Scan Timing: About 33.67% done; ETC: 12:21 (0:01:59 remaining)
+The FIN Scan took 88.66s to scan 1663 total ports.
+Host 207.46.20.60 appears to be up ... good.
+Interesting ports on 207.46.20.60:
+(The 1662 ports scanned but not shown below are in state: open|filtered)
+PORT    STATE    SERVICE
+139/tcp filtered netbios-ssn
+
+Nmap finished: 1 IP address (1 host up) scanned in 95.127 seconds
+               Raw packets sent: 3340 (134KB) | Rcvd: 72 (4022B)
+
+The -sF uses the Stealth FIN scan to scan the ports. These days firewalls and packet filtering programs test for SYN packets that arrive at restricted ports. Some programs that do this are Synlogger and Courtney. Thus if a machine knows that a certain IP address is scanning them, it may then block all the other packets for that IP address. Thus we use some more advanced scans like Stealth. The RFC 793 lays down an interesting rule, all closed ports must reply to a packet by sending an RST whereas open ports must ignore them. Filtered ports also do not send a response. Thus this scan as the name suggests sends a FIN packet and if it gets a RST it means that the port is closed. Thus no response means that the port is filtered or open. Windows however like Cisco, BSDI and others do not always follow the RFC and at times does not respond with a RST if the port is closed. Thus if we find open ports with these advanvced scans we know that the machine is not running Windows. 
+
+nmap -v -v -sX www.microsoft.com
+
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 12:32 India Standard Time
+Initiating XMAS Scan against 207.46.199.60 [1663 ports] at 12:32
+XMAS Scan Timing: About 5.98% done; ETC: 12:40 (0:07:59 remaining)
+XMAS Scan Timing: About 48.47% done; ETC: 12:37 (0:02:43 remaining)
+The XMAS Scan took 178.92s to scan 1663 total ports.
+Host 207.46.199.60 appears to be up ... good.
+Interesting ports on 207.46.199.60:
+(The 1661 ports scanned but not shown below are in state: open|filtered)
+PORT     STATE    SERVICE
+139/tcp  filtered netbios-ssn
+4444/tcp filtered krb524
+
+Nmap finished: 1 IP address (1 host up) scanned in 186.288 seconds
+               Raw packets sent: 3338 (134KB) | Rcvd: 140 (7830B)
+
+The -sX option is the Xmas tree option that has FIN, URG and PUSH flags on. 
+
+nmap -v -v -sN www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 12:38 India Standard Time
+Initiating NULL Scan against 207.46.199.30 [1663 ports] at 12:38
+NULL Scan Timing: About 23.63% done; ETC: 12:40 (0:01:38 remaining)
+The NULL Scan took 63.14s to scan 1663 total ports.
+Host 207.46.199.30 appears to be up ... good.
+Interesting ports on 207.46.199.30:
+(The 1660 ports scanned but not shown below are in state: open|filtered)
+PORT    STATE    SERVICE
+80/tcp  closed   http
+139/tcp filtered netbios-ssn
+443/tcp closed   https
+
+Nmap finished: 1 IP address (1 host up) scanned in 70.151 seconds
+               Raw packets sent: 3335 (133KB) | Rcvd: 47 (2502B)
+
+
+The -sN option is the null option that has all the flags off. 
+
+nmap -v -v -sP www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-18 12:40 India Standard Time
+Host 207.46.20.30 appears to be up.
+Nmap finished: 1 IP address (1 host up) scanned in 6.690 seconds
+               Raw packets sent: 2 (68B) | Rcvd: 1 (46B)
+
+The -sP option is the Ping scanning option. At times we do not want to know what ports are open at the other end, only whether the remote nachine is on. At these times we can either use ping or -sP option. This works like ping where we send a ICMP echo request packet to the remote machine. The other machine must respond with a ICMP Echo reply packet. All this is the past as most firewalls catch these echo request packets and not pass them ahead. If this is the case, nmap sends a TCP ack packet on port 80, and as we know that a web server normally is running on the target we should get an RST. We could also send a SYN and get a SYn/ACK or a RST if the port is closed. Finally we could use the connect method. Nmap uses the ICMP and ACK techniques. Common sense tells us that nmap would first ping the client and if up would then scan ports.
+
+
+nmap -v -v -sv www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 13:51 India Standard Time
+Initiating SYN Stealth Scan against 207.46.20.60 [1663 ports] at 13:51
+Discovered open port 80/tcp on 207.46.20.60
+Discovered open port 443/tcp on 207.46.20.60
+SYN Stealth Scan Timing: About 4.22% done; ETC: 14:03 (0:11:34 remaining)
+SYN Stealth Scan Timing: About 13.89% done; ETC: 14:00 (0:07:38 remaining)
+SYN Stealth Scan Timing: About 83.76% done; ETC: 13:57 (0:00:56 remaining)
+The SYN Stealth Scan took 323.45s to scan 1663 total ports.
+Initiating service scan against 2 services on 207.46.20.60 at 13:57
+The service scan took 5.56s to scan 2 services on 1 host.
+Host 207.46.20.60 appears to be up ... good.
+Interesting ports on 207.46.20.60:
+(The 1661 ports scanned but not shown below are in state: filtered)
+PORT    STATE SERVICE VERSION
+80/tcp  open  http    Microsoft IIS webserver 6.0
+443/tcp open  ssl     Microsoft IIS SSL
+
+Nmap finished: 1 IP address (1 host up) scanned in 338.166 seconds
+               Raw packets sent: 6705 (268KB) | Rcvd: 201 (10.6KB)
+
+The v stands for version detection. We first use UDP or TCP to scan ports. Once we have a list of ports we would like to know what services are running on those ports. Nmap comes with a file nmap-services-probes which specifies how to determine the name of the program running behind the port. It basically consists of a list of rules and strings to match. Depending upon the service running it will tells us its protocol ftp, http, the application name Apache, its version number and some more information. There is an entire paper that tells us how complex it is to figure out which service is running. In our case we can see that on port 80 is running IIS version 6.0 and SSL on port 443. 
+
+nmap -v -v -sU www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 13:59 India Standard Time
+Initiating UDP Scan against 207.46.20.30 [1478 ports] at 13:59
+UDP Scan Timing: About 8.12% done; ETC: 14:05 (0:05:50 remaining)
+Increasing send delay for 207.46.20.30 from 0 to 50 due to 11 out of 24 dropped probes since last increase.
+Increasing send delay for 207.46.20.30 from 50 to 100 due to 11 out of 18 dropped probes since last increase.
+UDP Scan Timing: About 40.75% done; ETC: 14:14 (0:09:16 remaining)
+Increasing send delay for 207.46.20.30 from 100 to 200 due to 11 out of 23 dropped probes since last increase.
+Increasing send delay for 207.46.20.30 from 200 to 400 due to 11 out of 29 dropped probes since last increase.
+Increasing send delay for 207.46.20.30 from 400 to 800 due to 11 out of 20 dropped probes since last increase.
+Increasing send delay for 207.46.20.30 from 800 to 1000 due to 11 out of 26 dropped probes since last increase.
+UDP Scan Timing: About 67.54% done; ETC: 14:22 (0:07:32 remaining)
+UDP Scan Timing: About 74.51% done; ETC: 14:30 (0:07:57 remaining)
+UDP Scan Timing: About 81.90% done; ETC: 14:37 (0:06:54 remaining)
+UDP Scan Timing: About 88.26% done; ETC: 14:42 (0:05:04 remaining)
+UDP Scan Timing: About 92.98% done; ETC: 14:45 (0:03:15 remaining)
+UDP Scan Timing: About 96.03% done; ETC: 14:47 (0:01:55 remaining)
+UDP Scan Timing: About 97.82% done; ETC: 14:48 (0:01:04 remaining)
+UDP Scan Timing: About 98.83% done; ETC: 14:49 (0:00:35 remaining)
+The UDP Scan took 3056.53s to scan 1478 total ports.
+Host 207.46.20.30 appears to be up ... good.
+Interesting ports on 207.46.20.30:
+(The 1474 ports scanned but not shown below are in state: open|filtered)
+PORT    STATE    SERVICE
+996/udp filtered vsinet
+997/udp filtered maitrd
+998/udp filtered puparp
+999/udp filtered applix
+
+Nmap finished: 1 IP address (1 host up) scanned in 3063.235 seconds
+               Raw packets sent: 6236 (175KB) | Rcvd: 1953 (109KB)
+
+The u stands for a UDP scan. Nearly all multimedia applications use UDP as TCP carries a lot of overhead as an ACK needs to be received before more data can be send. In todays days packet rarely get dropped and therefore UDP is as reliable as TCP. A UDP packet is 8 bytes compared to 20 of TCP. We send 28 bytes 20 ip 8 UDP i.e a 0 bytes packet. If the port is closed we will receive a ICMP port unreachable packet. It is unusual to get a message if the port is open. If we get no response it only means that the port is open or packet filters are soping the packet from going ahead. Lots of trojans today use the higher udp ports to communicate with each other. UDP scanning of ports is slow because the ICMP protocol limits the number of error messages a host can send to 80 per 4 seconds. If this was not the case, the internet would be flooded with error messages. Solaris limits it to 2 per second. Microsoft has no limit on the number of ICMP errors it can send across. However nmap is slowing down the number of UDP probes and we have 4 services running UDP.
+
+nmap -v -v -sU www.microsoft.com
+
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:21 India Standard Time
+Initiating IPProto Scan against 207.46.20.30 [256 ports] at 15:21
+IPProto Scan Timing: About 44.92% done; ETC: 15:22 (0:00:37 remaining)
+The IPProto Scan took 71.32s to scan 256 total ports.
+Host 207.46.20.30 appears to be up ... good.
+All 256 scanned ports on 207.46.20.30 are: open|filtered
+
+Nmap finished: 1 IP address (1 host up) scanned in 79.134 seconds
+               Raw packets sent: 514 (10.4KB) | Rcvd: 32 (1782B)
+
+The -So scan is called the IP protocol scan. The IP header has one byte that specifies which protocol follows IP. We send a packet with only IP and nothing else. If we get a ICMP unreachable  port then we can assume that the host does not supports the protocol. The same filtering techniques can block teh packet from going across. The error rate of ICMP does not come in the way as we are sending at most 256 packets. In our case none of the 256 packets reached microsoft.
+
+nmap -v -v -sA www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:27 India Standard Time
+Initiating ACK Scan against 207.46.199.60 [1663 ports] at 15:27
+ACK Scan Timing: About 4.97% done; ETC: 15:37 (0:09:41 remaining)
+ACK Scan Timing: About 18.20% done; ETC: 15:32 (0:04:32 remaining)
+The ACK Scan took 185.78s to scan 1663 total ports.
+Host 207.46.199.60 appears to be up ... good.
+Interesting ports on 207.46.199.60:
+(The 1661 ports scanned but not shown below are in state: filtered)
+PORT    STATE      SERVICE
+80/tcp  UNfiltered http
+443/tcp UNfiltered https
+
+Nmap finished: 1 IP address (1 host up) scanned in 192.747 seconds
+               Raw packets sent: 5020 (201KB) | Rcvd: 114 (6024B)
+
+The -sA is the ACK scan. We send a ack packet with some random sequence/ACK number. If a valid TCP IP stack is running on the other side, it should immediately send you an RST saying tear down the connection immediately, i do not know who you are. If we get no response it could only mean that the machine has a firewall or some packet before preventing us from reaching across. A stateful firewall normally keeeps track of every connection by monitoting the sequence and ack numbers and not allowing any packet that is not part of a connection. We see that two packets got through ports 80 and 443. 
+
+nmap -v -v -sW www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:31 India Standard Time
+Initiating Window Scan against 207.46.20.60 [1663 ports] at 15:31
+Window Scan Timing: About 23.24% done; ETC: 15:33 (0:01:39 remaining)
+The Window Scan took 90.44s to scan 1663 total ports.
+Host 207.46.20.60 appears to be up ... good.
+Interesting ports on 207.46.20.60:
+(The 1662 ports scanned but not shown below are in state: filtered)
+PORT    STATE  SERVICE
+443/tcp closed https
+
+Nmap finished: 1 IP address (1 host up) scanned in 98.352 seconds
+               Raw packets sent: 3342 (134KB) | Rcvd: 60 (3190B)
+
+The -sW is the Window scan and is similiar to the ACK scan. Window size is the amount of data one side can send across without waiting for a ACK. Thus at the time of sending SYN packet if we receive a window size of 10,000, it means that we will send 10,000 bytes at one stoke without waiting for an ack. The larger the window size, normally the faster the data though put. We see that only one port got though. 
+
+nmap -v -v -sL www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:36 India Standard Time
+Host 207.46.19.30 not scanned
+Nmap finished: 1 IP address (0 hosts up) scanned in 5.548 seconds
+
+The -sL is called the list scan as it does nothing at all. It only prints the IP addresses without pinging or port scanning them. Can't really call it a scan.
+
+nmap -v -v -p 10-15,80 www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:44 India Standard Time
+Initiating SYN Stealth Scan against 207.46.199.30 [7 ports] at 15:44
+Discovered open port 80/tcp on 207.46.199.30
+The SYN Stealth Scan took 6.13s to scan 7 total ports.
+Host 207.46.199.30 appears to be up ... good.
+Interesting ports on 207.46.199.30:
+PORT   STATE    SERVICE
+10/tcp filtered unknown
+11/tcp filtered systat
+12/tcp filtered unknown
+13/tcp filtered daytime
+14/tcp filtered unknown
+15/tcp filtered netstat
+80/tcp open     http
+
+Nmap finished: 1 IP address (1 host up) scanned in 12.979 seconds
+               Raw packets sent: 15 (588B) | Rcvd: 6 (316B)
+
+The -p option scans only those ports that we specify. In the above case ports from 10 to 5 and port 80 will be scanned. The default is for ports from 1 to 1024. 60000-means from 60000 to 65536. Also U:10 means scan the port as UDP and TCP.
+
+nmap -v -v -p 10-12,80 --packet_trace www.microsoft.com
+
+Starting nmap 3.81 ( http://www.insecure.org/nmap ) at 2005-05-19 15:48 India Standard Time
+SENT (0.3400s) ICMP 10.12.13.125 > 207.46.20.30 Echo request (type=8/code=0) ttl=55 id=10627 iplen=28
+SENT (0.3500s) TCP 10.12.13.125:58726 > 207.46.20.30:80 A ttl=40 id=42609 iplen=40 seq=2386758558 win=1024 ack=2818771870
+SENT (1.3520s) ICMP 10.12.13.125 > 207.46.20.30 Echo request (type=8/code=0) ttl=42 id=8889 iplen=28
+SENT (1.3520s) TCP 10.12.13.125:58727 > 207.46.20.30:80 A ttl=45 id=15449 iplen=40 seq=3292728286 win=2048 ack=889392094
+RCVD (1.6120s) TCP 207.46.20.30:80 > 10.12.13.125:58727 R ttl=112 id=15360 iplen=40 seq=889392094 win=0
+Initiating SYN Stealth Scan against 207.46.20.30 [4 ports] at 15:48
+SENT (7.8810s) TCP 10.12.13.125:58703 > 207.46.20.30:80 S ttl=56 id=51722 iplen=40 seq=7889861 win=1024
+SENT (7.8810s) TCP 10.12.13.125:58703 > 207.46.20.30:12 S ttl=54 id=62520 iplen=40 seq=7889861 win=3072
+SENT (7.8810s) TCP 10.12.13.125:58703 > 207.46.20.30:11 S ttl=58 id=2094 iplen=40 seq=7889861 win=3072
+SENT (7.8810s) TCP 10.12.13.125:58703 > 207.46.20.30:10 S ttl=48 id=52838 iplen=40 seq=7889861 win=1024
+RCVD (8.1420s) TCP 207.46.20.30:80 > 10.12.13.125:58703 SA ttl=112 id=22941 iplen=44 seq=4021093659 win=16384 ack=7889862
+Discovered open port 80/tcp on 207.46.20.30
+SENT (9.9240s) TCP 10.12.13.125:58704 > 207.46.20.30:10 S ttl=39 id=26935 iplen=40 seq=7955396 win=4096
+SENT (9.9240s) TCP 10.12.13.125:58704 > 207.46.20.30:11 S ttl=43 id=32380 iplen=40 seq=7955396 win=4096
+SENT (9.9240s) TCP 10.12.13.125:58704 > 207.46.20.30:12 S ttl=52 id=39015 iplen=40 seq=7955396 win=1024
+RCVD (10.3150s) ICMP 210.214.42.37 > 10.12.13.125 TTL=0 during transit (type=11/code=0) ttl=27 id=24093 iplen=56
+RCVD (10.6250s) ICMP 210.214.42.37 > 10.12.13.125 TTL=0 during transit (type=11/code=0) ttl=27 id=24097 iplen=56
+RCVD (10.6450s) ICMP 210.214.42.37 > 10.12.13.125 TTL=0 during transit (type=11/code=0) ttl=27 id=24098 iplen=56
+The SYN Stealth Scan took 3.11s to scan 4 total ports.
+Host 207.46.20.30 appears to be up ... good.
+Interesting ports on 207.46.20.30:
+PORT   STATE    SERVICE
+10/tcp filtered unknown
+11/tcp filtered systat
+12/tcp filtered unknown
+80/tcp open     http
+
+Nmap finished: 1 IP address (1 host up) scanned in 11.016 seconds
+               Raw packets sent: 11 (416B) | Rcvd: 5 (260B)
+
+The --packet_trace tells  is more about the packet that is being send across. This is how we can learn about the packets send across and received. 
+
+The -f option is to break up the packet into smaller packets. Normally the minimum size of apacket on the internet is 576 bytes. A 40 byte packet does not go fragmented. If we do some IDS's and firewalls do not understand what is going on and let us pass in peice. Thus this option fragments our 40 byte tint packet into multiple packets. The -O option also performs the TCP sequence Number predictibility test. This basially figures out how simple it is to predict the sequence number a machine will generate. 
+
+When we supply a numer to a host name we are specifying the class address. Thus /24 is used to scan the class C address, /16 for B. ) means the whole internet and /32 a single address. A class B address has 16 bits for us and hence 192.168.*.* will scan the entire class B address. We can also write this as 192.168.0-255.0-255 or 192.168.0.0/16. Also writing *.*.5.6-7 scans all ip address that end in 5.6 and 5.7. Thus www.microsoft.com/24 scans the 255 machines of the class C address.198.116.*.1-127 specifies the first half of the class B address space only. 

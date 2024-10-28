@@ -1,0 +1,341 @@
+<html>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final6.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<head>
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<TITLE>The Makings Of An OCX Container</TITLE>
+</head>
+<BODY>
+<H2>Storage: The saving grace</H2> 
+Storage is one of the most important functions that the container is to handle. Before we go into the details of how storage is implemented in our container, let us look at storage with respect to <i>OLE</i>. <i>OLE</i> implements storage in what has come to be called as a <b><i>Structured Storage</i></b> model. In this model, the entire data is stored in a single file but on the basis of a very organized pattern. The basic file is called the <i>root storage</i>. It may be a file on disk or a temporary  area in memory.<BR>
+Within the <i>root storage</i>, we create a new level of <i>storages</i> and/or <i>streams.</i> The people who documented <i>OLE</i> at <i>Microsoft</i> provide an excellent analogy when they compare the  <i>storage-stream</i> structure of <i>OLE</i> to the <i>directory-file</i>  hierarchy. <i>Root storage</i> can be considered as the root directory. Much like sub-directories within the root-directory, the <i>root storage</i> can contain storages. Typically, each <i>OLE</i> server within the container has it's own <i>storage.</i><BR>
+Within each of these <i>storages</i>, we create <i>streams.</i> <i>Streams</i> are analogous to files. Ideally, a <i>stream</i> is created for every new detail of the <i>OLE</i> object that is to be stored. For  each <i>OLE</i> server, the <i>CLSID</i> of the object is stored into a  <i>stream.</i> In addition, all properties of the object that will be required when it is loaded from the disk are also stashed away in  <i>streams</i>.<BR>
+The  container and the <i>OLE</i> server; be it an <i>OCX</i> or otherwise; work in tandem to accomplish storage. Throughout this explanation, we will assume that the <i>OCX</i> is the other party involved. However, the issues and procedures discussed are equally true for all other types of <i>OLE</i> objects too.<BR>
+The onus is on the container to create the <i>root storage</i>, whether on disk or otherwise. This will be a one time job; most often at the start of an application. A practical container will be able to handle more than one <i>OCX</i> at a time. Thus, for each it will create a separate storage; all within the root storage. It will then pass the sub-storage pointer to the <i>OCX</i> via a function of the <i>IPersistStorage</i> implementation in the <i>OCX</i>.<BR>
+<i>IPersistStorage</i> is the interface committed to handling the storage objects for the <i>OCX</i>. The <i>OCX</i> will then use the storage pointer to create relevant streams and store data into these streams. The <i>OCX</i> is hence responsible for storing it's properties and other details. The container provides the shell with the <i>OCX</i> filling in the details.<BR>
+Correspondingly, while loading the details from storage it is up to the container to open the root storage as well as the  appropriate sub-storage  and then pass the storage pointer to the <i>OCX</i>. The <i>OCX</i> will then use this pointer to open streams and retrieve the data.<BR>
+In  creating the storages and streams, each is either assigned a name by the container or the <i>OCX</i>. If the creator does not endow the storage or stream with a name, it will be a temporary file and is given a unique name. These storages and/or streams will not be used directly by the user. 
+The following code will save to and load from a file on disk.<BR>
+<H4>Program 15</H4> 
+<PRE>
+ void MFrameWnd::SaveToStorage()
+ {
+   CFileDialog   z_FileSave(0,"toc",0,0,"Test   Container   Files |*.toc|AllFiles|*.*",this);
+ 
+   if(z_FileSave.DoModal() == IDOK)
+   {
+     char *z_sClsid;
+     CString z_sSaveName;
+     ULONG z_actual;
+     IStorage *z_pMainStorage;
+     IStream *z_pStream;
+     IPersistStorage *z_pPersistStorage;
+     
+     z_sSaveName = z_FileSave.GetPathName();                         
+     StgCreateDocfile(z_sSaveName.AllocSysString(),STGM_CREATE|STGM_READWRITE|STGM_SHARE_EXCLUSIVE,0,&amp z_pMainStorage);
+     z_pMainStorage->CreateStream("clsid",STGM_WRITE | STGM_DIRECT|  STGM_SHARE_EXCLUSIVE | STGM_CREATE,0,0,&amp z_pStream);
+     z_sClsid = (char*)malloc(100);
+     StringFromCLSID(z_Clsid,&amp z_sClsid);
+     z_pStream->Write(z_sClsid,100,&amp z_actual);               
+     free(z_sClsid);
+     z_pOleObject-> QueryInterface(IID_IPersistStorage,(void**)&amp z_pPersistStorage);
+     z_pPersistStorage->Save(z_pMainStorage,0);
+     z_pStream->Release();
+     z_pMainStorage->Release();
+     z_pPersistStorage->Release();
+   } 
+ }
+ 
+ void MFrameWnd::LoadFromStorage()
+ {
+   CFileDialog       z_FileOpen(1,"toc",0,0,"Test       Container Files(*.toc)|*.toc|AllFiles(*.*)|*.*",this);
+ 
+   if(z_FileOpen.DoModal() == IDOK)
+   {
+     CString z_sOpenName;
+     IStream *z_pStream; 
+     IStorage *z_pMainStorage;
+     IPersistStorage *z_pPersistStorage;
+       
+     z_sOpenName = z_FileOpen.GetPathName();
+     if(StgOpenStorage(z_sOpenName.AllocSysString(),0,STGM_SHARE_EXCLUSIVE|STGM_READWRITE,0,0,&amp z_pMainStorage)  == S_OK)
+     if(z_pMainStorage->OpenStream("clsid",0,STGM_READWRITE|STGM_SHARE_EXCLUSIVE,0,&amp z_pStream)  == S_OK)
+{
+       char *z_sClsid;
+       ULONG actual;
+         
+       z_sClsid=(char*)malloc(100);                                             
+       z_pStream->Read(z_sClsid,100,&amp actual);
+       z_pStream->Release();           
+       CLSIDFromString(z_sClsid,&amp z_Clsid);                                           
+       free(z_sClsid);
+       ObjCreate(z_Clsid);                                                                     
+       z_pOleObject->QueryInterface(IID_IPersistStorage,(void**)&amp z_pPersistStorage);
+       z_pPersistStorage->Load(z_pMainStorage);
+       z_pPersistStorage->Release();
+       if(z_pMainStorage)  
+         z_pMainStorage->Release();
+     }        
+   }     
+ }
+</PRE>
+Select any <i>OCX</i> for display. Change it's properties. Use the <i>SaveToStorage...</i> option under <i>File</i> to save the <i>OCX</i> onto disk. This brings up the <i>`File Save'</i> common dialog box. Type in the name by which the file is to be known. If no extension is provided, the <i>`.toc'</i> is used as the default extension. A file of the specified name is created on the disk.<BR>
+Quit out of the application. Use the <i>LoadFromStorage...</i> option under <i>File</i>. Use the <i>`File Open'</i> dialog  box to specify the file to be opened. Click on <i>`OK'</i>. This will recreate the <i>OCX</i> stored in the file in all it's splendor.<BR>
+In the function <i>SaveToStorage()</i>, we recover the name keyed-in by the user from the <i>`File Save'</i> dialog box. We use this name in creating the root directory. <i>StgCreateDocFile()</i> is the <i>OLE</i> API that creates this storage. In addition to the name, all it requires is the characteristics that the file is to possess. These specify the read/write access to the file; if the file is to be created if it does not exist and if it does then should it be over-written and such like. It also expects the address of an <i>IStorage</i> pointer variable into which it will return a pointer to the created file.<BR>
+We create a stream named <i>`CLSID'</i> within the root storage using the <i>CreateStream()</i> function of the <i>IStorage</i> interface. We have to specify the characteristics for the stream too; much in the same way as we did for the storage. <i>CreateStream()</i> returns a pointer to the stream it creates. We use <i>StringFromCLSID()</i> to convert the <i>CLSID</i> of the <i>OCX</i> into a string and save it into the stream using <i>Write()</i> of <i>IStream</i>.<BR>
+We then acquire a pointer to the <i>OCX</i>'s <i>IPersistStorage</i> implementation using <i>QueryInterface()</i>. This pointer is used to call the function <i>Save()</i> of <i>IPersistStorage</i>. This function is passed the storage pointer obtained from <i>StgCreateDocFile()</i>. The <i>OCX</i> uses this  pointer to create streams and store the relevant data. In <i>LoadFromStorage()</i>, we retrieve the name of the file to be opened. We pass this name to <i>StgOpenStorage()</i>. This <i>OLE</i> API will open the file in the designated mode. In opening the file, we have to specify the read/write access to the file. The <i>IStorage</i> pointer returned by this function is used to open the stream named <i>`CLSID'.<i> The <i>OpenStream()</i> function will return an <i>IStream</i> pointer. From this stream, we read the <i>CLSID</i> into a string using the <i>Read()</i> function of the <i>IStream</i> interface.
+This <i>CLSID</i> is passed to <i>ObjCreate()</i> and hence the <i>OCX</i>  is created and displayed in the container. Next, the <i>IPersistStorage</i> pointer of the <i>OCX</i> is used to call the function <i>Load()</i>. <i>Load()</i> will read all property values. Thus, the <i>OCX</i> will possess all the stored  characteristics.<BR>
+<H2>The RC file</H2>
+<PRE>
+ #include "resource.h"
+ #include "afxres.h"
+ IDR_MENU1 MENU 
+ BEGIN
+     POPUP "&amp File"
+     BEGIN
+         MENUITEM "&amp Save To Storage...",         ID_FILE_SAVETOSTORAGE
+         MENUITEM  "&amp Load From  Storage...",        ID_FILE_LOADFROMSTORAGE
+     END
+     POPUP "&amp Edit"
+     BEGIN
+         MENUITEM "&amp Insert Control...",            ID_EDIT_INSERTOBJECT
+         MENUITEM SEPARATOR
+         MENUITEM "Invoke A &amp Single Method...",   ID_EDIT_INVOKESINGLEMETHOD
+         MENUITEM "Invoke &amp Multiple Methods...",  ID_EDIT_INVOKEMULTIPLEMETHODS
+ 
+         MENUITEM SEPARATOR
+         MENUITEM  "E&amp xecuting Events...",         ID_EDIT_EXECUTINGEVENTS
+         MENUITEM SEPARATOR
+         MENUITEM "&amp Change Properties...",        ID_EDIT_CHANGEPROPERTIES
+         MENUITEM "&amp AmbientProperties...",       ID_EDIT_AMBIENTPROPERTIES
+     END
+     POPUP "&amp Display"
+     BEGIN
+         MENUITEM                               "&amp Properties...",              ID_DISPLAY_PROPERTIES
+         MENUITEM                                  "&amp Methods...",                 ID_DISPLAY_METHODS
+         MENUITEM                                    "Events...",                   ID_DISPLAY_EVENTS
+      END
+ END
+ 
+ IDR_MENU2 MENU DISCARDABLE 
+ BEGIN
+     POPUP "Control"
+     BEGIN
+         MENUITEM                                     "Primar&amp y",                    ID_CONTROL_PRIMARY
+         MENUITEM     "&amp UIActive",                        ID_CONTROL_UIACTIVE
+         MENUITEM "&amp Hide",                       ID_CONTROL_HIDE
+         MENUITEM                                  "P&amp roperties",                    ID_CONTROL_PROPERTIES
+         MENUITEM "&amp Open",                       ID_CONTROL_OPEN
+         MENUITEM "&amp Show",                       ID_CONTROL_SHOW
+     END
+ END
+ IDD_DIALOG1 DIALOG DISCARDABLE  25, 15, 182, 130
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Insert Control"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX              IDC_LIST1,11,19,155,83,LBS_SORT       | LBS_NOINTEGRALHEIGHT  | 
+                     WS_VSCROLL | WS_GROUP | WS_TABSTOP
+     DEFPUSHBUTTON   "OK",IDOK,32,112,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,99,112,50,14
+     LTEXT           "Controls:",IDC_STATIC,11,6,30,7
+ END
+ 
+ IDD_DIALOG2 DIALOG DISCARDABLE  20, 50, 150, 110
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Properties"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX           IDC_LIST1,12,7,126,80,NOT   LBS_NOTIFY   | LBS_SORT  | 
+                     LBS_NOINTEGRALHEIGHT    |    WS_VSCROLL    | WS_TABSTOP
+     DEFPUSHBUTTON   "OK",IDOK,17,95,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,84,95,50,14
+ END
+ 
+ IDD_DIALOG3 DIALOG DISCARDABLE  20, 20, 150, 110
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Methods"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX           IDC_LIST1,10,7,130,76,NOT   LBS_NOTIFY   | LBS_SORT  | 
+                     LBS_NOINTEGRALHEIGHT    |    WS_VSCROLL    | WS_TABSTOP
+     DEFPUSHBUTTON   "OK",IDOK,18,94,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,84,94,50,14
+ END
+ 
+ IDD_DIALOG4 DIALOG DISCARDABLE  20, 20, 150, 110
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Events"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX           IDC_LIST1,10,7,130,76,NOT   LBS_NOTIFY   | LBS_SORT  | 
+                     LBS_NOINTEGRALHEIGHT    |    WS_VSCROLL    | WS_TABSTOP
+     DEFPUSHBUTTON   "OK",IDOK,18,94,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,84,94,50,14
+ END
+ 
+ IDD_DIALOG5 DIALOG DISCARDABLE  20, 15, 277, 173
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Executing Single Methods"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX         IDC_LIST1,6,19,139,61,LBS_SORT | LBS_NOINTEGRALHEIGHT  | 
+                     WS_VSCROLL | WS_TABSTOP
+     EDITTEXT            IDC_EDIT1,7,97,139,51,ES_MULTILINE     | ES_AUTOVSCROLL  | 
+                     ES_AUTOHSCROLL | 0x1000
+     DEFPUSHBUTTON   "&amp Invoke",IDC_BUTTON1,39,155,50,14
+     PUSHBUTTON      "&amp Close",IDOK,105,155,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,171,155,48,14
+     CONTROL         "Available Methods:",IDC_STATIC,"Static",
+                     SS_LEFTNOWORDWRAP,6,8,68,8
+     CONTROL                      "Enter               Parameters here:",IDC_STATIC,"Static",
+                     SS_LEFTNOWORDWRAP,6,87,76,7
+ END
+ 
+ IDD_DIALOG6 DIALOG DISCARDABLE  10, 20, 291, 150
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Executing Multiple Methods"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX         IDC_LIST1,7,26,135,94,LBS_SORT | LBS_NOINTEGRALHEIGHT  | 
+                     WS_VSCROLL | WS_TABSTOP
+     EDITTEXT           IDC_EDIT1,150,26,135,94,ES_MULTILINE    | ES_AUTOHSCROLL  | 
+                     0x1000
+     DEFPUSHBUTTON   "&amp Invoke",IDC_BUTTON2,58,130,50,14
+     PUSHBUTTON      "&amp Close",IDOK,124,130,50,14 PUSHBUTTON      "Cancel",IDCANCEL,190,130,50,14
+     LTEXT           "Available Methods:",IDC_STATIC,7,14,64,8
+     LTEXT              "Enter    methods    to    be    executed here:",IDC_STATIC,150,14,
+                     118,8
+ END
+ 
+ IDD_DIALOG7 DIALOG DISCARDABLE  10, 15, 307, 163
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Executing Events"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX              IDC_LIST1,6,19,143,112,LBS_SORT       | LBS_NOINTEGRALHEIGHT  | 
+                     WS_VSCROLL | WS_TABSTOP
+     EDITTEXT          IDC_EDIT1,156,19,145,112,ES_MULTILINE    | ES_AUTOHSCROLL  | 
+                     0x1000
+     DEFPUSHBUTTON   "&amp Test",IDC_TEST,39,142,50,14
+     PUSHBUTTON      "&amp Save",IDC_SAVE,100,142,50,14
+     PUSHBUTTON      "&amp Close",IDOK,161,142,50,14
+     LTEXT           "Events of the control:",IDC_STATIC,6,7,71,8
+     LTEXT            "Code  for the selected  event  is  entered here:",
+                     IDC_STATIC,156,7,144,8
+ END
+ 
+ IDD_DIALOG10 DIALOG DISCARDABLE  0, 0, 198, 135
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Change Properties"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     LISTBOX              IDC_LIST2,26,16,132,60,LBS_SORT       | LBS_NOINTEGRALHEIGHT |WS_VSCROLL | WS_TABSTOP
+     EDITTEXT        IDC_EDIT1,26,93,64,15,ES_AUTOHSCROLL
+     PUSHBUTTON      "More...",IDC_PROPPAGE,94,93,16,15,
+                     NOT WS_VISIBLE
+     PUSHBUTTON      " &amp Accept",IDC_ACCEPT,127,92,31,15
+     PUSHBUTTON      "All &amp Properties",IDC_BUTTON3,13,117,50,14
+     DEFPUSHBUTTON   "&amp Close",IDOK,75,117,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,137,117,50,14
+     LTEXT                 "Properties      of      the       OCX :",IDC_STATIC,26,4,76,8
+     LTEXT           "Value :",IDC_STATIC,26,82,24,8
+ END
+ 
+ IDD_DIALOG11 DIALOG DISCARDABLE  0, 0, 187, 95
+ STYLE  DS_MODALFRAME  |  WS_POPUP | WS_VISIBLE  |  WS_CAPTION  | WS_SYSMENU
+ CAPTION "Ambient Properties"
+ FONT 8, "MS Sans Serif"
+ BEGIN
+     EDITTEXT        IDC_EDIT1,2,29,62,12,ES_AUTOHSCROLL PUSHBUTTON      "More...",IDC_BACKCOLOR,70,29,14,12
+     CONTROL         "&amp True",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON |WS_GROUP | WS_TABSTOP,131,31,34,10
+     CONTROL         "&amp False",IDC_RADIO2,  "Button",BS_AUTORADIOBUTTON|WS_TABSTOP,131,47,34,10
+     DEFPUSHBUTTON   "OK",IDOK,43,77,50,14
+     PUSHBUTTON      "Cancel",IDCANCEL,109,77,50,14
+     GROUPBOX        "UIDead",IDC_STATIC,112,14,72,52,WS_GROUP
+     LTEXT           "Ambient BackColor",IDC_STATIC,2,16,63,8
+ END
+</PRE>
+<H2>Resource.h</H2>
+<PRE>
+ //{{NO_DEPENDENCIES}}
+ // App Studio generated include file.
+ // Used by ANAND.RC
+ //
+ #define IDR_MENU1                       101
+ #define IDD_DIALOG1                     102
+ #define IDB_BITMAP1                     103
+ #define IDR_MENU2                       104
+ #define IDD_DIALOG2                     105
+ #define IDD_DIALOG3                     106
+ #define IDD_DIALOG4                     107
+ #define IDD_DIALOG5                     108
+ #define IDD_DIALOG6                     109
+ #define IDD_DIALOG7                     110
+ #define IDD_DIALOG8                     111
+ #define IDD_DIALOG9                     112
+ #define IDD_DIALOG10                    113
+ #define IDD_DIALOG11                    114
+ #define IDI_ICON2                       126
+ #define IDI_ICON1                       126
+ #define IDC_LIST1                       1000
+ #define IDC_BUTTON1                     1001
+ #define IDC_EDIT1                       1004
+ #define IDC_BUTTON3                     1005
+ #define IDC_BUTTON2                     1006
+ #define IDC_HELP                        1007
+ #define IDC_TEST                        1008
+ #define IDC_SAVE                        1009
+ #define IDC_LIST2                       1010
+ #define IDC_PROPPAGE                    1011
+ #define IDC_RADIO1                      1012
+ #define IDC_RADIO2                      1013
+ #define IDC_BACKCOLOR                   1014
+ #define IDC_ACCEPT                      1015
+ #define ID_EDIT_INSERTOBJECT            40001
+ #define ID_FILE_SAVETOSTORAGE           40002
+ #define ID_FILE_LOADFROMSTORAGE         40003
+ #define ID_EDIT_INVOKESINGLEMETHOD      40004
+ #define ID_EDIT_INVOKEMULTIPLEMETHODS   40005
+ #define ID_EDIT_EXECUTINGEVENTS         40006
+ #define ID_DISPLAY_EVENTS               40007
+ #define ID_DISPLAY_PROPERTIES           40008
+ #define ID_DISPLAY_METHODS              40009
+ #define ID_ABOUT                        40010
+ #define ID_CONTROL_UIACTIVE             40011
+ #define ID_CONTROL_HIDE                 40012
+ #define ID_CONTROL_PROPERTIES           40013
+ #define ID_CONTROL_PRIMARY              40014
+ #define ID_CONTROL_OPEN                 40015
+ #define ID_CONTROL_SHOW                 40016
+ #define ID_EDIT_CHANGEPROPERTIES        40017
+ #define ID_EDIT_AMBIENTPROPERTIES       40018
+ #define ID_TRY                          -1
+ 
+ // Next default values for new objects
+ // 
+ #ifdef APSTUDIO_INVOKED
+ #ifndef APSTUDIO_READONLY_SYMBOLS
+ 
+ #define _APS_NEXT_RESOURCE_VALUE        127
+ #define _APS_NEXT_COMMAND_VALUE         40019
+ #define _APS_NEXT_CONTROL_VALUE         1020
+ #define _APS_NEXT_SYMED_VALUE           101
+ #endif
+ #endif
+</PRE>
+</i></i></BODY>

@@ -1,0 +1,2013 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/network/rawsockets.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:46 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="rawsockets_files/filelist.xml">
+<title>Windows Raw Socket</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Mr. Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>12</o:TotalTime>
+  <o:LastPrinted>2004-01-13T12:38:00Z</o:LastPrinted>
+  <o:Created>2004-06-07T12:01:00Z</o:Created>
+  <o:LastSaved>2004-03-29T11:35:00Z</o:LastSaved>
+  <o:Pages>10</o:Pages>
+  <o:Words>3647</o:Words>
+  <o:Characters>20788</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>173</o:Lines>
+  <o:Paragraphs>41</o:Paragraphs>
+  <o:CharactersWithSpaces>25529</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-page-numbers:111;
+	mso-even-footer:url("rawsockets_files/header.html") ef1;
+	mso-footer:url("rawsockets_files/header.html") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027">
+  <o:colormru v:ext="edit" colors="#006,#fafaff"/>
+  <o:colormenu v:ext="edit" fillcolor="#fafaff"/>
+ </o:shapedefaults></xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body bgcolor="#fafaff" lang=EN-US link=blue vlink=purple style='tab-interval:
+.5in'>
+
+<div class=Section1>
+
+<h1 align=center style='text-align:center'><b><sup><span style='font-size:24.0pt;
+mso-bidi-font-size:10.0pt;color:#000066;letter-spacing:1.0pt;text-decoration:
+none;text-underline:none'>Raw Sockets</span></sup></b><b><span
+style='font-size:12.5pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></b></h1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>This chapter focuses on raw sockets
+under the windows operating system. A raw socket brings in more flexibility
+when creating our own packet. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;windows.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;%04x\n&quot;,MAKEWORD(4,2));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;%04x\n&quot;,MAKEWORD(2,4));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;%04x\n&quot;, 4 | 2
+&lt;&lt; 8 );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>0204<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>0402<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>0204<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>In the above example, a macro MAKEWORD
+is used to create a short data type. The first parameter 4 to the macro becomes
+the low byte and the second the high byte. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The last printf displays the actual
+workings of a macro. It takes the second parameter and shifts it 8 to the left
+which in effect does a multiplication by 256. This moves the two 8 bits to the
+left<span style="mso-spacerun: yes">  </span>which is then bitwise ored with
+the first parameter which does an addition. Thus, the first parameter to the
+MAKEWORD macro becomes the low 8 bits and the second the higher eight bits.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;windows.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int d;WSADATA ws;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(2,1),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;wVersion=%x
+wHighVersion=%x\n&quot;,ws.wVersion,ws.wHighVersion);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(1,3),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;wVersion=%x
+wHighVersion=%x\n&quot;,ws.wVersion,ws.wHighVersion);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(0,9),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;wVersion=%x
+wHighVersion=%x\n&quot;,ws.wVersion,ws.wHighVersion);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(2,3),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;wVersion=%x
+wHighVersion=%x\n&quot;,ws.wVersion,ws.wHighVersion);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d =
+WSAStartup(MAKEWORD(12,3),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;wVersion=%x wHighVersion=%x\n&quot;,ws.wVersion,ws.wHighVersion);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>&gt;cl a.c ws2_32.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>wVersion=102 wHighVersion=202<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>wVersion=101 wHighVersion=202<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=10092<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>wVersion=0 wHighVersion=202<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>wVersion=202 wHighVersion=202<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>wVersion=202 wHighVersion=202<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The function WSAStartup returns 0 on
+success, any other value indicates an error. The first parameter is the Winsock
+version number that the coder wants to use. The high order byte specifies the
+minor version and the low order byte specifies the major version. The MAKEWORD
+macro is required here as the version number is written the other way around. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Thus in the first call, MAKEWORD(2,1)
+denotes that the version 2.1 of the Sockets API is to be used. The second
+parameter, the ws WSADATA structure has two members that reveals the versions
+supported. The member wHighVersion gives the highest version supported by this
+machine, which is 2.2 whereas wVersion gives the minimum of high version and
+version requested. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Thus, irrespective of asking for a low
+or a high version, we are given the high version, which is the maximum version
+that can be supported. The library used to link is not wsock32.lib but the newer
+one, ws2_32.lib.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int d;WSADATA ws;SOCKET s;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(2,1),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s =
+WSASocket(AF_INET,SOCK_RAW,IPPROTO_ICMP,NULL, 0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Socket Return Value=%d\n&quot;,s);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Sockets programming in today’s day and
+age shows extensive use of functions beginning with WSA instead of the earlier
+Unix socket functions. Therefore, unlike socket, the function used now is
+WSASocket. The last parameter is for the newer features, which presently is of
+no use, hence it is blank. The WSA functions do what the unix functions do and
+much more. However, we can conveniently use some from the WSA family and some
+from the unix family. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Also, one of the newer features is the
+use of overlapped sockets that make the network world go faster. This function
+WSASocket like its socket counterpart returns –1 when in error. The first
+parameter is for the major family, in our case not a protocol like Ipx or
+NetBios, but the internet family. The second parameter is the major family type
+within the internet set of protocols. They are two main types, a stream or
+connection oriented protocol or TCP and a connectionless one, UDP. Since we are
+creating our own packet, SOCK_RAW representing raw sockets is used.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int d;WSADATA ws;SOCKET s;struct
+hostent * hp;struct sockaddr_in dest;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main(int argc, char **argv)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(2,1),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s =
+WSASocket(AF_INET,SOCK_RAW,IPPROTO_ICMP,NULL, 0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Socket Return
+Value=%d\n&quot;,s);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hp = gethostbyname(argv[1]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;h_name=%s\n&quot;,hp-&gt;h_name);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Aliases=%s\n&quot;,hp-&gt;h_aliases[0]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Length=%d Type=%d
+%d\n&quot;,hp-&gt;h_length,hp-&gt;h_addrtype,AF_INET);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>//memcpy(&amp;(dest.sin_addr),hp-&gt;h_addr,hp-&gt;h_length);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>memcpy(&amp;(dest.sin_addr),hp-&gt;h_addr_list[0],hp-&gt;h_length);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>dest.sin_family = hp-&gt;h_addrtype;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Ip
+Address=%s\n&quot;,inet_ntoa(dest.sin_addr));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>A<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>h_name=vmci-354uctxbmk<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Aliases=(null)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Length=4 Type=2 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Ip Address=219.65.17.81<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>A <a href="http://www.vsnl.com/"><span
+style='color:#000066'>www.vsnl.com</span></a><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>h_name=www.vsnl.com<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Aliases=(null)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Length=4 Type=2 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Ip Address=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>A 202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>h_name=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Aliases=(null)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Length=4 Type=2 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Ip Address=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Function gethostbyname is used in this
+program even though the specs consider it to be a depreciated function. The
+specs prefer the use of function getaddrinfo instead. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The function gethostbyname takes a
+pointer to a char, that can either be in the form of a dotted decimal ip
+address or a domain name and returns some data in the form a structure of type
+hostent. It is given a null pointer and the<span style="mso-spacerun: yes"> 
+</span>member h_addr gives the ip address of the machine we are running on. In
+our case when we connected to our isp we were given an ip address of 219.65.17.81.
+In this manner, we can find out the IP address that our machine has been
+assigned.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The h_name member is the domain name
+our machine is assigned. The aliases or alternative name is null. The length of
+each address is 4 and its type is AF_INET or the internet family. The member
+h_addr_list is a null terminated list of address and the macro h_addr has a
+value h_addr_list[0]. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The function inet_ntoa requires a
+structure of type sockaddr_in and therefore the long member of the union is
+initialized to the ip address. If<span style="mso-spacerun: yes">  </span>a
+domain like <a href="http://www.vsnl.com/"><span style='color:#000066'>www.vsnl.com</span></a>
+is given, the IP address of this domain name is returned. Likewise, the dotted
+decimal address can also be used to obtain the same information.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int d,dummy,i;WSADATA ws;SOCKET
+s;struct hostent * hp;struct sockaddr_in dest;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char databuf[1024];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IcmpHeader
+*pIcmpHeader,*pIcmpHeader1;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IpHeader *pIpHeader;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IpHeader<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char lenver;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char tos;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short totallen;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short ident;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short fragandflags;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char ttl; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char proto;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short checksum;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct in_addr sourceIP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct in_addr destIP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} IpHeader;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IcmpHeader<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char i_type;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char i_code;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_cksum;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_id;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_seq;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned long timestamp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char data[32];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} ;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>USHORT checksum(USHORT *buffer, int
+size)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned long cksum=0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>while(size &gt;1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum+=*buffer++;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>size -=sizeof(USHORT);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>if(size )<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += *(UCHAR*)buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum = (cksum &gt;&gt; 16) + (cksum
+&amp; 0xffff);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += (cksum &gt;&gt;16);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>return (USHORT)(~cksum);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main(int argc, char **argv)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>d = WSAStartup (MAKEWORD(2,1),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;WSAStartup Return Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>s = WSASocket(AF_INET,SOCK_RAW, IPPROTO_ICMP ,NULL, 0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;Socket Return Value=%d\n&quot;,s);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>hp = gethostbyname(argv[1]);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>memcpy(&amp;dest.sin_addr,hp-&gt;h_addr,hp-&gt;h_length);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>dest.sin_family = hp-&gt;h_addrtype;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;hp=%x Ip Address=%s\n&quot;,hp,inet_ntoa(dest.sin_addr));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader = (IcmpHeader *) malloc(sizeof(IcmpHeader));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_type = 8;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_code = 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_id = (USHORT)GetCurrentProcessId();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_cksum = 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_seq = 326;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>memset(pIcmpHeader-&gt;data ,'A', 32);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;timestamp = GetTickCount();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;i_cksum = checksum((USHORT
+*)pIcmpHeader,sizeof(IcmpHeader));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>d = sendto(s,(char *)pIcmpHeader,sizeof(IcmpHeader),0,(struct
+sockaddr*)&amp;dest,sizeof(dest));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;Sentto return value=%d\n&quot;,d); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>dummy = sizeof(dest);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>d = recvfrom(s ,databuf,1024,0,(struct
+sockaddr*)&amp;dest,&amp;dummy);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;recvfrom return value=%d\n&quot;,d); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIpHeader = (struct IpHeader *)databuf;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;len=%x TOS=%d Total length %d
+%d\n&quot;,pIpHeader-&gt;lenver,pIpHeader-&gt;tos,<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIpHeader-&gt;totallen , htons(pIpHeader-&gt;totallen));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;ident=%d Frag=%d TTL=%d
+Protocol=%d\n&quot;,pIpHeader-&gt;ident,<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIpHeader-&gt;fragandflags,pIpHeader-&gt;ttl,pIpHeader-&gt;proto);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;CheckSum=%d %d\n&quot;,pIpHeader-&gt;checksum ,
+checksum((USHORT *)databuf,20+32+12));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;Source IP=%s Dest
+Ip=%s\n&quot;,inet_ntoa(pIpHeader-&gt;sourceIP),inet_ntoa(pIpHeader-&gt;destIP));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;dest=%s\n&quot;,inet_ntoa(dest.sin_addr));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader1= (struct IcmpHeader *)(databuf + 20);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;Type=%d
+Code=%d\n&quot;,pIcmpHeader1-&gt;i_type,pIcmpHeader1-&gt;i_code);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;CheckSum=%d %d\n&quot;,pIcmpHeader1-&gt;i_cksum ,
+checksum((USHORT *)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>(databuf+20),32+12));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;id ret=%d send=%d
+sequence=%d\n&quot;,pIcmpHeader1-&gt;i_id,pIcmpHeader-&gt;i_id ,<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader1-&gt;i_seq);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;timestamp ret=%d send=%d
+Diff=%d\n&quot;,pIcmpHeader1-&gt;timestamp,<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>pIcmpHeader-&gt;timestamp, GetTickCount() -
+pIcmpHeader1-&gt;timestamp<span style="mso-spacerun: yes">  </span>);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>for( i = 0 ; i &lt;= 31 ; i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>printf(&quot;%c&quot;,pIcmpHeader1-&gt;data[i]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a <a href="http://www.google.com/"><span
+style='color:#000066'>www.google.com</span></a><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hp=158c40 Ip Address=66.102.7.99<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Sentto return value=44<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>recvfrom return value=64<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>len=45 TOS=0 Total length 16384 64<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>ident=20299 Frag=0 TTL=242 Protocol=1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>CheckSum=50502 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Source IP=66.102.7.99 Dest
+Ip=66.102.7.99<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>dest=66.102.7.99<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Type=0 Code=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>CheckSum=26539 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>id ret=1720 send=1720 sequence=326<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>timestamp ret=620189515 send=620189515
+Diff=1188<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>This example is more a utility that
+mimics the ping program. The WSAStartup function asks for Winsock version 2.1.
+Though, we have not checked for return values we seriously recommend that you
+do. Then a socket is created using the function WSASocket even though the
+function socket would suffice. The second parameter is for Raw Sockets and the
+third is the actual protocol to be used with IP. All internet packets starts
+with IP but then we can use a protocol off our choice. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>We normally use TCP or UDP. For those
+who want to control the workings of the internet, ICMP is used. Thus, in our
+case as we want to control a small part of the net, we use the macro
+IPPROTO_ICMP that denotes the ICMP protocol. We want to check whether a machine
+on the net has the internet stack or code installed and running. If this is
+true, that site must support the ICMP protocol along with IP. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>A certain ICMP packet is sent to a
+site which will send back a reply. The program takes either the site name or
+its IP address. Either way, the function gethostbyname will return a hostent
+structure that will contain the ip address in the macro h_addr as shown in the
+last example. We also copy this value and the address family AF_INET into the
+structure dest. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The ICMP protocol has a certain packet
+format. The first 44 bytes are allocated for the ICMP header. In fact, the
+first 4 bytes are the bytes defined by the protocol for all ICMP messages. The
+field type then decides on the rest of the extra fields. The value of 8 denotes
+an Echo message and a value of 0 an echo reply. Thus, whenever a TCP/IP stack
+receives a message type of 8 or echo it sends back a Echo Reply message or type
+0. The code field is always 0. The checksum field is the normal internet
+checksum and its value should be zero before calculating the checksum. The next
+two fields id and sequence<span style="mso-spacerun: yes">  </span>number share
+the same role. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>On sending an echo message, an echo
+reply is received. However to match the echo reply message with the echo
+message, the id and sequence number fields are used which together become a
+unique id for the packet. The echo reply message copies the values of these
+fields plus more and then returns the packet. The id field is set to the
+process id thus making it absolutely unique. However, if more than one echo
+request packet is sent, the sequence field is changed to a different value each
+time. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Along with these header details, the packet
+also has 32 A’s in the array data. In the echo reply, all these extra bytes are
+returned back without any change. This helps in validating the packet for any
+data corruption. Not really needed. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The timestamp field is set to the
+current time and it factors the time taken for the packet to reach and return
+back. Not part of the protocol.<span style="mso-spacerun: yes">  </span>Once
+the packet is ready, the sendto function is used to send this packet over. The
+first parameter to this function is the raw socket handle and the second is the
+bytes to be sent across. The third is for the number of bytes, whereas the
+fourth is for options if any. The fifth is the IP address of the site to be
+visited. The IP address and port is always given as a sockaddr_in structure.
+The sendto function returns the number of bytes sent. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>In our case, the IP header is not
+explicitly specified, only the ICMP bytes are given. The IP header is generated
+by the system but the ICMP header will be taken from the program. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>When the destination site receives a
+ICMP packet with type 8, it sends an ICMP echo reply message with type set to
+0. First comes the recvfrom function to accept this message. The recvfrom
+function returns the number of bytes it has received, which is 64. The ICMP
+packet sent was 44 bytes along with the IP header, which is 20 bytes, hence 64
+bytes. Thus with raw sockets we can manually look at the IP bytes received. The
+parameters for the recvfrom and sendto functions are similar. The only
+difference is that the last parameter is the address of a variable that
+contains the size of the sockaddr_in structure. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The array databuf now starts with a 20
+byte structure that represents the IP header, therefore we set the pointer
+pIpHeader to this array databuf and read out the first 20 bytes. We have learnt
+earlier the structure of a IP header where the total length is stored in big
+endian format, thus the htons function is used which changes it to little
+endian. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The protocol field has a value of 1
+denoting a follow on of ICMP header. Next is the TTL field which has a very
+large number of 242. For some reason, unknown to us both the source and
+destination IP addresses are same. The ICMP header follows the IP header so the
+the variable pIcmpHeader1 is made to point to 20 bytes from the start of the
+array databuf. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>As this is an Echo Reply message, both
+the Type and Code field will be zero. The process ID is 1720 and the sequence
+number has been set to 326 to uniquely identify this packet. The timestamp field
+is copied back unaltered, thus, it makes it easier to find out the difference
+in time when the packet was sent to when it has been received. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Finally, the contents of the array
+data are printed to check for all of them being A’s. The timestamp and the data
+following need not be send. Thus, in effect, 8 bytes are all that we need to
+send of the ICMP header.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;ws2tcpip.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#pragma pack(1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct ipopt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char code;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char len;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char ptr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>long addr[9];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}ipopt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int d,dummy,i;WSADATA ws;SOCKET
+s;struct hostent * hp;struct sockaddr_in dest;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char databuf[1024];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IcmpHeader
+*pIcmpHeader,*pIcmpHeader1;struct IpHeader *pIpHeader;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IpHeader<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char lenver;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char tos;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short totallen;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short ident;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short fragandflags;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char ttl; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned char proto;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short checksum;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct in_addr sourceIP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct in_addr destIP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>long ipaddress[10];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} IpHeader;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct IcmpHeader<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char i_type;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char i_code;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_cksum;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_id;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned short i_seq;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned long timestamp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char data[32];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} ;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>USHORT checksum(USHORT *buffer, int
+size)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned long cksum=0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>while(size &gt;1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum+=*buffer++;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>size -=sizeof(USHORT);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>if(size )<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += *(UCHAR*)buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum = (cksum &gt;&gt; 16) + (cksum
+&amp; 0xffff);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += (cksum &gt;&gt;16);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>return (USHORT)(~cksum);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>main(int argc, char **argv)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = WSAStartup(MAKEWORD(2,1),&amp;ws);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;WSAStartup Return
+Value=%d\n&quot;,d);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s = WSASocket(AF_INET,SOCK_RAW,IPPROTO_ICMP,NULL,
+0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Socket Return
+Value=%d\n&quot;,s);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hp = gethostbyname(argv[1]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>memcpy(&amp;dest.sin_addr,hp-&gt;h_addr,hp-&gt;h_length);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>dest.sin_family = hp-&gt;h_addrtype;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;hp=%x Ip
+Address=%s\n&quot;,hp,inet_ntoa(dest.sin_addr));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader = (IcmpHeader *)
+malloc(sizeof(IcmpHeader));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_type = 8;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_code = 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_id =
+(USHORT)GetCurrentProcessId();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_cksum = 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_seq = 326;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>memset(pIcmpHeader-&gt;data ,'A', 32);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;timestamp =
+GetTickCount();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIcmpHeader-&gt;i_cksum =
+checksum((USHORT *)pIcmpHeader,sizeof(IcmpHeader));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>ipopt.code = 7;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>ipopt.ptr<span style="mso-spacerun:
+yes">  </span>= 4;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>ipopt.len<span style="mso-spacerun:
+yes">  </span>= 39;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>setsockopt (s, IPPROTO_IP,
+IP_OPTIONS,(char *)&amp;ipopt, sizeof(ipopt));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = sendto(s,(char *)pIcmpHeader,sizeof(IcmpHeader),0,(struct
+sockaddr*)&amp;dest,sizeof(dest));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Sentto return
+value=%d\n&quot;,d); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>dummy = sizeof(dest);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d = recvfrom(s ,databuf,1024,0,(struct
+sockaddr*)&amp;dest,&amp;dummy);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;recvfrom return
+value=%d\n&quot;,d); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIpHeader = (struct IpHeader
+*)databuf;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;len=%x TOS=%d Total
+length %d
+%d\n&quot;,pIpHeader-&gt;lenver,pIpHeader-&gt;tos,pIpHeader-&gt;totallen ,
+htons(pIpHeader-&gt;totallen));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;ident=%d Frag=%d TTL=%d
+Protocol=%d\n&quot;,pIpHeader-&gt;ident,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pIpHeader-&gt;fragandflags,pIpHeader-&gt;ttl,pIpHeader-&gt;proto);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;CheckSum=%d
+%d\n&quot;,pIpHeader-&gt;checksum , checksum((USHORT *)databuf,20+32+12));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Source IP=%s Dest
+Ip=%s\n&quot;,inet_ntoa(pIpHeader-&gt;sourceIP),inet_ntoa(pIpHeader-&gt;destIP));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;dest=%s\n&quot;,inet_ntoa(dest.sin_addr));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int size = pIpHeader-&gt;lenver &amp;
+0x0f;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>size = size * 4;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>size = size - 20;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Size of IP headers
+%d\n&quot;,size);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>if ( size &gt; 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct ipopt *pipopt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>pipopt = (struct ipopt *)(databuf +
+20);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;code=%d len=%d
+ptr=%d\n&quot;,pipopt-&gt;code,pipopt-&gt;len,pipopt-&gt;ptr);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int noofstr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>noofstr = (pipopt-&gt;ptr/4) - 1;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;No of
+addr's=%d\n&quot;,noofstr);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>for ( i = 0 ; i &lt; noofstr ; i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct in_addr a;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>a.S_un.S_addr = pipopt-&gt;addr[i];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;%s\n&quot;,inet_ntoa(a));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup Return Value=0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Socket Return Value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hp=1581b8 Ip Address=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Sentto return value=44<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>recvfrom return value=104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>len=4f TOS=0 Total length 26624 104<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>ident=27551 Frag=0 TTL=61 Protocol=1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>CheckSum=56174 33316<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Source IP=202.54.117.24 Dest
+Ip=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>dest=202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Size of IP headers 40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>code=7 len=39 ptr=36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>No of addr's=8<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.115.154<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>203.199.24.154<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.117.4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.117.24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>203.199.24.153<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.115.152<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>202.54.115.154<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>This example is similar to the
+traceroute program where we print out all the routers that our packet has seen
+along the way. We start as always with the usual WSAStartup, WSASocket and
+gethostbyname. Then comes the ICMP header where the type is set to 8 denoting a
+Echo Request message to be sent. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Now comes a slight change. The
+function setsockopt is brought in to to set a option for the socket. This
+function first requires the socket followed by an option that deals with the
+family, in our case macro IPPROTO_IP stands for the internet<span
+style="mso-spacerun: yes">  </span>protocol. We then specify that the actual
+option deals with IP and not TCP using the macro IP_OPTIONS. Now come the meat.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>We need to specify the actual option
+using the structure ipopt. This structure starts with a char called code where
+the number 7 means record the route the packet takes. This number is not
+documented by Microsoft. The ptr option shows where the option will start after
+the main IP header and the len field is the total length of the IP options. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Thus, the sendto function sends the same
+44 bytes but now the system adds some options data to the IP header. The same
+packet in the earlier program returned 64 bytes but now returns 104 bytes, an
+extra 40 bytes. These bytes could mean that the IP header has now increased. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>The first byte of the IP header gives
+a value of 0x0f. This means that the IP header is 60 bytes instead of 20 bytes.
+Thus, the size variable denotes the size of the extra IP options, which are 40
+bytes. These IP options start with a similar structure where the code field is
+7 that tells us what the IP record Route option is and what these extra bytes
+represents. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>Then the len field gives the number of
+bytes these options take up, 36. This value is divided by 4, the size of an IP
+addresses and then subtracted by 1 to give the final number of IP addresses
+that would be printed out. To print these IP address, function inet_ntoa is
+used. This function requires a structure that looks like in_addr where the long
+member S_addr is set to the IP address stored in the IP option header. This
+member S_addr is part of a unio S_un.<span style="mso-spacerun: yes"> 
+</span>In this manner, all the machines our packet has visited each way can be
+printed out.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>d.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;ws2tcpip.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdlib.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;pshpack1.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;wspiapi.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>typedef struct ip_hdr<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned char<span style="mso-spacerun: yes">  </span>ip_verlen;<span
+style="mso-spacerun: yes">        </span>// 4-bit IPv4 version<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun:
+yes">                                     </span>// 4-bit header length (in
+32-bit words)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned char<span style="mso-spacerun: yes">  </span>ip_tos;<span
+style="mso-spacerun: yes">           </span>// IP type of service<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short ip_totallength;<span style="mso-spacerun: yes">  
+</span>// Total length<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short ip_id;<span style="mso-spacerun: yes">           
+</span>// Unique identifier <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short ip_offset;<span style="mso-spacerun: yes">       
+</span>// Fragment offset field<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned char<span style="mso-spacerun: yes">  </span>ip_ttl;<span
+style="mso-spacerun: yes">           </span>// Time to live<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned char<span style="mso-spacerun: yes">  </span>ip_protocol;<span
+style="mso-spacerun: yes">      </span>// Protocol(TCP,UDP etc)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short ip_checksum;<span style="mso-spacerun: yes">     
+</span>// IP checksum<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned int<span style="mso-spacerun: yes">   </span>ip_srcaddr;<span
+style="mso-spacerun: yes">       </span>// Source address<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned int<span style="mso-spacerun: yes">   </span>ip_destaddr;<span
+style="mso-spacerun: yes">      </span>// Source address<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} IPV4_HDR, *PIPV4_HDR, FAR *
+LPIPV4_HDR;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>typedef struct udp_hdr<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short src_portno;<span style="mso-spacerun: yes">      
+</span>// Source port no.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short dst_portno;<span style="mso-spacerun: yes">      
+</span>// Dest. port no.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short udp_length;<span style="mso-spacerun: yes">      
+</span>// Udp packet length<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><span style="mso-spacerun: yes">   
+</span>unsigned short udp_checksum;<span style="mso-spacerun: yes">    
+</span>// Udp checksum<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>} UDP_HDR, *PUDP_HDR;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>USHORT checksum(USHORT *buffer, int
+size)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>unsigned long cksum=0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>while (size &gt; 1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += *buffer++;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>size<span style="mso-spacerun: yes"> 
+</span>-= sizeof(USHORT);<span style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>if (size)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += *(UCHAR*)buffer;<span
+style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum = (cksum &gt;&gt; 16) + (cksum
+&amp; 0xffff);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>cksum += (cksum &gt;&gt;16); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>return (USHORT)(~cksum); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>UDP_HDR *udphdr;IPV4_HDR *v4hdr;struct
+addrinfo *ressrc,*resdest;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct addrinfo hints;WSADATA
+wsd;SOCKET s;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char *buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int optval=1;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int _cdecl main(int argc, char **argv)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup(MAKEWORD(2,2), &amp;wsd);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>getaddrinfo(&quot;1.2.3.4&quot;,&quot;1234&quot;,0,&amp;ressrc
+);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_flags<span
+style="mso-spacerun: yes">  </span>= 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_family =
+ressrc-&gt;ai_family;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_socktype =
+ressrc-&gt;ai_socktype;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_protocol =
+ressrc-&gt;ai_protocol;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>getaddrinfo(&quot;127.0.0.1&quot;,&quot;5000&quot;,&amp;hints,&amp;resdest);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s=socket(ressrc-&gt;ai_family,SOCK_RAW,
+ressrc-&gt;ai_protocol);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>setsockopt(s, IPPROTO_IP, IP_HDRINCL,
+(char *)&amp;optval, sizeof(optval));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>buffer = (char
+*)HeapAlloc(GetProcessHeap(), 0, 128);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr = (IPV4_HDR *)buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_verlen= (4 &lt;&lt; 4) |
+(sizeof(IPV4_HDR) / sizeof(unsigned long));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_tos=0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_totallength=htons(sizeof(IPV4_HDR)+
+sizeof(UDP_HDR) + 10);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_id=0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_offset= 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_ttl = (unsigned char)8;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_protocol=(unsigned
+char)IPPROTO_UDP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_checksum = 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_srcaddr= ((struct
+sockaddr_in *)ressrc-&gt;ai_addr)-&gt;sin_addr.s_addr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_destaddr= ((struct
+sockaddr_in *)resdest-&gt;ai_addr)-&gt;sin_addr.s_addr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>v4hdr-&gt;ip_checksum<span
+style="mso-spacerun: yes">    </span>= checksum((unsigned short *)v4hdr,
+sizeof(IPV4_HDR));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>udphdr = (UDP_HDR *)(buffer +
+sizeof(IPV4_HDR));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>udphdr-&gt;src_portno = ((struct sockaddr_in
+*)ressrc-&gt;ai_addr)-&gt;sin_port;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>udphdr-&gt;dst_portno = ((struct
+sockaddr_in *)resdest-&gt;ai_addr)-&gt;sin_port;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>udphdr-&gt;udp_length =
+htons(sizeof(UDP_HDR) + 10);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>memcpy(buffer+sizeof(IPV4_HDR) +
+sizeof(UDP_HDR),&quot;vijaymukhi&quot;,10);<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span style='color:#000066'>sendto(s,buffer,sizeof(IPV4_HDR)
++ sizeof(UDP_HDR) + 10 ,0,resdest-&gt;ai_addr,<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span style='color:#000066'>resdest-&gt;ai_addrlen);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>sendto(s,buffer,sizeof(IPV4_HDR) + sizeof(UDP_HDR) + 10
+,0,resdest-&gt;ai_addr,<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'>resdest-&gt;ai_addrlen);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;winsock2.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;ws2tcpip.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;stdlib.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>#include &lt;wspiapi.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>SOCKADDR safrom;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int fromlen,rc;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>char *buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>struct addrinfo *ressrc,hints;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSADATA wsd;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>SOCKET s;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>int _cdecl main()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>WSAStartup(MAKEWORD(2,2), &amp;wsd);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_family = AF_INET;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_socktype = SOCK_RAW;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>//hints.ai_socktype = SOCK_DGRAM;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>hints.ai_protocol = IPPROTO_UDP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>getaddrinfo(&quot;127.0.0.1&quot;,&quot;5000&quot;,&amp;hints,&amp;ressrc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s = socket(ressrc-&gt;ai_family,
+SOCK_RAW, ressrc-&gt;ai_protocol);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>s = socket(ressrc-&gt;ai_family,
+SOCK_DGRAM, ressrc-&gt;ai_protocol);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>buffer = (char *)HeapAlloc(GetProcessHeap(),
+0, 128);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>bind(s,ressrc-&gt;ai_addr,ressrc-&gt;ai_addrlen);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>while (1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>fromlen = sizeof(safrom);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>rc = recvfrom(s, buffer, 128, 0,
+(SOCKADDR *)&amp;safrom, &amp;fromlen);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>printf(&quot;Read %d bytes from
+\n&quot;, rc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><a href="../../security.html"><b>Back
+to the main page</b></a><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+color:#000066'><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/network/rawsockets.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:48 GMT -->
+</html>

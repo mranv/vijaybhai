@@ -1,0 +1,3490 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:11 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap8_files/filelist.html">
+<link rel=Edit-Time-Data href="chap8_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Schema Definition - 8. XML Serialization</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>vmukhi</o:Author>
+  <o:LastAuthor>vmukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>31</o:TotalTime>
+  <o:Created>2002-01-20T08:43:00Z</o:Created>
+  <o:LastSaved>2002-01-20T08:43:00Z</o:LastSaved>
+  <o:Pages>25</o:Pages>
+  <o:Words>7129</o:Words>
+  <o:Characters>40636</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>338</o:Lines>
+  <o:Paragraphs>81</o:Paragraphs>
+  <o:CharactersWithSpaces>49903</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.figure1, li.figure1, div.figure1
+	{mso-style-name:figure1;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:"Chap Name";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapName1, li.ChapName1, div.ChapName1
+	{mso-style-name:"Chap Name1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:ChapName;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><img width=103
+height=77 id="_x0000_i1027" src=bpb.gif><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>8.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>XML Serialization </span><span
+style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Before we get
+down to expounding the intricate details about XML Serialization, we shall
+grapple with the basics by creating a file named b.cs, as follows: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int a1;<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This simple
+program has a class yyy with two fields, i.e. an int named a1 and a string
+named a2. Using the csc command, the file is compiled into a dll, as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc /t:library b.cs <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file b.dll
+now contains the class yyy and its two fields. Now, create a file b1.xml that
+bears a resemblance to the following:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;10&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;hell&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file
+matches class yyy; and thus, it has the root tag<span style="mso-spacerun:
+yes">  </span>yyy with two child elements a1 and a2, which represent the variables
+a1 and a2, respectively. Furthermore, their data types in the xml file are
+integer and string values, respectively. The following C# program named a.cs is
+employed to read this xml file:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b2.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = 100;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc a.cs /r:b.dll<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>10 hell<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The class yyy,
+which is present in b.dll, is referenced in the program. Hence, the /r option
+is used while compiling the file a.cs. The program sets off by creating an
+instance of an XmlSerializer object. This is the class that deserializes
+objects from dll into XML files. This class determines the manner in which the
+objects are converted into XML. We shall impart information on this class in
+just a short while. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The constructor
+is provided with a type object. In all, six overloaded constructors can be used
+during the creation of an XmlSerializer class, out of which, this constructor
+happens to be the most elementary and uncomplicated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XmlSerializer
+class reads and writes xml files. The parameter that is passed is the type of
+object that the XmlSerializer has to work with, which in our case refers to the
+objects of type yyy stored in b.dll. It is crucial to take into account the fact
+that the xsd program creates the dll file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The yyy class
+could have been present in the same file a.cs, but we preferred to place it
+within another file. The StreamReader class reads a file as a stream. The file
+being read is b1.xml. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XmlSerializer
+class has a function called Deserialize, which reads an xml file and creates an
+object. In this case, the object is of type yyy. The Deserialize function
+returns a data type with the actual return value as the object. There are three
+overloads available for this function, where the parameter can either be a
+TextReader, or a Stream or an XmlReader. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The object 'a'
+contains an actual instance of a yyy object, which has been initialized from
+the file b.xml. Thus, the fields a1 and a2 have been initialized to the values
+of 10 and 'hell' from the file b1.xml, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The Deserialize
+function merely reads from an xml file and creates an object of type, which is
+then passed to the constructor. It also initializes the various fields of the
+yyy object with the contents of the xml file, as has been delineated here. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Then, using the
+StreamWriter class, a file called b2.xml is created on disk. In order to write
+a yyy object to the disk, an object called b is used, notwithstanding the fact
+that the object 'a' could have been reused for this purpose. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Two members named
+a1 and a2 are initialized to 100 and 'Hi', respectively. Then, using the
+Serialize function that takes the two parameters of a Writer object and the
+object, the contents are written to the disk. The second parameter is the
+freshly created yyy object 'b', which is written to the disk as the file
+b2.xml.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b2.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;100&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;hi&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file b2.xml
+contains the usual directive and the starting yyy root tag. This yyy tag
+represents the name of the class. At this stage, no entities from the xsi or
+the xsd namespaces are resorted to. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the prefixes
+that are created with the help of the attribute xmlns, are of little or no
+purpose at all. Finally, the two elements a1 and a2 contain the data present in
+the object 'b'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int a1;<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = 100;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>100 hi<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1&gt;100&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a2&gt;hi&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Upto this point,
+we created a class in C# first, and then, used the xsd program to create the
+dll. Henceforth, we shall use the above program, which conducts itself in a
+manner similar to the previous one, barring the fact that the class yyy is
+present in the same file a.cs. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>At times, it is
+undeniably easier to deal with a single file. Thus, the object is serialized
+first, i.e. the file b1.xml is written to, and then, the object is recreated
+using the same file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>XML Serialization
+involves writing an object created in the file to the disk as an Xml file,
+whereas, XML De-Serialization entails reading an xml file from disk and
+initializing an object to the values present in the xml file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlAttributeAttribute()]<o:p></o:p></p>
+
+<p class=ILprg>public int a1;<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = 100;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>100 hi<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+a1=&quot;100&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a2&gt;hi&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above program
+has been slightly modified, wherein the attribute XmlAttributeAttribute is
+added to the int variable a1. As before, the yyy object is associated with the
+XmlSerializer using the constructor. A StreamWriter object is also created,
+which in turn creates the empty file b1.xml on the disk. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A yyy object b is
+created, and the variables a1 and a2 are set to the values 100 and 'hi',
+respectively. When the object b is serialized, both a1 and a2 become child
+elements of the yyy root tag by default, since they are variables. The issue of
+whether it is an element that is more appropriate or an attribute, is highly debatable.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The task of the
+attribute XmlAttributeAttribute is to change this default and to make a1 as an
+attribute to the tag yyy in the xml file. The end result is that there exists
+only a single child element in a2 in the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When the object
+is deserialized, the values get stored in the variables a1 and a2. From the C#
+point of view, whether the variable is stored as an attribute or as an element,
+is of no consequence at all. Thus, we can exercise total control on how the
+class should be represented in an xml file on the disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string [] a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>string [] ss = {&quot;hi&quot;,&quot;bye&quot;,&quot;no&quot; };<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = ss;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>foreach( string s1 in a.a1)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(s1 + &quot; &quot; );<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>hi bye no<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;hi&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;bye&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;no&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above program
+saves an array to the disk. The class yyy contains an array a1 of type strings.
+Simultaneously, an array of strings called ss is created and initialized to the
+three strings 'hi', 'bye' and 'no'. This array is then used to initialize the
+member a1 of the class yyy. Finally, using the Serialize function, this object
+b is written to disk, as was done before. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the file
+b1.xml, the child element a1, which is the name of our array, contains three
+members enclosed within the data type of string. Resorting to this methodology,
+the array is saved to the disk.<span style="mso-spacerun: yes">  </span>While
+reading back the xml file into the object a, the array is automatically
+initialized to the three members, viz. 'hi', 'bye' and 'no'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int x1;<o:p></o:p></p>
+
+<p class=ILprg>public string x2;<o:p></o:p></p>
+
+<p class=ILprg>public xxx( int a, string b)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>x1 = a;<o:p></o:p></p>
+
+<p class=ILprg>x2 = b;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public xxx()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlArrayAttribute(&quot;vijay&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public xxx [] a1;<o:p></o:p></p>
+
+<p class=ILprg>public int a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>xxx c = new xxx(1,&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>xxx d = new xxx(2,&quot;bye&quot;);<o:p></o:p></p>
+
+<p class=ILprg>xxx e = new xxx(3,&quot;no&quot;);<o:p></o:p></p>
+
+<p class=ILprg>xxx [] f = { c,d,e };<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = f;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = 10;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>foreach( xxx s1 in a.a1)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(s1.x1 + &quot; &quot; + s1.x2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>1 hi<o:p></o:p></p>
+
+<p class=ILoutput>2 bye<o:p></o:p></p>
+
+<p class=ILoutput>3 no<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;vijay&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;1&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;hi&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;2&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;bye&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;3&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;no&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xxx&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/vijay&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;10&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above example
+takes the concept of an array a step further. The class xxx contains two
+constructors, one having no parameters and the other with two parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The class yyy has
+an array a1, which contains members of type xxx and not of type string. The
+three objects c, d and e are created as instances of xxx. The constructor of
+the two parameters in the class xxx initializes the two public variables a1 and
+a2, with the values in variables x1 and x2, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Then, an array
+'f' of xxx objects is created and initialized to the three newly created xxx
+objects. Moreover, the a1 member of the yyy class is initialized to the array
+'f'. This object is then serialized to the disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The attribute
+named XmlArrayAttribute alters the name of the array attribute from a1 to vijay
+in the xml file. As always, the xml file starts with the yyy root element. This
+is followed by the contents of the entire array being placed within the tags
+xxx, since xxx is the name of the array class. The individual members are
+placed with tags that are the names of the variables. The data types are
+conspicuous by their absence. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the class
+name xxx delimits each member of the array, whereas the variables in the class
+delimit the individual values. The member a2 of the yyy class is placed outside
+the tags of vijay. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>There is a slight
+difference between an array of a built-in type and an array created from a
+user-defined class.<span style="mso-spacerun: yes">  </span>When the object is
+created from the file b1.xml using the Deserialize function, the arrays of the
+3 xxx members are retained. They are displayed in the 'foreach' loop.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Exception: There was an error
+reflecting 'yyy'. ---&gt; System.Exception: xxx cannot be serialized because it
+does not have a default public constructor.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above
+exception is thrown when the constructor with no parameters is eliminated from
+the class xxx. This default constructor is mandatory whenever a class is to be
+serialized or written to an xml file on the disk. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa : xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string x3;<o:p></o:p></p>
+
+<p class=ILprg>public aaa( int a, string b , string c)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>x1 = a;<o:p></o:p></p>
+
+<p class=ILprg>x2 = b;<o:p></o:p></p>
+
+<p class=ILprg>x3 = c;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public aaa()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int x1;<o:p></o:p></p>
+
+<p class=ILprg>public string x2;<o:p></o:p></p>
+
+<p class=ILprg>public xxx( int a, string b)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>x1 = a;<o:p></o:p></p>
+
+<p class=ILprg>x2 = b;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public xxx()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlArrayItem(typeof(xxx)),XmlArrayItem(typeof(aaa))]<o:p></o:p></p>
+
+<p class=ILprg>public xxx [] a1;<o:p></o:p></p>
+
+<p class=ILprg>public int a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>xxx c = new xxx(1,&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>xxx d = new xxx(2,&quot;bye&quot;);<o:p></o:p></p>
+
+<p class=ILprg>aaa e = new aaa(3,&quot;no&quot;,&quot;ok&quot;);<o:p></o:p></p>
+
+<p class=ILprg>xxx [] f = { c,d,e };<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = f;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = 10;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>foreach( object s1 in a.a1)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( s1 is xxx)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>xxx s2 = ( xxx ) s1;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(s2.x1 + &quot; &quot; + s2.x2);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( s1 is aaa)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>aaa s2 = ( aaa ) s1;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(s2.x1 + &quot; &quot; + s2.x2 + &quot;
+&quot;<span style="mso-spacerun: yes">  </span>+ s2.x3);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>1 hi<o:p></o:p></p>
+
+<p class=ILoutput>2 bye<o:p></o:p></p>
+
+<p class=ILoutput>3 no<o:p></o:p></p>
+
+<p class=ILoutput>3 no ok<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The class aaa is
+derived from the class xxx. It has a three parameter constructor, which
+initializes the two members x1 and x2 from the class xxx and the member x3 from
+the class aaa. There also subsists an aaa constructor, which takes no
+parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the class yyy,
+the variable a1 is an array of type xxx, but has an attribute of XmlArrayItem
+added to it. <o:p></o:p></span></p>
+
+<p class=ILbase align=left style='text-align:left'><span style='font-family:
+"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>[XmlArrayItem(typeof(xxx)),XmlArrayItem(typeof(aaa))]<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This attribute
+requisitions the serialization of both, an xxx type object and an aaa type
+object to an xml file, wherever an array of type xxx has been specified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Earlier, the f
+array consisted of three xxx objects named b, c and d. However, now b and c are
+xxx objects, whereas e is an aaa object that is initialized using the three
+constructors of the aaa class. The creation of the array f generates no errors,
+because wherever an xxx object is specified, an aaa object can also be
+specified. It is due to the fact that aaa has been derived from the class xxx. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, a derived
+and a base class can be used inter-changeably. The object, when written to the
+disk, displays the name of the array variable a1 with its three members. The
+first two are enveloped in an xxx tag and the third is located within an aaa
+element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Displaying the
+yyy object 'a' is slightly more challenging,<span style="mso-spacerun: yes"> 
+</span>since we want to isolate the aaa object stored in the xml file. In the
+'foreach' statement, the variable s1 that receives the individual object is of
+type object and not of xxx. Then, using the 'is' keyword, the run time data
+type of the object s1 is verified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>If it is xxx,
+then the first 'if' statement is true and s1 is then typecast into an xxx
+object. Thereafter, its members are displayed. The second 'if' statement is
+true only if the object s1 has a runtime data type of aaa. In such a case, s2
+is typecast to an aaa object, and then, the three members are displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Exception: There was an error
+generating the XML document. ---&gt; System.Exception: The type aaa was not
+expected. Use the XmlInclude or SoapInclude attribute to specify types that are
+not known statically.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On removing the
+two attributes of XmlArrayItem, which are placed over the array variable a1 in
+class yyy, the above exception gets generated. This error appears because, even
+though the type of the array is xxx, it is being stored in an aaa object
+instead.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The aaa type gets
+displayed twice, because aaa is derived from yyy. Hence, it becomes a yyy type
+also. This results in the 'if' statement becoming true on two counts, once as a
+yyy type, and then as an xxx type.<o:p></o:p></span></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: There
+was an error generating the XML document. ---&gt; System.InvalidCastException:
+Specified cast is not valid.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When only the
+type aaa is specified, the above exception gets reported. Thus, it is mandatory
+for the array to mention all the types that it is capable of handling. However,
+it can exercise its discretion on the issue of mentioning its own type, since
+it is optional. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>By using 'typeof
+'in the XmlArrayItem attribute, a feature known as polymorphism gets
+implemented. This allows us to write a derived class to disk, where the array
+clearly stipulates that the type is a base class. We may use as many
+XmlArrayItem attributes as we desire.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>[XmlArrayItem(typeof(xxx), ElementName =
+&quot;ss&quot;),XmlArrayItem(typeof(aaa),ElementName = &quot;tt&quot;)]<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ss&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;1&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;hi&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ss&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ss&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;2&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;bye&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ss&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;tt&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x1&gt;3&lt;/x1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x2&gt;no&lt;/x2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;x3&gt;ok&lt;/x3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/tt&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;10&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<span style='mso-tab-count:1'>       </span><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the attribute definition is amended, wherein the property ElementName
+has been specified. For the type xxx, it has been set to ss. Hence, in the xml
+file, the xxx element is replaced by the name ss, while the aaa element is
+replaced by the name ss. The ElementName property for the type aaa is ignored. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, there is
+an addition of the xsi:type attribute, which is used to indicate that this
+element could be an ss, but its runtime type is aaa. The xsi:type attribute has
+been demystified earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Schema;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlArrayItem(ElementName = &quot;b1&quot;, NestingLevel = 0)]<o:p></o:p></p>
+
+<p class=ILprg>[XmlArrayItem(ElementName = &quot;b2&quot;, NestingLevel = 1)]<o:p></o:p></p>
+
+<p class=ILprg>[XmlArrayItem(ElementName = &quot;b3&quot;,NestingLevel = 2)]<o:p></o:p></p>
+
+<p class=ILprg>public string[][][] a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>string[][][] aa = new string[2][][];<o:p></o:p></p>
+
+<p class=ILprg>string[][] z1 = new string[2][];<o:p></o:p></p>
+
+<p class=ILprg>z1 [0]=new string[1]{&quot;vijay&quot;};<o:p></o:p></p>
+
+<p class=ILprg>z1 [1]=new string[2]{&quot;hell&quot;,&quot;bad&quot;};<o:p></o:p></p>
+
+<p class=ILprg>aa[0]=z1;<o:p></o:p></p>
+
+<p class=ILprg>string[][]z2= new string[2][];<o:p></o:p></p>
+
+<p class=ILprg>z2[0]=new string[2]{&quot;mukhi&quot;,&quot;sonal&quot;};<o:p></o:p></p>
+
+<p class=ILprg>z2[1]=new
+string[3]{&quot;abc&quot;,&quot;def&quot;,&quot;ghi&quot;};<o:p></o:p></p>
+
+<p class=ILprg>aa[1]=z2;<o:p></o:p></p>
+
+<p class=ILprg>b.a1=aa;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;vijay&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;hell&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;bad&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;mukhi&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;sonal&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;abc&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;def&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b3&gt;ghi&lt;/b3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above example
+demonstrates an 'array of arrays of arrays', i.e. a three dimensional array. In
+the class yyy, a three-dimensional array a1 is created, with the final data
+type as string. Each dimension is assigned a name using the NestingLevel
+property. The three levels are b1, b2 and b3. The counting of the nesting
+levels starts with 0 and not with 1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A variable aa of
+array type a1 is created. An array with all its dimensions cannot be created or
+initialized simultaneously. Firstly, the outermost dimension is handled, which
+has only two members, viz. aa[0] and aa[1]. These two members are initialized with
+an 'array of arrays' type. Two types called z1 and z2 are created. Then, an
+array of two arrays is created, taking into consideration the fact that only
+one dimension can be used at a given time. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The two z1
+members z1[0] and z1[1] are then initialized to a single array containing one
+string and two strings, respectively. This signifies the fact that the two
+members of the array need not be of the same size. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A similar action
+is attempted for the second array of arrays z2; but here, an array of two strings
+and an array of three strings are involved. Finally, the a1 member is
+initialized to this 'array of arrays of arrays'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file
+commences with the first level or the NestingLevel 0 with the element b1. Then,
+the content vijay is present as part of the level 2 or the element b3. Thus,
+the element b2 or the Nesting level 1 has to come first. Here, the arrays of
+size one and two are posited. The b2 tag encompasses the array of two members
+within the b3 tag. The original b1 tag concludes, since the first main array
+has concluded. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Subsequent to
+this, we encounter the tags for the second array, which have two and three
+members internally. Here, the first b2 tag displays the first array and the
+second b2 displays the second array, which comprises of three members. The
+nested XML elements can be created upto any desired level. On eradicating the
+three XmlArrayItem attributes, the newly created xml file that results, is as
+follows:<o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;vijay&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;hell&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;bad&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;mukhi&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;sonal&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;abc&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;def&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;ghi&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Although no
+errors are reported, it is exceedingly cumbersome to attempt reading. The a1
+element still exists as before, but now the ArrayOfArrayOfString exists in
+place of the b1 tag. This is followed by an ArrayOfString tag in lieu of b2,
+and the final b3 is replaced with a string, which is the data type of the
+array. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>[XmlArrayItem(ElementName = &quot;b2&quot;, NestingLevel = 1)]<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt; ArrayOfArrayOfString &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;vijay&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;hell&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;bad&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;mukhi&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;sonal&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;abc&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;def&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;string&gt;ghi&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/b2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ArrayOfArrayOfString&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Only one nesting
+level is given, and then, the name of b1 is specified. Thus, in the xml file,
+the second level is replaced by b2 and the ArrayOfArrayOfString and string tags
+remain unchanged. The default values of the nesting levels can be changed as
+per your requirement.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(IsNullable= true)]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(IsNullable= false)]<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = null;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = null;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1 xsi:nil=&quot;true&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the class yyy has two strings named a1 and a2. Both these strings are
+set to null. However, as per the xml file that is generated, only the a1
+element is present and not a2. This is due to the XmlElement attribute, which
+sets the IsNullable attribute to true. This is the default value for a1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, if the
+value of the string a1 is null, then it shall be written in the xml file, but
+with the xsi:nil attribute set to true. However, if the value of this attribute
+is amended to false, then it becomes a null item, and null items are not
+present in the xml file. As a result, since the variable a2 is null, it is not
+flashed in the xml file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Namespace=&quot;ttt&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Namespace=&quot;uuu&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;bye&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>hi bye<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1 xmlns=&quot;ttt&quot;&gt;hi&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2 xmlns=&quot;uuu&quot;&gt;bye&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above C#
+program, two strings named a1 and a2 are placed in two different namespaces
+called ttt and uuu, respectively, using the property Namespace in the
+XmlElement attribute. No other amendment is carried out in the file. However,
+the xml file displays something absolutely different. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Using the xmlns
+attribute, the default namespace of the a1 element is changed to ttt. The same
+is true of the element a2, which has its default namespace set to uuu. Now, we
+are confronted with the poser as to what exactly do ttt and uuu represent ? The
+next example unveils this mystery.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Namespace=&quot;ttt&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Namespace=&quot;uuu&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializerNamespaces n = new XmlSerializerNamespaces();<o:p></o:p></p>
+
+<p class=ILprg>n.Add(&quot;n1&quot;,&quot;ttt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.Add(&quot;n2&quot;,&quot;uuu&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;bye&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b , n);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>hi<span style="mso-spacerun: yes">  </span>bye<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy xmlns:n1=&quot;ttt&quot; xmlns:n2=&quot;uuu&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;n1:a1&gt;hi&lt;/n1:a1&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;n2:a2&gt;bye&lt;/n2:a2&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We have created
+an instance of the class XmlSerializerNamespaces. This class contains all the
+XML namespaces and prefixes that the Serialize function requires to create
+fully qualified names. The Add function is used to add a prefix and a namespace
+combo to the XmlSerializerNamespaces object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>For those who
+tuned in late, the XML namespace is a mechanism to qualify names of elements or
+attributes, so that even when two elements are assigned the same name, they can
+be differentiated from one another. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, a qualified
+name is merely a namespace prefix, followed by a colon and the local name, or
+the actual name of an element. In the above case, the prefixes n1 and n2 are
+inutile. They only act as placeholders for a URI or a Universal Resource
+Identifier. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A URL is
+different from a URI, since a URL points to an actual resource on the Net or
+elsewhere. This combination of a namespace prefix and a name is globally
+unique. Thus, in the xml file, since a1 originates from the namespace ttt, it
+is prefaced with n1. In the root tag, n1 points to the namespace ttt using the
+xmlns attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The same is
+true<span style="mso-spacerun: yes">  </span>of a2, which uses n2, since n2 is
+associated with the namespace uuu by using the Add functions. An apt method of
+working with namespaces is by using the XmlSerializerNamespaces class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Schema;<o:p></o:p></p>
+
+<p class=ILprg>[XmlRootAttribute(Namespace=&quot;ttt&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Form=XmlSchemaForm.Unqualified)]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>[XmlElement(Namespace=&quot;uuu&quot; ,
+Form=XmlSchemaForm.Qualified)]<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializerNamespaces n =<span style="mso-spacerun: yes"> 
+</span>new XmlSerializerNamespaces();<o:p></o:p></p>
+
+<p class=ILprg>n.Add(&quot;n1&quot;,&quot;ttt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.Add(&quot;n2&quot;,&quot;uuu&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;bye&quot;;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b , n);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a <span style="mso-spacerun: yes"> </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>hi bye<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;n1:yyy xmlns:n2=&quot;uuu&quot;
+xmlns:n1=&quot;ttt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1&gt;hi&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;n2:a2&gt;bye&lt;/n2:a2&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/n1:yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The root element
+employs the Namespace property to set the namespace of the xml file to ttt.
+Moreover, the Form attribute is added to the variable a1 with the value of
+Unqualified from the enum XmlSchmaForm. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The namespace
+property has been eliminated, and the second string a2 is assigned the value of
+'qualified'. The third value of 'none' is equivalent to 'qualified', and hence,
+its presence is optional; however, it has been placed here for the sake of
+consistency. The string a2 belongs to the namespace uuu, like before. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+both the elements, i.e. a2 and yyy are qualified. The a1 element is not
+qualified, since it has been explicitly marked as 'unqualified'. The a2 element
+has to be qualified as it belongs to a different namespace. If the attribute
+from the variable a1 is placed within comments, it shall also appear with a
+namespace prefix.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the 'form'
+property determines whether an XML element is qualified or unqualified in the
+instance document. If the Namespace property is added to string a1, the
+following exception is thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>[XmlElement(Form=XmlSchemaForm.Unqualified , Namespace
+=&quot;iii&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: There
+was an error reflecting 'yyy'. ---&gt; System.InvalidOperationException: The
+Form property may not be 'Unqualified' when an explicit Namespace property is
+present.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above error
+was anticipated, since the element belonging to the namespace iii has to be
+qualified. This is in contrast to the Form property, which does not ask for it
+to be qualified. This is a contradiction that the Serialize function is unable
+to handle. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Just to refresh
+your memory, namespaces are inconsequential in the C# world, and thus, the
+Deserialize function does not require a Namespace parameter, while the
+Serialize function does.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Schema;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[XmlAttribute]<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>s.UnknownElement += new XmlElementEventHandler(abce);<o:p></o:p></p>
+
+<p class=ILprg>s.UnknownNode += new XmlNodeEventHandler(abcn);<o:p></o:p></p>
+
+<p class=ILprg>s.UnknownAttribute += new XmlAttributeEventHandler(abca);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy a<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1 + &quot; &quot; + a.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>static protected void abcn (object sender, XmlNodeEventArgs e)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Node: &quot; +<span
+style="mso-spacerun: yes">   </span>e.Name + &quot; &quot; + e.Text);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>static protected void abce (object
+sender, XmlElementEventArgs<span style="mso-spacerun: yes">  </span>e)</span><o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Element: &quot; +
+e.Element.InnerXml + &quot; &quot; + e.Element.Name);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>static protected void abca(object sender, XmlAttributeEventArgs
+e)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Xml.XmlAttribute a = e.Attr;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Attribute: &quot; +<span
+style="mso-spacerun: yes">  </span>a.Name + &quot;=&quot; + a.Value) ;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>b1.xml (without errors)</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; a1=&quot;hi&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;a2&gt;bye&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u><o:p></o:p></p>
+
+<p class=ILoutput>hi bye<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b1.xml (with errors)</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; a3=&quot;hi&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a4&gt;bye&lt;/a4&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Node: a3 hi<o:p></o:p></p>
+
+<p class=ILoutput>Attribute: a3=hi<o:p></o:p></p>
+
+<p class=ILoutput>Node: a4 <o:p></o:p></p>
+
+<p class=ILoutput>Element: bye a4<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the attribute a1 is replaced by a3, while the element a2 is replaced by a4.
+Both, the correct and the erroneous XML files have been furnished. This
+corroborates the fact that the C# program tests the error-handling capabilities
+of the Deserialize function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Three events of
+the XmlSerializer class are initialized. The UnknownElement event is pressed
+into action whenever the Deserialize function encounters an element that is not
+authorised. This triggers the calling of the abce function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This function
+gets called only once at the node a4, since it expects the node a2 instead. The
+Name property of the XmlElement object is used, which is a property of the
+XmlElementEventArgs parameter. The InnerXml property of the XmlElement is used
+to display the contents of the element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The UnknownNode
+gets called whenever an Unknown node is met. The function abcn gets called in
+such situations. This function is summoned twice since two nodes are out of
+place here, viz. a3 and a4. The first node has the value 'hi' and the second
+has the value null. The string 'hi' is the value of the attribute a1, which is
+now replaced by the node a3.<span style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>An
+UnknownAttribute event is called whenever an unknown attribute is encountered.
+Therefore, the function abca gets called only once. This occurs because only
+one attribute is out of place. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+XmlAttributeEventArgs parameter has an Attr property, which provides an
+XmlAttribute object, out of which, only the Name and Value are displayed.
+Numerous other parameters can also be displayed on similar lines. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u>Attribute Overrides </u><o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string a1;<o:p></o:p></p>
+
+<p class=ILprg>[XmlIgnoreAttribute]<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlAttributeOverrides<span style="mso-spacerun: yes">  </span>o
+= new XmlAttributeOverrides ();<o:p></o:p></p>
+
+<p class=ILprg>XmlAttributes a = new XmlAttributes();<o:p></o:p></p>
+
+<p class=ILprg>a.XmlIgnore = false;<o:p></o:p></p>
+
+<p class=ILprg>o.Add(typeof(yyy), &quot;a2&quot;, a);<o:p></o:p></p>
+
+<p class=ILprg>a = new XmlAttributes();<o:p></o:p></p>
+
+<p class=ILprg>a.XmlIgnore = true;<o:p></o:p></p>
+
+<p class=ILprg>o.Add(typeof(yyy), &quot;a1&quot;, a);<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy), o);<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.a1 = &quot;vijay&quot;;<o:p></o:p></p>
+
+<p class=ILprg>b.a2 = &quot;mukhi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, b);<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy c<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(c.a1 + &quot;.&quot; + c.a2);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>.mukhi<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;mukhi&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The class yyy has
+two variables a1 and a2, with the second variable a2 having an attribute of
+XmlIgnore. Thus, the xml file must only contain the element a1. However, the
+xml file exhibits just the reverse, in that it only contains a2, which it
+should not, while it does not contain a1, which it actually should. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Let us examine
+the class zzz in order to establish the cause behind this occurrence. The class
+XmlAttributeOverrides allows the overriding of all the attributes that have
+been specified on a class. Thus, this class dynamically takes a decision on the
+attribute that would finally be used during the creation of the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Firstly, an
+object 'a' of type XmlAttributes is created. This object has all the members of
+an attribute. Then, the XmlIgnore member is set to false. The Add function from
+the XmlAttributeOverrides class is then used to specify three parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The first
+parameter is the type of object that the attribute applies to, which in our
+case is the good old yyy class. The second parameter is the name of the
+variable or property that the attribute must apply to. The third parameter is
+the XmlAttribute instance, whose members like XmlIgnore, have already been set.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+XmlAttributeOverrides class stores these three values together as a single
+entity. Scores of such entities can exist. The XmlIgnore attribute is set to
+true for the variable a1 in the class yyy. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Earlier, the
+XmlSerializer object had been created using a single parameter in the
+constructor; in this case however, the XmlAttributeOverrides object 'o' is also
+added as the second parameter. Prior to writing to the disk, the Serialize
+function first checks the variables or properties that have overridden the
+attributes. Therefore, even though the a1 variable should have been written to
+the disk, since the XmlIgnore has been set to true, this will not happen. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the case of
+the variable a2, the reverse action takes place. Even though the XmlIgnore
+attribute is stated in the class, the field is not written to the disk. It is
+by reason of the fact that XmlIgnore is set to false in the Override for the
+variable a2. Thus, it is the Overrides attribute that ultimately determines
+what the xml file should look like, and no power on earth can override the
+contents of the XmlAttributeOverrides class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The Deserialize
+finally displays 'mukhi' as the value of a2. The value of the element a1 does
+not exist, since it was not written to the disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[DefaultValueAttribute(&quot;vijay&quot;)] <o:p></o:p></p>
+
+<p class=ILprg>public string a1; <o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>a.a1 = &quot;vijay&quot;; <o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy c<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(c.a1);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file
+should have contained the variable a1 along with the word 'vijay', but there is
+no trace of a1 anywhere in the xml file. So, let us amend a line in the above
+program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>a.a1 = &quot;mukhi&quot;;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;mukhi&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>mukhi<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>No sooner do we
+amend the value of the variable a1 to 'mukhi', the element a1 gets written to
+the disk with its<span style="mso-spacerun: yes">  </span>content as 'mukhi'.
+Thus, whenever the attribute of DefaultValueAttribute is used, and the same
+value is specified, this value does not get written to the xml file at all.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string a1; <o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlAttributeOverrides o = new XmlAttributeOverrides(); <o:p></o:p></p>
+
+<p class=ILprg>XmlAttributes x = new XmlAttributes(); <o:p></o:p></p>
+
+<p class=ILprg>x.XmlDefaultValue = &quot;vijay&quot;; <o:p></o:p></p>
+
+<p class=ILprg>o.Add(typeof(yyy), &quot;a1&quot;, x); <o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy), o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>a.a1 = &quot;vijay&quot;; <o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The same output
+that was achieved by the earlier program is witnessed in the case of the above
+program. Here, the XmlDefaultValue property of the XmlAttributes class has been
+used. It depends upon your individual preference<span style="mso-spacerun:
+yes">  </span>as to whether you wish to use Attributes or the Overrider class
+to accomplish the same task. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string a1; <o:p></o:p></p>
+
+<p class=ILprg>[XmlText]<o:p></o:p></p>
+
+<p class=ILprg>public string a2; <o:p></o:p></p>
+
+<p class=ILprg>public string a3; <o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>a.a1 = &quot;vijay&quot;; <o:p></o:p></p>
+
+<p class=ILprg>a.a2 = &quot;mukhi&quot;; <o:p></o:p></p>
+
+<p class=ILprg>a.a3 = &quot;sonal&quot;; <o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b.a1 + &quot; &quot; + b.a2 + &quot;
+&quot; + b.a3);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>vijay mukhi sonal<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1&gt;vijay&lt;/a1&gt;mukhi&lt;a3&gt;sonal&lt;/a3&gt;&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+program, there are three fields, viz. a1, a2 and a3. Each one of them has been
+initialized to a string value. Thus, the xml file is expected to have 3 tags or
+elements named a1, a2 and a3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file shows a1
+containing 'vijay', as is expected. However, the a2 element is not present in
+the file. Any field or property that contains the attribute XmlText, simply
+evolves into text or content in the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, instead of
+containing 'mukhi' within the element a2, it merely places the content in the
+xml file without the tags. The a3 element just follows the text 'mukhi'.
+However, on deserializing the file, the a2 field gets populated with 'mukhi',
+as if it were present as an element in the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public xxx a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>sonal,<o:p></o:p></p>
+
+<p class=ILprg>vijay<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>a.a1 = xxx.sonal;<o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>sonal<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;vijay&lt;/a1&gt;mukhi&lt;a3&gt;sonal&lt;/a3&gt;&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We have had a
+brief brush with enum earlier. It gets converted into a series of enumerations.
+In the above program, the class yyy has a field a1 of type enum xxx. This enum
+has two values, viz. vijay and sonal. A yyy object is created and the field a1
+is initialized to sonal, using the enum name and the field xxx.sonal as
+follows: a.a1 = xxx.sonal;<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, the xml
+file contains no vestige of the enum; the single perceptible thing being the
+content sonal within the a1 tag. On examining the xml file closely, we discover
+that there is no indication of a1 belonging to type enum. The enum merely
+accomplishes conducting an error check. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The field a1
+cannot assume values that are not the integral constituents of an enum. During
+deserialization, the system is aware that the data type is an enum and it works
+accordingly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public xxx a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay,<o:p></o:p></p>
+
+<p class=ILprg>sonal<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.a1);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;sonal1&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: There
+is an error in XML document (4, 5). ---&gt; System.InvalidOperationException:
+'sonal1' is not a valid value for xxx.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The code that
+writes or serializes the xml file has been eradicated from the above program.
+The enum type a1 can take only the two values of 'sonal' and 'vijay', but we
+have distorted the value of 'sonal' in the xml file to 'sonal1'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On executing the
+program, the above exception is generated, since sonal1 is not a valid value
+for the enum type a1. Thus, even at the time of de-serialization, a sizeable
+number of error checks are conducted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public xxx a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay,<o:p></o:p></p>
+
+<p class=ILprg>sonal<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlAttributeOverrides o = new XmlAttributeOverrides ();<o:p></o:p></p>
+
+<p class=ILprg>XmlAttributes x = new XmlAttributes();<o:p></o:p></p>
+
+<p class=ILprg>XmlEnumAttribute e = new XmlEnumAttribute();<o:p></o:p></p>
+
+<p class=ILprg>e.Name = &quot;mukhi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>x.XmlEnum = e;<o:p></o:p></p>
+
+<p class=ILprg>o.Add(typeof(xxx), &quot;sonal&quot;, x);<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy),o);<o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>a.a1 = xxx.sonal;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b.a1);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>sonal<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;mukhi&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The program has
+an XmlAttributeOverrides object 'o' and an XmlAttributes object. The
+XmlEnumAttribute class object 'e' is used to override an enum. The Name
+property is initialized to the value 'mukhi', which is then placed in the xml
+file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thereafter, the
+XmlEnum member of the XmlAttributes class is set to this freshly created enum
+object. Then, the Add function is used. Here, the first parameter specifies the
+data type of the xxx class, the second parameter specifies the name of the enum
+member that is to be replaced, and finally, the third parameter is the value
+that it is to be replaced with, viz. XmlEnumAttribute object 'e'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the string 'mukhi' is visible in place of 'sonal', since the overrider has been
+called upon to replace 'sonal' with 'mukhi'. However, the Deserialize function
+pays no heed to the overrider, and even though 'mukhi' is present in the xml file,
+the value of the a1 enum is taken as 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public xxx a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay,<o:p></o:p></p>
+
+<p class=ILprg>sonal<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy));<o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b.a1);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: There
+is an error in XML document (4, 5). ---&gt; System.InvalidOperationException:
+'mukhi' is not a valid value for xxx.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>By retaining the
+b1.xml file as it is and on executing the above program, the above exception is
+generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The program
+resorts to the Deserialize function to read the file b1.xml. The above
+exception transpires since there is no indication of the fact that the string
+'mukhi' stands for 'sonal'. Earlier, the XmlAttributeOverrides object 'o' had
+been passed as a parameter to the XmlSerializer class. This had taken care of
+the replacement. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, there is
+no provision by which an enum can be added dynamically.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System; <o:p></o:p></p>
+
+<p class=ILprg>using System.IO; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml; <o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization; <o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel; <o:p></o:p></p>
+
+<p class=ILprg>public class xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string a2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class vvv<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string a3;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public object [] a1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Type [] t = new Type[2];<o:p></o:p></p>
+
+<p class=ILprg>t[0] = typeof(xxx);<o:p></o:p></p>
+
+<p class=ILprg>t[1] = typeof(vvv);<o:p></o:p></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy) , t);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(&quot;b1.xml&quot;); <o:p></o:p></p>
+
+<p class=ILprg>yyy a = new yyy(); <o:p></o:p></p>
+
+<p class=ILprg>object [] o = new object[2];<o:p></o:p></p>
+
+<p class=ILprg>xxx x = new xxx();<o:p></o:p></p>
+
+<p class=ILprg>x.a2 = &quot;vijay&quot;;<o:p></o:p></p>
+
+<p class=ILprg>vvv v = new vvv();<o:p></o:p></p>
+
+<p class=ILprg>v.a3 = &quot;mukhi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>o[0] = x;<o:p></o:p></p>
+
+<p class=ILprg>o[1] = v;<o:p></o:p></p>
+
+<p class=ILprg>a.a1 = o;<o:p></o:p></p>
+
+<p class=ILprg>s.Serialize(w, a); <o:p></o:p></p>
+
+<p class=ILprg>w.Close(); <o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(&quot;b1.xml&quot;);<o:p></o:p></p>
+
+<p class=ILprg>yyy b<span style="mso-spacerun: yes">  </span>=
+(yyy)s.Deserialize(r);<o:p></o:p></p>
+
+<p class=ILprg>object [] o1 = b.a1;<o:p></o:p></p>
+
+<p class=ILprg>xxx x1 = (xxx) o1[0];<o:p></o:p></p>
+
+<p class=ILprg>vvv v1 = (vvv) o1[1];<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(x1.a2 + &quot; &quot; + v1.a3);<o:p></o:p></p>
+
+<p class=ILprg>r.Close();<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Output</u><o:p></o:p></p>
+
+<p class=ILprg>vijay mukhi<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;anyType xsi:type=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a2&gt;vijay&lt;/a2&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/anyType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;anyType xsi:type=&quot;vvv&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a3&gt;mukhi&lt;/a3&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/anyType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/a1&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>As always, we
+start with the class yyy, which has the field a1 as an array of type object. In
+the C# world, all classes are finally derived from object. Thus, a1 can have
+members of any data type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The classes xxx
+and vvv have the members a2 and a3, both of type string, respectively. An array
+of Type objects is created with the two members initialized to the types of xxx
+and vvv. This type array is then passed to the constructor of the XmlSerializer
+class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Next, two objects
+x and v of types xxx and vvv, are created. Then, the members a2 and a3 are
+initialized to vijay and mukhi, respectively. Then, an array of objects named
+'o' with a size of 2 is created, and the two members x and v are initialized.
+Ultimately, the a1 field is initialized to this array of objects, and
+subsequently, the Serialize function is called. This does not result in any
+errors.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the a1 element comes first, followed by the Object tag, since that is the data
+type of the array. The first array member is an xxx type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the
+xsi:type member is set to this value. The content of the array is placed within
+the Object tag. The second array member is of type vvv and the xsi:type
+attribute contains this value. To discern this program more lucidly, the
+XmlSerializer constructor can be rewritten as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>XmlSerializer s = new XmlSerializer(typeof(yyy) ); <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When the second
+parameter is removed, which is the array of type objects, an exception gets
+thrown. This is depicted below. <o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Error</u><o:p></o:p></p>
+
+<p class=ILprg>Unhandled Exception: System.InvalidOperationException: There was
+an error generating the XML document. ---&gt; System.InvalidOperationException:
+The type xxx was n<o:p></o:p></p>
+
+<p class=ILprg>ot expected. Use the XmlInclude or SoapInclude attribute to
+specify types that are not known statically.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This occurs
+because the system is called upon to write an object xxx to the disk, while the
+XmlSerializer class has only been supplied with the type yyy to be written to
+the disk. The types are furnished as an array of extra types in the
+constructor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:13 GMT -->
+</html>

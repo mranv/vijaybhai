@@ -1,0 +1,4176 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:43 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap3_files/filelist.html">
+<link rel=Edit-Time-Data href="chap3_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-01-27T20:06:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:07:00Z</o:LastSaved>
+  <o:Pages>32</o:Pages>
+  <o:Words>8714</o:Words>
+  <o:Characters>49670</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>413</o:Lines>
+  <o:Paragraphs>99</o:Paragraphs>
+  <o:CharactersWithSpaces>60998</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>3</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Data Types in WSDL</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this chapter, we shall
+explore different data types in greater depth and shall analyze the
+transformation that occurs when data is sent across from client to server and
+vice-versa. Be warned! While probing for answers, the journey may not be all
+that smooth. For the sake of conceptual clarity and since we feel that it is
+our moral responsibility to do so, we shall explicate the wsdl process yet
+again. However, we hope to be very succinct in our explanation. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As usual, we start with the file
+a.asmx. This file has to be placed in the c:\inetpub\wwwroot subdirectory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(ref int i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>i = 10;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc in the file
+accepts only one parameter named i, of data type int, which is passed by
+reference. For those of you who have been initiated only recently to the world
+of C#, a ref parameter needs to be initialized before it is passed as a parameter.
+If the function changes the value contained in the parameter, the change is
+reflected back in the main program also. The abc function alters the value of i
+to 10. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Run Internet Explorer and enter
+the following URL: http://localhost/a.asmx?WSDL. This will generate and display
+a wsdl file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we display the entire WSDL
+file, this book is likely to weigh a ton. Therefore, we have sifted through and
+filtered out the code that is superfluous and dispensable, and saved the
+contents in file aa.wsdl in a newly created folder named www. This file is
+displayed below for your reference.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot; targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;i&quot;
+type=&quot;s:int&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;i&quot;
+type=&quot;s:int&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapIn&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;part
+name=&quot;parameters&quot; element=&quot;s0:abc&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapOut&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;part
+name=&quot;parameters&quot; element=&quot;s0:abcResponse&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;input
+message=&quot;s0:abcSoapIn&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;output
+message=&quot;s0:abcSoapOut&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzSoap&quot;
+type=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:binding
+transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;
+style=&quot;document&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:operation
+soapAction=&quot;http://tempuri.org/abc&quot; style=&quot;document&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:body
+use=&quot;literal&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:body use=&quot;literal&quot;
+/&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;zzzSoap&quot;
+binding=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A major portion of the wsdl file
+remains unchanged. There however are a few modifications in the type element,
+i.e. in the schema. The element of abc is created like earlier, and the
+parameter i becomes the child element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter i is read/write,
+and is sent across as the ref parameter. It is mandatory for the client that
+calls the code in the server, to specify a value. Thus, the SOAP request packet
+displays the value of this parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second element in the types
+is the abcResponse. This element too has a child element called i, which is
+exactly similar to the first i child. This is for the simple reason that the
+function abc in the asmx file, is permitted to assign a value and return it
+back. Thus, all ref parameters are sent to and fro in the SOAP payload. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have effected a modification
+to the Uri property. To be precise, we have altered the location attribute in
+soap:address element, within the service tag. The port number of 8080 is
+specified, in place of 80. This is because, we intend to run the trace utility
+from the SOAP Toolkit, in order to view the packets flowing to and fro. In the
+www folder, write the program given below in a file called a.cs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int b = 100; <o:p></o:p></p>
+
+<p class=ILprg>a.abc(ref b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The program a.cs is a client
+program in which, an int variable named b is initialized to 100, and passed as
+a parameter to the abc function. After the function concludes execution, the
+value of b is printed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Prior to executing any program,
+start the trace utility from the SOAP toolkit. Then, create a batch file to
+hold a series of commands. Run the batch file and view the output in both, the
+console box as well as the trace window.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>z.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>del zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>wsdl aa.wsdl<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>csc a.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILprg>a<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>10<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Trace Output</u><o:p></o:p></p>
+
+<p class=ILoutput><u>Soap request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;100&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Soap Response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since majority of the commands
+need to be reiterated, we create a batch file named z.bat to contain them. In
+this file, we initially delete all the output files that have been created
+earlier, and then, we call WSDL to create a proxy in the file zzz.cs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The only parameter furnished to
+the WSDL program is the file aa.wsdl.<span style="mso-spacerun: yes"> 
+</span>We hereby restate that the wsdl file is created by the web server, after
+it has read the asmx file. The proxy zzz.cs is then compiled to a dll, so that
+it may be used as a reference while creating the client executable named a.exe.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On running the client program
+'a', the trace program exhibits the value of 100 in SOAP Request, and the value
+of 10 in the SOAP Response. i is set to 10 in the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the SOAP Request, the value
+of b i.e. 100, is sent across as the content of i. In the response packet, the
+value of 10 is sent across as the content of element i. There is no return
+value, because the abc function in the asmx file returns void.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, in the C# code
+generated by the WSDL program, the abc function accepts a single ref parameter
+named i. The name of the parameter remains the same like the one in asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>In zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc(ref int i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[]
+{i});<o:p></o:p></p>
+
+<p class=ILprg>i = ((int)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The invoke function is called,
+with the second parameter as an array of one int. The return value stored in
+the array results[0], is type cast to an int and assigned to the ref parameter
+i. Previously, this value had been returned back. The entire exercise provides
+ample evidence of the fact that a ref parameter is visible in both, the
+response and request packets.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now unveil the mechanism
+by means of which, an array is transmitted from a client to the server. The abc
+function in the asmx file accepts an array of ints in the variable i, which is
+the sole parameter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(int [] i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>In aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot; xmlns:s1=&quot;http://tempuri.org/AbstractTypes&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot; name=&quot;i&quot;
+nillable=&quot;true&quot; type=&quot;s0:ArrayOfInt&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfInt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot; name=&quot;int&quot;
+type=&quot;s:int&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<span
+style="mso-spacerun: yes">    </span>&lt;s:complexType /&gt;<span
+style="mso-spacerun: yes">    </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema
+targetNamespace=&quot;http://tempuri.org/AbstractTypes&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;StringArray&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexContent mixed=&quot;false&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:restriction base=&quot;soapenc:Array&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot; name=&quot;String&quot;
+type=&quot;s:string&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapIn&quot;&gt;<span
+style="mso-spacerun: yes">   </span>&lt;part name=&quot;parameters&quot;
+element=&quot;s0:abc&quot; /&gt;<span style="mso-spacerun: yes">  
+</span>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapOut&quot;&gt;<span
+style="mso-spacerun: yes">   </span>&lt;part name=&quot;parameters&quot;
+element=&quot;s0:abcResponse&quot; /&gt;<span style="mso-spacerun: yes">  
+</span>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzSoap&quot;&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<span style="mso-spacerun:
+yes">   </span><o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:abcSoapIn&quot; /&gt;<span
+style="mso-spacerun: yes">   </span>&lt;output
+message=&quot;s0:abcSoapOut&quot; /&gt; &lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzSoap&quot;
+type=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:binding
+transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;
+style=&quot;document&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<span style="mso-spacerun:
+yes">   </span>&lt;soap:operation soapAction=&quot;http://tempuri.org/abc&quot;
+style=&quot;document&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<span style="mso-spacerun: yes">  
+</span>&lt;soap:body use=&quot;literal&quot; /&gt;<span style="mso-spacerun:
+yes">    </span>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<span style="mso-spacerun: yes">  
+</span>&lt;soap:body use=&quot;literal&quot; /&gt;<span style="mso-spacerun:
+yes">    </span>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/operation&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt; &lt;port
+name=&quot;zzzSoap&quot; binding=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/port&gt;<span
+style="mso-spacerun: yes">   </span>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Henceforth, in order to keep
+this book trim, we shall exhibit only the variations in the file, instead of
+the entire file, unless required otherwise. We normally delete the element
+block containing the words HttpGet and HttpPost from the wsdl file. This block
+is created by the server, while the asmx file is being loaded in the browser
+window.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the wsdl file, the abc
+element reveals a complexType with a sequence. This is the same as before. The
+'nillable' attribute determines whether a value of 'null' is permissible or
+not.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; nillable=&quot;true&quot; type=&quot;s0:ArrayOfInt&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>However, the array element i,
+now has the type attribute initialized to an ArrayOfInt. This type does not
+originate from the XML Schema namespace, since XML Schemas do not contain any
+arrays. But in future, if the XML world decides to support arrays, the WSDL
+world is sure to voluntarily take away its support for arrays. The next element
+definition creates complexType with a name of ArrayOfInt. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfInt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;int&quot; type=&quot;s:int&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, unlike in the earlier
+case, the complexType element has been assigned a name, thereby, facilitating
+its reuse in the file.<span style="mso-spacerun: yes">  </span>The element
+within the sequence of complexType has been named int. The minOccurs has a
+value of zero, which is indicative of the fact that the element is optional.
+The maxOccurs has a value of 'unbounded', allowing an indefinite count of int
+child elements. Finally, the type is specified as an int, which is one of the
+predefined data types of the XML Schema. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;s:schema
+targetNamespace=&quot;http://tempuri.org/AbstractTypes&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;StringArray&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexContent mixed=&quot;false&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:restriction base=&quot;soapenc:Array&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;String&quot;
+type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is one more schema root
+element, which belongs to the targetNamespace. The name of the complexType is
+StringArray, and it commences with a complexContent element. The responsibility
+of this element is to interpret mixed content. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The mixed attribute has a
+default value of 'false'. The value assigned to this attribute resolves whether
+character data is permitted between child elements or not. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'restriction' element
+permits the use of an existing type, but it confines the range values that it
+can assume. Here, the base type that is to be restricted, is the Array type
+from the soapenc namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is pertinent to note that the
+soapenc namespace deals with types that are not embodied in the XML Schema
+definition. The restriction element contains an element called String, having
+the datatype of string, which can occur innumerable times. This complexType has
+not been used anywhere in our program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The return value for abc in the
+asmx file is void. Therefore, the element named abcResponse has a complexType,
+which contains no elements whatsoever. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client file a.cs, an
+array variable b of type int is created, and thereafter, initialized to the
+three values of 1, 3 and 5. The array is then supplied as a parameter to the
+function abc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int []b ; <o:p></o:p></p>
+
+<p class=ILprg>b = new int[3]{1,3,5};<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Run the batch file named z.bat,
+and observe the output in the trace window.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;1&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;3&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;5&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the SOAP request, the child
+element is named as i, followed by the familiar element int, as is observed in
+the WSDL file. This acquaints us with the fact that the data type of the array
+is an int. This name is not binding. In fact, any other name could have been
+used in its place. It is the name of the parameter i that is of prime
+significance. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP response is empty, and
+in the time to come, we shall bore you stiff, by making a display of it. The
+file zzz.cs or proxy makes for an interesting reading. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>In zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc( <o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlArrayItemAttribute
+(&quot;int&quot;, IsNullable=false) ] int[] i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {i});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter i is tagged with
+an attribute named XmlArrayItemAttribute, which specifies the name as int.
+Therefore, we see the word 'int' in the SOAP packet. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The property IsNullable
+establishes whether the array should be serialized in case it is a null or
+otherwise. In this case, since the IsNullable property is initialized to
+'false', only the values shall be sent across. We shall anatomize and analyze
+this concept later.<o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string [] i , int [] j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file now contains the
+same abc function, but the function now has two parameters, i and j, which are
+arrays of type string and int, respectively.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; nillable=&quot;true&quot; type=&quot;s0:ArrayOfString&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; nillable=&quot;true&quot; type=&quot;s0:ArrayOfInt&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfString&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;string&quot;
+nillable=&quot;true&quot; type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfInt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;
+name=&quot;int&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the truncated aa.wsdl file,
+we first observe the element abc with a sequence containing two children i and
+j, of type ArrayOfString and ArrayOfInt, respectively. Both the types belong to
+the namespace s0. The sequence of the elements is important. Therefore, the
+elements i and j are in a predetermined order. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then comes the complexType
+definition for the ArrayOfString. It is analogous to the ArrayOfInt definition.
+The only distinction lies in the type attribute, which refers to a string from
+the XML Schema namespace, and not to an int. The string and int are predefined
+data types.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>string[]b ; <o:p></o:p></p>
+
+<p class=ILprg>int []c ; <o:p></o:p></p>
+
+<p class=ILprg>b = new
+string[3]{&quot;Hi&quot;,&quot;bye&quot;,&quot;No&quot;};<o:p></o:p></p>
+
+<p class=ILprg>c = new int[2]{10,20};<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b,c);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program a.cs has two
+arrays b and c, declared to be of type string and int, respectively. They are
+originally created with 3 and 2 members, respectively. They are then
+initialized to some values; and thereafter, passed to the abc function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;string&gt;Hi&lt;/string&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;string&gt;bye&lt;/string&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;string&gt;No&lt;/string&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;j&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;10&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;20&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/j&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request in the trace
+output shows the two child elements in the correct sequence, i.e. i followed by
+j.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The three string members are
+securely ensconced within the string element, and the int child contains the
+second array. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>In zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void
+abc([System.Xml.Serialization.XmlArrayItemAttribute(&quot;string&quot;,
+IsNullable=true)] string[] i,
+[System.Xml.Serialization.XmlArrayItemAttribute(&quot;int&quot;,
+IsNullable=false)] int[] j) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {i, j});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The zzz.cs file also contains
+two array parameters with the same attribute as was discussed in the earlier
+program. However, each attribute is allotted a distinct name. There is hardly
+any difference between an array of strings and an array of ints.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(int [,] i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><u>Error in Browser</u><o:p></o:p></p>
+
+<p class=ILoutput>System.Exception: Method zzz.abc can not be reflected.
+---&gt; System.Exception: Multi-dimensional arrays are not supported. Use a
+jagged array instead.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A multi dimensional array when
+used in the asmx file, generates an error; it is so because the concept of an
+array is not supported in WSDL. The best alternative that comes to mind is the
+utilization of a jagged array. The function abc has now been modified to accept
+values into a jagged array.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(int[][] i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us first focus on the file
+a.cs, in which the concept of a jagged array has been explicated with
+considerable lucidity. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int[][] b = new int[2][] { new int[] {1,2,3}, new int[] {4,5} };<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In a.cs, first an array of size
+two is created. Then, the two arrays are initialized to arrays of ints; with
+one having three members, and the other having two members. The contents of the
+aa.wsdl file are indeed quite attention grabbing! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>In aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; nillable=&quot;true&quot; type=&quot;s0:ArrayOfArrayOfInt&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfArrayOfInt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;ArrayOfInt&quot;
+nillable=&quot;true&quot; type=&quot;s0:ArrayOfInt&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;ArrayOfInt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;int&quot; type=&quot;s:int&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Only one element i, of type
+ArrayOfArrayOfInt, is visible in the file. A few lines later, the type is
+specified as a complexType. It has one member ArrayOfInt, whose type is also
+ArrayOfInt. Thereafter, the type ArrayOfInt is created to accept a single element
+int, of type int, from the XML Schema type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The element i has minOccurs of 1
+and maxOccurs of 1, thereby, making its presence obligatory. The other types
+have the values for the attributes minOccurs and maxOccurs assigned in such a
+manner, that they could contain values ranging from none to infinity!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;ArrayOfInt&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;1&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;2&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;3&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/ArrayOfInt&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;ArrayOfInt&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;4&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;int&gt;5&lt;/int&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/ArrayOfInt&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request launches with
+the parameter name i, followed by an element called ArrayOfInt, as specified by
+the WSDL file. There are two ArrayOfInt child elements, since the first array
+has two members. The first child has three int elements and the second child
+has two int elements. The number of elements is contingent upon the size
+specified while they are being created in the file. This is how the concept of
+a jagged array is implemented in SOAP and WSDL. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc([System.Xml.Serialization.
+XmlArrayItemAttribute(&quot;ArrayOfInt&quot;, IsNullable=true)]
+[System.Xml.Serialization.XmlArrayItemAttribute(&quot;int&quot;,
+IsNullable=false, NestingLevel=1)] int[][] i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] { i});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The zzz.cs file has two
+attributes as there are two arrays. The first is an ArrayOfInt, while the
+second is an int. The NestingLevel indicates that it is one level below the
+main level. Earlier on, the attribute of XmlArrayItemAttribute had a single
+level.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot; %&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, a simple
+object, which is an instance of class yyy, is passed as a parameter to the
+function abc. Both the classes yyy and zzz are in the same asmx file. But they
+could have jolly well been separated, in other words, the class could have been
+placed in a dll, in the bin folder. We have placed them in the same file for
+the sake of convenience. The class is absolutely empty, i.e. it has no
+properties or functions or variables or for that matter, anything at all! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file provided by the
+web server has the element named abc with the complex type named as a, having
+the type yyy, from the s0 namespace. The yyy complexType is then defined as an
+empty type, since the class yyy does not contain any members. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program simply
+creates a yyy object 'b', and calls the function abc with the object b as a
+parameter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP Request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a /&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request displays the
+element a as the name of the parameter with empty content, since the class yyy
+has no members. Also, the proxy generated contains the function abc with the
+yyy object as a parameter. The Invoke function creates an array of objects,
+with a single member named 'a'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {a});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program demonstrates
+passing objects or reference types. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, there is a class yyy
+containing two int variables, i and j. The function abc returns the sum of
+these two int variables.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return a.i + a.j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i,j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file, like earlier,
+contains the same parameter 'a' as an element. But the complexType definition
+for yyy has undergone transformation. Earlier, it was an empty type, but now it
+contains the variables i and j, as elements in a sequence. It also has
+attributes, which mandate their occurrence, once and only once.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;abcResult&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program creates a yyy
+object 'b', and then, initializes the i and j members to 10 and 20,
+respectively. Thereafter, it calls the function abc with the object 'b' as a
+parameter. The return value, which obviously is 30, is stored in a variable
+named 'p' and thereafter, it is displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.i = 10;<o:p></o:p></p>
+
+<p class=ILprg>b.j=20;<o:p></o:p></p>
+
+<p class=ILprg>int p = a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(p);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>30<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP payload very clearly
+illustrates how an object is sent across in a SOAP request. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;30&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Both the public members are
+serialized on the wire. This implies that the object 'b' is not sent across.
+Instead, the values of the individual variables are dispatched. Thus, the
+element 'a' carries the values 10 and 20, enveloped within elements i and j,
+respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This highlights the fact that
+objects are passed by value, and not by reference. The return packet graciously
+carries the value of 30 in the abcResult element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public int abc(yyy a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[]
+{a});<o:p></o:p></p>
+
+<p class=ILprg>return ((int)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy merely passes the yyy
+object 'a' to the Invoke function, and type casts the return value to an int.
+The only variation incorporated here is that, the class yyy has two public
+variables, i and j.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this slightly larger asmx
+file, the class yyy contains a public variable i, a private variable j, and a
+protected variable k. Further, three public properties i1, i2 and i3 are also
+present.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>a.i = 1000;<o:p></o:p></p>
+
+<p class=ILprg>return a.i2;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>private int j;<o:p></o:p></p>
+
+<p class=ILprg>protected int k;<o:p></o:p></p>
+
+<p class=ILprg>public int i1<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 11;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public int i2<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 12;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public int i3<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>set<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the variables j and k are
+not marked as public in the proxy named zzz.cs, the class yyy displays only the
+variable i. Thus, only public members are serialized, whereas, protected and
+private members are not. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>public int i1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Furthermore, only the property
+of i1 is visible, since it is in possession of both, a get and a set accessor.
+The properties of i2 and i3 have only one accessor. Therefore, they are not
+taken into consideration. In order to be serialized, properties have to be
+both, public and read/write. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file depicts the
+element 'a' as before, with the type yyy. The complex type yyy now holds two
+elements named i and i1, in a specific sequence. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i1&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;abcResult&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The rules that apply to a proxy
+are binding on the wsdl file too. Only public members and properties containing
+both, the accessors of get and set, are visible. Technically, there is no
+concept of a 'property' in a wsdl file. Thus, in the context of a wsdl file,
+there is no clear-cut distinction between properties and variables. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abcResponse element is not
+affected by the introduction of the new instance variables and properties. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client can only initialize
+the members of i and i1. The other two variables, j and k cannot be accessed,
+since they remain out of bounds or off-limits. The property i3 has a set
+accessor and therefore, this too cannot be accessed. Besides, there is no
+indication of a variable by that name in the class yyy, within the zzz.cs file.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.i = 450;<o:p></o:p></p>
+
+<p class=ILprg>b.i1 = 45;<o:p></o:p></p>
+
+<p class=ILprg>int p = a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(p);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b.i);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>12<o:p></o:p></p>
+
+<p class=ILoutput>450<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;a&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;450&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i1&gt;45&lt;/i1&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;abcResult&gt;12&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request is
+straightforward, wherein, the values of 450 and 45 are ensconced in the
+elements of i and i1. The names of the elements are the same as in the class
+yyy, within the a.asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The return value that too is
+sent across is 12. This is the value that the property i2 returns. Thus, we are
+permitted to return the value of a property, since properties behave like
+variables, but they contain barrels full of code. The code for the property
+dwells on the server. Thus, the client need not lose sleep over its execution. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server modifies the value of
+the variable i to 1000. However, this change is not reflected in any way in the
+SOAP response that is dispatched across. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Objects are sent across as
+values. Thus, there is no mechanism, by means of which, this change that is
+effected by the server, can be passed onto the client. The return statement
+explicitly has the property of i2. Hence, the value that is displayed on the
+screen and is transported across, is 12.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy(int i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>yyy cannot be serialized because it does not have a default
+public constructor. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>Exception Details: System.Exception: yyy cannot be serialized
+because it does not have a default public constructor.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above asmx file throws an
+exception. This is because the class yyy now has a constructor with an int
+parameter. With the introduction of this, the free constructor that has no
+parameters, gets swept off its feet. Every object that gets serialized, must
+have a public constructor taking no parameters.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy(int i)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public yyy()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we add the constructor
+having no parameters to the asmx file, the error vanishes.<span
+style="mso-spacerun: yes">  </span>However, the proxy that is generated,
+ignores the constructors completely, and generates an empty class altogether. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This demonstrates the fact that
+a constructor which has no parameters, is worthless, since the proxy class
+would not reflect such a constructor in the class. This is for the reason that
+the WSDL language is devoid of adequate intelligence, to be able to handle
+functions.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int this[string a]<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 100;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The concept of an indexer is
+also not passed on to the WSDL file. Hence, there is no sign of it in the proxy
+also. Thus, despite the presence of a valid indexer in the class yyy of public
+access with a get and set accessor, it is not reflected in the proxy file
+zzz.cs. This substantiates the fact that indexers are incapable of being
+activated remotely.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static int i;<o:p></o:p></p>
+
+<p class=ILprg>public readonly int k;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int k;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The static variable i does not
+exist in the class yyy. Only the 'read only' variable k is present in the
+class, but it is without the 'read only' attribute. However, we are not allowed
+to change the value of the variable k in the function abc, since the class yyy
+has been informed about the 'read only' attribute in the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The main aim of analyzing the
+above programs is to demonstrate that, not all data types can be used in the
+asmx file.<o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class xxx : yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has the abc
+function, which accepts a yyy object. The class yyy has been created to contain
+a single variable i of datatype int. Also, another class named xxx is defined
+in the file, which derives from class yyy. The xxx class contains an int
+variable named j. So far so good! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The aa.wsdl file, as always,
+contains the initial set of statements, along with the parameter 'a' of type
+yyy. The complex type named yyy has a single element, which is an int named
+i.<span style="mso-spacerun: yes">  </span>There is no trace of the class xxx
+in the entire file. As the proxy is created from the contents of the wsdl file,
+the zzz.cs file too has no reference to the class xxx. It only contains
+information about the members of class yyy. These are the perils of working
+with beta software!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next program, the only
+change that has been incorporated is, the addition of a function called pqr, in
+the existing asmx file. It accepts an instance of class xxx as a parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(xxx b)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class xxx : yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file now contains many
+new statements as a outcome of the introduction of the function pqr. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;b&quot; nillable=&quot;true&quot; type=&quot;s0:xxx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexContent mixed=&quot;false&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:extension
+base=&quot;s0:yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;pqrResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As before, the element abc has a
+single parameter 'a', of type yyy. The complexType for the yyy type, has an
+element i of type int. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we encounter the empty
+abcResponse element. Every function with a WebMethod attribute is represented
+by an element in the wsdl world. Therefore, the element pqr is visible in the
+file. This element has an element b of type xxx. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Instead of the regular sequence,
+the complex type xxx has a complexContent element. A new element by the name of
+'extension' is located within the complexContent element. Unlike 'restriction'
+that restricts values, the element 'extension' simply extends the base
+attribute, i.e. a class. Thus, the xxx complexType extends the complexType
+class. The symbol of colon, used for derivation in C#, is neatly replaced by
+the word 'extension'. With this extension element, all the members of the class
+xxx can be specified. Presently, we have only one member called j, of type int.
+The pqrResponse element requires no explanation, since it is empty.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client program, we do
+things a little differently. Instead of creating a yyy object, we create an xxx
+object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>xxx c = new xxx();<o:p></o:p></p>
+
+<p class=ILprg>c.i = 10;<o:p></o:p></p>
+
+<p class=ILprg>c.j = 20;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(c);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The two members of class xxx,
+viz. i from yyy and j from class xxx, are initialized after creating an
+instance of class xxx. The function abc is passed an xxx object, and not a yyy
+object, as specified in the function parameter list. This does not bring about
+any error because, wherever a base class is specified, a derived class can be
+used interchangeably. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The question that crops up at
+this stage is that- On receiving the SOAP packet, how is the asmx file able to
+establish that the original object is of type xxx and not of yyy? <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request utilizes a
+feature of the XML schema world, wherein it seeks out an attribute called type,
+in the xsi namespace. This attribute specifies the run time data type of the
+object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;a xsi:type=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the proxy class reveals
+both the classes of yyy and xxx, and the fact that the xxx class is derived
+from yyy. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlIncludeAttribute (typeof(xxx))]<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class xxx : yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>There is also an extra attribute
+called XmlIncludeAttribute, together with class yyy, which is indicative of the
+fact that the yyy class is being used as a base class for the xxx class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, when the server receives
+this packet, it is aware that the parameter 'a' has two members i and j, and
+that it has received an xxx type and not the original yyy type. Despite both i
+and j being received by the server in the function abc, only i can be accessed
+and not j. An alternative approach would be to package only the members of the
+yyy class across the wire.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a , xxx b , yyy c)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(www c)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class xxx : yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class www : xxx<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int k;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;b&quot; nillable=&quot;true&quot; type=&quot;s0:xxx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;c&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexContent mixed=&quot;false&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:extension
+base=&quot;s0:yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;c&quot; nillable=&quot;true&quot; type=&quot;s0:www&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;www&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexContent mixed=&quot;false&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:extension
+base=&quot;s0:xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;k&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;pqrResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, one more class
+named www, derived from class xxx and which contains a single variable k, has
+been added. The abc function takes three parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is a yyy type.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second is an xxx.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third is yet again a yyy object.
+<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file is a mirror image
+of the asmx file. Thus, there are three child elements in the abc element, viz.
+a, b and c, of type yyy, xxx and yyy, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The complexType yyy, as is
+usually the case, has a sequence with one element i of type int. The
+complexType xxx has a complexContent, with an extension element that extends
+the type yyy. There exists the newly added element j, similar to what was
+observed in the earlier program. The newly introduced type is the www
+complexType. It has been extended from the type xxx, and the sequence has an
+element k. Thus, all extensions behave in a similar fashion. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client program a.cs, an
+object d of type www is created, and the three members i, j and k of the
+object, are initialized to 100,200 and 300, correspondingly. This object d is
+passed twice as a parameter to the function abc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>www d = new www();<o:p></o:p></p>
+
+<p class=ILprg>xxx e = new xxx();<o:p></o:p></p>
+
+<p class=ILprg>d.i=100;<o:p></o:p></p>
+
+<p class=ILprg>d.j=200;<o:p></o:p></p>
+
+<p class=ILprg>d.k=300;<o:p></o:p></p>
+
+<p class=ILprg>e.i=10;<o:p></o:p></p>
+
+<p class=ILprg>e.j=20;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(d,d,e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One more object e, which is an
+instance of class xxx, is created and passed as the last parameter to the
+function abc. This is accomplished after initializing the two members i and j,
+to the values of 10 and 20, respectively. Bear in mind that the function
+requires parameters in the sequence of yyy, xxx and yyy. There is no mention of
+a www object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we take a look at the SOAP
+request, where the function name abc is reflected as the main element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;a xsi:type=&quot;www&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;100&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;200&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;k&gt;300&lt;/k&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;b xsi:type=&quot;www&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;100&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;200&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;k&gt;300&lt;/k&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/b&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;c xsi:type=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/c&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The packet displays the first
+parameter 'a', which comprises of the values of 100, 200 and 300. However, in
+this case, the type attribute is initialized to the run-time data type of a www
+object, and not of a yyy object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter 'b' is a
+clone of 'a'. Here too, the run-time data type is www, in place of xxx.<span
+style="mso-spacerun: yes">  </span>The third parameter 'c' is expected to be a
+yyy data type. However, we have provided an xxx data type. Hence, the type
+attribute shows the type as xxx. The Invoke function in the proxy, does not
+show any variation at all. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a, xxx b, yyy c) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {a, b, c});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlIncludeAttribute(typeof(xxx))]<o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlIncludeAttribute(typeof(www))]<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlIncludeAttribute(typeof(www))]<o:p></o:p></p>
+
+<p class=ILprg>public class xxx : yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class www : xxx <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int k;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The class yyy is now used as a
+base class for the two classes, xxx and www. For the very same reason, the
+'include' attribute is repeated twice. The class www derives only from xxx.
+Hence, the 'include' attribute is used only once.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next round, we deter from
+making any amendment to the asmx file. Therefore, the wsdl file and the proxy,
+remain the same.<o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy c = new xxx();<o:p></o:p></p>
+
+<p class=ILprg>xxx d = new www();<o:p></o:p></p>
+
+<p class=ILprg>yyy e = new www();<o:p></o:p></p>
+
+<p class=ILprg>c.i = 1;<o:p></o:p></p>
+
+<p class=ILprg>d.i = 20;<o:p></o:p></p>
+
+<p class=ILprg>e.i = 30;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(c,d,e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;a xsi:type=&quot;xxx&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;i&gt;1&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;j&gt;0&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;b xsi:type=&quot;www&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;i&gt;20&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;j&gt;0&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;k&gt;0&lt;/k&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/b&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;c xsi:type=&quot;www&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;i&gt;30&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;j&gt;0&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;k&gt;0&lt;/k&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/c&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program creates a yyy
+object c, but initializes it to an xxx object. Thus, its run time data type is
+xxx, and not yyy. It has only one member viz. i, that is initialized to 1. As
+the data type of c is yyy, initializing the j member will result in a compiler
+error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, c is passed as the
+first parameter to the function. The SOAP request displays the type attribute
+having a value of xxx, and the element j with the content as 0. In an object,
+un-initialized variables are always assigned a value of zero. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter d is an xxx
+object, which is initialized to a higher object named www. Both the variables
+of i and j could have been initialized, but we chose to ignore j. In the SOAP
+request for d, we see the run-time data type of www. Further, the default
+values of both j and k are zero. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last parameter 'e' to
+function abc, is of type yyy, but it is initialized to a www instance. The SOAP
+request reveals the type attribute of www for the last parameter, with its
+three child elements. The last two elements j and k, possess the value of 0. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the run time data type is
+more dependent upon the type of object that the variable is initialized to,
+rather than the static data type that is used while creating the variable.
+Also, the type attribute selects the child elements that are serialized or
+carried across the wire.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program illustrates how
+interfaces can be used in an asmx file. In the asmx file, the class yyy is
+derived from iii interface. In order to be technically on the right side of
+WSDL, the function abc is provided with the iii interface, together with the
+yyy object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(iii i , yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public interface iii<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : iii<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file shows two child
+elements in the element abc, containing the types iii and yyy. The complexType
+iii has an attribute called 'abstract', which is set to true. This indicates
+that no element can use this complexType directly. Further, only a complexType
+can derive from it. However, the default value is false. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the wsdl is an aide memoir
+or reminder to us that we are dealing with an interface, rubbing the fact in,
+that interfaces are incapable of holding fields directly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; nillable=&quot;true&quot; type=&quot;s0:iii&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;iii&quot; abstract=&quot;true&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span><span
+style="mso-spacerun: yes"> </span>&lt;s:complexType name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public abstract class iii <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlTypeAttribute(Namespace=&quot;http://tempuri.org/&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy file zzz.cs displays
+the interface converted into an abstract class iii. Also, the yyy class is not
+derived from the abstract class, but it contains the members of the interface.
+This substantiates the fact that the interface is not used in the program. All
+this leads to a sole inference that, at this stage, interfaces are totally
+forbidden in an asmx file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having touched upon the
+concept of interfaces, let us examine structures. In C#, the basic data types,
+such as int and char are termed as 'value data types', and not as 'reference
+data types'. They are employed wherever speed and efficiency are of prime
+importance. The struct data type in C# is a value data type. All value data
+types are created on the stack. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc in the asmx
+file, accepts a single parameter of type yyy structure. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public struct yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i,j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file has one child
+element 'a' of type yyy, which in turn, is a complexType having two elements, i
+and j. Thus, there is no dissimilarity whatsoever, between a class and a struct
+in the wsdl file. Furthermore, there is no entity that differentiates between a
+class and a struct, in the wsdl vocabulary.<o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; type=&quot;s0:yyy&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now shift our focus upon the
+client program. Semantically, there is no dissimilitude between a class and a
+structure. As before, the 'new' keyword is employed to create the variable 'b',
+thereby, eliminating all the differences that a class may have from a struct. The
+yyy entity has all the looks and feel of a class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.i = 10;<o:p></o:p></p>
+
+<p class=ILprg>b.j = 20;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object 'b' can be created
+only with the help of the 'new' keyword. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In normal programming, a struct
+entity does not employ the 'new' keyword. Therefore, it is prudent not to use
+structures in the asmx file, since wsdl is devoid of any such notation, which
+may aid in describing structures. A wsdl file contains only value types. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy that is generated, is
+also of the belief that the yyy entity is a class, and not a struct. With the
+exception of one small variation wherein, one extra Attribute named
+XmlElementAttribute has been added to the parameter 'a', everything else
+remains unaltered. The XmlElementAttribute attribute merely conveys that the
+parameter 'a' will be serialized as an element, and would not be considered as
+an attribute.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc([System.Xml.Serialization.XmlElementAttribute
+(IsNullable=false)] yyy a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {a});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;a&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is nothing exceptional
+about the SOAP request. The data values of 10 and 20 are sent across, as is
+always done. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program demonstrates
+how an array of objects is sent to and fro, while being used in an asmx file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(yyy [] a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i,j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc is granted an
+array of yyy objects as a parameter. The class yyy consists of two public
+variables i and j, of data type int.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file displays the usual
+element 'a', of type ArrayOfyyy. This is the name of a type, and the actual
+name per se, is of no significance. Had it been named as 'bbb', in place of
+ArrayOfyyy, the complexType would have been of the same name, in that case.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot; type=&quot;s0:ArrayOfYyy&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;ArrayOfYyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; name=&quot;yyy&quot; nillable=&quot;true&quot;
+type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; type=&quot;s:int&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The type ArrayOfyyy is made up
+of a sequence of two int type elements i and j. They are allotted attributes,
+with values that sanction only one occurrence of each. However, the element 'a'
+may have as many occurrences as is deemed fit. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client program, an object
+'b', which is an array of two yyy objects, is created using the 'new' keyword.
+Thereafter, the two yyy objects, b[0] and b[1], are created individually and
+their members are initialized. An array of objects when considered
+individually, is similar to a simple object. Thus, the objects b[0] and b[1]
+are treated in much the same way, as any other simple object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>yyy [] b = new yyy[2];<o:p></o:p></p>
+
+<p class=ILprg>b[0] = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b[0].i = 1;<o:p></o:p></p>
+
+<p class=ILprg>b[0].j = 2;<o:p></o:p></p>
+
+<p class=ILprg>b[1] = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b[1].i = 10;<o:p></o:p></p>
+
+<p class=ILprg>b[1].j = 20;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc([System.Xml.Serialization.XmlArrayItemAttribute
+(&quot;yyy&quot;, IsNullable=true)] yyy[] a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {a});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public int i;<o:p></o:p></p>
+
+<p class=ILprg>public int j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The lone parameter 'a' in the
+proxy, has an attribute called XmlArrayItemAttribute. This attribute has the
+capability of serializing derived types. Normally, the attribute is used
+whenever the Xml Serializer has to serialize a derived class, after having
+specified the base class.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;i&gt;1&lt;/i&gt;
+<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;j&gt;2&lt;/j&gt;
+<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, in the SOAP payload,
+the child element 'a' is seen to contain two yyy children, which carry the data
+of the individual arrays.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program demonstrates as
+to how enums are handled in wsdl files.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An enum is purely a variable,
+which is capable of containing only a stipulated range of values. The enum yyy
+contains only two values, viz. aa and bb. The abc function in the asmx file
+accepts this enum. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public yyy abc(yyy a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return yyy.bb;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum yyy<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>aa = 1,<o:p></o:p></p>
+
+<p class=ILprg>bb = 2<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:simpleType
+name=&quot;yyy&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:restriction base=&quot;s:string&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:enumeration
+value=&quot;aa&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:enumeration
+value=&quot;bb&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;abcResult&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;yyy&quot; type=&quot;s0:yyy&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Most of the code in the wsdl
+file, upto the element 'a', remains unchanged. However, you would have noticed
+that 'simpletype' has been used in place of 'complex type', for the type yyy. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'restriction' element
+imposes an additional limitation over and above the current restriction, on the
+base type being a string. It permits only certain values within the string
+type. These values are specified by a child element enumeration. Since there
+are only two such enumeration elements 'aa' and 'bb', the simpleType yyy can
+contain only one of these two values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, an enum can be represented
+in wsdl, because the XML schema supports the concept of enumeration. The
+function returns an enum. Therefore, the abcResponse element does not remain
+empty. Observe the element called yyy, of type yyy, located at the very end.
+This element is not being utilized anywhere.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a.abc(yyy.aa));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>bb<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public yyy abc(yyy a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[]
+{a});<o:p></o:p></p>
+
+<p class=ILprg>return ((yyy)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum yyy <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>aa,<o:p></o:p></p>
+
+<p class=ILprg>bb,<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;a&gt;aa&lt;/a&gt;
+<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;abcResult&gt;bb&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program a.cs merely
+accepts a member aa from the enum yyy, as a parameter to the abc function.
+Subsequent to this, it displays the return value. The abc function in the proxy
+has no surprises tucked up its sleeve. Here, the enum data type is seen without
+the values that we specified in the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The values specified for the
+enum variables in the asmx file, do not get carried over to the proxy. It is so
+because they are available in the asmx file. Thus, if you observe the SOAP
+output, you will realize that it displays only the name of the enum 'aa' being
+sent across, and not its value. Also, the SOAP response elicits that the packet
+contains the enum name 'bb', and not its value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The final example in this
+chapter deals with an XmlNode type as a parameter to the abc function. An
+XmlNode represents an XML document.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public void abc(XmlNode a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;a&quot; nillable=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType
+mixed=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:any /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abc function now receives an
+XML file in a SOAP payload. The wsdl file has an element 'a', which like
+before, is devoid of a type attribute. It has a complexType element that
+describes its type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute 'mixed' has a
+value of 'true', which permits character data for this type. The 'any' element
+permits the use of elements from a specified namespace. As no namespace
+attribute has been specified, the default gives access to elements that may
+belong to any namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;vijay&gt;&quot;+ &quot;&lt;mukhi&gt;Hi
+&lt;sonal /&gt;Bye&lt;/mukhi&gt;&quot; + &quot;&lt;/vijay&gt;&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode e = d.DocumentElement;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program begins with a
+class that understands an Xml file called XmlDocument. The LoadXml member
+requires a string that represents an XML document. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is a root element called
+'vijay', which is followed by a valid Xml file. The property DocumentElement
+allows access to the XmlNode that represents this Xml file. This is furnished
+as a parameter to the abc function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public void abc(System.Xml.XmlNode a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Invoke(&quot;abc&quot;, new object[] {a});<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy server understands
+XmlNode, since it can recognize any element in a wsdl file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;vijay xmlns=&quot;&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;mukhi&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>Hi <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;sonal /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>Bye <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/mukhi&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/vijay&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request starts with the
+name of the parameter 'a', followed by the root tag 'vijay'. The default
+namespace is set to null. Thereafter, the entire Xml Document is passed as the
+content. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Thus, there is no difference between passing an int or an
+object or an Xml file in a SOAP packet, because they are both sent across as
+textual content.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:45 GMT -->
+</html>

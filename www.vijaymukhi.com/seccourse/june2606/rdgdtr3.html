@@ -1,0 +1,328 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/rdgdtr3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:08 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="rdgdtr3_files/filelist.html">
+<title>Reading GDT from Ring 3</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2006-06-26T11:59:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:59:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>574</o:Words>
+  <o:Characters>3276</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>27</o:Lines>
+  <o:Paragraphs>6</o:Paragraphs>
+  <o:CharactersWithSpaces>4023</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Reading GDT from Ring 3</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>w.c</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;aclapi.h&gt;</p>
+
+<p class=MsoNormal>LARGE_INTEGER pAddress;</p>
+
+<p class=MsoNormal>PVOID MappedAddress;</p>
+
+<p class=MsoNormal>typedef struct gdtr </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>short Limit,BaseLow,BaseHigh;</p>
+
+<p class=MsoNormal>} Gdtr_t, *PGdtr_t;</p>
+
+<p class=MsoNormal>struct GDTINFO</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>unsigned short IDTLimit , LowIDTbase , HiIDTbase;</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct UNICODE_STRING</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>USHORT<span style="mso-spacerun: yes"> 
+</span>Length,MaximumLength;</p>
+
+<p class=MsoNormal>PWSTR<span style="mso-spacerun: yes">  </span>Buffer;</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct OBJECT_ATTRIBUTES </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>ULONG Length;</p>
+
+<p class=MsoNormal>HANDLE RootDirectory;</p>
+
+<p class=MsoNormal>struct UNICODE_STRING *ObjectName;</p>
+
+<p class=MsoNormal>ULONG Attributes;</p>
+
+<p class=MsoNormal>long a[2];</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct GDT</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>unsigned Limit1<span style="mso-spacerun: yes">  </span>: 16;
+// bits 15..00</p>
+
+<p class=MsoNormal>unsigned Base1<span style="mso-spacerun: yes">  </span>: 16;
+// bits 15..00</p>
+
+<p class=MsoNormal>unsigned Base2<span style="mso-spacerun: yes">  </span>: 8;
+// bits 23..16</p>
+
+<p class=MsoNormal>unsigned Type<span style="mso-spacerun: yes">   </span>: 4;
+// segment type</p>
+
+<p class=MsoNormal>unsigned S<span style="mso-spacerun: yes">    </span>: 1; //
+type (0=system, 1=code/data)</p>
+
+<p class=MsoNormal>unsigned DPL<span style="mso-spacerun: yes">   </span>: 2;
+// descriptor privilege level</p>
+
+<p class=MsoNormal>unsigned P<span style="mso-spacerun: yes">    </span>: 1; //
+segment present</p>
+
+<p class=MsoNormal>unsigned Limit2<span style="mso-spacerun: yes">  </span>: 4;
+// bits 19..16</p>
+
+<p class=MsoNormal>unsigned AVL<span style="mso-spacerun: yes">   </span>: 1;
+// available to programmer </p>
+
+<p class=MsoNormal>unsigned Reserved : 1;</p>
+
+<p class=MsoNormal>unsigned DB<span style="mso-spacerun: yes">    </span>: 1;
+// 0=16-bit, 1=32-bit</p>
+
+<p class=MsoNormal>unsigned G<span style="mso-spacerun: yes">    </span>: 1; //
+granularity (1=4KB)</p>
+
+<p class=MsoNormal>unsigned Base3<span style="mso-spacerun: yes">  </span>: 8;
+// bits 31..24</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct GDT *g;</p>
+
+<p class=MsoNormal>void (_stdcall *RtlInitUnicode)(struct UNICODE_STRING
+*DestinationString, const wchar_t *SourceString);</p>
+
+<p class=MsoNormal>struct UNICODE_STRING uStr;</p>
+
+<p class=MsoNormal>PACL OldDacl,NewDacl;</p>
+
+<p class=MsoNormal>PSECURITY_DESCRIPTOR SecDesc;</p>
+
+<p class=MsoNormal>EXPLICIT_ACCESS Access;</p>
+
+<p class=MsoNormal>struct OBJECT_ATTRIBUTES oAttr;</p>
+
+<p class=MsoNormal>HANDLE Section;</p>
+
+<p class=MsoNormal>DWORD Size;</p>
+
+<p class=MsoNormal>HANDLE hntdll;</p>
+
+<p class=MsoNormal>int count,addr , limit;</p>
+
+<p class=MsoNormal>#define MAKELONG(a, b) ((unsigned long) (((unsigned short)
+(a)) | ((unsigned long) ((unsigned short) (b))) &lt;&lt; 16)) </p>
+
+<p class=MsoNormal>#define MAKEBASE(a, b , c) ((unsigned long) (((unsigned
+short) (a)) | ((unsigned long) ((unsigned short) (b))) &lt;&lt; 16 ) |
+((unsigned long) ((unsigned short) (c))) &lt;&lt; 24 ) </p>
+
+<p class=MsoNormal>#define MAKELIMIT(a, b) ((unsigned long) (((unsigned short)
+(a)) | ((unsigned long) ((unsigned short) (b))) &lt;&lt; 16)) </p>
+
+<p class=MsoNormal>#define MAKEGRANULAR(a, b) ((unsigned long) ((((unsigned
+short) (a)) &lt;&lt; 12) | ((unsigned long) ((unsigned short) (b))))) </p>
+
+<p class=MsoNormal>char a[100];</p>
+
+<p class=MsoNormal>__declspec(dllimport) long _stdcall
+NtMapViewOfSection(HANDLE SectionHandle,HANDLE ProcessHandle,PVOID
+*BaseAddress,ULONG ZeroBits,ULONG CommitSize,PLARGE_INTEGER SectionOffset,PSIZE_T
+ViewSize,int InheritDisposition,ULONG AllocationType,ULONG Protect);</p>
+
+<p class=MsoNormal>__declspec(dllimport) long _stdcall NtOpenSection(PHANDLE
+SectionHandle,ACCESS_MASK DesiredAccess,struct OBJECT_ATTRIBUTES
+*ObjectAttributes);</p>
+
+<p class=MsoNormal>void main() </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>struct GDTINFO gdt_info;</p>
+
+<p class=MsoNormal>hntdll = GetModuleHandle(&quot;ntdll.dll&quot;);</p>
+
+<p class=MsoNormal>*(FARPROC *)&amp;RtlInitUnicode = GetProcAddress(hntdll,
+&quot;RtlInitUnicodeString&quot;);</p>
+
+<p class=MsoNormal>RtlInitUnicode(&amp;uStr,L&quot;\\device\\physicalmemory&quot;);</p>
+
+<p class=MsoNormal>oAttr.Length = sizeof(struct OBJECT_ATTRIBUTES);</p>
+
+<p class=MsoNormal>oAttr.Attributes = 0x00000040L;</p>
+
+<p class=MsoNormal>oAttr.ObjectName = &amp;uStr;</p>
+
+<p class=MsoNormal>NtOpenSection(&amp;Section,WRITE_DAC|READ_CONTROL,&amp;oAttr);</p>
+
+<p class=MsoNormal>GetSecurityInfo(Section,SE_KERNEL_OBJECT,DACL_SECURITY_INFORMATION,0,0,&amp;OldDacl,0,&amp;SecDesc);</p>
+
+<p class=MsoNormal>Access.grfAccessPermissions=SECTION_ALL_ACCESS;</p>
+
+<p class=MsoNormal>Access.grfAccessMode=GRANT_ACCESS;</p>
+
+<p class=MsoNormal>Access.Trustee.ptstrName=&quot;CURRENT_USER&quot;;</p>
+
+<p class=MsoNormal>SetEntriesInAcl(1,&amp;Access,OldDacl,&amp;NewDacl);</p>
+
+<p class=MsoNormal>SetSecurityInfo(Section,SE_KERNEL_OBJECT,DACL_SECURITY_INFORMATION,0,0,NewDacl,0);</p>
+
+<p class=MsoNormal>NtOpenSection(&amp;Section,SECTION_MAP_READ|SECTION_MAP_WRITE,
+&amp;oAttr);</p>
+
+<p class=MsoNormal>__asm sgdt gdt_info</p>
+
+<p class=MsoNormal>g = (struct GDT*)
+MAKELONG(gdt_info.LowIDTbase,gdt_info.HiIDTbase);</p>
+
+<p class=MsoNormal>pAddress.LowPart = (DWORD)g &amp; 0x1FFFF000;</p>
+
+<p class=MsoNormal>Size = gdt_info.IDTLimit;</p>
+
+<p class=MsoNormal>NtMapViewOfSection(Section,-1,&amp;MappedAddress,0L,Size,&amp;pAddress,&amp;Size,1,0,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>printf(&quot;%x\n&quot;,MappedAddress);</p>
+
+<p class=MsoNormal>g = MappedAddress;</p>
+
+<p class=MsoNormal>for(count=0;count &lt; 12 ; count++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>a[0] = 0;</p>
+
+<p class=MsoNormal>if ( g-&gt;Type == 3)</p>
+
+<p class=MsoNormal>strcpy(a,&quot;DATA32&quot;); </p>
+
+<p class=MsoNormal>if ( g-&gt;Type == 0x0b)</p>
+
+<p class=MsoNormal>strcpy(a,&quot;CODE32&quot;); </p>
+
+<p class=MsoNormal>if ( g-&gt;Type == 0x09)</p>
+
+<p class=MsoNormal>strcpy(a,&quot;TSS32&quot;); </p>
+
+<p class=MsoNormal>if ( g-&gt;Type == 0x02)</p>
+
+<p class=MsoNormal>strcpy(a,&quot;LDT&quot;); </p>
+
+<p class=MsoNormal>limit = MAKELIMIT(g-&gt;Limit1,g-&gt;Limit2);</p>
+
+<p class=MsoNormal>if ( g-&gt;G == 1)</p>
+
+<p class=MsoNormal>limit = MAKEGRANULAR(limit, 0xfff);</p>
+
+<p class=MsoNormal>printf(&quot;%x %s %x %x %d %s G=%d\n&quot;, count*8,a ,
+MAKEBASE(g-&gt;Base1,g-&gt;Base2,g-&gt;Base3),limit, g-&gt;DPL , g-&gt;P == 1 ?
+&quot;P&quot; : &quot;NP&quot; , g-&gt;G);</p>
+
+<p class=MsoNormal>printf(&quot;Base %x %x %x Limit %x %x
+Type=%x\n&quot;,g-&gt;Base1,g-&gt;Base2,
+g-&gt;Base3,g-&gt;Limit1,g-&gt;Limit2,g-&gt;Type);</p>
+
+<p class=MsoNormal>g++;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>del w.obj</p>
+
+<p class=MsoNormal>del w.exe</p>
+
+<p class=MsoNormal>cl -W0 -c w.c</p>
+
+<p class=MsoNormal>link w.obj<span style="mso-spacerun: yes"> 
+</span>advapi32.lib ntdll.lib</p>
+
+<p class=MsoNormal>w</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/rdgdtr3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:10 GMT -->
+</html>

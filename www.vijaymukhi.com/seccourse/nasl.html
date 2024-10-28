@@ -1,0 +1,3188 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/nasl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:15 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="nasl_files/filelist.xml">
+<link rel=Edit-Time-Data href="nasl_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>NASL – Nessus Attack Scripting Language</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>3</o:TotalTime>
+  <o:Created>2005-07-23T12:24:00Z</o:Created>
+  <o:LastSaved>2005-07-23T12:24:00Z</o:LastSaved>
+  <o:Pages>17</o:Pages>
+  <o:Words>7162</o:Words>
+  <o:Characters>40826</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>340</o:Lines>
+  <o:Paragraphs>81</o:Paragraphs>
+  <o:CharactersWithSpaces>50137</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:12.0pt;
+	font-family:"Trebuchet MS";
+	mso-font-kerning:0pt;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-even-footer:url("nasl_files/header.html") ef1;
+	mso-footer:url("nasl_files/header.html") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>NASL – Nessus Attack
+Scripting Language<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>A penetration-test runs
+actual exploits on the identified machine and clarifies whether is safe from a
+hacker attack. If a pen-test fails then it is certain that any internal or
+external entity can exploit your computer resources. These exploits grow by
+leaps and bounds day-to-day and thus the number of pen tests also increases
+accordingly. Someone has to keep writing these newer and newer pen tests.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The single largest used
+penetration-testing tool in the world today is Nessus, which is available for
+the operating systems Linux/Unix and Windows. It is a poster boy for the
+success of Open Source tools. Nessus has over 8000 pen tests, with fresh ones
+being written every day. All thee tests are coded not in C or perl but with
+NASL – a scripting language solely used for writing these tests. Our job is to
+teach you how to write the most complex pen tests.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The software comes free
+for the Linux operating system whereas for Windows, there is a cost attached to
+it. Maybe, because the corporate world uses software only when it is paid for
+!! <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We first create a
+directory C:\nasl and set the path variable to C:\program files\tenable\newt.
+This is where the nasl interpreter nasl.exe has been installed. We then write
+our first nasl program a.nasl.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;hi&quot;,&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>To run the nasl
+interpreter, the command is <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>nasl c:\nasl\a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>This results in an output
+as in <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>NASL is a scripting
+language therefore it is simple and very easy to use. Unlike C/C++ it has fewer
+rules that a programmer has to go by. We assume that you have used some
+language in the past, need not be a programming language, JavaScript would also
+do. Like every language, nasl has its own set of in-built functions. The
+richness of a language and the ease of use is the number of functions it
+offers. A function is a word with open and close brackets. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In the above code, the
+display function is used to display some text on the screen. We can specify
+multiple strings, which are text but within double inverted commas. A \n
+signifies a new line. We have supplied two parameters or values to the display
+function. The display function functions in the same manner as the printf in C.
+Also, a lot of nasl looks and feels like C. Instead on seeing hi once we see it
+twice. For some reason, the display function displays things twice. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;hi&quot;,&quot;\n&quot;)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>parse error, unexpected
+$, expecting ';'Parse error at or near line 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Every language has a rule
+that denotes end of line or full stop. Some languages permit the use of enter
+to indicate end, while others like C use a semi colon. In nasl we have to use a
+semi colon after the closed brackets of the function. In absence of the
+semicolon like in the earlier example, an error is thrown. The use of semi
+colon denotes a logical end.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = 20 ;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Value of i
+is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = i + 10;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Value of i
+is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i++;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Value of i
+is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = &quot;Vijay
+Mukhi&quot;;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Value of i
+is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 30<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 31<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is Vijay Mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Every language allows the
+use of variables. In NASL, there is no need to create a variable, it can simply
+be used. Thus, we have created a variable i and set it to 20. The display
+function displays its value. Do bear in mind that anything in double inverted
+comma, including variable names are not evaluated by nasl. The + operator
+increases its value by 10 followed by the use of ++ to increase the value of
+the variable by 1. Finally we do the unthinkable, we set the value of variable
+i to a string. We get no complaints from nasl at all. Thus in nasl we do not
+declare or define a variable, we simply use it. The data type of a variable can
+change mid way though our program. Nasl handles all the internal house keeping.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = open_sock_tcp(79);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;The value
+of i is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The value of i is 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Lets start doing
+something really useful with nasl, i.e write a port scanner and simultaneously
+learn nasl. NASL has a zillion networking functions. The function open_sock_tcp
+opens a socket or network connection on a certain port that is supplied as a
+parameter. As we have not specified any IP address, this function checks
+whether there is a service or server running on port 79 on our machine. As we
+have no such server running, it results in 0. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = open_sock_tcp(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;The value
+of i is &quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The value of i is 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>An http or www server
+listens on port 80 and therefore the use of this portno shows 1 as the answer.
+We have two machines on our network, the one we work on is given a IP address
+of 70.0.0.10 and the other 70.0.0.2. We now run nasl as<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Nasl –t 70.0.0.2
+c:\nasl\a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The value of i is 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The –t option is used to
+specify the name of a host that will receive the packets. Our code remains the
+same but the function will now check for the port number on IP address
+70.0.0.2. To confirm this act, we had snort an open source IDS running on
+another dos box. This helps in tracing the actual packets being send by nessus.
+You could use ettercap or ethereal or any other packet sniffer or logger.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = 80;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;The value
+of sock is &quot; , sock , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The value of sock is 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>An old adage in
+programming is that wherever a number can be used, a variable can be used
+instead. So we set variable i to 80 and pass this as a parameter to our
+function open_sock_tcp. Now that we have code that tells us which port is open,
+we simply replicate it for all ports.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>for ( i = 10 ; i &lt;= 12
+; i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Value of i
+is &quot;, i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 10<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 11<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Value of i is 12<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>A for loop is used when
+we want to repeat code. It takes three entities separated by semi colons. Up to
+the first semicolon is executed once, where we set the value of variable i to
+10. The second entity checks the condition, if i is less than 12, as it is true
+the code in the {} is executed. Here we display the value of i. Finally the
+last entity in the for loop is executed, i.e the code between the ; and the ).
+Here the value of i is increased by 1. As long as i is less than 12, the for
+loop condition holds true. The minute it becomes 13, the for loop quits out. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = 80;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( sock)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Open\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Closed\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = 79;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( sock)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Open\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Closed\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 80 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 79 is Closed<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The if statement is used
+to make decisions in the code thus making the language more intelligent. The
+sock variable can have a value of 1 or 0. The if statement takes a condition
+and if true, executes the code following the braces. If false, executes the
+code following the else, which is optional. True in nasl is 1 or any positive
+value, 0 means false. Thus using this feature, we get an output which is more
+readable. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>for ( i = 20 ; i &lt;= 25
+; i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( sock)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Open\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Closed\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 20 is Closed<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 21 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 22 is Closed<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 23 is Closed<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 24 is Closed<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 25 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We now place our code in
+a for loop which takes the variable i from 20 to 25 and discloses the open and
+closed ports. A pot scanner works in this manner. It sends a Syn packet to each
+port. If the port is open, it receives a Syn-Ack. If the port is closed, an Rst
+packet is received. There is more information on this in the tcp rfc. For some
+reason, the function sends the packet twice. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>for ( i = 1 ; i &lt;=
+1023 ; i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( sock)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Port no
+&quot; , i , &quot; is Open\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 7 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 9 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 13 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 17 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 19 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 21 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 25 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 42 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 53 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 80 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 135 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 139 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 445 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 637 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Port no 1002 is Open<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The above program scans
+the first 1024 reserved ports and displays the ones that are open. The IP
+address 70.0.0.2 is a Windows 2000 box with no changes made to the default
+installation. The output is a clear indication that this out-of-the box windows
+2000 os is insecure as it has a large number of ports open by default. When we
+changed the for loop to iterate 65535 times,<span style="mso-spacerun: yes"> 
+</span>we were horrified to find out the number of ports that were open. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Lets move away from the
+port scanner and learn some more of the language<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>function abc()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;In
+abc\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>abc();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In abc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Function abc is
+user-defined. To write such a function we first use the keyword function, the
+name abc and then the code within brackets. The only restriction here is that
+the code must be placed before the function call. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>function abc()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;In
+abc\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return(100);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = abc();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;abc returns
+&quot; , i , &quot;\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In abc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>abc returns 100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The return function
+returns a value. In this case as we return 100 there the value of i is 100.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>function abc( val, zzz)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;In
+abc\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return(val + zzz);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = abc(zzz:20 , val:10);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;abc returns
+&quot; , i , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In abc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>abc returns 30<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The function call is very
+different from the way it is in the C language. In these languages we need to
+remember the order of parameters, however in NASL we use a different approach.
+Each parameter is given a name and we preface the value of the parameters by
+the name. Thus we do not call the abc function as (20,10) but as (zzz:20,
+val:10). The order of parameters is not important thus function abc could be
+called as (val:10, zzz:20). Which is a better approach is for the user to
+decide. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(25);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = recv_line (
+socket:sock , length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>220 mach2 Microsoft ESMTP
+MAIL Service, Version: 5.0.2195.6713 ready at<span style="mso-spacerun: yes"> 
+</span>Mon, 4 Jul 2005 09:40:36 +0530 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>nasl -t 70.0.0.2
+c:\nasl\a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In the above code, we
+first open a socket to port 25, which is the SMTP port. Once again we must
+refresh your mind by stating that the Windows 2000 machine at IP address
+70.0.0.2 has an SMTP server running on it. You can specify any IP address that
+has a SMTP server running. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The minute a SMTP server
+receives a connect packet it sends a number 220 denoting success along with a
+banner giving its version number and name. In order to capture this banner we
+use the recv_line function that takes two parameters named socket and length. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>This function is called
+with the socket handle sock, that we just opened and the maximum length of the
+line, 1024 that is to be returned. The variable data will now contain the
+banner. The value is displayed using the display function. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = recv_line(
+socket:sock , length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>220 mach2 Microsoft FTP
+Service (Version 5.0).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The FTP protocol listens
+on the port 21. The rules remain the same as SMTP, i.e. after connecting to the
+ftp server, the server sends a welcome banner to the client.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>abc();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>c:\nasl\a.nasl(70.0.0.2):
+Undefined function 'abc'<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We get an error as the
+abc function is undefined. The whole idea of having functions is to reuse that
+block of code. However, placing functions in the nasl file, kills the idea of
+sharing. Therefore it is wise to place all our function code in inc files. We
+create b.inc as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>function abc()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;In
+abc\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;c:\nasl\b.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>abc();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In abc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Then using the include
+function, the file is brought in and added to our code. The net result is that
+all code that is present in b.inc gets added to our nasl file. If we do not
+specify the full path name it looks for the file in another directory.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>port =
+get_http_port(default:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;port is
+&quot;, port , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>c:\nasl\a.nasl(70.0.0.2):
+Undefined function 'get_http_port' <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The compiler very
+strongly states that it does not understand the function get_http_port. This
+function is not an in-built function but is present in a file called http_func.inc.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>port =
+get_http_port(default:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;port is
+&quot;, port , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>port is 80<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>This inc file
+http_func.inc is written by the smart guys who wrote nessus. It is found in the
+directory c:\program files\tenable\newt\plugins\scripts. There are over 37 such
+inc files. The function get_http_port takes one parameter that we assume, is
+the http port the system uses. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>This function will detect
+the actual http port used by connecting to the http server on the target
+machine. We are aware of this because we have studied the code that comprises
+our function. Some time later we will explain the actual working of the
+function. Normally the http port is 80. It is better to use the above function
+to find out the http port on the target machine than assume what the port is. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock =
+http_open_socket(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;GET /
+HTTP/1.0\r\n&quot;,&quot;Accept: */*\r\n&quot;,&quot;\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock,
+length:4096);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>http_close_socket (sock);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>HTTP/1.1 200 OK<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Date: Mon, 04 Jul 2005
+04:56:14 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Server: Apache/1.3.17
+(Win32)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Location:
+index.html.en<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Vary:
+negotiate,accept-language,accept-charset<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>TCN: choice<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Last-Modified: Fri, 19
+Jan 2001 08:09:48 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ETag:
+&quot;0-54a-3a67f64c;41e6035c&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Accept-Ranges: bytes<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Length: 1354<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Connection: close<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Type: text/html<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Language: en<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Expires: Mon, 04 Jul 2005
+04:56:14 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>&lt;!DOCTYPE HTML PUBLIC
+&quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>&lt;HTML&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span>&lt;HEAD&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">  </span>&lt;TITLE&gt;Test Page for Apache Installation&lt;/TITLE&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span>&lt;/HEAD&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The above program reads
+an entire html file from the target machine. The http_open_socket function is
+called with the http port number to open a socket. We could have used the
+function open_sock_tcp instead, but opted for the above because the program we
+found on the net uses this function instead. Both do the same function, it
+returns a handle to the connection. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The string function comes
+handy to concatenate individual strings and us used to create our http request.
+A http request begins with the Get clause and then a slash<span
+style="mso-spacerun: yes">  </span>followed by the name of the file. No file by
+default references index.html in the apache world, default.htm in the IIS
+world. Then the send function is used to send the string across to the target.
+The send function needs two named arguments, the socket parameter is passed the
+sock variable, and the data parameter the req string. Then, instead of using
+the recv_line function that stops at a line, the more generic recv function is
+used, which takes the same parameters, a socket and a length and returns in r
+the data received from the socket. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The display function is
+finally used to display the file contents received and as good guys do it, we
+close the socket handle using http_close_socket.<span style="mso-spacerun:
+yes">  </span>The file received starts with a header and then the actual
+content. A header is a word that ends with a colon. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;GET /
+HTTP/1.0\r\n&quot;,&quot;Accept: */*\r\n&quot;,&quot;\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock,
+length:4096);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if(&quot;Server:
+Apache&quot; &gt;&lt; r)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Apache
+Server running on host\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else if(&quot;Server:
+Microsoft-IIS&quot; &gt;&lt; r)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;IIS Server
+running on host\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>http_close_socket(sock);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Apache Server running on
+host<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>IIS Server running on
+host<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>nasl -t 70.0.0.2
+c:\nasl\a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>nasl -t 70.0.0.10
+c:\nasl\a.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We have IIS running on
+host 70.0.0.10 and Apache running on host 70.0.0.2. Every web server adds a
+header called Server followed by its name, for e.g. in Apache we see Server:
+Apache. To extract the server name, all that is required is a search for the
+string ‘Server:’. Since this feature is used very often, NASL offers an
+operator<span style="mso-spacerun: yes">  </span>&gt;&lt;. This operator looks
+for a string specified before the &gt;&lt; in the string specified after. We
+search for<span style="mso-spacerun: yes">  </span>Server: Apache in the string
+r. If a match is found, a message is displayed. In the same vein, IIS uses the
+name Microsoft-IIS. This check is important as some exploits only work on
+certain servers with certain version numbers. Thus before running an exploit these
+prerequisite checks are a must so that the system meets with our conditions. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Now we venture into a few
+practical exploits and show you how they have coded. We will use the sample
+code supplied by the guys at nessus as the whole idea of this tutorial is to
+understand nasl code.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1>FTP exploits</h1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;USER
+anonymous\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;PASS
+vijay@mukhi.com\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>220 mach2 Microsoft FTP
+Service (Version 5.0).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>331 Anonymous access
+allowed, send identity (e-mail name) as password.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>230 Anonymous user logged
+in.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>As always, a socket
+connection to port 21 is opened and in response to it the initial banner is
+received. The FTP rfc details the rules of ftp whereby the user name has to be
+sent across. For this purpose, the command USER is used followed by then the
+name of the user, anonymous. The response to this command is a statement
+clarifying that anonymous users are allowed to the server and an e-mail id is
+required as the password. To supply this information, the PASS command is used
+with the e-mail id. Any password is allowed. Once done, we are logged in. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i =
+ftp_log_in(socket:sock, user:&quot;anonymous&quot; , pass:
+&quot;vijay@mukhi.com&quot; );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;i = &quot;
+, i ,&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Instead of writing all
+that code down, we could have used the function ftp_log_in instead which takes
+a socket, a user and pass parameters and does the internal plumbing. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i =
+ftp_log_in(socket:sock, user:&quot;anonymous1&quot; , pass:
+&quot;vijay@mukhi.com&quot; );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;i = &quot;
+, i ,&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>I = 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The user anonymous is
+special as he is the only user that can log in without a valid password. Change
+the user name to anonymous1 and the result will be a 0 as access is denied.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;USER
+anonymous1\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req = string(&quot;PASS
+vijay@mukhi.com\r\n&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:sock ,
+length : 1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>220 mach2 Microsoft FTP
+Service (Version 5.0).<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>331 Password required for
+anonymous1.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>530 User anonymous1
+cannot log in.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>With the user name as
+anonymous1, a valid password is to be supplied. However, the user anonymous1
+does not exist on host 70.0.0.2 and an error is generated. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Lets write a simple nasl
+script that tells us whether anonymous ftp access is allowed or not. This is
+one such check required on all ftp servers to ensure that anonymous logins are
+not permitted.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>i = ftp_log_in(socket:sock,
+user:&quot;anonymous&quot; , pass: &quot;vijay@mukhi.com&quot; );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( i == 1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Anonymous
+ftp access is allowed. A bad thing\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Anonymous
+ftp access is not allowed. A good thing\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Anonymous ftp access is
+allowed. Not good!!!<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if (
+ftp_log_in(socket:sock, user:&quot;Administrator&quot; , pass: &quot;&quot; ))<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;No password
+for Administrator\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Administrator
+has a valid password\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Administrator has a valid
+password<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Many systems has a user
+called Administrator with no password. The above script tries to logon as
+Administrator with a blank password. When the if statement is true, an error
+message is displayed. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;ftp_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1 =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:sock1,
+user:&quot;anonymous&quot;,pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = string(&quot;MKD
+/vijay\r\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock1,
+data:data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r =
+recv_line(socket:sock1, length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;sock1:
+&quot; , r , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1: 257
+&quot;/vijay&quot; directory created.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We once again anonymously
+log in and then use the MKD command to create a directory on the host running
+the ftp server, 70.0.0.2. The Microsoft’s ftp server root directory is
+c;\inetpub\ftproot therefore the directory vijay will be created within it. The
+recv_line function declares whether the above command has executed
+successfully.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;ftp_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1 =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:sock1,
+user:&quot;anonymous&quot;,pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock1,
+data:&quot;MKD /vijay2\r\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r =
+recv_line(socket:sock1, length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;sock1:
+&quot; , r , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The above program fails
+because all ftp, smtp, http commands end with a \r\n. It is only the double
+inverted commas or the string function that evaluate a \r\n to be an enter.
+Thus it is safe to use the string function or a single inverted whenever the
+\r\n are required. The display command first calls the string function and then
+displays the text. In the above case the system waits for an enter from our
+side.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock1,
+data:'MKD /vijay2\r\n');<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The correct way to do it
+is use the single inverted commas. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;ftp_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1 =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:sock1,
+user:&quot;anonymous&quot;,pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = string(&quot;CWD
+/\r\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock1,
+data:data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r =
+recv_line(socket:sock1, length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;sock1:
+&quot; , r , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>pasv = ftp_get_pasv_port
+(socket:sock1); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;second port
+is &quot;, pasv , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock2 =
+open_sock_tcp(pasv);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = string(&quot;RETR
+a.txt\r\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:sock1,
+data:data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r1 =
+ftp_recv_line(socket:sock2);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;File
+Contents: &quot; , r1 , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r =
+ftp_recv_line(socket:sock1);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;sock1:
+&quot; ,<span style="mso-spacerun: yes">  </span>r , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1: 250 CWD command
+successful.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>second port is 1677<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>File Contents: vijay
+mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sock1: 125 Data
+connection already open; Transfer starting.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We now proceed further to
+write a program that will retrieve an entire file from the server. The fourth
+line is not really necessary, it just shows us one more command that can be
+used within the ftp world, CWD is used to change the current working directory
+to another one. Here the directory is changed to / or the root which is the
+default. The recv_line function discloses the success of this command. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The ftp protocol uses 2
+ports when transferring data. Port 21 is used for passing commands across like
+MKD, CWD etc whereas file transfers take another port no called the data port.
+The function ftp_get_pasv_port is used to negotiate a second port address from
+the ftp server. We get a port number larger than 1024 and in our case it is
+1677. do bear in mind that it is this port no that will receive the contents of
+the file but it will keep changing with every file. Thus we are creating two
+channels, one 21 for sending commands, the other for sending the actual data
+across, the data channel. Once done, a socket connection is opened on this port
+1677 and the string RETR is used with the file name and sent to the first port
+or control channel. Once the send function sends the string across, we wait on
+sock2 to receive the contents of the file. Simultaneously, sock1 keeps us
+informed about the file transfer. This may get a little confusing as the file
+is transferred using sock2, whereas sock1 is used to control the transfer. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We hope that you created
+a file called a.txt in the ftproot directory. The function ftp_get_pasv_port
+simply sends the command PASV over to the server. The server sends the string
+Entering Passive mode and in round brackets its IP address in a dotted decimal
+format, but separated by commas and not by dots. This is followed by 2 numbers,
+the first to be multiplied by 256 and the second by 1 and then added up to give
+us the port number of the data channel. Once the transfer ends, the server
+sends a message ‘226 Transfer complete\r\n’. Some Linux daemons allow the users
+to log in a as user NULL and password NULL. This check can be performed too.
+Finally, to close a ftp connection gracefully, the Quit command is used.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We must admit that this
+is the simplest ftp client we have written, using nasl.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>There is an attack called
+the ftp glob overflow which crashes a server by creating too many directories
+and then listing them.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;ftp_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:soc,
+user:&quot;anonymous&quot;, pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>port2 =
+ftp_get_pasv_port(socket:soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc2 =
+open_sock_tcp(port2);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:soc,
+data:'NLST *\r\n');<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b = ftp_recv_line(socket:soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(b);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b = recv(socket:soc2,
+length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(b);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>125 Data connection
+already open; Transfer starting.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>One more program that
+displays the contents of a directory. The data channel port number is in port2,
+so this channel is opened first. Then the command NLST is sent with a wild card
+which lists files in a directory. At present, there are two files a.txt and
+b.txt so * will list both rgwaw files. If the command used is NLIST a*, only
+files beginning with a would have been listed. The data channel list the files
+and the soc channel keeps us updated with the transfer. RMD then removes the
+directory.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;ftp_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:soc,
+user:&quot;anonymous&quot;, pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>port2 = ftp_get_pasv_port(socket:soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc2 =
+open_sock_tcp(port2);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:soc,
+data:'NLST *\r\n');<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b = recv(socket:soc2,
+length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(b);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( '.avi' &gt;&lt; b )<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;Sound Files
+found\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>c.avi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Sound Files found<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Many people are concerned
+whether certain sound files, video files are present on their servers. The NLST
+command can be used to loop through all the files and then check whether
+certain files with certain extensions are there on the ftp server. Nevertheless
+it becomes a lot more complex. Also a check is required to track the banner for
+a fake ftp server. The </span><span style='font-size:10.0pt;font-family:"Trebuchet MS";
+mso-bidi-font-family:"Courier New"'>KIBUV.B worm installs a fake ftp server on
+port 7955. It has a banner 220 fuckFtpd 0wns j0 and is also found on ports
+14920 and 42260. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>Certain login
+combinations also need to be scrutinized for eg, user name being admin and
+password being password. There are a large number of tests for different user
+name and passwords combinations. Also earlier versions of sql server can have a
+blank password for user sa. Further, one can crash a novell ftp server by
+sending it nulls. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>soc =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>req = crap(15);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>ftp_log_in(socket:soc,
+user: req, pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>It is also
+possible to crash an ftp server by sending it huge chunks of data or by using
+too large user name. The crap function creates such a large string for us. In
+this case we get 15 X’s. A buffer overflow exploit uses the crap function to
+locate the position when the buffer overflows. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>In the above
+case we are sending a command USER XXXXXXXXXXXXXXX, 15 X’s in all. At times the
+buffer can be overflowed using 100 k of data. This is where the crap function
+is really useful. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>There is a test
+wherein every FTP command is used with large amount of data along with the crap
+function and sent across.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>soc =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>req = crap(data:
+&quot;ab&quot; , length:5);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>ftp_log_in(socket:soc,
+user: req, pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>The crap
+function takes two parameters, the data variable that contains the string to be
+replicated, and the total length of the string in the length variable. As the
+length is five, the user name send across will be ababa. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>soc =
+open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>ftp_log_in(socket:soc,
+user: &quot;anonymous&quot;, pass:&quot;aa@bb.com&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>for(i=0;i&lt;40000;i=i+1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>port2 =
+ftp_get_pasv_port(socket:soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>soc1 =
+open_sock_tcp(port2);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>display(&quot;Port
+no is &quot; , port2 , &quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'>In the above
+program, we are creating 40000 data channels. This is one method used
+extensively to create a denial of service where resources get used up
+unnecessary. As per our understanding, we thought that the system would create
+for us 40,000 data channels. But we were wrong, as after some time the ftp
+server kept giving us the same port numbers. The software knows that a DOS is
+being attempted and allows other legitimate users access. It keeps sending the
+port number up to 5000 and then restarts from 1027. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";mso-bidi-font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;hi\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>exit(0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;bye&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The exit function does it
+job of exiting. Anytime to exit from our code, the exit function is called.
+Normally the banner for a certain version of the product is checked. If the
+version does match, we immediately exit out. The EXIT command is used to
+gracefully quit the ftp connection. Many exploits send commands with very very
+long argument. A buffer overflow occurs and the server shuts down.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc = open_sock_tcp(21);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ftp_log_in(socket:soc,
+user:&quot;anonymous&quot;,pass:&quot;nessus@&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:soc,
+data:string(&quot;CWD &quot;, rand(), &quot;-&quot;, rand(),
+&quot;\r\n&quot;));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r = recv(socket:soc,
+length:1024);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>550 8482-15703: The
+system cannot find the file specified. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>550 9808-21412: The
+system cannot find the file specified. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>In the past, the ftp
+servers when asked to change to an unknown directory would leak out the full
+path name of the root directory. This is not an exploit but an information
+leak. Now days these leaks have been plugged by most ftp servers. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The rand function returns
+a random number. The program when executed twice gives different numbers. The
+minus sign is to separate the two random numbers. But still, our ftp server
+does not leak any directory names.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1>IIS exploits</h1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req =
+http_get(item:&quot;/NULL.printer&quot;, port:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(req,&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>GET /NULL.printer
+HTTP/1.1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Connection: Close<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Host: MACH2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Pragma: no-cache<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>User-Agent: Mozilla/4.75
+[en] (X11, U; Nessus)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Accept: image/gif,
+image/x-xbitmap, image/jpeg, image/pjpeg, image/png, */*<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Accept-Language: en<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Accept-Charset:
+iso-8859-1,*,utf-8<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We start the script with
+some http helper functions by including the file http_func.inc. The http_get
+function takes two parameters, the first is the name of the file and the second
+the port. It then creates the actual request that is to be sent across. This
+avoids the mugging up required on the headers that an http server requires. Our
+file name is /NULL.printer. The function deciphers the other headers of which
+some are optional, but why bother as we do not have to write them.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc
+&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req =
+http_get(item:&quot;/NULL.printer&quot;, port:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc =
+http_open_socket(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:soc,
+data:req);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>r =
+http_recv(socket:soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>http_close_socket(soc);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(r ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if(&quot;Error in web
+printer install&quot; &gt;&lt; r)<span style='mso-tab-count:1'>        </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;IIS bug
+found\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>HTTP/1.1 500 13<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Server: Microsoft-IIS/5.0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Date: Tue, 05 Jul 2005
+04:57:57 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>X-Powered-By: ASP.NET<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Connection: close<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Type: text/html<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>&lt;b&gt; Error in web
+printer install.&lt;/b&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>IIS bug found<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The Internet Information
+Server IIS supports the Internet Printing Protocol IPP from version 5 onwards.
+This protocol is implemented as an ISAPI extension. There has been a buffer
+overflow found in this extension and therefore it is recommended to disable
+this feature if not used. To disable it, choose the web server in the internet
+services manager, right mouse button, properties, Home directories tab,
+Configuration. Choose .printer in the extensions column and then remove. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The request is first sent
+out and then function http_recv is used to receive data from the http server.
+If this contains the string Error in web printer install, then we know that the
+IIS has the IPP protocol installed. This could lead to a security breach.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_keepalive.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>req =
+http_get(item:&quot;/b.html&quot;, port:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>res =
+http_keepalive_send_recv (data:req, port:80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(res);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>HTTP/1.1 200 OK<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Server: Microsoft-IIS/5.0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Date: Tue, 05 Jul 2005
+06:31:13 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Type: text/html<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Accept-Ranges: bytes<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Last-Modified: Sun, 03
+Apr 2005 01:11:30 GMT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ETag:
+&quot;08d2d11ea37c51:8f6&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Content-Length: 6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hi 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>With include files, we
+can create our own functions that shorten the code we have to write. The above
+example demonstrates this fact. The http_get functions, creates the request to
+be sent across and the http_keepalive_send_recv functions sends the request and
+waits for an answer. These two functions are all that we need to pick up a file
+on the server.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>include(&quot;http_func.inc&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>data = string(&quot;GET
+../../\r\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc = open_sock_tcp(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send(socket:soc,
+data:data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>sleep(2);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>soc2 = open_sock_tcp(80);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if(!soc2)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;server
+down&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(&quot;server up
+exploit does not work\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>server up exploit does
+not work<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Earlier, a request like
+GET ../../ to IIS was allowed which eventually would result in IIS crashing.
+The above request simply tells IIS to go one directory above and then again one
+level up. This would result in a denial of service as IIS would go beyond its
+directory structure. Today IIS simply comes back stating it to be a bad
+request. We sent a similar request over and then used the sleep function to
+sleep for 2 seconds. Then once again we connected to IIS. Since we received a
+valid socket it only signifies that the server is yet up and running. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Lets take a break from
+writing nasl code and instead write an actual pen test. Nessus installs itself
+in the directory c:\program files\tenable\newt. All the exe files are stored in
+this directory. Within it is a directory plugins that has a scripts
+subdirectory with all the nasl scripts. There are over 8000 files here. We
+moved all of them to another directory. SO in a sense we deleted all the nasl
+files. You heard us right, deleted all nasl files. Now create a file v.nasl as
+follows.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>v.nasl<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if (description)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span>script_id (11420);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span>script_bugtraq_id (420);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_name(english:&quot;Vijay
+Mukhi is the script name &quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>desc[&quot;english&quot;]
+= &quot;This is a long description&quot;;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_description
+(english:desc[&quot;english&quot;]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_summary
+(english:&quot;This is a script summary&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_category
+(ACT_GATHER_INFO);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_family
+(english:&quot;This is a script family&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_copyright(english:&quot;This
+script is Copyright (C) 2005 Vijay Mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>exit(0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>security_warning
+(port:81, data:&quot;Vijay Mukhi security warning&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We now run the exe file
+build.exe in the newt directory. This program goes into the plugins\scripts
+directory and reads all the available nasl scripts. It then builds a file,
+plugins.xml with the details of the plugins installed. In our case we have 3
+plugins, one of ours, two of the existing ones. If there were 8000 plugins, the
+build would take a very long time to create this file. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Now start nessus or the
+newt security scanner, which is a icon on your desktop. We choose the first
+option new scan task and specify the IP address of our class C network
+70.0.0.2. Then click on next. The window has four radio buttons to chose from
+which we choose the last one as we would like to specify our own plugins. Newt
+runs all the pen tests it can lay its hands on.Click on next gives a screen
+with two columns. The first is entitled families and has three entries. The
+third entry says This is script family. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Coming back to v.nasl,
+the description variable is true only when the script is executed through the
+newt security scanner. Thus running it though nasl will not activate the above
+code as the description variable will be false. The function script_family has
+a parameter english that specifies a family name. It is in this manner that the
+pen tests are grouped together.<span style="mso-spacerun: yes">  </span>The
+minute we click on it, the check box goes on and all the plugins belonging to
+this family is displayed on the right. We are shown just one with the parameter
+we have given to the function script_name and parameter english. By using the
+language name as the parameter, the same function can be used for registering
+different languages.<span style="mso-spacerun: yes">  </span>We select it using
+the link. This brings about a dialog box where other useful information about
+the pen test can be given. The first is the id of the script specified by using
+the script_id function. Do not give too large a number or a error results. This
+is only used for documentation. Then we have the Plugin Name which is the
+repeat of the script_name function. This is followed by the name of the plugin
+file v.nasl. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Finally we have the
+summary which is specified using the function script_summary. Then we have a
+long text area for description using the desc array with english as a
+parameter. We could have called the variable desc1 but all the nasl code we
+have seen calls the array desc. Arrays in nasl are like arrays in any
+programming language. This desc is specified with the script_description
+function. For some reason we first need to create an array variable and pass
+this variable to the description function. All other functions directly pass a
+string. Here we do it in a round about manner.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We then click on scan on
+and if<span style="mso-spacerun: yes">  </span>we get an error, start again. We
+are given a report that starts with a start time and end time and Ip address of
+host scanned and the number of warnings, errors, holes etc. We get only a
+warning and the following output.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+ mso-cellspacing:0in;mso-padding-alt:0in 0in 0in 0in'>
+ <tr>
+  <td width=100 style='width:75.0pt;border:solid #8CAAE6 .75pt;padding:0in 0in 0in 0in'>
+  <table border=0 cellspacing=0 cellpadding=0 width="100%" bgcolor=white
+   style='width:100.0%;mso-cellspacing:0in;background:white;mso-padding-alt:
+   0in 0in 0in 0in'>
+   <tr>
+    <td style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal style='text-align:justify'><b><span style='font-size:
+    10.0pt;mso-bidi-font-size:9.0pt;font-family:"Trebuchet MS";color:black'>hosts2-ns
+    (81/tcp)<o:p></o:p></span></b></p>
+    </td>
+   </tr>
+   <tr>
+    <td style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><b><span
+    style='font-size:10.0pt;mso-bidi-font-size:9.0pt;font-family:"Trebuchet MS";
+    color:black'><o:p></o:p></span></b></p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+  mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+  </td>
+  <td style='border:solid #8CAAE6 .75pt;border-left:solid #8CAAE6 .25pt;
+  padding:0in 0in 0in 0in'>
+  <table border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+   mso-cellspacing:0in;mso-padding-alt:0in 0in 0in 0in'>
+   <tr>
+    <td style='padding:0in 0in 0in 0in'>
+    <p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><!--[if gte vml 1]><v:shapetype
+     id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t"
+     path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+     <v:stroke joinstyle="miter"/>
+     <v:formulas>
+      <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+      <v:f eqn="sum @0 1 0"/>
+      <v:f eqn="sum 0 0 @1"/>
+      <v:f eqn="prod @2 1 2"/>
+      <v:f eqn="prod @3 21600 pixelWidth"/>
+      <v:f eqn="prod @3 21600 pixelHeight"/>
+      <v:f eqn="sum @0 0 1"/>
+      <v:f eqn="prod @6 1 2"/>
+      <v:f eqn="prod @7 21600 pixelWidth"/>
+      <v:f eqn="sum @8 21600 0"/>
+      <v:f eqn="prod @7 21600 pixelHeight"/>
+      <v:f eqn="sum @10 21600 0"/>
+     </v:formulas>
+     <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+     <o:lock v:ext="edit" aspectratio="t"/>
+    </v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" alt="" style='width:2.25pt;
+     height:2.25pt'>
+     <v:imagedata src="./nasl_files/image001.png" o:href="file:///C:/Documents%20and%20Settings/Administrator.VMCI.000/Tenable/NeWT/reports/html/images/pixel.gif"/>
+    </v:shape><![endif]--><![if !vml]><img width=3 height=3
+    src="nasl_files/image002.gif" v:shapes="_x0000_i1025"><![endif]><o:p></o:p></span></p>
+    </td>
+   </tr>
+   <tr>
+    <td style='padding:0in 0in 0in 0in'>
+    <table border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;
+     mso-cellspacing:0in;mso-padding-alt:0in 0in 0in 0in'>
+     <tr>
+      <td width="1%" valign=top style='width:1.0%;padding:0in 0in 0in 0in'>
+      <p class=MsoNormal style='text-align:justify'><span style='font-size:
+      10.0pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><!--[if gte vml 1]><v:shape
+       id="_x0000_i1026" type="#_x0000_t75" alt="" style='width:12pt;height:12pt'>
+       <v:imagedata src="./nasl_files/image003.gif" o:href="file:///C:/Documents%20and%20Settings/Administrator.VMCI.000/Tenable/NeWT/reports/html/images/info.gif"/>
+      </v:shape><![endif]--><![if !vml]><img width=16 height=16
+      src="nasl_files/image003.gif" v:shapes="_x0000_i1026"><![endif]><o:p></o:p></span></p>
+      </td>
+      <td style='padding:0in 0in 0in 0in'>
+      <p class=MsoNormal style='text-align:justify'><span style='font-size:
+      10.0pt;mso-bidi-font-size:9.0pt;font-family:"Trebuchet MS";color:black'>Vijay
+      Mukhi security warning<br>
+      BID : 420<br>
+      Plugin ID : <a href="http://cgi.nessus.org/plugins/newt.php?id=11420"
+      target="_blank">11420</a><o:p></o:p></span></p>
+      </td>
+     </tr>
+    </table>
+    <p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+    mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+  mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:9.0pt;font-family:"Trebuchet MS";color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:9.0pt;font-family:"Trebuchet MS";color:black'>The only line
+of code we have is the function security warning. This takes a port number and
+a description. The port number 81 is displayed in the first column and the
+description or data in the second column. The function </span><span
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>script_bugtraq_id
+was supplied a number 420 which was the bugtraq data base id and this is
+followed by our plugin id. The bugtraq id is for our reference only. The
+function script_category is important as it specifies the type of the script to
+the In our case we say that we are simply gathering information only. There are
+about half a dozen such categories. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>security_hole(port:81,
+data:&quot;Vijay Mukhi security warning&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>exit(0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>If we change the second
+last line to security_hole, the icon changes to a X and the number of hole
+increases by 1, not the warnings. We do not need to re run the build program as
+the changes are being made in the code and not in things like the name of the
+script.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>security_note(port:81,
+data:&quot;Vijay Mukhi security warning&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Finally changing the
+function to security note allows us to once again add to the notes, we see a
+different icon too. There is a way of also running exe files which are given an
+extension of nes. This is how we can combine our knowledge of nasl and create
+our own plugins.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1>Creating our own packets</h1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip = forge_ip_packet(
+ip_hl: 5, ip_v : 4, ip_tos : 0, ip_len : 20, ip_id:12, ip_off : 0,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">     </span>ip_ttl : 255, ip_p:2, ip_src : 70.0.0.4);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>display(this_host() ,
+&quot;\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(ip,pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.10<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Let us now create our own
+packets. The ip packet can be created using the function forge_ip_packet. This
+function takes up a large number of parameters. We start in the order they
+appear in the IP header. The first four bits is the version of ip used, 4 and
+we set this value as the ip_v parameter. The next four bits are the length of
+the ip header and in our case as we are not adding anything to ip, it is 5.,
+This number is to be multiplied by 4 and that is how we get 20. The length of
+the ip header can vary from minimum 20 to maximum 60 as four bits hold a number
+from 0 to 15. The parameter name is ip_hl.<span style="mso-spacerun: yes"> 
+</span>Then we have the type of service which signifies the importance of
+packets to the routers. Unfortunately most routers ignore this field called
+ip_tos. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Then there are two bytes
+that give the total length of the packet. The field ip_len is set to 20 as our
+packet is only an ip packet. The ip_id field holds the id of the packet. Most
+of the time this field is ignored. Our packet has an id of 12. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The maximum length of an
+ip packet is 65536 but Ethernet networks cannot carry a packet larger than 1500
+bytes. Thus if a packet is 3000 bytes large it has to be send as two packets or
+fragments. The field ip_off talks about the fragmentation. 0 refers to no
+fragments. Then is a field ip_ttl or time to live that decides on the number of
+routers our packet can cross before it is to be killed or dropped. We choose
+the maximum value of 255 but even 20 is too large. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The job of ip is simply
+to deliver a packet to the destination. IP never travels alone, there is some
+other protocol like TCP or ICMP or UDP following. The field ip_p is the
+protocol following ip for which we have given some non existent protocol 2.
+Then we have 2 bytes of the ip checksum which is calculated by an internal
+function. The next four bytes are the source ip address where we write 70.0.0.4
+even though our ip address is 70.0.0.10. The field ip_src takes the ip address
+in a dotted decimal notation. The last four bytes are the destination ip
+address. The field ip_ttl is an optional field. If we give a value other than
+the ip address specified by the –t option, the system emits an error. Which
+means that we can forge all the bytes of an<span style="mso-spacerun: yes"> 
+</span>ip packet but need to keep the –t and the ip_ttl fields the same. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The function this_host
+returns our ip address. Thereafter, we call a function send_packet with the ip
+packet to send across a packet. The pcap_active parameter will be explained
+later. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Prior to sending the
+packet, i.e running the program, run snort as in snort –dev and the following
+packet was captured.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Snort Output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-10:06:34.097968
+0:0:E8:DF:A4:66 -&gt; 0:0:E8:D7:5E:7C type:0x800 len:0x22<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.4 -&gt; 70.0.0.2
+PROTO002 TTL:255 TOS:0x0 ID:12 IpLen:20 DgmLen:20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The first line gives us a
+date and time when the packet capture happened and the Ethernet addresses of
+the source and destination. Then the ip address of the source and destination
+is shown. This is followed by the protocol, ttl, tos, id , length of ip and the
+total length of the datagram. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip =
+forge_ip_packet(ip_hl: 5, ip_v : 4,ip_tos : 1, ip_len : 40,ip_id:12,ip_off : 0,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">     </span>ip_ttl : 5, ip_p: IPPROTO_TCP, ip_src :
+this_host());<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>tcp = forge_tcp_packet
+(ip:ip, th_sport:70, th_dport:71, th_seq:4,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">      </span>th_ack:5, th_off:5, th_flags:TH_ACK,
+th_win:0x1000, th_x2:0, th_urp:0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(tcp,
+pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Now lets send a ip-tcp
+packet over. We first use the forge_ip_packet function where for the protocol
+we do not use 2 but the value for tcp that is IPPROTO_TCP. If we do not for
+some reason like using constants use the number 6 which stands for tcp. In the
+same vein 1 stands for the icmp protocol. The length of the packet is 40, 20
+for ip, 20 for tcp. The function forge_tcp_packet takes a parameter ip that is
+the ip packet just created. We then start with the source and destination ports
+70 and 71 using the parameters th_sport and th_dport. These fields are two
+bytes large. This is followed by 2 four byte fields, the sequence number or
+th_seq that is given a value of 4 and th_ack which is the acknowledgement
+number that has a value of 5. Then we have 6 flags of which we set only one
+TH_ACK or the ack flag. The th_off field is the length of the tcp header
+multiplied by 5, the same as ip. Then we have the window size or th_win which
+is<span style="mso-spacerun: yes">  </span>the amount of data that can be send
+without waiting for an acknowledgement. The last field is the th_urp field or
+the urgent pointer. This field is always zero as it is a way to tell the other
+side, some urgent data is in the packet please read. The check sum as usual is
+optional and the th_x2 field are the 6 unused bytes that are always zero. We
+use the same send_packet function with the tcp packet and not ip. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Snort output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-11:47:43.474595
+0:0:E8:DF:A4:66 -&gt; 0:0:E8:D7:5E:7C type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.10:70 -&gt;
+70.0.0.2:71 TCP TTL:5 TOS:0x1 ID:12 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>***A**** Seq: 0x4<span
+style="mso-spacerun: yes">  </span>Ack: 0x5<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>The tcp portion of snort
+shows the Ack flag on, the sequence and ack numbers, the window size and tcp
+length.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-12:17:42.909187
+0:0:E8:DF:A4:66 -&gt; 0:0:E8:D7:5E:7C type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.10:1080 -&gt;
+70.0.0.2:80 TCP TTL:5 TOS:0x1 ID:12 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>******S* Seq: 0x4<span
+style="mso-spacerun: yes">  </span>Ack: 0x5<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-12:17:42.909705
+0:0:E8:D7:5E:7C -&gt; 0:0:E8:DF:A4:66 type:0x800 len:0x3C<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.2:80 -&gt;
+70.0.0.10:1080 TCP TTL:128 TOS:0x0 ID:58331 IpLen:20 DgmLen:44 DF<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>***A**S* Seq:
+0xBDD4A946<span style="mso-spacerun: yes">  </span>Ack: 0x5<span
+style="mso-spacerun: yes">  </span>Win: 0x40E8<span style="mso-spacerun: yes"> 
+</span>TcpLen: 24<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>TCP Options (1) =&gt;
+MSS: 1460<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-12:17:42.909743
+0:0:E8:DF:A4:66 -&gt; 0:0:E8:D7:5E:7C type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.10:1080 -&gt;
+70.0.0.2:80 TCP TTL:128 TOS:0x0 ID:8881 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>*****R** Seq: 0x5<span
+style="mso-spacerun: yes">  </span>Ack: 0x5<span style="mso-spacerun: yes"> 
+</span>Win: 0x0<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip =
+forge_ip_packet(ip_hl: 5, ip_v : 4,ip_tos : 1, ip_len : 40,ip_id:12,ip_off : 0,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">     </span>ip_ttl : 5, ip_p:6, ip_src :
+this_host());<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>tcp =
+forge_tcp_packet(ip:ip, th_sport:1080, th_dport:80, th_seq:4,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">      </span>th_ack:5, th_off:5, th_flags:TH_SYN,
+th_win:0x1000, th_x2:0, th_urp:0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(tcp,
+pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Lets test out our code by
+sending a syn packet to Ip address 70.0.0.2 which will reply with a syn ack
+packet. We set the syn flag by using the enumeration TH_SYN. This is the first
+packet in the snort output. The machine 70.0.0.2 sends us a packet with two
+flags SYN and ACK set.<span style="mso-spacerun: yes">  </span>We send a
+sequence number of 4, the return packet increased it by 1 to 5 as the ACK
+number. The seq number from 70.0.0.2 is a large number 0xBDD4A946. When our
+copy of windows receives such a packet it sends back a RST packet. For a rst
+packet the seq no and ack no are not meaningful. Thus we successfully send a
+syn packet, received a syn ack which windows took objection to and send back a
+rst. All this happened because we are connecting to a web server running on the
+target machine on port 80. This is the value of the destination port field, the
+port on the other side. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip =
+forge_ip_packet(ip_hl: 5, ip_v : 4,ip_tos : 1, ip_len : 40,ip_id:12,ip_off : 0,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">     </span>ip_ttl : 5, ip_p:6, ip_src :
+this_host());<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>tcp =
+forge_tcp_packet(ip:ip, th_sport:80, th_dport:1080, th_seq:4,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">      </span>th_ack:5, th_off:5, th_flags:TH_SYN,
+th_win:0x1000, th_x2:0, th_urp:0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(tcp,
+pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-13:33:37.354257
+0:0:E8:DF:A4:66 -&gt; 0:0:E8:D7:5E:7C type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.10:80 -&gt;
+70.0.0.2:1080 TCP TTL:5 TOS:0x1 ID:12 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>******S* Seq: 0x4<span
+style="mso-spacerun: yes">  </span>Ack: 0x5<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>07/06-13:33:37.354678 0:0:E8:D7:5E:7C
+-&gt; 0:0:E8:DF:A4:66 type:0x800 len:0x3C<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>70.0.0.2:1080 -&gt;
+70.0.0.10:80 TCP TTL:128 TOS:0x0 ID:58567 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>***A*R** Seq: 0x0<span
+style="mso-spacerun: yes">  </span>Ack: 0x5<span style="mso-spacerun: yes"> 
+</span>Win: 0x0<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We now send a syn packet
+to port 1080. We know that we have no server running on this machine at that
+port. According to the rfc, if we send a syn packet on a port where no server
+is accepting packets, the os must send a RST packet. This is exactly what
+happens. This is how a port scanner works, it keeps sending syn packets and if
+it receives a Ack, the port is open, rst no port open, no packet, a firewall is
+between us and the target.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip =
+forge_ip_packet(ip_hl: 5,ip_v : 4,<span style='mso-tab-count:1'>    </span>ip_tos
+: 0,ip_len : 100,ip_id:4,ip_off : 0,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes">    </span>ip_ttl : 0xff,ip_p:0x03,ip_src :
+this_host());<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ipo = insert_ip_options
+(ip:ip, code:0xE4, length:2, value:raw_string(0x03, 0x04));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ipo +=
+string(&quot;ABCDEFG&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(ipo,
+pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>00 00 e8 d7 5e 7c 00 00
+e8 df a4 66 08 00 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>46 00<span
+style="mso-spacerun: yes">  </span>00 1f 00 04 00 00 ff 03 47 c5 46 00 00 0a 46
+00<span style="mso-spacerun: yes">  </span>00 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>e4 02 03 04<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>41 42 43 44 45 46 47<span
+style="mso-spacerun: yes">           </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We can change everything
+about the ip header whether it is logical or not. We now have used ethereal
+another network sniffer to show you the bytes send by nessus. After installing
+ethereal, we choose the menu Capture, Options, choose the network card and then
+capture. We then click again on Capture, Start and then click on Stop after we
+have captured our packets. By default we get 3 windows, the first with all the
+packets, the second with a higher level view of one packet, three the
+individual bytes. If we click on a certain english header name in the second
+window we get the actual bytes in the third. The first line is the Ethernet
+header. The second line that contains the IP packet starts with 46 and not 45.
+This is because our header is now 24 bytes large and not 20 bytes. We set the
+length of the packet to 100 bytes but the system overrode us and made it 31
+bytes or 1f instead. The ip packet ends with the source and destination
+addresses and then begins our IP options. Remember the IP header can be up to
+60 bytes large. Normally these extra 40 bytes are used to let routers place
+their IP addresses to act as a path used by the packet. The function
+insert_ip_options first takes an ip packet just created ip, the code of the ip
+option that is specified in the rfc, This is a one byte value, we use a non
+standard value of e4. Then we have the length of the data following 2 bytes and
+the actual bytes. The function raw_string is always used whenever we want our
+packet to contain specific bytes. This gives us a new packet ipo whose size is
+now 24 bytes. We then add a string to this ip packet which gets concatenated to
+the end. This adds another 7 bytes to our ip packet giving it a length of 31.
+This is how we can create our own packets to simulate say a buffer overflow.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ip =
+forge_ip_packet(ip_hl :5,ip_v :4,ip_tos :0,ip_len :20,ip_id :3,ip_off :0,ip_ttl
+:64,<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span>ip_p :IPPROTO_UDP,ip_src<span
+style="mso-spacerun: yes">  </span>:this_host());<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>udp =
+forge_udp_packet(ip:ip, uh_sport:1025,uh_dport:1026,uh_ulen :8);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>send_packet(udp,pcap_active:FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>00 00 e8 d7 5e 7c 00 00
+e8 df a4 66 08 00<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>45 00 00 1c 00 03 00 00
+40 11 ee c2 46 00 00 0a 46 00 00 02<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>04 01 04 02 00 08 6b cf <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>00 00 e8 df a4 66 00 00
+e8 d7 5e 7c 08 00<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>45 00 00 38 0e 94 00 00
+80 01 a0 25 46 00 00 02 46 00 00 0a <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>03 03 89 22 00 00 00 00
+45 00 00 1c 00 03 00 00 40 11 ee c2 46 00 00 0a 46 00 00 02 04 0104 02 00 08 6b
+cf<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/nasl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:20 GMT -->
+</html>

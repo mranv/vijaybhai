@@ -1,0 +1,157 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/windbg2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:16 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="windbg2_files/filelist.html">
+<title>Windebug 2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>187</o:TotalTime>
+  <o:Created>2006-06-26T12:04:00Z</o:Created>
+  <o:LastSaved>2006-06-26T12:04:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>74</o:Words>
+  <o:Characters>423</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>3</o:Lines>
+  <o:Paragraphs>1</o:Paragraphs>
+  <o:CharactersWithSpaces>519</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:1595630062;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1158670428 1170221488 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-text:%1;
+	mso-level-tab-stop:21.0pt;
+	mso-level-number-position:left;
+	margin-left:21.0pt;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>WINDBG II</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !cpuinfo</p>
+
+<p class=MsoNormal>CP<span style="mso-spacerun: yes">  </span>F/M/S
+Manufacturer<span style="mso-spacerun: yes">  </span>MHz PRCB Signature<span
+style="mso-spacerun: yes">    </span>MSR 8B Signature Features</p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-.25in;mso-list:l0 level1 lfo1;
+tab-stops:list 21.0pt'><![if !supportLists]>0<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>6,13,6 GenuineIntel<span style="mso-spacerun: yes"> 
+</span>598 0000001700000000<span style="mso-spacerun: yes"> 
+</span>0000001700000000 80033fff</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The extension<span style="mso-spacerun: yes"> 
+</span>cpuinfo gives us more information about the cpu. The features field
+80033fff gives us more details about the cpu we are using. The 11<sup>th</sup>
+bit is called the SEP bit which if 1 tells us whether the cpu supports the
+sysenter instructions. The cpu may support sysenter but the os must take
+advantage of this support. In our case the 11 bit is on as the third nibble is
+f.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; rdmsr 174</p>
+
+<p class=MsoNormal>msr[174] = 00000000`00000008</p>
+
+<p class=MsoNormal>lkd&gt; rdmsr 175</p>
+
+<p class=MsoNormal>msr[175] = 00000000`f78b3000</p>
+
+<p class=MsoNormal>lkd&gt; rdmsr 176</p>
+
+<p class=MsoNormal>msr[176] = 00000000`804de6f0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The rdmsr instruction reads the value of a model specific
+register. The address 174 is for the code segment value SYSENTER_CS_MSR which
+in our case is selector 8. When we look at the entry 1 in the GDT this will
+give us details of the code segment which contains the first function to be
+called in ring 0 KiFastCallEntry. The address 176 tells us the address of the
+kiFastCallEntry which is 804de6f0.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; u 804de6f0</p>
+
+<p class=MsoNormal>nt!KiFastCallEntry:</p>
+
+<p class=MsoNormal>804de6f0 b923000000<span style="mso-spacerun: yes">      
+</span>mov<span style="mso-spacerun: yes">     </span>ecx,0x23</p>
+
+<p class=MsoNormal>804de6f5 6a30<span style="mso-spacerun: yes">            
+</span>push<span style="mso-spacerun: yes">    </span>0x30</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The u command just confirmed our suspicions.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The selector 8 we get by running the command gdt in soft
+ice. We are told that the type is Code32, the base is 00000000 and the limit is
+fffffff. The DPL is 0 of this selector 8. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/windbg2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:17 GMT -->
+</html>

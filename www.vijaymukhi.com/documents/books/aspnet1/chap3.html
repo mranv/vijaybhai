@@ -1,0 +1,831 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/aspnet1/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:42:20 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap3_files/filelist.html">
+<link rel=Edit-Time-Data href="chap3_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Writing our own Web Controls - ASP.NET - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>10</o:TotalTime>
+  <o:Created>2001-09-26T10:22:00Z</o:Created>
+  <o:LastSaved>2001-09-26T10:32:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1650</o:Words>
+  <o:Characters>9409</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>78</o:Lines>
+  <o:Paragraphs>18</o:Paragraphs>
+  <o:CharactersWithSpaces>11554</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Trebuchet MS";
+	color:black;
+	mso-font-kerning:0pt;
+	font-weight:normal;}
+p.Cprg, li.Cprg, div.Cprg
+	{mso-style-name:"C\#prg";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Coutput, li.Coutput, div.Coutput
+	{mso-style-name:"C\#output";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Cbase, li.Cbase, div.Cbase
+	{mso-style-name:"C\#base";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b>-3-</b></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1>Writing our own Web Controls</h1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'>So far, we have been exclusively
+using controls provided by Microsoft. Since they are web based, they are also
+termed as Web Controls. In this chapter, we will show you how to create your
+own web control. Any Web Form can be modified to become a Web Control.<span
+style="mso-spacerun: yes">  </span>A Web Form that is used as a server control
+is termed as a user control.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Language=&quot;C#&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot;
+TagName=&quot;sonal&quot; Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>hi &lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:sonal runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cprg><u>a1.ascx</u><o:p></o:p></p>
+
+<p class=Cprg>Great ASP+ book<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>Great ASP+ book<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Nothing can be simpler than
+creating a user control. We first need a tag or a tag prefix to identify the
+control. In the previous chapter, all ASP+ controls started with the tag prefix
+asp:. This tag prefix was then followed by the word button or textbox. These
+type of words are given the nomenclature of tag names. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the case of user controls, we
+initially need to register our control with ASP+. To achieve this, a directive
+called Register is used. It is followed by the attributes TagPrefix, TagName
+and Src. Register is known as a directive because it is preceded by the @ sign.
+TagPrefix and TagName are initialized to vijay and sonal, respectively. So, the
+tag usage will now be vijay:sonal. Finally, it is essential to provide the file
+name of the file that contains the source code of our control. To accomplish
+this, Src is initialized to a1.ascx. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>By convention, we shall always
+name our source code file as a1.ascx. The big boys at Microsoft have requested
+the developers to standardize the file extension as ascx, but this is not
+mandatory. The file a1.ascx has only a single line of text i.e. Great ASP+
+book. Hence, the output replaces the control tag vijay:sonal with this line.
+Life could not get any simpler !<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot; TagName=&quot;mukhi&quot;
+Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>hi &lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi id=&quot;aaa&quot;<span style="mso-spacerun:
+yes">  </span>runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a1.ascx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>public String Color = &quot;blue&quot;;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>The color property is &lt;%= Color %&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>The color property is blue <o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>This program associates a
+property called Color with the control. A property can be introduced by simply
+adding a public variable in the ascx file, and then displaying it using &lt;%=.
+Here, the public variable Color is initialized to blue. Hence, we catch sight
+of the colour blue in the browser. This simple act of creating a public
+variable, which gets converted into a property, can also be used with tags
+created by us. The next program illustrates this point.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot; TagName=&quot;mukhi&quot;
+Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>hi &lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi id=&quot;aaa&quot;<span style="mso-spacerun:
+yes">  </span>Color=&quot;green&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>The color property is green<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The original value of the
+property can be overwritten in the tag. Hence, we see the value as green and
+not blue.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot;
+TagName=&quot;mukhi&quot; Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>void abc(Object s, EventArgs E)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>aaa.Color = &quot;red&quot;;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>hi &lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi id=&quot;aaa&quot;<span style="mso-spacerun:
+yes">  </span>Color=&quot;green&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;asp:button text=&quot;Change &quot; OnClick=&quot;abc&quot;
+runat=server/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>The color property is red<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Bear in mind that there is no
+distinction between the properties created by us and the built-in properties of
+the tag. Thus, in the function abc, we can modify the value of the property
+Color to red. The new values override the default ones. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot;
+TagName=&quot;mukhi&quot; Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>void abc(Object s, EventArgs E)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>aaa.Color = &quot;red&quot;;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>hi &lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi id=&quot;aaa&quot;<span style="mso-spacerun:
+yes">  </span>Color=&quot;green&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;br&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;asp:button text=&quot;Change &quot; OnClick=&quot;abc&quot;
+runat=server/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cprg><u>a1.ascx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>String aa = &quot;blue&quot;;<o:p></o:p></p>
+
+<p class=Cprg>public String Color<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>get <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return aa;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>set<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>aa<span style="mso-spacerun: yes">  </span>= value;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cprg>The color property is &lt;%= Color %&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We start with the output window
+displaying the following output:<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>The color property is green<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>And after we click on the button,
+the output that is now displayed, is as follows:<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi <o:p></o:p></p>
+
+<p class=Coutput>The color property is red<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We have carried out numerous
+modifications to the file a1.ascx, but we have left the file a.aspx untouched. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The C# programming language
+understands properties and uses keywords/accessors like 'get' and 'set' to
+operate upon them. Since the language used in the ASP+ file is given as C#,
+this feature can easily be exploited to act upon the tag properties. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the ascx file, the local
+variable aa is initialized to the value blue. On the next line, the statement
+commences with the word 'public' associated with the Color property and with
+the return value as String.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A property can either be used on
+the left or the right side of an = sign. If it is on the left, then it is being
+assigned a value. So, when we write Color=&quot;blue&quot; in a tag, we are
+setting the value of the property Color to blue, which is a string. ASP+ uses
+the set accessor to store the value into the property. The variable aa contains
+the value blue. Hence, the property Color is initialized to blue.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>When a property is placed on the
+right side of the 'equal to' sign, it will return the value contained in it. In
+the aspx file, &lt;%= Color&gt; is used to obtain the current value of the
+property Color. Accordingly, ASP+ calls the 'get' accessor. The only statement
+within 'get' is 'return aa' which will return the value stored in aa to the
+aspx file.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Apparently, both the techniques
+that used to create a property, appear identical; however,there is a subtle
+difference. In the first case, we are merely changing the value of a variable,
+whereas, in the second instance, we are calling functions. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A function can contain and
+execute innumerable lines of code. These statements can perform error checks
+and ensure that the user does not infringe on the permissible values of the
+property. A similar paradigm is noticeable in the highly successful Microsoft
+product, Visual Basic, which extensively supports the concept of properties.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot;
+TagName=&quot;mukhi&quot; Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>void Page_Load(Object s, EventArgs E)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>if (Page.IsPostBack) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;true a.aspx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>aa.Text = bb.Password;<o:p></o:p></p>
+
+<p class=Cprg>}<span style="mso-spacerun: yes">    </span><o:p></o:p></p>
+
+<p class=Cprg>else<o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;false a.aspx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi id=&quot;bb&quot; Password=&quot;hell&quot;
+runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;asp:Label id=&quot;aa&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cprg><u>a1.ascx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>public String Password <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>get <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return Pass.Text;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>set <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>Pass.Text = value;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:TextBox id=&quot;Pass&quot; TextMode=&quot;Password&quot;
+runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:Button Text=&quot;Submit&quot;
+runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>false a.aspx<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The file a.aspx has a custom tag
+called vijay:mukhi. It has an id of bb and a property called password, which
+has been initialized to 'hell'. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Since the label aa has no
+value,<span style="mso-spacerun: yes">  </span>Page_Load does not display any
+text when the page is loaded. Since the file a.aspx has been requested for,
+from the server by writing the url as http://localhost/a.aspx, (submit button
+is not used), the property IsPostBack is false. Hence, the output is depicted
+as false. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The source code file a1.ascx has
+a property called password, which is declared public and which returns a
+String. In order to initialize and retrieve values of the property, a textbox
+with an id of Pass is used instead of a variable. Since the TextMode is
+Password, the characters that are keyed in are not visible.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Further, a button labeled as
+'submit' has been added to the ascx file to take us back to the server.
+Therefore, an existing control can be used to hold a value. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A user control can accommodate
+multiple controls. The View-Source too does not spring up any surprises. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>View-Source</u><o:p></o:p></p>
+
+<p class=Cprg>false a.aspx<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form name=&quot;ctrl1&quot; method=&quot;post&quot;
+action=&quot;a.aspx&quot; id=&quot;ctrl1&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;input type=&quot;hidden&quot; name=&quot;__VIEWSTATE&quot;
+value=&quot;YTB6MTI3MTQyMTk4M19fX3g=d6c4c93a&quot; /&gt;<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cprg>&lt;input name=&quot;bb:Pass&quot; type=&quot;password&quot;
+value=&quot;hell&quot; id=&quot;bb_Pass&quot; /&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;input type=&quot;submit&quot; name=&quot;bb:ctrl1&quot;
+value=&quot;Submit&quot; /&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;span id=&quot;aa&quot;&gt;&lt;/span&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the ascx file, the textbox was
+assigned the id of Pass, and the control name in a.aspx name was bb. Hence, in
+the HTML file generated by the server, it is termed as bb:Pass. This is done
+merely to maintain the sanctity of names, as the same name could have been
+assigned to the textbox in both the files. When we type hell in the textbox and
+click on the button, the output that is displayed is as follows:<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>True a.aspx<o:p></o:p></p>
+
+<p class=Coutput>Hell<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>When we click on the submit
+button, the file a.aspx is called. Since the button is responsible for calling
+the a.aspx file, the property IsPostBack is assigned a value of true. Hence,
+True is displayed. The label in Page_Load is initialized to the password 'hell'
+because our textbox contains the word 'hell'.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Had we modified this value, we
+would not have been in such a muddle. Instead, the label would have displayed
+these values too. All this happens only on the server. An ascx file can
+definitely contain code that is normally written in an aspx file. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;%@ Register TagPrefix=&quot;vijay&quot;
+TagName=&quot;mukhi&quot; Src=&quot;a1.ascx&quot; %&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;html&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>void Page_Load(Object Src, EventArgs e) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>if (Page.IsPostBack) <o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;true1&quot;);<o:p></o:p></p>
+
+<p class=Cprg>else<o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;false1&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;form runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;vijay:mukhi runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/form&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/html&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a1.ascx</u><o:p></o:p></p>
+
+<p class=Cprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>void Page_Load(Object Src, EventArgs e) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>if (Page.IsPostBack) <o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;true&quot;);<o:p></o:p></p>
+
+<p class=Cprg>else<o:p></o:p></p>
+
+<p class=Cprg>Response.Write(&quot;false&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>void abc(Object sender, EventArgs e) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>Response.Write(aa.SelectedItem.Value);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:DropDownList AutoPostBack=&quot;true&quot;
+id=&quot;aa&quot; OnSelectedIndexChanged=&quot;abc&quot;
+runat=&quot;server&quot;&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:ListItem
+value=&quot;business&quot;&gt;Business&lt;/ASP:ListItem&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:ListItem value=&quot;trad_cook&quot;&gt;Traditional
+Cooking&lt;/ASP:ListItem&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;ASP:ListItem value=&quot;mod_cook&quot;&gt;Modern
+Cooking&lt;/ASP:ListItem&gt;<o:p></o:p></p>
+
+<p class=Cprg>&lt;/ASP:DropDownList&gt;<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>false1falsetrad_cook <o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Along with properties, a user
+control can also have events associated with it. In fact, it can contain every
+feature that is usually built into a tag. We can implement our own callbacks
+also. The above example amply validates this feature.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We have integrated a listbox in
+our control and associated a function abc with it. With every change in the
+item that is selected from the options in the listbox, abc shall be called. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Both files have a Page_Load
+function. It is relatively easy to verify which Page_Load function gets invoked
+first. This can simply be accomplished by placing a Write function with each of
+these functions, and verifying the output by determining the order in which
+they are being executed.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase>The output lucidly and comprehensively demonstrates that the
+Page_Load, which forms the part of<span style="mso-spacerun: yes">  </span>the
+main file a.aspx, is summoned first, followed by the user controls. Moreover,
+as we keep changing the current selection, the abc function gets called repeatedly,
+resulting in the display of the newly selected values.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/aspnet1/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:42:22 GMT -->
+</html>

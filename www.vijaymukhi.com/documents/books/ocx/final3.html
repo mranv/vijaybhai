@@ -1,0 +1,665 @@
+<html>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final3.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:44 GMT -->
+<head>
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<TITLE>The Makings Of An OCX Container</TITLE>
+</head>
+
+<BODY>
+
+<H2>A treasure trove of information: The type library</H2>
+
+The container can interact with the <i>OCX</i> in three different ways. The first way is by calling code in the <i>OCX</i>. This code is encapsulated in an entity called <i>Method</i>. Method is nothing but another word for function.<BR> 
+
+Similarly, the <i>OCX</i> can also have several <i>Properties</i> such as color, caption etc. associated with it. These properties can be read and/or changed by the user of the <i>OCX</i>. Each property is just a variable of the appropriate data type. For example, if we have an <i>OCX</i> that handles graphs, we would want to change the type of graph. So one property  of this <i>OCX</i> could be a variable <i>graph type</i> say of the data type integer. Depending on the value of this variable, a bar graph, a pie graph or a line graph could be displayed.<BR>          
+
+Finally, associated with an <i>OCX</i> are <i>Events</i>. An event is any happening that can be detected by the <i>OCX</i>. <i>`Click'</i> is an example. This event occurs whenever there is a mouse click over the <i>OCX</i>. Typically, we associate some code with each event. This code will be executed when the event occurs.<BR> 
+
+A user needs to know of all such features; be it events, methods or properties; that the <i>OCX</i> has decided to let him interact with. So, it became necessary to develop a technique that would indicate to the user all the accessible events, properties and methods of the <i>OCX</i>. Since, <i>OLE</i> itself is designed to be programming language independent this technique too had to work irrespective of the language used to access the information. In a sense, it also had to be distinct from the <i>OCX</i> itself.<BR> 
+
+Taking into account all these conditions <i>Microsoft</i> designed the <b><i>Object Description Language (ODL)</i></b> as an aid. Just like the resource programming language is used to define the resources of an application in a <i>`.rc'</i> file, <i>ODL</i> is used to create an <i>`.odl'</i> file. This is an ASCII file and it holds the names of the events, methods and properties of the <i>OCX</i>.<BR> 
+
+It has to be compiled separately using the <i>MkTypLib</i> compiler. On compilation it will generate a <i>`.tlb'</i> file; the type library. The type library file is considered to be a resource; much like a menu or a dialog. The RC file holds a line that indicates the type library for the <i>OCX</i>. The ID for the type library resource is always to be <b><i>1</i></b>. The line would typically read:<BR> 
+
+ 1 TYPELIB NameOfFile.tlb
+
+The <i>`.tlb'</i> file will be a part of the final DLL.<BR> 
+
+The <i>ODL</i> files for an <i>OCX</i> are always of the following format. This is an elementary <i>ODL</i> file that we had created.<BR> 
+
+<PRE> 
+
+ [uuid(12345678-9012-3456-7890-123456789012)]
+
+ 
+
+ library zzz
+
+ {
+
+   importlib("stdole.tlb");
+
+ 
+
+   [uuid(23456789-0123-4567-8901-234567890123)]
+
+   dispinterface www
+
+   {
+
+     properties:
+
+       [id(1)] long j;
+
+     methods:
+
+       [id(2)] void aa();
+
+       [id(3)] long bb(short a, BSTR b);
+
+   }; 
+
+ 
+
+   [uuid(34567890-1234-5678-9012-345678901234)]
+
+   dispinterface xxx
+
+   {
+
+     properties:
+
+ 
+
+     methods:
+
+       [id(10)] void Click();     
+
+   };                                   
+
+ 
+
+   [uuid(45678901-2345-6789-0123-456789012345)]
+
+   coclass yyy
+
+   {                         
+
+    [default] dispinterface www;
+
+    [default,source] dispinterface xxx;
+
+   };
+
+ };
+
+</PRE> 
+
+Every distinct entity in the <i>ODL</i> file is assigned it's own unique identification number. This identifier or <i>uuid</i> is nothing but a <i>GUID</i> structure. (<A HREF = "small.html">What's in a name?</A>). The very first <i>uuid</i> that we encounter in the <i>ODL</i> file is that of the type library itself. Just like every interface, each type library is also registered with <i>`reg.dat'</i>. It is this <i>uuid</i> that we use to access the type library.<BR> 
+
+The type libraries may want to reference type infos that have already been declared in other type libraries. <i>importlib()</i> is used to include the type libraries to be referenced. <BR> 
+
+The data within the type library could be of different types. We could have a structure, a union, an <i>IDispatch</i> interface etc. Each is a distinct element and is referred to by the generic name <i>Type Info</i>.<BR> 
+
+For an <i>OCX</i>, there are always three type infos per type library. The first type info always defines an <i>IDispatch</i> interface that holds information about the methods and properties while the second is always the <i>IDispatch</i> interface that allows access to the <i>OCX</i>'s events. This second type info will never have any properties associated with it. There would only be the events listed in it.<BR> 
+
+The third type info is a <i>CoClass</i>. The following is the definition given in the <b><i>OLE 2.0  Programmer's  Reference, Volume 2</i></b>:<BR> 
+
+<i>"Description  of a component object class description. Specifies an implementation of one or more OLE interfaces and one or more IDispatch interfaces."</i><BR> 
+
+
+We challenge you to make sense of this not-too-eloquent statement.<BR> 
+
+Each type info is provided with it's own <i>uuid.</i> The <i>uuid</i> is stated immediately above the type info. Thus,  in the type library, every <i>uuid</i> de-lineates a new type  info. Immediately  following the <i>uuid</i> is a line that  identifies the nature of the type info. The <i>IDispatch</i> interfaces  are distinguished  by  the <i>ODL</i>  keyword <i>dispinterface</i>. Following the keyword is the name assigned to the type info. This name can be used to refer to the  type  info  later  in  the <i>ODL</i>  file. The <i>IDispatch</i> interface type infos  have the following format:<BR> 
+
+<PRE> 
+
+ dispinterface NameOfInterface
+
+ {
+
+  properties:
+
+     .
+
+     .     // List Of Properties;  
+
+     .
+
+  methods:
+
+     .
+
+     .     // List Of Methods;  
+
+     .
+
+ };
+
+</PRE> 
+
+Each property is listed in the format:
+
+ [id(IDOfProperty)] TypeOfProperty NameOfProperty;
+
+while each method is listed in the format: 
+
+ [id(IDOfMethod)] ReturnType NameOfMethod(Param 1,..., Param n);
+
+Every element of an <i>OCX</i> that can be accessed by others  is assigned  an unique ID. This is true irrespective of  whether  we are talking of events, methods or properties. It is using this ID that  we access the members rather than their names. We will  get into  the specifics of accessing them later in  this  newsletter. First, let us read a type library.<BR> 
+
+On  executing  the  following program, you  will  not  <i>see</i> anything different from the previous one. But the important thing in  this program is that we show you how to read a type  library. In  the  process  we also initialize the  global  structures  and create  link-  lists to store the information from the  type  library.<BR> 
+
+<H4>Program 6</H4>
+
+<PRE>
+
+ void MFrameWnd::ObjCreate(CLSID z_TempClsid)
+
+ {
+
+   
+
+   // Retain all previously existing code  
+
+   
+
+   InitArray();
+
+ }
+
+ 
+
+ void MFrameWnd::InitArray()
+
+ {
+
+   IProvideClassInfo *z_pProvideClassInfo = 0;
+
+   ITypeLib *z_pTypeLib = 0;
+
+   ITypeInfo *z_pTypeInfo = 0; 
+
+   VARDESC *z_pVarDesc = 0;
+
+   FUNCDESC *z_pFuncDesc = 0;
+
+   UINT z_nIndex = 0;
+
+   TYPEATTR *z_pTypeAttr = 0;
+
+   
+
+   z_pOleObject-&#62 QueryInterface(IID_IProvideClassInfo,(void**)&amp z_pProvideClassInfo);
+
+   z_pProvideClassInfo-&#62 GetClassInfo(&amp z_pTypeInfo);
+
+   z_pTypeInfo-&#62 GetContainingTypeLib(&amp z_pTypeLib,&amp z_nIndex);
+
+   for(UINT z_nTypeCount = 0; z_nTypeCount  &#60  2; z_nTypeCount++)     
+
+   {
+
+     PData *z_pPDPrev = 0;
+
+     FData *z_pFDPrev = 0;
+
+     
+
+     z_pTypeLib-&#62 GetTypeInfo(z_nTypeCount,&amp z_pTypeInfo); 
+
+     z_pTypeInfo-&#62 GetTypeAttr(&amp z_pTypeAttr);                                                                              
+
+     
+
+     // if it is the Events dispinterface store the CLSID. It  is required later.
+
+     
+
+     if(z_nTypeCount)                     
+
+       z_ClsidEvents = z_pTypeAttr-&#62 guid;
+
+       
+
+     // Initialization of the link-list that holds information on properties
+
+    
+
+     if(!z_nTypeCount)
+
+     {
+
+       for(UINT z_nVars  = 0; z_nVars &#60 z_pTypeAttr-&#62 cVars; z_nVars++)
+
+       {
+
+         VARTYPE z_vt;
+
+         UINT z_nCopied;
+
+         
+
+         if(!z_pPDPrev)
+
+         {
+
+           z_pPDPrev = new PData;
+
+           z_pPDFirst = z_pPDPrev;
+
+         }   
+
+         else
+
+         {
+
+           PData *z_pNext;
+
+         
+
+           z_pNext = new PData;
+
+           z_pPDPrev-&#62 z_pNext = z_pNext;
+
+           z_pPDPrev = z_pNext;
+
+         }   
+
+         z_pPDPrev-&#62 z_pNext = 0;
+
+         z_pPDPrev-&#62 z_nPtr  = FALSE;
+
+         z_pTypeInfo-&#62 GetVarDesc(z_nVars,&amp z_pVarDesc);   
+
+         if(z_pVarDesc-&#62 elemdescVar.tdesc.vt&#62 13)
+
+           z_vt = z_pVarDesc-&#62 elemdescVar.tdesc.vt -2;
+
+         else
+
+           z_vt = z_pVarDesc-&#62 elemdescVar.tdesc.vt ;
+
+         z_pPDPrev-&#62 z_nPropType = z_vt;
+
+         if(!strcmp(z_VarType[z_pPDPrev-&#62 z_nPropType],"VT_USERDEFINED"))
+
+         {                                                                                                                           
+
+           UserDefined(z_pTypeInfo, &amp z_pVarDesc-&#62 elemdescVar.tdesc,&amp  z_vt);
+
+           z_pPDPrev-&#62 z_nPropType = z_vt;                
+
+         }
+
+         else if(!strcmp(z_VarType[z_pPDPrev-&#62 z_nPropType],"VT_PTR"))
+
+         {
+
+           z_pPDPrev-&#62 z_nPtr = TRUE;
+
+           Ptr(z_pTypeInfo,&amp z_pVarDesc-&#62 elemdescVar.tdesc,&amp z_vt);
+
+           z_pPDPrev-&#62 z_nPropType = z_vt;
+
+         }                
+
+         z_pPDPrev-&#62 z_lDispID = z_pVarDesc-&#62 memid;
+
+         char *z_sPName = (char*) malloc(25);
+
+         z_pTypeInfo-&#62 GetNames(z_pVarDesc-&#62 memid,&amp z_sPName,
+
+           1,&amp z_nCopied);
+
+         z_pPDPrev-&#62 z_sPropName = (char*) malloc(strlen(z_sPName) + 1);
+
+         strcpy(z_pPDPrev-&#62 z_sPropName,z_sPName);
+
+         if(z_pVarDesc)
+
+           z_pTypeInfo-&#62 ReleaseVarDesc(z_pVarDesc);
+
+         free(z_sPName); 
+
+       }
+
+     }                                                  
+
+    
+
+     // Initialization of the link-list that holds information on methods or events
+
+   
+
+     for(UINT z_nFuncs = 0;z_nFuncs  &#60  z_pTypeAttr-&#62 cFuncs;z_nFuncs++)
+
+     {
+
+       char **z_sNames; 
+
+       UINT z_nCopied;
+
+       VARTYPE z_vt;
+
+       
+
+       if(!z_pFDPrev)
+
+       {
+
+         z_pFDPrev = new FData;
+
+         if(!z_nTypeCount)
+
+           z_pFDFirst = z_pFDPrev;
+
+         else                                         
+
+           z_pEDFirst = z_pFDPrev;
+
+       }
+
+       else
+
+       {
+
+         FData *z_pFDNext;
+
+         
+
+         z_pFDNext = new FData;
+
+         z_pFDPrev-&#62 z_pNext =  z_pFDNext;
+
+         z_pFDPrev = z_pFDNext;
+
+       }                                                  
+
+       z_pFDPrev-&#62 z_nPtr = FALSE;
+
+       z_pFDPrev-&#62 z_pNext = 0;
+
+       z_pTypeInfo-&#62 GetFuncDesc(z_nFuncs,&amp z_pFuncDesc);
+
+       z_sNames  = (char**) malloc((z_pFuncDesc-&#62 cParams + 1)  * sizeof(char*)); 
+
+       z_pTypeInfo-&#62 GetNames(z_pFuncDesc-&#62 memid,z_sNames,
+
+         (z_pFuncDesc-&#62 cParams + 1),&amp z_nCopied);
+
+       if(z_pFuncDesc-&#62 elemdescFunc.tdesc.vt &#62  13)
+
+         z_vt = z_pFuncDesc-&#62 elemdescFunc.tdesc.vt - 2;
+
+       else
+
+         z_vt = z_pFuncDesc-&#62 elemdescFunc.tdesc.vt;  
+
+       if(!strcmp(z_VarType[z_vt],"VT_PTR"))
+
+       {
+
+         z_pFDPrev-&#62 z_nPtr = TRUE;
+
+         Ptr(z_pTypeInfo,&amp z_pFuncDesc-&#62 elemdescFunc.tdesc,&amp z_vt);
+
+       }   
+
+       z_pFDPrev-&#62 z_nRType = z_vt; 
+
+       z_pFDPrev-&#62 z_lDispID = z_pFuncDesc-&#62 memid;
+
+       z_pFDPrev-&#62 z_nNumParams = z_pFuncDesc-&#62 cParams ;
+
+       z_pFDPrev-&#62 z_sFName = (char*)  malloc(strlen(z_sNames[0]) + 1);
+
+       strcpy(z_pFDPrev-&#62 z_sFName,z_sNames[0]);
+
+       if(z_pFuncDesc-&#62 cParams )
+
+       {                                            
+
+         z_pFDPrev-&#62 z_pPTypes  = (VARTYPE*) malloc(z_pFuncDesc-&#62 cParams *                   sizeof(VARTYPE));
+
+         z_pFDPrev-&#62 z_sPName  = (char**) malloc(sizeof(char*)  * z_pFuncDesc-&#62 
+
+            cParams);
+
+         for(int z_nParms = 0; z_nParms  &#60   z_pFuncDesc-&#62 cParams ; z_nParms++)
+
+         {
+
+           z_pFDPrev-&#62 z_sPName[z_nParms] = (char*) malloc(strlen(z_sNames[z_nParms+1]) + 1);
+
+           strcpy(z_pFDPrev-&#62 z_sPName[z_nParms],z_sNames[z_nParms +1]);
+
+           z_pFDPrev-&#62 z_pPTypes[z_nParms] = z_pFuncDesc-&#62 lprgelemdescParam[z_nParms].tdesc.vt;
+
+         }  
+
+       }
+
+       free(z_sNames);
+
+       if(z_pFuncDesc)
+
+         z_pTypeInfo-&#62 ReleaseFuncDesc(z_pFuncDesc);
+
+     }                                                
+
+     if(z_pTypeAttr)
+
+       z_pTypeInfo-&#62 ReleaseTypeAttr(z_pTypeAttr); 
+
+   }  
+
+   if(z_pProvideClassInfo)
+
+     z_pProvideClassInfo-&#62 Release();
+
+   if(z_pTypeLib)
+
+     z_pTypeLib-&#62 Release();  
+
+   if(z_pTypeInfo)
+
+     z_pTypeInfo-&#62 Release();
+
+ } 
+
+ 
+
+ void   MFrameWnd::UserDefined(ITypeInfo   *z_pTInfo,TYPEDESC   * z_pTDesc,VARTYPE* z_nVt)
+
+ {                                                     
+
+   ITypeInfo *z_pRefTypeInfo;
+
+   TYPEATTR *z_pRefTypeAttr;
+
+   
+
+   z_pTInfo-&#62 GetRefTypeInfo(z_pTDesc-&#62 hreftype,&amp z_pRefTypeInfo);
+
+   z_pRefTypeInfo-&#62 GetTypeAttr(&amp z_pRefTypeAttr); 
+
+   if(z_pRefTypeAttr-&#62 typekind == TKIND_ALIAS)
+
+   {
+
+     if(z_pRefTypeAttr-&#62 tdescAlias.vt &#62 13)
+
+       *z_nVt = z_pRefTypeAttr-&#62 tdescAlias.vt -2;
+
+     else
+
+       *z_nVt = z_pRefTypeAttr-&#62 tdescAlias.vt;     
+
+     if(!strcmp(z_VarType[*z_nVt],"VT_USERDEFINED")) 
+
+       UserDefined(z_pRefTypeInfo,&amp z_pRefTypeAttr-&#62 tdescAlias,z_nVt);
+
+   }                                                                            
+
+   if(z_pRefTypeInfo)
+
+     z_pRefTypeInfo-&#62 ReleaseTypeAttr(z_pRefTypeAttr);
+
+ }
+
+ 
+
+ void   MFrameWnd::Ptr(ITypeInfo  *z_pTInfo,TYPEDESC   *z_pTDesc, VARTYPE *z_nVt)
+
+ {
+
+     if(z_pTDesc-&#62 lptdesc-&#62 vt &#62  13)
+
+       *z_nVt = z_pTDesc-&#62 lptdesc-&#62 vt - 2;
+
+     else
+
+       *z_nVt = z_pTDesc-&#62 lptdesc-&#62 vt;
+
+     if(!strcmp(z_VarType[*z_nVt],"VT_USERDEFINED")) 
+
+       UserDefined(z_pTInfo,z_pTDesc-&#62 lptdesc,z_nVt);
+
+ }
+
+</PRE> 
+
+The standard interface <i>ITypeLib </i> is a collection of  functions which enable us to read data from the type library. So,  we need to obtain a pointer to an <i>ITypeLib</i> interface. <BR> 
+
+The  interface <i>ITypeInfo</i> has functions that can deal  with details about the individual type infos within the type  library. If  we have a pointer to an <i>ITypeInfo</i> interface, then  the <i>ITypeLib</i>  pointer of the type library to which  this  type info belongs can be determined. The reverse is also true. In this program  we have initially obtained an  <i>ITypeInfo</i>  pointer and then fetched an <i>ITypeLib</i> pointer from it.<BR>   
+
+An <i>ITypeInfo</i> pointer to the <i>CoClass</i> within the type library  of the <i>OCX</i> can be obtained easily. This  information  can  be  had  from  the  implementation  of  the  interface <i>IProvideClassInfo</i> in the <i>OCX</i>. Thus, we start with a <i>QueryInterface()</i>  to obtain a pointer  to  the  interface <i>IProvideClassInfo</i>.<BR> 
+
+We use the <i>IProvideClassInfo</i> pointer to call the  function <i>GetClassInfo()</i>. This function returns a pointer to the <i>ITypeInfo</i> that describes the <i>CoClass</i>. <i>GetContainingTypeLib()</i> is the <i>ITypeInfo</i> method that is used to obtain  a pointer to <i>ITypeLib</i> interface for  the  type library.<BR>  
+
+Each    type    library   has   a   number   of    type    infos. <i>GetTypeInfo()</i> of <i>ITypeLib </i> will retrieve a  pointer to  the  required type info within the type  library.  The  first parameter to this function is the index of the type  info  whose <i>ITypeInfo</i> pointer is needed.<BR>  
+
+This <i>ITypeInfo</i> pointer is used to obtain more information about the type info. The information is returned via a <i>TYPEATTR</i> structure. The function <i>GetTypeAttr()</i>   of <i>ITypeInfo</i> is used to requisition a pointer to this  structure.<BR> 
+
+The  <i>TYPEATTR</i>  structure  holds information  such  as  the <i>uuid</i>,  number  of variables and number of  functions.  The <i>TYPEATTR</i> structure also has a variable that indicates  the nature  of  the  type info; i.e. whether it  is  a  structure,  a union ...<BR> 
+
+The  first  type info in the type library of an  <i>OCX</i>  will always  hold  the  property  and  the method  details  for   the <i>OCX</i>.  Thus, it's <i>TYPEATTR</i> structure  will  indicate the number of properties and methods accessible through it.  This information   is   stored  in  the element   <i>cVars</i>   and <i>cFuncs</i> respectively of the <i>TYPEATTR</i> structure.<BR> 
+
+The information about each variable can be had via a <i>VARDESC</i> structure. The function  <i>GetVarDesc()</i> of <i>ITypeInfo</i> accepts two parameters: the first an  index to the property  whose  details are sought and  the  address  of  a <i>VARDESC</i> structure that will hold the information about the variable.<BR> 
+
+The <i>VARDESC</i> structure holds the ID of the property and has an  <i>ELEMDESC</i> structure in addition to some other  information. It is the <i>ELEMDESC</i> structure that has to be used  to obtain additional facts about the property.<BR> 
+
+The  structure <i>ELEMDESC</i> contains two structures: <i>TYPEDESC</i> and <i>IDLDESC</i>. We ignore the <i>IDLDESC</i>  structure  in the discussion to follow. The <i>TYPEDESC</i>  structure contains  the  information on the data type of the  property.  It consists of just two elements: one of the type <i>VARTYPE</i> and the second a union.<BR> 
+
+Confusing, isn't it? Let's take up specific examples to  indicate how data about variables is read. Consider the first type info in the  type  library to have the variables listed  as  shown  below under the heading <i>properties</i>:<BR> 
+
+<PRE> 
+
+ [id(10)] int h
+
+ [id(15)] long* i;
+
+ [id(20)] int j[10][12];
+
+ [id(25)] OLE_COLOR k;
+
+</PRE> 
+
+<H2>CASE 1: [id(10)] int h</H2>
+
+
+
+The  following procedure will hold true for any variable that  is of  a  standard data type, is not a pointer or an  array  of  any sort.<BR> <IMG SRC = "dia2.gif">. <P>The function <i>GetVarDesc()</i> will return a <i>VARDESC</i> structure for this variable when it's first parameter is <b><i>0</i></b>. The member <i>memid</i> of  the <i>VARDESC</i> structure will be <b><i>10</i></b>. This is the ID of the integer variable <i>h</i> as seen from the above example. The <i>ELEMDESC</i> structure  within <i>VARDESC</i> is known by  the  name <i>elemdescVar</i>. Accessing  this  <i>ELEMDESC</i> structure is the  next  step  in determining  the data type of a variable. The actual  information is  contained  in  <i>tdesc</i>;  the  <i>TYPEDESC</i>  structure within the <i>ELEMDESC</i> structure. The <i>TYPEDESC</i>  structure has a variable <i>vt</i> that holds the data type.<BR> 
+
+If <i>z_pVarDesc</i> is our pointer to a <i>VARDESC</i> structure, then the above explanation can be represented by the code <i>`z_pVarDesc-&#62 elemdescVar.tdesc.vt'</i>.The acceptable data types are stored in the enum <i>VARENUM</i>. The variable <i>vt</i> is assigned the appropriate member of  the enum. For an integer variable; <i>vt</i> will be equal to <b><i>VT_I2</i></b>. A listing of <i>VARENUM</i> can be had  from <i>variant.h</i>.<BR> 
+
+
+
+<H2>CASE 2: [id(15)] long* i;</H2>
+
+
+
+Accessing any pointer is a multi-level process. The <i>GetVarDesc()</i> with <b><i>1</i></b> as it's  first  parameter  will return  a <i>VARDESC</i> structure for this variable. Once  again the element <i>memid</i> of <i>VARDESC</i> will return the ID  of the property; in this case <b><i>15</i></b>. <BR> <IMG SRC = "dia3.gif">. 
+
+<P>The  <i>ELEMDESC</i> within the <i>VARDESC</i> structure  is  accessed.    Using   the   <i>ELEMDESC</i>   structure    of    the <i>VARDESC</i>, we gain access to the <i>TYPEDESC</i>  structure. The   member  variable  <i>vt</i>  of   <i>TYPEDESC</i>   returns <i>VT_PTR</i>. This just indicates that the variable is a  pointer. We have to know what is it that it points to.<BR>  
+
+Within  the  <i>TYPEDESC</i>  structure is a union.  One  of  the members of the union; <i>lptdesc</i>; is a pointer to yet another <i>TYPEDESC</i>  structure. It is this <i>TYPEDESC</i>  structure that  will  hold the data type of the pointer. Thus, we  use  the <i>TYPEDESC</i>  pointer  to access  the  second  <i>TYPEDESC</i> structure. The variable <i>vt</i> in the second <i>TYPEDESC  </i> structure   returns  the  actual  data  type  of   the   pointer. <i>`z_pVarDesc-&#62 elemdesc.tdesc.lptdesc-&#62 vt'</i>  is  the   code equivalent of the above explanation.<BR> 
+
+In  our  case,  the  property was a pointer  to  a  long.  Hence, <i>vt</i> is equal to <b><i>VT_I4</i></b>.<BR> 
+
+What if the line had read <i>`[id(15)] long** j'</i>, instead? In such  a case, the member <i>vt</i> of the second  <i>TYPEDESC</i> structure will also read <i>VT_PTR</i>. We then use the  <i>TYPEDESC</i>  pointer  within it to access  a  third  <i>TYPEDESC</i> structure. The  variable <i>vt</i> of the third  structure  will return   the   data  type  of  the  variable;   in this   case; <b><i>VT_I4</i></b>.     <i>`z_pVarDesc-&#62 elemdesc.tdesc.lptdesc-&#62 lptdesc-&#62 vt'</i> would be the code. <BR> <IMG SRC = "dia4.gif">.  
+
+<P>Thus,  if  we have a a variable <i>long*** j</i>; then  a  fourth <i>TYPEDESC</i>  structure is to be accessed and so on. In  practice, we use a recursive function to deal with such situations.<BR> 
+
+
+
+<H2>CASE 3: [id(20)] int j[10][12]</H2>
+
+
+
+The process of accessing the <i>VARDESC</i> structure and the  ID remains   the   same.   The member   variable   <i>vt</i>    of <i>TYPEDESC</i> returns <b><i>VT_CARRAY</i></b> as the data  type for this variable. The <i>TYPEDESC</i> structure has a union. One of the three elements of this union is a pointer to an  <i>ARRAYDESC</i>  structure; <i>lpadesc</i>. The <i>ARRAYDESC</i>  structure holds information about the array.<BR> 
+
+The <i>TYPEDESC</i> structure; <i>tdescElem</i>; within <i>ARRAYDESC</i>  is  used to determine the data type. In our  case,  the variable  <i>vt  </i> within the <i>TYPEDESC</i> structure  will return  <b><i>VT_I2</i></b>.  The variable  <i>cDims</i>  of  the <i>ARRAYDESC</i>  structure will return the number of  dimensions in  the array; in our case it is <b><i>2</i></b>.<BR> <IMG SRC = "dia5.gif">.
+
+<P>Within  the <i>ARRAYDESC</i> structure is an array of  <i>SAFEARRAYBOUND</i> structures.  There  is  one   <i>SAFEARRAYBOUND</i> structure dedicated to each dimension of the array variable.  The size  of the dimension is stored in the element  <i>cElements</i> of the corresponding <i>SAFEARRAYBOUND</i> structure. <BR> 
+
+
+
+<H2>CASE 4: [id(25)] OLE_COLOR k;</H2>
+
+
+
+In  this case, <i>OLE_COLOR</i>, is a data type unique to  OCXes. This  is  treated  as  a user-defined  data  type.  The  variable <i>vt</i>  within  the  <i>TYPEDESC</i>  structure  will return <b><i>VT_USERDEFINED</i></b>.  The  third element  of  the  union within  the <i>TYPEDESC</i>  structure is used  to  access  more information about user defined data types. This a variable of the type  <i>HREFTYPE</i>. Each user-defined data type will  have  an <i>ITypeInfo</i> of it's own.<BR> 
+
+A  pointer to this type info can be accessed using  the  function <i>GetRefTypeInfo()</i> of the <i>ITypeInfo</i> interface and the <i>HREFTYPE</i>  variable of the <i>TYPEDESC</i> structure.  The function  <i>GetRefTypeInfo()</i>  requires two  parameters.  The first is an <i>HREFTYPE</i> variable that points to the type info to be accessed. The second is the address of an  <i>ITypeInfo</i> pointer variable.<BR> 
+
+Using  the newly acquired <i>ITypeInfo</i> pointer, we  access  a <i>TYPEATTR</i>  structure. We  now  check  the  value  of   the <i>TYPEATTR</i> variable <i>tkind</i>. Typically, for a variable of the data type <i>VT_USERDEFINED</i>, this variable will return the  value <b><i>TKIND_ALIAS</i></b>. The <i>TYPEATTR</i>  structure holds a <i>TYPEDESC</i> structure. It is this structure that holds  the  information about the data type of the  property.  It holds  the  actual  data type and not  the  alias.  For  example, <i>OLE_COLOR</i> is actually a <i>long</i>. Thus, <i>VT_I4</i> is the value returned to us.<BR> 
+
+While  these are the basic methods that  are used to  access  the variables from the type library, a combination of these may  also have to be used. <BR> 
+
+Before we move ahead a nugget. The <i>TYPEDESC</i> structure  has a  union  of pointers. One of the pointers in the union is  to  a <i>TYPEDESC</i>   structure   while   the   other   is   to the <i>ARRAYDESC</i> structure. Such a union makes sense if and  only if one of these structures is a part of the other. In this  case, the  <i>TYPEDESC</i>  structure  is a part or  a member  of  the <i>ARRAYDESC</i>  structure. Much like a derived class, which  is the base class plus more.<BR> 
+
+All the above cases describe how the data type of the variable is determined but they are silent on how the name of the variable is recovered.  The  name of the variable can be had by  calling the function <i>GetNames()</i> of the <i>ITypeInfo</i> interface.  In the case of methods <i>GetNames()</i> will fetch the name of  the function and those of the parameters too. The first parameter  to this function is the ID of element whose name is to be recovered. <i>GetNames()</i> will retrieve the name into the user  allocated buffer.<BR> 
+
+The third parameter to <i>GetNames()</i> indicates the number  of strings to be read into the buffer; in the case of variables this parameter  is  <i>1</i>. The last parameter is  filled  with  the number of names actually copied into the buffer. <BR> 
+
+After  dealing with properties of an <i>OCX</i>, we have to  deal with  methods  and events. Information for the  methods  and  the events are retrieved exactly in the same way. The only difference is  that the methods are held in the first type info  within  the type library while the events are held in the second.<BR> 
+
+In the following discussion, we have assumed that we are  dealing with methods. But the entire process also holds true for events.<BR> 
+
+The   data   about   each   method   is   retrieved   using   the <i>ITypeInfo</i>  method <i>GetFuncDesc()</i>.  This  returns  a <i>FUNCDESC</i> which holds the required information.<BR> 
+
+The <i>FUNCDESC</i> structure holds the ID of the method. It also indicates the number of parameters that the method has and  other information.  There  is an <i>ELEMDESC</i> structure  within  the <i>FUNCDESC</i>  structure. This structure holds the  information on the return type of the method.<BR> 
+
+The   <i>FUNCDESC</i>   structure   also  holds   an   array   of <i>ELEMDESC</i>  structures. These structures are used to  obtain information about the parameters. There is one to one correspondence  between  the elements in this array and the  order  of  the parameters in the method.<BR> 
+
+Don't you get an eerie feeling of deja vu? We won't tire you with how to use <i>TYPEDESC</i> to obtain the data type of the  return value and the parameters. We bet you could recite all the options in your sleep.<BR> 
+
+In  our  example, we have created two structures that  will  hold information  read  from  the type library. The  first  is  called <i>PData</i>  and will store information about the properties  of an <i>OCX</i>. It will store the name, the ID and the data  type of  the  property. <i>VARTYPE</i> is nothing but  a  typedef  and stands  for  <i>unsigned  short</i>.  A  variable  of  the   type <i>VARTYPE</i> can be used to hold the data type of the  variable under consideration. We create a link-list of <i>PData</i> structures  with  the  details about each  particular  property being stored in a separate structure.<BR> 
+
+The  structure  <i>FData</i> is used to store  particulars  about both the events as well as the methods. This structure holds  the name  of  the event/method, the data type of  the  return value, number  of parameters, names and data type of the parameters  and ID of the event/method. A link-list is formed and the particulars of  each of the events and methods are stored as individual  members  of this link-list.  Event and method details are stored  in separate link-lists.<BR> 
+
+The initialization of the link-lists is a one-time task  carried out   at   the   start   of   the application.   The   function <i>InitArray()</i>  is responsible for this chore. It  is  called from within  <i>ObjCreate().</i> The starting addresses  of  the link-lists that hold the  property, method and event details  are stored  in  <i>z_pPDFirst, z_pFDFirst</i>  and  <i>z_pEDFirst</i> respectively.<BR> 
+
+The functions <i>Ptr()</i> and <i>UserDefined()</i> deal with the situations where a variable is a pointer and an user-defined data type respectively.<BR><P>
+
+<A HREF = "final4.html">Continue</A>
+
+</BODY>
+

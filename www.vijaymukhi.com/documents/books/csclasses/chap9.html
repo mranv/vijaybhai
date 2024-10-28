@@ -1,0 +1,1957 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:03 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap9_files/filelist.html">
+<link rel=Edit-Time-Data href="chap9_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-11-06T19:08:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:09:00Z</o:LastSaved>
+  <o:Pages>10</o:Pages>
+  <o:Words>4591</o:Words>
+  <o:Characters>26172</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>218</o:Lines>
+  <o:Paragraphs>52</o:Paragraphs>
+  <o:CharactersWithSpaces>32141</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>9</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>XML Data Document</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;books.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>//r.MoveToContent();</p>
+
+<p class=ILprg>d.Load(r);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>books.xml</u></p>
+
+<p class=ILprg>&lt;?xml version='1.0'?&gt;</p>
+
+<p class=ILprg>&lt;!-- This file represents a fragment of a book store
+inventory database --&gt;</p>
+
+<p class=ILprg>&lt;bookstore&gt;</p>
+
+<p class=ILprg>&lt;book genre=&quot;autobiography&quot; publicationdate=&quot;1981&quot;
+ISBN=&quot;1-861003-11-0&quot;&gt;</p>
+
+<p class=ILprg>&lt;title&gt;The Autobiography of Benjamin
+Franklin&lt;/title&gt;</p>
+
+<p class=ILprg>&lt;author&gt;</p>
+
+<p class=ILprg>&lt;first-name&gt;Benjamin&lt;/first-name&gt;</p>
+
+<p class=ILprg>&lt;last-name&gt;Franklin&lt;/last-name&gt;</p>
+
+<p class=ILprg>&lt;/author&gt;</p>
+
+<p class=ILprg>&lt;price&gt;8.99&lt;/price&gt;</p>
+
+<p class=ILprg>&lt;/book&gt;</p>
+
+<p class=ILprg>&lt;book genre=&quot;novel&quot;
+publicationdate=&quot;1967&quot; ISBN=&quot;0-201-63361-2&quot;&gt;</p>
+
+<p class=ILprg>&lt;title&gt;The Confidence Man&lt;/title&gt;</p>
+
+<p class=ILprg>&lt;author&gt;</p>
+
+<p class=ILprg>&lt;first-name&gt;Herman&lt;/first-name&gt;</p>
+
+<p class=ILprg>&lt;last-name&gt;Melville&lt;/last-name&gt;</p>
+
+<p class=ILprg>&lt;/author&gt;</p>
+
+<p class=ILprg>&lt;price&gt;11.99&lt;/price&gt;</p>
+
+<p class=ILprg>&lt;/book&gt;</p>
+
+<p class=ILprg>&lt;book genre=&quot;philosophy&quot;
+publicationdate=&quot;1991&quot; ISBN=&quot;1-861001-57-6&quot;&gt;</p>
+
+<p class=ILprg>&lt;title&gt;The Gorgias&lt;/title&gt;</p>
+
+<p class=ILprg>&lt;author&gt;</p>
+
+<p class=ILprg>&lt;name&gt;Plato&lt;/name&gt;</p>
+
+<p class=ILprg>&lt;/author&gt;</p>
+
+<p class=ILprg>&lt;price&gt;9.99&lt;/price&gt;</p>
+
+<p class=ILprg>&lt;/book&gt;</p>
+
+<p class=ILprg>&lt;/bookstore&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;!-- This file represents a fragment of a book store
+inventory database --&gt;</p>
+
+<p class=ILoutput>&lt;bookstore&gt;</p>
+
+<p class=ILoutput>..</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlDocument class represents
+an XML document. The W3C has two standards, one called the Document Object
+Model DOM Level 1, and the other called the Core DOM Level 2. The XmlDocument
+class implements these standards. This class is derived from an abstract class
+called XmlNode.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML Document is loaded into
+memory as a tree structure, thereby facilitating the navigation within and the
+editing of the document. The representation of the document in memory is known
+as a DOM. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML file books.xml
+represents a bookstore , which stores a large number of books. This file shall
+not be displayed in future since it is pretty lengthy. This file is utilised by
+most of the XML samples supplied by Microsoft. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The tag 'books' represents a
+book, and has attributes such as, type of book, genre, the year of publication
+or publication date etc; and finally, a unique number, ISBN, assigned to the
+book. Each book has a title as well as an author. The attribute author contains
+a few tags that disclose details such as, the first name and the last name of
+the author. The price of the book is the last element. It is not imperative for
+these elements of a book to be present in a specific order, i.e. price can come
+before the title, and so on. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object r of type
+XmlTextReader class represents the XML file books.xml. As always, the
+WhiteSpaceHandling is set to None. D is an object that looks like XmlDocument.
+The Load function of this class can handle four overloads. One of the overloads
+that the function can take is an XmlReader. As we are supplying an
+XmlTextReader to this function, it eventually scales down to an XmlReader.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Load function is responsible
+for loading the XML file into the XmlDocument object. If the property
+PreserveWhitespace is set to True, then and only then, are the Whitespace nodes
+created. In this case, since we have set Whitespaces to None in the XML file,
+no white space nodes can ever be created, regardless of property
+PreserveWhitespace being set to True. The Load function cannot change the
+Whitespace Handling present in the reader. The Load method does not perform any
+validations. In case validations are imperative, the XmlValidatingReader class
+must be utilised in place of the plain Jane XmlTextReader class. The same
+argument holds good when entities have to be resolved. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Save function writes the XML
+document associated with the XmlDocument, either to disk or to the console. We
+have displayed only a section of the document, since the entire books.xml shall
+occupy space needlessly. We acquire the entire file because the ReadState is
+set to Initial. This is so because the state has not been changed yet. Let us
+now position the reader and see what happens. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We remove the comment marks
+associated with MoveToContent, thereby, making it available. As a consequence,
+both, the XmlDeclaration and the content are skipped, and the reader is
+positioned at the first node 'Bookstore'. The output is as displayed below:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;bookstore&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;book
+genre=&quot;autobiography&quot; publicationdate=&quot;1981&quot;
+ISBN=&quot;1-861003-11-0&quot;&gt;</p>
+
+<p class=ILoutput>…</p>
+
+<p class=ILoutput>&lt;/bookstore&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;books.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>r.MoveToContent();</p>
+
+<p class=ILprg>r.Read();</p>
+
+<p class=ILprg>r.Skip();</p>
+
+<p class=ILprg>r.Skip();</p>
+
+<p class=ILprg>d.Load(r);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;book genre=&quot;philosophy&quot;
+publicationdate=&quot;1991&quot; ISBN=&quot;1-861001-57-6&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;title&gt;The
+Gorgias&lt;/title&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;author&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   
+</span>&lt;name&gt;Plato&lt;/name&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/author&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;price&gt;9.99&lt;/price&gt;</p>
+
+<p class=ILoutput>&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Read function takes the
+liberty to position itself at the book tag, the first Skip function skips over
+the first book, and the second skip function skips over the second book. The
+Load function of the XmlDocument now loads the node from the reader's current
+position, i.e. from the third book onwards. Thus, the XmlDocument contains the
+third book, which is about Philosophy, and not the other two books. The skip
+function skips over nodes that are at the same level.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;aa bb='hi'&gt; bad &lt;/aa&gt;&quot;);</p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;aa bb=&quot;hi&quot;&gt; bad &lt;/aa&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are different ways of associating
+XML with an XmlDocument object. The XmlDocument class has a function called
+LoadXml that converts a string representing XML into an XmlDocument object. The
+Save function writes the contents to a file on disk named d.xml. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.CreateElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.XmlException: This an invalid
+XML document. The document does not have a root element.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CreateElement function, as
+the name suggests, creates an element with the name passed as a parameter. We
+encounter an impediment when we attempt to write it to disk. An exception is
+thrown, since we have not added the element to the XmlDocument. Had we used the
+Save overload that writes to Console.Out, no exceptions would have been thrown,
+but neither would any output have been displayed on the screen.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlElement e;</p>
+
+<p class=ILprg>e = d.CreateElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>d.AppendChild(e);</p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CreateElement function
+returns an XmlElement object, which is stored in e. This object is then passed
+on to the AppendChild function, which creates a child node. Thus, when we write
+the XmlDocument to disk, d.xml will display a single tag of 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall now examine a series of
+programs, which shall create each and every type of node and shall write them
+all to disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlElement e;</p>
+
+<p class=ILprg>e = d.CreateElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>XmlAttribute a = d.CreateAttribute(&quot;a1&quot;);</p>
+
+<p class=ILprg>e.SetAttributeNode(a);</p>
+
+<p class=ILprg>e.SetAttribute(&quot;a1&quot;, &quot;howdy&quot;);</p>
+
+<p class=ILprg>d.AppendChild(e);</p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;vijay a1=&quot;howdy&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>CreateElement creates an element
+called 'vijay'. Thereafter, a function called CreateAttribute creates an
+attribute called a1. This function returns an XmlAttribute object that is
+associated with the element e, using the function SetAttributeNode, off the
+XmlElement class. If we comment the line e.SetAttribute(&quot;a1&quot;,
+&quot;howdy&quot;);<span style="mso-spacerun: yes">  </span>we shall see the file
+d.xml containing the following: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;vijay a1=&quot;&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute gets created, but
+it is devoid of any value at this stage. It is the SetAttribute function from
+the XmlElement class that will assign the value to the attribute. Hence, it
+accepts two parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first parameter is a1, which
+is the name of the attribute, and the second parameter 'howdy' is the value of
+the attribute.<o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlElement e;</p>
+
+<p class=ILprg>e = d.CreateElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>d.AppendChild(e);</p>
+
+<p class=ILprg>XmlCDataSection c;</p>
+
+<p class=ILprg>c = d.CreateCDataSection(&quot;sonal mukhi&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>d.AppendChild(c);<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: The
+specified node cannot be inserted as the valid child of this node, because the
+specified node is the wrong type.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We first create an element
+'vijay' by using the CreateElement function. Thereafter, using the Append Child
+function, we add the element to the XmlDocument. No errors are generated upto
+this point. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we wish to add a CDATA
+section to the file. To achieve this, the CreateCDataSection is used with a
+string parameter 'sonal mukhi', which returns an XmlCDataSection object.
+Employing the familiar AppendChild function, the section is added to the file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since an XML document cannot
+have a CDATA section by itself, the above exception is generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>XmlElement e;</p>
+
+<p class=ILprg>e = d.CreateElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>d.AppendChild(e);</p>
+
+<p class=ILprg>XmlCDataSection c;</p>
+
+<p class=ILprg>c = d.CreateCDataSection(&quot;sonal mukhi&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>XmlElement r = d.DocumentElement;</p>
+
+<p class=ILprg>r.AppendChild(c);<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;vijay&gt;&lt;![CDATA[sonal mukhi]]&gt;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The error now disappears, as the
+AppendChild function is called from the XmlElement class, and not from the
+XmlDocument class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DocumentElement property
+represents the root or the first element of theXMLdocument. The CDATA section
+now gets added to the element 'vijay', since the root element is 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;vijay&gt; hi &lt;/vijay&gt;&quot;);</p>
+
+<p class=ILprg>XmlCDataSection c;</p>
+
+<p class=ILprg>c = d.CreateCDataSection(&quot;sonal mukhi&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>XmlElement r = d.DocumentElement;</p>
+
+<p class=ILprg>r.AppendChild(c);<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>d.Save(&quot;d.xml&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><u>d.xml</u></p>
+
+<p class=ILprg>&lt;vijay&gt; hi &lt;![CDATA[sonal mukhi]]&gt;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An alternative approach would be
+to use the trustworthy LoadXml function, in lieu of CreateElement. Any of the
+two approaches may be employed to add a root node, thereby, displaying the
+d.xml file. As we have been harping repeatedly, there are many ways to skin a
+cat.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;!DOCTYPE book &gt; &lt;book /&gt; &quot;);</p>
+
+<p class=ILprg>XmlDocumentType t;</p>
+
+<p class=ILprg>t = d.DocumentType;</p>
+
+<p class=ILprg>System.Console.WriteLine(t.OuterXml);</p>
+
+<p class=ILprg>System.Console.WriteLine(t.Name);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;!DOCTYPE book[]&gt;</p>
+
+<p class=ILoutput>book</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program demonstrates our
+ability to access a specific node while processing an XML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DocumentType property
+returns an XmlDocumentType t, which represents the singular DOCTYPE node present
+in an XML file. This object t has a large number of properties that facilitate
+access to all the details regarding the node. In the program, only two
+properties are displayed:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first property OuterXml
+represents the entire node as a string. Since no external DTD file is present,
+by default, the internal DTD, which does not have any contents, is displayed. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second property Name presents
+the name of the root node.</p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;book&gt; &lt;title&gt;None&lt;/title&gt;
+&lt;author&gt;Me&lt;/author&gt; &lt;/book&gt;&quot;);</p>
+
+<p class=ILprg>XmlNode r = d.FirstChild;</p>
+
+<p class=ILprg>XmlNode n = r.FirstChild;</p>
+
+<p class=ILprg>Console.WriteLine(r);</p>
+
+<p class=ILprg>Console.WriteLine(n.OuterXml);</p>
+
+<p class=ILprg>Console.WriteLine(r.OuterXml);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>System.Xml.XmlElement</p>
+
+<p class=ILoutput>&lt;title&gt;None&lt;/title&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;&lt;title&gt;None&lt;/title&gt;&lt;author&gt;Me&lt;/author&gt;&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The FirstChild property of the
+XmlDocument class or XmlNode class retrieves the first child of the current
+node in the document i.e. XmlElement.<span style="mso-spacerun: yes">  </span>The
+value is stored in both r and n. It can be displayed using the WriteLine
+function. The OuterXml property contains the tags, including the child nodes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The FirstChild property of r is
+an XmlNode, whose OuterXml is the first child node or tag title within the tag
+'book'. If no child node exists, the value is null.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;book&gt; &lt;title&gt;None&lt;/title&gt;
+&lt;author&gt;Me&lt;/author&gt; &lt;/book&gt;&quot;);</p>
+
+<p class=ILprg>XmlNode r = d.LastChild;</p>
+
+<p class=ILprg>XmlNode n = r.LastChild;</p>
+
+<p class=ILprg>Console.WriteLine(r);</p>
+
+<p class=ILprg>Console.WriteLine(n.OuterXml);</p>
+
+<p class=ILprg>Console.WriteLine(r.OuterXml);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>System.Xml.XmlElement</p>
+
+<p class=ILoutput>&lt;author&gt;Me&lt;/author&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;&lt;title&gt;None&lt;/title&gt;&lt;author&gt;Me&lt;/author&gt;&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Comparable to the FirstChild
+property is the LastChild property, which merely returns the last child in the
+node. Therefore, as the 'author' tag is the last tag, the LastChild property
+returns a reference to 'Me'. Since title is the only tag in the file, the use
+of FirstChild or LastChild achieves the same outcome, in this case. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;aa&gt;&lt;book&gt;
+hi&lt;title&gt;None&lt;/title&gt; &lt;/book&gt; &lt;/aa&gt;&quot;);</p>
+
+<p class=ILprg>XmlDocument de = (XmlDocument) d.CloneNode(true);</p>
+
+<p class=ILprg>Console.WriteLine(de.ChildNodes.Count);</p>
+
+<p class=ILprg>for (int i=0; i&lt;de.ChildNodes.Count; i++)</p>
+
+<p class=ILprg>Console.WriteLine(de.ChildNodes[i].OuterXml);</p>
+
+<p class=ILprg>Console.WriteLine(de.Name + de.OuterXml);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Shallow&quot;);</p>
+
+<p class=ILprg>XmlDocument sh = (XmlDocument) d.CloneNode(false);</p>
+
+<p class=ILprg>Console.WriteLine(sh.ChildNodes.Count);</p>
+
+<p class=ILprg>for (int i=0; i&lt;sh.ChildNodes.Count; i++)</p>
+
+<p class=ILprg>Console.WriteLine(sh.ChildNodes[i].InnerXml);</p>
+
+<p class=ILprg>Console.WriteLine(sh.Name + sh.OuterXml);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1</p>
+
+<p class=ILoutput>&lt;aa&gt;&lt;book&gt; hi&lt;title&gt;None&lt;/title&gt;&lt;/book&gt;&lt;/aa&gt;</p>
+
+<p class=ILoutput>#document&lt;aa&gt;&lt;book&gt;
+hi&lt;title&gt;None&lt;/title&gt;&lt;/book&gt;&lt;/aa&gt;</p>
+
+<p class=ILoutput>Shallow</p>
+
+<p class=ILoutput>0</p>
+
+<p class=ILoutput>#document</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We start with an XML fragment
+that has a root node aa, which has a child node of book, containing another child
+node called title. The CloneNode function in XmlDocument takes a boolean
+parameter, where True refers to cloning the nodes within the node aa, which
+includes the nodes 'book' and 'title'. It behaves akin to a copy constructor
+for nodes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The cloned node does not have a
+parent. Therefore, when we exploit the property ParentNode to ascertain the
+value of the parent node, it returns a value of null. The ParentNode property
+returns a handle to the Parent node of the node.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The return value of the CloneNode
+function is an XmlNode class. As the XmlDocument derives from XmlNode, the
+'cast' operator is used. The XmlNode class has a property called ChildNodes,
+which returns an XmlNodeList object that refers to all the child nodes. This
+object is of a Collection data type. The Count property in the collection can
+be used to render a count of the number of entities present in the clone.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Name property returns the
+qualified name of #document and the OuterXml property provides the entire
+element. This function at variance with the LocalName function, which returns
+the name of an attribute, #cdata-section for the CDATA section, and so on.
+Thus, with the help of this function, we can identify the different names for
+different node types.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CloneNode function is called
+again, but with a value of false. Thus, a shallow node with no ChildNodes is
+returned. This is confirmed using the count property, which shows a count of
+zero. This proves that only the node has been cloned and not the content.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using a 'for' statement, we
+iterate through all the child nodes, and display the OuterXml property using
+the indexer. The value returned is the content of the node, which includes text
+such as 'hi'. If you read about the CloneNode function in the documentation, it
+would apprise you of the impending eventuality, if an attempt is made to clone
+nodes of different types.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;!DOCTYPE book [&lt;!ENTITY bb
+'vijay'&gt;]&gt; &lt;book&gt; &lt;misc /&gt; &lt;/book&gt;&quot;); </p>
+
+<p class=ILprg>XmlEntityReference e = d.CreateEntityReference(&quot;bb&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(e.ChildNodes.Count);</p>
+
+<p class=ILprg>d.DocumentElement.LastChild.AppendChild(e);</p>
+
+<p class=ILprg>Console.WriteLine(e.FirstChild.InnerText + &quot;. &quot; + e.ChildNodes.Count
++ &quot; &quot; + e.Name);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>XmlEntityReference e1 =
+d.CreateEntityReference(&quot;bbb&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(e1.ChildNodes.Count);</p>
+
+<p class=ILprg>d.DocumentElement.LastChild.AppendChild(e1);</p>
+
+<p class=ILprg>Console.WriteLine(e1.FirstChild.InnerText + &quot;. &quot; + e1.ChildNodes.Count
++ &quot; &quot; + e1.Name);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0</p>
+
+<p class=ILoutput>vijay. 1 bb</p>
+
+<p class=ILoutput>&lt;!DOCTYPE book[&lt;!ENTITY bb 'vijay'&gt;]&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;misc&gt;&amp;bb;&lt;/misc&gt;</p>
+
+<p class=ILoutput>&lt;/book&gt;0</p>
+
+<p class=ILoutput>. 1 bbb</p>
+
+<p class=ILoutput>&lt;!DOCTYPE book[&lt;!ENTITY bb 'vijay'&gt;]&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;misc&gt;&amp;bb;&amp;bbb;&lt;/misc&gt;</p>
+
+<p class=ILoutput>&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The LoadXml function has a
+DOCTYPE declaration, and an entity reference called bb having a value of
+'vijay'. Now, using the function CreateEntityReference, we create an entity
+reference called bb. This function returns an XmlEntityReference object, which
+is a class derived from XmlLinkedNode, which, in turn, is derived from XmlNode.
+The number of child nodes is zero at this stage, because the node has not yet
+been expanded. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function AppendChild is then
+used to append the child to the node, returned by the LastChild property.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the node has been appended
+to the document, its parent node is set and the entity reference bb is expanded
+to 'vijay'. Thus, the file has a child node that contains 'vijay', the entity
+reference text. The InnerText property of the FirstChild gives the replacement
+text. The Count of the child nodes is one, since we have added one entity, and
+the Name property of the Entity Reference is the name bb, which we have
+created.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the Save function,
+which prints out the XML fragment, displays the entity reference bb, starting
+with an ampersand symbol &amp; and ending with a semi-colon, with the LastChild
+node named misc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now add another entity
+reference bbb, but lay it aside, undefined. The rules, which applied earlier to
+the entity reference, are also relevant now. The only significant difference is
+that the InnerText property does not have any value when the reference node is
+expanded. Thus, the child is an empty text node. The entity refs of bb and bbb
+are placed one after the other.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;book&gt;&lt;/book&gt;&quot;); </p>
+
+<p class=ILprg>XmlNode n=d.CreateNode(&quot;element&quot;, &quot;vijay&quot;,
+&quot;&quot;);<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>n.InnerText = &quot;hi&quot;;</p>
+
+<p class=ILprg>XmlElement r = d.DocumentElement;</p>
+
+<p class=ILprg>r.AppendChild(n);</p>
+
+<p class=ILprg>//d.LastChild.AppendChild(n);</p>
+
+<p class=ILprg>//d.AppendChild(n);</p>
+
+<p class=ILprg>Console.WriteLine(d.OuterXml);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;book&gt;&lt;vijay&gt;hi&lt;/vijay&gt;&lt;/book&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;vijay&gt;hi&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML fragment shows the root
+tag as 'book' because of the LoadXml function. The CreateNode function creates
+a new node or element called 'vijay'. This function returns an object of type
+XmlNode and accepts the following parameters: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first parameter decides on the
+type of node. Exactly 10 types of nodes can be created with this function:
+element, attribute, text, cdatasection, entityreference, processinginstruction,
+comment, document, documenttype and documentfragmnet. This parameter is case
+sensitive.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter is the name
+of the new node. If there is a colon in the name, it is parsed into a prefix
+and a LocalName. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third parameter refers to
+the namespace URI. The InnerText property is another mechanism for adding
+content between tags. The tag 'vijay' now embodies the word 'hi'. This node in
+memory is added to the XML fragment with the help of the AppendChild function,
+which is called off the XmlElement, returned by the DocumentElement property. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Calling AppendChild off the
+XmlDocument class, throws an exception, since a DocumentElement node already
+exists within the document. If we uncomment the line d.AppendChild(n), it will
+result in the following exception:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: This
+document already has a DocumentElement node.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we uncomment the line
+d.LastChild.AppendChild(n), it would be similar to first gaining a handle to
+the last child and then adding the node. In this case, whether the node is the
+first child or the last child, it does not make any difference at all. The
+documentation for the CreateNode function, offers a table that very distinctly
+specifies as to which nodes can be placed within other nodes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.Load(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>XmlImplementation i;</p>
+
+<p class=ILprg>i = d.Implementation;</p>
+
+<p class=ILprg>XmlDocument d1 = i.CreateDocument();</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>d1.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;!DOCTYPE vijay[]&gt;</p>
+
+<p class=ILoutput>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'>Every XmlDocument has an
+XmlImplementation object associated with it, which can be accessed using the
+Implementation property. XmlDocument objects created from the same
+XmlImplementation, share the same name table. Thus, it is permissible to
+compare attribute and element names as objects, instead of strings. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We create an empty XmlDocument d
+by using the constructor as before, and thereafter, use the Load function to
+associate anXMLfile named b.xml with the XmlDocument. Earlier we had used the
+Reader object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To create an XmlDocument object
+that shares the same XmlNameTable, we use the function CreateDocument from the
+XmlImplementation object. Then, the Save function is used to write out both the
+XmlDocument objects to the Console. The first XmlDocument object d, displays a
+replica of the file b.xml, while the second one is empty because we have not
+associated any XML content with it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the CreateDocument
+function creates an empty XML document, but it does not copy any content to it.
+It ensures that the names are shared, and not duplicated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r<span style="mso-spacerun: yes">  </span>= new
+XmlTextReader (&quot;books.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.Load (r);</p>
+
+<p class=ILprg>XmlNode n;</p>
+
+<p class=ILprg>n = d.DocumentElement;</p>
+
+<p class=ILprg>Console.WriteLine(n.Name + &quot;&lt;&quot; + n.Value +
+&quot;&gt;&quot;);</p>
+
+<p class=ILprg>n = n.FirstChild;</p>
+
+<p class=ILprg>Console.WriteLine(n.Name + &quot;&lt;&quot; + n.Value +
+&quot;&gt;&quot;);</p>
+
+<p class=ILprg>while (n != null)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlNamedNodeMap m = n.Attributes;</p>
+
+<p class=ILprg>foreach (XmlNode a in m)</p>
+
+<p class=ILprg>Console.Write(&quot; &quot; + a.Name + &quot;&lt;&quot; +
+a.Value + &quot;&gt; &quot;);</p>
+
+<p class=ILprg>n = n.NextSibling;</p>
+
+<p class=ILprg>Console.WriteLine();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>bookstore&lt;&gt;</p>
+
+<p class=ILoutput>book&lt;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes"> </span>genre&lt;autobiography&gt;<span style="mso-spacerun: yes"> 
+</span>publicationdate&lt;1981&gt;<span style="mso-spacerun: yes"> 
+</span>ISBN&lt;1-861003-11-0&gt; </p>
+
+<p class=ILoutput>genre&lt;novel&gt; publicationdate&lt;1967&gt;<span
+style="mso-spacerun: yes">  </span>ISBN&lt;0-201-63361-2&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes"> </span>genre&lt;philosophy&gt;<span style="mso-spacerun: yes"> 
+</span>publicationdate&lt;1991&gt;<span style="mso-spacerun: yes"> 
+</span>ISBN&lt;1-861001-57-6&gt; </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>First, we start by loading the
+XML file books.xml, and then, positioning the DocumentElement at the root tag
+bookstore. Then, using the FirstChild property, we make the first child node
+'book' as the active node and display it. As we have no clue about the number
+of child book nodes that are present in the file, we use a while loop that
+repeats itself until the XmlNode object n returns a null. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Attributes property returns
+an XmlNamedNodeMap object that represents a collection of nodes. These nodes
+can be represented by a name or an index. So, using the foreach loop, we fetch
+one attribute at a time in an XmlNode object and display the Name and the Value
+contained in it. The &lt;&gt; signs are used as a talisman. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once this is accomplished, we
+move to the next book at the same level. Tags at the same level are called
+siblings. The property NextSibling moves to the next book or tag at the same level,
+thereby, displaying one book tag after another.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r<span style="mso-spacerun: yes">  </span>= new
+XmlTextReader (&quot;books.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.Load (r);</p>
+
+<p class=ILprg>XmlNode n = d.DocumentElement;</p>
+
+<p class=ILprg>Console.WriteLine(n.Name);</p>
+
+<p class=ILprg>XmlNode b = n.LastChild;</p>
+
+<p class=ILprg>Console.WriteLine(b.Name);</p>
+
+<p class=ILprg>Console.WriteLine(b.OuterXml + &quot;\n&quot;);</p>
+
+<p class=ILprg>b = n.LastChild.PreviousSibling;</p>
+
+<p class=ILprg>Console.WriteLine(b.OuterXml); </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>bookstore</p>
+
+<p class=ILoutput>book</p>
+
+<p class=ILoutput>&lt;book genre=&quot;philosophy&quot;
+publicationdate=&quot;1991&quot;
+ISBN=&quot;1-861001-57-6&quot;&gt;&lt;title&gt;The
+Gorgias&lt;/title&gt;&lt;author&gt;&lt;name&gt;Plato
+&lt;/name&gt;&lt;/author&gt;&lt;price&gt;9.99&lt;/price&gt;&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the previous example, we
+first displayed the root node bookstore, followed by the LastChild and not the
+FirstChild node. Both are expected to return the same name, since the first and
+last child tags refer to the same node book. The XML associated with this node
+was displayed using the OuterXml function, which displayed the last book, which
+deals with Philosophy. You may recollect that the OuterXml function displays
+the child tags also. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, we proceed
+backwards. Hence, we use the PreviousSibling function to display the second
+last book. Thus, we can either proceed in the forward direction, like we did in
+the last example, or in the backward direction, as shown in the current
+example. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class Sample</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;book&gt; hi &lt;/book&gt;&quot;);</p>
+
+<p class=ILprg>XmlComment c;</p>
+
+<p class=ILprg>c = d.CreateComment(&quot;Comment 1&quot;);</p>
+
+<p class=ILprg>XmlElement r = d.DocumentElement;</p>
+
+<p class=ILprg>d.InsertBefore(c, r);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;\n---&quot;);</p>
+
+<p class=ILprg>XmlComment c1;</p>
+
+<p class=ILprg>c1 = d.CreateComment(&quot;Comment 2&quot;);</p>
+
+<p class=ILprg>d.InsertAfter(c1, r);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;!--Comment 1--&gt;</p>
+
+<p class=ILoutput>&lt;book&gt; hi &lt;/book&gt;</p>
+
+<p class=ILoutput>---</p>
+
+<p class=ILoutput>&lt;!--Comment 1--&gt;</p>
+
+<p class=ILoutput>&lt;book&gt; hi &lt;/book&gt;</p>
+
+<p class=ILoutput>&lt;!--Comment 2--&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>LoadXml creates a node called book,
+which encompasses 'hi'. Thereafter, a Comment object is created by calling the
+CreateComment function. The function merely requires the string to be displayed
+as a comment. The extra comment characters are placed by the function in the
+XML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next dilemma is with regard
+to the position of the comment i.e. should the comment be placed before or
+after the node book. The InsertBefore function inserts the required node. It
+takes two parameters, i.e. a comment, followed by the node before which the
+comment is to be inserted. As we want it to be inserted before the book node,
+we use the handle returned by DocumentElement property, which contains the
+handle to the book node. The Save function then displays the comment before the
+book node. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InsertAfter function inserts
+the comment node after the reference node, which has been passed as the second
+parameter. Thus, the second comment comes after the book node.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;?xml version='1.0' ?&gt;&lt;book&gt;
+&lt;title&gt;Vijay&lt;/title&gt; &lt;/book&gt;&quot;);</p>
+
+<p class=ILprg>XmlNode n = d.DocumentElement;</p>
+
+<p class=ILprg>n.RemoveChild(n.FirstChild);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>d.RemoveAll();</p>
+
+<p class=ILprg>Console.WriteLine(&quot;\n=========&quot;);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;book&gt;</p>
+
+<p class=ILoutput>&lt;/book&gt;</p>
+
+<p class=ILoutput>=========</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML fragment that is loaded
+using the LoadXml function has an XML Declaration, which is a tag book,
+containing an element of title enclosing 'Vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DocumentElement property
+returns a handle to the node book, which is stored in n. Then, the RemoveChild
+function of node n is called with a single parameter, which is the node title,
+since the FirstChild returns this value. This function removes the child from
+the tag.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Saving to the Console displays
+the remaining XML fragment. Thus, we can see the XML declaration and the tag
+book, but without any content, since the tag title has been removed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next function that is
+implemented is, RemoveAll from the XmlDocument class. On displaying the XML
+file, we witness no output since the RemoveAll function erases everything from
+the Document.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlNode n;</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.LoadXml(&quot;&lt;zz
+xml:space=\&quot;preserve\&quot;&gt;&lt;aa&gt;Vijay&lt;/aa&gt;&lt;bb&gt;Mukhi&lt;/bb&gt;&lt;/zz&gt;&quot;);
+</p>
+
+<p class=ILprg>Console.WriteLine(d.DocumentElement.InnerText);</p>
+
+<p class=ILprg>n=d.DocumentElement;</p>
+
+<p class=ILprg>XmlSignificantWhitespace
+s=d.CreateSignificantWhitespace(&quot;<span style="mso-spacerun: yes">      
+</span>&quot;);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>Console.WriteLine();</p>
+
+<p class=ILprg>n.InsertAfter(s, n.FirstChild);</p>
+
+<p class=ILprg>Console.WriteLine(d.DocumentElement.InnerText);</p>
+
+<p class=ILprg>d.Save(Console.Out);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>VijayMukhi</p>
+
+<p class=ILoutput>&lt;zz xml:space=&quot;preserve&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;aa&gt;Vijay&lt;/aa&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;bb&gt;Mukhi&lt;/bb&gt;</p>
+
+<p class=ILoutput>&lt;/zz&gt;</p>
+
+<p class=ILoutput>Vijay<span style="mso-spacerun: yes">       </span>Mukhi</p>
+
+<p class=ILoutput>&lt;zz xml:space=&quot;preserve&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;aa&gt;Vijay&lt;/aa&gt;<span style="mso-spacerun: yes">      
+</span>&lt;bb&gt;Mukhi&lt;/bb&gt;&lt;/zz&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DocumentElement property
+returns a handle to the zz tag, whereas, the InnerText property in the
+DocumentElement, refers to the Text present within the tags aa and bb. Thus, we
+see 'VijayMukhi' displayed without any spaces displayed between the two words. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We also create significant
+whitespace, using the function CreateSignificantWhitespace, after initializing
+the node n to tag zz. This function accepts only one string parameter, which
+could be any one of the following four: &amp;#20; &amp;#10; &amp;#13; and
+&amp;#9.<span style="mso-spacerun: yes">  </span>It does not augment
+theXMLfragment. Finally, we write the XML fragment using the Save function. The
+attribute space=preserve is visible. This attribute is optional. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the InsertAfter function,
+we add significant whitespace after the FirstChild node. Thus, we see
+significant space between the nodes aa and bb. The InnerText also displays the
+spaces between the words 'Vijay' and ' Mukhi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>VijayMukhi</p>
+
+<p class=ILoutput>&lt;zz xml:space=&quot;preserve&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;aa&gt;Vijay&lt;/aa&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;bb&gt;Mukhi&lt;/bb&gt;</p>
+
+<p class=ILoutput>&lt;/zz&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       </span>VijayMukhi</p>
+
+<p class=ILoutput>&lt;zz xml:space=&quot;preserve&quot;&gt;<span
+style="mso-spacerun: yes">      
+</span>&lt;aa&gt;Vijay&lt;/aa&gt;&lt;bb&gt;Mukhi&lt;/bb&gt;&lt;/zz&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above output is obtained on
+adding the significant space before the first child, using the InsertBefore
+function, in lieu of the InsertAfter function. The spaces are inserted before
+the FirstChild aa, i.e. before the text 'Vijay' and not after.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Collections;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();</p>
+
+<p class=ILprg>d.Load(&quot;books.xml&quot;);</p>
+
+<p class=ILprg>XmlNode n = d.DocumentElement;</p>
+
+<p class=ILprg>IEnumerator i = n.GetEnumerator();</p>
+
+<p class=ILprg>XmlNode b;</p>
+
+<p class=ILprg>while (i.MoveNext()) </p>
+
+<p class=ILprg>{<span style="mso-spacerun: yes">     </span></p>
+
+<p class=ILprg>b = (XmlNode)i.Current;</p>
+
+<p class=ILprg>Console.WriteLine(b.OuterXml);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;book genre=&quot;autobiography&quot;
+publicationdate=&quot;1981&quot; ISBN=&quot;1-861003-11-0&quot;&gt;&lt;title&gt;The
+Autobiography of Benjamin
+Franklin&lt;/title&gt;&lt;author&gt;&lt;first-name&gt;Benjamin&lt;/first-name&gt;&lt;last-name&gt;
+Franklin&lt;/last-name&gt;&lt;/author&gt;&lt;price&gt;8.99&lt;/price&gt;&lt;/book&gt;</p>
+
+<p class=ILoutput>&lt;book genre=&quot;novel&quot;
+publicationdate=&quot;1967&quot;
+ISBN=&quot;0-201-63361-2&quot;&gt;&lt;title&gt;The Confidence Man&lt;/title&gt;&lt;author&gt;&lt;first-name&gt;
+Herman&lt;/first-name&gt;&lt;last-name&gt;Melville&lt;/last-name&gt;&lt;/author&gt;
+&lt;price&gt;11.99&lt;/price&gt;&lt;/book&gt;&lt;book
+genre=&quot;philosophy&quot; publicationdate=&quot;1991&quot; ISBN=&quot;1-861001-57-6&quot;&gt;&lt;title&gt;The</p>
+
+<p class=ILoutput>Gorgias&lt;/title&gt;&lt;author&gt;&lt;name&gt;Plato&lt;/name&gt;&lt;/author&gt;&lt;price&gt;
+9.99&lt;/price&gt;&lt;/book&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last example in the series,
+displays various parts of an XML file in a different manner.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every XML node object has a
+function called GetEnumerator, which returns an IEnumerator interface object.
+This interface has a MoveNext function that moves from one node to the next. In
+our program, we move from one book to another, since the XmlNode is on a tag
+book. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Current property accesses
+the current book node, since it happens to be the first one. Then, we use the OuterXml
+property to display the entire contents of this node. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>The MoveNext function then activates the next node. If no more
+nodes exist, it returns False, or else it returns True. In this manner, we can
+iterate through all the nodes. The foreach instruction has a similar
+functionality.<span style="mso-spacerun: yes">  </span>Whenever we want to
+navigate through a collection, the IEnumerator interface is used. This is the
+conventional way of moving sequentially through a list of objects or a
+collection in C#.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:05 GMT -->
+</html>

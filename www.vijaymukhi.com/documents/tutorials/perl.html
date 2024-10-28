@@ -1,0 +1,876 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/tutorials/perl.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:23 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Perl</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+<script  type="text/javascript"><!--   hide the script from old browsers
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+// End of script hiding --></script  ></HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT SIZE=5><P>PERL</P>
+</B></FONT><P ALIGN="JUSTIFY">Perl stards for Practical Extraction and Reporting Language. The man pages describe it best.</P>
+<P ALIGN="JUSTIFY">"Perl is a language optimized for scanning arbitrary text files, extracting information from those text files, and printing reports based on that information. It's also a good language for many system management tasks. The language is intended to be practical (easy to use, efficient, complete) rather than beautiful (tiny, elegant, minimal).</P>
+<P ALIGN="JUSTIFY">Perl combines (in the author's opinion, anyway) some of the best features of C, sed, awk, and sh, so people familiar with those languages should have little difficulty with it. (Language historians will also note some vestiges of csh, Pascal, and even BASIC-PLUS.) Expression syntax corresponds quite closely to C expression syntax. Unlike most Unix utilities, Perl does not arbitrarily limit the size of your data--if you've got the memory, Perl can slurp in your whole file as a single string. Recursion is of unlimited depth. And the tables used by hashes (sometimes called "associative arrays") grow as necessary to prevent degraded performance. Perl can use sophisticated pattern matching techniques to scan large amounts of data very quickly. Although optimized for scanning text, Perl can also deal with binary data, and can make dbm files look like hashes. Setuid Perl scripts are safer than C programs through a dataflow tracing mechanism which prevents many stupid security holes.</P>
+<P ALIGN="JUSTIFY">If you have a problem that would ordinarily use sed or awk or sh, but it exceeds their capabilities or must run a little faster, and you don't want translators to turn your sed and awk scripts into Perl scripts. " </P>
+<P ALIGN="JUSTIFY">--man perl </P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Let's not waste any more time flapping our gums. It's code'n time! </P>
+<P ALIGN="JUSTIFY">We tested everything out on a system using Redhat 6.0 with Kernel 2.2.5-15. The Web server was Apache 1.3.6 with the Perl modules all set up.</P>
+<P ALIGN="JUSTIFY">The first thing we'd like you to do is create a directory called /pjunk. Create it anywhere you want, it's just something to hold the junk code you'll be writing. Yup! you'll be churning out proper tripe before the day's out!</P>
+<P ALIGN="JUSTIFY">Now start up the browser of your choice and type in 127.0.0.1 or localhost or localhost.localdomain. All of them point to the same location, your own machine. </P>
+<P ALIGN="JUSTIFY">When you now press Enter, your browser will connect to the Web Server, in this case Apache, running on your local machine and will ask for the default file. This file resides in /home/httpd/html (or whatever directory you set as the root directory when you installed Apache) and is named index.html. Apache picks up this file and sends it to your browser, which then displays it, informing all and sundry that 'It Worked!'.</P>
+<P ALIGN="JUSTIFY">Start up a terminal window and 'cd' your way to this directory. Use your favorite text editor to make a file 'a.pl' and save it to this directory. </P>
+<PRE>a.pl</PRE>
+<CODE><P ALIGN="JUSTIFY">print Content-Type:text/html</P>
+</CODE><P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Now go back to the browser and type in '127.0.0.1/a.pl', press Enter and what do you see? the contents of the file a.pl listed on your screen.</P>
+<P ALIGN="JUSTIFY">This isn't exactly what we had in mind. We want the Perl program a.pl to execute when type it's name in, not have it displayed by Netscape! </P>
+<P ALIGN="JUSTIFY">It seems that if you place your Perl program in any old directory, Apache will treat it as a normal text file. When asked for it, it will pick it up and shoot it across to your browser, without trying to run it or do anything at all with it. </P>
+<P ALIGN="JUSTIFY">Let's try a.pl out with Perl.</P>
+<PRE>bash# perl a.pl
+syntax error at a.pl Line 1, near "Type:"
+Execution of a.pl aborted due to compilation errors.</PRE>
+<P ALIGN="JUSTIFY">No good. It barfs all over us.</P>
+<P ALIGN="JUSTIFY">Let's try this</P>
+<PRE>bash# ./a.pl
+bash: ./a.pl: Permission denied</PRE>
+<P ALIGN="JUSTIFY">It refuses to run. This we can solve.</P>
+<PRE>bash# ls -l a.pl
+-rw-r--r-- 1 root root 46 Sep 7 18:03 a.pl</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">The r, w and -'s on the extreme left are file permissions. Everyone on a UNIX system belongs to three groups viz a viz a file. You are either it's creator, or you belong to a relevant group or you're a total outsider. The - on the extreme left tells you about the nature of the file, the three characters after that explain what the owner of the file can do with it. He can either (r)ead from it, (w)rite to it or e(x)ecute it. In the same way, the next three characters show what a person belonging to the same group as the owner can do with the file and the last three characters show what everyone on the system can do with the file.</P>
+<P ALIGN="JUSTIFY">In this case, the owner can read from and write to his file and everyone else can read from it. However, no one has execute permission. Let's remedy that.</P>
+<PRE>bash# chmod +x a.pl
+bash# ls -l a.pl
+-rwxr-xr-x 1 root root 46 Sep 7 18:03 a.pl</PRE>
+<P ALIGN="JUSTIFY">Now everyone has permission to execute this file. Let's do just that.</P>
+<PRE>bash# ./a.pl
+./a.pl: print: command not found</PRE>
+<P ALIGN="JUSTIFY">This looks suspicious. What's happening here is that instead of Perl running the file and spitting out an error, our shell BASH assumes that this is a shell script and attempts to run it. Since it isn't, BASH trips over its own feet and prints an error.</P>
+<P ALIGN="JUSTIFY">What we need to do is tell BASH to run Perl when we try to execute a.pl. We do that by modifying a.pl as shown below.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print Content-Type:text/html</PRE>
+<P ALIGN="JUSTIFY">In a shell script, a '#' is usually used to mark a comment. But when it's followed by a '!', it's an instruction to the shell telling it to run the program specified and to pass the contents of the file to it.</P>
+<PRE>bash# ./a.pl
+syntax error at a.pl Line 1, near "Type:"</PRE>
+<P ALIGN="JUSTIFY">Execution of a.pl aborted due to compilation errors.</P>
+<P ALIGN="JUSTIFY">Ah yes, a familiar error message. It seems that Perl is being called now.</P>
+<P ALIGN="JUSTIFY">Things still don't work though, but we'll get to that in a moment</P>
+<P ALIGN="JUSTIFY">copy this file to <FONT FACE="Courier New" SIZE=2>/home/cgi-bin/</FONT> and get back to your browser. Type in</P>
+<FONT FACE="Courier New" SIZE=2><P ALIGN="JUSTIFY">127.0.0.1/cgi-bin/a.pl</FONT> and press Enter.</P>
+<P ALIGN="JUSTIFY">Apache reads your trashy code, giggles wildly, slams you with an Internal Server Error and then politely tells you to contact the server admin.</P>
+<P ALIGN="JUSTIFY">Apache isn't crass enough to scream to all the world that you don't know how to program using Perl. It receives an error message from Perl and so it sends a polite error page across.</P>
+<P ALIGN="JUSTIFY">&nbsp;Change a.pl to look like this.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html"</PRE>
+<P ALIGN="JUSTIFY">All we need to do is add the "'s and it works! The output if we run it from the shell is </P>
+<PRE>bash# ./a.pl
+Content-Type:text/htmlbash#</PRE>
+<P ALIGN="JUSTIFY">Perl demands that all strings be surrounded by ""'s. There's no arguing with it. It's syntax.</P>
+<P ALIGN="JUSTIFY">Now let's reload this file from the browser. No luck, Apache still isn't satisfied so we must be doing something wrong. </P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n"</PRE>
+<P ALIGN="JUSTIFY">Save the file and reload the page in the browser. We're still getting an error, but it's a different one this time. Netscape tells us that the 'document contains no data' and would we try again later?</P>
+<P ALIGN="JUSTIFY">The reason we get this error is because Netscape expects every HTML page to contain data. A proper HTML page is made up of two sections, the header and the actual data. Our Perl program just sends a single line of the header (containing the MIME type) across. This line tells the receiving browser that the data to follow is of type text/html and to treat it as such. When Netscape receives nothing after the header, it suspiciously flags an error and shows a warning message box. If you try this with a more laid back browser like Lynx, you're shown a blank page and nothing more.</P>
+<P ALIGN="JUSTIFY">The two '\n's tell the browser that the headers have ended.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n"
+print "hi"</PRE>
+<P ALIGN="JUSTIFY">Type in the new line and test the program at the prompt</P>
+<PRE>bash# ./a.pl
+syntax error at ./a.pl line 3, near "print"</PRE>
+<P ALIGN="JUSTIFY">Execution of ./a.pl aborted due to compilation errors</P>
+<P ALIGN="JUSTIFY">This error is rather easy to get rid of. It's another syntaxical gaffe of ours. All lines must end with a ';' in Perl, except the very last one. That's why our one line program worked without a semi-colon. Just add the missing semi-colon.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "hi"</PRE>
+<P ALIGN="JUSTIFY">Now the program will work just fine, from both the shell and the browser.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "hi ";
+print "bye";</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">As far as the semi-colon issue goes, we'll just stick to putting them after all our statements, a la C.</P>
+<P ALIGN="JUSTIFY">This program goes one step further than the earlier one by having two print statements instead of one. You'd expect the plesantries to appear on two lines, but on both your browser and the shell, they'll be squashed together on one.</P>
+<P ALIGN="JUSTIFY">Let's try this out.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "hi\n";
+print "bye";</PRE>
+<P ALIGN="JUSTIFY">Getting warm now. When run as a Perl script from the shell, the output is separated by a newline, but you'll still see the two words on the same line in your browser.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "hi&lt;p&gt;";
+print "bye";</PRE>
+<P ALIGN="JUSTIFY">Now this is the exact opposite. Under the shell, you're simply shown the contents of the print statements on a single line. As displayed by your browser however, they will appear on two distinct lines.</P>
+<P ALIGN="JUSTIFY">Just one more to drum the point in.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "&lt;h1&gt;hi&lt;/h1&gt;";
+print "bye";</PRE>
+<P ALIGN="JUSTIFY">Now the 'hi' will be shown in a larger font on your browser.</P>
+<P ALIGN="JUSTIFY">All this goes to show that you can put any HTML tag in the print statement and when seen through the eyes of a browser, they will be interpreted and accepted as such. What we're doing through these simple programs is actually _constructing_ Web pages on the fly. A more complicated version of this happens when you go to any search engine. The page with your results on it is created on the server by a program, and then sent across to you. You can also grab a file off the disk and shoot it across, but we'll deal with that a little later.</P>
+<P ALIGN="JUSTIFY">Now lets delve a little deeper into the innards of Perl. Try this.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print "hi $i bye";</PRE>
+<P ALIGN="JUSTIFY">You'd expect to be shown the string 'hi $i bye' but you'll get 'hi bye' instead. </P>
+<P ALIGN="JUSTIFY">Anything in Perl that starts with a '$' is special. It's a variable. A variable is an entity that can hold a single, changeable value. But to use a variable you have to \idefine\i it first and we haven't done that yet. Since this variable has no assigned value, Perl simply gives it a Null value which means it has no value at all. Unlike other programming languages, Perl doesn't start spitting out errors when it finds variables floating in mid air, as it were. It just tries to guess the right response and move along with the flow.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = "hi bye";
+print $i;</PRE>
+<P ALIGN="JUSTIFY">Here we've give '$i' a value. In tech-speak, we've \ideclared\i and \idefined\i a variable. In Perl both steps are carried out at the same time. </P>
+<P ALIGN="JUSTIFY">So this little script will print 'hi bye' at both the shell and through the browser.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = "hi bye";
+print $i;
+$i = "bye";
+print $i;
+$i = 100;
+print $i;</PRE>
+<P ALIGN="JUSTIFY">This is a fairly simple program that demonstrates that a variable's value is, well, variable. We can change it to anything we like.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = 100;
+print "$i &lt;p&gt;";
+$i = $i + 7;
+print "$i &lt;p&gt;";
+$i = $i + 1;
+print "$i &lt;p&gt;";
+$i++;
+print "$i &lt;p&gt;";</PRE>
+<P ALIGN="JUSTIFY">Here's proof that Perl can do math. We first assign '$i' the value 100, print it out (remember, the value of the variable will be printed out, not the string '$i'). Then we add '7' to the current value of '$i', making it 107. We then add '1' making it 108 and finally we do a '$i++' which is simply shorthand for the longer '$i = $i + 1'. The final print prints out 109.</P>
+<P ALIGN="JUSTIFY">So much for variables. On to more substantial fare.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+if (1)
+{
+print "True&lt;p&gt;";
+}
+if (0)
+{
+print "False&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Control statements add intelligence to your programs and give them the ability to make decisions. The IF statement is one of the most important and basic control statements to be found in any programming language. </P>
+<P ALIGN="JUSTIFY">In the third line of the program we say</P>
+<PRE>if (1)
+{
+print "True&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">The value that IF is to test is always in ()'s. In this case it's the number '1' which when used in any decision making statement means TRUE. The pair of {}'s are also compulsory as dictated by the syntax rules. All statements to be executed if the IF statement is found to be TRUE are enclosed within. In this case, all we have is a single print statement.</P>
+<P ALIGN="JUSTIFY">The second IF statement is identical in structure, except that it test the number '0' which is always FALSE. If, some how, '0' is found to be TRUE, the print statement would churn out 'False'.</P>
+<P ALIGN="JUSTIFY">Try it out.</P>
+<P ALIGN="JUSTIFY">You just get to see the True.</P>
+<P ALIGN="JUSTIFY">That's because only if the result of the IF statement is TRUE will the statements within the {}'s be executed. '0' (which is _always_ FALSE) is never going to equal TRUE, so the contents of the second IF statement are never executed.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+if (4 &gt; 8)
+{
+print "4 &gt; 8 is never true&lt;p&gt;";
+}
+if (4 &lt; 8)
+{
+print "4 &lt; 8 is always true&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Here's another one in a similar vein to clear things up. Only the contents of the second IF statement will be executed. That's because the number '4' will _never_ be larger than '8'; it's always smaller and that's why the second IF statement is executed.</P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+if (4 &gt; 8)
+{
+print "4 &gt; 8 is never true&lt;p&gt;";
+}
+else
+{
+print "the else&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Instead of using two IF's we can use an ELSE. If the IF statement is not TRUE (as it isn't in this case), the ELSE will be executed. It's just like a statement of fact in English. "If this is true, do it, or else do this".</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+while ($i &lt;= 10)
+{
+print "$i &lt;p&gt;";
+$i++;
+}</PRE>
+<P ALIGN="JUSTIFY">Here we have another control statement, the WHILE. WHILE repeats a set of statements (enclosed in {}'s) while the condition within it's ()'s is TRUE.</P>
+<P ALIGN="JUSTIFY">So while '$i' is less than or equal to '10', the statements will be executed, otherwise not.</P>
+<P ALIGN="JUSTIFY">In this case '$i' is automatically give a value of '1' instead of a blank value (a Null) because Perl is smart enough to notice that you're using the variable in a mathematical context. Therefor it would make more sense if the value was a number.</P>
+<P ALIGN="JUSTIFY">So the WHILE will run while the value of '$i' is less than or equal to '10'.</P>
+<P ALIGN="JUSTIFY">The line</P>
+<P ALIGN="JUSTIFY">$i++;</P>
+<P ALIGN="JUSTIFY">is vital. If it isn't there then the value of '$i' would never increase and we'll be stuck in the WHILE statement forever! A condition known as an Infinite Loop. Since we're incrementing the value however, the WHILE will run ten times and the values of '$i' from one to ten will be printed out.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+for ($i = 2; $i &lt;=10; $i++)
+{
+print "$i &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">A FOR statement is identical in use to a WHILE statement, though the syntax is a little different.</P>
+<P ALIGN="JUSTIFY">In the FOR, we first set the initial value of '$i' (we \iinitialise\i it) to '2'. After the semi-colon, we then set the condition i.e. the statement should loop while '$i' is less than or equal to the number '10'. After the last semi-colon, we tell the FOR statement what to do with '$i' after every iteration and in this case, we want to increment the value by '1'.</P>
+<P ALIGN="JUSTIFY">So the print statement prints out the numbers two to ten.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = 30;
+@a = (6 , "Hi", Bye , $i );
+print @a;
+print "@a";</PRE>
+<P ALIGN="JUSTIFY">Up till now, we've dealt with variables that start with a '$'; those that can only hold one value. Now let's check out those variables (called arrays in C and most other languages) that can hold multiple, usually related, values. These variables start with an '@' sign and values are assigned to them in the manner shown above. We don't have to use ""'s to demarcate strings, we can simply write out what we want ( as in the case of the string Bye). We can even have a variable as part of the array.</P>
+<P ALIGN="JUSTIFY">The first print will print out all the values, without any spaces so they appear joined together. The second print will display the values with spaces in between them.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = 30;
+@a = (6 , "Hi", Bye , $i );
+print "@a[0] , @a[20] , @a[2] , $a[2]";</PRE>
+<P ALIGN="JUSTIFY">The output in your browser will be </P>
+<P ALIGN="JUSTIFY">6,,Bye,Bye</P>
+<P ALIGN="JUSTIFY">This program shows another way to access the stores values. Look carefully at the print statement. Using '@a[0]' we tell the Perl interpreter to access the _first_ (Perl in this case counts from zero onwards) member of the array. So '6' is displayed. Similarly, we next ask for the twenty first (remember, we're counting from zero) member of the array, which hasn't been defined. Perl doesn't complain. All it does is return a Null. Next, we ask for the third member, and Perl returns 'Bye'. Finally, we demonstrate that we don't have to use '@' to access an array, the good ol' '$' sign will suffice. We get a 'Bye' here too.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+print "$#a &lt;p&gt;";
+print "@a[0,2] &lt;p&gt;";
+print "@a[0..2] &lt;p&gt;";
+print "@a[$#a] &lt;p&gt;";
+print "@a[-1] Last &lt;p&gt;";</PRE>
+<P ALIGN="JUSTIFY">The text displayed in the browser window is</P>
+<PRE>3
+6 Bye
+6 Hi Bye
+Last</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Notice that we've removed the variable '$i' from the script. The first print will output the total number of members in the array '@a'. That's what the '$#a' means. Next, we have '@a[0,2]', which means output the first and third members. '@a[0..2]' gives us the members in the range zero to 2. So we get the string '6 Hi Bye'. The fourth print is supposed to give us the last member of the array, but since that is a Null ('$i' is no loner initialized to anything), we get nothing. The final print does the same thing, i.e. it accesses the last member of the array. Here too, we get a Null and the word Last.</P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+foreach $aa (@a)
+{
+print "$aa &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Here's a simple program that prints out all the members of the array '@a'. FOREACH is a reserved word. What happens here is that each time through the loop, '$aa' is assigned the value of a member of '@a', from zero onwards. In other words, foreach iteration of the loop, '@aa' holds the value of the next member in '@a'.</P>
+<P ALIGN="JUSTIFY">Here's another way to do it.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+for $aa (@a)
+{
+print "$aa &lt;p&gt;";
+} </PRE>
+<P ALIGN="JUSTIFY">It's exactly the same when you use a simple FOR. It's up to you to decide what coding style you wish to follow.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+for $aa (0 .. $#a)
+{
+print "$aa $a[$p] &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">You should be able to guess what this program does just by looking at it. It's simply going over some old ground.</P>
+<P ALIGN="JUSTIFY">In the FOR loop, we're cycling through the range of values from zero to the last value of the array. Within the loop, we print those values out.</P>
+<P ALIGN="JUSTIFY">Nothing to it.</P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+for (@a)
+{
+print "$_ &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Here's just a little bit of extra information. The variable $_ is a special one. It always holds the last value returned. It's like saying 'print "$aa &lt;p&gt;" in the earlier programs. So here in the loop, the print statement will output a list of all the members in '@a' as the FOR statement loops the loop.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+@a = (6 , "Hi", Bye , $i );
+for (@a)
+{
+print ;
+}</PRE>
+<P ALIGN="JUSTIFY">In fact, you don't need to use the '$_' at all. If you put nothing else after the print, Perl will automatically add the '$_' internally and everything will work as before.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+print $a{"a1"};
+print $a{"b1"};
+print $a{"c1"};</PRE>
+<P ALIGN="JUSTIFY">In this program we introduce something new, a _third_ kind of variable! This one's called a 'hash' or a 'hash table' or even an 'associated array' and it's made up of paired values. It's a lot like an array, except that here each member is either a \ikey\i or it's associated \ivalue\i. </P>
+<P ALIGN="JUSTIFY">This new variable is marked with a '%' sign and the members are initialized as shown. Here, 'a1' is the key member and 'b1' is the associated value. Similarly, 'c1' is the key and 'd1' is the value. They're written out one after the other as shown.</P>
+<P ALIGN="JUSTIFY">The print statement also has a slightly different format. There's no explaining it; it's syntax and we have to simply accept it as such. The first print will display 'b1' because that's the value of the key 'a1'. Similarly, the last print will display 'd1'. The print in the middle however, will display nothing at all, since 'b1' is a value and not a key. Only the value can be displayed when the key is given, not vice-versa.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+($a,$b) = each (%a);
+print "$a , $b &lt;p&gt;";
+$a,$b = each (%a);
+print "$a , $b &lt;p&gt;";</PRE>
+<P ALIGN="JUSTIFY">Here, in line number four, we're putting the first key into '$a' and it's value into '$b'. So '$a' will contain 'a1' and '$b' will contain 'b1'. We print that out.</P>
+<P ALIGN="JUSTIFY">Next, we try the same thing without the ()'s. No go. We end up with '$a' equal to 'a1' (because we haven't changed it's value yet) and '$b' contains 'c1', the key. This is definitely not something we want. The lesson as always is, stick to the syntax!</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+while ( ($a,$b) = each (%a) )
+{
+print "$a , $b &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">This is a nice clean way to print out all the values. While the loop loops, '$a' and '$b' will keep being given the key and value members respectively and those will be printed out. The loop ends when 'each' reaches the end of the hash table and returns a FALSE.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+@b = keys(%a);
+print "@b &lt;p&gt;";
+@b = values(%a);
+print "@b &lt;p&gt;";</PRE>
+<P ALIGN="JUSTIFY">Here's a straight forward program. The function 'keys()' extracts the names of all the keys in the hash table '%a' and the print displays them. Similarly, the function 'values()' extracts all the values and the next print displays them.</P>
+<PRE>&nbsp;
+a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+print %a;</PRE>
+<P ALIGN="JUSTIFY">This program outputs a line with the keys and values, one after the other. The values are not separated by spaces. </P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+%a = ("a1","b1","c1","d1");
+print "%a";</PRE>
+<P ALIGN="JUSTIFY">This program (surprise!) outputs the text </P>
+<P ALIGN="JUSTIFY">%a</P>
+<P ALIGN="JUSTIFY">Nothing more.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print %ENV;</PRE>
+<P ALIGN="JUSTIFY">Check this program out. Quite a lot of text for just one simple line. These are the Environmental variables available to Perl. The hash table %ENV is a special one and is automatically created by the Perl interpreter and is always available for instant use. It contains a lot of information about the environment your script is running in and can be very useful.For now, just gape at the output and be amazed.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+foreach $aa (%ENV)
+{
+print "$aa &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">This script cleans up the output a bit by inserting a paragraph break after every line of data. It's all beginning to make sense now, isn't it? Look at the output carefully. You can discover the server you're running under, the document root, the IP address of the machine that called you,</P>
+<P ALIGN="JUSTIFY">all at run time. Useful, this is.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print $ENV{"QUERY_STRING"};
+print $ENV{"HTTP_HOST"};</PRE>
+<P ALIGN="JUSTIFY">Flashback to the earlier script where we were talking about extracting individual values for every string in a hash table. That's what we're doing here. The first key, 'QUERY_STRING' gives us nothing at all because no parameters have been passed to our script and so this key is empty. The second key, 'HTTP_HOST' holds the address of the client and that's what the print dutifully displays.</P>
+<P ALIGN="JUSTIFY">Let's try this out...</P>
+<P ALIGN="JUSTIFY">Create an HTML file with the following text in it and copy it to</P>
+<P ALIGN="JUSTIFY">/home/httpd/html/ and name it a.html</P>
+<PRE>&lt;HTML&gt;
+&lt;FORM ACTION="http://127.0.0.1/cgi-bin/a.pl"&gt;
+&lt;INPUT TYPE=TEXT NAME=aa&gt;&lt;P&gt;
+&lt;INPUT TYPE=TEXT NAME=bb&gt;&lt;P&gt;
+&lt;INPUT TYPE=SUBMIT VALUE="click"&gt;
+&lt;/FORM&gt;
+&lt;/HTML&gt;</PRE>
+<P ALIGN="JUSTIFY">Edit our pal a.pl to look like this.</P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print $ENV{"QUERY_STRING"};</PRE>
+<P ALIGN="JUSTIFY">Now load on Netscape and go to http://127.0.0.1/a.html. Enter any old rubbish in to the two text boxes on display and click the button named 'click'. You're immediately presented with the output from our Perl script; the text of the 'QUERY_STRING' sent to us by the browser. Examine it closely. If, like me, you typed 'aaa' into the first box and 'bbb' into the second one, you'll get the following.</P>
+<PRE>aa=aaa&amp;bb=bbb</PRE>
+<P ALIGN="JUSTIFY">Simple it is, but it's also the heart and soul of CGI programming. What we have here are a list of the text boxes on our HTML page and the data entered into them, separated by ampersands. This is exactly the technique that sites like Yahoo (www.yahoo.com) use. You enter text into their "Search" text box and the data is passed to a waiting script/program in the server which examines the string and does the needful.</P>
+<P ALIGN="JUSTIFY">Of course, this string is pretty useless until it can be properly formatted and this is where Perl really shines. Sure, a language like C would be faster, but C just can't handle strings as easily as Perl can. Perl is justifiably famous as one of the best scripting languages around for text handling and not without reason. The next script shows just how easy it is to handle strings in Perl</P>
+<PRE>
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$a = $ENV{"QUERY_STRING"};
+@b = split('=' , $a);
+print "@b &lt;p&gt;";
+foreach $i (@b)
+{
+print "$i &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">What this script does is cut up the 'QUERY_STRING' into members of the array '@b', at the '=' signs. So we end up with 3 members in '@b', "aa" "aaa&amp;bb" and "bbb". Not exactly what we wanted, but we're getting there. Let's try chopping them up at the '&amp;'.</P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$a = $ENV{"QUERY_STRING"};
+@b = split('&amp;' , $a);
+print "@b &lt;p&gt;";
+foreach $i (@b)
+{
+print "$i &lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Just one character has been changed. The '=' in split() has been replaced by a '&amp;'. We get</P>
+<PRE>aa=bbb</PRE>
+<P ALIGN="JUSTIFY">and</P>
+<PRE>bb=bbb</PRE>
+<P ALIGN="JUSTIFY">in the second and third lines respectively. This is definitely more useful. The next script should clear up any lingering doubts. </P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$a = $ENV{"QUERY_STRING"};
+@b = split('&amp;' , $a);
+print "@b &lt;p&gt;";
+foreach $i (@b)
+{
+print "$i &lt;p&gt;";
+}
+foreach $j (@b)
+{
+@c = split('=' , $j);
+&#9;foreach $k (@c)
+&#9;{
+&#9;print "$k &lt;p&gt;";
+&#9;}
+}</PRE>
+<P ALIGN="JUSTIFY">This may look convoluted, but it's actually quite simple. Up until line number 8, everything is familiar. After that, we take the array '@b' which has already been split at the '&amp;' and further splice it at the '='. The inner loop just prints everything out.</P>
+<P ALIGN="JUSTIFY">Nothing to it really; and we get just what we want, all the keys and their values nicely lined up on after another with no intervening ampersands and equal to's.</P>
+<P ALIGN="JUSTIFY">Onwards now to something a little overdue. Reading from a file. You should be able to decipher this yourself. </P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+open(aa,"a10.txt");
+while ($i = &lt;aa&gt;)
+{
+print $i;
+}
+close(aa);</PRE>
+<P ALIGN="JUSTIFY">This is quite straight forward. We use the function 'open()' to open the file of our choice. 'aa' is the name of the \ifile handle\i (a variable that is use by us to refer to the file). In the WHILE statement we loop till we reach the end of the file. FALSE will then be returned and we'll exit out. With in the loop, we're simply printing out the file. Notice that 'aa' is surrounded by &lt;&gt;'s. There's no rationalizing it; it's syntax. </P>
+<P ALIGN="JUSTIFY">The final statement is the function close() which as the name suggests, closes a file and cleans up after it. </P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+&amp;aa;
+&amp;aa;
+print "END &lt;p&gt;";
+sub aa()
+{
+print "hi&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">Here we introduce a new concept. The Subroutine. A subroutine is a quick and easy way to call code that will be repeated in the script. Here we wish to print out the line 'hi' twice. We could either use two print statements one after the other or create a subroutine 'aa()' which prints out the string and call it twice. This example is quite trivial, so it may not make to much sense to use subroutines here, but what if the subroutine was many hundreds of lines of code long. We'd be in trouble without subroutines then!</P>
+<P ALIGN="JUSTIFY">Why the '&amp;' before the sub name? You better than to ask! It's syntax of course and there's no explaining it.</P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = &amp;aa;
+print "$i &lt;p&gt;";
+sub aa()
+{
+print "hi&lt;p&gt;";
+}</PRE>
+<P ALIGN="JUSTIFY">This program returns a value, which is stored in '$i'. The return value is the last value that's returned in the subroutine. Here, it's the return value of print (which is 1) which is returned.</P>
+<PRE>#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+$i = &amp;aa;
+print "$i &lt;p&gt;";
+sub aa()
+{
+print "hi&lt;p&gt;";
+21;
+}</PRE>
+<P ALIGN="JUSTIFY">Now the return value will be 21. Simple isn't it? Return values are used to indicate errors or to return the value of a calculation; that sort of thing. You've come across them before. For example, split() returns an array.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+&amp;aa(1,2) , "\n"; 
+sub aa() 
+{
+print $_[0] ,"\n" ;
+print $_[1] ,"\n" ;
+}</PRE>
+<P ALIGN="JUSTIFY">This script is a continuation of the same theme, but it's a tad more involved. Here we're passing the subroutine '&amp;aa' two parameters. To access these parameters in the subroutine, we use '$_'. Use '$_[0]' for the first one and '$_[1]' for the next. These variables are created for you automatically, by Perl.</P>
+<PRE>a.pl 
+#!/usr/bin/perl 
+print "Content-Type:text/html\n\n"; 
+&amp;aa(1,2,3) ,"\n"; 
+sub aa() 
+{
+print @_ , "\n";
+foreach $_ (@_) 
+{
+print $_ , "\n"; 
+} 
+} </PRE>
+<P ALIGN="JUSTIFY">Here we first print out the parameters in one long line using '@_' and we then print them out one by one in a foreach loop.'@_' is an array containing the parameters and is created automatically.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print &amp;aa(),"\n";
+sub aa()
+{
+6;
+}</PRE>
+<P ALIGN="JUSTIFY">Here's another way to return a number and print out it's value.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+print "Content-Type:text/html\n\n";
+print &amp;aa(1,2,3,4) , "\n"; 
+sub aa() 
+{ 
+$s = 0; 
+foreach (@_) 
+{
+$s += $_; 
+} 
+$s; 
+}</PRE>
+<P ALIGN="JUSTIFY">Here's a nice little program that puts everything together for us. We pass the subroutine four parameters. In the subroutine we then initialize the variable '$s' to 0 and use it in the FOREACH loop to add up all the parameter values. FOREACH will loop until all the parameters have been accessed and then it will end. Since we have '$s' as the last value in the subroutine that will be returned as the return value and printed out.</P>
+<P ALIGN="JUSTIFY">MODULES</P>
+<P ALIGN="JUSTIFY">^^^^^^^</P>
+<P ALIGN="JUSTIFY">Up till now, all that we've done is create simple Perl scripts using the predefined functions in Perl. One of the things Perl is justifiably famous for is it's extensibility. By that I don't mean hacking the Perl interpreter. True, it's source code is freely available and if you want to you can do just about anything with it you want. Unfortunately, not too many people in the world have the ability or the patience to go through some million lines of code just to add a new keyword or function! </P>
+<P ALIGN="JUSTIFY">No, Perl, gives us a much simpler way to do what we want, modules. </P>
+<P ALIGN="JUSTIFY">Let's figure these beasts out.</P>
+<PRE>x.pl
+use Env;
+print "Home: $HOME\n";
+print "Name: $LOGNAME\n";
+
+bash# perl x.pl
+Home= /root
+Name= root</PRE>
+<P ALIGN="JUSTIFY">Type in the script as shown into x.pl and then run the program using the perl interpreter. Notice that we're not using the '#!' to call the interpreter, but doing it directly. It's no biggie, you can do things the old way if you want.</P>
+<P ALIGN="JUSTIFY">The output is shown above.</P>
+<P ALIGN="JUSTIFY">What this script does is use the module Env to automatically create some variables for our use. We then use these variables in the print statements. Try the same program without the line 'use Env'. The print statements will only have blank lines after the ='s.</P>
+<PRE>x.pl
+use zzz;
+bash# perl x.pl
+Can't locate zzz.pm in @INC (@INC contains:
+/usr/lib/perl5/5.00503/i386-linux /usr/lib/perl5/5.00503
+/usr/lib/perl5/site_perl/5.005/i386-linux /usr/lib/perl5/site_perl/5.005
+.) at x.pl line 1.
+BEGIN failed--compilation aborted at x.pl line 1.</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Let's try using a module of our own, which we'll call zzz. By putting the line 'use zzz' in the Perl script, we're telling Perl to find and load the module into memory and to prepare it for use. Since we haven't yet gotten around to actually creating the module file, Perl spits out a screen full of errors telling us it can't locate the file aaa.pm.</P>
+<PRE>&nbsp;
+x.pl
+use zzz;
+zzz.pm
+package zzz;
+$x = 1;
+bash# perl x.pl
+&lt;no output&gt;</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Right. Now we've created a file named zzz.pm and put the relevant lines into it. the word 'package' tell Perl the name of the package and after that we create a variable and assign it a value. We get no output when we run the file, but no errors either.</P>
+<PRE>&nbsp;
+x.pl
+use zzz;
+zzz.pm
+package zzz;
+$x = 1;
+print "hi \n";
+bash# perl x.pl
+hi</PRE>
+<P ALIGN="JUSTIFY">Okay, here's a line of output. Simple.</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz.pm
+package zzz;
+$x = 1;
+print "hi \n";
+bash# perl x.pl
+hi</PRE>
+<P ALIGN="JUSTIFY">In this version of x.pl, we use the line 'use lib './'' precisely state the location of the module file. It could be anywhere on the disk.</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz.pm
+package zzz;
+$x = 1;
+sub xxx
+{
+print "Hi in xxx\n";
+}
+bash# perl x.pl
+&lt;no output&gt;</PRE>
+<P ALIGN="JUSTIFY">We're going a little deeper now. We've created a small function name 'xxx' which prints out a line. Notice however, that when we run the script, we get no output. That's pretty obvious to debug, we haven't called this new function from within x.pl!</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz::xxx();
+zzz-&gt;xxx();
+zzz.pm
+package zzz;
+$x = 1;
+sub xxx
+{
+print "Hi in xxx\n";
+}
+bash# perl x.pl
+Hi in xxx
+Hi in xxx</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">We've remedied that here and we get our output. We've actually called the same function twice, using two different styles. They both mean the same thing, it's just a matter of personal preference which one you decide to use in the end. </P>
+<PRE>&nbsp;
+x.pl
+use lib './';
+use zzz;
+zzz::xxx();
+zzz.pm
+package zzz;
+sub xxx
+{
+print "Hi in xxx\n";
+}
+bash# perl x.pl
+zzz.pm did not return a true value at x.pl line 1.
+BEGIN failed--compilation aborted at x.pl line 1.
+&nbsp;</PRE>
+<P ALIGN="JUSTIFY">Who would have thought that removing one simple variable. which we don't even use, would have given us an error. It seems that our package must always exit out with an acceptable return value. So let's not quibble and give Perl what it wants.</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz::xxx();
+zzz.pm
+package zzz;
+sub xxx
+{
+print "Hi in xxx\n";
+}
+1;
+bash# perl x.pl
+Hi in xxx</PRE>
+<P ALIGN="JUSTIFY">That's all that was required. A single return value.</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz::xxx();
+zzz.pm
+package zzz;
+BEGIN {print "start\n";}
+sub xxx
+{
+print "Hi in xxx\n";
+}
+1;
+bash# perl x.pl
+start
+Hi in xxx</PRE>
+<P ALIGN="JUSTIFY">The BEGIN is called a constructor and is the first thing called when you</P>
+<P ALIGN="JUSTIFY">say 'use zzz' in x.pl. It can be used by your script to initialize things</P>
+<P ALIGN="JUSTIFY">before any other function is called or variable is accessed.</P>
+<PRE>x.pl
+use lib './';
+use zzz;
+zzz::xxx();
+zzz.pm
+package zzz;
+BEGIN {print "start\n";}
+sub xxx
+{
+print "Hi in xxx\n";
+}
+END {print "over\n";}
+1;
+bash# perl x.pl
+start
+Hi in xxx
+over</PRE>
+<P ALIGN="JUSTIFY">Similar in concept to the constructor, we have the destructor, END,</P>
+<P ALIGN="JUSTIFY">which is the last thing called before the module ends. It is supposed to</P>
+<P ALIGN="JUSTIFY">clean up after the rest of the module.</P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Of course, you needn't do all of this by hand. A nifty little program</P>
+<P ALIGN="JUSTIFY">named h2xs makes most of the framework automatically. Check it out below.</P>
+<P ALIGN="JUSTIFY">Try this out. Go to the directory of your choice, /pjunk for example and</P>
+<P ALIGN="JUSTIFY">type this in.</P>
+<PRE>bash# h2xs -A -n VMCI</PRE>
+<P ALIGN="JUSTIFY">You'll get these lines on your screen.</P>
+<PRE>Writing VMCI/VMCI.pm
+Writing VMCI/VMCI.xs
+Writing VMCI/Makefile.PL
+Writing VMCI/test.pl
+Writing VMCI/Changes
+Writing VMCI/MANIFEST</PRE>
+<P ALIGN="JUSTIFY">Now say </P>
+<PRE>bash# ls -l 
+total 15
+drwxr-xr-x 2 root root 1024 Sep 11 12:16 VMCI</PRE>
+<P ALIGN="JUSTIFY">Hmmm. We have a new directory named VMCI. Let's 'cd' into it.</P>
+<PRE>bash# cd VMCI
+bash# ls -l
+total 6
+-rw-r--r-- 1 root root 117 Sep 11 12:16 Changes
+-rw-r--r-- 1 root root 53 Sep 11 12:16 MANIFEST
+-rw-r--r-- 1 root root 369 Sep 11 12:16 Makefile.PL
+-rw-r--r-- 1 root root 1008 Sep 11 12:16 VMCI.pm
+-rw-r--r-- 1 root root 91 Sep 11 12:16 VMCI.xs
+-rw-r--r-- 1 root root 649 Sep 11 12:16 test.pl</PRE>
+<P ALIGN="JUSTIFY">Now lets edit the file VMCI.xs in a text editor. Use any you like.</P>
+<PRE>VMCI.xs
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+&nbsp;
+MODULE = VMCI&#9;&#9;PACKAGE = VMCI&#9;&#9;</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">This is the framework that h2xs automatically creates so that you don't have to type it in. Add the following lines to the file after the line with MODULE = VMCI.</P>
+<PRE>void 
+hello()
+CODE:
+printf("Hello\n");</PRE>
+<P ALIGN="JUSTIFY">This is the code of the function hello() that we wish to add have in our module.</P>
+<P ALIGN="JUSTIFY">Now exit back to the shell and type in the following at the prompt.</P>
+<PRE>bash# perl Makefile.PL</PRE>
+<P ALIGN="JUSTIFY">The following will be displayed.</P>
+<PRE>Checking if your kit is complete...
+Looks good
+Writing Makefile for VMCI</PRE>
+<P ALIGN="JUSTIFY">Now type this in.</P>
+<PRE>bash# make</PRE>
+<P ALIGN="JUSTIFY">This calls the resident C compiler which starts to compile the code.</P>
+<PRE>mkdir blib
+mkdir blib/lib
+mkdir blib/arch
+mkdir blib/arch/auto
+mkdir blib/arch/auto/VMCI
+mkdir blib/lib/auto
+mkdir blib/lib/auto/VMCI
+mkdir blib/man3
+cp VMCI.pm blib/lib/VMCI.pm
+AutoSplitting blib/lib/VMCI.pm (blib/lib/auto/VMCI)
+/usr/bin/perl -I/usr/lib/perl5/5.00503/i386-linux -I/usr/lib/perl5/5.00503 /usr/lib/perl5/5.00503/ExtUtils/xsubpp -typemap /usr/lib/perl5/5.00503/ExtUtils/typemap VMCI.xs &gt;xstmp.c &amp;&amp; mv xstmp.c VMCI.c
+cc -c -Dbool=char -DHAS_BOOL -I/usr/local/include -O2 -DVERSION=\"0.01\" -DXS_VERSION=\"0.01\" -fpic -I/usr/lib/perl5/5.00503/i386-linux/CORE VMCI.c
+Running Mkbootstrap for VMCI ()
+chmod 644 VMCI.bs
+LD_RUN_PATH="" cc -o blib/arch/auto/VMCI/VMCI.so -shared -L/usr/local/lib VMCI.o 
+chmod 755 blib/arch/auto/VMCI/VMCI.so
+cp VMCI.bs blib/arch/auto/VMCI/VMCI.bs
+chmod 644 blib/arch/auto/VMCI/VMCI.bs
+Manifying blib/man3/VMCI.3</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Now type </P>
+<PRE>bash# make install</PRE>
+<P ALIGN="JUSTIFY">to actually install the module. Notice where it's being copied.</P>
+<PRE>&nbsp;
+Installing /usr/lib/perl5/site_perl/5.005/i386-linux/auto/VMCI/VMCI.so
+Installing /usr/lib/perl5/site_perl/5.005/i386-linux/auto/VMCI/VMCI.bs
+Files found in blib/arch --&gt; Installing files in blib/lib into architecture dependend library tree!
+Installing /usr/lib/perl5/man/man3/VMCI.3
+Writing /usr/lib/perl5/site_perl/5.005/i386-linux/auto/VMCI/.packlist
+Appending installation info to /usr/lib/perl5/5.00503/i386-linux/perllocal.pod</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">That's it! We're done. Now to test out the module. Create a file called</P>
+<P ALIGN="JUSTIFY">'hello.pl' containing the following Perl code.</P>
+<PRE>hello.pl
+#! /usr/bin/perl
+use lib './blib' ;
+use VMCI;
+VMCI::hello();</PRE>
+<P ALIGN="JUSTIFY">Now run it from the prompt.</P>
+<PRE>bash# perl hello.pl
+Hello</PRE>
+<P ALIGN="JUSTIFY">It works! That's all there was to it. This is how we can extend Perl using modules written in C rather than Perl. So we can now pretty much to whatever it is that C can do, in the warm and freindly confines of Perl.</P>
+<P ALIGN="JUSTIFY">Here is the .pm file that's automatically created for us. Notice the difference in size and complexity, yet it does pretty much what we've been doing in a couple of lines.</P>
+<PRE>&nbsp;
+package VMCI;
+use strict;
+use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
+require Exporter;
+require DynaLoader;
+require AutoLoader;
+@ISA = qw(Exporter DynaLoader);
+# Items to export into callers namespace by default. Note: do not export
+# names by default without a very good reason. Use EXPORT_OK instead.
+# Do not simply export all your public functions/methods/constants.
+@EXPORT = qw(
+&#9;
+);
+$VERSION = '0.01';
+bootstrap VMCI $VERSION;
+# Preloaded methods go here.
+# Autoload methods go after =cut, and are processed by the autosplit program.
+1;
+__END__
+# Below is the stub of documentation for your module. You better edit it!
+=head1 NAME
+VMCI - Perl extension for blah blah blah
+=head1 SYNOPSIS
+use VMCI;
+blah blah blah
+=head1 DESCRIPTION</PRE>
+<P ALIGN="JUSTIFY">Stub documentation for VMCI was created by h2xs. It looks like the author of the extension was negligent enough to leave the stub unedited.</P>
+<PRE>Blah blah blah.
+=head1 AUTHOR
+A. U. Thor, a.u.thor@a.galaxy.far.far.away
+=head1 SEE ALSO
+perl(1).
+=cut</PRE>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">Now the implications of modules should be quite clear. Let's examine anexample of modules in action and how they can make life easier for us. One of the many things Perl is used for in a Website is to accept registration forms and to add the information to a database. Now, if we had to, we could have used a simple text file as the database and kept adding new data to it. That's a clunky approach, but one we'd have had to adopt. The only other alternative would have been to write out own C modules that would talk to a full commercial database like Oracle or Postgresql or MySql. Lots o' work, that! </P>
+<P ALIGN="JUSTIFY">But fear not! The tough stuff has already been done by someone else. Yes, ladies and gentlemen, there already exists a library of modules, called the DBI (DataBase Interface) modules that can talk to almost every RDBMS in existence. You no longer have to struggle with them yourselves, all you have to do is talk to DBI and it'll do the needful. Check out the following programs.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+$host = " ";
+use DBI;
+$dbh = DBI-&gt;connect("DBI:mysql:test:$host");
+$dbh-&gt;do("CREATE TABLE z5 (vno char(10))");</PRE>
+<P ALIGN="JUSTIFY">This is really simple. We first create a variable named '$host' and make it hold a space. In the next line we say 'use DBI' to use the DBI modules. </P>
+<P ALIGN="JUSTIFY">We then call a function named 'connect' within the DBI module and pass it certain parameters. The first is the name of the module itself, 'DBI'. The second is the name of the Database we wish to connect to. In our case it's 'mysql' because that's what we're using. If you're using Oracle, you'd put that here. Everything else (and this is the crucial bit) would remain the _same_. The third parameter is the name of the database we wish to use and the final one is the address of the machine on which the RDBMS resides.We're passing it a space to tell DBI that MySql is on our machine, but you could put the address of any machine you wished out here.</P>
+<P ALIGN="JUSTIFY">Connect will return a number which is the handle to this connection and this handle will be stored in the variable '$dbh'.</P>
+<P ALIGN="JUSTIFY">We then use the handle to call the function 'do' which is passed a string. This string (which in this case is an SQL statement) is sent to the Database specified earlier. We're telling MySql to create a new table name 'z5' and make a single column in it, that of 'vno' which is ten characters</P>
+<P ALIGN="JUSTIFY">wide.</P>
+<P ALIGN="JUSTIFY">That's all that this program does.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+$t = "z5";
+use DBI;
+$dbh = DBI-&gt;connect("DBI:mysql:test");
+$dbh-&gt;do("drop table if exists $t");</PRE>
+<P ALIGN="JUSTIFY">Here we connect to the SQL server as usual. Notice that we don't even need to give the host address if the server is on our machine. We send the server the SQL command to drop the table if it exists. That done, we exit. </P>
+<P ALIGN="JUSTIFY">The only real reason we've done this script is to demonstrate that we can use Perl variables even within the strings to be sent to the Database. The variables are replaced with their values before the string is shot off to the server.</P>
+<PRE>a.pl
+#!/usr/bin/perl
+$t = "z5";
+use DBI;
+$dbh = DBI-&gt;connect("DBI:mysql:test");
+$dbh-&gt;do("drop table $t") or die $DBI::errstr;</PRE>
+<P ALIGN="JUSTIFY">This program demonstrates the concept of error checks. If the table 'z5' cannot be dropped, then the program ends with the error value displayed. </P>
+<PRE>a.pl
+#!/usr/bin/perl
+use DBI;
+$dbh = DBI-&gt;connect("DBI:mysql:test");
+$sth = $dbh-&gt;prepare("select * from z5") or die $dbh-&gt;errstr;
+$sth-&gt;execute() or die $sth-&gt;errstr;
+$i=0;
+while($row = $sth-&gt;fetchrow_arrayref) 
+{
+print $row-&gt;[0] , "\n";
+}</PRE>
+<P ALIGN="JUSTIFY">This program really puts things together. The first three lines are familiar by now. In the fourth line, we can a function named 'prepare' and give it the SQL command string as it's only parameter. This function doesn't send the string across, it simply readies it for the trip. It returns a handle, which we store in the variable '$sth'. In the fifth line we use the handle to call the function 'execute'. It's this function which 'executes' the SQL statement by sending it to the server.</P>
+<P ALIGN="JUSTIFY">In the while loop that follows, we use the function 'fetchrow_array' to retrieve the result, row by row and store it in '$row'. We then print out values of the first (and in this case the only) column in the database.</P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">&nbsp;</P>
+<P ALIGN="JUSTIFY">&nbsp;</P></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/tutorials/perl.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:23 GMT -->
+</HTML>

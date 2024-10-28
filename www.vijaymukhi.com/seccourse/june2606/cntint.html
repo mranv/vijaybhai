@@ -1,0 +1,613 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/cntint.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:02 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="cntint_files/filelist.html">
+<title>Counting Interrupts</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>116</o:TotalTime>
+  <o:Created>2006-06-26T11:55:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:55:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>1962</o:Words>
+  <o:Characters>11186</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>93</o:Lines>
+  <o:Paragraphs>22</o:Paragraphs>
+  <o:CharactersWithSpaces>13737</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Counting Interrupts<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>r.c<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>#include
+&lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>#include
+&lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>#define MAKELONG(a,
+b) ((unsigned long) (((unsigned short) (a)) | ((unsigned long) ((unsigned
+short) (b))) &lt;&lt; 16)) <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned long
+g_i_count[0xff+1],old_ISR_pointers[0xff+1];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>//90 60 9c b8 00 00
+00 00 50 9a f7 80 7b f7 08 00 58 9d 61 ea 50 f3 4d 80 08 00 90<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>//idt_detour_tablebase=88f2e000
+count_interrupts=f77b80f7<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>//Count 0 old isr
+pointer=804df350<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>char jump_template[]
+= { <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x90, //nop, debug<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x60, //pushad<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x9C, //pushfd<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0xB8, 0xAA, 0x00, 0x00, 0x00,<span
+style='mso-tab-count:1'>    </span>//mov eax, AAh<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x50, //push eax<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x9A, 0x11, 0x22, 0x33, 0x44, 0x08, 0x00,
+//call 08:44332211h<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x58, //pop eax<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x9D, //popfd<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0x61, //popad<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><span
+style="mso-spacerun: yes"> </span>0xEA, 0x11, 0x22, 0x33, 0x44, 0x08, 0x00
+//jmp 08:44332211h<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned char
+*idt_detour_tablebase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>#pragma pack(1)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTENTRY<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned short
+LowOffset , selector;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned char
+unused_lo, segment_type:4,system_segment_flag:1,DPL:2,P:1;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned short
+HiOffset;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>} ;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTINFO<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned short
+IDTLimit;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned short
+LowIDTbase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned short HiIDTbase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>#pragma pack()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>VOID
+OnUnload(PDRIVER_OBJECT DriverObject )<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<span
+style='mso-tab-count:1'>    </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>int i;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTINFO
+idt_info;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTENTRY
+*idt_entries;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>char _t[255];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;ROOTKIT:
+OnUnload called\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm<span
+style='mso-tab-count:1'>     </span>sidt<span style='mso-tab-count:1'> </span>idt_info<span
+style='mso-tab-count:1'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries =
+(struct IDTENTRY*) MAKELONG(idt_info.LowIDTbase,idt_info.HiIDTbase);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>for(i=0;i&lt;=0xff;i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>if (<span
+style="mso-spacerun: yes">  </span>g_i_count[i] )<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;Interrupt
+%02x called %d times&quot;,i, g_i_count[i]);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>for(i=0;i&lt;=0xff;i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries[i].LowOffset
+= (unsigned short) old_ISR_pointers[i];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries[i].HiOffset
+= (unsigned short)((unsigned long)old_ISR_pointers[i] &gt;&gt; 16);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>void __stdcall
+count_interrupts(unsigned long inumber)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned long
+aNumber ,*aCountP ;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm mov eax,
+[ebp+0Ch]<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm mov aNumber,
+eax<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>aNumber = aNumber
+&amp; 0x000000FF;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>aCountP =
+&amp;g_i_count[aNumber]; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>InterlockedIncrement(aCountP);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>int j;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>NTSTATUS
+DriverEntry(PDRIVER_OBJECT d,PUNICODE_STRING r)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTINFO
+idt_info;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>struct IDTENTRY
+*idt_entries,*i;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>unsigned long
+count,addr;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>d-&gt;DriverUnload<span
+style="mso-spacerun: yes">  </span>= OnUnload; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm sidt idt_info<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;IDTLimit=%x
+LowIDTbase=%x
+HiIDTbase=%x&quot;,idt_info.IDTLimit,idt_info.LowIDTbase,idt_info.HiIDTbase);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries =
+(struct IDTENTRY*) MAKELONG(idt_info.LowIDTbase,idt_info.HiIDTbase);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;idt_entries=%x
+%x&quot;, idt_entries , idt_info.HiIDTbase * 65536+ idt_info.LowIDTbase);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>for(count=0;count
+&lt;= 0xff;count++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>i = idt_entries +
+count;<span style="mso-spacerun: yes">  </span>// i = &amp;idt_entries[count]<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>addr =
+MAKELONG(i-&gt;LowOffset, i-&gt;HiOffset);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;Interrupt
+%02x at %x LowOffset=%x HiOffset Selector=%x segment_type=%x segment_flag=%02x
+DPL=%x P=%d&quot;,count , addr , <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>i-&gt;LowOffset,
+i-&gt;HiOffset,
+i-&gt;selector,i-&gt;segment_type,i-&gt;system_segment_flag,i-&gt;DPL,i-&gt;P);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>old_ISR_pointers[count]
+= MAKELONG(idt_entries[count].LowOffset,idt_entries[count].HiOffset);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase
+= ExAllocatePool(NonPagedPool,sizeof(jump_template)*256);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;idt_detour_tablebase=%x
+count_interrupts=%08x&quot;,idt_detour_tablebase,count_interrupts);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>for(count=0;count&lt;=0xff;count++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>int offset =
+26*count;<span style='mso-tab-count:1'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>char *entry_ptr =
+idt_detour_tablebase + offset;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>memcpy(entry_ptr,
+jump_template, 26);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>entry_ptr[4] =
+(char)count;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>*( (unsigned long
+*)(&amp;entry_ptr[10]) ) = (unsigned long)count_interrupts;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>*( (unsigned long
+*)(&amp;entry_ptr[20]) ) = old_ISR_pointers[count];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries[count].LowOffset
+= (unsigned short)entry_ptr;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries[count].HiOffset
+= (unsigned short)((unsigned long)entry_ptr &gt;&gt; 16);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>__asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;offset=%d
+entry_ptr=%x idt_entries[count].LowOffset=%x <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries[count].HiOffset=%x&quot;,offset,entry_ptr,idt_entries[count].LowOffset,idt_entries[count].HiOffset);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;%02x
+%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x
+%02x %02x %02x %02x %02x %02x <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>%02x %02x %02x
+%02x&quot;,idt_detour_tablebase[0],
+idt_detour_tablebase[1],idt_detour_tablebase[2], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[3],idt_detour_tablebase[4],
+idt_detour_tablebase[5],idt_detour_tablebase[6], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[7],idt_detour_tablebase[8],
+idt_detour_tablebase[9],idt_detour_tablebase[10], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[11],idt_detour_tablebase[12],
+idt_detour_tablebase[13],idt_detour_tablebase[14], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[15],idt_detour_tablebase[16],
+idt_detour_tablebase[17],idt_detour_tablebase[18], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[19],idt_detour_tablebase[20],
+idt_detour_tablebase[21],idt_detour_tablebase[22], <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase[23],
+idt_detour_tablebase[24], idt_detour_tablebase[25], idt_detour_tablebase[26]);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>DbgPrint(&quot;Count
+0 old isr pointer=%08x&quot;,old_ISR_pointers[0]);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>return
+STATUS_SUCCESS;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>IDTLimit=7ff
+LowIDTbase=f400 HiIDTbase=8003<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_entries=8003f400
+8003f400<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Interupt 00 at
+804df350 LowOffset=f350 HiOffset Selector=804d segment_type=8 segment_flag=0e
+DPL=0 P=0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>idt_detour_tablebase=88f09000
+count_interrupts=b20a90c2<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>offset=0
+entry_ptr=88f09000 idt_entries[count].LowOffset=9000 idt_entries[count].HiOffset=88f0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>90 60 9c b8 00 00 00
+00 50 9a c2 90 0a b2 08 00 58 9d 61 ea 50 f3 4d 80 08 00 90<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Count 0 old isr
+pointer=804df350<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The above program
+displays how many times a certain interrupt has been called. We call an
+interrupt using the int assembler command. This int 3 calls interrupt 3. As
+always we start with the DriverEntry method.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The code that you
+see above has been written by Greg Hoglund and the only value we have done is
+simply explained it in a different way.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>We start by creating
+a structure idt_info that is of type IDTINFO. This structure has three shorts,
+a limit and a low and high offset. The problem with pointers is that we need 4
+bytes and thus we use the two shorts for a pointer. The assembler instruction
+sidt<span style="mso-spacerun: yes">  </span>fills up an actual structure of 6
+bytes with a limit field has a value 7ff and the address of where the idt table
+begins. In our case the low field has<span style="mso-spacerun: yes">  </span>a
+value f400 and the high a value 8003. Thus the idt table begins at 8003f400.
+The macro MAKELONG simply multiplies the high by 2 ^ 16 or 65536 or left shits
+it 16 bytes. The variable idt_entries tells us where in memory the interrupt
+structures start. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>We want to loop
+through the 256 interrupts from 0 to 255. idt_enteries is a pointer to a
+structure that is 8 bytes large. These structures are present back to back. The
+variable idt_enteries points to the first structure and as count becomes 1 it
+points to the second and so forth. Each time we add 1 to idt_enteries we are
+actually increasing its value by 8. Thus I points to a different idt entry
+structure each time. The members LowOffset and HiOffset contain the address of
+the function that will be called to handle the interrupt. For some reason we do
+not have the pointer to the function called but two individual shorts that need
+to be converted to the actual pointer to the function. Thus variable addr
+contains the actual pointer to the original function. The segment_flag if it
+has value of 0x0e, the entry is a interrupt gate. We then store this original
+address of addr into an array old_ISR_pointers. Thus array 0 contains the
+original address of the function that will be called when interrupt 0 occurs
+and so on. We did not have to use the macro MAKELONG and could have used the
+addr variable instead. Thus we simply display all the ISR’s and also store
+their values in a array. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Now for the real
+work. We then use the DDK method ExAllocatePool which has been declared
+obsolete where we allocate fresh memory for 256 times 26 bytes. This function
+is another malloc where we first specify the type of memory and then the amount
+of memory. In our case the memory is allocated at 88f09000. Your mileage will
+vary, it will be a remarkable coincidence if you get a similar value. There are
+6 pool types we can use and NonPAgePool memory comes from memory that cannot be
+paged to disk ever. This is scarce memory and must be used only when necessary.
+This memory can be accessed from any IRQL. Four of the above pool types are for
+internal use only<span style="mso-spacerun: yes">  </span>and the only other type
+that we can use is PAGEDPOOL which is pageble system memory. Thus variable
+idt_detour_tablebase now contains the address of memory which is 256 * 26 bytes
+large. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The offset variable
+starts at 0 and increase by 26 each time we enter the loop. Its values are
+therefore 0 , 26 52 etc. The variable entry_ptr starts at 88f09000 and
+increases by 26 each times. Lets now understand what this magic number 26 is
+all about. We have some standard code that we would like to be called each time
+an interrupts occurs. This code happens to be 26 bytes large and is in an array
+called jump_template. Thus the memory be allocated was for 256 such blocks of
+code that is 26 bytes large. The first thing we do is copy these 26 bytes of
+code at 88f09000 and then at 88f0901a. Thus we take these 26 bytes of code and
+copy them across our array 256 times. We have there 256 copies of this 26 byte
+code. The variable entry_ptr points to the start of this code each time. We
+first put the number 0, 1 2 etc at the 4 byte of the start of the code. If we
+look at the code in the<span style="mso-spacerun: yes">  </span>array
+jump_template, it starts with a nop 90, a push all registers and push flags.
+Then we mov a value into the eax register. In the code we move a fixed value
+0xaa which we replace by the current interrupt number 0, 1 2 etc. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>We then need to
+place the address of our method at offset 10 that we want to be called each
+time any interrupt occurs, This method is called count_interrupts and in our it
+address is b20a90c2. We want this address to be placed at bytes 10 to 13 from
+the start. We then place the address of the original ISR stored in the
+old_ISR_pointers array at location 20 to 23 from the start. We then do the last
+act which is place this address of these 26 bytes of code into idt_enteries
+which is what the processor uses to figure which method to call. Thus each time
+an interrupt occurs the processor calls one of these 256 26 byte code arrays
+which in turn calls the method count_interrupt and then calls the original
+code. The opcode 0x9a is a 6 byte call and the opcode 0xea is a 6 byte jump. In
+the method count_interrupts we have on the stack a return value which is 8
+bytes and hence the first parameter is 12 bytes from ebp. Actually the ret
+value normally is 4 bytes followed by ebp and thus the first parameter should
+by 8 bytes from the start of ebp. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>We move this value
+12 bytes from ebp into eax and then w e move this into the variable aNumber.
+This value is the number of the interrupt that gets called. The processor does
+not put this value on the stack, our 26 bytes of code is what created this
+magic. For some reason we mask off all the bits but the first 8. We then get a
+pointer to the array with aNumber as the offset. The InterlockedIncrement then
+increments the memory by 1. Thus each time an interrupt occurs we are adding 1
+to the corresponding global array g_I_count. When we unload the driver, we do
+two things one we display this global array and then we also change the
+idt_enteries to point to what they were before our driver came along. These
+original values we stored in the array old_ISR_pointers.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The only reason we
+use the InterlockedIncrement method is because it increments a variable whose
+address we pass as an atomic operation. Good code written by experts do not
+take chances and if we increment the array ourselves it may not get done
+atomically before another interrupt occurs. If we look at the 26 bytes of code,
+byte 5 contains 0 as this is code for interrupt 0. Byte 5 will contain for the
+next interrupt and so on. The method count_interrupts starts b20a90c2 and this
+bytes 10 to 14 contain c2 90 0a b2. Finally the original ISR is at 804df350 and
+hence bytes 20 to 23 contain 50 f3 4d 80. The address are little endian and in
+the reverse order.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The initial and
+final nop are there for good luck. The sidt opcode is used by operating systems
+only and as the rest of the world do not want to know how interrupts get
+handled by the system. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Thus in our code we
+are simply pointing the ISR tour 26 bytes code where we place the interrupt
+number on the stack and then call the method count_interrupts. This method
+increments an array member by 1 and then calls the original method by jumping
+to it. The count_interrupts method is <i>stdcall so that it cleans up the stack
+when it gets over. Otherwise we would have to write code in our 26 bytes to set
+the stack back up by 4. There is a push eax but no pop eax after the call to
+count_</i>interrupts.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The pushfd pushes
+the EFLAGS register on the stack and moves the stack down by 4. The D stands
+fro Double. The pushad pushes the registers in the following order Push EAX,
+ECX, EDX, EBX, original ESP, EBP, ESI, and EDI. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The pragma pack
+preprocessor directive simply decides how much memory to leave as padding.
+Pragma pack(1) is for no padding.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>Intel processors
+have 4 types of gates, interrupt, call , task and trap. The interrupt and trap
+gates do the same thing, they take care of interrupts from hardware and the int
+instruction. The call gate allows us to execute code in a lower ring and the
+task is meant for a task switch. The P bit is set tells us that this segment or
+the method that will be called to handle the interrupt is in memory. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>The DPL or the
+Descriptor Privilege can be either 0 or 3. In our case all point to ring 0
+code. The segment type 0 means not used, 5 is a task gate. Interrupts that we
+deal with are not the interrupts of dos which happened in real mode, all our
+interrupts in windows are protected mode.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>This IDT unlike the
+dos one can be anywhere in memory and hence we have the sidt instruction that
+tells us where in memory this table resides. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-family:"Courier New"'>!idt windbg<o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/cntint.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:03 GMT -->
+</html>

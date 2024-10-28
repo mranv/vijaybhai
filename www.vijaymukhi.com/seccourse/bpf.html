@@ -1,0 +1,228 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/bpf.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:14 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="bpf_files/filelist.html">
+<title>BPF Filters</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2005-07-17T03:24:00Z</o:Created>
+  <o:LastSaved>2005-07-17T03:24:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>681</o:Words>
+  <o:Characters>3202</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>86</o:Lines>
+  <o:Paragraphs>39</o:Paragraphs>
+  <o:CharactersWithSpaces>4768</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>BPF Filters</p>
+
+<p class=MsoNormal>One of the best known network sniffer tcpdump introduced the
+concept of Berkley Packet Filters or BPF to filter out network traffic. The
+problem with a Ids is that it logs not millions but zillions of packets. We
+need a way to specify packets that meet our unique conditions.<span
+style="mso-spacerun: yes">  </span>Snort supports BPF filters which make up
+everything we write after the options.</p>
+
+<p class=MsoNormal>Snort –dev tcp</p>
+
+<p class=MsoNormal>Here we use a simple bpf filter specifying that only tcp
+traffic should be displayed. Thus when we as usual ping to 70.0.0.3 we see no
+snort traffic. If we connect to the web server on 70.0.0.3 we see network
+traffic displayed by snort.</p>
+
+<p class=MsoNormal>Snort –dev tcp and icmp</p>
+
+<p class=MsoNormal>ERROR: OpenPcap() FSM compilation failed: </p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>expression
+rejects all packets</p>
+
+<p class=MsoNormal>PCAP command: tcp and icmp </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above filter gets rejected as we want packets that are
+tcp and icmp. Snort is smart enough to realize that this condition can never be
+realized and thus gives us an error.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Snort –dev tcp or icmp</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>What we should have used is the or instead of the and. Thus
+snort now captures all packets that are either tcp or icmp but not udp.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Snort –dev ip or arp</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Earlier the arp packets did not get captured. Now all ip or
+arp packets are included in the display.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev dst 70.0.0.3</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we ping a host we get two packets one that we send and
+one a response. The dst specifies the ip destination field. Thus we now get
+only packet, the packet send by the machine with the ip address 70.0.0.3. In
+the same vein the src keyword represents the source ip address field. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev dst 70.0.0.3 and src 70.0.0.10</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This gives us also one packet instead of two. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev host 70.0.0.3</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now we get two packets as host stands for either source and
+destination. This filter gives us all packets to and from ip address 70.0.0.3</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev ether src 0:0:E8:DF:A4:66</p>
+
+<p class=MsoNormal>What applies to ip address also applies to Ethernet address.
+One of our machines has the Ethernet address<span style="mso-spacerun: yes"> 
+</span>0:0:E8:DF:A4:66. Thus we once again see only one packet. The ether
+host<span style="mso-spacerun: yes">  </span>will give us two packets. The same
+rules for ip with the word ether added.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev dst port 80</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The dst stands for destination port and 80 is the http port.
+This will give us all those packets where the destination port is 80. This
+means all the packets we are sending a web server. These packets will be the GET
+requests. When we web server sends us packets of data his source port will be
+80 and the destination port number will be the one we send. </p>
+
+<p class=MsoNormal>snort -dev src port 80</p>
+
+<p class=MsoNormal>This will only display the packets send to us by a web
+server. These start with HTTP and the version number. This form does not
+differentiate between tcp and udp. Thus we can preface the src port with tcp
+src port 80 to capture only tcp traffic and not udp.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev less 100</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above checks for those packets whose combine length is
+less than 100 bytes. Thus ping gets through but the http request does not. The
+less has a corresponding greater 100 which will display those packets greater
+than size 100.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev ether broadcast</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This prints only broadcast Ethernet packets that start with
+a destination address of all FF’s. In the same way we can have a IP multicast
+or broadcast.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev ip[0] = 0x45</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The bpf filter stand out as we can access any of the bytes
+of the ip, tcp protocol. We write the name of the protocol and use the square
+brackets to access the byte number. In ip the first byte is 0x45 and this is
+what ip[0] contains. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev ip[2:2] = 40</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The 3rd and 4<sup>th</sup> bytes of ip contain the length of
+the packet. The :2 stand for size and thus 2:2 give us access to bytes 3 and 4
+of the ip header. We are looking for ip packets with no payload, only 20 bytes
+of ip and tcp. These are normally the syn and ack packets of a connection.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>snort -dev ether[12] = 8 and ether[13] = 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Using the ether array we can now access the 14 bytes of the
+Ethernet header. The last two 12 and 13 are the type of data following. 0800 is
+the type for ip. Thus the above rule will catch only ip packets and not arp.
+The best way to send an arp packet is by pinging to a non existent site.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/bpf.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:15 GMT -->
+</html>

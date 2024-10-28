@@ -1,0 +1,5092 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:59 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap8_files/filelist.html">
+<link rel=Edit-Time-Data href="chap8_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>13</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2002-01-27T20:26:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:28:00Z</o:LastSaved>
+  <o:Pages>41</o:Pages>
+  <o:Words>12882</o:Words>
+  <o:Characters>73429</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>611</o:Lines>
+  <o:Paragraphs>146</o:Paragraphs>
+  <o:CharactersWithSpaces>90175</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Times New Roman CYR";
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:536902279 -2147483648 8 0 511 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:24.0pt;font-family:"Monotype Corsiva";color:black'>8</span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:24.0pt;font-family:"Monotype Corsiva";color:black'>Encrypting
+and Decrypting </span><span style='font-size:24.0pt;font-family:"Monotype Corsiva"'>Soap
+Data</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This chapter dapples with
+Encrypting and Decrypting Soap Headers. It presupposes that you would possess
+some basic knowledge of the elements contained in an XML document. To put it
+precisely, it expects you to be cognizant of the process of accessing the
+contents of the nodes that constitute an XML document. This is for the reason
+that a SOAP payload is merely an XML document consisting of nodes, which in
+turn, also have nodes. These nodes are required to be accessed prior to
+modifying their contents.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The opening program in this
+chapter elucidates and establishes how you can gain access to a node in an XML
+file, in order to extract the relevant information from it. We have created a
+new directory named ddd in the root, and created the following two files in
+this directory:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream s = new FileStream(&quot;a.txt&quot;, FileMode.Open,
+FileAccess.Read);<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader (s);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d.Load(r);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager m = new XmlNamespaceManager(d.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>m.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n;<o:p></o:p></p>
+
+<p class=ILprg>n = d.SelectSingleNode(&quot;//soap:Body&quot;, m);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(n.InnerText + &quot; &quot; + n.Name);<o:p></o:p></p>
+
+<p class=ILprg>n = n.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(n.InnerText + &quot; &quot; + n.Name);<o:p></o:p></p>
+
+<p class=ILprg>n = d.SelectSingleNode(&quot;//soap:Body&quot;, m);<o:p></o:p></p>
+
+<p class=ILprg>n = n.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(n.InnerText + &quot; &quot; + n.Name);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;abcResult&gt;vijay mukhi&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Compile the .cs file using the
+csc compiler, and then, run the executable. The output generated is shown
+below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>vijay mukhi soap:Body<o:p></o:p></p>
+
+<p class=ILoutput>vijay mukhi abcResponse<o:p></o:p></p>
+
+<p class=ILoutput>vijay mukhi abcResult<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program kicks-off and gets
+going by creating object 's', which is an instance of a FileStream class. This
+constructor accepts three parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The name of the file - a.txt, <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The mode to decide whether the File
+should be created or not - FileMode.Open<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Whether the file is to be opened for
+reading or writing - FileAccess.Read.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file a.txt is a clone of one
+of the SOAP responses received earlier by the client from the server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, in order to access specific
+parts of the SOAP response packet, an object r of type XmlTextReader is
+created.<span style="mso-spacerun: yes">  </span>The XmlTextReader class
+requires either a Stream object or a class derived from the Stream class as a
+parameter. Hence, the constructor is supplied with the FileStream object 's'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once we have introduced a class
+that can read our XML file from disk, we require the services of another class
+named XmlDocument, which shall facilitate access to this XML file. The Load
+function in the XmlDocument object d is passed an XmlTextReader object. Now,
+when the object d is used, it allows access to each individual node in the
+file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every XML Document has a
+NameTable object, which stores the names of the elements and attributes, in the
+form of atomized strings. The data type of the NameTable is XmlNameTable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlNamespaceManager class
+deals with namespaces, which is perfectly suited to our requirement. The
+constructer is given a NameTable property as a parameter. The namespace
+prefixes are associated with the URIs using this Namespace manager. On a
+perusal of the a.txt file, you would notice that all the elements are prefaced
+by the namespace 'soap', which has a URI of
+http://schemas.xmlsoap.org/soap/envelope/. Therefore, this pair must be
+registered with the Namespace manager.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlNode object is used to
+represent a node in the XML file. The SelectSingleNode function in the object
+is employed to return the first node for the specified parameter. In this case,
+the first node is returned as 'Body', with a namespace prefix of 'soap'. The
+second parameter to the function is the namespace manager 'm', which is
+conversant with the 'soap' namespace prefix. In order to verify the outcome of
+our actions so far, we display the InnerText and the Name properties of the
+node that we are currently pointing to. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InnerText property provides
+the final content, which could include the child elements; while the Name
+property provides the full name, including the namespace prefix soap. Thus, the
+InnerText<span style="mso-spacerun: yes">  </span>is 'vijay mukhi', and the
+Name is 'soap:Body'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each node is blessed with
+children and grandchildren. The FirstChild property provides a handle to the
+first child, abcResponse. The InnerText property offers the same answer as
+before, i.e. 'vijay mukhi', since the node of abcResult contains this text. In
+order to access the grandchild abcResult, the FirstChild of the abcResponse
+node is employed. We have printed out its name for the purpose of
+verification.<span style="mso-spacerun: yes">  </span>Thus, we now have a
+mechanism to access the different nodes embodied in the XML file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>string s;<o:p></o:p></p>
+
+<p class=ILprg>s = &quot;&lt;?xml version=\&quot;1.0\&quot;
+encoding=\&quot;utf-8\&quot; ?&gt;\n&lt;soap:Envelope
+xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;
+xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot;
+xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot;&gt;\n&lt;soap:Body&gt;&lt;abcResponse
+xmlns=\&quot;http://tempuri.org/\&quot;&gt;\n&lt;abcResult&gt;vijay
+mukhi&lt;/abcResult&gt;\n &lt;/abcResponse&gt;&lt;/soap:Body&gt;&lt;/soap:Envelope&gt;&quot;;<o:p></o:p></p>
+
+<p class=ILprg>byte[] ms = Encoding.UTF8.GetBytes(s);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream(ms);<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(ms1);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d.Load(r);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager m = new XmlNamespaceManager(d.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>m.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n;<o:p></o:p></p>
+
+<p class=ILprg>n = d.SelectSingleNode(&quot;//soap:Body&quot;, m);<o:p></o:p></p>
+
+<p class=ILprg>n = n.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(n.InnerText + &quot; &quot; + n.Name);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>vijay mukhi abcResponse<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This example is at a slight
+variance with the earlier one. Instead of opening a file containing the xml
+code, it now contains a String s, which represents the entire XML file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string has to be converted
+into an array of bytes. To achieve this, we utilise the static GetBytes
+function. The array of bytes received from the function, is then supplied to
+the MemoryStream constructor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The MemoryStream class, derived
+from the Stream object, represents a stream in memory, and not on disk. Thus,
+we are entitled to supply the MemoryStream object to the XmlTextReader
+constructor. The rest of the program is identical to the earlier one.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>string s;<o:p></o:p></p>
+
+<p class=ILprg>s = &quot;ABC&quot;;<o:p></o:p></p>
+
+<p class=ILprg>byte[] ms = Encoding.UTF8.GetBytes(s);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream(ms);<o:p></o:p></p>
+
+<p class=ILprg>byte[] ms2 = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>StringBuilder s1 = new StringBuilder();<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;ms2.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if(i==(ms2.Length-1))<o:p></o:p></p>
+
+<p class=ILprg>s1.Append(ms2[i]);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>s1.Append(ms2[i] + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(s1);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>65 66 67<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above program, a string
+variable 's' is initialized to ABC. Now, we intend to convert the string into
+an array of bytes. For this, we use the GetBytes function. The output is stored
+in the byte array called 'ms'. This byte array represents our string. It is
+thereafter, supplied to a MemoryStream object named 'ms1'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having converted the
+string into a stream, we embark on the reverse procedure, i.e. we use the
+ToArray function of the MemoryStream class, to convert a stream back into an
+array of bytes. Thereafter, the StringBuilder class is used to display this
+array. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The byte array has a size of 3,
+since the string has three characters. Now, using the 'for' loop, the individual
+strings are appended to the StringBuilder object s1, thereby, concatenating all
+of them. Since we desire to insert a space between the individual numbers, an
+extra space is subjoined while adding the number to the StringBuilder object.
+However, no space is added after the last character. Finally, the three
+numbers, along with the spaces, are displayed using the WriteLine function with
+s1 .<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Having grappled with these
+essentials, we now progress onto the very heart of the chapter, i.e. Encryption
+and Decryption.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>DES is an acronym for Data
+Encryption Standard. It is one of the most widely used standards for
+encryption. Other symmetric algorithms, such as RC2, also exist. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Symmetric algorithms use the
+same key or password for encryption and decryption; while the Asymmetric
+algorithms, such as private key and public key, use different passwords or keys
+for encryption and decryption. A password and key are synonyms, wherein,
+passwords are English-like and can easily be committed to the memory; however, keys
+cannot be memorized. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One of the most widely used
+techniques in the world of security is authentication of messages, where
+algorithms like MD5 or Message Digest 5 are implemented. On the basis of the
+message text, a MD5 hash number is generated for the document. This document is
+then sent across the wire, along with the number in an encrypted form. In the
+event of a single byte of the file being tampered with, the hash would change,
+thereby, apprising the receiver of the fact that the document has been modified
+in transit. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Given below is an example of
+DES, where bytes are encrypted and the new value is displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3, 4, 5, 6, 7 , 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {4,5,6,7,8,9,10,11};<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider d = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream s = new CryptoStream (ms1, d.CreateEncryptor( k, k1
+), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>byte[] b = Encoding.UTF8.GetBytes(&quot;ABCD&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.Write(b, 0,b.Length);<o:p></o:p></p>
+
+<p class=ILprg>s.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte[] b1 = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>StringBuilder s1 = new StringBuilder();<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;b1.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if(i==(b1.Length-1))<o:p></o:p></p>
+
+<p class=ILprg>s1.Append(b1[i]);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>s1.Append(b1[i] + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(s1);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>96 216 128 107 226 104 164 58<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence by creating an
+object of type DESCryptoServiceProvider, which is in the namespace of
+System.Security.Cryptography. This namespace has infinite classes for encoding
+and decoding data, hashing, generating random numbers, et al. The class DESCryptoServiceProvider
+is the only pathway granting access to the classes that deal with the DES
+standard.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, we first create an
+object of type DESCryptoServiceProvider, and then, set up a memory stream. To
+comprehend DES, we also need to create an object 's', of the class
+CryptoStream. The constructor of this class is supplied with three parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first parameter is a stream,
+which shall hold the results of the encryption. Since we are not too keen on
+saving this output to a file on disk, we have specified a memory stream named
+'ms1'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter is of type
+ICryptoTransform. The value specified here determines the cryptographic
+transform that is required to be carried out. One such value that can be
+specified is 'hashing'. The CreateEncryptor function in object 'd', accepts two
+parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>An 8-byte key or password in k<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>An 8-byte initialization in k1.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In real life, the password
+should be larger, and should normally contain some random digits. Thus, the
+output generated would be used to encrypt the string &quot;ABCD&quot;.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last parameter is an enum
+CryptoStreamMode that can take either of the two values, Read or Write. As we
+wish to write into the stream, the value given here is CryptoStreamMode.Write. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string &quot;ABCD&quot; is
+then converted into an array of bytes. This is because, in the .Net world, an
+array of bytes is given preference over a string. As humans, we love to work
+with strings, but here, who pays heed to our preferences? The array is then
+written to the CryptoStream, using the Write function. There are three
+parameters to the Write function:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The byte array b.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The starting point.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The length of the byte array. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As always, the bytes are
+flushed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next task is to ascertain
+the contents of the MemoryStream object ms1, which was passed to the
+constructer of the CryptoStream class. ms1 now contains the string
+&quot;ABCD&quot; in its encrypted form. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To do so, the function ToArray
+of the Memory Stream is utilized to return the data that it contains, in the
+form of a series of bytes. The output displayed is the encrypted form of the
+string &quot;ABCD&quot;. Since we wish to insert a space between each number
+that is displayed, we pursue an approach similar to the one that we had adopted
+earlier, in the case of the StringBuilder class. The encrypted form of the
+string &quot;ABCD&quot; is displayed, along with the spaces that we have
+inserted. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3, 4, 5, 6, 7 , 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {4,5,6,7,8,9,10,11};<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider des = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>string s = &quot;96 216 128 107 226 104 164 58&quot;;<o:p></o:p></p>
+
+<p class=ILprg>char[] c = {' '};<o:p></o:p></p>
+
+<p class=ILprg>string[] ss = s.Split(c);<o:p></o:p></p>
+
+<p class=ILprg>byte[] b = new byte[ss.Length];<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;b.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>b[i] = Byte.Parse(ss[i]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor ( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(b, 0,b.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b2 = ms.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>string s1 = Encoding.UTF8.GetString(b2);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(s1);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>ABCD<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program, in a sense, is a
+continuation of the earlier program. The encrypted data is now decrypted, using
+the DES standards.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string 's' is initialized to
+the encrypted form of the string &quot;ABCD&quot;, as displayed in the earlier
+program. Since the spaces are also part of the string, the first task is to get
+rid of these spaces. They were inserted in the earlier program, for visual
+clarity of the numbers. In order to remove these spaces, we have created a
+single byte array of chars, containing only one character, i.e. 'space'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'split' function that is
+part of the String class, accepts one parameter, and splits a string on the occurrence
+of a specific character or characters, in the array of chars. In our case, the
+string is split into 8 strings, since there are a total of 7 spaces. These 8
+numbers are accommodated in a new string array named 'ss'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, we need to copy these 8
+strings into the array of bytes named 'b'. The Byte class has a static Parse
+function, which converts a string stored in an array location into a byte. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, just like before, a
+memory stream object ms is created to contain the new value in the memory. The
+CryptoStream object 'cs' is created, but it now employs the CreateDecryptor
+function, since we want to decrypt the content’s. The last enum parameter is
+Write, because we intend to write the decrypted string to the memory stream.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Write function in the
+CryptoStream class obtains the array of bytes from the byte array containing
+the encrypted data, and then, uses the DES standard to decrypt it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As we are keen on witnessing the
+outcome of our actions, we convert the Memory Stream object ms into a byte
+array 'b2', and then, use the GetString function to convert this byte array
+into a string.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output reveals the string
+&quot;ABCD&quot;, thus proving beyond doubt, that the string &quot;ABCD&quot;
+was encrypted into some unintelligible mumbo-jumbo using DES, and thereafter,
+the mumbo-jumbo was decrypted back to the string &quot;ABCD&quot;.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style='mso-tab-count:1'>            </span><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;script language=&quot;c#&quot; runat=server&gt;<o:p></o:p></p>
+
+<p class=ILprg>public void Page_Load() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>l.InnerHtml = a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;BODY&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b id=&quot;l&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay]<o:p></o:p></p>
+
+<p class=ILprg>public string abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return &quot;ABCD&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>return 0; <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>Stream o;<o:p></o:p></p>
+
+<p class=ILprg>Stream n;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3,4,5, 6, 7 , 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {4,5,6,7,8,9,10,11};<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m, SoapExtensionAttribute
+a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type t) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(vijay);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(r.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize &quot; + n.Position);<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader rr = new XmlTextReader(n);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(rr);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;, &quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>abc(no.Name + &quot; &quot; + no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>abc(no.Name + &quot; &quot; + no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = Encoding.UTF8.GetBytes(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1, de.CreateEncryptor( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Memory Stream Before&quot; + ms1.Position);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Memory Stream Before&quot; + ms1.Position);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Memory Stream Before&quot; + ms1.Position);<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>string s1 = &quot;&quot;;<o:p></o:p></p>
+
+<p class=ILprg>abc(ou.Length.ToString());<o:p></o:p></p>
+
+<p class=ILprg>for(int i = 0; i&lt; ou.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>s1 = s1 + ou[i].ToString();<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s1;<o:p></o:p></p>
+
+<p class=ILprg>abc(ou[0].ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(s1);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Position of ms &quot; + ms.Position );<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>n = ms;<o:p></o:p></p>
+
+<p class=ILprg>TextReader r1 = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w2 = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>string s3 = r1.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w2.WriteLine(s3);<o:p></o:p></p>
+
+<p class=ILprg>abc(s3);<o:p></o:p></p>
+
+<p class=ILprg>w2.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override Stream ChainStream( Stream stream ) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>o = stream;<o:p></o:p></p>
+
+<p class=ILprg>n = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;9621612810722610416458&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Browser Output</u><o:p></o:p></p>
+
+<p class=ILoutput>9621612810722610416458<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize 360<o:p></o:p></p>
+
+<p class=ILprg>soap:Body ABCD<o:p></o:p></p>
+
+<p class=ILprg>abcResult ABCD<o:p></o:p></p>
+
+<p class=ILprg>Memory Stream Before0<o:p></o:p></p>
+
+<p class=ILprg>Memory Stream Before0<o:p></o:p></p>
+
+<p class=ILprg>Memory Stream Before8<o:p></o:p></p>
+
+<p class=ILprg>8<o:p></o:p></p>
+
+<p class=ILprg>96<o:p></o:p></p>
+
+<p class=ILprg>9621612810722610416458<o:p></o:p></p>
+
+<p class=ILprg>Position of ms 381<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;abcResult&gt;9621612810722610416458&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program is a
+protracted one, but all the same, it is absorbing, since it demonstrates the
+actions on the server-side, during encryption of a string value, which is to be
+dispatched to the client. It is our humble advice to you to ensue the steps
+outlined by us, while running this program. It is because, we are of the firm
+opinion that it is the safest and the most steadfast pathway, steering clear of
+any perplexity in understanding the concept.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The aspx file calls a function
+abc from the class zzz. The return value of this function is passed to the
+InnerHtml property of the bold element, which has an id of</span><span
+style='font-family:"Times New Roman CYR";color:windowtext'> </span><span
+style='font-family:"Trebuchet MS";color:windowtext'>l.</span><span
+style='color:windowtext'> At this stage, we cannot run this aspx file in the
+browser, since no class named zzz exists in the bin folder. We will not create
+this zzz class; instead, we shall task the asmx file with this errand.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has a function
+named abc, which returns the string ABCD. In addition to this, an attribute of
+'vijay' is added to it. Since no code for 'vijay' is available at the moment,
+we get an error on loading the asmx. Hence, the WSDL file is not created.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Compiler Error Message: CS0246: The type or namespace name
+'vijay' could not be found (are you missing a using directive or an assembly
+reference?)<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So, comment out the attribute
+'vijay', and reload the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>//[vijay]<o:p></o:p></p>
+
+<p class=ILprg>public string abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return &quot;ABCD&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Save the wsdl contents in a file
+named aa.wsdl in the bin folder, and not in wwwroot folder. Add the port number
+8080 to the localhost, and then, run the batch file named a.bat. This will
+create a dll named zzz.dll, which contains the code of the class zzz.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>cd \inetpub\wwwroot\bin<o:p></o:p></p>
+
+<p class=ILprg>wsdl aa.wsdl <o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Run the trace utility from the
+Soap Toolkit, if it is not already active, and then, in the browser window,
+load the aspx file as :<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>http://localhost/a.aspx<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The browser window will display
+the string &quot;ABCD&quot;. Further, the SOAP response packet will display the
+value of &quot;ABCD&quot;, which is being sent across.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, instead of sending the
+string &quot;ABCD&quot; in its pristine form, we wish the server to encrypt it,
+and then, send it across to the browser. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To accomplish this, the
+attribute of 'vijay' is utilised. Remove the comments from the attribute
+'vijay' in the a.asmx file, and thereafter, create the file aaa.cs in the bin
+folder. Now, compile the code in this file, and you will obtain a dll file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>\inetpub\wwwroot\bin&gt;csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, reload the asmx file to
+create the wsdl file. Change the port number to 8080 and run the batch file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In aaa.cs, there exist a large
+number of 'using' statements. Although, quite a few of them are redundant, with
+no utility at all, the one positive aspect of a few extra statements strewn
+around is that, their presence is innocuous. The Attribute AttributeUsage
+restricts the use of the attribute 'vijay' only on methods.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we create the actual
+attribute class 'vijay', derived from SoapExtensionAttribute. The code in this
+class is not substantial, except for the read-only property of ExtensionType,
+which returns the class 'mukhi'. The class 'vijay' handles the parameters that
+are passed from the attribute that gets forwarded to the 'mukhi' class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now proceed and press
+onto the main code in the class 'mukhi', wherein, our primary focus shall be on
+the ProcessMessage function. In this function too, our main object of interest
+is the AfterSerialize event. This is because, the SOAP packet has already been
+created. The main task that remains to be accomplished is, the encryption of
+the response that is being sent over.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>But prior to that, the stream
+object passed to the ChainStream function as a parameter is stored in a public
+Stream variable named 'o'. The data that is written to MemoryStream object o,
+would be utilized by SOAP every now and then. Thereafter, the Memory Stream
+object 'n' is initialized and supplied as the return value of the function.</span><span
+style='color:blue'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>Although we have no business to transact with the
+BeforeDeserialize event, the presence of this event is mandatory, since the
+Stream object 'n' would remain empty in its absence. This would result in the
+loss of the SOAP request data. <span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the BeforeDeserialize event,
+a TextReader object 'r' is created, using the Stream object 'o'. Moreover, a
+TextWriter object 'w' is also created, using the empty MemoryStream 'n'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The entire SOAP request that
+reads from the TextReader 'r', is then written to the Writer. If the Stream 'w'
+in not flushed, nothing could possibly be written. As the SOAP infrastructure
+expects the file pointer to be positioned at the beginning, this basic
+housekeeping activity is also performed in the BeforeDeserialize event. The
+function abc can be used to corroborate our actions at each stage.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The main task rests in the
+AfterSerialize event, where the entire SOAP response that has been generated,
+is initially read. As the file pointer is at byte 360 ( revealed by the
+function abc), the pointer is repositioned at the beginning, by setting the
+Position property to 0. </span><span style='color:red'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:red'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>Here, an XmlTextReader object 'rr' is created from the Stream
+object 'n', and then, an Xml Document object 'd1' is instantiated. Thereafter,
+the Load function in the document class is used, to read the SOAP response 'rr'
+into the XmlDocument object. The namespace of 'soap' is added to the Namespace
+manager, along with its url. The object no of type XmlNode is then made to
+represent the first node body in the SOAP response.<span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc displays the
+name of the node body and its content, using the properties of Name and
+InnerText. Since, the abcresult node is the only node of interest to us at this
+point in time, the value within FirstChild in the FirstChild member is used.
+The function abc prints the values, and we stand vindicated, since our stance
+has been verified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we create an instance of
+the wrapper class DESCryptoServiceProvider. A wrapper or helper class shields
+us from the trivia or the nitty-gritty of the class. These repugnant details
+are carefully wrapped up by this wrapper class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InnerText property of
+XmlNode contains the string that we desire to encrypt. Since it is in a string
+form, it has to be converted into an array of bytes. The GetBytes function
+converts the string into bytes, and thereafter, stores them into an array named
+'inp'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, arises the requirement of a
+MemoryStream object, which is to be provided to the CryptoStream class. The
+CryptoStream class is the class that is used to encrypt the bytes. The
+CryptoStream constructor takes three parameters, which are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is the
+MemoryStream object.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter is the
+encryption that needs to be performed. Therefore, the function comprises of an
+8-bye key in 'k', and a 8-byte initialization in 'k1'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third parameter is the mode
+which represents either a read or a write.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the CryptoStream object cs
+is created, we use the Write function to write the array 'inp', which
+accommodates the contents of the tag abcResult, in the byte form. The second
+parameter to the Write function is the incipient point in the array. A value of
+zero indicates the beginning of the array. The last parameter is the length of
+the array, which needs to be written. The FlushFinalBlock function is like the
+Flush function, which actually does the writing. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, the MemoryStream ms1
+contains the encrypted bytes. The output of the function abc provides ample
+evidence of the fact that, although the Write function may be writing, it is
+actually the Flush function that writes the bytes to the MemoryStream.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ToArray function is used to
+convert the encrypted bytes in the Memory Stream object, into an array of
+bytes. Now, this 8-byte array has to be converted into an ASCII string. So, we
+use a loop construct, wherein each and every byte of the array is concatenated
+to the string s1. This string, which is the encrypted version of our SOAP
+response, is then written to disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InnerText property of the
+XmlNode is also initialized to this string, resulting in the initialization of
+the XML document.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML document is then saved
+in the MemoryStream object named 'ms'. This new MemoryStream contains the same
+XML file that the SOAP infrastructure had created. However, there is a minor
+variation here, i.e. the contents of abcResult tag are encrypted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The File pointer in the new
+MemoryStream, which is at Position 381 due to the saving, is now repositioned
+at the beginning of the file. Then, the MemoryStream 'n' is equated to 'ms',
+and a new TextReader object is created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The TextWriter object uses the
+stream 'o', since it is this stream that should contain the final SOAP payload.
+The stream 'o' in this event is used for writing the output that is to be sent
+across. The stream 'n' is used to read the SOAP packet that is generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string s3 is used to store
+the SOAP response, which is read from the reader. Then subsequently, it is
+written out to the Writer, or to the Stream 'o'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Yet another way of achieving
+this is, to read the bytes from the memory stream, convert them into a string,
+and then, to write them with the help of the w2 object. The string s3 substantiates
+the fact that, the SOAP response that is sent across, comprises of contents
+that are encrypted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;script language=&quot;c#&quot; runat=server&gt;<o:p></o:p></p>
+
+<p class=ILprg>public void Page_Load() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz w = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>l.InnerHtml = w.abc(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;BODY&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b id=&quot;l&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Response,Dec=DM.Request)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc( string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return &quot;vijay &quot; + a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.WebServiceBindingAttribute(Name=&quot;HelloWorldSoap&quot;,
+Namespace=&quot;http://tempuri.org/&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz:
+System.Web.Services.Protocols.SoapHttpClientProtocol <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public zzz() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Url = &quot;http://localhost:8080/a.asmx&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Request,Dec=DM.Response)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new
+object[]{a});<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>EM emode= EM.None;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode= DM.None;<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>return 0; <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public EM Enc<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return emode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>emode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public DM Dec <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return dmode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>dmode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum DM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum EM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>Stream o;<o:p></o:p></p>
+
+<p class=ILprg>Stream n;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode;<o:p></o:p></p>
+
+<p class=ILprg>EM emode;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3, 4, 5, 6, 7, 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {10,11 , 12, 13, 14, 15, 16, 17};<o:p></o:p></p>
+
+<p class=ILprg>public mukhi()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer &quot; + m.ToString());<o:p></o:p></p>
+
+<p class=ILprg>return a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type t) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay a = (vijay) i;<o:p></o:p></p>
+
+<p class=ILprg>dmode = a.Dec;<o:p></o:p></p>
+
+<p class=ILprg>emode = a.Enc;<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize &quot; + i.ToString() + &quot; &quot; +
+a.Dec.ToString() + &quot; &quot; + a.Enc.ToString());<o:p></o:p></p>
+
+<p class=ILprg>return;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize &quot; + emode.ToString() + &quot;
+&quot; + n.Position );<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>if ((emode == EM.Request) || (emode == EM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader rr = new XmlTextReader(n);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(rr);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>abc(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = Encoding.UTF8.GetBytes(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1, de.CreateEncryptor( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>StringBuilder s = new StringBuilder();<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;ou.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if(i==(ou.Length-1))<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i]);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i] + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s.ToString();<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>n = ms;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>string s5 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>abc(s5);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s5);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage ==<span style="mso-spacerun: yes"> 
+</span>SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize &quot; + dmode.ToString());<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ds = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ((dmode == DM.Request) || (dmode == DM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(ds);<o:p></o:p></p>
+
+<p class=ILprg>string s6 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s6);<o:p></o:p></p>
+
+<p class=ILprg>abc(s6);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Position of ds &quot; + ds.Position);<o:p></o:p></p>
+
+<p class=ILprg>ds.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader r0 = new XmlTextReader(ds);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(r0);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>string s3 = no.InnerText;<o:p></o:p></p>
+
+<p class=ILprg>abc(s3);<o:p></o:p></p>
+
+<p class=ILprg>char[] c = {' '};<o:p></o:p></p>
+
+<p class=ILprg>string[] ss = s3.Split(c);<o:p></o:p></p>
+
+<p class=ILprg>byte[] b = new byte[ss.Length];<o:p></o:p></p>
+
+<p class=ILprg>abc(ss.Length.ToString());<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;b.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>b[i] = Byte.Parse(ss[i]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = b;<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1,de.CreateDecryptor( k, k1
+), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>string s1 = Encoding.UTF8.GetString(ou);<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s1;<o:p></o:p></p>
+
+<p class=ILprg>abc(s1);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ( dmode == DM.Request)<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\z.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\y.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>TextReader r1 = new StreamReader(ms);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w1 = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w1.WriteLine(r1.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w1.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize else&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(r.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override Stream ChainStream( Stream stream ) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ChainStream&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o = stream;<o:p></o:p></p>
+
+<p class=ILprg>n = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>GetInitializer System.String abc(System.String)<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Response Request<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Request 326<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>hi<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abc
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;a&gt;214 134 72
+131 106 41 82 55&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>GetInitializer System.String abc(System.String)<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Request Response<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abc
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;a&gt;214 134 72
+131 106 41 82 55&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg>Position of ds 355<o:p></o:p></p>
+
+<p class=ILprg>214 134 72 131 106 41 82 55<o:p></o:p></p>
+
+<p class=ILprg>8<o:p></o:p></p>
+
+<p class=ILprg>hi<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Response 364<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>vijay hi<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span><span
+style="mso-spacerun: yes">    </span>&lt;abcResult&gt;225 92 58 159 62 55 111
+215 225 255 97 209 232 130 31 99&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;abcResult&gt;225 92 58 159 62 55 111 215 225 255 97 209 232 130 31
+99&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>Position of ds 416<o:p></o:p></p>
+
+<p class=ILprg>225 92 58 159 62 55 111 215 225 255 97 209 232 130 31 99<o:p></o:p></p>
+
+<p class=ILprg>16<o:p></o:p></p>
+
+<p class=ILprg>vijay hi<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>z.txt</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abc
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;a&gt;hi&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>y.txt</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span><span
+style="mso-spacerun: yes">   </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;abcResult&gt;vijay hi&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output in Browser</u><o:p></o:p></p>
+
+<p class=ILoutput>Vijay hi<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILoutput>del *.dll<o:p></o:p></p>
+
+<p class=ILoutput>csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILoutput>csc /t:library zzz.cs /r:aaa.dll<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program sheds light on the
+concepts of encryption and decryption at their best.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program sends a SOAP
+request, which holds the encrypted value of &quot;hi&quot;, to the server. The
+server receives the encrypted parameter, decrypts it and transmits it further,
+to the SOAP system. The function in the extension dll receives the parameter as
+'hi', and reciprocates by sending the return value of 'vijay hi', in an
+encrypted form. Then, the SOAP framework creates a SOAP packet, containing the
+return value in an encrypted form, and then, sends it to the client. The client
+receives this encrypted value, and decrypts it prior to flaunting it in the
+browser window. This roller coaster ride is an endeavor to unravel the mystery
+behind all the actions transpired above.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We set out by grappling with the
+aspx file, as the first step. The function abc in this file accepts a string
+parameter and then, returns a string. Subsequently, the browser displays this
+string. The SOAP request and response packets that flow to and fro, neither
+display the input string as &quot;hi&quot;, nor do they disclose the response
+value of &quot;vijay hi&quot;, which is received from the server. All that they
+display, is a series of numbers, floating from one end to the other.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;a&gt;214 134 72
+131 106 41 82 55&lt;/a&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;225 92 58 159 62 55 111 215 225 255 97 209
+232 130 31 99&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has a function
+named abc in the class zzz. This function accepts one string parameter named
+'a', and it returns a string that contains the word 'vijay', concatenated to
+this string parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It also has an attribute named
+'vijay', which in turn, owns two parameters named Enc and Dec, which are short
+forms for the terms Encrypt and Decrypt, respectively. Thus, the class
+attribute 'vijay' now possesses two properties. The values of these properties
+determine what needs to be done. EM and DM are enums, both of which specify
+that the request or response is to be either encrypted or decrypted. The third
+value in the enum is 'none'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our case, the values
+specified here are indicative of the fact that, the Response is to be
+encrypted, and the Request is to be decrypted. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file is located on the
+server. Thus, it represents the processing that is to be done at the server
+end. It is the bounden duty of the server to decrypt the data that has been
+encrypted by the client, and to encrypt the Response data, which shall
+subsequently be decrypted by the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Until now, the asmx file was
+being used to create the client program, in that, it was utilized for running
+the wsdl utility on the wsdl file, and for creating the .cs file. But for the
+moment, we shall write the client program manually, since we have to place the
+attribute named 'vijay'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Candidly speaking, we employed
+the webserver for creation of the client program, and subsequently, we eliminated
+the code that was unnecessary, and thus, redundant. Thereafter, the attribute
+named 'vijay' made its debut. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Akin to the server, this
+attribute also accepts two parameters, viz. Enc=EM.Request, Dec=DM.Response.
+These values signify that the Request is to be encrypted and the Response is to
+be decrypted. The code remains almost identical, except for the introduction of
+the attribute named 'vijay'. We have provided you with the bird's eye view,
+before diving any deeper into comprehending the code of the attribute named
+'vijay'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the URL with the aspx file
+is written in the browser, a Get or Post is dispatched to the Web Server. Let
+us designate the name 'A' for the Web Server. Subsequent to the file being
+positioned on the web server 'A', the aspx program gets converted into C# code,
+and the function abc is called from the program named zzz.dll. Thereafter, this
+function sends a SOAP packet, containing data encrypted by the SOAP extension
+dll, to another server, which is named as 'B' merely on the whim. This server
+'B' actually contains the code of the function abc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On receiving the SOAP payload,
+the server B executes the asmx file. The SOAP extension dll decrypts the data
+and calls the function abc, while furnishing it with the original data value of
+'hi'. The return value of the function i.e. 'vijay hi', is then encrypted, and
+dispatched back to the client dll named zzz.dll, which is located on the Web
+Server A. It is then decrypted by the code in the 'vijay' attribute extension
+dll, and the string 'vijay hi' is then returned back. Finally, the Web Server A
+creates an html file with the return value, and transports it to the browser.
+At times, this concept can be truly baffling!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file aaa.cs is the extension
+dll, which contains the encryption and decryption code for both, the client and
+the server. Thus, it has to handle a situation wherein, only the Serialize
+events are triggered-off to encrypt the request from the client, and both the
+Serialize and Deserialize events are triggered-off for the response packets
+from the server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The extension dll contains two
+enum classes called DM and EM, which symbolise Decryption and Encryption,
+respectively. These enum classes identify the values to be encrypted or
+decrypted, such as- the request, the response, or no value at all! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So, when we specify the enum
+value of EM.Response, the interpretation rendered by the program is that, the
+Response has to be encrypted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The class 'vijay' has two
+properties named Enc and Dec. Only those programs that employ the attribute of
+'vijay', are entitled to the use of Enc and Dec properties; and It is these
+properties that 'set' or 'get' the value that is stored in the variables
+'emode' and 'dmode'. In the present context, these variables store the state of
+the properties Dec and Enc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, the GetInitializer
+function returns the second parameter that is cached. Since you have already
+been enlightened about the motive behind this call, we choose to ignore it at
+this stage. The system calls this function twice, since there are two instances
+of the attribute 'vijay':<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>First, for the client in zzz.cs <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>And then, for the server in a.asmx.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The prototypes of both the
+functions have to be identical. Firstly, the constructor is called, followed by
+the GetInitializer function. Thereafter, the constructor is called yet again;
+but this time, it is for the client data. The same process is repeated for the
+server as well. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Initialize function gets
+called each time. Here, the parameter i represents the 'vijay' object. The
+value of the a.Dec property is Response, whereas, the value of the a.Enc
+property is Request. The values unearthed by the function abc, vindicate our claim.
+It is because, in the client zzz.cs, the parameters of the attribute 'vijay'
+are specified as Enc=EM.Request and Dec=DM.Response. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the Initialize function is
+called for the packet received from the client. In this function, the values of
+the properties Dec and Enc, are saved in the variables dmode and emode,
+respectively. This concludes the process of transferring data from the
+attribute 'vijay', pertaining to the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the ProcessMessage function,
+it is the AfterSerialize event which is called first, since the data originates
+from the client. The ChainStream function sets up the Streams, prior to this
+event being fired. The Position parameter of the Stream object n is set to 0,
+because when the packet is received, the stream pointer is at the end of the
+Stream, at position 326. This number corresponds to the size of the SOAP
+payload. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, emode contains the value of
+Request, since the packet has to be encrypted. Just to jog your memory a
+little, this is so because, in the parameter of the 'vijay' attribute in the
+client program named zzz.cs, the value of ENC is set to EM.Request.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, in order to populate the
+byte array, the code that was specified earlier, has to be entered. In order to
+pay our respects to the original programmer who wrote this class, the
+StringBuilder class is used to concatenate the bytes from the byte array. Here,
+we iterate through the byte array and utilise the Append function to add a byte
+to the StringBuilder class named 's'. We have added a space between the encrypted
+values, in order to brandish the output in a more aesthetic manner. These
+spaces will have to be stripped off, prior to decryption of the numbers.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InnerText is then
+initialized to the new output data, and the memory stream is created. Once the
+loop terminates, the contents of the stream 'n' are written to the Stream 'o'.
+The file a.txt displays the SOAP payload that is being sent over. Presently,
+only the first parameter will be encrypted. The code catering to encryption of
+multiple parameters is not entered.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the SOAP packet reaches the
+server, the decryption routine takes over. This is because, in the asmx file,
+the parameter supplied to the attribute 'vijay' is Dec=DM.Request. The
+ChainStream function is called prior to the firing of the BeforeDeSerialize
+event.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this event, an empty
+MemoryStream object is created initially. Then, the value of the dmode variable
+is ascertained, to determine whether it is Request or Response. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the value contained in
+dmode is 'Request', we enter the 'if' statement, which will decrypt the SOAP
+payload sent from the client to the server. The encrypted SOAP request payload
+from the client, which is saved in the Stream 'o', is then transferred to the
+memory stream 'ds'. Since the Position property in the memory stream ds has
+changed to 355, it is reset to 0. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we require an XmlDocument
+to accommodate the encrypted data in the MemoryStream 'ds'. Therefore, we
+create an XmlTextReader object named 'r0', and an XmlDocument object named
+'d1'. The Load function is pressed into service to copy the XML data from the
+memory stream 'ds', to the XmlDocument 'd1'. After having provided for the
+other details, we access the first grandchild from the body. The XmlNode named
+'no' represents this child node. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, a wrapper object of
+class DESCryptoServiceProvider, is instantiated. Further, the encrypted text,
+which is contained in the node 'no', is assigned to a string s3, using the
+InnerText property. Since the text contains spaces, the Split function of the string
+is provided with the delimiter of the 'space' character, and the output is
+stored in a string array named 'ss'. There are a total of 7 spaces in the
+string s3. Therefore, the size of the string array ss is 8. Once this is
+achieved, we create a byte array named b, of length 8, and subsequently,
+iterate through a 'for' loop. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The static function Parse in the
+Byte class, converts the string into a byte, and stores it in a different
+member of the array. The member is decided on the basis of the value of the
+variable i. The loop continues till all the string bytes have been transferred
+into the array. We could have used the Byte array named 'b' for this purpose,
+but we decided to create a new one named 'imp'. Ask us not why! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next task is to decrypt this
+data. In order to accomplish this, an empty MemoryStream object named 'ms1' is
+created and assigned to the CryptoStream constructor, while the object cs is
+being created. The second parameter is the CreateDecryptor function, with the
+same key and IV. This leads to the creation of an object, which will decrypt
+the byte array and place the contents in the MemoryStream ms1. The last
+parameter is the enum value of 'Write'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the Write function in
+the stream is called, with the byte arrays that contain the encrypted values.
+The end result is that, the memory stream ms1 shall now contain the decrypted
+value. But hold your horses! This is attainable only when the stream is
+flushed. For this, the FlushFinalBlock function is put to use. The decrypted text
+from the MemoryStream ms1 is then acquired, using the ToArray function, which
+returns a byte array containing the word 'hi'. The bytes are converted into a
+string, using the GetString function. Ultimately, the value of 'hi' is
+displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The task still remains
+unfinished, since an XmlDocument has yet to be created, with this new value.
+The InnerText of the XmlNode is set to 'hi', and a MemoryStream object 'ms' is
+created. Then, using the Save function, the entire XmlDocument is written to this
+object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, we employ the freshly
+created 'ms' MemoryStream as the Reader, and the MemoryStream 'n' as the
+Writer. All that is written to this stream, shall be passed on to the asmx
+program. The 'else' block is never called, since it is used only when the dmode
+variable has a value of None 0 no decryption. Thus, you would realize that both
+encryption and decryption, adhere to analogous rules.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server calls the asmx file,
+with the value of the parameter 'a' as 'hi'. The asmx file returns 'vijay hi',
+which is used by the server to create a SOAP payload. The SOAP payload reaches
+the extension dll, where the AfterSerialize event gets called, but with the
+value of emode as Response. The SOAP payload is now encrypted and sent across. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On receiving the encrypted SOAP
+response, the client uses the extension dll and triggers off the
+BeforeDeSerialize event. The code contained in this block, converts the
+encrypted bytes to the value 'vijay hi', since the value of dmode is
+DM.Response. The files z.txt and y.txt, exhibit the actual SOAP payload that
+has been received by the server and the client, subsequent to the
+decryption.<span style="mso-spacerun: yes">  </span>The above illustration is
+indeed an enormous mental workout, but is worth comprehending.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once you have ruminated and
+digested the above program, incorporate the following two modifications in the
+aaa.cs program:<o:p></o:p></span></p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>Replace the two
+instances of the DESCryptoServiceProvider class, with the
+RC2CryptoServiceProvider class. <o:p></o:p></p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase align=center style='text-align:center'><span style='color:windowtext'>Change
+<o:p></o:p></span></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<span
+style="mso-spacerun: yes">   </span><o:p></o:p></p>
+
+<p class=ILbase align=center style='text-align:center'><span style='color:windowtext'>To<o:p></o:p></span></p>
+
+<p class=ILprg>RC2CryptoServiceProvider de = new RC2CryptoServiceProvider ();<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The residual code remains
+unchanged. The eventual outcome is that, the algorithm adopted for the
+encryption of data is RC2, and not the DES. This is suggestive of the fact
+that, shifting from one algorithm to another, is indeed effortless.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;a&gt;214 40 209
+188 96 8 97 42&lt;/a&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;abcResult&gt;164
+69 219 2 3 8 58 43 175 147 53 64 112 176 15 181&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP payload here is
+different, since the encrypted data is at variance with the earlier data,
+however, this does not seem to hassle the program at all. Now, let us make
+rapid strides to the very last program of the chapter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;script language=&quot;c#&quot; runat=server&gt;<o:p></o:p></p>
+
+<p class=ILprg>public void Page_Load() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz w = new zzz(&quot;RC2&quot;);<o:p></o:p></p>
+
+<p class=ILprg>l.InnerHtml = w.abc(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>zzz w1 = new zzz(&quot;DES&quot;);<o:p></o:p></p>
+
+<p class=ILprg>l1.InnerHtml = w1.abc(&quot;Bye&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;BODY&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b id=&quot;l&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;p&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b id=&quot;l1&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.WebServiceBindingAttribute(Name=&quot;HelloWorldSoap&quot;,
+Namespace=&quot;http://tempuri.org/&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz:
+System.Web.Services.Protocols.SoapHttpClientProtocol <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy b;<o:p></o:p></p>
+
+<p class=ILprg>public zzz(string s) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>b.type = s;<o:p></o:p></p>
+
+<p class=ILprg>this.Url = &quot;http://localhost:8080/a.asmx&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Request,Dec=DM.Response)]<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapHeaderAttribute(&quot;b&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new
+object[]{a});<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : SoapHeader<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string type;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Response,Dec=DM.Request)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc( string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return &quot;vijay &quot; + a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>EM emode= EM.None;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode= DM.None;<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>return 0; <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public EM Enc<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return emode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>emode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public DM Dec <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return dmode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>dmode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum DM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum EM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>Stream o;<o:p></o:p></p>
+
+<p class=ILprg>Stream n;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode;<o:p></o:p></p>
+
+<p class=ILprg>EM emode;<o:p></o:p></p>
+
+<p class=ILprg>static string ctype = &quot;RC2&quot;;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3, 4, 5, 6, 7, 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {10,11 , 12, 13, 14, 15, 16, 17};<o:p></o:p></p>
+
+<p class=ILprg>public mukhi()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type t) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay a = (vijay) i;<o:p></o:p></p>
+
+<p class=ILprg>dmode = a.Dec;<o:p></o:p></p>
+
+<p class=ILprg>emode = a.Enc;<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize &quot; + i.ToString() + &quot; &quot; +
+a.Dec.ToString() + &quot; &quot; + a.Enc.ToString());<o:p></o:p></p>
+
+<p class=ILprg>return;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize &quot; + emode.ToString() + &quot;
+&quot; + n.Position );<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>if ((emode == EM.Request) || (emode == EM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader rr = new XmlTextReader(n);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(rr);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = Encoding.UTF8.GetBytes(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;-------------------&quot; + ctype);<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = null; <o:p></o:p></p>
+
+<p class=ILprg>if (emode == EM.Request)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no1 = d1.SelectSingleNode(&quot;//soap:Header&quot;,
+nm);<o:p></o:p></p>
+
+<p class=ILprg>no1 = no1.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;################&quot; + no1.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>ctype = no1.InnerText;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( ctype == &quot;DES&quot;)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1, de.CreateEncryptor( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>RC2CryptoServiceProvider de = new RC2CryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1, de.CreateEncryptor( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>StringBuilder s = new StringBuilder();<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;ou.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if(i==(ou.Length-1))<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i]);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i] + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s.ToString();<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>n = ms;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>string s5 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s5);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage ==<span style="mso-spacerun: yes"> 
+</span>SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize &quot; + dmode.ToString());<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ds = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ((dmode == DM.Request) || (dmode == DM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(ds);<o:p></o:p></p>
+
+<p class=ILprg>string s6 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s6);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>ds.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader r0 = new XmlTextReader(ds);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(r0);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>string s3 = no.InnerText;<o:p></o:p></p>
+
+<p class=ILprg>char[] c = {' '};<o:p></o:p></p>
+
+<p class=ILprg>string[] ss = s3.Split(c);<o:p></o:p></p>
+
+<p class=ILprg>byte[] b = new byte[ss.Length];<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;b.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>b[i] = Byte.Parse(ss[i]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = b;<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = null;<o:p></o:p></p>
+
+<p class=ILprg>abc(ctype);<o:p></o:p></p>
+
+<p class=ILprg>if ( ctype == &quot;DES&quot;)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1,de.CreateDecryptor( k, k1
+), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>RC2CryptoServiceProvider de = new RC2CryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1,de.CreateDecryptor( k, k1
+), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>string s1 = Encoding.UTF8.GetString(ou);<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s1;<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ( dmode == DM.Request)<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\z.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\y.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>TextReader r1 = new StreamReader(ms);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w1 = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w1.WriteLine(r1.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w1.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize else&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(r.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override Stream ChainStream( Stream stream ) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>//abc(&quot;ChainStream&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o = stream;<o:p></o:p></p>
+
+<p class=ILprg>n = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>vijay hi <o:p></o:p></p>
+
+<p class=ILoutput>vijay Bye <o:p></o:p></p>
+
+<p class=ILoutput>a.txt<o:p></o:p></p>
+
+<p class=ILoutput>Initialize vijay Response Request<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize Request 436<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILoutput>-------------------RC2<o:p></o:p></p>
+
+<p class=ILoutput>################RC2<o:p></o:p></p>
+
+<p class=ILoutput>Initialize vijay Request Response<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILoutput>RC2<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize Response 364<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILoutput>-------------------RC2<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILoutput>RC2<o:p></o:p></p>
+
+<p class=ILoutput>Initialize vijay Response Request<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize Request 437<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILoutput>-------------------RC2<o:p></o:p></p>
+
+<p class=ILoutput>################DES<o:p></o:p></p>
+
+<p class=ILoutput>Initialize vijay Request Response<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILoutput>DES<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize Response 365<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILoutput>-------------------DES<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILoutput>DES<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Response Request<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Request 436<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>-------------------RC2<o:p></o:p></p>
+
+<p class=ILprg>################RC2<o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Request Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>RC2<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Response 364<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>-------------------RC2<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>RC2<o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Response Request<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Request 437<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>-------------------RC2<o:p></o:p></p>
+
+<p class=ILprg>################DES<o:p></o:p></p>
+
+<p class=ILprg>Initialize vijay Request Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>DES<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Response 365<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize if<o:p></o:p></p>
+
+<p class=ILprg>-------------------DES<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>DES<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del c:\a.txt<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs /r:aaa.dll<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>SOAP request1</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Header&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;yyy xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> 
+</span>&lt;type&gt;RC2&lt;/type&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Header&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;a&gt;214 40 209 188
+96 8 97 42&lt;/a&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>SOAP response1</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;abcResult&gt;164 69
+219 2 3 8 58 43 175 147 53 64 112 176 15 181&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>SOAP request2</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Header&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;yyy xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> 
+</span>&lt;type&gt;DES&lt;/type&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Header&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;a&gt;173 131 120 91
+72 185 185 206&lt;/a&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>SOAP response2</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>- &lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;abcResult&gt;106 62
+105 90 124 131 63 128 6 230 32 130 85 3 149 119&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>In the aspx file, two objects
+named w and w1, of type zzz, are created. While the object is being created,
+the constructor is furnished with the specific encryption algorithm type, which
+the object supports. The object w utilizes the RC2 encryption algorithm, while
+the object w1 employs the DES algorithm. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Resultantly, the SOAP payload
+displays bytes encrypted with the RC2 algorithm in the first case, and with the
+DES algorithm in the second case. Thereafter, the function abc is called, using
+both the objects, but with a distinct parameter value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>While creating the objects, the
+a.aspx file calls code from the zzz.cs file. In the earlier program, we had
+made use of the attributes to supply values, whereas in the present case, this
+task has been undertaken by the constructor. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A new instance of the class yyy
+is created in the zzz object. The class yyy, which is derived from SoapHeader,
+has only one member called 'type'. This member, i.e. 'type' is initialized to
+the encryption method, which is supported by the object in the zzz constructor.
+This information is then sent across, in the form of a header value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In one of the earlier chapters,
+we were enlightened about the fact that the headers can be sent across, using
+the attribute of SoapHeaderAttribute. We implement the same attribute here, and
+assign it the variable 'b', to stores the contents of the attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP Request displays two
+messages, wherein, the first request header has the element type as RC2, and
+the second request header has the element type as DES. Once the header is
+created and sent across, the AfterSerialize event is called in the dll, which
+pertains to the 'vijay' attribute. Here, the value of emode is set to Request.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the dll, contingent to the
+value displayed in the header, a specific encryption method is used. The ctype
+variable is declared static in nature, and assigned a value of &quot;RC2&quot;
+in the first round. This is for the reason that, a static variable is
+available, as long as the<span style="mso-spacerun: yes">  </span>application
+is alive. Therefore, even though there may be numerous instances of the 'mukhi'
+class in memory, there will be only one copy of the ctype variable. Had the
+variable been an instance variable, it would have lost its previous value, and
+would have attained a fresh value every time.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the header packet arrives
+at the server, the BeforeDeserialize event is triggered-off in the extension
+dll. This is because, the asmx file contains the attribute of 'vijay'. The
+process explicated in the previous program, is relevant in this context too,
+i.e. the data is decrypted before the function abc is called, and the return
+value is encrypted thereafter. This encrypted packet is then sent back to the
+client, to be decrypted. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is pertinent to note that
+there exists no header packet, to notify the client as to which algorithm is to
+be used for decrypting the packet. This could cause complications during the
+transfer of data, using headers. The answer to this quagmire is, to use headers
+both ways. However, we have implemented a distinct method to deal with this
+exigency, i.e. we ascertain the value contained in the ctype variable. The
+details are given below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the packet arrives from the
+client, the value contained in the emode variable is Request. Thus, the 'if'
+statement becomes true. To access the headers tag in the SOAP packet, we
+utilize the SelectSingleNode function from the document class. The node named
+'no1' now represents this header node.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, using the property
+FirstChild twice, the node 'no1' is initialized to represent the content, i.e.
+InnerText, of the type element. The value that is retrieved is RC2. To
+substantiate our claim, we have written it to the file a.txt, on disk. The
+ctype variable is initialized to the value contained in the header. Thereafter,
+the algorithm of RC2 is implemented, for encrypting the data.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the data has been
+encrypted, the packet is sent across. When the server receives the packet, the
+BeforeDeserialize event in the dll gets triggered-off. Herein lies the beauty
+of the static variable. The constructor could be called a million times, but
+the static variable retains its value as RC2. We could have easily examined the
+header again (as was done in the client), however, we prefer to use the value
+of the ctype variable, instead. The packet data is decrypted, using the valid
+algorithm. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, the AfterSerialize event
+is called from the server side. Since the value in the ctype variable has not
+been altered, there is no requirement for deciphering the value enclosed in the
+variable. Bear in mind that no header is present at the time, when the packet
+is being sent over. When the packet reaches the client, the BeforeDeserialize
+event is triggered. Since no header information has been sent from the server
+to client, there is no option, but to refer to the value in the ctype variable.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the function abc is called
+from the second instance of the zzz object, the header element at the client
+end contains the value of DES. This alters the ctype variable to DES. Thus, the
+encryption algorithm that is employed here is DES. The whole process is then
+iterated with the algorithm of DES. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the header field is used
+only once in the client, basically to determine the value of the type field. We
+could even have used the headers in the server, and then, tasked the server for
+sending the header to the client. There are many ways to skin a cat, but we
+have the flexibility to choose what suits us the best.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Compression and Decompression</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Very often, we encounter certain
+characters that make repeated appearances in a data sequence. This recurrence
+leads to dilation in the size of the data packet, thereby, adding to the web
+traffic. A thought that crosses the mind at this point is, why not pluck out
+this character and insert some indication instead, which signals that the
+specific character has been filtered out? <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In a sense, this is the basis
+for the concept of compression of a data packet and its subsequent
+transmission. The receiver, who would be clued-up about this procedure, could
+then decompress the data, prior to processing it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One variant of this approach is,
+the (Small Messaging System) SMS language, used in mobile communication.<span
+style="mso-spacerun: yes">  </span>Although it doesn't work exactly on the
+guidelines specified above, its utilization has gained popular acceptance by
+users of mobile phones. In SMS, specific characters are simply filtered out
+from the message.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us consider the case wherein
+we wish to filter out the 'space' character from the SOAP Payload. We have
+specifically chosen the 'space' character, since it is the most commonly
+recurring character in the entire packet. On eradicating the character from the
+parameters of the payload, there is a substantial decrease in the size of the
+payload, thus introducing the concept of compression. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At the other end, these spaces
+are simply inserted back into the positions from where they were removed
+earlier. To implement this, information relating to the number of spaces that
+have been removed, and their original positions, has to be retained, to
+facilitate subsequent restoration of the original data.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we present to you a
+diminutive .cs program. It has nothing to do with SOAP or client server. It
+merely contains code that strips the spaces from the text, and subsequently,
+reinserts them into their original positions. You can work in any sub-directory,
+but we have chosen the ddd subdirectory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>string s = &quot;A B C&quot;;<o:p></o:p></p>
+
+<p class=ILprg>byte [] b,c;<o:p></o:p></p>
+
+<p class=ILprg>byte [] d;<o:p></o:p></p>
+
+<p class=ILprg>c = Encoding.ASCII.GetBytes(s);<o:p></o:p></p>
+
+<p class=ILprg>for ( int kk=0; kk &lt; c.Length ; kk++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(c[kk].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine();<o:p></o:p></p>
+
+<p class=ILprg>b = a.compress(c);<o:p></o:p></p>
+
+<p class=ILprg>for ( int kk=0; kk &lt; b.Length ; kk++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(b[kk].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine();<o:p></o:p></p>
+
+<p class=ILprg>d = a.decompress(b);<o:p></o:p></p>
+
+<p class=ILprg>for ( int kk=0; kk &lt; d.Length ; kk++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(d[kk].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine();<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(Encoding.ASCII.GetString(d));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public byte [] compress(byte [] d)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>byte [] t = new byte[d.Length];<o:p></o:p></p>
+
+<p class=ILprg>int i,j=0;<o:p></o:p></p>
+
+<p class=ILprg>for ( i = 0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( d[i] == 32)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i + 1] ;<o:p></o:p></p>
+
+<p class=ILprg>t[j] += 128;<o:p></o:p></p>
+
+<p class=ILprg>i++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>j++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte [] t1 = new byte[j];<o:p></o:p></p>
+
+<p class=ILprg>for ( int k = 0 ; k &lt; j ; k++)<o:p></o:p></p>
+
+<p class=ILprg>t1[k] = t[k];<o:p></o:p></p>
+
+<p class=ILprg>return t1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public byte [] decompress(byte [] d)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>byte [] t = new byte[d.Length*2];<o:p></o:p></p>
+
+<p class=ILprg>int i,j=0;<o:p></o:p></p>
+
+<p class=ILprg>for ( i = 0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( d[i] &gt;= 128)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>t[j] = 32;<o:p></o:p></p>
+
+<p class=ILprg>j = j + 1;<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>t[j] -= 128;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>j++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte [] t1 = new byte[j];<o:p></o:p></p>
+
+<p class=ILprg>for ( int k = 0 ; k &lt; j ; k++)<o:p></o:p></p>
+
+<p class=ILprg>t1[k] = t[k];<o:p></o:p></p>
+
+<p class=ILprg>return t1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc a.cs<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>65 32 66 32 67 <o:p></o:p></p>
+
+<p class=ILoutput>65 194 195 <o:p></o:p></p>
+
+<p class=ILoutput>65 32 66 32 67 <o:p></o:p></p>
+
+<p class=ILoutput>A B C<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program, which
+expounds the concept of compression and decompression, is applicable only to
+ASCII text. ASCII text is defined as characters that represent numbers from 0
+to 128. The characters constituting the SOAP payload are all ASCII based. The
+program removes the spaces from the text, and subsequently, inserts them back
+into place.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Any number ranging from 0 to
+255, occupies one byte, i.e. 8 bits. The number 200 takes up the same amount of
+space as the number 10. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We start with the string &quot;A
+B C&quot;, containing spaces between its characters. Then we create three byte
+arrays named 'b', 'c' and 'd'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The GetBytes function converts
+the string 's' into an array of bytes, which is stored in the array 'c'. This
+array is then displayed, using a 'for' loop. We see the following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>65 - the ASCII value of 'A'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>32 - the ASCII value of 'space'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>66 - the ASCII value of 'B'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>32 - the ASCII value of 'space'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>67 - the ASCII value of 'C'. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This byte array, which has a
+size of 5, is then passed to the compress function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The compress function, as its
+name indicates, initiates a reduction in the number of bytes. First, it creates
+an array 't', which is of the same size as the array 'd'. The array 'd' is
+passed as a parameter to the function. It contains the original uncompressed
+string. The Length property of an array returns the size of an array. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using a 'for' loop, each and
+every member of the byte array 'd' is checked, in order to determine whether it
+is a 'space' character or not. If it is not, the array member is copied to the
+freshly created array 't'. The variable 'i' is used as an index to the array
+'d', and the variable 'j' is used as an index to the array 't'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we come across a space in the
+array, the 'if' statement gets activated. In the 'if' block, we merely move on
+to the next number in the byte array 'd'. Then, we store this number in the
+array 't', using 'j' as the index, but only after adding 128 to this number. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, when we encounter a
+'space' character after the character 'A' has been copied, the next value 66,
+which is the ASCII value of B, gets picked. The value of 128 is then added to
+the ASCII value of B, i.e. 66 + 128, resulting in the number 194. This number
+is then inserted into the array 't'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the algorithm or rule is quite
+plain and simple, i.e. if you encounter a 'space' character, add 128 to the
+next number. This works without any complexity, since each of the numbers 66
+and 194, occupy just a single byte. Thus, the spaces are compressed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, we copy the array 't' into
+a new byte array named 't1', whose size is determined by the variable 'j'. This
+array t1 is then returned and displayed. Thus, whenever we chance upon a number
+greater than 128, it signifies the presence of a 'space' character, before this
+particular character.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, to decompress the data, in
+the decompress function, an array 't' is created, which is twice the size of
+the original array. This is to cater for the anticipated increase in the number
+of bytes. The same process is repeated again, except for the variations made to
+the 'if' statement. In the 'if' statement, the number is verified, to determine
+if it is larger than 128. If it is so, the following actions get executed:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>A space is added to the array t.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The index variable is increased by
+1.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The value 128 is subtracted from the
+number. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Finally the subtracted value is
+copied into the new array. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For instance, when the number
+194 is sighted, a space is first inserted into the array. Then, the number 128
+is subtracted from 194, to obtain the original number i.e. 66. Thereafter, the
+number 66 is stored in the new array. Thus, by applying this mechanism, spaces
+are reinserted into their original positions. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have employed the most
+elementary method available. However, in real life, the method that is
+employed, allocates different bits to a character, based upon the frequency of
+occurrence of the character. Thus, if the character 'A' occurs most often, a
+smaller number of bits would be assigned to represent it, whereas, if the
+character 'Z' occurs the least number of times, a larger number of bits maybe
+allocated to represent it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program is an extension
+of the encryption/decryption program. The client compresses the bytes prior to
+encrypting them. On the other side, the server decrypts the bytes and then
+decompresses them.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;script language=&quot;c#&quot; runat=server&gt;<o:p></o:p></p>
+
+<p class=ILprg>public void Page_Load() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz w = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>l.InnerHtml = w.abc(&quot;A B C&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/script&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HEAD&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;BODY&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;b id=&quot;l&quot; runat=&quot;server&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/HTML&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Response,Dec=DM.Request)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc( string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return &quot;D E F&quot; + a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.WebServiceBindingAttribute(Name=&quot;HelloWorldSoap&quot;,
+Namespace=&quot;http://tempuri.org/&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz:
+System.Web.Services.Protocols.SoapHttpClientProtocol <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public zzz() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Url = &quot;http://localhost:8080/a.asmx&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Enc=EM.Request,Dec=DM.Response)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new
+object[]{a});<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>EM emode= EM.None;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode= DM.None;<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>return 0; <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public EM Enc<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return emode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>emode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public DM Dec <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return dmode;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>dmode= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum DM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public enum EM <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>None,<o:p></o:p></p>
+
+<p class=ILprg>Response,<o:p></o:p></p>
+
+<p class=ILprg>Request<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>Stream o;<o:p></o:p></p>
+
+<p class=ILprg>Stream n;<o:p></o:p></p>
+
+<p class=ILprg>DM dmode;<o:p></o:p></p>
+
+<p class=ILprg>EM emode;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k = {1, 2, 3, 4, 5, 6, 7, 8};<o:p></o:p></p>
+
+<p class=ILprg>Byte[] k1 = {10,11 , 12, 13, 14, 15, 16, 17};<o:p></o:p></p>
+
+<p class=ILprg>public mukhi()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer &quot; + m.ToString());<o:p></o:p></p>
+
+<p class=ILprg>return a;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type t) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay a = (vijay) i;<o:p></o:p></p>
+
+<p class=ILprg>dmode = a.Dec;<o:p></o:p></p>
+
+<p class=ILprg>emode = a.Enc;<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize &quot; + i.ToString() + &quot; &quot; +
+a.Dec.ToString() + &quot; &quot; + a.Enc.ToString());<o:p></o:p></p>
+
+<p class=ILprg>return;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize &quot; + emode.ToString() + &quot;
+&quot; + n.Position );<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>if ((emode == EM.Request) || (emode == EM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader rr = new XmlTextReader(n);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(rr);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>abc(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp1 = Encoding.UTF8.GetBytes(no.InnerText);<o:p></o:p></p>
+
+<p class=ILprg>byte [] inp = compress(inp1);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1, de.CreateEncryptor( k,
+k1 ), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>StringBuilder s = new StringBuilder();<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;ou.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if(i==(ou.Length-1))<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i]);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>s.Append(ou[i] + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s.ToString();<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>n = ms;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>string s5 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>abc(s5);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s5);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage ==<span style="mso-spacerun: yes"> 
+</span>SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize &quot; + dmode.ToString());<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ds = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ((dmode == DM.Request) || (dmode == DM.Response))<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize if&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(ds);<o:p></o:p></p>
+
+<p class=ILprg>string s6 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s6);<o:p></o:p></p>
+
+<p class=ILprg>abc(s6);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Position of ds &quot; + ds.Position);<o:p></o:p></p>
+
+<p class=ILprg>ds.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>XmlTextReader r0 = new XmlTextReader(ds);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>d1.Load(r0);<o:p></o:p></p>
+
+<p class=ILprg>XmlNamespaceManager nm = new XmlNamespaceManager(d1.NameTable);<o:p></o:p></p>
+
+<p class=ILprg>nm.AddNamespace(&quot;soap&quot;,
+&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode no = d1.SelectSingleNode(&quot;//soap:Body&quot;, nm);<o:p></o:p></p>
+
+<p class=ILprg>no = no.FirstChild.FirstChild;<o:p></o:p></p>
+
+<p class=ILprg>DESCryptoServiceProvider de = new DESCryptoServiceProvider();<o:p></o:p></p>
+
+<p class=ILprg>string s3 = no.InnerText;<o:p></o:p></p>
+
+<p class=ILprg>abc(s3);<o:p></o:p></p>
+
+<p class=ILprg>char[] c = {' '};<o:p></o:p></p>
+
+<p class=ILprg>string[] ss = s3.Split(c);<o:p></o:p></p>
+
+<p class=ILprg>byte[] b = new byte[ss.Length];<o:p></o:p></p>
+
+<p class=ILprg>abc(ss.Length.ToString());<o:p></o:p></p>
+
+<p class=ILprg>for(int i=0; i&lt;b.Length; i++) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>b[i] = Byte.Parse(ss[i]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte[] inp = b;<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms1 = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>CryptoStream cs = new CryptoStream(ms1,de.CreateDecryptor( k, k1
+), CryptoStreamMode.Write);<o:p></o:p></p>
+
+<p class=ILprg>cs.Write(inp, 0, inp.Length);<o:p></o:p></p>
+
+<p class=ILprg>cs.FlushFinalBlock();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou1 = ms1.ToArray();<o:p></o:p></p>
+
+<p class=ILprg>byte[] ou = decompress(ou1);<o:p></o:p></p>
+
+<p class=ILprg>string s1 = Encoding.UTF8.GetString(ou);<o:p></o:p></p>
+
+<p class=ILprg>no.InnerText = s1;<o:p></o:p></p>
+
+<p class=ILprg>abc(s1);<o:p></o:p></p>
+
+<p class=ILprg>MemoryStream ms = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>if ( dmode == DM.Request)<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\z.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(&quot;c:\\y.txt&quot;);<o:p></o:p></p>
+
+<p class=ILprg>d1.Save(ms);<o:p></o:p></p>
+
+<p class=ILprg>ms.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>TextReader r1 = new StreamReader(ms);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w1 = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w1.WriteLine(r1.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w1.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeserialize else&quot;);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(r.ReadToEnd());<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override Stream ChainStream( Stream stream ) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ChainStream&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o = stream;<o:p></o:p></p>
+
+<p class=ILprg>n = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public byte [] compress(byte [] d)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>byte [] t = new byte[d.Length];<o:p></o:p></p>
+
+<p class=ILprg>int i,j=0;<o:p></o:p></p>
+
+<p class=ILprg>for ( i = 0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( d[i] == 32)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i + 1] ;<o:p></o:p></p>
+
+<p class=ILprg>t[j] += 128;<o:p></o:p></p>
+
+<p class=ILprg>i++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>j++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte [] t1 = new byte[j];<o:p></o:p></p>
+
+<p class=ILprg>for ( int k = 0 ; k &lt; j ; k++)<o:p></o:p></p>
+
+<p class=ILprg>t1[k] = t[k];<o:p></o:p></p>
+
+<p class=ILprg>return t1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public byte [] decompress(byte [] d)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>byte [] t = new byte[d.Length*2];<o:p></o:p></p>
+
+<p class=ILprg>int i,j=0;<o:p></o:p></p>
+
+<p class=ILprg>for ( i = 0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( d[i] &gt;= 128)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>t[j] = 32;<o:p></o:p></p>
+
+<p class=ILprg>j = j + 1;<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>t[j] -= 128;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>t[j] = d[i];<o:p></o:p></p>
+
+<p class=ILprg>j++;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>byte [] t1 = new byte[j];<o:p></o:p></p>
+
+<p class=ILprg>for ( int k = 0 ; k &lt; j ; k++)<o:p></o:p></p>
+
+<p class=ILprg>t1[k] = t[k];<o:p></o:p></p>
+
+<p class=ILprg>return t1;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Request 329<o:p></o:p></p>
+
+<p class=ILprg>65 32 66 32 67<o:p></o:p></p>
+
+<p class=ILprg>---------<o:p></o:p></p>
+
+<p class=ILprg>65 194 195<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Request<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>Position of ds 357<o:p></o:p></p>
+
+<p class=ILprg>8 65 32 66 32 67<o:p></o:p></p>
+
+<p class=ILprg>A B C<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize Response 366<o:p></o:p></p>
+
+<p class=ILprg>68 32 69 32 70 65 32 66 32 67<o:p></o:p></p>
+
+<p class=ILprg>---------<o:p></o:p></p>
+
+<p class=ILprg>68 197 198 65 194 195<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize Response<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeserialize if<o:p></o:p></p>
+
+<p class=ILprg>Position of ds 389<o:p></o:p></p>
+
+<p class=ILprg>8 68 32 69 32 70 65 32 66 32 67<o:p></o:p></p>
+
+<p class=ILprg>D E FA B C<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;211 74 179 234 218 161 41 172&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>SOAP Response<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;abcResult&gt;30
+192 219 33 206 140 243 252&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in Browser</u><o:p></o:p></p>
+
+<p class=ILoutput>D E FA B C<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILoutput>del c:\a.txt<o:p></o:p></p>
+
+<p class=ILoutput>del *.dll<o:p></o:p></p>
+
+<p class=ILoutput>csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILoutput>csc /t:library zzz.cs /r:aaa.dll<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the aspx file, the function
+abc is called with a string parameter. The only modification made to this file
+is that, the string now contains spaces. The a.asmx file and the zzz.cs file
+remain unchanged. However, the return value in the a.asmx file, now has the
+string &quot;D E F&quot; concatenated with the parameter value of 'a'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are some modifications
+made to the aaa.cs file. Before the bytes can be encrypted, the text embodied
+in the first node, needs to be compressed. So firstly, the bytes in the
+original text are displayed from the byte array inp1. Then, the compress
+function is called, which actually compresses the byte array, by uprooting all
+the spaces. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The new byte array is also
+displayed. The exercise of compression is carried out prior to the event of
+bytes being sent out to the other side, each time. Thereafter, the data packet
+is encrypted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the BeforeDeserialize event,
+the bytes are first decrypted.<span style="mso-spacerun: yes">  </span>After
+decryption, this byte array is handed over to the decompress function. The
+resultant bytes have been displayed at every stage, so that you can visually
+determine the result of every individual process.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An alternative to DES is the
+Triple DES Encryption, which is a great deal more sophisticated, but works along
+similar lines. The above method can also be modified, by employing an
+asymmetrical algorithm, such as, a public key and a private key. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A program can be downloaded off
+the RSA site, and executed to generate two keys, viz. a public key and a
+private key. A byte stream that is encrypted with a public key, can only be
+decrypted with the private key, and vice versa. The public key, as the name
+suggests, is meant for the public. Therefore, it can be unveiled to the whole
+world. A private key is meant for private use. Hence, as the saying goes, it
+should not be divulged even to your spouse! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client keeps the private key
+close to its heart, and distributes the public key to the interested parties.
+Then, it encrypts the file that is to be sent across, using its private
+key.<span style="mso-spacerun: yes">  </span>On receiving the packet, the
+server decrypts it, using the public key of the client. In the reverse
+procedure, the server uses the public key of the client to encrypt the packet
+that is to be sent over to the client. It is only the client's sole prerogative
+to decrypt this packet, since it is in possession of the private key. So, it
+uses the private key to decrypt it. In this manner, the issue of security is
+taken care of.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the public key is made
+public, it could pose a problem in the sense that, it could fall into wrong
+hands. So, in order to plug this loophole, the client first encrypts the packet
+with its private key, followed by one more layer of encryption using the public
+key of the destination server. Now, only the designated can decrypt it, since
+it alone holds the private key to the packet. In the next step, the server
+would use the client's public key to decrypt the data. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Along the same lines, while
+sending the packet back to the client, the server first encrypts it using its
+private key, and then, encrypts it further, by using the client's public key.
+On similar lines, when the packet is received, the client first decrypts the
+data using its private key, followed by further decryption, using the server's
+public key. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This procedure ensures that only
+the genuine client and server have access to the SOAP payload, since the
+private keys are not to be shared with anyone. The above methodology is
+assigned the nomenclature of a 'digital envelope'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Message Digests</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>string s = &quot;ABC&quot;;<o:p></o:p></p>
+
+<p class=ILprg>byte [] c;<o:p></o:p></p>
+
+<p class=ILprg>c = Encoding.ASCII.GetBytes(s);<o:p></o:p></p>
+
+<p class=ILprg>MD5 m = new MD5CryptoServiceProvider ();<o:p></o:p></p>
+
+<p class=ILprg>byte[] d<span style="mso-spacerun: yes">  </span>=
+m.ComputeHash(c);<o:p></o:p></p>
+
+<p class=ILprg>for ( int i=0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(d[i].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>144 47 189 210 177 223 12 79 112 180 165 210 53 37 233 50<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After creating an object 'a' of
+type zzz, the string 's' is initialized to the string &quot;ABC&quot;. The
+string is then converted into a byte array and stored in 'c', using the
+GetBytes function. Now, we use a new wrapper class called
+MD5CryptoServiceProvider, which is derived from the class MD5. From this class,
+a function ComputeHash is called, which accepts a byte array, as well as,
+returns a byte array. The return value is stored in 'd'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The byte array, when displayed,
+reveals a series of unintelligible numbers. The output is depicted above. Now,
+change the string value to &quot;AB&quot;. On doing so, there will be a drastic
+change in the output, which is also reflected below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output </u><o:p></o:p></p>
+
+<p class=ILoutput>184 111 198 176 81 246 61 115 222 38 45 76 52 227 160 169<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Even a slight mutation in a
+single character, results in an altogether different set of values.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Message Digest is a series of
+numbers that represents some data. The algorithm used above is called MD5. In
+this method, a unique number is generated to represent the document. Thus,
+throughout time and space, the string &quot;AB&quot; would be represented by
+the above Message Digest number.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The document is sent over by the
+client, subsequent to its Message Digest number being calculated. At the server
+end, on receipt of the message, the Message Digest Number is recalculated. In
+the eventuality of the numbers not matching, it is safe to conclude that, the
+document has been tampered with. We leave it as an exercise for you to
+implement a SOAP extension that uses MD5.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.Security.Cryptography;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>string s = &quot;AB&quot;;<o:p></o:p></p>
+
+<p class=ILprg>byte [] c;<o:p></o:p></p>
+
+<p class=ILprg>c = Encoding.ASCII.GetBytes(s);<o:p></o:p></p>
+
+<p class=ILprg>byte [] k ;<o:p></o:p></p>
+
+<p class=ILprg>k = new byte[8]{1,2,3,4,5,6,7,8};<o:p></o:p></p>
+
+<p class=ILprg>HMACSHA1 h = new HMACSHA1(k); <o:p></o:p></p>
+
+<p class=ILprg>byte [] d = h.ComputeHash(c);<o:p></o:p></p>
+
+<p class=ILprg>for ( int i=0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write(d[i].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine();<o:p></o:p></p>
+
+<p class=ILprg>k = new byte[8]{1,2,3,4,5,6,7,9};<o:p></o:p></p>
+
+<p class=ILprg>h = new HMACSHA1(k); <o:p></o:p></p>
+
+<p class=ILprg>d = h.ComputeHash(c);<o:p></o:p></p>
+
+<p class=ILprg>for ( int i=0; i &lt; d.Length ; i++)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.Write (d[i].ToString() + &quot; &quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>132 103 229 233 222 51 190 195 96 116 213 28 182 253 222 57
+229 117 180 130<o:p></o:p></p>
+
+<p class=ILoutput>224 211 185 221 74 124 62 203 251 104 96 86 145 107 59 57 200
+167 183 90<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Though the Message Digests
+algorithm and the checksum methodology appear to be secure, they are not
+completely reliable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every TCP/IP packet has two
+checksums; one is for TCP, while the other is for IP. Just anyone can change a
+byte of the SOAP payload, and simultaneously, recalculate the TCP/IP checksums.
+This change could go undetected. So, checksums are not very dependable, as they
+are susceptible to manipulation. The same is true for the Message Digest
+computation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It would be a sagacious move to
+encrypt the SOAP payload, and then, recalculate the new MD5 hash value. Over
+and above this, it would make sound sense to encrypt the MD5 hash also, before
+transmitting the packet across, or else, the hash loses its sanctity. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above program, we have a
+class called HMACSHA1, where HMAC is an acronym for &quot;Hash based Message
+Authentication Code&quot;, and SHA1 represents the hashing algorithm. This
+class calculates a hash value and uses a key or password, which is passed to
+the constructor. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The hash value that gets generated
+at this stage, not only depends upon the input data, but also on the key. In
+the next round, we keep the input byte array the same, with the exception of
+the last byte of the key. It is changed to 9 from 8. As a result of this
+modification, the entire hash changes dramatically.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, it is advisable to use the
+HMACSHA1 class, because when the hash value is sent across, only those with the
+password can compute or recompute the hash value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Another problem with symmetrical encryption algorithms is
+that of 'key management'. How can we transfer the key to the other side, in a
+secure manner? One possibility is to implement the public key - private key
+logic. But then, the algorithm slows down the processing. Digital signatures
+are based on Message Digest algorithms and Public keys/Private keys.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:01 GMT -->
+</html>

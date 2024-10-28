@@ -1,0 +1,1807 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap12.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:36 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap12_files/filelist.html">
+<link rel=Edit-Time-Data href="chap12_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Operator Overloading - C# The Basics - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-09-27T11:05:00Z</o:Created>
+  <o:LastSaved>2001-09-27T11:07:00Z</o:LastSaved>
+  <o:Pages>13</o:Pages>
+  <o:Words>2833</o:Words>
+  <o:Characters>16152</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>134</o:Lines>
+  <o:Paragraphs>32</o:Paragraphs>
+  <o:CharactersWithSpaces>19835</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:36.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:48.0pt'>12</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1>Operator Overloading</h1>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let’s explain what operator overloading is all about with an
+example of a class that represents a date. Would it not be great if we could
+subtract two date objects and be returned an int representing the number of
+days elapsing between the two dates. We would like to use the good old
+subtraction operator – like we do when subtracting numbers. Also we would like
+the<span style="mso-spacerun: yes">  </span>&gt; operator to compare two date
+objects and tell us which one is larger. The + operator could add a number to a
+date resulting in a new date object. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus, operator overloading lets us redefine the existing
+operators so that they work with classes/objects we create like yyy. We have
+not yet instructed C# on how to use the trusty old + operator with two yyy
+objects. Though C# knows how to use the + to add two numbers, it does not know
+how to add two yyy’s.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy c;<o:p></o:p></p>
+
+<p class=programs>c = a + b ;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,5): error CS0019: Operator ‘+’ cannot be applied to
+operands of type ‘yyy’ and ‘yyy’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We have created a simple class yyy which has one instance
+variable i which will distinguish different instances of yyy from each other.
+The constructor with an int as a parameter initializes i. We have tried to add
+two objects that look like yyy which does not go down well with C# and it
+objects to it. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy c;<o:p></o:p></p>
+
+<p class=programs>c = a + b ;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,12): error CS0558: User-defined operators
+‘yyy.operator +(yyy, yyy)’ must be declared static and public<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Error messages can be at times helpful. Our operator + is
+public but not static. C# demands that all operator overloads be static.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() {<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy c;<o:p></o:p></p>
+
+<p class=programs>c = a + b ;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(c.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j) {<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator + 10 5<o:p></o:p></p>
+
+<p class=DOSPROMPT>15<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The word operator as the name of a function, is legal and
+the only way to overload operators. We follow this word with the operator we
+want to overload and then the parameters we will call the operator with. + is a
+binary operator and will need two yyy’s, one on its<span style="mso-spacerun:
+yes">  </span>left and the other on its right. Then at beginning,<span
+style="mso-spacerun: yes">  </span>we give the return value of the operator. In
+our case we want a + to add two yyy’s and return a third yyy whose i will be
+the sum of the individual i’s. Thus a+b will call the operator + with x being
+equal to a and y to b. Thus x.i will have a value 10 and y.i, 5. We are
+creating a new object z and in the constructor passing 15 i.e. 10 + 5. Thus the
+i of z will be 15 which is being returned. a + b will now be replaced by the
+object whose i has a value 15 and c will be equal to this object. Thus c.i will
+be equal to 15.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy c;<o:p></o:p></p>
+
+<p class=programs>c = a + b ;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(c.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator = ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(19,28): error CS1020: Overloadable binary operator
+expected<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error message is telling us that we cannot overload the
+assignment operator =. Every class gets a free assignment operator which does a
+bitwise copy of the variables of the object from the left to the right.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy c = new yyy(2);<o:p></o:p></p>
+
+<p class=programs>yyy d;<o:p></o:p></p>
+
+<p class=programs>d = a + b + c ;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(d.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Operator + 10 5<o:p></o:p></p>
+
+<p class=DOSPROMPT>Operator + 15 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>17<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The only change is d = a + b + c. C# gets easily confused
+with complex statements so it does not read all of it. It sees two operators on
+the same line. In this case, the same plus. An internal rule tells it to read
+the plus left to right i.e. it will only see a + b. It will call the operator +
+with x.i as 10 and y.i as 5 because a’s i is 10 and b’s i is 5. This will
+create a temporary object like yyy whose i is 15, lets call it zz. The object z
+is very different from zz. C# then evaluates zz + c. Thus x.i will display 15
+and y.i will have the value of c.i i.e. 2. To support multiple invocations of
+the operator on a single line, the code does not change.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>int d = a + b ;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(d);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static int operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>return x.i + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator + 10 5<o:p></o:p></p>
+
+<p class=DOSPROMPT>15<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# does not and will never understand what addition of two
+yyy’s is all about. It is in your hands to decide what the code accomplishes.
+You decide whether the overloaded + returns a yyy or an int object. The class
+yyy is your creation not C#’s. Hence you decide what addition means in the
+context of a yyy class. In this case, we are returning an int unlike earlier
+where we returned a yyy. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>int d = a + b ;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(d);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static int operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>return x.i + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(23,19): error CS0111: Class ‘yyy’ already defines a
+member called ‘ op_Addition ‘ with the same parameter types<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You cannot have two operator + overloads which only differ
+in return types. Also the error messages change the name of the operator from +
+to op_Addition. When we overloaded functions, the return type was not
+considered part of the function signature. The same applies for operators.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy d = a + b + 20;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(d.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,9): error CS0019: Operator ‘+’ cannot be applied to
+operands of type ‘yyy’ and ‘int’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# is now telling you that you can add two yyy’s but cannot
+do the same, i.e. add a yyy and an int as we have not told C# how to do so.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>yyy d = a + b + 20;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(d.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y.i);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static yyy operator + ( yyy x , int y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator + “ + x.i + “ “ + y);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(x.i+y);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Operator + 10 5<o:p></o:p></p>
+
+<p class=DOSPROMPT>Operator + 15 20<o:p></o:p></p>
+
+<p class=DOSPROMPT>35<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Life is fun in the fast lane. As we could have a large
+number of functions with the same name but differing number of parameters,
+ditto for operators. a + b as usual calls the first operator +. This as usual
+creates a temp object,<span style="mso-spacerun: yes">  </span>say zz and now
+C# reads the line as zz + 20. This matches the second operator + which now gets
+called. You can have over a million plus operators with differing parameters if
+you desire.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>if ( a &gt; b )<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“true”);<o:p></o:p></p>
+
+<p class=programs>else<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“false”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static bool operator &gt;<span style="mso-spacerun:
+yes">  </span>( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator &lt; “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>return x.i &gt; y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(20,20): error CS0216: The operator ‘yyy.operator
+&gt;(yyy, yyy)’ requires a matching operator ‘&lt;‘ to also be defined<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# is a romantic at heart and loves pairs. We tried to
+overload the &gt; operator and C# tells us that we have to also overload the
+&lt; operator. It makes sense as a user would want to know whether a yyy is
+greater than or less than another yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy(5);<o:p></o:p></p>
+
+<p class=programs>if ( a &gt; b )<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“true”);<o:p></o:p></p>
+
+<p class=programs>else<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“false”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static bool operator &gt;<span style="mso-spacerun:
+yes">  </span>( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator &gt; “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>return x.i &gt; y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static bool operator &lt;<span style="mso-spacerun:
+yes">  </span>( yyy x , yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator &lt; “ + x.i + “ “ + y.i);<o:p></o:p></p>
+
+<p class=programs>return x.i &lt; y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator &gt; 10 5<o:p></o:p></p>
+
+<p class=DOSPROMPT>true<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The operator &lt; returns a bool as we would like to use it
+as part of an if or a while. In this case we are using it as part of an if and
+nothing stops us from using the &lt; overloaded for ints and yyy’s to return a
+bool. What code you write in an operator is entirely your decision. The &lt;
+operator looks like the + and can take different parameters. To overload the
+!=, you also have to overload the ==. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.ToString());<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the first WriteLine function to be called, we are passing
+the object a whereas the first parameter to WriteLine should be a string. Also
+we do not get an error and we see yyy displayed. A longtime back we told you
+that all classes finally derive from object. The class object has a function
+ToString. Thus calling the ToString function off a produces the same output as
+the above line. We have not created the ToString function. So either we got a
+free ToString implementation from C# like we get a free Constructor or the
+ToString function of object in some way determines the name of our class and
+returns it as a string.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.ToString());<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Warning<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(17,15): warning CS0114: ‘yyy.ToString()’ hides
+inherited member ‘object.ToString()’. To make the current method override that
+implementation, add the override keyword. Otherwise add the new keyword.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>It is the same warning if a function exists in the base
+class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>ToString<o:p></o:p></p>
+
+<p class=DOSPROMPT>mukhi<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>WriteLine displays yyy and a.ToString displays mukhi. Which
+means that they call different ToString functions. The WriteLine(a) calls the
+ToString of object whereas the second WriteLine calls it of yyy. If we want to
+override a function in the base class, we have to specifically do so by using
+the modifier override. If we do not, the default is to call the base class
+ToString. All this has been explained earlier, in any case.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.ToString());<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>ToString<o:p></o:p></p>
+
+<p class=DOSPROMPT>mukhi<o:p></o:p></p>
+
+<p class=DOSPROMPT>ToString<o:p></o:p></p>
+
+<p class=DOSPROMPT>mukhi<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now both the System.Console.WriteLine calls the ToString
+function of yyy. We would like to convert a yyy into a string or an int for
+example. These type conversions are a major part of operator overloading. <o:p></o:p></p>
+
+<p class=cbasetext><span style="mso-spacerun: yes"> </span><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static implicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator string<o:p></o:p></p>
+
+<p class=DOSPROMPT>string 10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In spite of having a function ToString, it does not get
+called unlike earlier. After the keyword operator we have the name of a data
+type i.e. string. This function is called whenever we want to convert our
+object into a string. The parameter y stands for the object to be converted. In
+this function we can write whatever code we want to but we must return a
+string. In our case we return the text string concatenated with the current
+value of i. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Once again, the WriteLine function requires a string class.
+We are offering a yyy class. C# checks whether there is an operator string
+which is available to convert a yyy into a string. As there is one, it gets
+called. The word implicit means that we are indirectly implying that it should
+be called. Lets explain this with another example.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>string s;<o:p></o:p></p>
+
+<p class=programs>s = a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static explicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,5): error CS0029: Cannot implicitly convert type
+‘yyy’ to ‘string’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We have changed the word implicit which means imply. It also
+means giving a hint with the word explicit which means specify. Had we not
+changed implicit with explicit, we would have got no error and C# would have
+called the operator to convert a into a string and initialize s to it.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>string s;<o:p></o:p></p>
+
+<p class=programs>s = (string)a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static explicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator string<o:p></o:p></p>
+
+<p class=DOSPROMPT>string 10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The () is called a cast and it takes any data type within
+brackets. We are explicitly asking for a conversion to a string and unlike
+earlier we are not being implicit but explicit.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>string s;<o:p></o:p></p>
+
+<p class=programs>s = (string)a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static explicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator string<o:p></o:p></p>
+
+<p class=DOSPROMPT>string 10<o:p></o:p></p>
+
+<p class=DOSPROMPT>ToString<o:p></o:p></p>
+
+<p class=DOSPROMPT>mukhi<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The explicit will get called only when we cast and as we do
+not have an implicit modifier, the ToString gets called. We get no error if we
+do not have an implicit modifier. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy(10);<o:p></o:p></p>
+
+<p class=programs>string s;<o:p></o:p></p>
+
+<p class=programs>s = (string)a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static explicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static implicit operator string(yyy y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator string”);<o:p></o:p></p>
+
+<p class=programs>return “string “ + y.i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(24,15): error CS0557: Duplicate user-defined conversion
+in class ‘yyy’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We cannot have both the implicit and explicit modifier as
+two separate functions. Thus you have to decide which one you would want to
+implement.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a ;<o:p></o:p></p>
+
+<p class=programs>a = 10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,5): error CS0029: Cannot implicitly convert type
+‘int’ to ‘yyy’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>One more error. Here we are trying to equate a yyy to an int
+but unlike earlier, we have not created an object like yyy by saying new. We
+would need someone to create the yyy object and initialize it to 10, an int.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a ;<o:p></o:p></p>
+
+<p class=programs>a = 10;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>static public implicit operator yyy(int v)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator yyy int “ + v);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(v);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator yyy int 10<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A constructor has the same name as the name of the class.
+Thus operator yyy may double up as a constructor. When we write a = 10, C#
+calls this constructor and passes the parameter v a value, 10. Operator yyy has
+now to create an object that looks like yyy and return it. Thus it does not act
+like a constructor in the sense that a constructor<span style="mso-spacerun:
+yes">  </span>is responsible for creating the object. In other words, writing a
+= 10, creates a new object that looks like yyy and initializes it to 10. It is
+different from what we did earlier as previously the operator did not have to
+create an object that looks like yyy. In this case it has to.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a ;<o:p></o:p></p>
+
+<p class=programs>a = “Hi”;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public yyy( int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>static public implicit<span style="mso-spacerun: yes"> 
+</span>operator yyy(int v)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator yyy int “ + v);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(v);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>static public implicit<span style="mso-spacerun: yes"> 
+</span>operator yyy(string v)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“operator yyy string “ + v);<o:p></o:p></p>
+
+<p class=programs>yyy z = new yyy(100);<o:p></o:p></p>
+
+<p class=programs>return z;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“ToString”);<o:p></o:p></p>
+
+<p class=programs>return “mukhi”;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>operator yyy string Hi<o:p></o:p></p>
+
+<p class=DOSPROMPT>100<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We can have as many operator yyy functions as we like,
+provided we follow the rules of function overloading. Thus we have two of them,
+one that takes a string, another that takes an int. In this case as we are
+writing a = “hi”, the second operator that accepts a string get called. They
+all have to return an object that looks like yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>a = (short) 10;<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Had we written the above line, we will not get any errors.
+We assumed we will get an error as we do not have an operator yyy which takes a
+short as a parameter. C# is highly intelligent. It first checks whether we have
+an operator yyy that matches what we wrote. In no case, there is a match. It
+will then check whether there is<span style="mso-spacerun: yes">  </span>any
+other way it can prevent an error from being signaled. C# realizes that there
+is an operator yyy which accepts an int. Thus it converts a short to an int and
+then calls the operator yyy with the int parameter.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap12.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:38 GMT -->
+</html>

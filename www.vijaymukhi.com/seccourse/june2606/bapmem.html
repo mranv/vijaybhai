@@ -1,0 +1,183 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/bapmem.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:01 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="bapmem_files/filelist.html">
+<title>Blocking Access to Physical Memory</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>11</o:TotalTime>
+  <o:Created>2006-06-26T11:55:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:55:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>266</o:Words>
+  <o:Characters>1518</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>12</o:Lines>
+  <o:Paragraphs>3</o:Paragraphs>
+  <o:CharactersWithSpaces>1864</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Blocking Access to Physical Memory</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;ntddk.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>NTSYSAPI NTSTATUS NTAPI ZwOpenSection(PHANDLE
+pHandle,ACCESS_MASK DesiredAccess,POBJECT_ATTRIBUTES ObjectAttributes);</p>
+
+<p class=MsoNormal>typedef struct </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>unsigned int *ServiceTableBase;</p>
+
+<p class=MsoNormal>unsigned int *ServiceCounterTableBase;</p>
+
+<p class=MsoNormal>unsigned int NumberOfServices;</p>
+
+<p class=MsoNormal>unsigned char *ParamTableBase;</p>
+
+<p class=MsoNormal>} sdt;</p>
+
+<p class=MsoNormal>__declspec(dllimport) sdt KeServiceDescriptorTable;</p>
+
+<p class=MsoNormal>typedef NTSTATUS (NTAPI
+*qtype)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES);</p>
+
+<p class=MsoNormal>qtype OldZwOpenSection;</p>
+
+<p class=MsoNormal>NTSTATUS NewZwOpenSection(PHANDLE pHandle,ACCESS_MASK
+DesiredAccess,POBJECT_ATTRIBUTES ObjectAttributes)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>NTSTATUS status;</p>
+
+<p class=MsoNormal>if
+(_wcsicmp(ObjectAttributes-&gt;ObjectName-&gt;Buffer,L&quot;\\Device\\PhysicalMemory&quot;)==0)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Blocking device/PhysicalMemory access&quot;);</p>
+
+<p class=MsoNormal>return STATUS_ACCESS_DENIED;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>status = (OldZwOpenSection)(pHandle, DesiredAccess,
+ObjectAttributes);</p>
+
+<p class=MsoNormal>return status;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>long no;</p>
+
+<p class=MsoNormal>VOID DriverUnload(PDRIVER_OBJECT DriverObject)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Driver Unloading&quot;);</p>
+
+<p class=MsoNormal>_asm cli</p>
+
+<p class=MsoNormal>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)OldZwOpenSection;</p>
+
+<p class=MsoNormal>_asm sti</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS DriverEntry(PDRIVER_OBJECT driverObject,
+PUNICODE_STRING RegistryPath)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>char *p;</p>
+
+<p class=MsoNormal>driverObject-&gt;DriverUnload = DriverUnload;</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Vijay Driver&quot;);</p>
+
+<p class=MsoNormal>p = (char *) ZwOpenSection;</p>
+
+<p class=MsoNormal>p = p + 1;</p>
+
+<p class=MsoNormal>no = *(long *)p;</p>
+
+<p class=MsoNormal>OldZwOpenSection = (qtype)KeServiceDescriptorTable.
+ServiceTableBase [no];</p>
+
+<p class=MsoNormal>_asm cli</p>
+
+<p class=MsoNormal>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)NewZwOpenSection;</p>
+
+<p class=MsoNormal>_asm sti</p>
+
+<p class=MsoNormal>return(STATUS_SUCCESS);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Whenever we want to access the device \device\physicalmemory
+we first open a handle to the device driver using NtOpenSection. The third
+parameter ObjectAttributes contains a Unicode string to the name of the device
+we want to open. We check the buffer member for Device\\PhysicalMemory and if
+true we return an error. This is how we block access to any device.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/bapmem.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:02 GMT -->
+</html>

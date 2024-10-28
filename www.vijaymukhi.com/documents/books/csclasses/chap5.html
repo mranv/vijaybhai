@@ -1,0 +1,4528 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:47:10 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap5_files/filelist.html">
+<link rel=Edit-Time-Data href="chap5_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>9</o:Revision>
+  <o:TotalTime>50</o:TotalTime>
+  <o:Created>2001-11-05T23:51:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:08:00Z</o:LastSaved>
+  <o:Pages>41</o:Pages>
+  <o:Words>13385</o:Words>
+  <o:Characters>76297</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>635</o:Lines>
+  <o:Paragraphs>152</o:Paragraphs>
+  <o:CharactersWithSpaces>93698</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1056" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>5</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Data Handling</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.ComponentModel;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Data.OleDb;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Collections;</p>
+
+<p class=ILprg>public class CustomerList : System.Collections.CollectionBase </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static CustomerList GetCustomers() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>CustomerList cl = new CustomerList();</p>
+
+<p class=ILprg>Customer a = Customer.ReadCustomer1();</p>
+
+<p class=ILprg>IList b = cl.List;</p>
+
+<p class=ILprg>b.Add(a);</p>
+
+<p class=ILprg>Customer c = new Customer(&quot;246-12-5645&quot;);</p>
+
+<p class=ILprg>c.FirstName = &quot;Vijay&quot;;</p>
+
+<p class=ILprg>c.DateOfBirth = DateTime.Parse(&quot;5/3/1933&quot;);</p>
+
+<p class=ILprg>cl.Add1(c);</p>
+
+<p class=ILprg>cl.Add1(Customer.ReadCustomer2());</p>
+
+<p class=ILprg>return cl;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public int Add1(Customer value) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return List.Add(value);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Customer : Component </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public string id,FirstName ;</p>
+
+<p class=ILprg>public DateTime dateOfBirth;</p>
+
+<p class=ILprg>public static Customer ReadCustomer1() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Customer cust = new Customer(&quot;536-45-1245&quot;);</p>
+
+<p class=ILprg>cust.FirstName = &quot;Sonal&quot;;</p>
+
+<p class=ILprg>cust.DateOfBirth = DateTime.Parse(&quot;9/9/1941&quot;);</p>
+
+<p class=ILprg>return cust;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static Customer ReadCustomer2() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Customer cust = new Customer(&quot;651-27-8117&quot;);</p>
+
+<p class=ILprg>cust.FirstName = &quot;Manish&quot;;</p>
+
+<p class=ILprg>cust.DateOfBirth = DateTime.Parse(&quot;3/25/1942&quot;);</p>
+
+<p class=ILprg>return cust;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public Customer(string ID): base() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>id = ID ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string ID </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return id ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string FirstName1 </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return FirstName ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public DateTime DateOfBirth</p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return dateOfBirth ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>set </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>dateOfBirth = value ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TextBox textBoxPosition;</p>
+
+<p class=ILprg>CustomerList custList;</p>
+
+<p class=ILprg>void textBoxDOB_FormatDate(object sender, ConvertEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (e.DesiredType != typeof(string)) </p>
+
+<p class=ILprg>return ;</p>
+
+<p class=ILprg>if (e.Value.GetType() != typeof(DateTime)) </p>
+
+<p class=ILprg>return ;</p>
+
+<p class=ILprg>DateTime dt = (DateTime)e.Value;</p>
+
+<p class=ILprg>e.Value = dt.ToLongDateString();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void textBoxDOB_ParseDate(object sender, ConvertEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (e.DesiredType != typeof(DateTime)) </p>
+
+<p class=ILprg>return ;</p>
+
+<p class=ILprg>if (e.Value.GetType() != typeof(string)) </p>
+
+<p class=ILprg>return ;</p>
+
+<p class=ILprg>string value = (string)e.Value;</p>
+
+<p class=ILprg>try </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Value = DateTime.Parse(value);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>catch(Exception ex) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>MessageBox.Show(ex.Message);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveFirst_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[custList].Position = 0 ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveLast_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[custList].Position = custList.Count - 1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveNext_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (BindingContext[custList].Position &lt; custList.Count - 1) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[custList].Position++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMovePrev_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (BindingContext[custList].Position &gt; 0) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[custList].Position--;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void customers_PositionChanged(object sender, System.EventArgs
+e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[custList].Position + 1) + &quot; of &quot; + custList.Count;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>Text = &quot;Customer Details&quot;;</p>
+
+<p class=ILprg>ClientSize = new System.Drawing.Size(368, 413);</p>
+
+<p class=ILprg>MinimumSize = new Size(368, (413 +
+SystemInformation.CaptionHeight));</p>
+
+<p class=ILprg>Label labelFirstName,labelID,labelDOB;</p>
+
+<p class=ILprg>labelID = new Label();</p>
+
+<p class=ILprg>labelID.Location = new System.Drawing.Point(8, 32);</p>
+
+<p class=ILprg>labelID.Text = &quot;ID:&quot;;</p>
+
+<p class=ILprg>labelID.Size = new System.Drawing.Size(64, 16);</p>
+
+<p class=ILprg>labelFirstName = new Label();</p>
+
+<p class=ILprg>labelFirstName.Location = new System.Drawing.Point(8, 112);</p>
+
+<p class=ILprg>labelFirstName.Text = &quot;<span style='font-family:"Bookman Old Style"'>&amp;</span>First
+Name:&quot;;</p>
+
+<p class=ILprg>labelFirstName.Size = new System.Drawing.Size(64, 16);</p>
+
+<p class=ILprg>labelDOB = new Label();</p>
+
+<p class=ILprg>labelDOB.Location = new System.Drawing.Point(8, 194);</p>
+
+<p class=ILprg>labelDOB.Text = &quot;<span style='font-family:"Bookman Old Style"'>&amp;</span>Date
+of Birth:&quot;;</p>
+
+<p class=ILprg>labelDOB.Size = new System.Drawing.Size(92, 16);</p>
+
+<p class=ILprg>TextBox textBoxDOB,textBoxFirstName,textBoxID;</p>
+
+<p class=ILprg>textBoxID = new TextBox();</p>
+
+<p class=ILprg>textBoxID.Location = new System.Drawing.Point(88, 30);</p>
+
+<p class=ILprg>textBoxID.ReadOnly = true;</p>
+
+<p class=ILprg>textBoxID.Enabled = false;</p>
+
+<p class=ILprg>textBoxID.Size = new System.Drawing.Size(203, 20);</p>
+
+<p class=ILprg>textBoxFirstName = new TextBox();</p>
+
+<p class=ILprg>textBoxFirstName.Location = new System.Drawing.Point(88, 112);</p>
+
+<p class=ILprg>textBoxFirstName.Size = new System.Drawing.Size(243, 20);</p>
+
+<p class=ILprg>textBoxDOB = new TextBox();</p>
+
+<p class=ILprg>textBoxDOB.Location = new System.Drawing.Point(88, 192);</p>
+
+<p class=ILprg>textBoxDOB.Size = new System.Drawing.Size(243, 20);</p>
+
+<p class=ILprg>textBoxPosition = new TextBox();</p>
+
+<p class=ILprg>textBoxPosition.Location = new System.Drawing.Point(88, 14);</p>
+
+<p class=ILprg>textBoxPosition.ReadOnly = true;</p>
+
+<p class=ILprg>textBoxPosition.Enabled = false;</p>
+
+<p class=ILprg>textBoxPosition.Size = new System.Drawing.Size(88, 20);</p>
+
+<p class=ILprg>Button buttonMoveFirst,buttonMovePrev,</p>
+
+<p class=ILprg>buttonMoveNext,buttonMoveLast;</p>
+
+<p class=ILprg>buttonMoveNext = new Button();</p>
+
+<p class=ILprg>buttonMoveNext.Location = new System.Drawing.Point(184, 8);</p>
+
+<p class=ILprg>buttonMoveNext.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveNext.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveNext.Text = &quot;&gt;&quot;;</p>
+
+<p class=ILprg>buttonMoveNext.Click += new
+System.EventHandler(buttonMoveNext_Click);</p>
+
+<p class=ILprg>buttonMovePrev = new Button();</p>
+
+<p class=ILprg>buttonMovePrev.Location = new System.Drawing.Point(48, 8);</p>
+
+<p class=ILprg>buttonMovePrev.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMovePrev.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMovePrev.Text = &quot;&lt;&quot;;</p>
+
+<p class=ILprg>buttonMovePrev.Click += new
+System.EventHandler(buttonMovePrev_Click);</p>
+
+<p class=ILprg>buttonMoveFirst = new Button();</p>
+
+<p class=ILprg>buttonMoveFirst.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>buttonMoveFirst.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveFirst.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveFirst.Text = &quot;|&lt;&quot;;</p>
+
+<p class=ILprg>buttonMoveFirst.Click += new
+System.EventHandler(buttonMoveFirst_Click);</p>
+
+<p class=ILprg>buttonMoveLast = new Button();</p>
+
+<p class=ILprg>buttonMoveLast.Location = new System.Drawing.Point(224, 8);</p>
+
+<p class=ILprg>buttonMoveLast.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveLast.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveLast.Text = &quot;&gt;|&quot;;</p>
+
+<p class=ILprg>buttonMoveLast.Click += new
+System.EventHandler(buttonMoveLast_Click);</p>
+
+<p class=ILprg>Panel panelVCRControl;</p>
+
+<p class=ILprg>panelVCRControl = new Panel();</p>
+
+<p class=ILprg>panelVCRControl.Location = new System.Drawing.Point(88, 344);</p>
+
+<p class=ILprg>panelVCRControl.Size = new System.Drawing.Size(264, 48);</p>
+
+<p class=ILprg>panelVCRControl.Text = &quot;panel1&quot;;</p>
+
+<p class=ILprg>panelVCRControl.Controls.AddRange(new Control[] </p>
+
+<p class=ILprg>{textBoxPosition,buttonMoveFirst,buttonMovePrev,</p>
+
+<p class=ILprg>buttonMoveNext,buttonMoveLast});</p>
+
+<p class=ILprg>Controls.AddRange(new Control[] </p>
+
+<p class=ILprg>{textBoxDOB,labelDOB,panelVCRControl,textBoxFirstName,</p>
+
+<p class=ILprg>textBoxID,labelFirstName,labelID});</p>
+
+<p class=ILprg>custList = CustomerList.GetCustomers();</p>
+
+<p class=ILprg>ControlBindingsCollection a = textBoxID.DataBindings;</p>
+
+<p class=ILprg>a.Add(&quot;Text&quot;, custList, &quot;ID&quot;);</p>
+
+<p class=ILprg>textBoxFirstName.DataBindings.Add(&quot;Text&quot;, custList,
+&quot;FirstName1&quot;);</p>
+
+<p class=ILprg>Binding dobBinding = new Binding(&quot;Text&quot;, custList,
+&quot;DateOfBirth&quot;);</p>
+
+<p class=ILprg>dobBinding.Format += new
+ConvertEventHandler(textBoxDOB_FormatDate) ;</p>
+
+<p class=ILprg>dobBinding.Parse += new ConvertEventHandler(textBoxDOB_ParseDate)
+;</p>
+
+<p class=ILprg>textBoxDOB.DataBindings.Add(dobBinding);</p>
+
+<p class=ILprg>BindingManagerBase c = BindingContext[custList];</p>
+
+<p class=ILprg>c.PositionChanged += new
+EventHandler(customers_PositionChanged);</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[custList].Position + 1) + &quot; of &quot; + custList.Count;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before submerging deep into the
+topic of Data Binding with Windows Forms Controls, let us first address the
+issues of the User Interface. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=431 height=508 id="_x0000_i1025"
+  src="chap5img/Image1.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the zzz constructor, the Text
+property of the Form class, which is initialized to 'Customer Details', dons
+the mantle of the window title. The ClientSize property determines the size of
+the Form. The MinimumSize property ensures that the size is not reduced beyond
+the value specified. We have dealt with these properties quite a while ago. The
+User Interface code is more germane for creating a visually appealing window,
+than for ameliorating our understanding of the core concepts of Data Binding.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We intend to display three text
+labels in our window. To facilitate this, it is essential to create three label
+controls viz., labelFirstName, labelID and labelDOB. The text property of each
+is initialized to ID, First Name and Date of Birth respectively. We have
+deliberately not altered the names of the controls provided in the original
+sample.<span style="mso-spacerun: yes">  </span>Furthermore, we have not modified
+any of the label control codes, in order to facilitate effortless
+comprehension. Besides Text, the other properties of the label control that we
+modify are the Location and the Size. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This user interface code is
+usually written by a utility called the Screen Painter and not by the
+programmer. This is because, it is very irksome and arduous for a programmer to
+supply coordinates, in pixels, for Properties such as the Location etc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We will display data employing
+the services of a textbox. Thus, three textboxes named textBoxDOB,
+textBoxFirstName and textBoxID, have been provided, to store the date of birth,
+first name of customer and the customer ID, respectively. The Size of each
+textbox is defined by modifying the value contained in the Size property.
+Thereafter, a new location is specified using the Location property. The
+textbox displaying the customer ID has the ReadOnly property set to true, so
+that its contents cannot be altered.<span style="mso-spacerun: yes"> 
+</span>Moreover, setting the Disabled property to false disables the field. One
+more textbox control called textBoxPosition is introduced. It displays the
+current active record and the total number of records in the recordset. We
+shall not discuss the textbox properties any further in the forthcoming
+programs. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now need buttons in our
+window to enable the user to navigate between records. To attain this, the four
+button controls and their corresponding actions are given below: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>buttonMovePrev<span
+style='mso-tab-count:1'>          </span>: Moves to the previous record.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>buttonMoveNext<span
+style='mso-tab-count:1'>          </span>: Moves to the next record.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>buttonMoveFirst<span
+style='mso-tab-count:1'>         </span>: Jumps to the first record.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>buttonMoveLast<span
+style='mso-tab-count:1'>          </span>: Jumps to the last record. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We can set the properties of
+Location, Size and Text of the button controls to suit our requirements. For an
+enhanced visual appeal, the FlatStyle property is also altered. We use the
+Click event to wire up each button to a corresponding method having a similar
+name. This is done to ensure that every time we click on a button, the desired
+code gets executed. The code that gets activated will be dealt with
+subsequently.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Panel control, by itself, is
+worthless, since it does nothing. Its role becomes consequential only when it
+aggregates or collects other controls. By placing controls within a Panel
+control, we can deal with all of them simultaneously. Thus, with a single line
+of code, we can disable a panel, thereby effectively, disabling all the
+controls contained therein. So, by using a panel control, a large number of
+controls can be treated as a single control and all their properties can be
+changed in unison. The Location and Size properties of the Panel control named
+panelVCRControl are set to certain specific co-ordinates. The Text property is
+initialized, but it does not get displayed on the screen.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Panel control, like any other
+control, has a Controls property having a data type of
+Control.ControlCollection. Using the AddRange method that requires an array,
+all controls are added in a single action to the ControlCollection. This is
+analogous in functionality to the Add function, which adds only a single
+control to the Controls Collection. Thus, internally, AddRange repetitively
+calls the Add function, and in each iteration, supplies it with a single member
+of the array, till it has passed all the members of the entire array as
+parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To summarize, we add the four
+textboxes and one label control to the panel, so that we can treat them as a
+single entity. In this program, we however, are not utilizing this property.
+The rest of the controls, including the panel control, are finally added to the
+main Form using the above AddRange function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object custList is of
+user-defined data type CustomerList, which is derived from CollectionBase. This
+class contains a static function called GetCustomers. This function creates an
+object c1, which is an instance of CustomerList. By using New and Finally, the
+value in this object is returned to custList in the zzz constructor. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have another class Customer,
+which is derived from the Component class (this is optional). It represents a
+single Customer. The CustomerList class symbolizes a list or an assemblage of
+customers. The Customer class has a static function ReadCustomer1 that creates
+an instance of class Customer and passes the customer ID to the constructor.
+The constructor initializes the field id with this value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Customer object is
+represented by three variables, viz., id, FirstName and dateofBirth. Thus, an
+object is identified by its fields or variables, and not by the methods it
+employs. The programmers at Microsoft chose to initialize the id field through
+the constructor and the other fields separately. They could instead have
+initialized all three fields through the constructor or initialized none at
+all. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The most noteworthy thing here
+is that the FirstName field can be directly accessed, whereas, the dateofBirth
+field is accessible only through the property DateofBirth, using its set
+accessor. It is sensible and prudent to prevent access to a field directly, and
+allow access only through a property. The id field, however, is accessed
+through the constructor and not through the property id. We shall delve upon
+this, before long.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Object a represents the first
+customer. This object is stored in the CustomerList class since it is derived
+from class CollectionBase. It has the ability to store multiple objects. The
+CollectionBase class has a property called List of data type lList, which
+represents the collection. An IList object named b has a method Add, which adds
+any object to the Collection and returns the position where the object has been
+added. Thus, we have added a Customer object to the list.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To add the second customer, we
+create a Customer object in the same class, and initialize the members
+directly. This customer is also added to the CustomerList by calling a function
+Add1, which uses the List property to Add the customer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third customer is added to
+the List, using a more compact form. Each one of us possesses a distinct style
+of writing code. Thus, it is ineffectual to debate over the issue of why a static
+function has been used by us to create an object, instead of creating it
+directly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CustomerList class, which is
+derived from Collections, can store any arbitrary object. The Add1 function is
+not essential, but it facilitates the addition of objects to the collection.
+Thus, the CustomerList class is a simple collection of objects. Any other
+entity that can represent a collection could also have been used instead.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Reverting back to our
+constructor zzz, the Custlist object now provides access to the three customer
+objects through a collection object. Every control has a ReadOnly property
+called DataBindings, which is of the data type ControlBindingsCollection.
+ControlBindingsCollection in turn, is derived from class BindingsCollection.
+This class is used to bind a control to the data source, since it represents a
+collection of all data bindings for a control. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Add function accepts three
+parameters and returns a Binding object. <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is a string
+representing the name of the property of the control that we want to bind to.
+In our program, we have used the property named Text. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter is of type
+object, which represents the data i.e. the collection object or data source. In
+this case, it is custlist.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third parameter is the name of
+the field or property that we need to bind to. Here, the field name is id. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, we are binding a field
+called id in the data source custList to the first textbox's Text property. Using
+the above mechanism, we could bind any column in the data source to any valid
+control property, such as, backcolor or forecolor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next set, we bind the
+Text property of the second textbox control, textBoxFirstName, to the column
+FirstName1 in the data source custlist.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third column is added with
+the help of a class called Binding, which only understands Binding. This class
+represents a simple relationship between the property of a control and that of
+any object. The constructor of the Binding class is given the same three
+parameters as those of the Add function, and they also have the same
+significance. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall now explain the second
+parameter, i.e. a data source. The second parameter could be any class that
+derives from interfaces, IBindingList or ITypedList. These comprise of the
+DataSet, DataTable, DataView, or DataViewManager classes. These classes
+implement the IList interface. In effect, there are a large number of classes
+(over 20), which implement from this interface.<span style="mso-spacerun:
+yes">  </span>We have used CollectionBase in our present example. The only
+safeguard to be kept in mind is that, an IList object has to be created first,
+and only then can it be used in any of the bindings functions. The object in
+the list must be of the same data type, or else, an exception will get thrown.
+The last type permitted as a data source is a strongly typed IList such as an
+array.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One commendable feature about
+the Binding class is that it permits the user to determine the display patterns
+of data. It also acts as the validating authority, whenever the user makes any
+alteration to the data. The Binding manager calls the Format event when it has
+to display some data in the control and calls the Parse event when it has to
+retrieve data. Thus, we can build our own custom formats. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Format event is attached to
+a function called textBoxDOB_FormatDate, using the delegate
+ConvertEventHandler. This function supplies the custom format in which the date
+is to be displayed. We use the same principles to call the method textBoxDOB_ParseDate,
+which parses the date and checks for errors. We shall make an endeavor to grasp
+these functions, in a short while. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Add function used earlier,
+was overloaded to accept either of the following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>two strings and an object parameter.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>two strings and a Binding object. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the only difference
+between the two data bindings is that, by using a Binding object, we are able
+to customize the display of data.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Form class has a
+BindingContext property that returns a BindingContext object. The indexer
+returns a BindingManagerBase object, which represents all data-bound controls,
+which are bound to the same data source, and keeps them synchronized. It is
+this BindingManagerBase object that facilitates movement from one record to
+another. As of now, we initialize its PositionChanged event to a function
+customers_PositionChanged, which will be called each time the Position property
+changes. The secret of how this is done shall be revealed at a later date.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Any class derived from
+Collections has a member called Count, which returns the number of objects
+present in the Collection. In our case, the count is shown as 3. The
+BindingManagerBase has a member called Position that exposes the object (which
+is the current object in the list or data source), to which the control is
+bound. This index is zero based i.e. the first object in the list is numbered
+zero. And since it is zero based, the Text property of the label in the panel
+is initialized to a string containing the value of the Position property + 1.
+It is followed by the string 'of', and finally by the value returned by the
+Count property of the custList object. The text is finally displayed as '1 of
+3'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=431 height=508 id="_x0000_i1026"
+  src="chap5img/Image2.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the form loads on, the
+first object is the active object. The BindingManagerBase class now ensures
+that the Text property of the three textboxes is initialized to the appropriate
+value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first textbox is bound to a
+field called ID. Thus, the Customer class is searched for a property called ID.
+The 'get' accessor is called. The value returned by it is the value displayed
+in the textbox. Thus, the Customer class needs a property called ID with a
+'get' accessor. If the name of the property is modified, say to ID1, or if the
+get accessor is removed, an exception is generated at run time; however, no
+errors will be generated at compile time.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The same holds true for the
+FisrtName1 property and the DateofBirth. The DateofBirth differs, in that, the
+function textBoxDOB_FormatDate is called after the get accessor is called. This
+is done to facilitate display of the date in the format approved by us. The
+second parameter 'e' in textBoxDOB_FormatDate, which is of data type
+ConvertEventArgs, is well acquainted with the object that is to be displayed in
+the textbox. The DesiredType property of the parameter class contains the
+original data type of the property that is bound in the data source. If its
+type is not DateTime, the program exits from the function gracefully using
+Return. This parameter 'e' has a property called Value, which contains the
+actual unformatted value that exists in the data source. As the return value of
+the property is object, we use the GetType function to retrieve the type of
+this unformatted value. If the type is a string, the program continues
+execution, or else, it exits. Yet another error check!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The fact that the program has
+been able to pass beyond the above two error checks successfully establishes
+that the value in hand can now be formatted to the type we desire. Therefore,
+we first cast this value into a DateTime object dt, and then, use the
+ToLongDateString function from the class, to convert the date into a string
+using the long form. This value is stored back into the Value property of the
+parameter 'e' and is displayed as the Text property of the textbox. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Whenever we attempt at altering
+the date into a valid or an invalid one, the function textBoxDOB_ParseDate or
+the Parse event gets called. This function runs the same two error checks on
+the date, and thereafter, stores the value of the Value property in a string.
+Thereafter, the string is converted into a datetime object. If this process
+does not score a success for any reason, an exception is thrown and a
+MesssageBox is displayed. This modified value in the Value property of the
+parameter, is stored back in the data source by the framework.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=565 height=120 id="_x0000_i1027"
+  src="chap5img/Image3.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.3</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the form loads on, we
+notice the first record from the data source. To see the next record, we have
+to press the button with the display of the &gt; arrow. This is the
+buttonMoveNext control. This action consecutively, calls function
+buttonMoveNext_Click that uses the BindingManagerBase object and the
+BindingContext to increment the Position property by a value of 1. This process
+is encapsulated in an 'if' statement, so that a check can be performed on
+whether the record is the last one in the list or not. The last record is
+retrieved, using the Count property of the data source. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The subtraction of 1 is
+mandatory, since the Position property is zero based. To move backwards, the
+Position property is decremented by 1, and the 'if' statement verifies whether
+the value is greater than zero or not. To move to the first record, we set the
+Position property to 0, and to move to the last record, we set the Position
+property to Count-1. Each time we change the Position property, the function
+customers_PositionChanged gets called. Here, the textbox was updated in a
+manner similar to what was done earlier to change the position of the record
+pointer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The program is considerably
+extensive, but it exhibits the data binding properties of a control, in order
+to display objects from a data source.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.ComponentModel;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Collections;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>DataTable t; </p>
+
+<p class=ILprg>int cnt;</p>
+
+<p class=ILprg>TextBox textBoxPosition;</p>
+
+<p class=ILprg>void buttonMoveFirst_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[t].Position = 0 ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveLast_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[t].Position = cnt - 1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveNext_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (BindingContext[t].Position &lt; cnt - 1)<span
+style="mso-spacerun: yes">  </span>{</p>
+
+<p class=ILprg>BindingContext[t].Position++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMovePrev_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (BindingContext[t].Position &gt; 0) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[t].Position--;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void customers_PositionChanged(object sender, System.EventArgs
+e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[t].Position + 1) + &quot; of &quot; + cnt;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>Text = &quot;Customer Details&quot;;</p>
+
+<p class=ILprg>ClientSize = new System.Drawing.Size(368, 413);</p>
+
+<p class=ILprg>MinimumSize = new Size(368, (413 + SystemInformation.CaptionHeight));</p>
+
+<p class=ILprg>TextBox textBoxFirstName;</p>
+
+<p class=ILprg>textBoxFirstName = new TextBox();</p>
+
+<p class=ILprg>textBoxFirstName.Location = new System.Drawing.Point(88, 112);</p>
+
+<p class=ILprg>textBoxFirstName.Size = new System.Drawing.Size(243, 20);</p>
+
+<p class=ILprg>textBoxPosition = new TextBox();</p>
+
+<p class=ILprg>textBoxPosition.Location = new System.Drawing.Point(88, 14);</p>
+
+<p class=ILprg>textBoxPosition.ReadOnly = true;</p>
+
+<p class=ILprg>textBoxPosition.Enabled = false;</p>
+
+<p class=ILprg>textBoxPosition.Size = new System.Drawing.Size(88, 20);</p>
+
+<p class=ILprg>Button
+buttonMoveFirst,buttonMovePrev,buttonMoveNext,buttonMoveLast;</p>
+
+<p class=ILprg>buttonMoveNext = new Button();</p>
+
+<p class=ILprg>buttonMoveNext.Location = new System.Drawing.Point(184, 8);</p>
+
+<p class=ILprg>buttonMoveNext.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveNext.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveNext.Text = &quot;&gt;&quot;;</p>
+
+<p class=ILprg>buttonMoveNext.Click += new System.EventHandler(buttonMoveNext_Click);</p>
+
+<p class=ILprg>buttonMovePrev = new Button();</p>
+
+<p class=ILprg>buttonMovePrev.Location = new System.Drawing.Point(48, 8);</p>
+
+<p class=ILprg>buttonMovePrev.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMovePrev.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMovePrev.Text = &quot;&lt;&quot;;</p>
+
+<p class=ILprg>buttonMovePrev.Click += new
+System.EventHandler(buttonMovePrev_Click);</p>
+
+<p class=ILprg>buttonMoveFirst = new Button();</p>
+
+<p class=ILprg>buttonMoveFirst.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>buttonMoveFirst.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveFirst.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveFirst.Text = &quot;|&lt;&quot;;</p>
+
+<p class=ILprg>buttonMoveFirst.Click += new
+System.EventHandler(buttonMoveFirst_Click);</p>
+
+<p class=ILprg>buttonMoveLast = new Button();</p>
+
+<p class=ILprg>buttonMoveLast.Location = new System.Drawing.Point(224, 8);</p>
+
+<p class=ILprg>buttonMoveLast.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveLast.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveLast.Text = &quot;&gt;|&quot;;</p>
+
+<p class=ILprg>buttonMoveLast.Click += new
+System.EventHandler(buttonMoveLast_Click);</p>
+
+<p class=ILprg>Panel panelVCRControl;</p>
+
+<p class=ILprg>panelVCRControl = new Panel();</p>
+
+<p class=ILprg>panelVCRControl.Location = new System.Drawing.Point(88, 344);</p>
+
+<p class=ILprg>panelVCRControl.Size = new System.Drawing.Size(264, 48);</p>
+
+<p class=ILprg>panelVCRControl.Text = &quot;panel1&quot;;</p>
+
+<p class=ILprg>panelVCRControl.Controls.AddRange(new Control[] </p>
+
+<p class=ILprg>{textBoxPosition,buttonMoveFirst,buttonMovePrev,</p>
+
+<p class=ILprg>buttonMoveNext,buttonMoveLast});</p>
+
+<p class=ILprg>Controls.AddRange(new Control[] </p>
+
+<p class=ILprg>{panelVCRControl,textBoxFirstName});</p>
+
+<p class=ILprg>t = MakeTable();</p>
+
+<p class=ILprg>textBoxFirstName.DataBindings.Add(&quot;Text&quot;, t,
+&quot;Text&quot;);</p>
+
+<p class=ILprg>textBoxFirstName.DataBindings.Add(&quot;BackColor&quot;, t,
+&quot;BackColor&quot;);</p>
+
+<p class=ILprg>textBoxFirstName.DataBindings.Add(&quot;ForeColor&quot;, t,
+&quot;ForeColor&quot;);</p>
+
+<p class=ILprg>BindingManagerBase c = BindingContext[t];</p>
+
+<p class=ILprg>c.PositionChanged += new
+EventHandler(customers_PositionChanged);</p>
+
+<p class=ILprg>cnt = t.Rows.Count;</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[t].Position + 1) + &quot; of &quot; + cnt;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>private DataTable MakeTable() {</p>
+
+<p class=ILprg>DataTable t = new DataTable(&quot;Control&quot;);</p>
+
+<p class=ILprg>t.Columns.Add(&quot;BackColor&quot;, typeof(Color));</p>
+
+<p class=ILprg>t.Columns.Add(&quot;ForeColor&quot;, typeof(Color));</p>
+
+<p class=ILprg>t.Columns.Add(&quot;Text&quot;);</p>
+
+<p class=ILprg>DataRow r;</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;BackColor&quot;] = Color.Blue;</p>
+
+<p class=ILprg>r[&quot;ForeColor&quot;] = Color.Yellow;</p>
+
+<p class=ILprg>r[&quot;Text&quot;] = &quot;Yellow on Blue&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;BackColor&quot;] = Color.White;</p>
+
+<p class=ILprg>r[&quot;ForeColor&quot;] = Color.Green;</p>
+
+<p class=ILprg>r[&quot;Text&quot;] = &quot;Green on white&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;BackColor&quot;] = Color.Orange;</p>
+
+<p class=ILprg>r[&quot;ForeColor&quot;] = Color.Black;</p>
+
+<p class=ILprg>r[&quot;Text&quot;] = &quot;Black on Orange&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>return t;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=491 height=577 id="_x0000_i1028"
+  src="chap5img/Image4.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.4</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This example borrows
+sufficiently from the previous example. The user interface too is almost
+similar to the earlier one. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program has one textbox
+called textBoxFirstName, which has 3 data bindings on properties of Text,
+BackColor and ForeColor. The data source is a DataTable object t. The
+properties in the DataTable have the same name as the bound textbox properties.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To create a DataTable object, we
+create a new instance of DataTable and pass a string, Control, that signifies
+the name of the table. Every data table desires columns. Hence, there is a
+Columns property that is a collection. The Columns collection has an Add method
+that adds a column. The Column names specified must correspond with those given
+in the Bindings. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first two columns are of
+data type Color, and the last column called Text, is of the data type String.
+After having added 3 columns, we need to add a row. The NewRow function returns
+a blank DataRow object. So, we use the indexer of the data row and pass the
+column name as a parameter to the indexer, in order to initialize the columns.
+Finally, we use the Add function of the Rows Collection to add a new row. This
+process is repeated thrice, once for each column.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=491 height=577 id="_x0000_i1029"
+  src="chap5img/Image5.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.5</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The difference here is that, the
+data source has changed from a Collection to a DataTable object. The column
+names correspond to the property names specified in the Bindings function.
+Thus, they can now replace the property names. We can bind multiple properties
+of a control to fields from a data source. The Binding manager handles this
+internally. Thus, each time we move from one row to another in the DataTable,
+three properties of the textbox get modified, and we get to see a colorful
+output. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Rows Collection has a member
+called Count, which signifies the number of records or rows present in the
+DataTable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So far, we have discovered that
+one or more properties of a control can be bound or associated with a field,
+column or property of a data source. Thereafter, the Binding Context is
+employed to move the record pointer in the data source. The framework then ensures
+that the properties of the control get updated automatically. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We can bind as many properties
+of a control as we desire, and the data source too can be of different types,
+with strings attached. If it is a DataTable, we need to bind to column names, however,
+if it is a Collections object, we require a property with a get accessor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Globalization;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>Button button1,button2,button3,button4;</p>
+
+<p class=ILprg>TextBox text1,text2,text3,text4;</p>
+
+<p class=ILprg>BindingManagerBase bmCustomers,bmOrders;</p>
+
+<p class=ILprg>DataSet ds;</p>
+
+<p class=ILprg>DateTimePicker DateTimePicker1;</p>
+
+<p class=ILprg>void DecimalToCurrencyString(object sender, ConvertEventArgs
+cevent)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if(cevent.DesiredType != typeof(string)) return;</p>
+
+<p class=ILprg>cevent.Value = ((decimal) cevent.Value).ToString(&quot;c&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void CurrencyStringToDecimal(object sender, ConvertEventArgs
+cevent)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if(cevent.DesiredType != typeof(decimal)) return;</p>
+
+<p class=ILprg>cevent.Value =
+Decimal.Parse(cevent.Value.ToString(),NumberStyles.Currency, null);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected void button1_Click(object sender, System.EventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bmCustomers.Position -= 1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected void button2_Click(object sender, System.EventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bmCustomers.Position += 1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected void button3_Click(object sender, System.EventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bmOrders.Position-=1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected void button4_Click(object sender, System.EventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bmOrders.Position+=1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected void BindControls()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>text1.DataBindings.Add(new Binding(&quot;Text&quot;, ds,
+&quot;customers.custName&quot;));</p>
+
+<p class=ILprg>text2.DataBindings.Add(new Binding(&quot;Text&quot;, ds,
+&quot;customers.custID&quot;));</p>
+
+<p class=ILprg>DateTimePicker1.DataBindings.Add(new Binding(&quot;Value&quot;,
+ds, &quot;customers.CustToOrders.OrderDate&quot;));</p>
+
+<p class=ILprg>Binding b = new Binding(&quot;Text&quot;, ds,
+&quot;customers.custToOrders.OrderAmount&quot;);</p>
+
+<p class=ILprg>b.Parse+=new ConvertEventHandler(CurrencyStringToDecimal);</p>
+
+<p class=ILprg>b.Format+=new ConvertEventHandler(DecimalToCurrencyString);</p>
+
+<p class=ILprg>text3.DataBindings.Add(b);</p>
+
+<p class=ILprg>text4.DataBindings.Add(new Binding(&quot;Text&quot;, ds,
+&quot;customers.CustToOrders.custID&quot;));</p>
+
+<p class=ILprg>bmCustomers = BindingContext [ds, &quot;Customers&quot;];</p>
+
+<p class=ILprg>bmOrders = BindingContext[ds, &quot;customers.CustToOrders&quot;];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void MakeDataSet()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ds = new DataSet(&quot;myDataSet&quot;);</p>
+
+<p class=ILprg>DataTable tCust = new DataTable(&quot;Customers&quot;);</p>
+
+<p class=ILprg>DataTable tOrders = new DataTable(&quot;Orders&quot;);</p>
+
+<p class=ILprg>DataColumn cCustID = new DataColumn(&quot;CustID&quot;);</p>
+
+<p class=ILprg>DataColumn cCustName = new DataColumn(&quot;CustName&quot;);</p>
+
+<p class=ILprg>tCust.Columns.Add(cCustID);</p>
+
+<p class=ILprg>tCust.Columns.Add(cCustName);</p>
+
+<p class=ILprg>DataColumn cID = new DataColumn(&quot;CustID&quot;);</p>
+
+<p class=ILprg>DataColumn cOrderDate = new
+DataColumn(&quot;orderDate&quot;,typeof(DateTime));</p>
+
+<p class=ILprg>DataColumn cOrderAmount = new
+DataColumn(&quot;OrderAmount&quot;, typeof(decimal));</p>
+
+<p class=ILprg>tOrders.Columns.Add(cOrderAmount);</p>
+
+<p class=ILprg>tOrders.Columns.Add(cID);</p>
+
+<p class=ILprg>tOrders.Columns.Add(cOrderDate);</p>
+
+<p class=ILprg>ds.Tables.Add(tCust);</p>
+
+<p class=ILprg>ds.Tables.Add(tOrders);</p>
+
+<p class=ILprg>DataRelation dr = new DataRelation(&quot;custToOrders&quot;,
+cCustID , cID);</p>
+
+<p class=ILprg>ds.Relations.Add(dr);</p>
+
+<p class=ILprg>DataRow newRow1,newRow2;</p>
+
+<p class=ILprg>for(int i = 1; i &lt; 4; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>newRow1 = tCust.NewRow();</p>
+
+<p class=ILprg>newRow1[&quot;custID&quot;] = &quot;Cust &quot; + i;</p>
+
+<p class=ILprg>tCust.Rows.Add(newRow1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>tCust.Rows[0][&quot;custName&quot;] = &quot;Vijay&quot;;</p>
+
+<p class=ILprg>tCust.Rows[1][&quot;custName&quot;] = &quot;Sonal&quot;;</p>
+
+<p class=ILprg>tCust.Rows[2][&quot;custName&quot;] = &quot;Manish&quot;;</p>
+
+<p class=ILprg>for(int i = 1; i &lt; 4; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for(int j = 1; j &lt; 6; j++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>newRow2 = tOrders.NewRow();</p>
+
+<p class=ILprg>newRow2[&quot;CustID&quot;]=<span style="mso-spacerun: yes"> 
+</span>&quot;Cust &quot; + i;</p>
+
+<p class=ILprg>newRow2[&quot;orderDate&quot;]= new DateTime(2001, i, j * 2);</p>
+
+<p class=ILprg>newRow2[&quot;OrderAmount&quot;] = i * 10 + j<span
+style="mso-spacerun: yes">  </span>* .1;</p>
+
+<p class=ILprg>tOrders.Rows.Add(newRow2);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>Text = &quot;Binding Sample&quot;;</p>
+
+<p class=ILprg>ClientSize = new System.Drawing.Size(450, 200);</p>
+
+<p class=ILprg>button1 = new Button();</p>
+
+<p class=ILprg>button1.Location = new System.Drawing.Point(24, 16);</p>
+
+<p class=ILprg>button1.Size = new System.Drawing.Size(64, 24);</p>
+
+<p class=ILprg>button1.Text = &quot;&lt;&quot;;</p>
+
+<p class=ILprg>button1.Click+=new System.EventHandler(button1_Click);</p>
+
+<p class=ILprg>button2 = new Button();</p>
+
+<p class=ILprg>button2.Location = new System.Drawing.Point(90, 16);</p>
+
+<p class=ILprg>button2.Size = new System.Drawing.Size(64, 24);</p>
+
+<p class=ILprg>button2.Text = &quot;&gt;&quot;;</p>
+
+<p class=ILprg>button2.Click+=new System.EventHandler(button2_Click);</p>
+
+<p class=ILprg>button3 = new Button();</p>
+
+<p class=ILprg>button3.Location = new System.Drawing.Point(90, 100);</p>
+
+<p class=ILprg>button3.Size = new System.Drawing.Size(64, 24);</p>
+
+<p class=ILprg>button3.Text = &quot;&lt;&quot;;</p>
+
+<p class=ILprg>button3.Click+=new System.EventHandler(button3_Click);</p>
+
+<p class=ILprg>button4 = new Button();</p>
+
+<p class=ILprg>button4.Location = new System.Drawing.Point(150, 100);</p>
+
+<p class=ILprg>button4.Size = new System.Drawing.Size(64, 24);</p>
+
+<p class=ILprg>button4.Text = &quot;&gt;&quot;;</p>
+
+<p class=ILprg>button4.Click+=new System.EventHandler(button4_Click);</p>
+
+<p class=ILprg>text1= new TextBox();</p>
+
+<p class=ILprg>text1.Location = new System.Drawing.Point(24, 50);</p>
+
+<p class=ILprg>text1.Size = new System.Drawing.Size(150, 24);</p>
+
+<p class=ILprg>text2= new TextBox();</p>
+
+<p class=ILprg>text2.Location = new System.Drawing.Point(190, 50);</p>
+
+<p class=ILprg>text2.Size = new System.Drawing.Size(150, 24);</p>
+
+<p class=ILprg>text3= new TextBox();</p>
+
+<p class=ILprg>text3.Location = new System.Drawing.Point(290, 150);</p>
+
+<p class=ILprg>text3.Size = new System.Drawing.Size(150, 24);</p>
+
+<p class=ILprg>text4= new TextBox();</p>
+
+<p class=ILprg>text4.Location = new System.Drawing.Point(9, 150);</p>
+
+<p class=ILprg>text4.Size = new System.Drawing.Size(70, 24);</p>
+
+<p class=ILprg>DateTimePicker1 = new DateTimePicker();</p>
+
+<p class=ILprg>DateTimePicker1.Location = new System.Drawing.Point(90, 150);</p>
+
+<p class=ILprg>DateTimePicker1.Size = new System.Drawing.Size(200, 800);</p>
+
+<p class=ILprg>Controls.Add(button1);</p>
+
+<p class=ILprg>Controls.Add(button2);</p>
+
+<p class=ILprg>Controls.Add(button3);</p>
+
+<p class=ILprg>Controls.Add(button4);</p>
+
+<p class=ILprg>Controls.Add(text1);</p>
+
+<p class=ILprg>Controls.Add(text2);</p>
+
+<p class=ILprg>Controls.Add(text3);</p>
+
+<p class=ILprg>Controls.Add(text4);</p>
+
+<p class=ILprg>Controls.Add(DateTimePicker1);</p>
+
+<p class=ILprg>MakeDataSet();</p>
+
+<p class=ILprg>BindControls();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'>The above example utilizes more
+controls as compared to the earlier ones. It also exploits a more complicated
+data source. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=556 height=265 id="_x0000_i1030"
+  src="chap5img/Image6.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.6</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On the screen, we see 4 buttons
+in sets of two, which assist the record pointer in navigating within the data
+source.<span style="mso-spacerun: yes">  </span>We also have three textboxes
+and a control named DateTimePicker control, which activates a calendar. We have
+already enlightened you on the subject of this control, in the previous
+chapter. We add these controls using the Add function. The function MakeDataSet
+is then employed to create a complicated relationship between the data.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us take a steal peek into
+the function MakeDataSet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this function, we create a
+DataSet object and then pass a string called myDataSet to the constructor. This
+string is used to provide a name to the root document element in the XML
+representation. Since there is little utility in assigning a name to the data
+in this program currently, it can be edged out and abandoned. A DataSet is a
+collection of tables in the memory, which can be related to each other. We can
+write volumes on the DataSet concept. Microsoft has pulled out all stops in
+integrating a large number of features in a DataSet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next task in hand is to
+associate two DataTables with our DataSet object. Whenever we require more than
+one of a similar kind, we need to assign a name to that entity. So, we create
+two tables tCust and tOrders with Customers and Orders. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We create two DataColumn objects
+named cCustID and cCustName, and add them to the Columns Collection of our
+DataTable Customer, using the Add member. The two columns represent the unique
+ID and the customer name. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We then add the following three
+columns to our table called Orders:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>CustID: the id of the customer who
+bought the order. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>orderDate: the date on which the
+order was placed.<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>OrderAmount: the amount of the order
+placed. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once this has been accomplished,
+we add the two empty tables to the DataSet, using the Add function from the
+Tables collection, in the DataSet class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now need to relate the two
+tables, i.e. Customers and Orders. The field custID in the Customers table is
+unique for every customer record, and thus, is called the Primary Key. In the
+Orders table, the field cID is not unique, as a customer may place multiple
+orders. Thus, for every single customer in the Customer table, we may have
+multiple records in the Orders table. This type of relationship is called a
+parent-child relationship, or a primary key-foreign key relationship. A field
+in a table is called a foreign key, only if it is a primary key in another table,
+and if both the fields belong to the same domain. A DataRelation class
+recognizes a parent-child relationship.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The constructor of the
+DataRelation class requires three parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets>1) The name of the DataRelation, which may be null. </p>
+
+<p class=ILbullets>2) The DataColumn object that represents the parent column.
+In our case, it is the field cCustID in the Customer table. </p>
+
+<p class=ILbullets>3) The child column, i.e. the field cID in the Orders table.
+</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now use the property named
+Relations in the DataSet class of type DataRelationCollection, to Add the
+relation to the Dataset. From now on, the DataSet class will relate each
+customer id from the Customer table to the multiple customer ids in the Orders
+table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, the tables are required to be
+populated with some data. So, we start by creating a DataRow object, with the
+help of which, we shall populate the tables. Since we want to add three
+customers with IDs Cust 1, Cust 2 and Cust 3, we first call the NewRow
+function, which creates the DataRow object, and then we use the indexer with a
+column name to store the data. Using the Add member of the Row Collection, the
+row is then added. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Alternatively, we could have
+initialized the column custName in a for loop. This approach has been
+sidestepped or avoided since Microsoft samples have employed a different
+methodology. The Rows Collection object, denoted by the property Rows, has an
+indexer that facilitates access to each row.<span style="mso-spacerun: yes"> 
+</span>For e.g. tCust.Rows[0] accesses the first row. The DataRow objects indexer
+can be utilized to change the field custName.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For each of the three customers,
+we would now want to add five records to the Order table. The Custid and the
+year of the order date, remain the same. The month number is suffixed with 1, 2
+or 3, depending upon the customer. And the day is increased by 2, in
+consideration of each order. The amount on the order is, the month number
+multiplied by 10, plus the value of j in the inner for loop, multiplied by 0.1.
+This expression generates a unique value for each order. With the help of the
+for loop, the process of populating tables can become reasonably simpler, as
+against, writing the values individually. Thus, we have 3 records in the
+Customer table and 15 records in the Orders table, i.e. 5 per customer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the controls are bound
+to the columns in the data table, using the function BindControls. In the first
+textbox, we display the field custName from the Customer table, which is
+present in the DataSource ds. Currently, it happens to be a DataSet and not a
+DataTable or a Collection Object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last parameter to the
+Binding object Constructor is tablename.fieldname. It is not merely a field
+name. It is because a DataSet consists of a collection of tables, and the same
+field name could be present in more than one table. Thus, we need to clearly
+identify the table from which the column has been obtained. The second textbox
+is bound to the customer id from the customer table. The DateTimePicker control
+behaves akin to other controls, when it comes to data binding. Instead of the
+Text property, we bind the control to the Value property. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The point of greater
+significance is that, while displaying orderdate, instead of specifying
+order.orderdate, we use customers.CustToOrders.OrderDate, which is the parent-table-name.relation-name.field-name.
+The motive behind this will be explained in a short while from now. The date is
+displayed using a more sophisticated control than a simple textbox. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Like before, we want to call the
+code for the fourth textbox, which displays data that can be edited. So,
+firstly we are required to create a Binding object b, and associate two
+functions with the Format and Parse events. The delegates are added before the
+Add function is called, to facilitate the addition of the bindings, since no
+formatting takes place when we change the current object in the DataSource.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The BindingContext object takes
+more than one indexer. Therefore, the datasource, i.e. a DataSet or a
+navigational path, is used as an indexer to refer to a specific BindingManagerBase.
+The above-mentioned object is mandatory in order to update the record pointer
+and to display all the data in the data source. This parameter may either
+contain merely a table name or a table name followed by a relation name, e.g.
+customers.custtoOrders. The first BindingMangerBase object, bmCustomers,
+facilitates movement through the three customer records, because we have
+supplied the table name Customer. The second one, bmOrders, will move through
+those records using the relation, since we have supplied the relation name.
+Thus, even though we have 15 records in the Orders table, we can see only 5 of
+them.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, whenever we click on the
+first two buttons, we use the bmCustomers object's Position property to move
+from one record to another, up or down, without checking for errors. The next
+two buttons also use the Position property of the bmOrders object, depending
+upon the active customer id, thus, reducing the number of records.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=556 height=265 id="_x0000_i1031"
+  src="chap5img/Image7.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.7</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The method
+DecimalToCurrencyString is called every time we desire to display a new value
+in the last textbox. The value returned by the DesiredType member of the
+ConvertEventArgs parameter, is checked with a string. If they do not correspond
+with each other, the program exits out. This is the only error check performed.
+Thus, we first ascertain whether we are allowed to convert from a decimal type
+in the original value, to a string or not. If the conversion is allowed, we
+call the ToString function with the formatting character 'c', to carry out the
+actual conversion to a Currency. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The method
+CurrencyStringToDecimal is called whenever we modify the value in the textbox.
+As earlier, we perform the same error check on the conversion to string, and
+then we use the Parse event to convert it into the original decimal type. If we
+change the display to 20.001, we may see it as 20.00. But the original value
+still remains at 20.001. The WriteLine function can be used to display the
+unformatted value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the textbox control
+text4 displays the current customer id. If we move the top two buttons, the
+value contained in this textbox changes. However, when we alter the Position
+property on the relation, the customer id remains constant, while the other two
+fields change. This example illustrates how the data source can be made
+extremely complex using the BindingManagerBase class, which has its work cut
+out for it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=556 height=265 id="_x0000_i1032"
+  src="chap5img/Image8.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.8</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public struct State1 </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>string shortName, longName;</p>
+
+<p class=ILprg>public State1(string longName , string shortName) </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>this.shortName = shortName ; this.longName = longName ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string ShortName </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return shortName; </p>
+
+<p class=ILprg>} </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string LongName </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>get</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return longName;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>int cnt;</p>
+
+<p class=ILprg>DataSet customersDataSet1;</p>
+
+<p class=ILprg>ComboBox comboBoxState;</p>
+
+<p class=ILprg>TextBox textBoxPosition;</p>
+
+<p class=ILprg>Button buttonMoveFirst,buttonMovePrev,buttonMoveNext,</p>
+
+<p class=ILprg>buttonMoveLast;</p>
+
+<p class=ILprg>TextBox textBoxID,textBoxRegion;</p>
+
+<p class=ILprg>Label labelID;</p>
+
+<p class=ILprg>Panel panelVCRControl;</p>
+
+<p class=ILprg>// Washington not there</p>
+
+<p class=ILprg>public State1[] States<span style="mso-spacerun: yes">  </span>=
+new State1[] </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>new State1(&quot;Alaska&quot;,&quot;AK&quot;),new
+State1(&quot;California&quot; ,&quot;CA&quot;),new
+State1(&quot;Idaho&quot;,&quot;ID&quot;),new State1(&quot;Montana&quot;
+,&quot;MT&quot;),</p>
+
+<p class=ILprg>new State1(&quot;New Mexico&quot; ,&quot;NM&quot;),new
+State1(&quot;Oregon&quot;<span style="mso-spacerun: yes"> 
+</span>,&quot;OR&quot;)</p>
+
+<p class=ILprg>,new State1(&quot;Wyoming&quot; ,&quot;WY&quot;)</p>
+
+<p class=ILprg>} ;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>buttonMoveLast = new Button();</p>
+
+<p class=ILprg>customersDataSet1 = new DataSet();</p>
+
+<p class=ILprg>buttonMoveFirst = new Button();</p>
+
+<p class=ILprg>textBoxID = new TextBox();</p>
+
+<p class=ILprg>textBoxRegion = new TextBox();</p>
+
+<p class=ILprg>textBoxPosition = new TextBox();</p>
+
+<p class=ILprg>buttonMovePrev = new Button();</p>
+
+<p class=ILprg>panelVCRControl = new Panel();</p>
+
+<p class=ILprg>comboBoxState = new ComboBox();</p>
+
+<p class=ILprg>labelID = new Label();</p>
+
+<p class=ILprg>buttonMoveNext = new Button();</p>
+
+<p class=ILprg>buttonMoveNext.Click += new
+System.EventHandler(buttonMoveNext_Click);</p>
+
+<p class=ILprg>buttonMoveNext.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveNext.Location = new System.Drawing.Point(280, 8);</p>
+
+<p class=ILprg>buttonMoveNext.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveNext.Text = &quot;&gt;&quot;;</p>
+
+<p class=ILprg>customersDataSet1.DataSetName = &quot;CustomersDataSet&quot;;</p>
+
+<p class=ILprg>buttonMoveFirst.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveFirst.Click += new
+System.EventHandler(buttonMoveFirst_Click);</p>
+
+<p class=ILprg>buttonMoveFirst.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>buttonMoveFirst.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveFirst.Text = &quot;|&lt;&quot;;</p>
+
+<p class=ILprg>textBoxID.Enabled = false;</p>
+
+<p class=ILprg>textBoxID.Location = new System.Drawing.Point(88, 16);</p>
+
+<p class=ILprg>textBoxID.ReadOnly = true;</p>
+
+<p class=ILprg>textBoxID.Size = new System.Drawing.Size(299, 20);</p>
+
+<p class=ILprg>textBoxRegion.Location = new Point(88, 116);</p>
+
+<p class=ILprg>textBoxRegion.Size = new System.Drawing.Size(299, 20);</p>
+
+<p class=ILprg>ClientSize = new System.Drawing.Size(464, 357);</p>
+
+<p class=ILprg>Text = &quot;Customer Details&quot;;</p>
+
+<p class=ILprg>textBoxPosition.Enabled = false;</p>
+
+<p class=ILprg>textBoxPosition.Location = new System.Drawing.Point(88, 14);</p>
+
+<p class=ILprg>textBoxPosition.ReadOnly = true;</p>
+
+<p class=ILprg>textBoxPosition.Size = new System.Drawing.Size(184, 20);</p>
+
+<p class=ILprg>buttonMovePrev.Click += new
+System.EventHandler(buttonMovePrev_Click);</p>
+
+<p class=ILprg>buttonMovePrev.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMovePrev.Location = new System.Drawing.Point(48, 8);</p>
+
+<p class=ILprg>buttonMovePrev.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMovePrev.Text = &quot;&lt;&quot;;</p>
+
+<p class=ILprg>panelVCRControl.Location = new System.Drawing.Point(88, 288);</p>
+
+<p class=ILprg>panelVCRControl.Size = new System.Drawing.Size(360, 48);</p>
+
+<p class=ILprg>comboBoxState.Location = new System.Drawing.Point(88, 208);</p>
+
+<p class=ILprg>comboBoxState.Size = new System.Drawing.Size(176, 20);</p>
+
+<p class=ILprg>comboBoxState.Text = &quot;&quot;;</p>
+
+<p class=ILprg>labelID.Location = new System.Drawing.Point(16, 16);</p>
+
+<p class=ILprg>labelID.Size = new System.Drawing.Size(64, 16);</p>
+
+<p class=ILprg>labelID.Text = &quot;ID:&quot;;</p>
+
+<p class=ILprg>buttonMoveLast.Click += new
+System.EventHandler(buttonMoveLast_Click);</p>
+
+<p class=ILprg>buttonMoveLast.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>buttonMoveLast.Location = new System.Drawing.Point(320, 8);</p>
+
+<p class=ILprg>buttonMoveLast.Size = new System.Drawing.Size(32, 32);</p>
+
+<p class=ILprg>buttonMoveLast.Text = &quot;&gt;|&quot;;</p>
+
+<p class=ILprg>panelVCRControl.Controls.AddRange(new Control[]
+{textBoxPosition,buttonMoveFirst,buttonMovePrev,</p>
+
+<p class=ILprg>buttonMoveNext,buttonMoveLast});</p>
+
+<p class=ILprg>Controls.AddRange(new Control[]
+{comboBoxState,panelVCRControl,textBoxID,labelID,textBoxRegion});</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter cmd = new SqlDataAdapter(&quot;Select * from
+Customers where country='USA'&quot;, con);</p>
+
+<p class=ILprg>cmd.Fill(customersDataSet1, &quot;Customers&quot;);</p>
+
+<p class=ILprg>comboBoxState.DataSource=States;<span style="mso-spacerun:
+yes">        </span></p>
+
+<p class=ILprg>comboBoxState.DisplayMember=&quot;LongName&quot;;<span
+style="mso-spacerun: yes">     </span></p>
+
+<p class=ILprg>comboBoxState.ValueMember=&quot;ShortName&quot;;<span
+style="mso-spacerun: yes">      </span></p>
+
+<p class=ILprg>comboBoxState.DataBindings.Add(&quot;SelectedValue&quot;,
+customersDataSet1, &quot;Customers.Region&quot;);</p>
+
+<p class=ILprg>textBoxID.DataBindings.Add(&quot;Text&quot;, customersDataSet1,
+&quot;Customers.CustomerID&quot;);</p>
+
+<p class=ILprg>textBoxRegion.DataBindings.Add(&quot;Text&quot;,
+customersDataSet1, &quot;Customers.Region&quot;);</p>
+
+<p class=ILprg>BindingContext[customersDataSet1,&quot;Customers&quot;].PositionChanged
++= new System.EventHandler(customers_PositionChanged);</p>
+
+<p class=ILprg>DataTableCollection tc = customersDataSet1.Tables;</p>
+
+<p class=ILprg>DataTable t = tc[0];</p>
+
+<p class=ILprg>cnt = t.Rows.Count;</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[customersDataSet1,&quot;Customers&quot;].Position + 1) + &quot;
+of &quot; + cnt;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveFirst_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[customersDataSet1,&quot;Customers&quot;].Position
+= 0 ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveLast_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[customersDataSet1,&quot;Customers&quot;].Position
+= cnt - 1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void buttonMoveNext_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if
+(BindingContext[customersDataSet1,&quot;Customers&quot;].Position &lt; cnt - 1)
+</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[customersDataSet1,&quot;Customers&quot;].Position++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>void buttonMovePrev_Click(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if
+(BindingContext[customersDataSet1,&quot;Customers&quot;].Position &gt; 0) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>BindingContext[customersDataSet1,&quot;Customers&quot;].Position--;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void customers_PositionChanged(object sender, System.EventArgs
+e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>textBoxPosition.Text = &quot;Record &quot; +
+(BindingContext[customersDataSet1,&quot;Customers&quot;].Position + 1) + &quot;
+of &quot; + cnt;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=467 id="_x0000_i1033"
+  src="chap5img/Image9.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.9</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Continuing with our saga on data
+handling, let us launch a few more intriguing twists and turns. As before, let
+us tackle the User Interface issues first. We possess one label, three
+textboxes, one combo box and four buttons. There is nothing novel or innovative
+about this. In the earlier programs, we had entered the data in our program
+itself, using a DataTable or a DataSet, and this data was eventually displayed.
+In this program, we source the data from a database. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we install the .NET
+framework, a large number of databases are brought into existence and installed
+in SQL Server. To access the data within a database, we have to use the
+SqlConnection class. The constructor is given a string that identifies the
+machine on which the database server resides. The default in our case is
+server=(local)\\NetSDK, where 'local' represents the machine we are currently
+working on. The installation program creates NetSDK. The word following server
+is 'uid', which denotes the user name, and the word 'pwd' implies the password.
+The values supplied are QSUser and QSPassword, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>All data is stored in tables
+that reside in a database. We are interested in a list of customers, which is
+stored in a table called Customers, residing in the northwind database.
+Therefore, in the connection string, we specify database = northwind.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SqlConnection class is
+merely capable of comprehending the wherewithal of connecting to a database. It
+is clueless about the word SQL or Structured Query Language. SQL is a language
+used to extricate data from one or more tables. Thus, we introduce a new class
+named SqlDataAdapter that understands SQL, and then, we pass the SQL statement
+to its constructor along with the connection object. The SQL statement
+&quot;Select * from Customers where country = 'USA' &quot;, selects all the
+fields, since the symbol * represents all fields of the Customers table. The 'where'
+condition restricts/filters records whose country field has the value of 'USA'.
+As of now, no data gets retrieved. The class stores this information
+internally.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is the Fill command of the
+SqlDataAdapter class, which is responsible for filling up the DataSet
+customersDataSet1. The first parameter supplied is the DataSet and the second
+parameter is a tablename whose fields are to be mapped. The tablename has to be
+a valid table name, or else, a run time exception will be generated. The return
+value is the number of rows that are present in the data source. Earlier, we
+had used the 'for' statements to provide data; whereas, currently we are using
+real life data from a database to load a table. The WriteLine function if given
+here would display the number of records in the DataSet, which is 13 in this
+case.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataSource property in the
+Combo Box control is of type object. This property determines what the combo
+box displays. Here, we have specified an array called States, of data type
+State1. Our array contains seven members of type State1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The State1 object has two
+members, viz. longName and shortName. LongName stores the actual name of the
+state and shortName stores the two-character abbreviations. The constructor of
+the class initializes these two members. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is our misfortune that,
+despite being tantalized by being offered the exciting privilege of selecting
+names for parameters, the same old names as assigned to the fields, are being
+ascribed to the parameters as well. Therefore, to access the field shortName
+from within the constructor, we need to preface it with the word 'this'. The
+'this' keyword is optional in situations where we use different names for the
+parameters. Thus, the combo box shall display one of the values present in the
+States array, which encompasses the short and the long names of seven different
+states. To authenticate this, you may click on the down arrow and see the names
+of the seven states. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=467 id="_x0000_i1034"
+  src="chap5img/Image10.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.10</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The question that comes to the
+fore at this stage is that, 'How does the combo box come to a decision on the
+values to be displayed?' The combo box or any control that displays a list,
+takes two different values, namely, DisplayMember and ValueMember.
+DisplayMember takes a decision on the data that the user sees in the list box,
+while ValueMember is the actual value of the selected item. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus in our case, we get to see
+the full name of the state, when the DisplayMember property is initialized to
+longName. The ValueMember is equated to the shortName. So, the value obtained
+from this list box is the abbreviated name of a state. These two have to be
+properties in the class State1.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The combo box, like all other
+controls, has a Binding property. The first two textboxes are bound to the
+CustomerID field and the Region field. They are preceded by the table-name. The
+name of the DataSet is also specified. The field from the dataset is the Region
+field that contains the abbreviation, but we get to see the full name, since
+the DisplayMember is longName.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now work under the
+assumption that the current value of the region field is NM. So, the combo box
+shall display New Mexico, and not NM. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=467 id="_x0000_i1035"
+  src="chap5img/Image11.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.11</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The framework embarks on its
+search from the beginning of the States array, and then calls the property
+shortName. It verifies every entry in the array, in order to confirm whether
+the value is 'NM' or otherwise. Once the value matches, it calls the property
+longName to display the full name in the combo box. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, if the desired shortName
+were at a position that is deep down the array, it would entail summoning the
+shortName property numerous times. The long name property, for reasons unknown,
+gets called only twice. The state Washington is not present in the array. In a
+situation like this, the framework moves through all the members in the array.
+If no match is found, it displays the first member of the array, which in this
+case is Alaska. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To unravel the number of records
+in the table, we first need to access the DataTableCollection object. This is
+accomplished using the Tables property, which results in a collection.
+Thereafter, the tables are accessed, using the indexer. In order to access the
+table Customers, tc[0] is used. Subsequently, the Count property of the Rows
+collection is used to return the number of rows in the table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Binding Manager code, which
+is essential to move the active object, remains the same. So, we shall not
+delve upon it any further. All that we are trying to explain through the above
+example is that, by using one value in a database, we can display another
+value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>You need to commit it to your
+memory that, we are binding to a combo box for the first time ever. The combo
+box is bound to the SelectedValue property. If you comment out this binding,
+you will observe that the values remain impervious or unaltered. Further, if
+you click in the combo box, you will witness the display of the names of all
+the states. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Data
+Grids </span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>DataSet c;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>c = new DataSet();</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers1&quot;);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One of the most common uses of
+data is to position it in a tabular form. This format can be achieved by using
+a DataGrid control, which is a collection of columns and rows. The above
+program displays data from the Customer table in a data grid object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1036"
+  src="chap5img/Image12.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.12</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence by creating a
+DataGrid object d, and assign it a certain size using the Size property. As
+earlier, we create a SqlConnection object to connect to the database server on
+a machine, and then, create a SqlDataAdaptor object Cust to represent all the
+data from the Customers table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataSource property of the
+DataGrid is initialized to a freshly created, albeit, empty DataSet object, c.
+This is because a DataGrid displays data from a source, and therefore, the
+DataSource property is specifically introduced to identify the source. Dataset
+is not the only medium, since the data source can obtain a value from seven
+different entities. We shall explore this in greater detail in the next
+example. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the Fill function of the
+SqlDataAdaptor class, the DataSet 'c' is packed with data. You can assign any
+name to it. We have used Customer1 mainly to facilitate source mapping. Bear in
+mind that the DataSet, by itself, is devoid of any data. It comprises of other
+sources, which in turn, contain data. This highlights the fact that a DataSet
+contains supplementary data sources. This function is obtained from the
+DbDataAdapter class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the DataSource for the
+DataGrid class is to be specified. As we have only one source i.e. Customers1,
+we have initialized the DataMember property to it. Had the DataMember property
+not been supplied with a value, i.e. d.DataMember = &quot;&quot;, we would not
+have seen any data on start up. At this stage, a plus sign would be displayed
+in the empty grid. Clicking on the plus sign would then show the name of our
+solitary source, Customer1. This is displayed as a hyperlink. When we click on
+the link, in addition to the new dataset being displayed in the heading of the
+data grid, the previous data is also displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1037"
+  src="chap5img/Image13.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1038"
+  src="chap5img/Image14.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.13</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.14</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we add the line Cust.Fill(c,
+&quot;Customers2&quot;) immediately after the first Fill function, it results in
+the creation of a second source. Thus, at this stage, two sources are present. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1039"
+  src="chap5img/Image15.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.15</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, clicking on the +
+sign in the DataGrid at this stage would display two different sources as
+hyperlinks. Clicking on either of the hyperlinks will exhibit the same set of
+data. The point worthy of notice is that, we can let the user dynamically choose
+the source that he wishes to work with.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>DataTable t = new DataTable(&quot;Control&quot;);</p>
+
+<p class=ILprg>t.Columns.Add(&quot;Name&quot;);</p>
+
+<p class=ILprg>t.Columns.Add(&quot;City&quot;);</p>
+
+<p class=ILprg>DataRow r;</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;Name&quot;] = &quot;Vijay&quot;;</p>
+
+<p class=ILprg>r[&quot;City&quot;] = &quot;Bombay&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;Name&quot;] = &quot;Sonal&quot;;</p>
+
+<p class=ILprg>r[&quot;City&quot;] = &quot;Delhi&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>d.DataSource = t;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As we had mentioned earlier, the
+data source should essentially be dynamic since data comes in different shapes
+and sizes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we create a
+simple DataTable t with two columns named Name and City. This DataTable is then
+supplied as the DataSource. Since we are making use of an entity that contains
+data, we do not have to specify the DataMember explicitly. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=308 height=203 id="_x0000_i1040"
+  src="chap5img/Image16.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.16</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This results in the display of
+two records in the DataGrid control. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataTable could also have
+been initialized by sourcing data from a database using the SqlDataAdaptor
+class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>using System.Collections;</p>
+
+<p class=ILprg>public class CustomerList : System.Collections.CollectionBase {</p>
+
+<p class=ILprg>public static CustomerList GetCustomers() {</p>
+
+<p class=ILprg>CustomerList cl = new CustomerList();</p>
+
+<p class=ILprg>Customer a = Customer.ReadCustomer1();</p>
+
+<p class=ILprg>IList b = cl.List;</p>
+
+<p class=ILprg>b.Add(a);</p>
+
+<p class=ILprg>Customer c = new Customer(&quot;246-12-5645&quot;);</p>
+
+<p class=ILprg>c.FirstName = &quot;Vijay&quot;;</p>
+
+<p class=ILprg>c.DateOfBirth = DateTime.Parse(&quot;5/3/1933&quot;);</p>
+
+<p class=ILprg>cl.Add1(c);</p>
+
+<p class=ILprg>cl.Add1(Customer.ReadCustomer2());</p>
+
+<p class=ILprg>return cl;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public int Add1(Customer value) {</p>
+
+<p class=ILprg>return List.Add(value);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Customer {</p>
+
+<p class=ILprg>public string id,FirstName ;</p>
+
+<p class=ILprg>public DateTime dateOfBirth;</p>
+
+<p class=ILprg>public static Customer ReadCustomer1() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Customer cust = new Customer(&quot;536-45-1245&quot;);</p>
+
+<p class=ILprg>cust.FirstName = &quot;Sonal&quot;;</p>
+
+<p class=ILprg>cust.DateOfBirth = DateTime.Parse(&quot;9/9/1941&quot;);</p>
+
+<p class=ILprg>return cust;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static Customer ReadCustomer2() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Customer cust = new Customer(&quot;651-27-8117&quot;);</p>
+
+<p class=ILprg>cust.FirstName = &quot;Manish&quot;;</p>
+
+<p class=ILprg>cust.DateOfBirth = DateTime.Parse(&quot;3/25/1942&quot;);</p>
+
+<p class=ILprg>return cust;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public Customer(string ID): base() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>id = ID ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string ID </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get <span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return id ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string FirstName1 </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return FirstName ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public DateTime DateOfBirth</p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>return dateOfBirth ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>set </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>dateOfBirth = value ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>CustomerList custList;</p>
+
+<p class=ILprg>custList = CustomerList.GetCustomers();</p>
+
+<p class=ILprg>d.DataSource = custList ;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A DataSource for a DataGrid can
+comprise of seven different types of Data sources. These are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>DataTable</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>DataView</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>DataSet</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>DataViewManager</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Single dimensional array</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>IList interface </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>An object that implements the
+IListSource</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=372 height=233 id="_x0000_i1041"
+  src="chap5img/Image17.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.17</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above example is merely a
+replica of the first example of this Chapter, where we had used a class derived
+from CollectionBase. The same rules as mentioned in the first example shall be
+applicable here also.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For e.g. the presence of
+properties that represent column names, etc. As we have only three properties,
+only three columns are displayed in the DataGrid. This program also illustrates
+the utilization of the varied data sources in a data grid.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>DataSet c;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>c = new DataSet();</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers1&quot;);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>d.AlternatingBackColor = Color.Red;</p>
+
+<p class=ILprg>d.BackColor = Color.Blue;</p>
+
+<p class=ILprg>d.BackgroundColor = Color.Green;</p>
+
+<p class=ILprg>Rectangle r = d.Bounds;</p>
+
+<p class=ILprg>System.Console.WriteLine(r);</p>
+
+<p class=ILprg>r = new Rectangle(1,100,200,400);</p>
+
+<p class=ILprg>d.Bounds = r;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1042"
+  src="chap5img/Image18.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1043"
+  src="chap5img/Image19.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.18</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.19</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, we have a
+large number of properties whose values can be altered. Within a DataGrid, if
+we click on a column, a sort is performed on the values in the column. If the
+column is clicked again, the sort order is reversed. The column which decides
+the sorting has an arrow displayed next to it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Sorting is enabled by default
+and can be disabled by initializing the property AllowSorting to False.
+However, there is no way of disabling the facility to sort on a single column.
+Provision is available to sort on an expression.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The property
+AlternatingBackColor bestows a ledger-like appearance to our Grid. The
+background color of every alternate row is of a specific shade. In this case,
+it is red. The BackColor property of the DataGrid control, which bestows every
+row with the same background color, is set to blue. The default color for this
+property is the system color of Windows. Setting the BackColor property to
+Color.Empty switches the color mode to the default color.<span
+style="mso-spacerun: yes">  </span>Thus, we observe that the first row and
+every alternate row thereafter are blue in color, and the remaining rows are
+red in color. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is a narrow tract at the
+bottom of the grid, which is displayed in green color. This color is determined
+by the value assigned to the property BackgroundColor. This narrow strip, which
+is part of the non-row area of the grid, is distinctly visible when the grid
+comprises of only a few rows, or when there is no table to be displayed in the
+grid.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The size of the DataGrid control
+can be controlled programmatically. The Bounds property in the DataGrid is a
+read-write property. Hence, the default rectangle structure, which contains the
+DataGrid, can be displayed using the WriteLine function. The X and Y
+co-ordinates are specified as 0,0, the Width is 584 pixels and the Height is
+336 pixels. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, it is evident that we have
+the discretion to determine the size of the DataGrid, since we have to share
+real estate on our Window with other controls.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>DataSet c;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;uid=QSUser;</p>
+
+<p class=ILprg>pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>c = new DataSet();</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers1&quot;);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>d.CaptionForeColor = Color.Blue;</p>
+
+<p class=ILprg>d.CaptionBackColor = Color.Red;</p>
+
+<p class=ILprg>d.CaptionText = &quot;Vijay Muhki&quot;;</p>
+
+<p class=ILprg>Font f = new Font(&quot;Arial&quot;,10);</p>
+
+<p class=ILprg>d.CaptionVisible = true;</p>
+
+<p class=ILprg>Rectangle r = d.ClientRectangle;</p>
+
+<p class=ILprg>System.Console.WriteLine(r);</p>
+
+<p class=ILprg>Size s = d.ClientSize;</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>System.Console.WriteLine(d.Height + &quot; &quot; + d.Width);</p>
+
+<p class=ILprg>System.Console.WriteLine(d.Left + &quot; &quot; + d.Right);</p>
+
+<p class=ILprg>Point p = d.Location;</p>
+
+<p class=ILprg>System.Console.WriteLine(p.X + &quot; &quot; + p.Y);</p>
+
+<p class=ILprg>System.Console.WriteLine(d.Size);</p>
+
+<p class=ILprg>d.ColumnHeadersVisible = false;</p>
+
+<p class=ILprg>System.Console.WriteLine(d.CompanyName);</p>
+
+<p class=ILprg>Control.ControlCollection cc =<span style="mso-spacerun: yes"> 
+</span>d.Controls;</p>
+
+<p class=ILprg>System.Console.WriteLine(cc.Count);</p>
+
+<p class=ILprg>Control c1,c2;</p>
+
+<p class=ILprg>c1 = cc[0]; c2 = cc[1]; </p>
+
+<p class=ILprg>System.Console.WriteLine(c1);</p>
+
+<p class=ILprg>System.Console.WriteLine(c2);</p>
+
+<p class=ILprg>System.Console.WriteLine(d.HasChildren);</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>{X=0,Y=0,Width=584,Height=336}</p>
+
+<p class=ILoutput>{Width=584, Height=336}</p>
+
+<p class=ILoutput>336 584</p>
+
+<p class=ILoutput>0 584</p>
+
+<p class=ILoutput>0 0 </p>
+
+<p class=ILoutput>{Width=584, Height=336}</p>
+
+<p class=ILoutput>Microsoft Corporation</p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput>System.Windows.Forms.HScrollBar, Minimum: 0, Maximum: 100,
+Value: 0</p>
+
+<p class=ILoutput>System.Windows.Forms.VScrollBar, Minimum: 0, Maximum: 0,
+Value: 0</p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A caption, which is similar to a
+Windows title, is displayed above the column names. It furnishes additional
+information to the user. The text to be displayed is decided by the CaptionText
+property, which by default is an empty string. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=356 height=285 id="_x0000_i1044"
+  src="chap5img/Image20.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.20</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CaptionForeColor property
+determines the foreground color of the caption, while the CaptionBackColor
+decides on the background color. The CaptionFont property refers to the font in
+which the text is to be displayed. The boolean value in the property
+CaptionVisible exhibits or suppresses the display of the caption. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are a large number of
+properties for a Caption since it is derived from the base class of Control.
+The documentation specifies whether the property is read-write or not, thereby
+signifying whether change is permitted at the design stage or not.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ClientRectangle property,
+which is read-only, displays the same results as that of the Bounds property.
+The co-ordinates are relative to the upper left corner of the client area or
+window. Thus, they start at X=0 and Y=0. The width and height are used as the
+drawing surface within which data of the grid is to be placed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ClientSize property returns
+a Size object that contains the Height and Width of the DataGrid. These
+dimensions are akin to those returned by the Bounds property. The Height and
+Width properties also return the same values. The Left property denotes the
+leftmost edge and returns zero. The Right property denotes the rightmost edge
+of the data grid, which happens to be 584. It therefore returns this value. The
+Location property returns a point whose X and Y co-ordinates have the value 0,0
+since that is where the left edge of the DataGrid commences. Finally, the Size
+property once again returns the same data containing the width and height. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, we have a large number of
+properties, which return the same information. The property ColumnHeadersVisible
+is similar to CaptionVisible. It is boolean and decides whether the
+column/field names are to be displayed above the data or not. This row is also
+called the parent row.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The CompanyName property
+divulges the name of the company that created the control. The answer, quite
+obviously, is Microsoft Corporation. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every control has a property
+called Controls that returns a ControlCollection object. The collection
+constitutes of a list of controls, which form the DataGrid. The Count property
+in the Collection reports that the DataGrid control is made up of 2 controls.
+Using the indexer, we access the two individual controls, c1 and c2. The
+WriteLine function displays these two controls as the vertical and horizontal
+scrollbars. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the ones who tuned in late,
+every class has a ToString function that discloses relevant information about
+the class. The output of the function ToString varies, depending upon what the
+class wants to reveal about itself.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to verify that the
+DataGrid object is fabricated from other controls, we display the value
+contained in the property HasChildren. The return value is True.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>DataGrid
+Events</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>DataSet c;</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>c = new DataSet();</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers1&quot;);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>d.MouseDown += new MouseEventHandler(abc);</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void abc(object s, MouseEventArgs e){</p>
+
+<p class=ILprg>System.Console.WriteLine(e.X + &quot; &quot; + e.Y + &quot;
+&quot; + e.Clicks + &quot; &quot; + e.Button) ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>87 66 1 Left</p>
+
+<p class=ILoutput>90 82 1 Right</p>
+
+<p class=ILoutput>84 101 1 Middle</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=311 height=287 id="_x0000_i1045"
+  src="chap5img/Image21.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.21</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Event handling is the arena,
+wherein the true ability of a Control comes into focus. We desire that our own
+event-handling function should be called, every time an event occurs in the
+DataGrid control. So far, whenever the control has been displayed, none of our
+code has come into play. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, we desire
+that whenever the user clicks in the DataGrid, our code should be executed. To
+accomplish this, we trap one of the Events using the MouseEventHandler
+delegate, and ensure that the function abc is called every time someone clicks
+in the DataGrid. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The handler functions is always
+given the control that generated the event as the first parameter. In our case,
+it is the DataGrid. You can verify this by executing the WriteLine function,
+which displays the name of the control as System.Windows.Forms.DataGrid.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter to abc is
+an object that contains the X and Y co-ordinates i.e the location at which the
+mouse was clicked; the number of times the mouse was clicked; and finally, the
+button that was employed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>You are at liberty to insert the
+code that you wish to execute, when the event is called. The basic concept is
+that, certain events that occur in the DataGrid can be trapped and,
+accordingly, specific user-defined functions can be called.<span
+style="mso-spacerun: yes">  </span>We will focus on some of these events in the
+forthcoming programs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>DataSet c;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>c = new DataSet();</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers1&quot;);</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers1&quot;;</p>
+
+<p class=ILprg>d.CurrentCellChanged += new EventHandler(abc);</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void abc(object s, EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataGridCell g =<span style="mso-spacerun: yes"> 
+</span>d.CurrentCell;</p>
+
+<p class=ILprg>int c = g.ColumnNumber ;</p>
+
+<p class=ILprg>int r = g.RowNumber; </p>
+
+<p class=ILprg>System.Console.WriteLine( &quot;Column &quot; + c + &quot; Row
+&quot; + r + &quot; &quot; + d[r,c]);</p>
+
+<p class=ILprg>d[r,c + 1] = &quot;hi &quot; + r;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Column 0 Row 1 ANATR</p>
+
+<p class=ILoutput>Column 1 Row 2 Antonio Moreno Taquer¡a</p>
+
+<p class=ILoutput>Column 2 Row 3 Thomas Hardy</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is more constructive to trap
+the event CurrentCellChanged, which gets activated whenever a cell is selected
+from the DataGrid. The function abc gets called with similar parameters as
+identified by the event in the earlier program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In function abc, using the
+DataGrid property of CurrentCell of type DataGridCell, we retrieve information
+such as the Column number, RowNumber etc. of the current cell. The row number
+is stored in the variable r, whereas the column number is stored in the
+variable c.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The indexer in the DataGrid aids
+us in accessing the contents of the cell that has been clicked on. Since the
+indexer requires the row number followed the column number, we supply it with
+variables r and c. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This indexer is read-write.
+Therefore, it allows us to change the value of any cell in the grid. Here, we
+have altered the value of the column to the right of the current cell to
+contain the string 'hi', followed by the row number. This demonstrates the
+flexibility provided by a DataGrid control. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=358 id="_x0000_i1046"
+  src="chap5img/Image22.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.22</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every minuscule aspect of the
+grid can be altered at run time, but all properties are not available at design
+time. The events that a grid can respond to are ever so many to be listed here.
+The only event that it does not presently respond to is the 'End of the World'
+event, which as per our conviction, Microsoft is likely to redress in the next
+version.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Master-Detail
+or Parent-Child Relationship</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>ccc c;</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>public zzz() {</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>c = new ccc();</p>
+
+<p class=ILprg>d.BeginInit();</p>
+
+<p class=ILprg>d.PreferredRowHeight = 16;</p>
+
+<p class=ILprg>d.Size = new System.Drawing.Size(584, 336);</p>
+
+<p class=ILprg>d.DataSource = c;</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers&quot;;</p>
+
+<p class=ILprg>d.ForeColor = System.Drawing.Color.Navy;</p>
+
+<p class=ILprg>d.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>d.BackColor = System.Drawing.Color.Gainsboro;</p>
+
+<p class=ILprg>d.AlternatingBackColor = System.Drawing.Color.WhiteSmoke;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>c.DataSetName = &quot;CustomersDataSet&quot;;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>d.EndInit();</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;</p>
+
+<p class=ILprg>uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>SqlDataAdapter Ord = new SqlDataAdapter (&quot;Select * from
+Orders&quot;, con);</p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers&quot;);</p>
+
+<p class=ILprg>Ord.Fill(c, &quot;Orders&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class ccc : DataSet {</p>
+
+<p class=ILprg>cus tc;</p>
+
+<p class=ILprg>Orders to;</p>
+
+<p class=ILprg>DataRelation r;</p>
+
+<p class=ILprg>public ccc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>tc= new cus(&quot;Customers&quot;);</p>
+
+<p class=ILprg>Tables.Add(this.tc);</p>
+
+<p class=ILprg>to= new Orders(&quot;Orders&quot;);</p>
+
+<p class=ILprg>Tables.Add(this.to);</p>
+
+<p class=ILprg>r = new DataRelation(&quot;custord&quot;,tc.cID,to.oID);</p>
+
+<p class=ILprg>//r = new DataRelation(&quot;custord&quot;,new
+DataColumn[]{tc.cID},new DataColumn[]{to.oID});</p>
+
+<p class=ILprg>Relations.Add(r);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class cus : DataTable</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public DataColumn cID;</p>
+
+<p class=ILprg>public cus(string name) : base(name) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>cID = new DataColumn(&quot;CustomerID&quot;);</p>
+
+<p class=ILprg>Columns.Add(cID);</p>
+
+<p class=ILprg>PrimaryKey = new System.Data.DataColumn[] {cID};</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Orders : DataTable</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public DataColumn oID;</p>
+
+<p class=ILprg>public Orders(string name) : base(name) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>oID = new DataColumn(&quot;CustomerID&quot;);</p>
+
+<p class=ILprg>Columns.Add(oID);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>First, let us steal a look at
+what occurs when the above program is run. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1047"
+  src="chap5img/Image23.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.23</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the form loads on, we see a
+list of customers from the Customers table, with a plus sign displayed on the
+left. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=417 id="_x0000_i1048"
+  src="chap5img/Image24.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.24</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Clicking on the plus sign will
+exhibit a hyperlink with the word 'custord'. When we click on the hyperlink, a
+list of orders placed by this customer along with the customer details is
+displayed on the first row. The topmost right hand corner has a back button,
+which takes us back to the Customers table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=576 height=493 id="_x0000_i1049"
+  src="chap5img/Image25.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.25</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is a perfect example of a master-detail
+relationship. What follows next, is an explanation of the code that implements
+this parent-child relationship.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At the outset, the DataGrid must
+be populated with data from a database. At times, it may take considerable time
+to fetch this data. While this process is on, we would obviously not want the
+user to interact with or use the control. In order to forbid interference by
+the user while the data is being retrieved, the DataGrid control provides us
+with two functions, viz., BeginInit and EndInit. The function BeginInit informs
+the DataGrid that initialization has begun and the function EndInit signals
+that the process of data retrieval has been accomplished. The EndInit function
+is placed at the absolute end of the code handling the database. If we comment
+out the EndInit function, the DataGrid behaves similarly, but with one small
+difference, i.e. it now assumes a read-only state.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataSource property is an
+object that is normally derived from DataSet. In our program this property is
+initialized to c, which is an instance of class ccc. Class ccc is derived from
+DataSet. The constructor of this class performs many interesting actions. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We begin by creating an object
+tc, which is an instance of class cus. This class in turn, is derived from
+class DataTable. In the constructor of class cus, the parameter 'Customers' is
+supplied to the constructor of the DataTable, using the base keyword. Thus, the
+DataTable is now called Customers. We also create a DataColumn object cID,
+which is named CustomerID, and we use the Add function in the Columns
+collection of the DataTable class, to add this column to the Customers
+DataTable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every table should essentially
+consist of one or more columns, which can uniquely identify a row of the table.
+This set of columns is called a Primary Key. The PrimaryKey property is set to
+an array of DataColumn objects, which constitute the columns comprising the
+primary key. Normally, the primary key is a single column. Most modern
+databases would not create a table without first coercing the user to specify
+the primary key. In this program, the setting of the PrimaryKey property is
+optional. However, creating the column called CustomerID, is mandatory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now that we have created a
+DataTable object, we need to add it to the DataSet. This is achieved by
+employing the Add function in the Tables collection. An instance of class
+Orders that is derived from class DataTable, is created and named as Orders.
+This table has one column with the same name CustomerID. The Orders table is
+then added to the DataSet. You may note that this keyword is optional.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The very quintessence of the
+application is the DataRelation object. During the creation of the object r,
+the constructor of the DataRelation object is called with three parameters. The
+first parameter is the name of the data relation. A name is to be provided,
+whenever more than one entity of the same type is created. In this case, the
+name custord becomes a hyperlink, and gets displayed whenever we click on the
+plus sign. The next two parameters are the parent and child columns, which are
+related to each other. The column CustomerID from the Customers table is
+related to the CustomerID column in the Orders table, in order to establish a
+one-to-many relationship. So, we specify these DataColumn objects as the next
+two parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataRelation object can also
+be related with a DataColumn object, expressed as an array, in case there are
+multiple DataColumn objects within the relation. The commented line displays
+the same relation expressed as an array of DataColumn objects. We finally add
+this freshly minted Relation object to the Relation collection.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is obligatory to derive from
+the DataSet class, since both the DataTable objects, Customers and Orders, need
+to be added. Since a DataRelation had to be created between two columns, one
+each from these tables, we had to create two Data Column objects in classes
+derived from the DataTable class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This proves that data has not
+been physically added to the DataTable. Presently, the DataTable comprises of
+only two columns and a relation. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The utility of the second
+parameter to the Fill function, which is the name of the mapping table, will
+now become apparent. At this juncture, we associate the data from the database
+with the tables Customer and Order, through the SqlDataAdapter objects Cust and
+Ord. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As the DataRelation is created
+through these tables, the DataGrid displays the plus sign. The second parameter
+to the Fill function is called the Mapping Tables parameter. This parameter is
+needed, unless we wish to build the relations in the database on our own, which
+is, by all odds, not a straightforward task. If the AllowNavigation property is
+set to False, the links to the child tables shall no longer be visible.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program clearly
+demonstrates how we can impose our own relationships on data contained in
+databases, which have been created by others. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>StatusBar s;</p>
+
+<p class=ILprg>CustomersDataSet customersDataSet1;</p>
+
+<p class=ILprg>Button b;</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>s = new StatusBar();</p>
+
+<p class=ILprg>customersDataSet1 = new CustomersDataSet();</p>
+
+<p class=ILprg>b = new Button();</p>
+
+<p class=ILprg>d.BeginInit();</p>
+
+<p class=ILprg>d.PreferredRowHeight = 16;</p>
+
+<p class=ILprg>d.Size = new System.Drawing.Size(584, 336);</p>
+
+<p class=ILprg>d.DataSource = customersDataSet1;</p>
+
+<p class=ILprg>d.DataMember = &quot;Customers&quot;;</p>
+
+<p class=ILprg>d.ForeColor = System.Drawing.Color.Navy;</p>
+
+<p class=ILprg>d.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>d.BackColor = System.Drawing.Color.Gainsboro;</p>
+
+<p class=ILprg>d.AlternatingBackColor = System.Drawing.Color.WhiteSmoke;</p>
+
+<p class=ILprg>AcceptButton = b;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>s.BackColor = System.Drawing.SystemColors.Control;</p>
+
+<p class=ILprg>s.Size = new System.Drawing.Size(600, 16);</p>
+
+<p class=ILprg>s.Text = &quot;Click on Load&quot;;</p>
+
+<p class=ILprg>s.Location = new System.Drawing.Point(0, 397);</p>
+
+<p class=ILprg>customersDataSet1.DataSetName = &quot;CustomersDataSet&quot;;</p>
+
+<p class=ILprg>b.FlatStyle = FlatStyle.Flat;</p>
+
+<p class=ILprg>b.Size = new Size(112, 32);</p>
+
+<p class=ILprg>b.Text = &quot;<span style='font-family:"Bookman Old Style"'>&amp;</span>Load&quot;;</p>
+
+<p class=ILprg>b.Location = new Point(480, 352);</p>
+
+<p class=ILprg>b.Click += new System.EventHandler(abc);</p>
+
+<p class=ILprg>Controls.Add(s);</p>
+
+<p class=ILprg>Controls.Add(b);</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>d.EndInit();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void abc(object sender, System.EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Cursor cu = Cursor.Current;</p>
+
+<p class=ILprg>try </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Cursor.Current = Cursors.WaitCursor;</p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;uid=QSUser;pwd=QSPassword;database=northwind&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);</p>
+
+<p class=ILprg>SqlDataAdapter Ord = new SqlDataAdapter (&quot;Select * from
+Orders&quot;, con);</p>
+
+<p class=ILprg>SqlDataAdapter OrdD = new SqlDataAdapter (&quot;Select * from
+[Order Details]&quot;, con);</p>
+
+<p class=ILprg>s.Text =&quot;Loading Customers...&quot;;</p>
+
+<p class=ILprg>Cust.Fill(customersDataSet1, &quot;Customers&quot;);</p>
+
+<p class=ILprg>s.Text =&quot;Loading Orders...&quot;;</p>
+
+<p class=ILprg>Ord.Fill(customersDataSet1, &quot;Orders&quot;);</p>
+
+<p class=ILprg>s.Text =&quot;Loading Order Details...&quot;;</p>
+
+<p class=ILprg>OrdD.Fill(customersDataSet1, &quot;Order_Details&quot;);</p>
+
+<p class=ILprg>s.Text =&quot;Updating Grid...&quot;;</p>
+
+<p class=ILprg>} </p>
+
+<p class=ILprg>finally </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>s.Text =&quot;Done&quot;;</p>
+
+<p class=ILprg>Cursor.Current = cu;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class CustomersDataSet : DataSet </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Customers tc;</p>
+
+<p class=ILprg>Orders to;</p>
+
+<p class=ILprg>Order_Details td;</p>
+
+<p class=ILprg>DataRelation ro;</p>
+
+<p class=ILprg>DataRelation rd;</p>
+
+<p class=ILprg>public CustomersDataSet() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>tc = new Customers(&quot;Customers&quot;);</p>
+
+<p class=ILprg>Tables.Add(tc);</p>
+
+<p class=ILprg>to = new Orders(&quot;Orders&quot;);</p>
+
+<p class=ILprg>Tables.Add(to);</p>
+
+<p class=ILprg>td = new Order_Details(&quot;Order_Details&quot;);</p>
+
+<p class=ILprg>Tables.Add(td);</p>
+
+<p class=ILprg>ro = new DataRelation(&quot;CustomersOrders&quot;, new
+DataColumn[] {tc.cID}, new DataColumn[] {to.columnCustomerID}, false);</p>
+
+<p class=ILprg>Relations.Add(ro);</p>
+
+<p class=ILprg>rd = new DataRelation(&quot;OrdersOrder_Details&quot;, new
+DataColumn[] {to.columnOrderID}, new DataColumn[] {td.odID}, false);</p>
+
+<p class=ILprg>Relations.Add(rd);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Customers : DataTable</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public DataColumn cID;</p>
+
+<p class=ILprg>public Customers(string name) : base(name) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>cID = new DataColumn(&quot;CustomerID&quot;);</p>
+
+<p class=ILprg>Columns.Add(cID);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Orders : DataTable</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public DataColumn columnOrderID;</p>
+
+<p class=ILprg>public DataColumn columnCustomerID;</p>
+
+<p class=ILprg>public Orders(string name) :<span style="mso-spacerun: yes"> 
+</span>base(name) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>columnOrderID = new DataColumn(&quot;OrderID &quot;,
+typeof(int));</p>
+
+<p class=ILprg>Columns.Add(this.columnOrderID);</p>
+
+<p class=ILprg>columnCustomerID = new DataColumn(&quot;CustomerID&quot;,
+typeof(string));</p>
+
+<p class=ILprg>Columns.Add(this.columnCustomerID);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class Order_Details : DataTable</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public DataColumn odID;</p>
+
+<p class=ILprg>public Order_Details(string name) : base(name) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>odID= new DataColumn(&quot;OrderID&quot;, typeof(int));</p>
+
+<p class=ILprg>Columns.Add(odID);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On executing the program, we
+witness an empty DataGrid with a star symbol and the word 'CustomerID' displayed.
+The status bar perceptibly advises us to click on the button labeled 'Load'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1050"
+  src="chap5img/Image26.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1051"
+  src="chap5img/Image27.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.26</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.27</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After we have done so, a list of
+customers is displayed, along with a plus sign. If we click on the plus sign, a
+hyperlink on CustomerOrders will be displayed. A click on this link, would lead
+to a list of orders placed by this customer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There has been an addition to
+the program. A plus sign is displayed with every order, which expands to a
+hyperlink OrdersOrder detail. If we click on this hyperlink, the actual items
+included in the particular order, are to be displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1052"
+  src="chap5img/Image28.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1053"
+  src="chap5img/Image29.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.28</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.29</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first line of the DataGrid also
+reveals both, the customer details, as well as, the order details. If we click
+just once on the Back button, it takes us back to the orders. Clicking on it
+again, takes us further back to the list of customers.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We add a StatusBar, as is
+customary in most applications, to display user interface messages. The
+constructor of the class ccc, performs the same tasks as explained in the
+earlier program. Previously, we had created two tables; but now, we create
+three tables, i.e. Customers, Orders and Order_Details. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Customers table has one
+column called CustomerID; the Orders table has two columns named CustomerID and
+OrderID; and the Order_Details table has only one column called OrderID. We now
+create two relations. The first one is called CustomersOrders that relates the
+CustomerID columns in the two tables, as before. The second relation is named
+OrdersOrder_Details, which relates the OrderID column from the Orders table, to
+the OrderID column from the OrderDetails table. Thus, the only difference between
+this program and its predecessor is, the inclusion of an additional table,
+column and relation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataSource that represents a
+DataSet is made up of three tables. The question that is expected to surface in
+our minds is: Which of the three tables should be used in the initial display?
+The DataSource property decides the initial table. Since we have specified
+Customers, we see only one column, i.e. CustomerID. If we comment out the line
+d.DataMember = &quot;Customers&quot;, only a plus sign would be displayed without
+any column name. Clicking on the plus sign would demonstrate the list of three
+tables. Finally, when we click on the link that displays Orders, we shall spot
+the two columns that we have created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1054"
+  src="chap5img/Image30.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=411 height=276 id="_x0000_i1055"
+  src="chap5img/Image31.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.30</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 5.31</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The property DataSetName can be
+ignored for the moment. If we click on the button, the function abc gets
+called. In this function, we first save the current cursor in a Cursor object called
+cu. This current cursor is stored in the property Current of the Cursor object.
+Then, we modify the current cursor to the Wait Cursor, since it is extremely
+time consuming to write the code, in order to retrieve data from the database. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We use the Fill function in the
+similar manner as used before, and then change the text displayed in the Status
+Bar, depending upon the table that is being filled up from the database. It is
+advisable to place database-handling code in a try catch statement for error
+handling. Code placed in the finally clause, resets user interface widgets like
+the cursor, status bar, etc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>We can have as many data relations as we yearn for, and we
+can build as many logical relations between tables as we covet. In the above
+program, we have two levels; but surely, many more levels are realizable !</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:47:54 GMT -->
+</html>

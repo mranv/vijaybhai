@@ -1,0 +1,116 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/simcardport.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:13 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="simcardport_files/filelist.html">
+<title>Sim card com port</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>16</o:TotalTime>
+  <o:Created>2005-08-27T11:16:00Z</o:Created>
+  <o:LastSaved>2005-08-27T11:16:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>354</o:Words>
+  <o:Characters>2018</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>16</o:Lines>
+  <o:Paragraphs>4</o:Paragraphs>
+  <o:CharactersWithSpaces>2478</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>We first went to a site <a
+href="http://www.compt.ru/serial-port-monitor/en/download.php">http://www.compt.ru/serial-port-monitor/en/download.php</a>
+from where we downloaded the program that lets us send some bytes to a com
+port. When we start this program we see two windows, the one on the left is
+data that we send to the com port and the one on the right is the data received
+from the com port. Any program that allows us to send bytes to a com port could
+be used. We have a sim card reader that connects to a USB port but we have
+installed a driver from a company A-Men that lets this usb port look like a com
+port. In our case it is com port 3. In the toolbar the fifth icon is com port
+configuration. We click here and change the com port to 3, the baud rate to
+9600,<span style="mso-spacerun: yes">  </span>data bits to 8, Parity to
+even,<span style="mso-spacerun: yes">  </span>stop bits to 2 and finally flow
+control to No. These are the settings that the sim card reader wants from us if
+we have to communicate with it.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>To test whether things are working we send the some bytes to
+the sim card and check whether we get the right answer. We click on the menu
+message and then send. In the first text box we write the bytes a0 a4 00 00 02.
+When we click on send we get the following bytes in the second window pane - A0
+A4 00 00 02 A4. Thus the sim card simply repeats whatever bytes we send it. It
+adds an extra character, the command number a4 which is command select. The
+number 2 at the end is that we will send you two bytes in the next round. The
+two zeroes are extra parameters that we will discuss later. Thus a sim command
+starts with a0 always, followed by the command, some extra parameters and the
+length of the next bytes. The sim card replies with the same bytes we have send
+and the command number. We then send the two bytes which is the name of the
+first file/directory. This is 3f 00. When we send these bytes we get another
+answer, 3f 00 9f 19. Thus our bytes get echoed, then a success or failure code
+9f means ok and then the number of bytes the system has to send us. We now need
+a command to fetch these bytes for us. Thus we send the bytes a0 c0 00 00 19.
+c0 is the command to fetch bytes for us and the last number 19 is the number of
+bytes we need. The system now responds as A0 C0 00 00 19 C0 00 00 00 6A 3F 00
+01 01 00 FF<span style="mso-spacerun: yes">  </span>FF 01 0C 91 04 0B 06 00 82
+89 82 8A 00 80 83 90 00. The first bytes are always what we have send the sim
+card, then the 19 hex bytes the sim card has send us. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/simcardport.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:14 GMT -->
+</html>

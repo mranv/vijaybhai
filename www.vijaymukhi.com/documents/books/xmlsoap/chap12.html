@@ -1,0 +1,1967 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap12.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:21 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap12_files/filelist.html">
+<link rel=Edit-Time-Data href="chap12_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-01-27T20:36:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:37:00Z</o:LastSaved>
+  <o:Pages>15</o:Pages>
+  <o:Words>5895</o:Words>
+  <o:Characters>33606</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>280</o:Lines>
+  <o:Paragraphs>67</o:Paragraphs>
+  <o:CharactersWithSpaces>41270</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>12</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>WSDL and DISCO</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>DISCO<o:p></o:p></span></b></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The discovery tool disco accepts
+the name of the asmx file. On executing the command, it creates three files in
+the folder, viz. a.disco, a.wsdl and results.discomap. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string i , string<span style="mso-spacerun:
+yes">  </span>j) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i+j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;disco http://localhost/a.asmx<o:p></o:p></p>
+
+<p class=ILoutput>Microsoft (R) Web Services Discovery Utility<o:p></o:p></p>
+
+<p class=ILoutput>[Microsoft (R) .NET Framework, Version 1.0.2914.16]<o:p></o:p></p>
+
+<p class=ILoutput>Copyright (C) Microsoft Corp. 1998-2001. All rights reserved.<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Disco found documents at the following URLs:<o:p></o:p></p>
+
+<p class=ILoutput>http://localhost/a.asmx?disco<o:p></o:p></p>
+
+<p class=ILoutput>http://localhost/a.asmx?wsdl<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>The following files hold the content found at the
+corresponding URLs:<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>.\a.disco &lt;-
+http://localhost/a.asmx?disco<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>.\a.wsdl &lt;-
+http://localhost/a.asmx?wsdl<o:p></o:p></p>
+
+<p class=ILoutput>The file .\results.discomap holds links to each of these files.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The a.wsdl file is fairly wieldy
+and has already been dealt with in one of the preceding chapters. Hence, we
+have not displayed it here. Alternatively, a .disco file can also be generated
+by specifying the URL of http://localhost/a.asmx?disco in the browser.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.disco</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;discovery
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns=&quot;
+http://schemas.xmlsoap.org/disco/ &quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;contractRef
+ref=&quot;http://localhost/a.asmx?wsdl&quot;
+docRef=&quot;http://localhost/a.asmx&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/disco/scl/&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap
+address=&quot;http://localhost/a.asmx&quot;
+xmlns:q1=&quot;http://tempuri.org/&quot; binding=&quot;q1:zzzSoap&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/disco/soap/&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/discovery&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>results.discomap</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;DiscoveryClientResultsFile
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;Results&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;
+DiscoveryClientResult
+referenceType=&quot;System.Web.Services.Discovery.ContractReference&quot;
+url=&quot;http://localhost/a.asmx?wsdl&quot; filename=&quot;a.wsdl&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;DiscoveryClientResult
+referenceType=&quot;System.Web.Services.Discovery.DiscoveryDocumentReference&quot;
+url=&quot;http://localhost:8080/a.asmx?disco&quot; filename=&quot;a.disco&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/Results&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/DiscoveryClientResultsFile&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The disco file is an XML
+document, which starts with a root element of discovery. The URI from where all
+the elements originate is http://schemas.xmlsoap.org/disco/. The contactRef element,
+along with its attributes, is of vital significance here. The ref attribute
+refers to the WSDL file, while the docRef attribute refers to the asmx file.
+The default namespace mutates to http://schemas.xmlsoap.org/disco/scl/. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next element is soap, where
+the address attribute refers to the a.asmx file on the server, and the binding
+refers to zzzSoap. Using this binding, the WebService is located from within
+the WSDL file. The results.discomap file is also an XML document. Here, the
+root element is DiscoveryClientResultsFile, which is followed by the Results
+element. This is followed by two DiscoveryClientResult elements, which refer to
+the two files named a.wsdl and a.disco, which have been created by the DISCO
+program. The url attribute contains the url that creates these files.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This chapter shall now dissect
+the details of the WSDL specification thoroughly, which have not been touched
+upon, so far.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string i , string<span style="mso-spacerun:
+yes">  </span>j) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i+j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;i&quot; nillable=&quot;true&quot; type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;j&quot; nillable=&quot;true&quot; type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;string&quot; nillable=&quot;true&quot;
+type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpPostIn&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;i&quot; type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;j&quot; type=&quot;s:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpPostOut&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;Body&quot; element=&quot;s0:string&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:abcHttpPostIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:abcHttpPostOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzHttpPost&quot;
+type=&quot;s0:zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:binding verb=&quot;POST&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/abc&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;mime:content
+type=&quot;application/x-www-form-urlencoded&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;mime:mimeXml part=&quot;Body&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : <o:p></o:p></p>
+
+<p class=ILprg>System.Web.Services.Protocols.HttpPostClientProtocol <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public zzz() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.P<o:p></o:p></p>
+
+<p class=ILprg>rotocols.HttpMethodAttribute(typeof(System.Web.<o:p></o:p></p>
+
+<p class=ILprg>Services.Protocols.XmlReturnReader),
+typeof(System.Web.Services.Protocols.HtmlFormParameterWriter))]<o:p></o:p></p>
+
+<p class=ILprg>[return:
+System.Xml.Serialization.XmlRootAttribute(&quot;string&quot;,
+Namespace=&quot;http://tempuri.org/&quot;, IsNullable=true)]<o:p></o:p></p>
+
+<p class=ILprg>public string abc(string i, string j) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(this.Invoke(&quot;abc&quot;, (this.Url +
+&quot;/abc&quot;), new object[] {i,j})));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>string b = a.abc(&quot;hi&quot;,&quot;bye&quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(b);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>WSDL /protocol:HttpPost aa.wsdl<o:p></o:p></p>
+
+<p class=ILprg>Csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>Csc b.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILprg>b<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>Formatted Trace<o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>i=hi&amp;j=bye<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;string
+xmlns=&quot;http://tempuri.org/&quot;&gt;hibye&lt;/string&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Unformatted Trace<o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>POST /a.asmx/abc HTTP/1.1<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>i=hi&amp;j=bye<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Hibye<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has a function
+named abc, which takes two strings and returns a single string. Then, in the
+browser, we specify the URL as http://localhost/a.asmx?WSDL, which results in
+the generation of a wsdl file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the wsdl file seen above, we
+will lay emphasis only that portion which deals with a POST request. A POST
+request is different from a GET in one significant way. The parameters to a GET
+are passed in the URL, whereas in a POST, they are dispatched in a separate
+packet, after the headers have been sent across.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As always, the wsdl file begins
+with the definitions root tag.<span style="mso-spacerun: yes">  </span>This is
+followed by the element abc that is made up of two elements viz. i and j, which
+are the parameters to the function abc. The message abcHttpPostIn comprises of
+two parts, one each for the variables named i and j. The message abcHttpPostOut
+contains a single part called Body. The port type determines the messages that
+will be used for input and output. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the binding, the verb in
+focus is POST, and not GET. The input element uses the content element from the
+mime namespace, which ensures that the parameters are sent across as URLencoded.
+The output element uses the mimeXml element, with Body as its part. The service
+element remains unaltered.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program is generated
+by running the wsdl program as: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>WSDL /protocol:HttpPost aa.wsdl<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since we have opted for
+HttpPost, it is the class zzz that is now derived from the class
+HttpPostClientProtocol, instead of the default protocol option of SOAP.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The HttpMethodAttribute has two
+types:<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>XmlReturnReader<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>HtmlFormParameterWriter. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>These types establish the method
+by which, the data is received and dispatched. When data is sent over, the
+class or type of HtmlFormParameterWriter is used, whereas, it is the type of
+XmlReturnReader that is utilized, when the data is received. As usual, there is
+no help available on these classes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The return: specifies that the
+return value will be encoded in the form of a simple string. Thus, if you
+examine the output, you will realize that it is a simple XML document, where
+the return value is enclosed within a string element. The request too is sent
+as a separate packet, since the verb is set to POST. Thus, we have divulged
+both, the formatted and unformatted outputs to you.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl program can generate a
+client for SOAP, GET and POST. By using the GET and POST verbs, any device
+other than a browser, can also be used to communicate with a web server, with
+the help of WSDL.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the operation element, the
+location has to be a relative URI, since this value is merged with the location
+attribute of the address element. If we change a single line in the output
+element to the following: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;mime:content type=&quot;text/xml&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>an exception is thrown. This is
+due to the fact that the system does not anticipate the inclusion of an element
+string in the return packet. The content tag is employed to avoid defining a
+new element for every MIME format. This element is used in a situation where
+there is nothing more to convey about the format, except the MIME type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since only a single part is
+present, the part attribute is optional. A MIME type string has two portions,
+which are separated by a / symbol, such as- text/xml, image/gif. If no MIME
+type has been specified, it is an indication that we are contented and at ease
+with all of them. The mimeXml element is used, when the XML payload is not SOAP
+compliant. To be SOAP compliant, the root element must be Envelope. The payload
+that we receive, does not begin with the envelope tag. Hence, the element is
+indispensable.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The request received in the
+above POST has a schema, which is specified by the mimeXml element. The part
+attribute refers to a part called Body, which is created in the message
+element, and comprises of a simple string. The part attribute can be
+sidestepped completely, since only one part is present.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILoutput>wsdl /server aa.wsdl<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml.Serialization;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.WebServiceBindingAttribute(Name=&quot;zzzSoap&quot;,
+Namespace=&quot;http://tempuri.org/&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public abstract class zzz : System.Web.Services.WebService <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.WebMethodAttribute()]<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;,
+Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]<o:p></o:p></p>
+
+<p class=ILprg>public abstract string abc(string i, string j);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last option of wsdl is
+server. It takes a wsdl file and generates an abstract class. This class is
+derived from WebService. As there is no code present in a WSDL file, the
+function abc is marked as abstract, in the zzz class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having removed the lines
+that are not required, aa.wsdl file looks like shown below.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;m&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;pt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:m&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:m&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;b1&quot; type=&quot;s0:pt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:binding
+transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:operation soapAction=&quot;http://tempuri.org/abc&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:b1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>wsdl aa.wsdl<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>csc b.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILprg>b<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body /&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we encounter the smallest
+possible WSDL file, which neither sends nor receives any data from the server.
+Let us now tread over familiar territory, which we have covered in the past. We
+would also be scrutinizing the WSDL specifications exhaustively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At the bottom of the aa.wsdl
+file, exists a service element named zzz. The address element from the soap
+namespace is optional. However, if it is omitted, the Url property does not get
+initialized. As a result, the client is unable to connect to any Web Service.
+If we remove the port element, the class in the .cs file assumes the name of
+b1, which is the name of the binding. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Also, the Url property does not
+get initialized. The binding contains all the essential information for WSDL.
+The service is merely one step ahead of the binding.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:b1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class b1 :
+System.Web.Services.Protocols.SoapHttpClientProtocol {<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>public class b11 :
+System.Web.Services.Protocols.SoapHttpClientProtocol {<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now add one more service
+called aaa, to the end of the wsdl file. Multiple service elements are
+permissible in the WSDL file. This results in two classes in the client proxy,
+viz. b1 and b11. If we add one more service called bbb, the class b12 will get
+freshly added. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each service element becomes a
+class in the proxy. However, the name of the service no more decides on the
+name of the class but the name of the binding.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;p1&quot; binding=&quot;s0:b1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;p2&quot; binding=&quot;s0:b1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So far, we have been screaming
+hoarse from rooftops, that the service name determines the name of the class in
+the client proxy. However, in the case of multiple services, it is the name of
+the binding that determines the class name, irrespective of the fact that two
+ports exist within the same service, with both using the same binding. Legally,
+it is permissible to have different port names, such as p1 and p2. However, the
+two classes that get created in the zzz.cs file, would be b1 and b11. Thus, the
+real meat of the matter lies in the ports, and not in the service element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now attend to some
+general issues relating to WSDL. First of all, WSDL offers a binding for SOAP
+1.1 endpoints. This is because, a major part of the WSDL specifications
+converges around SOAP. In a sense, the specifications of both, SOAP and WSDL, were
+developed simultaneously. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>You would notice that a large
+number of elements in WSDL originate from the soap namespace. Therefore, there
+is a need to specify the address for a SOAP endpoint, as well as, the URI for
+the SOAPAction HTTP header. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WSDL is required to betoken
+the fact that the binding that shall be used, would be the SOAP 1.1 protocol.
+The binding grammar is not exhaustive, since the SOAP specifications keep
+evolving on a continuous basis, thereby, resulting in amendments and enhancements
+to the WSDL specifications. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now veer our focus on to
+the binding attribute from the soap namespace. It is mandatory for the element
+soap:binding to be present in the binding element, when a SOAP payload is sent
+across the wire. The duty of this element is to enforce the rules of the SOAP
+protocol, when the binding is created. In other words, the payload should
+contain the following : an Envelope, an optional Header and a Body. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The binding element is
+indifferent to the encoding or format types being used. It only accepts two
+attributes:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Transport, which is a URI.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Style, which is either document or
+rpc. The default is document. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The transport attribute
+establishes the transport protocol that would be used to carry the SOAP packet
+across. To this point, the http protocol was being used to serve this purpose.
+However, we can use the other transports, such as- the Simple Mail Transfer
+Protocol SMTP, or the File Transfer Protocol FTP. In the beta copy, if we
+replace http with ftp, WSDL reports an error. The client proxy projects the
+class as being derived from SoapHttpClientProtocol; thus, giving the impression
+that all is hunky-dory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The operation element is akin to
+the binding element, wherein the same element name appears in both, in the wsdl
+space, as well as, in the soap space. This element refers to the soap operation
+as a complete entity. It has to be a child element within the operation
+element, and it accepts two attributes, viz. soapAction and style. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The soapAction attribute is the
+most important attribute, since the SOAPAction HTTP header derives its value
+from it. The value that is entered in this URI must be an absolute URI. This
+value is used as the first parameter to the attribute
+SoapDocumentMethodAttribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>WSDL generates no errors at all,
+even in the eventuality of no value being supplied; instead, the value of the
+parameter to the attribute is set to 'null'. However, when we finally run the
+program, an exception is thrown, since the server fails to recognize the value
+of the header named SoapAction. Thus, a valid URI must be specified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For SOAP protocol bindings other
+than HTTP, such as SMTP, a value cannot be specified. Hence, the operation
+element is optional.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now progress onto the
+body element. This element is used twice, i.e. once each in the input and
+output elements. The body element specifies the appearance of the message parts
+inside the SOAP Body element. In all, four attributes can be used with it: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Parts<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Use<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>EncodingStyle<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Namespace<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>These attributes, along with the
+style attribute, will be analysed a little later in the chapter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last soap element is the
+address element. This element is employed to assign an address or a URI to a
+port. We cannot assign more than one address to the port that we wish to bind
+to. Moreover, the value or the address specified here, must correspond to the
+transport protocol that is in use. For example, if we are using the SMTP
+transport, the location should be an e-mail address. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having dealt with the soap
+namespace elements, let us revert back to the smallest WSDL file again. A
+service merely groups the ports together. The name attribute is optional. If it
+is present, it determines the name of the class and the file. If it is absent,
+the name of the class becomes Item, while the name of the file becomes
+output.cs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We cannot have more than one service,
+each without a name. Also, as reiterated earlier, multiple services can have
+multiple bindings, and each service can have multiple ports, subject to the
+port names being unique. The names of the bindings determine the names of the
+classes. The first service name is used for the name of the file. Multiple
+ports are permitted in a service, but these ports do not communicate with each
+other. Thus, we cannot state that the output of a port should become the input
+to another port. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If a service has ports that do
+not share a port type, and at the same time, they use different bindings or
+addresses, these ports are to be used as alternatives.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once again, compared to the
+binding, the service and the port appear insignificant. This is because, the
+port defines an endpoint by stating a single address for the binding. The port
+element contains the attributes of name and binding. If there is only one port,
+then the name is optional, but the binding attribute is obligatory.<span
+style="mso-spacerun: yes">  </span>As per the WSDL specifications, a port
+cannot specify more than one address. However, if we do hold two address
+elements, only the first element that is encountered is put to use, and a
+warning is displayed. The only binding information that must be associated with
+a port is, an address or a URL. All the rest results in an error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our opinion, the binding
+element is one of the most crucial elements. The binding derives from a port
+type, and it specifies a protocol for transport. We can have more than one
+binding, derived from the same port type. Then, an operation is defined with
+the SoapAction header. This is followed by the actual input and output section.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A binding coalesces the message
+formats and the protocol for operations. All the above elements are inevitable
+and inescapable for a binding. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The binding element has a name,
+which is used by a service. It also has a type, which specifies a port type. If
+the name is omitted, the same set of rules that we explicated earlier, would be
+applicable. The type attribute is mandatory, since it introduces the port type
+details. The binding may also contain a fault element, which deals with faults,
+as the name itself suggests.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The element 'operation' that we
+place within a binding, specifies the binding information for an operation. The
+name assigned here must be the same, as the one specified for the operation
+that is created in the port type. It is incorrect to use different names for
+the operation in the binding and the port type. If more than one protocol is
+specified, a warning is issued. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Further, a binding is not
+authorised to specify any address information, since this is the sole
+prerogative of the port element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A port type is arguably the key
+to unlocking the mysteries of WSDL. A binding derives from the port type. To
+define a port type in formal terms, it is a compendium of abstract collections
+and messages. The port type is normally assigned a name, since it can then be
+used in the binding element. The lone element that is worthy of being placed
+within the portType is, the operation element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The operation element name must
+match with the name in the bindings element. Resorting to different names in
+each of the operation elements may result in whopping errors, as an outcome of
+which, the zzz.cs file may refuse to be written at all!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public void pqr() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:element name=&quot;pqrResponse&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;s:complexType /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/s:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/types&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapIn&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot; element=&quot;s0:abc&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcSoapOut&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot;
+element=&quot;s0:abcResponse&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrSoapIn&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot; element=&quot;s0:pqr&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrSoapOut&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot;
+element=&quot;s0:pqrResponse&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/message&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpGetIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpGetOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrHttpGetIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrHttpGetOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpPostIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;abcHttpPostOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrHttpPostIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;pqrHttpPostOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:abcSoapIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:abcSoapOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:pqrSoapIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:pqrSoapOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzHttpGet&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:abcHttpGetIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:abcHttpGetOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:pqrHttpGetIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:pqrHttpGetOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:abcHttpPostIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:abcHttpPostOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:pqrHttpPostIn&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output message=&quot;s0:pqrHttpPostOut&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzSoap&quot;
+type=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;
+style=&quot;document&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:operation soapAction=&quot;http://tempuri.org/abc&quot;
+style=&quot;document&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:operation soapAction=&quot;http://tempuri.org/pqr&quot;
+style=&quot;document&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/output&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzHttpGet&quot; type=&quot;s0:zzzHttpGet&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:binding verb=&quot;GET&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/abc&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:urlEncoded /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/pqr&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:urlEncoded /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;zzzHttpPost&quot;
+type=&quot;s0:zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:binding verb=&quot;POST&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/abc&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;mime:content
+type=&quot;application/x-www-form-urlencoded&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;pqr&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/pqr&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;mime:content
+type=&quot;application/x-www-form-urlencoded&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;output /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;zzzSoap&quot;
+binding=&quot;s0:zzzSoap&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address location=&quot;http://localhost/a.asmx&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;zzzHttpGet&quot;
+binding=&quot;s0:zzzHttpGet&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:address location=&quot;http://localhost/a.asmx&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port name=&quot;zzzHttpPost&quot;
+binding=&quot;s0:zzzHttpPost&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;http:address location=&quot;http://localhost/a.asmx&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now display two functions
+through our web service, in the asmx file. Let us cast the spotlight on the
+wsdl file, which is displayed exclusive of any modifications, to facilitate
+ameliorated understanding of it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are three different verbs
+that a wsdl file supports, viz. GET, POST and SOAP. We shall be expounding each
+one of the three verbs now.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>First, we commence with the SOAP
+part of the WSDL file. The WSDL file has a 'types' section, which is
+independent of the method of access. These types may be employed by any of the
+verbs, and hence, are common to all. The types element is merely an XML schema,
+where different types are created, and which can be referred to by the
+elements. Since there are two functions in the asmx file, namely, abc and pqr,
+an element is also defined for every function that has been created. The
+element represents the parameters passed to the function. In our case, since
+the functions take no parameters, the elements are empty. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Functions return values.
+Therefore, an element that contains the name of function, followed by the word
+'Response' is distinctly perceptible. This covers the explanation of the
+elements abcResponse and pqrResponse. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The service name is insouciant
+towards the number of functions. Hence, it refuses to change in any way. The
+binding now has two operations, named abc and pqr, with each representing the
+individual functions. Thus, a wsdl file can have a variety of operations, but
+the portType remains the same. Here, two operations called abc and pqr, are
+posited.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Like before, every operation
+consists of an input and output section. However, the difference here rests in
+the fact that, these input and output elements represent the parameters that
+are being sent and received, respectively. The input and output elements
+utilize the messages that are created in the file. This is for the reason that,
+the parameters and return values of each function vary. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the case of a message, it is
+formed by utilising the individual elements, which are created in the file.
+This explicates the concept that forms the basis of the implementation of
+multiple functions in SOAP. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the service element, there
+exist three individual port names that use a different binding, but share the
+same address element. The SOAP port uses the address element from the soap
+namespace, while GET and POST use it from the http namespace. This is where the
+concept of a service comes to prominence.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The same class zzz is generated,
+but it is derived from a different class. Hence, it uses a different binding.
+The binding for the verb POST, which is akin to SOAP, consists of two
+operations for the two functions, named abc and pqr. The rules of URL encoding
+are specified in the input, and since there is no output, the output element is
+bereft of all content. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The GET verb is similar to the
+POST verb. The only variation lies in the input, where it utilises the
+urlEncoded element, since the parameters in a GET are passed as part of the
+URL. However, they are encoded in much the same way, as is done in the POST. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output element is empty,
+just like a POST. The port type structure is the same for GET and POST; but
+unlike SOAP, this element does not provide any useful information. This happens
+because, the messages that form its basis, are all empty. Thus, the message
+concept is more germane to the SOAP protocol, rather than to the GET or POST
+verbs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Reverting back to the port type,
+a name attribute has to be specified here, since many ports will be created in
+the WSDL file. Each of these has to be uniquely identified.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the next program, remove the
+pqr function and give a return value of 100 for the abc function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>public int abc() {<o:p></o:p></p>
+
+<p class=ILprg>return 100;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file has been created
+manually and represents a One-way operation. If you examine the file minutely,
+you would be able to discern the fact that there is no output element visible
+in either the port type, or in the binding.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;message name=&quot;m&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;portType name=&quot;pt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input message=&quot;s0:m&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/portType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;binding name=&quot;b1&quot; type=&quot;s0:pt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:binding
+transport=&quot;http://schemas.xmlsoap.org/soap/http&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:operation soapAction=&quot;http://tempuri.org/abc&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:body /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/input&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/operation&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/binding&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:b1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/a.asmx&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/port&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/service&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/definitions&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;100&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is perfectly legal, as it
+signifies that a SOAP request is being sent over, although there would be no
+response at all. The server being privy to this manipulation, merrily sends
+back an answer. But, since it is a One-Way operation, the Invoke function
+disregards it completely.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second operation is called a
+request-response operation. This is the most commonly used one, and it serves
+as a very vital foundation to a significant number of our programs in this
+book. This operation takes an input and an output element, along with the
+'fault' element that is optional. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The fault element is used to
+specify a message format, over and above the protocol specifications. The
+request-response paradigm is implemented by the binding. The payload may be
+dispatched, either in a single communication, or in two independent ones.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are two more transmission
+primitives that an endpoint can support:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Solicit response, where the endpoint
+sends a message and then receives a message. This is different from a request
+response, where the endpoint receives a message and then sends a message.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Notification, where the endpoint
+only sends a message. This is the reverse of the One-Way, where the end point
+just receives a message.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>These primitives are called
+operations. The WSDL specification only defines One-Way and request-response
+primitives. Thus, we cannot demonstrate examples of the other two.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now let us delve upon the
+concept of 'types', before moving on to the last major element named
+'messages'. By using the 'types element', we can create our own custom made
+types and elements. Also, when parameters are passed to a function with return
+values, two elements get created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XSD or XML Schema type
+system is referred to, when 'types' are defined. They are eventually used in
+messages, irrespective of whether the payload is XML or not. Everything in the
+WSDL world can be extended, as a result of which, other type systems can be
+added.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As you would have realised, a
+WSDL file is capable of taking gargantuan dimensions. Hence, the specifications
+recommend that we break this file up into smaller documents. Thereafter, these
+smaller files can be coalesced into one large file, by using the import
+statement. The documentation element is used to add comments to the code in the
+WSDL file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first entity that we build
+in WSDL is a 'message' element. A message can consist of zero or more parts. A
+part is created from the 'type', which in itself is created in the 'types'
+section. The 'type', in turn, represents the parameters and return values. We
+may use either the 'element' or the 'type' attribute, to refer to elements or
+types created in the type section. Every message is assigned a name, since it
+would be referred to, in the port Type element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The part element that describes
+the logical and abstract content of a message, can make an appearance more than
+once in a message. If we so desire, we may create a complexType in place of an
+element, and may even use the type in lieu of the element attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Message is an abstract
+definition of a message content. Finally, the message binding converts the
+abstract entity into something concrete. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we shall acquaint you with
+various methods available for controlling the format of the SOAP messages, sent
+by a SOAP client to a server, and vise-versa. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP specification yearns
+simply for the SOAP message to be a valid XML document. However, it does not
+specify the encoding style that should be used. Thus, ASP.Net concedes to the
+use of different encoding styles, by providing a set of attributes. These
+attributes are then used to control the SOAP payload, by facilitating
+customization of every byte that is sent across. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we zero in on customizing
+the SOAP packet sent by a Client. Subsequently, we shall be attending to the
+server end too.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Sections 5 and 7 of the SOAP
+specification, make a mention of two distinct encoding definitions. These give
+a detailed description of the manner in which the Body element should be
+formatted, and how the parameters within a method should be encoded. However,
+these encoding elements are not mandatory. The Asp.Net services support the
+requests and responses that ensue these two encodings.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before we venture into creating
+our own web service, the one thing that needs circumspection is, the manner in
+which the XML within a SOAP request must be encoded, or formulated. The basic
+issue here is to decide whether the XML document should adhere to the XSD
+schema or to the rules of the SOAP specification. The advantage of using the
+encoding rules of the SOAP world is that they permit variations. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However, the server that handles
+the request, must also be equipped to handle all these variations. By employing
+an XSD schema, which is the default, we can be very explicit about what is
+being sent across. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameters and the return
+value form the bulk of a SOAP payload. The SOAP specifications subsist, mainly
+to define how the parameters and return values shall be sent across. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the WSDL world, there are two
+encoding styles for parameters, viz. Encoded and Literal. Although we are aware
+of the fact that this has been discussed earlier, we are now toiling towards
+consolidating everything at one place. The style of Encoded encodes the
+parameters, using the SOAP specs, as stated in Section 5. On the other hand,
+Literal encodes the parameters using a predefined XSD schema. The Web Service
+must expect the parameters in the same format, as is sent by the client. Even
+if there is a very minor mismatch, the parameters shall not reach the final
+destination. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The enum of SoapBindingUse is
+used to specify an encoding, using the attribute
+SoapDocumentMethodAttribute.<span style="mso-spacerun: yes">  </span>Also, the
+parameters that dwell within the Body element, are encoded as self-containing
+XML documents, since they refer to an XSD schema. The Encoded parameter is
+specified by employing the same method, as has been outlined above. The
+encoding rules delineated in Section 5 are used here.<span style="mso-spacerun:
+yes">  </span>We are permitted to modify the overall formatting of the SOAP
+Body. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WSDL standard describes two
+styles for operation. An operation is a Web Service method, which can be
+formatted within the Body element. This does not refer to the optional Header
+element. The two styles are RPC and Document, where Document is the default
+style. The Document style uses the XSD schema for encoding, whereas, the RPC
+style makes use of the SOAP specification. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the RPC style, all the
+parameters are placed within a single element, after the name of the remoted
+function has been called. Each child element that is placed below the method
+name, is a parameter to the function with the same name. Alternatively, the
+Document style specifies or defines XSD schemas, using the WSDL file. The
+clients and servers expect the packets to cohere to these schemas. The actual
+code that represents these coding styles, has already been revealed earlier.
+The SoapRpcMethodAttribute is used for the Rpc encoding. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameters to a function can
+reside within the Body element in two ways. They can either reside within their
+own element, or they can be lodged within one element. The RPC style wraps the
+parameters within one element, whereas, the Document encoding is much more
+flexible. All the parameters can be wrapped within one element, and a default
+namespace can be created for these parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The benefit of this is, the size
+of the SOAP payload contracts, since the XML files are always bulkier than the
+native data. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To accomplish this, the
+Parameter style is set to Wrapped, and the encoding is set to Literal. By
+changing the ParameterStyle to Bare, we can ensure that the parameters are
+directly beneath the Body element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A namespace cannot be specified
+in an element that wraps parameters. Thus, each parameter must be specified
+individually, for all the parameters and return values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To realize this, an
+XmlElementAttribute is added, and then, the Namespace property is set. The word
+'return' that ends with a colon (as seen earlier), is of considerable
+significance here. The return value is the name of the web service, followed by
+the word 'Result'. The WebService method on the server must define an encoding
+style that corresponds to the client, by using the same attributes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The System.Xml.Serialization
+namespace contains the attributes, which can be used to change the SOAP
+payload, which gets sent across. The XmlElementAttribute is used to amend the
+name of the parameter that goes across. However, if the RPC method is implemented,
+the SoapElement attribute has to be used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal>In the WSDL specifications, the style attribute indicates
+whether the operation or function is RPC or document. In a RPC style, the
+messages contain parameters and return values; whereas, in the document style,
+the message contains documents. The soap:binding element determines the style,
+where the default is document, and the 'use' attribute specifies either
+'encoded' or 'literal'. This value is then employed by WSDL, to determine the
+attributes that are to be used while generating the proxy.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap12.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:25 GMT -->
+</html>

@@ -1,0 +1,2514 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:57 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap7_files/filelist.html">
+<link rel=Edit-Time-Data href="chap7_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-01-27T20:25:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:26:00Z</o:LastSaved>
+  <o:Pages>20</o:Pages>
+  <o:Words>5780</o:Words>
+  <o:Characters>32947</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>274</o:Lines>
+  <o:Paragraphs>65</o:Paragraphs>
+  <o:CharactersWithSpaces>40461</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>7</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>SOAP Extensions</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP Request packet, when it
+arrives at the web server, is in the form of an XML document. The relevant
+information, such as function names and parameters, need to be extracted from
+the XML document. This act of extraction is termed as de-serialization. At the
+other end, the system when it is to send a value over, it has to create a SOAP
+Response packet, which is an XML file containing the value. To accomplish this,
+a process called Serialization is executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This Serialization and
+De-serialization of SOAP packets is achieved by using SOAP Extensions. This
+chapter explains how the packets can be parsed and messages can be intercepted.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>The webservice possesses a
+simple attribute called 'vijay', which is applied to the function abc. On
+loading the asmx file in the web browser, an error is generated, since the
+compiler fails to recognize the word 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The error displayed in the browser
+window is <o:p></o:p></span></p>
+
+<p class=ILoutput>'CS0246: The type or namespace name 'vijay' could not be
+located (are you missing a using directive or an assembly reference?)<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the compiler needs to be
+educated about the fact that 'vijay' is a class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>While loading the asmx file, the
+compiler scans the dll files in the bin subdirectory, within the
+c:\inetpub\wwwroot folder, for the class named 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since it is unable to locate it,
+it expresses its inability to compile the code. To surmount this error, create
+the bin folder, if it is not already present at the location specified, and
+enter the following code in a file named aaa.cs:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijayAttribute : Attribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Compile the file by giving the
+command as <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>C:\inetpub\wwwroot\bin&gt;csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To enable creation of an
+attribute called 'vijay', a class named 'vijayAttribute' or 'vijay' must be
+present in the library. The word 'Attribute' is specified after the class name
+'vijay', in order to appease the naming conventions. The attribute called
+AttributeUsage that is specified over the class name, is optional. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter Method restricts
+the use of this attribute over a function; however, there is no curb on its use
+over entities such as, a class or a property. To qualify as an attribute, the
+most important criteria that the class 'vijay' must satisfy is that, it<span
+style="mso-spacerun: yes">  </span>must be derived from the class Attribute.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file loads successfully
+in the browser. The regular client program is used, to call the function abc.
+The process of calling code remains unaltered. After you have created a proxy
+from the wsdl file, use the batch file and then, run the program.<o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() {<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>z.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>del zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>wsdl aa.wsdl<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>csc a.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILprg>a<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next program, 'vijay' is
+derived from the class SoapExtensionAttribute, which in turn, is derived from
+the class Attribute. It is mandatory to derive all custom extensions from the
+above class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc /t:library aaa.cs<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(5,14): error CS0534: 'vijay' does not implement
+inherited abstract member<span style="mso-spacerun: yes">        
+</span>'System.Web.Services.Protocols.SoapExtensionAttribute.ExtensionType.get'<o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(5,14): error CS0534: 'vijay' does not implement
+inherited abstract member<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>'System.Web.Services.Protocols.SoapExtensionAttribute.Priority.get'<o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(5,14): error CS0534: 'vijay' does not implement
+inherited abstract member<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>'System.Web.Services.Protocols.SoapExtensionAttribute.Priority.set'<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SoapExtensionAttribute class
+contains two properties, Extensiontype and Priority, hence, if the two members
+are not implemented, an error will be generated. We see four errors being
+generated because the 'get' and the 'set' accessors of both the properties are
+yet to be implemented. The next program implements the required members in the
+class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute {<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType {<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority {<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi {<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Other than returning the Type of
+a class mukhi, there is nothing more added to these properties. Each time, the
+framework will call the ExtensionType property to decipher the type of the
+extension class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Executing the client program
+throws an exception with the errors shown below:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>C:\www&gt;a<o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception:
+System.Web.Services.Protocols.SoapException:
+System.Web.Services.Protocols.SoapException: Server was unable to process
+request. ---&gt; System.InvalidCastException: Exception of type System.InvalidCastException
+was thrown.<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapReflectedExtension.GetInitializer(LogicalMethodInfo
+methodInfo)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapReflectedExtension.GetInitializers(LogicalMethodInfo
+methodInfo, SoapReflectedExtension[] extensions)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapServerType..ctor(Type type)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapServerProtocol.Initialize()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.ServerProtocolFactory.Create(Type type,
+HttpContext context, HttpRequest request, HttpResponse response)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapHttpClientProtocol.ReadResponse(SoapClientMessage
+message, WebResponse response, Stream responseStream)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Web.Services.Protocols.SoapHttpClientProtocol.Invoke(String methodName,
+Object[] parameters)<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at aaa.Main()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>These errors have occurred
+because the class 'mukhi' should have been derived from the class
+SoapExtension. Hence, we do the same, as depicted below. Henceforth, we will
+only display the class 'mukhi', since it contains the code that performs the
+required task.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>During the compilation of the
+program, after having derived the class 'mukhi' from the SoapExtenstion class,
+a few more errors are generated during the creation of the library. This is for
+the reason that the class SoapExtension comprises of four abstract functions,
+which are yet to be implemented.<o:p></o:p></span></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(25,14): error CS0534: 'mukhi' does not implement
+inherited abstract member<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>'System.Web.Services.Protocols.SoapExtension.GetInitializer(System.Web.Services.Protocols.LogicalMethodInfo,<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>System.Web.Services.Protocols.SoapExtensionAttribute)'<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(25,14): error CS0534: 'mukhi' does not implement
+inherited abstract member
+'System.Web.Services.Protocols.SoapExtension.GetInitializer(System.Type)'<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(25,14): error CS0534: 'mukhi' does not implement
+inherited abstract member
+'System.Web.Services.Protocols.SoapExtension.Initialize(object)'<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>aaa.cs(25,14): error CS0534: 'mukhi' does not implement
+inherited abstract member<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>'System.Web.Services.Protocols.SoapExtension.<o:p></o:p></p>
+
+<p class=ILoutput>ProcessMessage(System.Web.Services.Protocols.SoapMessage)'<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program incorporates
+the required functions in the class 'mukhi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the four functions are
+added, everything is hunky dory. At this stage, it is inconsequential to
+attempt and gauge the wherewithal, i.e. how, when and why these functions are
+called. We shall save the explanation for a rainy day.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension<span style="mso-spacerun:
+yes">  </span>{<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 2&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ProcessMessage &quot; + m.Stage);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>GetInitializer 1<o:p></o:p></p>
+
+<p class=ILprg>Initialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeSerialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The class 'mukhi' now has a
+function abc, which accepts a string as a parameter. This string is written to
+the file c:\a.txt. The FileStream class constructor is used to specify the file
+name and the mode of operation of the file. The two modes indicated here
+facilitate addition of text to this file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once this has taken effect, an
+object w, of type StreamWriter is created, by calling the constructor of the
+object and supplying it with a FileStream object. The WriteLine function in
+this class is then employed to write information onto the file. The Flush
+function actually implements the writing, and the Close function closes the
+writer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, each time the function abc
+is called, in effect, we are appending some text to this file. As an outcome,
+we are able to detect the functions that have been called, and their sequence
+of execution, by merely examining the contents of the file a.txt. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To begin with, the function
+GetInitializer, which accepts two parameters, gets called. It is followed by
+the Initialize function. Then, it is the ProcessMessage function that gets
+called four times; and on each occasion, it is called with a different value
+for the Stage property. This property belongs to an enum named
+SoapMessageStage. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first value is
+BeforeDeserialize, which occurs after the system has received the SOAP payload,
+but before it has deserialized the request. This is followed by the
+AfterDeserialize message, where the system deciphers or deserializes the
+message, but has not yet handed over the SOAP request packet to the asmx file.
+The last two messages deal with the reverse process, i.e. of sending the SOAP
+response payload over to the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the ProcessMessage
+function that gets called at a specific instant in time, we can smoothly
+construe the SOAP payload, which has either been received, or is being sent
+across.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 2&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>Stream o;<o:p></o:p></p>
+
+<p class=ILprg>Stream n;<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;AfterSerialize &quot; + n.Position + &quot; &quot; +
+n.Length );<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>string s1 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s1);<o:p></o:p></p>
+
+<p class=ILprg>abc(s1);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeSerialize &quot; + o.Position + &quot; &quot;
++ n.Position + &quot; &quot; + o.Length + &quot; &quot; + n.Length );<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>string s = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>abc(s);<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeSerialize1 &quot; + o.Position + &quot; &quot;
++ n.Position + &quot; &quot; + o.Length + &quot; &quot; + n.Length );<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeSerialize2 &quot; + o.Position + &quot; &quot;
++ n.Position + &quot; &quot; + o.Length + &quot; &quot; + n.Length );<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override Stream ChainStream( Stream s )<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ChainStream&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o = s;<o:p></o:p></p>
+
+<p class=ILprg>n = new MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>GetInitializer 1<o:p></o:p></p>
+
+<p class=ILprg>Initialize<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeSerialize 0 0 299 0<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abc
+xmlns=&quot;http://tempuri.org/&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeSerialize1 299 0 299 0<o:p></o:p></p>
+
+<p class=ILprg>BeforeDeSerialize2 299 301 299 301<o:p></o:p></p>
+
+<p class=ILprg>ChainStream<o:p></o:p></p>
+
+<p class=ILprg>AfterSerialize 307 307<o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The singular objective of the
+above example is to display the SOAP packet, which is either sent or received
+by the web server. Before we dive beneath the surface to explore the details of
+its working, we need to offer a terse explanation on XML serialization and
+de-serialization.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The relevant parameters, such as
+function names and parameters in the SOAP payload, needs to be extracted from
+the XML document. This act of extraction is termed as de-serialization.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before the system commences with
+the disintegration of the XML file, it calls ProcessMessage, with the value
+BeforeDeSerialize. Upto this instant, only the original SOAP document is
+available in its pristine form, untouched by human hands! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the system extracts the
+requisite information from the XML file, it calls the ProcessMessage with the
+value AfterDeserialize; thus, intimating that the task has been completed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now to send a value over, that
+is to create an XML file containing the value , a process called Serialization
+is executed. However, before this is carried out, the ProcessMessage function
+is called, with the message code of BeforeSerialize. After the values have been
+encoded into an XML document, the ProcessMessage gets called for the last time,
+with a value of AfterSerialize.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, at the stage of
+BeforeDeserialize, the original XML payload is available, and at the stage of
+AfterSerialize, the XML document has been created. We concern ourselves with
+these events, since we intend to write the XML documents to the disk. The
+salient point to be borne in mind is that, during the stage of Deserialization,
+the XML document is to be read, whereas, at the time of Serialization, the
+document is to be written to. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, let us revert back to the
+program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the ProcessMessage function,
+there is an 'if' statement, which ascertains whether the value of the Stage
+property is the enum value BeforeDeserialize, which belongs to the enum
+SoapMessageStage. If the 'if' statement passes muster, it signifies that the
+incoming SOAP payload must be read.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the function abc, the
+message is written to the file. However, on closer examination, we realize that
+the function ChainStream gets called first. A Stream parameter is passed to
+this function. This parameter is used extensively when the XML documents are to
+be read or written to, coupled with the SOAP payload.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As the Stream object is very
+crucial to get at the SOAP payload, its value is saved in a public variable
+named 'o'. Thereafter, a variable 'n', which has been created earlier, is
+initialized to a MemoryStream object. Then, it is duly returned. We shall
+ponder upon it and scrutinize this return value a little later.</span><span
+style='color:blue'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Stream class is incapable of
+reading and writing. Therefore, a StreamReader object named 'r' is created,
+whose constructor is passed the Stream 'o'. We could have specified the data
+type StreamReader for 'r', but we have specified the abstract class TextReader
+instead, since the StreamReader class is eventually derived from the TextReader
+class. This was done for yet another reason, i.e. all the illustrations
+furnished by Microsoft have also resorted to the above technique.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Stream variable named 'n', which
+has been declared earlier and initialized to MemoryStream in the ChainStream
+function,<span style="mso-spacerun: yes">  </span>is used to create a
+StreamWriter object. The Position property of the Stream reveals the cursor
+position or the byte number, where the data would be written. The Length
+property contains the number of bytes in the Stream. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As we are at the initial stages
+of execution, the position of file pointer in the stream that is to be read is
+0, and its length is 299 bytes. It is a well-known fact that the size of a SOAP
+request is 299 bytes. The stream that is used for writing, does not embody any
+value. Hence, the position of the file pointer is at zero, and the value of the
+length too is zero.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ReadToEnd function reads all
+the data upto the end of the stream, and returns it in a string format,
+ensconced in the variable 's'. The WriteLine function in the TextWriter object
+w, finally writes the string s to the MemoryStream n. The function abc writes
+the string to the file a.txt.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function ReadToEnd then
+moves the file pointer to the last byte that it has read. Since 299 bytes have
+been read, the file pointer is now positioned at byte 299. The Gordian Knot or
+the dilemma here is that, the file pointer for the writer has remained static
+at position 0. It is the function Flush that actually writes to disk, thereby,
+updating the values contained in Position and Length.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Writing to a file on disk is an
+expensive process. Therefore, it is economical to consolidate all the Writes.
+In addition to the existing bytes, two extra bytes get added. Since, the file
+pointer is stuck at byte 301 in the writer at this stage, it is binding to set
+it to 0, as this is what the system anticipates. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Please note that the system will
+interpret the data written to the stream 'n' as the incoming data. Effectively,
+we have just copied data from one stream to another. However, very soon, we
+shall amend the data passed to the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now that we have read the
+incoming stream, and written it out, let us examine the message AfterSerialize.
+At this point in time, the situation is as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>There is an XML document response,
+which is ready to bolt the stable doors and reach the client. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The MemoryStream n contains 307
+bytes of data within it.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The file pointer is positioned at
+the end of the file.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Firstly, the file pointer is
+repositioned at the absolute start position. Thereafter, a reader is created
+using the stream 'n', unlike on the last occasion, where it was used for
+creating a writer. As the ChainStream function always gets called, the Stream
+'o' is used for writing, and not for reading. Any data that is written to this
+stream, shall be sent to the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To summarise, the system first
+calls ChainStream, obtains a return stream object, writes 307 bytes in it, and
+then, calls AfterSerialize. Subsequent to this, the bytes are written to the
+stream 'o'. Previously, the stream 'o' was used to read the incoming SOAP
+request. But now, we use it to write the SOAP response. In the bargain, both,
+the response and request packets are saved to the file on disk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(int i, int j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i + j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int k = a.abc(10,20);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(k);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.BeforeDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeSerialize &quot; + o.Position + &quot; &quot;
++ n.Position + &quot; &quot; + o.Length + &quot; &quot; + n.Length );<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(n);<o:p></o:p></p>
+
+<p class=ILprg>TextReader r = new StreamReader(o);<o:p></o:p></p>
+
+<p class=ILprg>string s = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>int j = 274;<o:p></o:p></p>
+
+<p class=ILprg>abc(s[j].ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(s[j+1].ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(s[j+2].ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(s[j+3].ToString());<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>abc(s);<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;BeforeDeSerialize1 &quot; + o.Position + &quot; &quot;
++ n.Position + &quot; &quot; + o.Length + &quot; &quot; + n.Length );<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 274;<o:p></o:p></p>
+
+<p class=ILprg>w.Write('4');<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>60<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP Request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILoutput>Initialize<o:p></o:p></p>
+
+<p class=ILoutput>ChainStream<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeSerialize 0 0 343 0<o:p></o:p></p>
+
+<p class=ILoutput>1<o:p></o:p></p>
+
+<p class=ILoutput>0<o:p></o:p></p>
+
+<p class=ILoutput>&lt;<o:p></o:p></p>
+
+<p class=ILoutput>/<o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;abc
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">     
+</span>&lt;i&gt;10&lt;/i&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">     
+</span>&lt;j&gt;20&lt;/j&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span><span
+style="mso-spacerun: yes">  </span>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput>BeforeDeSerialize1 343 0 343 0<o:p></o:p></p>
+
+<p class=ILoutput>ChainStream<o:p></o:p></p>
+
+<p class=ILoutput>AfterSerialize 358 358<o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">     
+</span>&lt;abcResult&gt;60&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   
+</span>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us attempt at appreciating
+the SOAP extensions from a fresh perspective. The asmx file has the familiar
+function abc, which now accepts two parameters and returns an int. Since we
+want to trace the bytes that are traversing to and fro, we shall follow the
+same process that has been executed innumerable times before. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In other words, before running
+the batch file z.bat, we shall create a wsdl file and modify the port number of
+localhost to 8080. The values assigned to the function abc are 10 and 20. Thus,
+the expected output is the value 30. However, it is quite astonishing to find
+the value 60 being displayed. There is definitely something wrong somewhere! <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have only displayed the 'if'
+statement, which gets activated when the BeforeDeserialize event gets
+triggered. At this instant, the string 's' contains the entire SOAP payload. On
+examining bytes 274 to 277 of the SOAP payload, we realize that byte 274 holds
+the digit 1, of the number 10. This is the content of the variable i. The
+string is written and flushed in the MemoryStream, as before. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, the file pointer is
+positioned at byte 274, and using an overload of the Write function, the value
+of 1 is replaced by the ASCII character 4. Thus, the value changes from 10 to
+40, resulting in a return value of 60, instead of the expected 30. All
+characters written to the stream 'n' get amalgamated into the incoming SOAP
+packet. Therefore, the original stream 's' is not read at all, since the stream
+that returned, is the one that is sent to the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In a situation where the client
+compresses a file and sends it to the server, the server must have a program
+running, which will receive the bytes and decompress them, before placing the
+new contents in the stream 'n'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP request that is
+received by the trace, contains the numbers 10 and 20. This is because the
+trace receives the output before it is sent over to the server. Thus, the trace
+and the client will notice the same SOAP packet. The change is made to the
+stream 'n', and not to 's'. The contents that are visible in the a.txt file,
+are a spitting image or a replica of what the client sends to the trace
+program. These contents are eventually forwarded to the server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>n.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>TextWriter w = new StreamWriter(o);<o:p></o:p></p>
+
+<p class=ILprg>StreamReader r = new StreamReader(n);<o:p></o:p></p>
+
+<p class=ILprg>string s1 = r.ReadToEnd();<o:p></o:p></p>
+
+<p class=ILprg>abc(s1);<o:p></o:p></p>
+
+<p class=ILprg>string s2 = s1.Replace(&quot;60&quot;,&quot;90&quot;);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s2);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>90<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;60&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;90&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the aaa.cs file, we have only
+displayed the AfterSerialize message. At this stage, we are aware that the
+string read from the Stream 'n' contains the SOAP output. Now, instead of
+writing it directly to the Stream 'o' that is received from ChainStream, we
+first write the characters to the file a.txt, in order to verify the result to
+be 60. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, by using the Replace
+function, all occurrences of the string 60 in the string s1, are replaced by
+90. The return value contains the modified string. This new string s2 is then
+sent across to the client. Since the packet reaches the trace program first,
+the SOAP response displays the result as 90. Also, since the value being sent
+across is 90, the output of the client is displayed as 90. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have just demonstrated how we
+can exercise absolute control over both, the SOAP payload that is being sent to
+the asmx file, and the packets being sent from the server to the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public void pqr()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>a.pqr();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>public override
+Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>get<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">                </span>return
+typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>public override
+int Priority <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>get {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">                </span>return 0;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>set { }<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public mukhi()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;Initialize &quot; + o);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 1 &quot; + m);<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Name == &quot;abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>return &quot;sonal&quot;;<o:p></o:p></p>
+
+<p class=ILprg>else<o:p></o:p></p>
+
+<p class=ILprg>return &quot;mukhi&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;GetInitializer 2&quot;);<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ProcessMessage &quot; + m.Stage);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>GetInitializer 1 Void abc()<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>GetInitializer 1 Void pqr()<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>Initialize sonal<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeSerialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>Initialize sonal<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeSerialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILprg>Constructor<o:p></o:p></p>
+
+<p class=ILprg>Initialize mukhi<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterDeserialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage BeforeSerialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has two functions
+named abc and pqr, containing the attribute 'vijay'. The client program calls
+the function abc twice, and the function pqr only once. The aaa.dll as usual,
+contains the function abc. Additionally, it contains the GetInitializer
+function, which displays the string representation of the first parameter, i.e.
+LogicalMethodInfo.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP Extension should at no
+cost, trammel the speed of the system. To ensure this, the framework first
+ascertains the number of functions contained in the asmx file, and then, it
+creates an equal number of copies of the class mukhi. Since the asmx file has
+two functions, the constructor is called twice. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, it calls the function
+GetInitializer with two parameters. The first parameter is a LogicalMethodInfo
+that represents a function. The String representation displays the prototype of
+the string. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This class has a function called
+'name', which provides the name of the function having the attribute of
+'vijay'. Thus, on the first occasion, the GetInitializer gets called because of
+the function abc, while on the second occasion, it is called due to the
+function pqr.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The task of GetInitializer is to
+return a value, which will be passed to the Initialize function. The Name
+property ascertains whether the name of the function is abc or not. If it is
+so, the value returned is 'sonal', or else, it is 'mukhi'. This entire process
+is executed only once. This value that is returned is cached internally. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each time a function gets
+called, its constructor gets called once. Thereafter, the function 'Initialize'
+gets called, with the value that is returned by function GetInitializer. Thus,
+calling the function abc twice, results in a call to the Initialize function,
+with the parameter value of 'sonal'. This is how depending upon the function
+name, parameters can be passed to functions. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To summarize, when a function is
+called manifold times, GetInitializer gets called only once; whereas, the
+Constructor and the Initialize function get called every time that the function
+is executed. The function ProcessMessage gets called four times per function
+call.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Filename=&quot;c:\\z.txt&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public void abc()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay(Filename=&quot;c:\\z1.txt&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public void pqr()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public void xyz()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>a.pqr();<o:p></o:p></p>
+
+<p class=ILprg>a.xyz();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>[AttributeUsage(AttributeTargets.Method)]<o:p></o:p></p>
+
+<p class=ILprg>public class vijay : SoapExtensionAttribute <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>private string fi = &quot;c:\\z2.txt&quot;;<o:p></o:p></p>
+
+<p class=ILprg>public override Type ExtensionType <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{ <o:p></o:p></p>
+
+<p class=ILprg>return typeof(mukhi); <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override int Priority <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 0;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public string Filename <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>get <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return fi;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>fi= value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>string f;<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>vijay b = (vijay)a;<o:p></o:p></p>
+
+<p class=ILprg>return b.Filename;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(vijay);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>f = (string) o;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(f, FileMode.Append,
+FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterSerialize)<o:p></o:p></p>
+
+<p class=ILprg>abc(&quot;ProcessMessage &quot; + m.Stage);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>z.txt</u><o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Z1.txt</u><o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Z2.txt</u><o:p></o:p></p>
+
+<p class=ILprg>ProcessMessage AfterSerialize<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program demonstrates the
+phenomenon of passing data dynamically onto the SOAP extension.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the first time, we have
+passed a parameter named FileName, to the attribute of 'vijay'. The first two
+functions, abc and pqr, use a different filename, while the last function, xyz
+uses none. This parameter is primarily used to determine the file name that is
+to be used while writing the text. A total of three files are created in the
+root. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program a.cs merely
+calls the three functions, viz. abc, pqr and xyz.<span style="mso-spacerun:
+yes">  </span>In aaa.cs, the class 'vijay' is of prime significance. Since
+every parameter to an attribute must have a corresponding public property by
+the same name, there exists a property called 'Filename'. The task of this
+read-write property is to return the value held in the variable 'fi' to the
+'get' accessor. It is also responsible for setting the same variable to the
+reserved parameter value, in the 'set' accessor. The string 'fi' is used only
+to store the state or value of the property Filename.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Technically speaking, the state
+of the property Priority should also be stored in a variable, but since we are
+not interested in its value, we do not do the same. The GetInitializer function
+gets called first. Its second parameter is a handle to the attribute class
+'vijay'. The parameter is cast to type 'vijay', and then, the Filename property
+value is returned. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc sets the value
+of 'fi' to &quot;C:\z.txt&quot;, and the function pqr sets the value of 'fi' to
+&quot;c:\z1.txt&quot;. Since the function xyz does not call this property at
+all, the default value of 'fi', i.e. &quot;c:\z2.txt&quot;, remains unchanged.
+When the Initialize function gets called, the above values are sent across as
+parameter values. The string 'f' is initialized to the parameter 'o' that is
+passed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, whenever the function abc
+gets called in the function ProcessMessage, it assigins a value to the variable
+'f' depending upon the function being called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the function abc now
+stores its data in three different files, namely, z.txt, z1.txt and z2.txt.
+This program demonstrates how an attribute can accept parameters, and
+thereafter, pass them on to the class 'mukhi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we intend to capture the
+Headers in our trace program. So, we implement the program from the Soap
+Headers chapter, which sends across a header. The SoapMessage parameter is
+going to be the main focus of the residual programs of this chapter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa :
+System.Web.Services.Protocols.SoapHttpClientProtocol<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy b;<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>aaa a= new aaa();<o:p></o:p></p>
+
+<p class=ILprg>a.b = new yyy();<o:p></o:p></p>
+
+<p class=ILprg>a.b.name=&quot;vijay&quot; ;<o:p></o:p></p>
+
+<p class=ILprg>a.b.pass=&quot;sonal&quot; ;<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapHeaderAttribute(&quot;b&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>public void abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[0]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public aaa()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>this.Url = &quot;http://localhost:8080/a.asmx&quot;;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : SoapHeader <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public string name;<o:p></o:p></p>
+
+<p class=ILprg>public string pass;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class mukhi : SoapExtension <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(LogicalMethodInfo m,
+SoapExtensionAttribute a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return null;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override object GetInitializer(Type s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return typeof(vijay);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void Initialize(object o) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void abc(string s)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);<o:p></o:p></p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);<o:p></o:p></p>
+
+<p class=ILprg>w.WriteLine(s);<o:p></o:p></p>
+
+<p class=ILprg>w.Flush();<o:p></o:p></p>
+
+<p class=ILprg>w.Close();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>SoapHeaderCollection s;<o:p></o:p></p>
+
+<p class=ILprg>s = m.Headers;<o:p></o:p></p>
+
+<p class=ILprg>abc(s.Count.ToString());<o:p></o:p></p>
+
+<p class=ILprg>SoapUnknownHeader h = (SoapUnknownHeader)s[0];<o:p></o:p></p>
+
+<p class=ILprg>System.Xml.XmlElement e = h.Element;<o:p></o:p></p>
+
+<p class=ILprg>abc(e.OuterXml);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>1<o:p></o:p></p>
+
+<p class=ILprg>&lt;yyy xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;name&gt;vijay&lt;/name&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;pass&gt;sonal&lt;/pass&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/yyy&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence with a simple asmx
+file, where the function abc returns a void. The header program is modified to
+return a void instead of a string. In any case, there is no rationale behind
+complicating the code unnecessarily. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to identify the headers
+that have been received, we are required to wait for the AfterDeserialize event
+to occur, since the incoming XML has still not been parsed in the
+BeforeDeserialize event. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the AfterDeserialize event,
+it is the SoapHeaderCollection object named 's' that is created first. It is
+then initialized to the value contained in the Headers property of the
+SoapMessage Object, m. The class SoapHeaderCollection, being a collection
+class, has a property called Count, which identifies the number of SoapHeader
+objects contained in the collection class. Presently, since only a single
+header exists, our output displays a value of one. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>With the help of the indexer,
+s[0] the single SoapHeader object is retrieved and stored in h, a variable of
+type SoapUnknownHeader. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since h is not of type
+SoapHeader, the use of a cast operator is imperative.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, the Element property
+in the object is employed to initialize an object of type XmlElement. The
+entire node is then displayed, using the OuterXml function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is how we can display the
+headers that are sent across. BeforeSerialize is the other event where we deal
+with headers. This property is read-only. Therefore, we cannot amend the
+headers using this property. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we present the smallest
+asmx file, as well as, the smallest client. We don't come across any of the
+complications that were present in other programs, such as the trace program,
+etc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<span style="mso-spacerun: yes">  </span>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(int i, int j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i + j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() {<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int k = a.abc(10,20);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(k);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>abc(m.Action);<o:p></o:p></p>
+
+<p class=ILprg>abc(m.MethodInfo.ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(m.OneWay.ToString());<o:p></o:p></p>
+
+<p class=ILprg>abc(m.Url);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>http://tempuri.org/abc<o:p></o:p></p>
+
+<p class=ILprg>Int32 abc(Int32, Int32)<o:p></o:p></p>
+
+<p class=ILprg>False<o:p></o:p></p>
+
+<p class=ILprg>http://localhost/a.asmx<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program outputs four properties
+of the SoapMessage class, which are written to the file a.txt. These properties
+are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•</span><span
+style='mso-tab-count:1'>    </span>The first property is the familiar Action
+property, which displays the value of the SOAPAction HTTP header. This is the
+only HTTP header that SOAP introduces. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•</span><span
+style='mso-tab-count:1'>    </span>The second property is the MethodInfo
+property, which provides all the details about a function. It helps us to
+structure our code to act in a particular way, depending upon the call to a
+specific function. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•</span><span
+style='mso-tab-count:1'>    </span>The third property is the OneWay property,
+which returns the value of the OneWay property of the
+SoapDocumentMethodAttribute attribute. Here, the value is 'false'. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•</span><span
+style='mso-tab-count:1'>    </span>The fourth property is the URL property,
+which reveals the URL of the remote server, where the execution takes place.<o:p></o:p></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.AfterDeserialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>int i;<o:p></o:p></p>
+
+<p class=ILprg>i = (int)m.GetInParameterValue(0);<o:p></o:p></p>
+
+<p class=ILprg>abc(i.ToString());<o:p></o:p></p>
+
+<p class=ILprg>i = (int)m.GetInParameterValue(1);<o:p></o:p></p>
+
+<p class=ILprg>abc(i.ToString());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>30<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILoutput>10<o:p></o:p></p>
+
+<p class=ILoutput>20<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP payload triggers off
+the BeforeSerialize event, when it first arrives at the web server. Thereafter,
+the XML file is Deserialized, wherein, all the parameters are extracted from
+the XML document. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once this is over, the
+AfterDeserialize event gets triggered. Here, we use the function
+GetInParameterValue with the parameter 'number', and obtain the values of the
+parameters that are passed. Thus, the index 0 returns the value of i, and the
+index 1 returns the value of j. This is a useful way of ascertaining the values
+of parameters directly, instead of parsing the XML stream manually, since the
+manual process is extremely time consuming.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>[vijay()]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(ref int i,int j , ref int k)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return 234;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>int p = 30;<o:p></o:p></p>
+
+<p class=ILprg>int q = 20;<o:p></o:p></p>
+
+<p class=ILprg>a.abc(ref p,20, ref q);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.BeforeSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>int i;<o:p></o:p></p>
+
+<p class=ILprg>i = (int)m.GetOutParameterValue(0);<o:p></o:p></p>
+
+<p class=ILprg>abc(i.ToString());<o:p></o:p></p>
+
+<p class=ILprg>i = (int)m.GetOutParameterValue(1);<o:p></o:p></p>
+
+<p class=ILprg>abc(i.ToString());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>30<o:p></o:p></p>
+
+<p class=ILprg>20<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file has a function
+abc, which starts with a 'ref' parameter, followed by an 'int' parameter, and
+finally, ends with a 'ref' parameter. The client program follows along the same
+lines. Since the BeforeSerialize event gets fired, it provides ample proof that
+the 'out' parameters have been assigned values, and that, the function abc has
+been called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the function
+GetOutParameterValue in the event BeforeSerialize, provides the value stored in
+the 'out' parameters, only when it is assigned a number. Thus, the index 0
+represents the variable 'i', and the index 1 represents the second 'out'
+parameter 'q'. This is because, it is the second 'out' parameter, though
+overall, it is the third parameter in the parameter list, <o:p></o:p></span></p>
+
+<p class=ILprg><u>aaa.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public override void ProcessMessage(SoapMessage m) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>if ( m.Stage == SoapMessageStage.BeforeSerialize)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>int i;<o:p></o:p></p>
+
+<p class=ILprg>i = (int)m.GetReturnValue();<o:p></o:p></p>
+
+<p class=ILprg>abc(i.ToString());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u><o:p></o:p></p>
+
+<p class=ILprg>234<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The BeforeSerialize event can also supply the return value.
+The function abc returns 234, which is the value returned from the function
+GetReturnValue. At this point, we cannot amend any of these values, since these
+values are 'read-only'.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:59 GMT -->
+</html>

@@ -1,0 +1,1108 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap5.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>The Linux Kernel Module Programming</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=4><P>The Linux Kernel Module Programming</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>One of the main reasons an operating system exists, is to add a layer of abstraction over the hardware. We can't have people writing directly to the hardware everytime they need to access it. Not only is this a pain for the programmer (who has to support various types of hardware), it makes makes the job of a multiuser/multitasking operating system almost impossible. Such an operating system has to arbitrate between it's different processes and users. If two users wish to read from the harddisk at the same time and both implement independant code to do this, then not only will that code be repeated in every program (wasting space), but the operating system will have no control over the disk access. This will lead to conflicts between programs/users when they attempt to perform actions on hardare at the same time.</P>
+<P>However, but routing their requests <I>through</I> the operating system, they give it the abilty to arbitrate. Now if two people wish to read from the disk at the same time, the operating system can que up their requests and service them one after the other.</P>
+<P>Another use for the abstraction layer is to present a uniform and easy to comprehend interface to the programmer. You really can't expect programmers to individually support the literally hundreds of different kinds of hardware that they wish to access. By routing their requests through the operating system, they can use the interface provided by the operating system and allow it to do the finally reading or writing or whatever itself. This may slow down the process, but the performance hit is usually negligible.</P>
+<P>Every operating system comes equiped with a lot of these routines to access hardware, called 'drivers'. Under Linux, they are packaged in 'modules' or they can be compiled directly into the kernel. If used seperatly as modules, they can be loaded or unloaded at runtime by the kernel itself, or by the use. This makes the system more flexibile than if the modules were compiled into the kernel.</P>
+<P>Module programming is considered (usually by those who don't know it) to be the pinacle of coding prowess. Knowing about it usually gives on major bragging rights over other programmers. It is a little screwy, but if it were truly that difficult, we wouldn't be talking about it in chapter 5.</P>
+<P>Onwards now.</P>
+</FONT><PRE>a.c
+int init_module()
+{
+return 0;
+}
+&nbsp;
+#gcc -c a.c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This here is a simple enough function that returns an int (zero in this case), in a file named (rather imainatively as usual) 'a.c'.</P>
+<P>We compile with gcc, using -c and get the file 'a.o'. No linking is required. That's it, you have a module...</P>
+<P>Sort of. </P>
+<P>Now without going into detail, we'd like to mention the existence of a very special directory named /proc. It contains a lot of useful information and one of these bits of useful information is contained in a file named /proc/modules. This file contains the name (plus some additional information) of all the modules currently loaded into memory. Cat it and see.</P>
+</FONT><PRE>#cat /proc/modules</PRE>
+<FONT FACE="Courier New" SIZE=2><P>On our test system, we've got no loaded modules, but your milege may vary.</P>
+<P>Now to add a.o (our module) into memory, we have to employ the services of a very special program named 'insmod'. 'insmod' prepares the module file (which is an object file), strips off certain sections of the file, does some more mumbo jumbo on it, loads it into memory and tell the kernel where to find it.</P>
+</FONT><PRE>#insmod a
+./a.o: couldn't find the kernel version the module was compiled for</PRE>
+<FONT FACE="Courier New" SIZE=2><P>As usual, our first program generates an error. Now 'insmod' is a picky little creature and it performs a lot of error checks on the module file. A module has to be very well written because if it crashes once it's loaded into kernel space, it'll take the system with it. Not something anyone would want. </P>
+<P>'insmod' checks for a section in the file named .modinfo and looks for the line &lt;i&gt;kernel_version= &lt;/i&gt; and then a '.' seperated list of numbers. We don't have a .modinfo, so 'insmod' pedantically rejects our module.</P>
+<P>In this next program, we correct our oversight. We create a variable __module_kernel_version which is used as a pointer to a char. We then use __attribute__ (a gcc built in) and section() (ditto) to both create a Elf section named .modinfo and initialize it to the string "kernel_version=2.2.12".</P>
+</FONT><PRE>a.c
+char __module_kernel_version[] __attribute__ ((section(".modinfo")))="kernel_version=2.2.12";
+int init_module()
+{
+return 0;
+}
+
+#gcc -c a.c
+#insmod a
+#cat /proc/modules
+a 152 0 (unused)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Great! No more sniverling from 'insmod'. Our module is loaded into memory and a cat displays the name in /proc/modules.</P>
+</FONT><PRE>#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>'rmmod' is the opposite of 'insmod' in that it removes a module from a running kernel. </P>
+</FONT><PRE>#cat /proc/modules</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Yup, it's not there any more.</P>
+<P>The variable need not be called __module_kernel_version. We could call it anything we want. The format of the rest of the declaration must remain the same.</P>
+</FONT><PRE>a.c
+char mo[] __attribute__ ((section(".modinfo")))="kernel_version=2.2.12";
+int init_module()
+{
+return 0;
+}
+&nbsp;
+#gcc -c a.c
+#insmod a
+#cat /proc/modules
+a 152 0 (unused)
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Works as usual.</P>
+<P>Or rather not. On almost all the system that this is run on, the module will fail to load. The fault is ours. We've hard coded the kernel version into the declaration and if your's isn't identical, tough luck.</P>
+<P>There are two ways to get out of this jam.</P>
+<P>One is to run the program 'uname' and discover the version number of your setup which you then hard code in.</P>
+</FONT><PRE>#uname -r
+2.2.12</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Or you can cat a file named '/usr/src/linux/include/linux/version.h' where you'll notice a #define named UTS_RELEASE which is defined to be the current kernel version number.</P>
+</FONT><PRE>version.h
+#define UTS_RELEASE "2.2.12"
+#define LINUX_VERSION_CODE 131596
+#define KERNEL_VERSION(a,b,c) (((a) &lt;&lt; 16) + ((b) &lt;&lt; 8) + (c))
+
+a.c
+char __module_kernel_version[] __attribute__ ((section(".modinfo")))="kernel_version=2.2.12-20";
+int init_module()
+{
+return 1;
+}
+#gcc -c a.c
+#insmod a
+./a.o: init_module: Device or resource busy</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Seems that trying to return 1 instead of 0 is not the way to go about doing things.</P>
+<P>When 'insmod' gets a hold of the file, it places the address of the function init_module() in a special structure in memory. When the kernel wishes to initialize the module, it uses the address it finds in this structure. So when init_module is called by the kernel (and it's always the first function to be called), it &lt;i&gt;must&lt;/i&gt; return a 0 (success). If the return value is non-zero then obviously the initialization of the module has failed and it makes no sense trying to run it. When the kernel sees that we return 1, it flags an error and tells 'insmod' about it. 'insmod' then displays the appropriate error message.</P>
+</FONT><PRE>a.c
+char __module_kernel_version[] __attribute__ ((section(".modinfo")))="kernel_version=2.2.12";
+int init_module()
+{
+printk("Hi\n");
+return 0;
+}
+#gcc -c a.c
+#insmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This program is for the paranoid. If you wish to be absolutely sure that the module has been successfully loaded into memory, you can always place a printk() in there and check the output in the log file.</P>
+</FONT><PRE>#dmesg
+VFS: Mounted root (ext2 filesystem) readonly.
+change_root: old root has d_count=1
+Trying to unmount old root ... okay
+Freeing unused kernel memory: 64k freed
+Adding Swap: 168640k swap-space (priority -1)
+lp: driver loaded but no devices found
+VFS: Disk change detected on device fd(2,0)
+end_request: I/O error, dev 02:00 (floppy), sector 0
+VFS: Disk change detected on device fd(2,0)
+Hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>It's there alright. Loading the module again will not display another 'Hi'. That's cause 'insmod' is smart enough to notice that a copy of 'a' already exists in memory and it won't reload the same thing twice.</P>
+<P>printk() both logs the output to the log file and it also displays the output in the currently open terminal. However, you don't get to see the output on the screen when using X. </P>
+</FONT><PRE>&nbsp;
+char __module_kernel_version[] __attribute__ ((section(".modinfo")))="kernel_version=2.2.12";
+int init_module()
+{
+printk("Hi\n");
+return 0;
+}
+void cleanup_module()
+{
+printk("Bye\n");
+}
+&nbsp;
+#gcc -c a.c
+#insmod a
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we add another function, cleanup_module(), which is the last function to be called before the module is unloaded from memory. As it's name suggests, you're supposed to place clean up code here. We've just placed a printk().</P>
+</FONT><PRE>&nbsp;
+#dmesg
+VFS: Mounted root (ext2 filesystem) readonly.
+change_root: old root has d_count=1
+Trying to unmount old root ... okay
+Freeing unused kernel memory: 64k freed
+Adding Swap: 168640k swap-space (priority -1)
+lp: driver loaded but no devices found
+VFS: Disk change detected on device fd(2,0)
+end_request: I/O error, dev 02:00 (floppy), sector 0
+VFS: Disk change detected on device fd(2,0)
+Hi
+Hi
+Bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The first 'Hi' is from the earlier program.</P>
+<P>Let's get rid of that hardcoded kernel version number. You &lt;i&gt;do&lt;/i&gt; want your code to compile and run on other versions, don't you?</P>
+<P>The clean way to do this is to #include two header files, 'kernel.h' and 'module.h'. This file is to be found in /usr/include/linux or /usr/src/include</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+int init_module()
+{
+printk("Hi\n");
+return 0;
+}
+void cleanup_module()
+{
+printk("Bye\n");
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#cat /proc/modules
+#insmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>That's all. We've cleaned up quite a bit now haven't we? Now do you realize why we do things the ugly way first. If we didn't you'd never learn about the various things going on in the background.</P>
+<P>Notice the switches being passed to 'gcc'. -O6 turns on optimising all the way up, -Wall tells the compiler to be pedantic about warnings, -D as we've mentioned before defines macros at compile time and -c tells 'gcc' to only compile the file.</P>
+</FONT><PRE>#cat /proc/modules
+a 124 0 (unused)
+#rmmod a
+#cat /proc/modules</PRE>
+<FONT FACE="Courier New" SIZE=2><P>And it disappears too, right on cue.</P>
+<P>If you've been reading the book attentively, you'd have noticed something a little strange. We spoke at length about the function of the linker and how it links up the code either statically or dynamically and how the loader patches up function calls at load time if the file requires it. So where is printk() coming from? It's not linked in and we don't use a loader; or do we?</P>
+<P>It seems that 'insmod' does a lot more than just error checks. There are some functions which are to be found at fixed memory locations and are exported by the kernel. printk() is one of these. When 'insmod' loads a kernel into memory, it patches up the code to point to the reqisite kernel function calls. </P>
+<P>Try putting in a call to a function like puts() for example, 'insmod' will return an error saying</P>
+</FONT><PRE>./a.o: unresolved symbol puts</PRE>
+<FONT FACE="Courier New" SIZE=2><P>It seems that 'insmod' acts a lot like a linker/loader combination.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>&nbsp;Spy</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>Earlier we had written a rather yucky spy. This spy works in user space. Now lets write a simple spy that works in kernel space.</P>
+<P>The Linux kernel has between 170 to 190 system calls. That's what a lot of user space functions like fork() or exit() boil doen to. If we can track these, we can keep a rather close on what a program is doing. To activate a system call, you place a specified number in the EAX register and call interrupt 80.</P>
+<P>Have a look at this file, to be found at /usr/include/asm/unistd.h</P>
+</FONT><PRE>unistd.h
+#define __NR_exit&#9;&#9; 1
+#define __NR_fork&#9;&#9; 2
+#define __NR_read&#9;&#9; 3
+#define __NR_write&#9;&#9; 4
+#define __NR_open&#9;&#9; 5
+#define __NR_close&#9;&#9; 6
+#define __NR_waitpid&#9;&#9; 7
+#define __NR_creat&#9;&#9; 8
+#define __NR_link&#9;&#9; 9
+#define __NR_unlink&#9;&#9; 10
+#define __NR_execve&#9;&#9; 11
+#define __NR_chdir&#9;&#9; 12
+#define __NR_time&#9;&#9; 13
+#define __NR_mknod&#9;&#9; 14
+#define __NR_chmod&#9;&#9; 15</PRE>
+<FONT FACE="Courier New" SIZE=2><P>And so on. Every system call is listed. In the linux kernel there is an array of pointers to functions named sys_call_table. So to call 'open' (#define __NR_open 5) the sixth member in the array sys_call_table is called. To do that, we place 5 in the EAX register and call interrupt 80. </P>
+<P>To spy on these system calls we simply replace the address of the original functions in sys_call_table with our own function, log the call and then call the original code. </P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+extern void *sys_call_table[];
+int (*o) (char *, int , int);
+int mi(char *name, int flags, int mode)
+{
+printk("..%s\n",name);
+return o(name,flags,mode);
+}
+int init_module()
+{
+o=sys_call_table[5];
+sys_call_table[5] = mi;
+printk("Hi\n");
+return 0;
+}
+void cleanup_module()
+{
+sys_call_table[5] = o;
+printk("Bye\n");
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a
+&nbsp;
+Hi
+../etc/ld.so.preload
+../etc/ld.so.cache
+../lib/libc.so.6
+../usr/share/locale/locale.alias
+../usr/share/i18n/locale.alias
+../usr/share/locale/en_US/LC_MESSAGES
+../usr/share/locale/en_US/LC_MESSAGES/SYS_LC_MESSAGES
+../usr/share/locale/en_US/LC_MONETARY
+../usr/share/locale/en_US/LC_COLLATE
+../usr/share/locale/en_US/LC_TIME
+../usr/share/locale/en_US/LC_NUMERIC
+../usr/share/locale/en_US/LC_CTYPE
+../proc/modules
+#rmmod a
+../etc/ld.so.preload
+../etc/ld.so.cache
+../lib/libc.so.6
+Bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The code's so simple, it's almost self documenting!</P>
+<P>We first declare sys_call_table to be an array of pointers to functions which returns void. The extern means that this array exists else where, but we can access it from here. o is a pointer to a function which takes three parameters, the exact same type as open(). mi() is a function which takes three parameters, logs the name, and calls o() with the original parameters, returning the result.</P>
+<P>In init_module(), we initialize o() to the sixth member in sys_call_tabel (which is open()) and then place the address of mi() in the exact same place. The printk() is not really nessesary.</P>
+<P>Now evertime open() is called, mi() will be called first. It'll log the name of the file to open and then call the original code of open(). Notice that we return exactly what open() does by placing the return keyword before the the function call.</P>
+<P>To spy on all the system calls we'd have to trap each and everyone and then log the calls to disk.</P>
+<P>Way cooler than our earlier spy.</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+char *str1; int j;
+MODULE_PARM(str1,"s");
+MODULE_PARM(j,"i");
+int init_module()
+{
+printk("s:%s %d\n",str1,j);
+return 0;
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a str1=hi j=400
+#dmesg
+s:hi 400
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Here we go a little deeper into modules and discuss a topic which might be importan if you intend to write an modules of your own. Passing parameters to your module may become nessesary and this is how you go about doing it.</P>
+<P>We'll be passing a string and a number to our module and to do that we create two variables. The first is a pointer to a char 's' and the second is an int named 'j'. The macro MODULE_PARM() is used to point these variables to the appropriate parameter. "s" stands for &lt;i&gt;string&lt;/i&gt; and "i" stands for &lt;i&gt;integer&lt;/i&gt;.</P>
+<P>Within init_module() we then print out the values of the variables.</P>
+<P>To pass the module parameters, we give 'insmod' the name of the parameter and the value.</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+char __module_parm_str1[] __attribute__((section(".modinfo"))) = "parm_str1=s";
+char __module_parm_j[] __attribute__((section(".modinfo"))) = "parm_j=i";
+char *str1; int j;
+int init_module()
+{
+printk("s:%s %d\n",str1,j);
+return 0;
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a str1=hi j=400
+#dmesg
+s:hi 400
+&nbsp;
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Just how does MODULE_PARM() go about it's work? This program should help clear things up.</P>
+<P>All that MODULE_PARM() does is create entries in the section .modinfo. We create the variables and point them to the appropriate strings. The format is "param_&lt;var name&gt;=&lt;type of var&gt;". </P>
+<P>It's a lot like storing the kernel version number and just like in the kernel version number example, the variable name char __module_parm_whater[] is not important; only the data type is.</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+char __module_parm_str2[] __attribute__((section(".modinfo"))) = "parm_str1=s";
+char __module_parm_j[] __attribute__((section(".modinfo"))) = "parm_j=i";
+char *str1; int j;
+int init_module()
+{
+printk("s:%s %d\n",str1,j);
+return 0;
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a str1=hi j=400
+#dmesg
+s:hi 400
+&nbsp;
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>See, it makes no difference.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Device Drivers</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>All that we've done till now has been leading up to this point. The main reason one writes modules is to create device drivers. As I'd mentioned earlier, most programmers don't really want to, or for that matter, need to talk directly to the hardware. The job of the Operating System and the programmer becomes easier if the interface to devices is standarddized. The bit of code that actully ends up talking to the hardware is called the Device Driver. </P>
+<P>Try this out.</P>
+<P>Type "tty" at the prompt. This program displays the name of the terminal you're working on. </P>
+</FONT><PRE>#tty
+/dev/pts/2
+#echo hi &gt;/dev/pts/2
+hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now echo the string "hi" to that terminal by redirecting the output to the file /pts/2 in the /dev directory. All the files in the /dev directory are links to device drivers. When you read/write to them, you're actually talking to a device driver. This presents a consistent interface for the programmer. </P>
+<P>Let's see if we can't do something like this!</P>
+</FONT><PRE>#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+#include &lt;linux/fs.h&gt;
+int dopen(struct inode * inode, struct file *file)
+{
+printk("hi\n");
+return 0;
+}
+struct file_operations fo = {0,0,0,0,0,0,0,dopen,0,0};
+int init_module()
+{
+printk("init_module\n");
+register_chrdev(251,"cde1",&amp;fo);
+return 0;
+}
+void cleanup_module()
+{
+printk("cleanup_module\n");
+unregister_chrdev(251,"cde1");
+}
+&nbsp;
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a 
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Check out the code in init_module(). We're calling a function named register_chrdev() to register our character device driver with the kernel (more on this in a second) and passing it three parameters. ????????????The first is the number for our device (again more on this a little later), the second is the name of our device ??????????and the last is the address of a structure which contains the addresses of the functions provided by our driver.</P>
+<P>Add info on char vs block drivers... minor and major numbers, 8 for scsi , below 250 for major, you get a kernel panic max 255 etc. Now when ever anyone attempts to read/write/anything to the device cde1 (number 251), our code will be called. </P>
+<P>In the structure fo, which looks like the structure file_operation defined in fs.h, we zero out all the feilds except one. dopen() is the only function we wish to register with the kernel.</P>
+<P>In cleanup_module(), we unregister the device.</P>
+<P>Compile the module and then try to cat to the device.</P>
+</FONT><PRE>#cat cde1
+cat: cde1: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Nope, nothing like this exists yet.</P>
+<P>Load the module into memory...</P>
+</FONT><PRE>#insmod a
+and try cat again.
+#cat cde1
+cat: cde1: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>No luck yet.</P>
+<P>We don't have an entry in /dev for our device so you can load the module as often as you wish, it still won't work. The files in /dev are special and we use a program named 'mknod' to create them. The first command line argument is the name of the device, the second is usually either 'b' (for block device) or 'c' (for character device). A block device is a device to which output and from which input is buffered, or passed in blocks. For example, SCSI disk drives are buffered and this speeds them up a bit. Mice on the other hand are character devices, which means that data is passed to and from them character by character as soon as it arrives. You don't buffer up mouse movement and then squirt out the data all at once! The third argument is the major number of our device and last is the minor number</P>
+<P>You don't have to use 'mknod' everytime, just once per device driver is enough.</P>
+</FONT><PRE>#ls -l cde1
+crw-r--r-- 1 root root 251, 8 Jul 14 20:36 cde1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>As you can see, the file type is 'c' for character.</P>
+<P>Now try 'cat' once more.</P>
+</FONT><PRE>#cat cde1
+cat: cde1: Invalid argument</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We've only got a dopen() so we can't do much, but check the log file messages and you'll see that our printk() in dopen() has been called.</P>
+</FONT><PRE>#dmesg
+init_module
+hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Try it again</P>
+</FONT><PRE>#cat cde1
+cat: cde1: Invalid argument
+#dmesg
+init_module
+hi
+hi
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Yup, it's definitely being called.</P>
+<P>When 'cat' is called, it attempts to open up the file cde1. The function open() internally calls the kernel which then calls dopen() in our module. We print out "hi" and return signalling success. Not when 'cat' tries to read from our device, it fails since we don't have a function available to handle that. </P>
+<P>Let's remedy that now.</P>
+</FONT><PRE>#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+#include &lt;linux/fs.h&gt;
+int dopen(struct inode * inode, struct file *file)
+{
+printk("hi\n");
+return 0;
+}
+int dread(struct file * file, char * buffer, int length, int *offset)
+{
+printk("dread %d %d \n", length, *offset);
+return 0;
+}
+struct file_operations fo = {0,dread,0,0,0,0,0,dopen,0,0};
+int init_module()
+{
+printk("init_module\n");
+register_chrdev(251,"cde1",&amp;fo);
+return 0;
+}
+void cleanup_module()
+{
+printk("cleanup_module\n");
+unregister_chrdev(251,"cde1");
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a
+#cat cde1
+#dmesg
+init_module
+hi
+dread 4096 0 </PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Now we've got a dread() as well and we've added an entry to that effect in fo. In dread(), the first parameter is a pointer to a structure which looks like file. This contains infomation like the permissions, owner, uid etc. The second parameter is a pointer to a buffer in memory (initialized with zero's) we're supposed to write too. The third is the size of the buffer in bytes and the last is the offset of the start of data within buffer.</P>
+<P>All we're doing here is printing out the length and the offset and returning a 0 for success.</P>
+<P>If you try 'cat' on cde1 now, you won't get much, because we're not returning any data. If you echo the return value, it's an unexciting 0.</P>
+</FONT><PRE>#cat cde1;echo $?
+0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>But atleast you're not getting any errors.</P>
+<P>What we're actually supposed to do in dread() is fill up the buffer with data (making sure we don't put in more than the length of the buffer) and our return value should be the number of bytes we've put into the buffer. We signal that we're done bu returning 0 to show that we'be placed 0 bytes in the buffer. Remember, dread() will continue to be called until it returns 0 to signal the end of data.</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+#include &lt;linux/fs.h&gt;
+#include &lt;asm/uaccess.h&gt;
+char *MP = "hell\n";
+int dopen(struct inode * inode, struct file *file)
+{
+printk("hi\n");
+return 0;
+}
+int dread(struct file * file, char * buffer, int length, int *offset)
+{
+int bytes_read = 0;
+printk("dread %d %d \n", length, *offset);
+while (*MP) {
+put_user(*(MP++) , buffer++);
+bytes_read++;
+}
+return bytes_read;
+}
+struct file_operations fo = {0,dread,0,0,0,0,0,dopen,0,0};
+int init_module()
+{
+printk("init_module\n");
+register_chrdev(251,"cde1",&amp;fo);
+return 0;
+}
+void cleanup_module()
+{
+printk("cleanup_module\n");
+unregister_chrdev(251,"cde1");
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a
+#cat cde1
+hell
+#
+#rmmod a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Here we actually return some data to 'cat'. We initialize MP, a pointer to a char, to the string "hell\n". In the while loop in dread(), we loop while *MP is non-zero. Within the loop, we call put_user() to place the data, character by character, in the buffer, which is in user space (hence put_&lt;i&gt;user&lt;/i&gt;). Remember that we're post-incrementing with ++ so the pointer will shift up &lt;i&gt;after&lt;/i&gt; it's been used. We also increase the buffer pointer. bytes_read is initially 0, but increases to 5, which we then return.</P>
+<P>Now dread() will be called once more because we returned 5 last time. This time, since *MP is alread equal to 0, we won't enter the loop and the bytes_read will be 0. That signals the end of the read operation.</P>
+<P>In this module, we keep returning a 5 in dread(). So 'cat' will return "hell" till we shut it off with a Ctrl+C.</P>
+</FONT><PRE>a.c
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/module.h&gt;
+#include &lt;linux/fs.h&gt;
+#include &lt;asm/uaccess.h&gt;
+char *MP = "hell\n";
+int dopen(struct inode * inode, struct file *file)
+{
+printk("hi\n");
+return 0;
+}
+int dread(struct file * file, char * buffer, int length, int *offset)
+{
+int bytes_read = 0;
+printk("dread %d %d \n", length, *offset);
+while (*MP) {
+put_user(*(MP++) , buffer++);
+bytes_read++;
+}
+return 5;
+}
+struct file_operations fo = {0,dread,0,0,0,0,0,dopen,0,0};
+int init_module()
+{
+printk("init_module\n");
+register_chrdev(251,"cde1",&amp;fo);
+return 0;
+}
+void cleanup_module()
+{
+printk("cleanup_module\n");
+unregister_chrdev(251,"cde1");
+}
+#gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a.c
+#insmod a
+#cat cde1
+hell
+hell
+hell
+^C
+#
+#rmmod a
+
+Programs that you can try
+&nbsp;
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;a9.c</P>
+
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/fs.h&gt;</P>
+<P>#include &lt;asm/uaccess.h&gt;</P>
+<P>char *MP = "hello\n";</P>
+<P>static int drel(struct inode *inode,struct file *file)</P>
+<P>{</P>
+<P>printk("drel\n");</P>
+<P>return 0;</P>
+<P>}</P>
+<P>int dopen(struct inode *inode,struct file *file)</P>
+<P>{</P>
+<P>printk("dopen\n");</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>int dread(struct file *file, char *buffer, int length, int *offset)</P>
+<P>{</P>
+<P>int bytes_read=0;</P>
+<P>while (*MP)</P>
+<P>{</P>
+<P>put_user(*(MP++),buffer++);</P>
+<P>bytes_read++;</P>
+<P>}</P>
+<P>return bytes_read;</P>
+<P>}</P>
+<P>struct file_operations Fops = {0,dread,0,0,0,0,0,dopen,0,drel};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>register_chrdev(251,"cde1",&amp;Fops);</P>
+<P>return 0;</P>
+<P>}</P>
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>unregister_chrdev(251,"cde1");</P>
+<P>}</P>
+
+<P>/*</P>
+<P>#cat cde1</P>
+<P>dopen</P>
+<P>hell</P>
+<P>drel</P>
+<P>*/</P>
+
+<P>a10.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/fs.h&gt;</P>
+<P>#include &lt;asm/uaccess.h&gt;</P>
+<P>char *MP = "hell\n";</P>
+<P>int dwrite(struct file *file, const char *b, int len, int *offset)</P>
+<P>{</P>
+<P>printk("dwrite %c %c %c %c %c %c %d %d\n", b[0],b[1], b[2],b[3], b[4],</P>
+<P>b[5], b[6],len);</P>
+<P>return 7;</P>
+<P>}</P>
+<P>static int drel(struct inode *inode,struct file *file)</P>
+<P>{</P>
+<P>printk("drel\n");</P>
+<P>return 0;</P>
+<P>}</P>
+<P>int dopen(struct inode *inode,struct file *file)</P>
+<P>{</P>
+<P>printk("dopen\n");</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>int dread(struct file *file, char *buffer, int length, int *offset)</P>
+<P>{</P>
+<P>int bytes_read=0;</P>
+<P>while (*MP)</P>
+<P>{</P>
+<P>put_user(*(MP++),buffer++);</P>
+<P>bytes_read++;</P>
+<P>}</P>
+<P>return bytes_read;</P>
+<P>}</P>
+<P>struct file_operations Fops = {0,dread,dwrite,0,0,0,0,dopen,0,drel};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>register_chrdev(251,"cde1",&amp;Fops);</P>
+<P>return 0;</P>
+<P>}</P>
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>unregister_chrdev(251,"cde1");</P>
+<P>}</P>
+<P>/*</P>
+<P>#echo "hell\n" &gt;cde1</P>
+<P>dopen</P>
+<P>dwrite h e l l \ n 10 7</P>
+<P>drel</P>
+<P>*/</P>
+
+<P>&nbsp;</P>
+<P>a11.c</P>
+
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>struct proc_dir_entry O = {0,4,"test",S_IFREG | S_IRUGO,1,0,0,80,0,0,0};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>return proc_register(&amp;proc_root, &amp;O);</P>
+<P>}</P>
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>proc_unregister(&amp;proc_root,O.low_ino);</P>
+<P>}</P>
+
+<P>/*</P>
+<P>#ls -l /proc/test</P>
+<P>-r--r--r--   1 root     root           80 Feb 16 12:38 /proc/test</P>
+<P>#cat /proc/test</P>
+
+<P>*/</P>
+
+<P>a12.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>char *b = "hi bye\n";</P>
+<P>int pread(char *buffer, char ** buffer_location, int offset,</P>
+<P>int blen, int z)</P>
+<P>{</P>
+<P>printk("offset=%d  blen=%d z=%d\n",offset,blen,z);</P>
+<P>if (offset &gt; 0)</P>
+<P>{</P>
+<P>return 0;</P>
+<P>}</P>
+<P>*buffer_location=b;</P>
+<P>return 8;</P>
+<P>}</P>
+<P>struct proc_dir_entry O = {0,4,"test",S_IFREG |</P>
+<P>S_IRUGO,1,0,0,80,0,pread,0};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>proc_register(&amp;proc_root,&amp;O);</P>
+<P>return 0;</P>
+<P>}</P>
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>proc_unregister(&amp;proc_root,O.low_ino);</P>
+<P>}</P>
+<P>/*</P>
+
+<P>#cat /proc/test</P>
+<P>offset=0 blen=3072 z=0</P>
+<P>hi bye</P>
+<P>offset=8 blen=3072 z=0</P>
+<P>*/ </P>
+
+<P>a13.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>char *b = "hi bye\n";</P>
+<P>struct proc_dir_entry O = {0,4,"test",S_IFREG |</P>
+<P>S_IRUGO,1,0,0,80,0,0,0};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>printk("%s..\n",proc_root.name);</P>
+<P>proc_register(&amp;proc_root,&amp;O);</P>
+<P>printk("%s..\n",proc_root.name);</P>
+<P>return 0;</P>
+<P>}</P>
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>proc_unregister(&amp;proc_root,O.low_ino);</P>
+<P>}</P>
+
+<P>/*</P>
+<P>#./y</P>
+<P>/proc..</P>
+<P>/proc..</P>
+
+<P>y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a13.c</P>
+<P>insmod a13</P>
+
+<P>*/</P>
+
+<P>a14.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/sched.h&gt;</P>
+<P>#include &lt;linux/tty.h&gt;</P>
+<P>void print_string(char *str)</P>
+<P>{</P>
+<P>struct tty_struct *my_tty;</P>
+<P>my_tty = current-&gt;tty;</P>
+<P>//my_tty = get_current()-&gt;tty;</P>
+<P>my_tty-&gt;driver.write(my_tty,0,str,strlen(str));</P>
+<P>my_tty-&gt;driver.write(my_tty,0,"\015\012",2);</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>print_string("Module Inserted");</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>print_string("Module Removed");</P>
+<P>}</P>
+<P>/*</P>
+<P>y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a14.c</P>
+
+<P>#insmod a14</P>
+<P>Module Inserted</P>
+<P>#rmmod a14</P>
+<P>Module Removed</P>
+<P>*/</P>
+
+<P>a15.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>printk("Bye\n");</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>struct module *a;</P>
+<P>a = &amp;__this_module;</P>
+<P>printk("%x %x %x %x %d\n",a-&gt;init, init_module,a-&gt;cleanup, cleanup_module, </P>
+<P>a-&gt;uc.usecount.counter);</P>
+<P>a-&gt;uc.usecount.counter++;</P>
+<P>return 0;</P>
+<P>}</P>
+<P>/*</P>
+<P>#./y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a15.c</P>
+<P>cat /proc/modules</P>
+<P>insmod a15</P>
+<P>cat /proc/modules</P>
+
+<P>parport_probe           2980   0 (autoclean) (unused)</P>
+<P>lp                      4476   0 (autoclean) (unused)</P>
+<P>parport                 7124   0 (autoclean) [parport_probe lp]</P>
+
+<P>a15                      168   1 (unused)</P>
+<P>parport_probe           2980   0 (autoclean) (unused)</P>
+<P>lp                      4476   0 (autoclean) (unused)</P>
+<P>parport                 7124   0 (autoclean) [parport_probe lp]</P>
+
+<P>#rmmod a15</P>
+<P>rmmod: a15: Device or resource busy</P>
+<P>*/</P>
+
+<P>&nbsp;</P>
+<P>a16.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>printk("Bye\n");</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>struct module *a;</P>
+<P>a = &amp;__this_module;</P>
+<P>printk("%x %x %x %x %d\n",a-&gt;init, init_module,a-&gt;cleanup, cleanup_module, </P>
+<P>a-&gt;uc.usecount.counter);</P>
+<P>MOD_INC_USE_COUNT;</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>&nbsp;</P>
+<P>/*</P>
+<P>y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a16.c</P>
+<P>cat /proc/modules</P>
+<P>insmod a16</P>
+<P>cat /proc/modules</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>parport_probe           2980   0 (autoclean) (unused)</P>
+<P>lp                      4476   0 (autoclean) (unused)</P>
+<P>parport                 7124   0 (autoclean) [parport_probe lp]</P>
+<P>a16                      172   1</P>
+<P>parport_probe           2980   0 (autoclean) (unused)</P>
+<P>lp                      4476   0 (autoclean) (unused)</P>
+<P>parport                 7124   0 (autoclean) [parport_probe lp]</P>
+
+<P>&nbsp;</P>
+<P>rmmod a16</P>
+<P>rmmod: a16: Device or resource busy</P>
+
+<P>&nbsp;</P>
+<P>*/</P>
+<P>a17.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/modversions.h&gt;</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>printk("hi\n");</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>&nbsp;</P>
+<P>/*</P>
+
+<P>gcc -E a17.c -o a17.o</P>
+
+<P>a17.o</P>
+<P># 3 "a17.c" 2</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>    printk_R1b7d4074            ("hi\n");</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>/usr/include/linux/modules/ksyms.ver</P>
+<P>#define __ver_printk&#9;1b7d4074</P>
+<P>#define printk&#9;_set_ver(printk)</P>
+
+<P>*/</P>
+
+<P>a18.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/fs.h&gt;</P>
+<P>#include &lt;asm/uaccess.h&gt;</P>
+<P>int ret;</P>
+<P>char *MP = "hello\n";</P>
+<P>#define __put_user_x1(x,ptr) __asm__ ("call __put_user_1" : "=a" (ret) : "0" (ptr), "d" (x) :"cx")</P>
+
+<P>int dopen(struct inode *inode, struct file *file)</P>
+<P>{</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>int dread(struct file *file, char *buffer, int length, int *offset)</P>
+<P>{</P>
+<P>int bytes_read=0;</P>
+<P>while (*MP)</P>
+<P>{</P>
+<P>__put_user_x1(*MP,buffer);</P>
+<P>MP++;</P>
+<P>buffer++;</P>
+<P>bytes_read++;</P>
+<P>}</P>
+<P>return bytes_read;</P>
+<P>}</P>
+
+<P>struct file_operations Fops = {0,dread,0,0,0,0,0,dopen,0,0};</P>
+<P>int init_module()</P>
+<P>{</P>
+<P>register_chrdev(251,"cde1",&amp;Fops);</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>unregister_chrdev(251,"cde1");</P>
+<P>}</P>
+
+<P>/*</P>
+<P>y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a18.c</P>
+<P>cat /proc/modules</P>
+<P>insmod a18</P>
+<P>cat /proc/modules</P>
+
+<P>&nbsp;</P>
+<P>cat cde1</P>
+<P>hello</P>
+<P>*/</P>
+
+<P>&nbsp;</P>
+<P>a19.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>#include &lt;asm/uaccess.h&gt;</P>
+<P>static char Message[80];</P>
+
+<P>int module_output(struct file *file, char *buf, size_t len, loff_t *offset)</P>
+<P>{</P>
+<P>static int finished = 0;</P>
+<P>int i;</P>
+<P>char message[80+30];</P>
+<P>if (finished)</P>
+<P>{</P>
+<P>finished=0;</P>
+<P>return 0;</P>
+<P>}</P>
+<P>sprintf(message,"Last input:%s\n",Message);</P>
+<P>for(i=0;i&lt;len &amp;&amp; message[i];i++)</P>
+<P>put_user(message[i], buf+i);</P>
+<P>finished=1;</P>
+<P>return i;</P>
+<P>}</P>
+
+<P>int module_input(struct file *file, const char *buf, int length, loff_t *offset)</P>
+<P>{</P>
+<P>int i;</P>
+<P>for(i=0; i&lt;80 &amp;&amp; i &lt;length; i++)</P>
+<P>get_user(Message[i], buf+i);</P>
+<P>Message[i]='\0';</P>
+<P>return i;</P>
+<P>}</P>
+
+<P>static int module_permission(struct inode *inode, int op)</P>
+<P>{</P>
+<P>if (op == 4 || (op == 2 &amp;&amp; current-&gt;euid == 0))</P>
+<P>return 0;</P>
+<P>return -EACCES;</P>
+<P>}</P>
+
+<P>int module_open(struct inode *inode, struct file *file)</P>
+<P>{</P>
+<P>MOD_INC_USE_COUNT;</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>int module_close(struct inode *inode, struct file *file)</P>
+<P>{</P>
+<P>MOD_DEC_USE_COUNT;</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>static struct file_operations Fops = </P>
+<P>{ 0, module_output, module_input, 0,0,0,0,module_open,0,module_close,0};</P>
+
+<P>static struct inode_operations Iops = </P>
+<P>{&amp;Fops,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,module_permission};</P>
+<P>static struct proc_dir_entry opf = </P>
+<P>{0,7,"rw_test",S_IFREG|S_IRUGO|S_IWUSR,1,0,0,80,&amp;Iops,0};</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>return proc_register(&amp;proc_root, &amp;opf);</P>
+<P>}</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>proc_unregister(&amp;proc_root, opf.low_ino);</P>
+<P>}</P>
+
+<P>/*</P>
+<P>#cat /proc/test</P>
+<P>Last Input:</P>
+<P>#</P>
+<P>*/</P>
+
+<P>&nbsp;</P>
+<P>a20.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>#include &lt;linux/tqueue.h&gt;</P>
+<P>#include &lt;linux/sched.h&gt;</P>
+<P>int TimerIntrpt = 0;</P>
+<P>struct wait_queue *WaitQ = 0;</P>
+<P>static void intrpt_routine(void *irrelevant);</P>
+<P>static struct tq_struct Task = {0,0,intrpt_routine,0};</P>
+<P>static void intrpt_routine(void *irrelevant)</P>
+<P>{</P>
+<P>TimerIntrpt++;</P>
+<P>printk("Timer %d\n",TimerIntrpt);</P>
+<P>if (TimerIntrpt &lt;= 10)</P>
+<P>&#9;queue_task(&amp;Task,&amp;tq_timer);</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>queue_task(&amp;Task, &amp;tq_timer);</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>sleep_on(&amp;WaitQ);</P>
+<P>}</P>
+
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a20.c</P>
+<P>cat /proc/modules</P>
+<P>insmod a20</P>
+<P>cat /proc/modules</P>
+<P>Timer 1</P>
+<P>Timer 2</P>
+<P>Timer 3</P>
+<P>Timer 4</P>
+<P>Timer 5</P>
+<P>Timer 6</P>
+<P>Timer 7</P>
+<P>Timer 8</P>
+<P>Timer 9</P>
+<P>Timer 10</P>
+<P>Timer 11</P>
+
+<P>&nbsp;</P>
+<P>a21.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/proc_fs.h&gt;</P>
+<P>#include &lt;linux/tqueue.h&gt;</P>
+<P>#include &lt;linux/sched.h&gt;</P>
+<P>int TimerIntrpt = 0;</P>
+<P>struct wait_queue *WaitQ = 0;</P>
+<P>static void intrpt_routine(void *irrelevant);</P>
+<P>static struct tq_struct Task = {0,0,intrpt_routine,0};</P>
+<P>static void intrpt_routine(void *irrelevant)</P>
+<P>{</P>
+<P>TimerIntrpt++;</P>
+<P>if (WaitQ != NULL)</P>
+<P>{</P>
+<P>   printk("Timer %d\n",TimerIntrpt);</P>
+<P>   wake_up(&amp;WaitQ);</P>
+<P>}</P>
+<P>else</P>
+<P>{</P>
+<P>    printk("Timer %d\n",TimerIntrpt);</P>
+<P>    queue_task(&amp;Task,&amp;tq_timer);</P>
+<P>}</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>queue_task(&amp;Task, &amp;tq_timer);</P>
+<P>return 0;</P>
+<P>}</P>
+
+<P>void cleanup_module()</P>
+<P>{</P>
+<P>sleep_on(&amp;WaitQ);</P>
+<P>}</P>
+
+<P>&nbsp;</P>
+<P>/*</P>
+<P>y</P>
+<P>gcc -O6 -Wall -DCONFIG_KERNELD -DMODULE -D__KERNEL__ -DLINUX -c a21.c</P>
+<P>cat /proc/modules</P>
+<P>insmod a21</P>
+<P>cat /proc/modules</P>
+<P>Timer 1</P>
+<P>Timer 2</P>
+<P>Timer 3</P>
+
+<P>&nbsp;</P>
+<P>rmmod a21</P>
+
+<P>*/</P>
+
+<P>a22.c</P>
+<P>#include &lt;linux/kernel.h&gt;</P>
+<P>#include &lt;linux/module.h&gt;</P>
+<P>#include &lt;linux/modversions.h&gt;</P>
+<P>#include &lt;linux/sched.h&gt;</P>
+<P>#include &lt;linux/tqueue.h&gt;</P>
+<P>#include &lt;linux/interrupt.h&gt;</P>
+<P>#include &lt;asm/io.h&gt;</P>
+
+<P>void got_char(char *scancode)</P>
+<P>{</P>
+<P>printk("Scan Code %x %s\n",*(scancode) &amp; 0x7F, </P>
+<P>*scancode &amp; 0x80 ? "Released":"Pressed");</P>
+<P>}</P>
+
+<P>void irq_handler(int irq, void *dev_id, struct pt_regs *regs)</P>
+<P>{</P>
+<P>static unsigned char scancode;</P>
+<P>static struct tq_struct task = {NULL,0,got_char,&amp;scancode};</P>
+<P>inb(0x64);</P>
+<P>scancode = inb(0x60);</P>
+<P>queue_task(&amp;task,&amp;tq_immediate);</P>
+<P>mark_bh(IMMEDIATE_BH);</P>
+<P>}</P>
+
+<P>int init_module()</P>
+<P>{</P>
+<P>free_irq(1,NULL);</P>
+<P>return request_irq(1,irq_handler,SA_SHIRQ,"test_keyboard_irq_handler",NULL);</P>
+<P>}</P>
+
+<P>/*</P>
+<P>{Press a}</P>
+<P>Scan Code 1e Pressed</P>
+<P>Scan Code 1e Released</P>
+
+<P>ReBoot </P>
+<P>*/</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</FONT><PRE></PRE></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap5.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

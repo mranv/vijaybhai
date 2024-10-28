@@ -1,0 +1,1081 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:41:03 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="Chap8_files/filelist.html">
+<link rel=Edit-Time-Data href="Chap8_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Nested Classes - C# Nuts and Bolt - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-09-27T12:19:00Z</o:Created>
+  <o:LastSaved>2001-09-27T12:20:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>1182</o:Words>
+  <o:Characters>6738</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>56</o:Lines>
+  <o:Paragraphs>13</o:Paragraphs>
+  <o:CharactersWithSpaces>8274</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:Garamond;
+	panose-1:2 2 4 4 3 3 1 1 8 3;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Cprg, li.Cprg, div.Cprg
+	{mso-style-name:"C\#prg";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Coutput, li.Coutput, div.Coutput
+	{mso-style-name:"C\#output";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Cbase, li.Cbase, div.Cbase
+	{mso-style-name:"C\#base";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:15.0pt;font-family:Garamond;
+color:black'>Chapter 8</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:26.0pt;font-family:Garamond;
+color:black'>Nested Classes</span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Nested classes are classes
+created within existing classes. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A simple example is shown above
+where class yyy is created within class zzz. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>xxx x = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(5,1): error CS0246: The type or namespace name 'xxx'
+could not be found (are you missing a using directive or an assembly
+reference?)<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We are not allowed to use the
+class xxx directly as it exists inside yyy and has no permanent existence at
+all by itself. We cannot even define an object that looks like xxx.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The actual name of class xxx is
+yyy.xxx as it is nested within the class yyy.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int i = 10; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,26): error CS0176: Static member 'yyy.xxx.i' cannot be
+accessed with an instance reference; use typename instead<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The member i is static, hence we
+need the name of the class and not name of object.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.xxx.i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int i = 10; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Static members work the same way
+everywhere. No instance name required, only the name of class or classes.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.j);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int j = 2;<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int i = 100; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,26): error CS0117: 'yyy.xxx' does not contain a
+definition for 'j'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The member j is in the class yyy,
+not in xxx and hence the above error.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.pqr());<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int j = 2;<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int i = 100; <o:p></o:p></p>
+
+<p class=Cprg>public int pqr()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return j;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(22,8): error CS0038: Cannot access a non-static member of
+outer type 'yyy' via nested type 'yyy.xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The nested class xxx cannot
+access the member j in class yyy as it is non-static. The fields of the
+containing class are not automatically available to the nested class.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.pqr());<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int j = 2;<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int i = 100; <o:p></o:p></p>
+
+<p class=Cprg>public int pqr()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return yyy.j;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>2<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The nested class xxx can access
+static members of the class by simply doing what everyone else does, that is
+preface the member with the name of the class.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>yyy.xxx a = new yyy.xxx();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.pqr());<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int j = 2;<o:p></o:p></p>
+
+<p class=Cprg>public xxx abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public int i = 100; <o:p></o:p></p>
+
+<p class=Cprg>public int pqr()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy h = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>return h.j;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>2<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The non-static members can be
+accessed as normal but we have to create an object that looks like yyy.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public yyy()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public xxx()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>yyy<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Creating an object that looks
+like yyy does not create one that looks like the nested class xxx as the
+constructor of class xxx does not get called at all.<o:p></o:p></span></p>
+
+<p class=Cprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.abc();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public yyy()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public static void abc()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>xxx x = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public xxx()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>xxx<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The nested class is independent
+of the containing class it resides in. The static function abc creates an
+object that looks like xxx but the constructor of the class yyy<span
+style="mso-spacerun: yes">  </span>is not executed.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int v = 9;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx : zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a.yyy.v);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(12,28): error CS0572: 'yyy': cannot reference a type
+through an expression; try 'zzz.yyy' instead<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The compiler comes back with the
+right answer. As the member v is static, we have no choice but to use the name
+of the class zzz and then the name of the inner class.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int v;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx : zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>xxx.yyy.v = 5;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The compiler gives no error
+messages. We are allowed to access a static member as shown in the program
+above. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>static void abc(int i)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>static void abc(string s)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>void pqr()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>abc(1);<span style='mso-tab-count:4'>                                      </span><o:p></o:p></p>
+
+<p class=Cprg>abc(&quot;Hello&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>static void abc(long l)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(14,1): error CS1502: The best overloaded method match for
+'zzz.yyy.abc(long)' has some invalid arguments<o:p></o:p></p>
+
+<p class=Coutput>a.cs(14,5): error CS1503: Argument '1': cannot convert from
+'string' to 'long'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The class zzz has two static
+functions abc that accepts an int and a string. The nested class yyy creates
+one more abc that accepts a long. The problem in this is that the two abc's in
+class yyy get hidden. The compiler can convert a number one into a long, but
+cannot convert the string into a long. Remove the abc from class yyy to see the
+error disappear.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz {<o:p></o:p></p>
+
+<p class=Cprg>class yyy : zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The above example does not give
+us a circular reference as the class yyy is derived from class zzz and it is
+also a nested class within zzz. A circular reference occurs only if the class
+zzz in turn is derived from class yyy directly or indirectly. Remember no one
+likes circular references. A class is not dependent upon the classes it nests
+in.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>private static int i4 = 0;<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int i1= 2;<o:p></o:p></p>
+
+<p class=Cprg>internal static int i2 = 1;<o:p></o:p></p>
+
+<p class=Cprg>private static int i3 = 0;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i1= 1; <o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i2= 2; <o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i3= 3; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(15,1): error CS0122: 'zzz.yyy.i3' is inaccessible due to
+its protection level<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The same rules binding access
+modifiers apply to nested classes. The field i1 can be used everywhere. The
+field i2 being internal can be used only in the current project and finally i3
+being private as i4 is used only in class yyy and the containing class zzz. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>private static int i4 = 0;<o:p></o:p></p>
+
+<p class=Cprg>private class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int i1= 2;<o:p></o:p></p>
+
+<p class=Cprg>internal static int i2 = 1;<o:p></o:p></p>
+
+<p class=Cprg>private static int i3 = 0;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i1= 1; <o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i2= 2; <o:p></o:p></p>
+
+<p class=Cprg>zzz.yyy.i3= 3; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(16,1): error CS0122: 'zzz.yyy.i3' is inaccessible due to
+its protection level<o:p></o:p></p>
+
+<p class=Coutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'>Same explanation as above. Only
+difference the nested class yyy is now private and not public but nothing
+changes.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>namespace mmm<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>private class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int i1 = 0;<o:p></o:p></p>
+
+<p class=Cprg>internal static int i2 = 0;<o:p></o:p></p>
+
+<p class=Cprg>private static int i3 = 0;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>zzz.xxx.i1= 1;<span style="mso-spacerun: yes">   </span>// zzz<o:p></o:p></p>
+
+<p class=Cprg>zzz.xxx.i2= 2; // zzz<o:p></o:p></p>
+
+<p class=Cprg>zzz.xxx.i3= 3;<span style="mso-spacerun: yes">  </span>// xxx<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(16,1): error CS0122: 'mmm.zzz.xxx' is inaccessible due to
+its protection level<o:p></o:p></p>
+
+<p class=Coutput>a.cs(17,1): error CS0122: 'mmm.zzz.xxx' is inaccessible due to
+its protection level<o:p></o:p></p>
+
+<p class=Coutput>a.cs(18,1): error CS0122: 'mmm.zzz.xxx' is inaccessible due to
+its protection level<o:p></o:p></p>
+
+<p class=Coutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We have placed everything in a namespace. Now i1 and i2 and
+i3 are not accessible in class yyy. i1 and i2 are accessible in class zzz and
+i3 only in class xxx. The explanation has been given earlier.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:41:07 GMT -->
+</html>

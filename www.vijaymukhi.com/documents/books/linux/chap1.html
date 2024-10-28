@@ -1,0 +1,2390 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap1.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Chap1 </TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=4><P>1. Basics - A New Beginning</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>The good thing about C, is that it has been written for programmers who understand the needs, requirements and expectations of fellow programmers. So, it cuts through the shackles of conventional programming languages and gives you, the programmer, more control. The immense success of C can be attributed to the fact that C talks to the computer one-on-one. No wonder then that C is often termed a "hardcore" programming language.</P>
+</FONT><PRE>1.
+a.c
+main()
+{
+}
+#gcc a.c
+#a.out
+bash: a.out: command not found
+#./a.out
+#
+#gcc a.c -o a
+#./a
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right, this is the simplest C program that one could have. main() marks the starting point of your program and is absolutely essential. The two {}'s hold the code of your program. Right now, we've not put anything in there, so this program won't really do anything, but let's run it anyway.</P>
+<P>Before you can run a C program, you must compile it, turning the human readable source code shown above into machine-readable gobbledygook. Invoke GCC, the GNU C Compiler, from the prompt and pass it the name of the C file, a.c in this instance. The compiler spits out the file a.out (This is the default name of the output file under *nix, for historical reasons).</P>
+<P>Type in </P>
+<P>#a.out</P>
+<P>at the prompt and try it out. </P>
+<P>Whoops! Didn't work, did it? You're supposed to add a ./ in front of the file name to tell the shell to pick up the file from the present working directory.</P>
+<P>We don't get anything as output; the program simply starts up and exits. </P>
+<P>If you wish to give your output file another name instead of the default, pass the -o switch to 'gcc' along with the new name.</P>
+</FONT><PRE>2.
+a.c
+main()
+{
+printf("Hell")
+}
+#gcc a.c -o a
+a.c: In function `main':
+a.c:4: parse error before `}'</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right, that program didn't do much, but this one has (gasp!) one whole line of code in it! printf() is a function. A function is a block of code with a name assigned to it that carries out a certain task. It may or may not accept parameters passed to it containing data. In C, function names are always followed by a pair of ()'s which contain the parameters to be passed, or nothing if no parameters are required. </P>
+<P>Here printf() is a function provided by C which prints out the data string passed to it. The string of data is enclosed within a pair of ""'s.</P>
+<P>Notice that main() is also followed by a pair of ()'s. Yup, it's a function too, but a special one. It is a function that we define (create) ourselves and it's not provided by anyone. printf() on the other hand comes along with C and all we're doing is calling it here.</P>
+<P>You'll pick up this stuff as time goes by, just accept it for now.</P>
+<P>Compile the program and gawk at the error message the compiler spits out. Notice the passing resemblance to English and its terse, abusive nature. Fear not, you'll get used to it.</P>
+<P>Interpreting error messages takes a little time, but it's not too difficult. Just read the messages slowly and think about it.</P>
+<P>a.c: In function `main':</P>
+<P>a.c:4: parse error before `}'</P>
+<P>First comes the name of the file with the error, 'a.c', then the line number where the error is to be found and then the error itself.</P>
+<P>In the first line the compiler tells you that in the file 'a.c', in the function main() we have some errors. The second line then lists the error. Here we're told that on line number 4, there's a 'parse error' before '}'. This means that the compile finds that the syntax of our program is unacceptable and this error occurs before the '}' in line number 4. </P>
+<P>Our error is quite simple. All statements in C must end with a ';'. If they don't the compiler spits at you. So let's remedy that in the next program.</P>
+</FONT><PRE>3.
+a.c
+main()
+{
+printf("Hell");
+}
+#gcc a.c -o a
+#./a
+Hell#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right, in this program, we've put the semi-colon after the function call like we should have and the program compiles properly. Run it and see the string appear on the screen. </P>
+</FONT><PRE>4.
+a.c
+main()
+{
+printf("Hell\n");
+}
+#gcc a.c -o a
+#./a
+Hell
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Let's clean up the output a bit. '\n' is an escape character and it tells printf() to place a new line after the string. In common parlance, printf() will now 'press' Enter/Return after printing out the string. It looks a little better now.</P>
+</FONT><PRE>5.
+a.c
+main()
+{
+printf("Hi ");
+printf("Bye ");
+}
+#gcc a.c -o a
+#./a
+Hi Bye #</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Intuitively, you might expect this program to print out the two words on separate lines. Unfortunately, C is anything but intuitive and instead of displaying the strings on separate lines, it will display them on the same line. </P>
+<P>One has to specify all the details when dealing with C. The compiler isn't clairvoyant and it can't figure out what you want. You have to very explicit in your instructions. The next program shows you the correct way to do it. </P>
+</FONT><PRE>6.
+a.c
+main()
+{
+printf("Hi \n\n");
+printf("Bye \n");
+}
+#gcc a.c -o a
+# ./a
+Hi 
+Bye
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>By placing two '\n's one after the other, we tell printf() to press Enter/Return twice after "Hi". </P>
+</FONT><PRE>7.
+a.c
+main()
+{
+printf("%d \n",10);
+}
+#gcc a.c -o a
+#./a
+10 </PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here is one way to print out a number using printf(). The '%d' is a marker that will be replaced by the number 10. Using markers instead of numbers (or strings) directly makes it easier to format strings. They are also invaluable when we start using variables.</P>
+</FONT><PRE>8.
+a.c
+main()
+{
+printf("%d %d\n",10,20);
+}
+#gcc a.c -o a
+#./a
+10 20</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's how you print out two numbers one after the other. Simple really.</P>
+</FONT><PRE>9.
+a.c
+main()
+{
+i;
+}
+#gcc a.c -o a
+a.c: In function `main':
+a.c:3: `i' undeclared (first use in this function)
+a.c:3: (Each undeclared identifier is reported only once
+a.c:3: for each function it appears in.)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's another one of our programs that generates an error from the very beginning. Read it line by line. All it's saying is that the token 'i' is undeclared. More on this in the next program.</P>
+</FONT><PRE>10.
+a.c
+main()
+{
+int i;
+}
+#gcc a.c -o a
+#./a
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right, here we've declared the variable 'i' to be an int. A variable is a labeled area of memory which we've set aside and which we can refer to as need be. By saying 'i' is an int or integer, we're setting aside 4 bytes of memory for i. </P>
+<P>Variables are one of the corner stones of programming languages. The values they hold can be referred to and changed at will. You'll be using a lot of them when you write programs of your own.</P>
+</FONT><PRE>11.
+a.c
+main()
+{
+int i;
+i=10;
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>A variable is pretty useless unless we use it to hold a value. Here we assign 'i' the value 10 and then print out the value of 'i' in the printf(). What we're actually doing is storing the number 10 in a memory address labeled 'i'. When we wish to access that memory address and print out its value, we use the variable name 'i' to refer to it. </P>
+<P>This program isn't too different from program no. 7, but the next program will demonstrate the uses of variables.</P>
+</FONT><PRE>12.
+a.c
+main()
+{
+int i;
+i=10;
+printf("%d\n",i);
+i=20;
+printf("%d\n",i);
+i=i+5;
+printf("%d\n",i);
+i=i+1;
+printf("%d\n",i);
+i++;
+printf("%d\n",i);
+i+=1;
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+10
+20
+25
+26
+27
+28</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Don't let the length of the program put you off. It's really quite simple. </P>
+<P>Here we declare a variable 'i' and assign it the value 10. We then print out the value of 'i'. So far so good.</P>
+<P>We now give 'i' a new value to hold. The value of 'i' will now be 20. The earlier value of 10 is discarded and lost. The new value is then printed.</P>
+<P>i=i+5;</P>
+<P>This is why variables are such a good idea. Always look at the right side of the equal to sign first. Here we're adding 5 to the present value of 'i' (which is 20 right now) which gives us 20+5; 25. We now print out the value of 'i' which is now equal to 25. </P>
+<P>In a similar manner we add 1 to the current value of 'i', printing out 26.</P>
+<P>i++ is just shortcut for i=i+1. This is a very common way to increment the value of a variable by 1.</P>
+<P>Similarly, i+=1 is the same as saying i=i+1. Rather than repeat the name of the variable twice in the same line, we shorten it thus. In the same way, i-=1 is the same as i=i-1, i*=1 is the same as i=i*1 etc. </P>
+<P>Not too difficult was it?</P>
+</FONT><PRE>13.
+a.c
+main()
+{
+int i;
+char j;
+long k;
+float l;
+double m;
+printf("Sizeof i=%d \n",sizeof(i));
+printf("Sizeof j=%d \n",sizeof(j));
+printf("Sizeof k=%d \n",sizeof(k));
+printf("Sizeof l=%d \n",sizeof(l));
+printf("Sizeof m=%d \n",sizeof(m));
+}
+#gcc a.c -o a
+#./a
+Sizeof i=4 
+Sizeof j=1 
+Sizeof k=4 
+Sizeof l=4 
+Sizeof m=8 </PRE>
+<FONT FACE="Courier New" SIZE=2><P>Earlier in the text we'd mentioned that when we declare 'i' to be an int, the compiler reserves 4 bytes in memory for us. An int is not the only type of datatype there is. A char is 1 byte large, a long is 4 bytes long, a float (for floating point numbers) is 4 bytes large as well while a double is 8 bytes large. The larger the variable, the larger is the value it can hold. char, with only 1 byte to its name can hold a maximum value of 255, while an int can hold up to 4billion </P>
+<P>This program uses the C language keyword sizeof() in conjunction with the function printf() to display the sizes of the various datatyped variables. </P>
+<P>One word of caution. The size of datatypes is not fixed, only their relation to each other is. You can be sure that a long will be larger than or equal to a char on every implementation of C, but you can't be sure that it will be 4 bytes large. In fact, on 16 bit systems (like MS-DOS), an int is 2 bytes large, not 4. That's why sizeof() has been provided so that you can check the size of variables to produce truly portable code. </P>
+</FONT><PRE>14.
+a.c
+main()
+{
+printf("4&gt;2 %d\n",4&gt;2);
+printf("2&lt;4 %d\n",2&lt;4);
+printf("2&gt;4 %d\n",2&gt;4);
+printf("2&gt;=2 %d\n",2&gt;=2);
+printf("2&gt;2 %d\n",2&gt;2);
+printf("2!=3 %d\n",2!=3);
+printf("2!=2 %d\n",2!=2);
+printf("!0 %d\n",!0);
+printf("!4 %d\n",!4);
+printf("!-1 %d\n",!-1);
+}
+#gcc a.c -o a
+#./a
+4&gt;2 1
+2&lt;4 1
+2&gt;4 0
+2&gt;=2 1
+2&gt;2 0
+2!=3 1
+2!=2 0
+!0 1
+!4 0
+!-1 0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we'll quickly run through a list of C operators. Operators are symbols that er.. operate on numbers and return either 0 (for false) or 1 (for true).</P>
+<P>In the first instance we check to see if 4 is greater than (&gt;) 2. Since it is, the operator returns a '1'(for true) which is then displayed by printf().</P>
+<P>Similarly, we check other situations, like is 2 smaller than (&lt;) 4. It is.</P>
+<P>Is 2 greater than (&gt;) 4? No it's not.</P>
+<P>Is 2 greater than or equal to (&gt;=) 2? Yes, 2 may not be greater than 2, but it is equal to it.</P>
+<P>Is 2 greater than (&gt;) 2? No it's not.</P>
+<P>Is 2 not equal to (!=) 3? Yes, 2 is not the same as 3.</P>
+<P>Is 2 not equal to (!=) 2? 2 is equal to 2, so the statement is false.</P>
+<P>The exclamation mark (!) is used to invert the value of a variable. If it's 0, it will become 1 and if it's 1 it will become 0. Here 0, when inverted, will become 1.</P>
+<P>Any non-zero value, when inverted, becomes 0. So !4 is equal to 0.</P>
+<P>The same applies to negative values as well.</P>
+</FONT><PRE>15.
+a.c
+main()
+{
+if(0)
+printf("Hi\n");
+}
+#gcc a.c -o a
+#./a
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>First compile and run this program.</P>
+<P>Instead of seeing a "Hi" as you expected, you get nothing. You end up back on the prompt.</P>
+<P>if() is a C keyword and it's used to control the flow of the program. Computer programs often have to make decisions based on information they receive. Statements like if() are used to evaluate variables and perform actions depending on the result.</P>
+<P>Here we've said 'if(0)'. Under C and most other computer languages, '0' means FALSE. Read like English, the statement is "If the condition is TRUE (any non-zero number), then execute the next statement. If it's FALSE, skip it". </P>
+<P>The next few programs should clear up any doubts you have.</P>
+</FONT><PRE>16.
+a.c
+main()
+{
+if(2)
+printf("Hi\n");
+}
+#gcc a.c -o a
+#./a
+Hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we have 'if(2)' where if() is asked to evaluate a non-zero number. That's always TRUE, so the next statement is executed and the string "Hi" is printed on the screen.</P>
+</FONT><PRE>17.
+a.c
+main()
+{
+if(-2)
+printf("Hi\n");
+}
+#gcc a.c -o a
+#./a
+Hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we prove once more that anything that's non-zero is TRUE. </P>
+</FONT><PRE>18.
+a.c
+main()
+{
+if(0)
+printf("Hi\n");
+printf("Bye\n");
+}
+#gcc a.c -o a
+#./a
+Bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now this is interesting. According to all that we've told you so far, neither of the printf()'s should be called, yet only the first one is ignored. This is because if() only affects the statement after it and no other. So the second printf() is unaffected and does it's job.</P>
+</FONT><PRE>19.
+a.c
+main()
+{
+if(0) {
+printf("Hi\n");
+printf("Bye\n");
+}
+}
+#gcc a.c -o a
+#./a
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Of course, if you want the if() to control more lines of code, all you need to do is use the handy {}'s to group them together. Now both printf()'s will be ignored.</P>
+</FONT><PRE>20.
+a.c
+main()
+{
+if(0) 
+printf("Hi\n");
+else
+printf("Bye\n");
+}
+#gcc a.c -o a
+#./a
+Bye
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we introduce another keyword, else. Notice that else has no ()'s after it and it does no evaluation. Its use is simple. If the if() evaluates to FALSE, then you might want some other lines of code to be executed. Simply place them after an else (grouped together between a pair of {}'s if you have more than one statement). You would read this statement as "if TRUE, print 'Hi', else, print 'Bye'".</P>
+</FONT><PRE>21
+a.c
+main()
+{
+int i;
+i = 6 ;
+if(i) 
+printf("Hi\n");
+if(i &gt;= 5)
+printf("Bye\n");
+}
+#gcc a.c -o a
+#./a
+Hi
+Bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>More fun with if(). In this program we have a variable i, (an int) which we assign the value 6. In the first if(), we're actually saying if(6) (which is a non-zero number and therefor always TRUE) and so the first printf() is called. After that we check to see if 'i' is greater than or equal to (&gt;=)5. Since the value of 'i' is currently 6, which is greater than 5, the if() evaluates to TRUE and the second printf() is printed as well. Check the output and confirm that if you wish.</P>
+</FONT><PRE>22
+a.c
+main()
+{
+int i;
+i = 0 ;
+if(i) 
+printf("Hi\n");
+if(i &gt;= 5)
+printf("Bye\n");
+}
+#gcc a.c -o a
+#./a
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we try out the same program with different values of 'i'. Both statements evaluate to FALSE and therefor neither of the printf()'s are called.</P>
+</FONT><PRE>23
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;=10; i++)
+printf("%d\n",i);
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This program introduces another C keyword, for(). for() is used to create loops, or chunks of code which will be repeated a set number of times or until a condition is met.</P>
+<P>The syntax is simple. </P>
+<P>for(i=0;i&lt;=10;i++) </P>
+<P>In the space between the opening bracket and the first semicolon, we initialize the variable 'i' to 0. This is done only on the first pass through the loop. In the space between the first and second semicolons, we set the condition that must be meet for the loop to continue. In this case, 'i' must remain smaller than or equal to 10 for the loop to work. Finally, we say that at every iteration of the loop, the variable 'i' must be incremented by 1. Examine this closely and you'll see this loop should run from 0 to 10, which it does. </P>
+<P>The for() only affects the statement after it (unless you group a whole bunch of them together using {}'s). It is the second printf() which prints the 11. Why 11 instead of 10? That's simple enough. When 'i' is 10, the for() statement will check to see if it's smaller than or equal to 10 (which it will is) and then increment the value to 11 (i++). The printf() will be called and 10 printed out onto the screen. Now we go up to the for() statement again. 'i' will once more be tested against 10. This time it's 11 and therefor larger than 10. The condition is no longer TRUE and the loop will exit. When it does, the program will carry on downwards and the second printf() will be executed. The current the value of 'i' will then be 11, which is what is printed out.</P>
+</FONT><PRE>24
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;=10; i++)
+{
+printf("%d\n",i);
+printf("%d\n",i);
+}
+}
+#gcc a.c -o a
+#./a
+0
+0
+1
+1
+2
+2
+3
+3
+4
+4
+5
+5
+6
+6
+7
+7
+8
+8
+9
+9
+10
+10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we add a pair of {}'s to include both printf()'s into the loop. Now both printf()'s will be called through each iteration, giving us the same output twice.</P>
+</FONT><PRE>25.
+a.c
+main()
+{
+int i;
+i=0;
+while (i &lt;= 10){
+printf("%d\n",i);
+}
+}
+#gcc a.c -o a
+#./a
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a common type programming error. Infinite loops. This program will loop the loop till you CNTL+C it, shutdown the computer or hell freezes over. The mistake is simple, at no point do we increment 'i'. Since the value of 'i' never increases, i&lt;=10 is always TRUE.</P>
+<P>Here while() is a C keyword. It does exactly what for() does, handle looping. Which one you use is entirely up to you.</P>
+</FONT><PRE>25.
+a.c
+main()
+{
+int i;
+i=0;
+while (i &lt;= 10){
+printf("%d\n",i);
+i++;
+}
+}
+#gcc a.c -o a
+#./a
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>This is a working example of a while() loop. Notice that it contains all the elements of a for() loop, just in different places. 'i' is initialized before the while() (If you initialize it inside the loop, every iteration will set the value back to 0, and you'll have another infinite loop on your hands). The condition is checked by while() itself and the value of 'i' is incremented by the statement 'i++' within the loop. Take care to ensure that the incrementing of the counter takes place within the loop, or you'll have another infinite loop to deal with.</P>
+</FONT><PRE>26.
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;= 10 ; i++)
+if(i &gt;= 3)
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+3
+4
+5
+6
+7
+8
+9
+10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a nice example of for() and if() being used together. We first set up a for() loop which will loop 11 times from 0 to 10 (it's 11 times because we count the starting 0 as well). But we only want to print out the numbers from 3 onwards. All we need to do is add an if() before the printf() and check the value of 'i' before we print. </P>
+<P>Another way to do this would have been to initialize the variable 'i' to 3 in the first place and remove the if().</P>
+</FONT><PRE>27.
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;= 10 ; i++)
+if(i &gt;= 3 &amp;&amp; i &lt;=6)
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+3
+4
+5
+6</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we go into greater depth with the if() statement. '&amp;&amp;' means AND and the usage is straightforward. If 'i' is greater than or equal to 3 AND if 'i' is greater than or equal to 6, print 'i'. So we get the output, 3 4 5 6.</P>
+</FONT><PRE>28.
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;= 10 ; i++)
+if(i &lt;= 3 || i &gt;=6)
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+0
+1
+2
+3
+6
+7
+8
+9
+10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Similarly '||' stands for OR and the usage is the same. Only print out the value of 'i' if 'i' is smaller than or equal to 3 OR if 'i' is greater than or equal to 6.</P>
+</FONT><PRE>29.
+a.c
+main()
+{
+int i;
+i=6;
+printf("%d\n", i==7);
+printf("%d\n",i);
+printf("%d\n", i=7);
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+0
+6
+7
+7</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a simple program to help you differentiate between the assignment operator '=' and the comparison operator '=='.</P>
+<P>Here we assign 'i' the value 6. The first printf() prints 0 because the expression i==7 evaluates to 0. Since the value of 'i' is unchanged, the second printf() prints out 6. Next we change the value of 'i' by saying i=7 and printing out that value. </P>
+</FONT><PRE>30.
+a.c
+main()
+{
+int i;
+for(i=0;i &lt;= 10; i++)
+if (i = 3)
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+3
+3
+3
+3
+3
+3
+3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we have an example of using the assignment operator instead of the comparison one. It should be 'if(i==3)' and since it isn't and 'i' is repetitively assigned the value 3 (which is less than 10), we enter an infinite loop.</P>
+</FONT><PRE>31
+a.c
+main()
+{
+int i;
+for(i=0;i &lt;= 10; i++)
+if (i == 3)
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is the correct way to do it.</P>
+</FONT><PRE>32
+a.c
+main()
+{
+printf("%d\n",65);
+printf("%c\n",65);
+}
+#gcc a.c -o a
+#./a
+65
+A</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In this program, we play around with printf() a bit. printf() is actually a very powerful function and can output data in various formats. </P>
+</FONT><PRE>33
+a.c
+main()
+{
+printf("%d %c\n",66,66);
+printf("%d %c\n",67,67);
+printf("%d %c\n",48,48);
+printf("%d %c\n",49,49);
+printf("%d %c\n",97,97);
+printf("%d %c\n",98,98);
+}
+#gcc a.c -o a
+#./a
+66 B
+67 C
+48 0
+49 1
+97 a
+98 b</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In this program, we print out a whole bunch of characters.</P>
+</FONT><PRE>34
+a.c
+main()
+{
+int i;
+for(i=0; i &lt;= 255; i++)
+printf("%d..%c\n",i,i); 
+}
+#gcc a.c -o a
+#./a
+0..
+1.._
+2..
+3.._
+4.._
+5..
+6.._
+7..
+8.._
+9..&#9;
+10..
+11..
+12..
+13..
+14..
+15.._
+16.._
+17.._
+18.._
+19.._
+20.._
+21.._
+22.._
+23.._
+24.._
+25.._
+26.._
+27.._
+28.."
+29.."
+30..-
+31..
+32.. 
+33..!
+34.."
+35..#
+36..$
+37..%
+38..&amp;
+39..'
+40..(
+41..)
+42..*
+43..+
+44..,
+45..-
+46...
+47../
+48..0
+49..1
+50..2
+51..3
+52..4
+53..5
+54..6
+55..7
+56..8
+57..9
+58..:
+59..;
+60..&lt;
+61..=
+62..&gt;
+63..?
+64..@
+65..A
+66..B
+67..C
+68..D
+69..E
+70..F
+71..G
+72..H
+73..I
+74..J
+75..K
+76..L
+77..M
+78..N
+79..O
+80..P
+81..Q
+82..R
+83..S
+84..T
+85..U
+86..V
+87..W
+88..X
+89..Y
+90..Z
+91..[
+92..\
+93..]
+94..^
+95.._
+96..`
+97..a
+98..b
+99..c
+100..d
+101..e
+102..f
+103..g
+104..h
+105..i
+106..j
+107..k
+108..l
+109..m
+110..n
+111..o
+112..p
+113..q
+114..r
+115..s
+116..t
+117..u
+118..v
+119..w
+120..x
+121..y
+122..z
+123..{
+124..|
+125..}
+126..~
+127..
+128..€
+129..
+130..‚
+131..ƒ
+132..„
+133.....
+134..†
+135..‡
+136..ˆ
+137..‰
+138..Š
+139..‹
+140..Œ
+141..
+142..Ž
+143..
+144..
+145..'
+146..'
+147.."
+148.."
+149..•
+150..-
+151..-
+152..˜
+153..(tm)
+154..š
+155..›
+156..œ
+157..
+158..ž
+159..Ÿ
+160.. 
+161..¡
+162..¢
+163..£
+164..¤
+165..¥
+166..¦
+167..§
+168..¨
+169..(c)
+170..ª
+171..«
+172..¬
+173..­
+174..(r)
+175..¯
+176..°
+177..±
+178..²
+179..³
+180..´
+181..µ
+182..¶
+183..·
+184..¸
+185..¹
+186..º
+187..»
+188..1/4
+189..1/2
+190..3/4
+191..¿
+192..&Agrave;
+193..&Aacute;
+194..&Acirc;
+195..&Atilde;
+196..&Auml;
+197..&Aring;
+198..&AElig;
+199..&Ccedil;
+200..&Egrave;
+201..&Eacute;
+202..&Ecirc;
+203..&Euml;
+204..&Igrave;
+205..&Iacute;
+206..&Icirc;
+207..&Iuml;
+208..&ETH;
+209..&Ntilde;
+210..&Ograve;
+211..&Oacute;
+212..&Ocirc;
+213..&Otilde;
+214..&Ouml;
+215..×
+216..&Oslash;
+217..&Ugrave;
+218..&Uacute;
+219..&Ucirc;
+220..&Uuml;
+221..&Yacute;
+222..&THORN;
+223..&szlig;
+224..&agrave;
+225..&aacute;
+226..&acirc;
+227..&atilde;
+228..&auml;
+229..&aring;
+230..&aelig;
+231..&ccedil;
+232..&egrave;
+233..&eacute;
+234..&ecirc;
+235..&euml;
+236..&igrave;
+237..&iacute;
+238..&icirc;
+239..&iuml;
+240..&eth;
+241..&ntilde;
+242..&ograve;
+243..&oacute;
+244..&ocirc;
+245..&otilde;
+246..&ouml;
+247..÷
+248..&oslash;
+249..&ugrave;
+250..&uacute;
+251..&ucirc;
+252..&uuml;
+253..&yacute;
+254..&thorn;
+255..&yuml;
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This cute little program prints out all the ASCII characters. Your first useful program! </P>
+</FONT><PRE>35
+a.c
+main()
+{
+int i = 'A';
+printf("%d %c\n",i,i);
+i='a';
+printf("%d %c\n",i,i);
+i='0';
+printf("%d %c\n",i,i);
+}
+#gcc a.c -o a
+#./a
+65 A
+97 a
+48 0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we show you how to use the operator. When we say i='A', the value of 'A' under the ASCII standard is stored in 'i'. Just another way to print out all those funky ASCII characters...</P>
+<P>This is getting real good, real fast.</P>
+</FONT><PRE>36
+a.c
+main()
+{
+int i=7;
+printf("%d\n", i=7 != 8);
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+1
+1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right! Enough of that ASCII stuff.</P>
+<P>This program gives us some interesting results. Initially 'i' is equal to 6.</P>
+<P>In the first printf() we have i=7!=8</P>
+<P>Whenever C finds 2 operators in the same line, it stops and ponders. It then processes the statement according to the rules of operator precedence. Just because the equal to (=) comes first in the statement, it doesn't mean it will be executed first. According to this rule whenever C sees a not equal to (!=) and a equal to (=) in the same line, it executes the != part of the statement first. (the rest of the rules of operator precedence will be covered later). So the above statement is broken as :</P>
+<P>7!=8</P>
+<P>which is true hence the value returned is 1. Then we have </P>
+<P>i=1</P>
+<P>Thus the first printf displays 1 and ditto for the second printf. </P>
+</FONT><PRE>37
+a.c
+main()
+{
+int i=7;
+printf("%d\n", (i=7) != 8);
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+1
+7</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In the first printf(), (i=7) evaluates to 7 since we're assigning 'i' a value of 7 and we succeed in doing that. 7 is not equal to 8; this statement is self-evident and true, so the result is 1. The second printf() simply prints out the value of 'i'. </P>
+</FONT><PRE>38
+a.c
+main()
+{
+int i=7;
+printf("%d\n", (i=7) != 7);
+printf("%d\n",i);
+}
+#gcc a.c -o a
+#./a
+0
+7</PRE>
+<FONT FACE="Courier New" SIZE=2><P>More of the same. 'i' is 7 which is equal to 7, so the statement 7!=7 is false. A 0 is returned and printed out, along with the current value of 'i'.</P>
+</FONT><PRE>39
+a.c
+main()
+{
+abc();
+abc();
+}
+abc()
+{
+printf("In abc\n");
+}
+#gcc a.c -o a
+#./a
+In abc
+In abc</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we introduce a new concept, functions. A function is a block of code that can be passed information in the form of parameters and which performs some task. </P>
+<P>Take the example here. We define a function can abc() and place a single call to printf() in it. The function is defined outside the scope of the function main() (Yes, even main is a function, so is printf() for that matter). In main(), we call the function abc() twice in this manner.</P>
+</FONT><PRE>abc();
+abc();</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Since abc() is called twice, the code in it will be executed twice, and so we see two instances of the string "In abc" on the screen when we run the program.</P>
+</FONT><PRE>40.
+a.c
+main()
+{
+abc(10,20);
+}
+abc(int i, int j)
+{
+printf("%d %d \n",i,j);
+}
+#gcc a.c -o a
+#./a
+10 20 </PRE>
+<FONT FACE="Courier New" SIZE=2><P>As I mentioned earlier, functions can be passed information in the form of parameters and this is how it's done.</P>
+<P>abc() is defined as a function which accepts two ints, 'i' and 'j'. The value of these variables is then printed out.</P>
+<P>In main(), we call abc() with two parameters, 10 and 20 in this manner.</P>
+<P>abc(10,20);</P>
+<P>The value of 10 will end up in 'i' and 20 in 'j'. These values are then printed out.</P>
+</FONT><PRE>41
+a.c
+main()
+{
+int p,q;
+p=10; q=20;
+abc(p,q);
+abc(p+10,q-10);
+}
+abc(int i, int j)
+{
+printf("%d %d \n",i,j);
+}
+#gcc a.c -o a
+#./a
+10 20 
+20 10 </PRE>
+<FONT FACE="Courier New" SIZE=2><P>More of the same. Instead of passing the values directly, we first place them in variables and pass those instead. In the next call to abc(), we play with the values before we pass them. The changes are reflected in the output.</P>
+</FONT><PRE>42
+a.c
+main()
+{
+int i;
+i=pqr();
+printf("%d\n",i);
+}
+pqr()
+{
+}
+#gcc a.c -o a
+#./a
+1074816664</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Up until now, we've been passing information to functions, lets see if functions can talk back to us and give us some data in return as well. By writing </P>
+<P>i=pqr() </P>
+<P>we're telling the compiler to place the return value of pqr() in the variable 'i'. Since pqr() is presently empty, we get some random value in return. Time to remedy that.</P>
+</FONT><PRE>43
+a.c
+main()
+{
+int i;
+i=pqr();
+printf("%d\n",i);
+}
+pqr()
+{
+return 100;
+}
+#gcc a.c -o a
+#./a
+100</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The keyword return solves our problem. Now 'i' will contain the value 100.</P>
+</FONT><PRE>44
+a.c
+main()
+{
+int *p;
+char *q;
+long *r;
+printf("%d %d %d\n",sizeof(p),sizeof(q),sizeof(r));
+}
+#gcc a.c -o a
+#./a
+4 4 4</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Time to roll up out sleeves and enter the big bad world of pointers. This is a new class of variable which points to places in memory which contain useful data.</P>
+<P>In this program we show that now matter what you declare a pointer to be, whether char, int or long, it's size will always be 4 bytes (at least on 32 bit Intel machines).</P>
+</FONT><PRE>45
+a.c
+main()
+{
+int *p;
+char *q;
+long *r;
+p=0;q=0;r=0;
+printf("%x %x %x\n",p,q,r);
+p++;q++;r++;
+printf("%x %x %x\n",p,q,r);
+p++;q++;r++;
+printf("%x %x %x\n",p,q,r);
+}
+#gcc a.c -o a
+#./a
+0 0 0
+4 1 4
+8 2 8</PRE>
+<FONT FACE="Courier New" SIZE=2><P>However, the data type the pointer is declared to be does affect its behavior. Here we first point the pointers to the first location in memory. We then increment the pointers by one and print out their location (%x helps with that). When incremented, int and long pointers leap ahead in 4 byte large bounds. A char pointer on the other hand ambles along, increasing by one byte every time.</P>
+</FONT><PRE>46 
+a.c
+main()
+{
+int i;
+printf("%x\n",&amp;i);
+}
+#gcc a.c -o a
+#./a
+bffffa24</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we show you the address of the variable i. 0xbffffa24 is the location in memory where the value of 'i' is stored.</P>
+</FONT><PRE>47 
+a.c
+main()
+{
+char *i;
+short *j;
+long *h;
+i=0;j=0;h=0;
+printf("%x..%x..%x\n",i,j,h);
+i++; j++; h++;
+printf("%x..%x..%x\n",i,j,h);
+i++; j++; h++;
+printf("%x..%x..%x\n",i,j,h);
+i++; j++; h++;
+printf("%x..%x..%x\n",i,j,h);
+}
+#gcc a.c -o a
+#./a
+0..0..0
+1..2..4
+2..4..8
+3..6..c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we demonstrate another datatype, short, which is 2 bytes large. Notice the way a short pointer increases in 2 byte large increments.</P>
+</FONT><PRE>48 
+a.c
+main()
+{
+short i;
+char *p;
+printf("Memory location of i= %x\n",&amp;i);
+i=300;
+printf("Value of i= %d\n",i);
+printf("Memory location of p= %x\n",&amp;p);
+p=&amp;i;
+printf("New Memory location of p= %x\n",p);
+*p=10;
+printf("Value of i= %d\n",i);
+p++;
+printf("Value of p= %x\n",p);
+*p=10;
+printf("Value of i= %d\n",i);
+p++;
+printf("Value of p= %x\n",p);
+*p=100;
+printf("Value of i= %d\n",i);
+}
+Output
+Memory location of i= bffffa26
+Value of i= 300
+Memory location of p= bffffa20
+New Memory location of p= bffffa26
+Value of i= 266
+Value of p= bffffa27
+Value of i= 2570
+Value of p= bffffa28
+Value of i= 2570</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a really important program. Take it slow and easy.</P>
+<P>We first declare two variables, 'i', a short and 'p', a pointer to a char. We then print out the location of the variable 'i' in memory. We then assign 'i' the value 300 and print it out.</P>
+<P>We then print out the memory location 'p'. After that, we point 'p' to the same address as 'i' and print out the new memory location of 'p'. Notice that 'p' now points to the same memory location as 'i'.</P>
+</FONT><PRE>*p=10;
+printf("Value of i= %d\n",i);
+p++;
+printf("Value of p= %x\n",p);
+*p=10;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>When we store a number in memory which is larger than 255 (the maximum value that a single byte can hold), it has to be broken up into segments and stored in several bytes. </P>
+<P>Let's take a number like 300. Now 300 is larger than 255, so it has to be split up over atleast 2 bytes. This obviously means that the number must be split up into two segments and weighted so that we can extract the correct value later. </P>
+</FONT><PRE>49 
+a.c
+main()
+{
+short i;
+short *p;
+printf("Memory location of i= %x\n",&amp;i);
+i=300;
+printf("Value of i= %d\n",i);
+printf("Memory location of p= %x\n",&amp;p);
+p=&amp;i;
+printf("Value of p= %x\n",p);
+*p=10;
+printf("Value of i= %d\n",i);
+p++;
+printf("Value of p= %x\n",p);
+*p=100;
+printf("Value of i= %d\n",i);
+}
+Output
+Memory location of i= bffffa26
+Value of i= 300
+Memory location of p= bffffa20
+Value of p= bffffa26
+Value of i= 10
+Value of p= bffffa28
+Value of i= 10
+50
+a.c
+main()
+{
+long i;
+char *j;
+short *k;
+long *l;
+printf("%x\n",&amp;i);
+i=65536+515;
+printf("%ld\n",i);
+printf("%x\n",&amp;j);
+j=&amp;i;
+printf("%x\n",j);
+*j=10;
+printf("%ld\n",i);
+j++;
+printf("%x\n",j);
+*j=10;
+printf("%ld\n",i);
+i=65536+515;
+k=&amp;i;
+printf("%x\n",k);
+*k=10;
+printf("%ld\n",i);
+k++;
+printf("%x\n",k);
+*k=10;
+printf("%ld\n",i);
+i=65536+515;
+l=&amp;i;
+printf("%x\n",l);
+*l=10;
+printf("%ld\n",i);
+l++;
+printf("%x\n",l);
+*l=20;
+printf("%ld\n",i);
+}
+Output
+bffffa24
+66051
+bffffa20
+bffffa24
+66058
+bffffa25
+68106
+&nbsp;
+bffffa24
+65546
+bffffa26
+655370
+bffffa24
+10
+bffffa28
+10
+51 
+a.c
+main()
+{
+int i,j;
+i=300;
+j=515;
+abc(i,j);
+}
+abc(x,y)
+int x,y;
+{
+printf("%d..%d\n",x,y);
+}
+Output
+300..515</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We're now going to be dealing with another important aspect of C, the stack. This is an area of memory which is used primarily for passing parameters and the like and is pointed to by a stack pointer. </P>
+<P>Take the program shown above. All we're doing is passing the parameters to the function and then displaying them using printf(). </P>
+<P>When the function abc() is called with two parameters, C does a lot of work internally. First, it goes to the memory location of 'i' and picks up the value stored there. It then goes to the memory location of 'j' and picks up the value it find there. It then places these values on the stack.</P>
+<P>Let's assume that the stack pointer currently points to the memory location 104. C will go and place the value of the variable in 'j' (515) at that location and move the stack pointer 4 bytes downwards to 100. </P>
+<P>C will next place the value of the variable 'i' (300) in the bytes following 100 and move the stack pointer 4 bytes down to 96. The function abc() will then be called.</P>
+<P>When abc() comes onto the scene, it doesn't know much, but it does know that it needs two variables. It checks the stack pointer and follows it to the location of the stack. It then pops off the first 4 bytes from 96 to 100 and places the value found in them (300) in the variable 'x', which is 'i's counterpart. Since, abc() wants two parameters, it pops off the next 4 bytes (515) and places them in 'y', 'j's counterpart. The stack pointer is still set to 96, that has not changed.</P>
+<P>abc() then prints out the variables and returns.</P>
+<P>Once main() regains control, it sets the stack pointer back to 104. main() remembers the number of parameters passed and so it takes on the responsibility for setting and resetting the stack pointer. abc() simply uses the data on the stack.</P>
+<P>And that's all there is to it. The stack is a dumping ground for parameters and variables, making the task of passing things around much easier. Notice one quirk though, 'j' is passed into the stack before 'i' and then 'i' is popped back in before 'j'. In the end, the values are in the same position.</P>
+</FONT><PRE>52 
+a.c
+main()
+{
+char i, j;
+i=1;
+j=2;
+abc(i,j);
+}
+abc(x,y)
+int x,y;
+{
+printf("%d..%d\n",x,y);
+}
+Output
+1..2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is an interesting one. Here we're passing two chars to abc() and referring to them as ints within abc() (by default, all variables returned or passed are ints). This should lead to some confusion with both chars being incorporated into the very first int and the second int containing gibberish. </P>
+<P>But the output is absolutely fine, so what happened?</P>
+<P>The answer is simple. The stack pointer always moves in 4 byte increments. Whether it's a char, short, int or long, a variable always occupies 4 bytes on the stack. </P>
+<P>Thus the program works.</P>
+</FONT><PRE>53 
+a.c 
+main()
+{
+int i,j;
+i=300;
+j=515;
+abc(i,j);
+}
+abc(x,y)
+char x,y;
+{
+printf("%d..%d",x,y);
+}
+Output
+44..3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Unfortunately, the converse is not true. Here we try to read in ints stored on the stack into abc() as chars. Since we're only taking in the very first bytes of the variables, we get 44 and 3.</P>
+<P>Lets probe further.</P>
+</FONT><PRE>54 
+a.c 
+main()
+{
+abc();
+}
+abc(x,y)
+int x,y;
+{
+printf("%d..%d",x,y);
+}
+Output
+-1073743288..1073943019</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Whoopse! Here we don't give abc() any parameters but still pop two of them off the stack. When abc() is called, it is unaware that no parameters have been placed on the stack. So it goes the stack and pops of two 4 byte chunks and places the values found in them in 'x' and 'y'. Naturally, these values are totally random and so are the results.</P>
+<P>Thankfully, since ??? main()??? will be doing the cleaning up and the stack pointer is not changed by abc(), the rest of the program is not affected by this mismatch. </P>
+</FONT><PRE>55 
+a.c
+main()
+{
+abc(10,20);
+}
+abc()
+{
+printf("Hi");
+}
+Output
+Hi
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's another interesting program. We're passing two values through the stack, but not picking them up. That's fine because once more, since ???main()??? is doing the cleanup, whether we use the stack or not is immaterial.</P>
+</FONT><PRE>56 
+a.c
+main()
+{
+abc();
+pqr();
+xyz();
+abc();
+}
+abc()
+{
+int i,j;
+printf("%x..%x\n",&amp;i,&amp;j);
+}
+pqr()
+{
+int p,q;
+printf("%x..%x\n",&amp;p,&amp;q);
+}
+xyz()
+{
+int i,j;
+printf("%x..%x\n",&amp;i,&amp;j);
+}
+Output
+bffffa1c..bffffa18
+bffffa1c..bffffa18
+bffffa1c..bffffa18
+bffffa1c..bffffa18</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Let's talk about this stack business a little more.</P>
+<P>Notice the output. The numbers are the same. </P>
+</FONT><PRE>57
+a.c
+main()
+{
+int i;
+printf("%x\n",&amp;i);
+abc();
+}
+abc()
+{
+int i;
+printf("%x\n",&amp;i);
+}
+Output
+bffffa24
+bffffa18
+58 
+a.c
+main()
+{
+int i,j;
+abc(10,20);
+pqr(i,j);
+pqr(10,j);
+abc(i+10,j);
+}
+abc(p,q)
+int p,q;
+{
+printf("%x..%x\n",&amp;p,&amp;q);
+}
+pqr(x,y)
+int x,y;
+{
+printf("%x..%x\n",&amp;x,&amp;y);
+}
+xyz(p,q)
+int p,q;
+{
+printf("%x..%x\n",&amp;p,&amp;q);
+}
+Output
+bffffa18..bffffa1c
+bffffa18..bffffa1c
+bffffa18..bffffa1c
+bffffa18..bffffa1c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+</FONT><PRE>59 
+a.c
+main()
+{
+char *p;
+printf("%x\n",&amp;p);
+p="ABC";
+printf("%x\n",p);
+printf("%s\n",p);
+while (*p)
+{
+printf("%c\n",*p);
+p++;
+}
+}
+Output
+bffffa24
+80484a4
+ABC
+A
+B
+C
+60 
+a.c
+main(argc)
+int argc;
+{
+printf("%d\n",argc);
+}
+Output
+1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>main() is a function like any other and it too is passed parameters. The argc is an int and it contains the number of command line parameters passed to the program at startup. Currently the result is 1 even without any parameters being passed. This is because the program name itself is counted as well.</P>
+<P>Where does the number come from? the stack of course! And who puts it there? The operating system.</P>
+</FONT><PRE>#./a 1 2 3
+4
+#
+Now the result is 4; a + 1 + 2 + 3 = 4.
+61 
+a.c
+main(z)
+int z;
+{
+printf("%d\n",z);
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The program shown above works in exactly the same way as the previous one. The variable 'argc' is not special in anyway. Instead like a lot of things, it's the name traditionally give to this variable.</P>
+</FONT><PRE>62 
+a.c
+main()
+{
+char a[3];
+printf("%d\n",sizeof (a));
+}
+Output
+3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we create an array and then print out the size of the array. An array is a continuous stretch in memory used to store information. It's just like a rather large (where the size is defined at compile time) variable.</P>
+<P>In this program, we create an array of chars which is three units long. The size is three bytes because the array is made up of three bytes (chars).</P>
+</FONT><PRE>63 
+a.c
+main()
+{
+char *a[3];
+printf("%d\n",sizeof (a));
+}
+Output
+12</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we create an array of pointers to chars, three units long. The size this time is 12 because we're storing pointers to chars here, not chars themselves. Pointers are always 4 bytes long; no compromise there.</P>
+</FONT><PRE>&nbsp;
+64 
+a.c
+main(argc, argv)
+int argc;
+char *argv[];
+{
+printf("%s\n",argv[0]);
+printf("%s\n",argv[1]);
+}
+Output
+#./a ab
+./a
+ab</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>We've already shown you one parameter passed to main(), here's another. argv is an array of pointers to chars which stores the actual parameters passed to the program by the user (through the OS). You could see the number of parameters passed using argc, now see the actual parameters themselves. </P>
+<P>The array argv[] contains pointers to strings which hold the actual text of the parameters passed. In the example shown above, argv[0] would contain (let's assume) 100 and argv[1], 104. If we were to go the memory location 100, we'd see the string "./a" and at 104 we'd find "ab". In the printf(), we use '%s'. When using '%s' we pass printf() the address of the string to be displayed. argv[0] contains 100, the address of the first string and argv[1] contains the second string. In this way, using an array of pointers we can easily access these strings.</P>
+</FONT><PRE>65 
+a.c
+main(argc, argv)
+int argc;
+char *argv[];
+{
+int i;
+for(i=1; i&lt;argc; i++)
+printf("%s\n",argv[i]);
+}
+Output
+ab
+abc
+zzz</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's the proper way to do it... This will work for an arbitrary number of parameters.</P>
+</FONT><PRE>66 
+a.txt
+hi
+bye
+a.c
+#include &lt;stdio.h&gt;
+main(argc, argv)
+int argc;
+char *argv[];
+{
+FILE *fp;
+int i;
+fp = fopen (argv[1],"r");
+while ((i=fgetc(fp))!=-1)
+printf("%c", i);
+}
+Output
+#./a a.txt
+hi
+bye
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a great little program that actually does something useful. Think of it as a slimmed down 'cat' program. You pass it the name of a text file and it prints it out onto the screen.</P>
+<P>We'll step through this program one line at a time.</P>
+</FONT><PRE>#include &lt;stdio.h&gt;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a preprocessor directive. It tells the compiler to add in all the lines from the file stdio.h. This file contains function definitions, global variables, and other odds and ends.</P>
+</FONT><PRE>main(argc, argv)
+int argc;
+char *argv[];
+{</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We're familiar with this atleast.</P>
+</FONT><PRE>FILE *fp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we create a pointer to a FILE. FILE isn't an inbuilt C datatype, rather, it's a structure tag defined in stdio.h. </P>
+</FONT><PRE>int i;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we create a variable i.</P>
+</FONT><PRE>fp = fopen (argv[1],"r");</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now call a function fopen() to open up the file passed as the first parameter (argv[1]) for reading ("r"). fp now contains a pointer to a structure which looks like FILE and is called a handle. Handles are variables which themselves contain no useful information. Rather they point to useful data. Since fp points to a structure that contains all the information about the file that we're supposed to read, all further references to that file can be through fp. Other functions can examine fp and get all the information they need to process the file.</P>
+<P>while ((i=fgetc(fp))!=-1)</P>
+<P>Things get more interesting in the while() loop. Examine the innermost parenthesizes first.</P>
+</FONT><PRE>(i=fgetc(fp))</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a function that retrieves a character from a file. Notice that we don't pass it the file name, but instead we give it the file handle. fgetc() will retrieve the file name and other bits of information from the structure that fp points to. The character returned by fgetc() is stored in 'i'.</P>
+<P>C processes statements from the inner parenthesis inwards. The statement will no look like this.</P>
+</FONT><PRE>(i != -1)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>So the while() will check if the character read in is -1. If it isn't, we proceed onwards and print out the character and if it is, we pop out of the loop.</P>
+</FONT><PRE>printf("%c", i);
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In this manner we print out the entire file.</P>
+</FONT><PRE>67 
+b.txt
+good
+bad
+a.c
+#include &lt;stdio.h&gt;
+main(argc, argv)
+int argc;
+char *argv[];
+{
+int i,j;
+FILE *fp;
+for(j=1; j&lt;argc; j++)
+{
+fp=fopen(argv[j],"r");
+while ((i=fgetc(fp))!=-1)
+printf("%c",i);
+}
+}
+Output
+#./a a.txt b.txt
+hi
+bye
+good
+bad</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is the same program, slightly modified to read in and print out multiple files one after the other. The changes are pretty straightforward.</P>
+</FONT><PRE>68 
+a.c
+main()
+{
+int i;
+i=strcmp("Hi","Bye");
+printf("%d\n",i);
+i=strcmp("Hi","Hi");
+printf("%d\n",i);
+}
+Output
+6
+0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Whenever C sees a pair of matching ""'s it stores the string within them at a memory location. In this case strcmp() (string compare) will look like this internally.</P>
+<P>strcmp(&lt;addr of the first string&gt;,&lt;addr of the second string&gt;);</P>
+<P>strcmp() goes to the addresses specified and checks to see if the strings are identical. If they are, it returns zero, if not, a non-zero value is returned.</P>
+</FONT><PRE>69 
+a.c
+main()
+{
+int i;
+char *p;
+i=strcmp("Hi","Bye");
+printf("%d\n",i);
+i=strcmp("Hi","Hi");
+printf("%d\n",i);
+p="ABC";
+i=strcmp(p,"ABC");
+printf("%d\n",i);
+}
+Output
+6
+0
+0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here p is a pointer to a char (char *p) and we point it to the address location of "ABC". Remember that all matching ""'s are replaced with the location of the string in memory. so</P>
+<P>strcmp(p,"ABC");</P>
+<P>is the same as </P>
+<P>strcmp(&lt;addr of the first string&gt;,&lt;addr of the second string&gt;);</P>
+<P>or </P>
+<P>strcmp("ABC","ABC");</P>
+</FONT><PRE>70 
+a.c
+main(argc, argv)
+int argc;
+char *argv[];
+{
+int i;
+i=strcmp(argv[0],"\a");
+if(i==0)
+printf("Hi\n");
+else
+printf("Bye\n");
+}
+Output
+Bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Clueless lamers may decide to play around with your program, renaming 'rm' to 'cp'. To prevent this, you can add in some code to prevent any name changes to the program. Of course, if they have the source, you're out of luck!</P>
+<P>This program checks to see if argv[0] (which is the program name) is the same as "\a" If it is, all is well and we print out "Hi", if not, we print "Bye". You would of course add more appropriate code.</P>
+</FONT><PRE>71 
+a.c
+main()
+{
+printf("A\bC");
+}
+Output
+C</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Just a small factoid and a demonstration of it. The escape character \b stands for backspace. So "A" is deleted even before it can be printed.</P>
+</FONT><PRE>72 
+a.c
+main()
+{
+printf("confusion");
+main();
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a cute one. Call it recursion or general craziness. You'll get an endless string of "confusion" as main() is called over and over again from within itself. Endless hours of enjoyment!!</P>
+</FONT><PRE>73 
+a.c
+int abc();
+main()
+{
+printf("%x\n",abc);
+}
+abc()
+{
+printf("hi");
+}
+Output
+80483e0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>A function is just a block of code and a function name is a label that points to that block of code. Since functions are stored in memory, they too have a starting addresses. The function name points to the start of the function code in memory. So by referring to the function without the ()'s we're asking for it's starting address and not running it. Here we print out the memory location where the function abc() starts.</P>
+</FONT><PRE>74 
+a.c
+main()
+{
+printf("%p\n",abc);
+}
+#gcc a.c -o a
+a.c: In function `main':
+a.c:3: `abc' undeclared (first use in this function)
+a.c:3: (Each undeclared identifier is reported only once
+a.c:3: for each function it appears in.)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>No this won't work for obvious reasons. As the error message states, abc() is undeclared. You can't refer to a function that doesn't exist.</P>
+</FONT><PRE>75 
+a.c
+main()
+{
+printf("%p\n",abc);
+}
+abc()
+{
+printf("hi");
+}
+#gcc a.c -o a
+a.c: In function `main':
+a.c:3: `abc' undeclared (first use in this function)
+a.c:3: (Each undeclared identifier is reported only once
+a.c:3: for each function it appears in.)
+a.c: At top level:
+a.c:6: `abc' used prior to declaration</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Thought you'd got the compiler licked huh? The error message didn't go away when you defined the function, instead two more lines were added to it!</P>
+<P>C insists that functions be declared before they are used. One must state the name, return value and parameter datatypes right at the start even before main(). This is called declaring a function and the declaration itself is called a function prototype. When we actually sit down and create the function later on and add code to it, we're defining it. </P>
+<P>In this program we've defined the function, but not declared it. To rectify this add the line</P>
+<P>int abc();</P>
+<P>at the top or do this.</P>
+</FONT><PRE>76 
+a.c
+abc()
+{
+printf("hi");
+}
+main()
+{
+printf("%x\n",abc);
+}
+Output
+80483c8</PRE>
+<FONT FACE="Courier New" SIZE=2><P>If we define the function itself before main(), we don't need to declare it.</P>
+</FONT><PRE>77 
+a.c
+int abc();
+main()
+{
+printf("%x\n",abc);
+}
+abc()
+{
+printf("hi");
+}
+Output 
+80483e0</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we declare the function using a function prototype and define it later.</P>
+<P>The reason function prototypes are important is because they allow the compiler to perform type checking when it's compiling your code. In other words, they let the compiler catch you if you try to pass four pointers to a function that accepts 2 chars. Error checks become more accurate and that can save your bacon.</P>
+</FONT><PRE>78 
+a.c
+main()
+{
+int (*p)();
+printf("%d\n",sizeof(p));
+}
+Output
+4</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Strange declaration! What is it exactly? It's got an asterix, so it's a pointer, but to what?</P>
+<P>Simply put, p is a pointer to a function that accepts no parameters and returns an int. The format looks a little like this.</P>
+<P>&lt;return value&gt; (*&lt;name of pointer&gt;) (&lt;parameters, if any&gt;)</P>
+<P>The size of p is four, so it is a pointer.</P>
+</FONT><PRE>79 
+a.c
+int abc(); int pqr();
+main()
+{
+int (*p)();
+printf("%d\n",sizeof(p));
+p=abc;
+printf("%x..%x\n",p,abc);
+abc(); p();
+p=pqr;
+printf("%x..%x\n",p,pqr);
+}
+int abc()
+{printf("abc\n");}
+int pqr ()
+{printf("pqr\n");}
+Output
+4
+8048428..8048428
+abc
+abc
+804843c..804843c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's more on pointers to functions and how to use them. In this program, p is a pointer to a function that takes no parameters and returns an int. By saying </P>
+<P>p=abc;</P>
+<P>we point p to the starting address of abc(). Printing out their address, we see they both point to the same location. Saying p() will execute the function abc() because p points to it.</P>
+<P>Think of it this way, the label abc points to the start of the function code, (let's assume it starts at 500). When you say </P>
+<P>abc();</P>
+<P>to call the function, you're actually writing</P>
+<P>500();</P>
+<P>The compiler will go to location 500 in memory and start executing the code from there.</P>
+<P>So when we point p to the start of abc() (which is at 500), and we say</P>
+<P>p();</P>
+<P>We're giving the compiler absolutely the same information. The compiler sees no difference between the two calls.</P>
+<P>Later we point p to the start of pqr() and print out the addresses again.</P>
+</FONT><PRE>80 
+a.c
+#include &lt;stdio.h&gt;
+main(argc,argv)
+int argc;
+char *argv[];
+{
+FILE *fp;
+int i;
+fp = fopen(argv[1],"rb");
+while ((i=fgetc(fp))!=-1)
+{
+printf("%c",i);
+}
+}
+Output
+./a a.txt
+hi
+bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is a simple program that opens a file in a read/binary mode. Binary takes care of non-printable characters too unlike ASCII/text files.</P>
+</FONT><PRE>81 
+a.c
+main(argc,argv)
+int argc;
+char *argv[];
+{
+int i;
+i=atoi(argv[1]);
+printf("%d\n",i);
+printf("%s\n",argv[1]);
+}
+&nbsp;
+Output
+#./a 123
+123
+123</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This program demonstrates a useful function in C named atoi(). It converts strings to actual numbers. In this example, we give the string "123" as a command line argument to './a'. "123" is stored as a string and not a number, so you can't add it to something or subtract from it or anything. It is a string of ASCII characters, not the numbers themselves. If you we're to view their values in memory, you'd see 49,50, and 51, the ASCII values of the characters 1,2, and 3. To convert them into actual numbers that you can manipulate you use atoi(). You just give it the string and grab the int it returns. Here we're just printing them out. </P>
+<P>Remember, they may look the same, but they're very different.</P>
+</FONT><PRE>82 
+a.c
+z.txt
+ABCDEFGHIJK(\n) 
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+int i;
+fp=fopen("z.txt","r");
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek (fp,3,0);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,7,0);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,0,0);
+fseek(fp,4,1);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,3,1);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,-4,1);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,0,1);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+fseek(fp,-2,2);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+}
+Output 
+65..A
+68..D
+72..H
+69..E
+73..I
+70..F
+71..G
+75..K</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Create a file named z.txt with the string ABCDEFGHIJK (end with an Enter/return (\n)) contained within.</P>
+<P>This is a program which will demonstrate the functionality of fseek(), a function which moves the file pointer around.</P>
+<P>We first open up the file and retrieve a single character from it, which we display.</P>
+<P>We then call fseek() for the first time. The first parameter we pass it is the file handle fp. The second parameter tells fseek() to move the file pointer by four characters (A,B,C, the pointer moved ahead by three, is now at D) and the third parameter is 0, which tells fseek() to move the file pointer onwards from the start of the file.</P>
+<P>Now what exactly is the file pointer? It's not a very complicated concept. The file pointer is a pointer (invisible to us) which points at the character to be read in from the file. So when we say fgetc() and read in a character, the file pointer is moved one ahead, so that the next time we say fgetc(), we read in the next character and not the same one again. We use fseek() to manipulate this pointer.</P>
+<P>Keep in mind that everytime we call fgetc(), the current character is printed out and the file pointer is moved ahead by one automatically.</P>
+<P>So anyhow, we read in the fourth character from the start of the file, which is D and print it out.</P>
+<P>We then move to the eighth character from the start of the file (H) and print it out. Right after that, we say </P>
+<P>fseek(fp,0,0);</P>
+<P>Which moves the file pointer back to the start of the file. You don't have to reset the pointer like this, we're just showing you how to do it.</P>
+<P>fseek(fp,4,1);</P>
+<P>Here the second parameter is 4 and the third one is 1 which tells fseek() to move ahead by five characters from its present position. So we get E.</P>
+<P>fseek(fp,3,1);</P>
+<P>Similarly, here we move four positions ahead from our current location and print out I.</P>
+<P>A minus sign means we move backwards from the (1) current position to F.</P>
+<P>fseek(fp,0,1);</P>
+<P>This is a pretty simple. Here we're telling fseek() not to move the pointer anywhere, and the next fgetc() prints out G. Remember, the previous fgetc() had printed out F and moved the file pointer ahead by one.</P>
+<P>fseek(fp,-2,2);</P>
+<P>This tells fseek to go to the end of the file (2, the third parameter) and seek backwards (-2, the second parameter) to the third last character, which is K. Keep in mind that final \n (the Enter/Return) takes up two characters.&gt;</P>
+</FONT><PRE>83 
+a.c
+#include &lt;stdio.h&gt;
+main(argc,argv)
+int argc;
+char *argv[];
+{
+FILE *fp;
+int i,j;
+i=atoi(argv[1]);
+j=atoi(argv[2]);
+fp=fopen(argv[3],"r+b");
+fseek (fp,i-1,0);
+fputc(j,fp);
+}
+#./a 2 65 z.txt
+#cat z.txt
+AACDEFGHIJK</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This program manipulates any file and adds the character specified at the command prompt at the position specified. Here, we take in three command line arguments, convert the first two into integers and open up the last one. We then go to the position specified in the file and place the character specified there.</P>
+<P>Here we replace B with A.</P>
+</FONT><PRE>84 
+a.c
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+int i,j; j=0;
+fp=fopen("z.txt","r");
+while ((i=fgetc(fp))!=-1)
+{
+j++;
+printf("%d\n",i);
+}
+printf("j=..%d\n",j);
+}
+z.txt
+ABC
+DE
+Output
+65
+66
+67
+10
+68
+69
+10
+10
+j=..8</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we read in the characters in the file z.txt and display the ASCII values on the screen along with the final byte count. Notice that it's 8 rather than 5. This is because the \n (Enter/Return) though not displayed, still takes up space in the file. The 10 stands for Line Feed. A single line feed marks the spot where you pressed Enter/Return. ??Two together???</P>
+</FONT><PRE>85 
+z.txt
+ABCDEFGHIJK
+a.c
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+char a[10]; int i;
+fp=fopen("z.txt","r");
+for (i=0;i&lt;=9;i++)
+a[i]='Z';
+for (i=0;i&lt;=9;i++)
+printf("%c\n",a[i]);
+fread(a,8,1,fp);
+for (i=0;i&lt;=9;i++)
+printf("%c\n",a[i]);
+i=fgetc(fp);
+printf("%d..%c\n",i,i);
+}
+Output
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+Z
+A
+B
+C
+D
+E
+F
+G
+H
+Z
+Z
+73..I</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In this program, we open up a file 'z.txt' for reading. We then use a for() loop to initialize every member of the array a[] to Z. We then print out the members of the array using another loop.</P>
+<P>fread(a,8,1,fp);</P>
+<P>We then use fread() to read in 8 units (second parameter) of size 1 (third parameter) into the array 'a' (first parameter) from the file pointed to by file handle fp (fourth parameter). We then print out the new values in a[]. Right at the end we read in one value and print it out.</P>
+<P>Notice that we use 'a' to refer to the start of the memory address for the array 'a[]'. </P>
+<P>Notice that only the first eight members of a[] have new values, the ones we haven't touched as still set to Z.</P>
+<P>Notice also that we haven't bothered with {} around the for() loops. This is because they are needed only if there is more than one statement to use in the loop. Here we've got just one statement, so the {}'s would have been redundant.</P>
+</FONT><PRE>
+86 
+a.c
+main()
+{
+struct
+{
+int i;
+char j;
+long k;
+}zzz;
+printf("%d\n",sizeof(zzz));
+printf("%x\n",&amp;zzz);
+printf("%x\n",&amp;zzz.i);
+printf("%x..%x\n",&amp;zzz.j, &amp;zzz.k);
+zzz.i=10; zzz.i++;
+printf("%d\n",zzz.i);
+}
+Output
+12
+bffffa1c
+bffffa1c
+bffffa20..bffffa24
+11</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a quick and dirty introduction to structures. Structures are convenient ways of grouping related bits of data. They just make life a lot simpler and they're not difficult to understand.</P>
+<P>Here in main, we create a structure zzz using the struct keyword. It contains an int, a char and a long.</P>
+<P>We then print out the sizeof() zzz which is the sum of the size of all the datatypes within it i.e. int + char + long or 4 bytes + 1 byte + 4 bytes = 9 bytes.</P>
+<P>We then print out the starting address of zzz, and the members within it. Notice that the first member 'i' is to be found at the same location as the start of the structure and the rest follow at 4 byte intervals. </P>
+<P>Notice also how we refer to the members within zzz. If we wish to access 'i' we say 'zzz.i'. For 'j' we say 'zzz.j' and so on.</P>
+<P>In the last few lines of the program, we assign 'zzz.i' a value, increment it and then print it out. Nothing to it really.</P>
+<P>Linked list</P>
+</FONT><PRE>87 
+a.c
+#include &lt;malloc.h&gt;
+main()
+{
+char *p;
+p=malloc(100);
+printf("%x\n",p);
+p=malloc(10);
+printf("%x\n",p);
+}
+Output
+8049728
+8049790</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we introduce you to a new but very important function, malloc(). malloc() or memory allocation allocates a certain block of memory for you at run time. This is different from using arrays because their size is hard coded in. However, malloc() can be used at any time to return pointers to vast sections of memory for you to use.</P>
+<P>Here we use 'p', a pointer to a char to hold the return value of malloc() which returns. We first use malloc() to allocate a block in memory 100 bytes large, print out it's starting location and then overwrite 'p' with the starting location of another block 10 bytes large.</P>
+</FONT><PRE>88
+int i;
+main()
+{
+int j;
+for (j=0;j&lt;=5;j++)
+abc();
+}
+abc()
+{
+if (i==0)
+{
+i++;
+printf("%d..\n",i);
+}
+else
+printf("%d\n",i);
+}
+Output
+1..
+1
+1
+1
+1
+1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we call the function abc() from within main() six times by using a loop. 'i' is a global function so it can be accessed by every function in the source file and it's value is not lost when the function ends. Global functions are automatically initialized to 1 by C. In abc() we check the value of 'i'. If it's 1, we're being called for the first time and we print out the value of i with two dots. We then increment the value of 'i' to ensure that the if() statement is never true again.</P>
+<P>The next time abc() is called, the if() will return false and the else will be executed. The value of 'i' is not lost, so 2 is printed 5 times.</P>
+</FONT><PRE>&nbsp;
+89
+a.c
+main()
+{
+int i;
+for (i=0;i&lt;=10;i++)
+printf("%d..\n",i);
+}
+Output
+0..
+1..
+2..
+3..
+4..
+5..
+6..
+7..
+8..
+9..
+10..</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a simple program that loops 11 times (remember, we count from 0) and prints out the value of 'i' each time.</P>
+</FONT><PRE>90
+a.c
+main()
+{
+int i;
+for (i=0;i&lt;=10;i++)
+{
+if (i == 3)
+break;
+printf("%d..\n",i);
+}
+}
+Output
+0..
+1..
+2..</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here, when 'i' becomes equal to 3, we enter the if() statement. The keyword break, breaks out of the loop and we end up at the final braces. The program ends.</P>
+</FONT><PRE>
+91
+a.c
+main()
+{
+char a[1000];
+gets(a);
+printf("%s\n",a);
+}
+#gcc a.c -o a
+/tmp/ccAN41hX.o: In function `main':
+/tmp/ccAN41hX.o(.text+0x11): the `gets' function is dangerous and should not be used.
+#./a
+hi
+hi
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we use gets() to read in a string from the user and we store it in the array 'a[]'. We then print it out. Ideally, we should be using malloc() but what the hell!</P>
+</FONT><PRE>92
+a.c
+main()
+{
+char a[10];
+printf("%s\n",a);
+strcpy(a,"ABC");
+printf("%s\n",a);
+}
+Output
+&euml;ƒ__¤"__¸"__H&uacute;&yuml;¿&euml;__@_
+ABC</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Here we demonstrate that arrays when created are uninitialized. The first printf() outputs gibberish. We then strcpy() (string copy) "ABC" into 'a[]' and that's what we print out next.</P>
+</FONT><PRE>93
+a.c
+struct zzz
+{
+int i,j,k;
+}
+main()
+{
+struct zzz a;
+struct zzz b;
+struct zzz *c;
+a.i=1; a.j=2;
+printf("%x..%d..%d\n",&amp;a,a.i,a.j);
+b.i=10; b.j=20;
+printf("%x..%d..%d\n",&amp;b,b.i,b.j);
+printf("%d\n",sizeof(c));
+c=&amp;a;
+printf("%x\n",c);
+printf("%d\n",c-&gt;i);
+c-&gt;j=3;
+printf("%d\n",a.j);
+c=&amp;b;
+printf("%x\n",c);
+printf("%d\n",c-&gt;i);
+c-&gt;j=4;
+printf("%d\n",b.j);
+}
+Output
+bffffa1c..1..2
+bffffa10..10..20
+4
+bffffa1c
+1
+3
+bffffa10
+10
+4
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's some more on structures.</P>
+<P>We create a structure tag zzz. This is different from a structure because it a new datatype by itself. One can create variables to it and pointers to it too. </P>
+<P>In main() we do just that by typing </P>
+<P>struct zzz a;</P>
+<P>struct zzz b;</P>
+<P>struct zzz *c;</P>
+<P>To create two variables that look like 'zzz' and one pointer to a struct 'zzz'.</P>
+<P>We initialize the members of 'a' to some values and print out the memory location where they are stored along with the values themselves. We then do the same for 'b'.</P>
+<P>After that, we print out the size of 'c' which since it is a pointer, will always be 4.</P>
+<P>We then point 'c' to the start of 'a' and print out its location. It's the same as 'a''s. Now to access the members of 'a' through 'c' we can't use '.', instead we use '-&gt;'. So</P>
+<P>printf("%d\n",c-&gt;i);</P>
+<P>will print out the value of 'a.i'</P>
+<P>c-&gt;j=3;</P>
+<P>and this will change the value of 'a.i' to 3. We play around with 'b' in a similiar manner.</P>
+<P>&nbsp;</P>
+</FONT><PRE>94
+a.c
+struct zzz
+{
+char a[100];
+struct zzz *b;
+}
+main()
+{
+struct zzz a;
+printf("%d\n",sizeof(a));
+}
+Output
+104</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we create a structure tag zzz and place a pointer to itself within it. This is a very useful thing we can do in structures. We create 'a' which looks like 'zzz' and then print out its size which is 100 chars + 1 pointer = 104 bytes. </P>
+</FONT><PRE>95
+a.c
+#include &lt;malloc.h&gt;
+struct zzz
+{
+char a[100];
+struct zzz *b;
+};
+struct zzz *root, *new, *prev;
+char z[100];
+main()
+{
+gets(z);
+while (strcmp (z,"QUIT"))
+{
+abc();
+gets(z);
+}
+pqr();
+}
+abc()
+{
+if(root==0)
+{
+root = malloc(104);
+strcpy(root-&gt;a,z);
+root-&gt;b=0;
+prev=root;
+}
+else
+{
+new = malloc(104);
+strcpy(new-&gt;a,z);
+new-&gt;b=0;
+prev-&gt;b=new;
+prev=new;
+}
+}
+pqr()
+{
+while (root!=0)
+{
+printf("%s\n",root-&gt;a);
+root=root-&gt;b;
+}
+}
+Output
+hi
+bye
+QUIT
+hi
+bye
+#
+
+96
+a.c
+main()
+{
+printf("%d\n",GUJJU);
+}
+#gcc a.c -o a
+a.c: In function `main':
+a.c:3: `GUJJU' undeclared (first use in this function)
+a.c:3: (Each undeclared identifier is reported only once
+a.c:3: for each function it appears in.)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Type this in and gawk at the pretty errors.</P>
+</FONT><PRE>97
+a.c
+#define GUJJU 420
+main()
+{
+printf("%d\n",GUJJU);
+}
+Output
+420</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Quite obviously, we can't use GUJJU until we tell the compiler what it is. Here we use a preprocessor directive to set GUJJU to 420. What this tells the compiler to do is replace every instance of the word GUJJU with the number 420. This is called a MACRO and by convention they're always in uppercase.</P>
+</FONT><PRE>98
+a.c
+main()
+{
+int i,j; char a[100];
+i=10; j=20;
+printf("%d..%d\n",i,j);
+sprintf(a,"%d..%d\n",i,j);
+printf("%s\n",a);
+}
+Output
+10..20
+10..20</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we demonstrate the functioning of sprintf(). This function works just like printf() but unlike printf(), it outputs the formatted string to a location in memory instead of to the screen.</P>
+<P>So we place the contents of the string into the array 'a[]' and then print out the array. </P>
+</FONT><PRE>99
+a.c
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+int i,j;
+i=10; j=20;
+printf("%d..%d\n",i,j);
+fp=fopen("z.c","w");
+fprintf(fp,"%d..%d\n",i,j);
+}
+Output
+10..20
+#cat z.c
+10..20</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Here is another nifty function, fprintf() which prints to a file handle instead of to the screen. Very useful when you want to write formatted strings to disk.</P>
+</FONT><PRE>100
+a.c
+# include&lt;malloc.h&gt;
+struct zzz
+{
+&#9;char a[100];
+&#9;int freq;
+&#9;struct zzz *b;
+};
+struct zzz *root , *prev , *curr, *new1;
+char z[100]; int dup;
+main()
+{
+&#9;gets(z);
+&#9;while (strcmp(z,"quit"))
+&#9;{
+&#9;&#9;abc();
+&#9;&#9;gets(z);
+&#9;}
+&#9;pqr();
+}
+abc()
+{
+&#9;if(root==0)
+&#9;{
+&#9;&#9;root = malloc(106);
+&#9;&#9;strcpy(root-&gt;a,z);
+&#9;&#9;root-&gt;b = 0;
+&#9;&#9;root-&gt;freq = 1;
+&#9;}
+&#9;else
+&#9;{
+&#9;&#9;if(strcmp(z,root-&gt;a) &lt;0)
+&#9;&#9;{
+&#9;&#9;&#9;new1 = malloc(106);
+&#9;&#9;&#9;strcpy(new1-&gt;a,z);
+&#9;&#9;&#9;new1-&gt;freq = 1;
+&#9;&#9;&#9;new1-&gt;b = root;
+&#9;&#9;&#9;root = new1;
+&#9;&#9;}
+&#9;&#9;else
+&#9;&#9;{
+&#9;&#9;curr = root;
+&#9;&#9;dup=1;
+&#9;&#9;while(curr!=0)
+&#9;&#9;{
+&#9;&#9;&#9;if(strcmp(z,curr-&gt;a) == 0)
+&#9;&#9;&#9;{
+&#9;&#9;&#9;&#9;curr-&gt;freq++;
+&#9;&#9;&#9;&#9;dup=0;
+&#9;&#9;&#9;&#9;break;
+&#9;&#9;&#9;}
+&#9;&#9;&#9;if(strcmp(z,curr-&gt;a) &lt;0)
+&#9;&#9;&#9;{
+&#9;&#9;&#9;&#9;new1 = malloc(106);
+&#9;&#9;&#9;&#9;strcpy(new1-&gt;a,z);
+&#9;&#9;&#9;&#9;new1-&gt;freq = 1;
+&#9;&#9;&#9;&#9;prev-&gt;b = new1;
+&#9;&#9;&#9;&#9;new1-&gt;b = curr;
+&#9;&#9;&#9;&#9;dup=0;
+&#9;&#9;&#9;&#9;break;
+&#9;&#9;&#9;}
+&#9;&#9;&#9;prev = curr;
+&#9;&#9;&#9;curr = curr-&gt;b;
+&#9;&#9;}
+&#9;&#9;if(dup==1)
+&#9;&#9;{
+&#9;&#9;&#9;new1 = malloc(106);
+&#9;&#9;&#9;strcpy(new1-&gt;a,z);
+&#9;&#9;&#9;new1-&gt;freq = 1;
+&#9;&#9;&#9;new1-&gt;b=0;
+&#9;&#9;&#9;prev-&gt;b=new1;
+&#9;&#9;}
+&#9;}
+}
+}
+pqr()
+{
+&#9;while(root)
+&#9;{
+&#9;&#9;printf("%s..%d\n",root-&gt;a,root-&gt;freq);
+&#9;&#9;root = root-&gt;b;
+&#9;}
+}</PRE></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap1.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

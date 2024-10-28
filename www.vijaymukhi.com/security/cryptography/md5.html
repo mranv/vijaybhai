@@ -1,0 +1,1837 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/cryptography/md5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:40:27 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="md5_files/filelist.html">
+<title>Message Digest </title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Mr. Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>9</o:Revision>
+  <o:TotalTime>3019</o:TotalTime>
+  <o:LastPrinted>2004-07-10T10:29:00Z</o:LastPrinted>
+  <o:Created>2004-07-24T06:58:00Z</o:Created>
+  <o:LastSaved>2004-03-29T11:11:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>4480</o:Words>
+  <o:Characters>25539</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>212</o:Lines>
+  <o:Paragraphs>51</o:Paragraphs>
+  <o:CharactersWithSpaces>31363</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+h6
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	color:#000066;
+	mso-text-raise:3.0pt;
+	letter-spacing:1.0pt;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<table border=1 cellspacing=0 cellpadding=0 width="100%" bgcolor="#eeeeff"
+ style='width:100.0%;background:#EEEEFF;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td width="100%" valign=top style='width:100.0%;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <h6>MD5 (Message Digest Algorithm )<sup><span style='mso-text-raise:0pt'><o:p></o:p></span></sup></h6>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int a,b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0x30000003;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (b &lt;&lt; 3) | (b &gt;&gt; 29);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%x\n&quot;,a);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%x\n&quot;,b&lt;&lt;3);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%x\n&quot;,b&gt;&gt;29);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>80000019<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>80000018<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>When we right shift a byte by 3, the three leftmost bits
+get thrown off the byte. The same occurs when we left shift a byte, the top
+bits disappear into thin air. What we would like to do for various reasons is
+to rotate bits in a byte but the bits that lie on the edge do not disappear
+into thin air but actually rotate back into the byte. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>In our example the 3 lets us have the first 2 bits on.
+When we shift them to the left, we should get an answer of 18 and not 19 that
+we see.<span style="mso-spacerun: yes">  </span>This is because bits 1 and 2
+now become bits 4 and 5. If we simply left shift b by three we get 80000018.
+Lets move on to the second part.<o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>By shifting the bits to the left will throw off the top
+three bits so we now also right shift all the bits to the right by 29, which
+throws off all but the last bits which become the first three. From the end we
+have two of the last four bits on or in other word the last three and four bits
+are on. By shifting 29 to right the third<span style="mso-spacerun: yes"> 
+</span>last bit becomes 1 and the fourth last bit disappears.<o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>When we bit wise or the two, the effect is off a
+rotation. What we are planning to do in the first few programs is to break up
+the MD5 program into manageable smaller programs. The next program explains
+how.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#define ROTATE_LEFT(x, n) (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32-(n))))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int a,b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0x30000003;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT (b,3);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%x\n&quot;,a);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>80000019<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The MD5 code written by Ron Rivest who created for RSA
+labs, he is the R of RSA wrote the MD5 algorithm. RFC 1321 describes this
+algorithm and also gives us a reference implementation. What we plan to do is
+explain is the reference code written by the man himself. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Obviously we can not go wrong if we understand the code
+written by the master himself. Nobody can do a better job on the MD5 algorithm
+than the person who designed the algorithm. What we will do is break up his
+code into manageable chunks.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#define ROTATE_LEFT(x, n) (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32-(n))))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int a,b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0x30000003;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT (b,3);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%x\n&quot;,a);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The reference implementation uses a macro ROTATE_LEFT
+that rotates a value a certain number of times. When we write macros, we use
+round brackets a lot even when not necessary. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>To sum up, the macro ROTATE_LEFT<span
+style="mso-spacerun: yes">  </span>first shifts the bytes say three to the left.
+This results in the first three bits being zeroes and the last three bits being
+thrown off. Then we rotate the bits by 29 resulting in the last three bits
+becoming the first three bits. We now bit wise or the above two to get a actual
+rotation and not a shift.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;math.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbc(char i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m,n;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>n = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(9);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(10);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[8] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[9] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 7 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[7-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 7; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbs(short i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(17);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(20);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[16] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[19] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 15 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[15-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 15; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3 || j == 7 || j == 11)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbi(unsigned int i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(33);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(40);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[32] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[39] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 31 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[31-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 31; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3 || j == 7 || j == 11 || j == 15 || j == 19 || j == 23 || j == 27)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int i = 0xfedc4321;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char j = 0xfe;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned short k = 0xfedc;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s %02x\n&quot;,printbc(j),j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s %04x\n&quot;,printbs(k),k);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s %08x\n&quot;,printbi(i),i);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 1110 fe<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 1110 1101 1100 fedc<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 1110 1101 1100 0100 0011 0010 0001 fedc4321<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The function printf has a zillion options and we bet no
+one can remember all its myriad options. The printf function allows you to
+display different types of data but it does not display data the way we want,
+and that is in binary. It displays the values of variables in hex, but there is
+no way we can see the actual bit pattern. We thus had no choice but o write our
+own series of print functions that will display the bit pattern of a number. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We need three such functions as the numbers can be 8 bit,
+char or 16 bit short or finally 32 bits or int or long. The code remains nearly
+the same so lets start with a char or 8 bits using the printbc function. We
+first allocate 9 bytes for an array of chars to store the entire bit pattern,
+the last extra byte is for the zero. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>After storing the bit pattern we would like to have a
+space after every bits displayed and thus create another array b which is one
+larger as we need to introduce only one space. We null terminate each array
+writing a zero to the last member of the array. We then come across a for loop
+that iterates 8 times as there are 8 bits in a byte. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Each time in the loop we would like to extract one bit at
+a time. We thus need to bit wise and the parameter I with 0x1, 0x2, 0x4 etc,
+i.e. powers of 2 so that only one bit is 1 at one iteration of the loop. We use
+the pow function that raises the first parameter 2 to the power of the second
+which is 2.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The pow function returns a double that we cast to a int
+l. We then bit wise and I and l and store this value into m. The value of m
+will be such that it will have all the bits as 0 and may have only one bit as
+zero or 1. This bit will be in the first position for the first iteration of
+the loop, second position when j is 1 and third position when j is 2. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We would need to make this bit the first bit n the byte
+and thus we right shift m that many bytes to the right using the loop variable
+j. Thus the first time in the loop we need no shifting, the second time as the
+second bit is 0 or 1, we right shift only once. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We cannot display the bit in the first iteration as this
+is the first bit and it needs to be displayed last. Thus we store all the bits
+first into an array a and as m is 0 or 1, we need to add 48 to this to store a
+ASCII 0 or 1 in the array. Also we need to store this value at the end of the
+array at byte 7 to be precise. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Thus the array offset is 7 –j so that at the second
+iteration, the value is stored at index offset 6 as j is 1. Now that we have
+our string we now need to copy it into the array b, but with a space. We have 8
+bits from the array a to be copied, but we need a extra space, so that the
+number of bits to be copied is 9 but the for loop will yet be executed 8 times.
+<o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The value of j goes from 0 to 7 and we use this value as
+an offset for the array a. The variable I is used to index array b and till the
+value of j is 3, both I and j have the same values. The minute j touches 3
+which means that we have written 4 bits, we add a space to the array b at
+position I+1 as at position I we have just written a byte. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We then increase I by 1 and from now on I will be larger
+than j by 1. This is how we add a space to the array b and then w return this
+array. The printbs function displays the 16 bits of a short. The array b is now
+3 larger as we have 3 spaces to display. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The for loop goes on 16 times instead of 8. In the last
+for loop we add a space when j is 3 or 7 or 11. The printbi function displays
+the 32 bits of a long. Here we need to add 7 more spaces and thus we make the
+array b 40 larger. The for loop now iterates 32 times and we then finally add
+the 7 spaces.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>main()<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>{<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>int i,j,k;<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>i = 5;<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>j = 10;<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>printf(&quot;%d %d\n&quot;,i+j, i | j);<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>i = 3;<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>j = 6;<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>printf(&quot;%d %d\n&quot;,i+j, i | j);<br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></pre><pre style='margin-top:0in;margin-right:.5in;
+margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'>}<o:p></o:p></span></pre><pre style='margin-top:0in;
+margin-right:.5in;margin-bottom:0in;margin-left:.5in;margin-bottom:.0001pt'><span
+style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>15 15<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>9 7<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>One question that always bothers us is when to use bit
+oring and when to add. In the first printf both give us the same answer, whereas
+in the second case we get a different answer. Thus the rule is that whenever
+two numbers do not share any bit positions whose value is 1, it does not matter
+whether we bit wise or or add. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Thus as 5 and 10 have no 1 in the same position we can
+use any of the two. In the second case the second is on in both and hence
+bitwise oring and plus give us different answer. In the above function F, x and
+not x will never share a 1 in the same position and the bitwise or could be
+replaced by a plus.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;math.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double f = sin(3);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>long i;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;sin=%f\n&quot;,f);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i = abs(f *4294967296);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;i=%08x\n&quot;,i);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>sin=0.141120<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i=242070db<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The above example uses the sin function that takes a
+value in radians. We multiply this returned value by a constant number
+4294967296 and then remove the negative sign if any using the abs function. In
+the MD5 algorithm we need to do something 64 times. Each time we need to add a
+number which is calculated using the above formula. The only change is that the
+parameter to the sin function will vary from 1 to 64. <o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;math.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbc(char i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m,n;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>n = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(9);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(10);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[8] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[9] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 7 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[7-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 7; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define F(x, y, z) (((x) &amp; (y)) | ((~x) &amp; (z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int a,b,c,f;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = 0xf0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0x22;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>c = 0x35;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>f = F(a,b,c);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(a));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(b));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(c));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(f));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 0000 0010 0010 0011 0101<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0010 0101<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Most of the above program has been done before, it is the
+printbc function. In the function main, we have three variables a,b and c. The
+variable a has a value 0xf0 which makes the first four bits as zero and the
+last four bits are 1. We then call a macro F which we have stolen from the MD5
+code. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>All that this macro does is first bitwise and the first
+two parameters and then bitwise and the not of x and z. Finally it bitwise or’s
+them together. The net result of this exercise is that the result of this macro
+is a bitwise if statement. If the first bit of x is 1 or true , then the first
+bit of y is the answer, if 0 or false then the first bit of z is used. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>This process carries on for all 8 bits. As we have chosen
+the value of a or x as the first 4 bits 0 and the last four bits 1, the output
+is the first four bits of z and the last four bits of y. In mathematics this is
+called selection or bit wise anding. <o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;math.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbc(char i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m,n;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>n = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(9);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(10);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[8] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[9] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 7 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[7-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 7; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define G(x, y, z) (((x) &amp; (z)) | ((y) &amp; (~z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int a,b,c,f;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = 0xf0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0xf0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>c = 0x35;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>f = G(a,b,c);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(a));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(b));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(c));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(f));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 0000 1111 0000 0011 0101<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 0000<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We now use another macro G which acts as a majority
+function. The final bits depend upon a simple majority vote. Lets start with
+the lowest bit. We have two zeroes and a 1. The majority is a 0 and hence the
+output bit is 0. Lets take the highest bit of each byte. The first two bytes
+have a value of 1, the third a value of 0, majority wins and the bit value is
+1. <o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>0001 0000 0001 0100 0001 0110<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0001 0010<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The above case uses a macro H to simulate the parity
+function. The first bit of each byte is 0 and hence the output bit is 0. We
+then take the second bit of the last byte as 1 and as there is only a single
+bit as 1, the output is 1 and this is called odd parity. The third bit has two
+ones in the second and third byte and thus the third bit is 0. Finally all the
+bytes have the fifth bit as 1 and hence the fifth bit is 1.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;math.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char * printbc(char i)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int j,l,m,n;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *a,*b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>n = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = (char *)malloc(9);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = (char *)malloc(10);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[8] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[9] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for( j = 0 ; j &lt;= 7 ; j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>double k = pow(2,j);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>l = k;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = i &amp; l;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>m = m &gt;&gt; j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a[7-j] = m + 48;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>for(i = 0,j = 0 ; j &lt;= 7; i++,j++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i] = a[j];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>if ( j == 3)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b[i+1] = 32;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>i++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>return b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define I(x, y, z) ((y) ^ ((x) | (~z))) <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>main()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int a,b,c,f;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = 0x02;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0x12;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>c = 0x16;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>f = I(a,b,c);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(a));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s &quot;,printbc(b));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(c));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%s\n&quot;,printbc(f));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0000 0010 0001 0010 0001 0110<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1111 1001<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0 0 0<span style="mso-spacerun: yes">   </span>1<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>1 1 1<span style="mso-spacerun: yes">   </span>0 <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0 0 1<span style="mso-spacerun: yes">   </span>0<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0 1 1<span style="mso-spacerun: yes">   </span>1<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>Explanation later<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define F(x, y, z) (((x) &amp; (y)) | ((~x) &amp; (z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define G(x, y, z) (((x) &amp; (z)) | ((y) &amp; (~z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define H(x, y, z) ((x) ^ (y) ^ (z))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define I(x, y, z) ((y) ^ ((x) | (~z))) <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define ROTATE_LEFT(x, n) (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32-(n))))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define FF(a, b, c, d, x, s, ac) \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>{(a) += F ((b), (c), (d)) + (x) + (unsigned int)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define GG(a, b, c, d, x, s, ac) \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>{(a) += G ((b), (c), (d)) + (x) + (unsigned int)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define HH(a, b, c, d, x, s, ac) \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>{(a) += H ((b), (c), (d)) + (x) + (unsigned int)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define II(a, b, c, d, x, s, ac) \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>{(a) += I ((b), (c), (d)) + (x) + (unsigned int)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>(a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int i,bytes,in[16],a,b,c,d;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FILE *fp;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *p;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void main ()<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>fp = fopen(&quot;a.txt&quot;, &quot;rb&quot;);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = 0x67452301;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = 0xefcdab89;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>c = 0x98badcfe;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>d = 0x10325476;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>bytes=fread (in, 1, 1024, fp);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p = (char *)in;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p[bytes] = 0x80;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>in[14] = bytes &lt;&lt; 3;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>in[15] = bytes &gt;&gt; 29;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += ((b &amp; c) | (~b &amp; d))<span style="mso-spacerun: yes">  </span>+ in[0] + 3614090360;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT(a, 7); <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>//FF( a, b, c, d, in[ 0], 7, 3614090360);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( d, a, b, c, in[ 1], 12, 3905402710);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( c, d, a, b, in[ 2], 17,<span style="mso-spacerun: yes">  </span>606105819);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( b, c, d, a, in[ 3], 22, 3250441966);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( a, b, c, d, in[ 4], 7, 4118548399);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( d, a, b, c, in[ 5], 12, 1200080426);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( c, d, a, b, in[ 6], 17, 2821735955);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( b, c, d, a, in[ 7], 22, 4249261313);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( a, b, c, d, in[ 8], 7, 1770035416);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( d, a, b, c, in[ 9], 12, 2336552879);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( c, d, a, b, in[10], 17, 4294925233);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( b, c, d, a, in[11], 22, 2304563134);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( a, b, c, d, in[12], 7, 1804603682);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( d, a, b, c, in[13], 12, 4254626195);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( c, d, a, b, in[14], 17, 2792965006);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>FF( b, c, d, a, in[15], 22, 1236535329);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += ((b &amp; d) | (c &amp; ~d)) + in[1] + 4129170786; <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT (a,5);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>//GG( a, b, c, d, in[ 1], 5, 4129170786);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( d, a, b, c, in[ 6], 9, 3225465664);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( c, d, a, b, in[11], 14,<span style="mso-spacerun: yes">  </span>643717713);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( b, c, d, a, in[ 0], 20, 3921069994);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( a, b, c, d, in[ 5], 5, 3593408605);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( d, a, b, c, in[10], 9,<span style="mso-spacerun: yes">   </span>38016083);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( c, d, a, b, in[15], 14, 3634488961);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( b, c, d, a, in[ 4], 20, 3889429448);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( a, b, c, d, in[ 9], 5,<span style="mso-spacerun: yes">  </span>568446438);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( d, a, b, c, in[14], 9, 3275163606);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( c, d, a, b, in[ 3], 14, 4107603335);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( b, c, d, a, in[ 8], 20, 1163531501);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( a, b, c, d, in[13], 5, 2850285829);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( d, a, b, c, in[ 2], 9, 4243563512);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( c, d, a, b, in[ 7], 14, 1735328473);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>GG( b, c, d, a, in[12], 20, 2368359562);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += (b ^ c ^ d) + in[5]<span style="mso-spacerun: yes">  </span>+ 4294588738;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT(a,4); <o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>//HH( a, b, c, d, in[ 5], 4, 4294588738);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( d, a, b, c, in[ 8], 11, 2272392833);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( c, d, a, b, in[11], 16, 1839030562);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( b, c, d, a, in[14], 23, 4259657740);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( a, b, c, d, in[ 1], 4, 2763975236);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( d, a, b, c, in[ 4], 11, 1272893353);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( c, d, a, b, in[ 7], 16, 4139469664);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( b, c, d, a, in[10], 23, 3200236656);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( a, b, c, d, in[13], 4,<span style="mso-spacerun: yes">  </span>681279174);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( d, a, b, c, in[ 0], 11, 3936430074);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( c, d, a, b, in[ 3], 16, 3572445317);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( b, c, d, a, in[ 6], 23,<span style="mso-spacerun: yes">   </span>76029189);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( a, b, c, d, in[ 9], 4, 3654602809);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( d, a, b, c, in[12], 11, 3873151461);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( c, d, a, b, in[15], 16,<span style="mso-spacerun: yes">  </span>530742520);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>HH( b, c, d, a, in[ 2], 23, 3299628645);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += (c ^ (b | ~d))<span style="mso-spacerun: yes">  </span>+ in[0]<span style="mso-spacerun: yes">  </span>+ 4096336452;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = ROTATE_LEFT (a,6);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a += (b);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>//II( a, b, c, d, in[ 0], 6, 4096336452);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( d, a, b, c, in[ 7], 10, 1126891415);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( c, d, a, b, in[14], 15, 2878612391);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( b, c, d, a, in[ 5], 21, 4237533241);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( a, b, c, d, in[12], 6, 1700485571);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( d, a, b, c, in[ 3], 10, 2399980690);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( c, d, a, b, in[10], 15, 4293915773);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( b, c, d, a, in[ 1], 21, 2240044497);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( a, b, c, d, in[ 8], 6, 1873313359);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( d, a, b, c, in[15], 10, 4264355552);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( c, d, a, b, in[ 6], 15, 2734768916);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( b, c, d, a, in[13], 21, 1309151649);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( a, b, c, d, in[ 4], 6, 4149444226);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( d, a, b, c, in[11], 10, 3174756917);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( c, d, a, b, in[ 2], 15,<span style="mso-spacerun: yes">  </span>718787259);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>II( b, c, d, a, in[ 9], 21, 3951481745);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>a = a + 0x67452301;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>b = b + 0xefcdab89;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>c = c + 0x98badcfe;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>d = d + 0x10325476;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p = (char *)&amp;a;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%02x%02x%02x%02x&quot;,p[0],p[1],p[2],p[3]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p = (char *)&amp;b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%02x%02x%02x%02x&quot;,p[0],p[1],p[2],p[3]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p = (char *)&amp;c;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%02x%02x%02x%02x&quot;,p[0],p[1],p[2],p[3]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>p = (char *)&amp;d;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>printf(&quot;%02x%02x%02x%02x&quot;,p[0],p[1],p[2],p[3]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>0dece865043d2105e03126dc2c979e6e<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The above program is a simplified version of the MD5
+algorithm. The MD5 algorithm takes whatever input we give it and outputs a 128
+bit hash value which represents the input we gave it. There is way that any two
+inputs will give us the same hash value. This is called a collisions are is not
+mathematically feasible. The reverse is also not possible, where given a hash value
+we can get at the original input. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The Govt of USA used another message digest algorithm
+called SHA-1 which spits out a 160 bit hash value. These algorithms are called
+one way hashes as given the hash we cannot get back to the input. The passwords
+that we give databases or operating systems are not stored internally as clear
+texts because of security reasons. If stored as clear text say in a database,
+anyone can get access to them if they can access the database. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Thus store the one way hash using MD5 and throw away the
+actual password. Each time you want to check the password you calculate the one
+way hash and then check with the one way hash stored in the database. This
+method is more secure because the minute the system has the user type in the
+password, it is immediately converted to a one way hash and the password does
+not remain in the system. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We first open the file a.txt for reading. We then take 4
+variables a, b c and d and initialize them to arbitrary values. These values
+actually form a pattern as they start from 0 and to up to F and then back to 0.
+It does not look like this at first stroke as the nibbles are reversed. We then
+read the bytes in a.txt using the fread function. The MD5 algorithm says
+whatever the size of text, we need to apply some 64 rounds to it. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Thus we break up the input in chunks of 512 bits or 64
+bytes or 16 ints and apply the transformations. After we do this we will come
+to the end where our data left may not be a multiple of 512 bits. Thus at the
+end we need to pad our data with some bits. Theses pad bits start with 0x80 and
+then are a set of zeroes. These pad bits go on until the size becomes 448 bits
+which is 64 bits less than 512. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>We store the size of the original input minus the padding
+as a 64 bit number. If the size of the data is greater than 64 bits, then we
+store only the lower 64 bits. We get a pointer to a char p which we equate to
+the buffer in which we read the data. The variable bytes tells us the size of
+the text. We use this variable as the index into the in array and place a 0x80
+there.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The array in is an array of ints and as we want to write
+to a single byte we need a char * pointer. Finally at array index values of 14
+and 15, that is the last 64 bits we write out the length of the file. The
+variables a,b,c and d will store the 128 bit hash value for us. We will now
+need to carry out 64 rounds for each 512 bits of data. We first use a series of
+macros, four in number to compute the hash for us. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The first parameter will be one that will change its
+value and each time we call the macro we change the order of the a,b,c and d.
+The FF macro calls the macro F which behaved like the bitwise if. To this value
+we add the input data<span style="mso-spacerun: yes">  </span>taking four bytes
+together as a number. Initially we take the in array members one after the
+other, after words we jumble the index values. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>This is how we factor in the current data in computing
+the one way hash. We then add another number which is the multiplication of a
+constant and the sin value as shown above. After doing all this we rotate the
+bits not shift them a certain random number of bytes. Finally we add the second
+parameter to the first. We do this 16 times and then move on to round two. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Here we use the macro GG and the G macro which we call
+implements the majority function. Then in the HH macro we call the J macro
+which is the parity function. Both get called 16 times. Finally we end the last
+round with the II macro which calls the I macro. Once these 64 rounds are over,
+we once add the constants to a,b,c and d and then display the 128 bit hash
+value in hex. We first display a and then b, c and d. <o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>The low byte are displayed first and hence we set a
+pointer to char to each variable and then display the low byte first. The
+printf with the x modifier will display the high byte first. This is how we can
+calculate the MD5 algorithm.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;time.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#include &lt;string.h&gt;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>typedef unsigned char *POINTER;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>typedef unsigned short int UINT2;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>typedef unsigned long int UINT4;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define PROTO_LIST(list) list<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>typedef struct {<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>UINT4 state[4];<span style="mso-spacerun: yes">                                   </span>/* state (ABCD) */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>UINT4 count[2];<span style="mso-spacerun: yes">        </span>/* number of bits, modulo 2^64 (lsb first) */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned char buffer[64];<span style="mso-spacerun: yes">                         </span>/* input buffer */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>} MD5_CTX;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Init PROTO_LIST ((MD5_CTX *));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Update PROTO_LIST ((MD5_CTX *, unsigned char *, unsigned int));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Final PROTO_LIST ((unsigned char [16], MD5_CTX *));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S11 7<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S12 12<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S13 17<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S14 22<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S21 5<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S22 9<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S23 14<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S24 20<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S31 4<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S32 11<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S33 16<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S34 23<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S41 6<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S42 10<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S43 15<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define S44 21<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5Transform PROTO_LIST ((UINT4 [4], unsigned char [64]));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void Encode PROTO_LIST ((unsigned char *, UINT4 *, unsigned int));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void Decode PROTO_LIST<span style="mso-spacerun: yes">   </span>((UINT4 *, unsigned char *, unsigned int));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5_memcpy PROTO_LIST ((POINTER, POINTER, unsigned int));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5_memset PROTO_LIST ((POINTER, int, unsigned int));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static unsigned char PADDING[64] = {<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>};<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define F(x, y, z) (((x) &amp; (y)) | ((~x) &amp; (z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define G(x, y, z) (((x) &amp; (z)) | ((y) &amp; (~z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define H(x, y, z) ((x) ^ (y) ^ (z))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define I(x, y, z) ((y) ^ ((x) | (~z)))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define ROTATE_LEFT(x, n) (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32-(n))))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define FF(a, b, c, d, x, s, ac) { \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += F ((b), (c), (d)) + (x) + (UINT4)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define GG(a, b, c, d, x, s, ac) { \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += G ((b), (c), (d)) + (x) + (UINT4)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define HH(a, b, c, d, x, s, ac) { \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += H ((b), (c), (d)) + (x) + (UINT4)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>#define II(a, b, c, d, x, s, ac) { \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += I ((b), (c), (d)) + (x) + (UINT4)(ac); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) = ROTATE_LEFT ((a), (s)); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> (a) += (b); \<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> <span style="mso-spacerun: yes"> </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Init (context)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>MD5_CTX *context;<span style="mso-spacerun: yes">                                        </span>/* context */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;count[0] = context-&gt;count[1] = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;state[0] = 0x67452301;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;state[1] = 0xefcdab89;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;state[2] = 0x98badcfe;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;state[3] = 0x10325476;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Update (context, input, inputLen)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>MD5_CTX *context;<span style="mso-spacerun: yes">                                        </span>/* context */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *input;<span style="mso-spacerun: yes">                                </span>/* input block */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int inputLen;<span style="mso-spacerun: yes">                     </span>/* length of input block */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i, index, partLen;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>index = (unsigned int)((context-&gt;count[0] &gt;&gt; 3) &amp; 0x3F);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>if ((context-&gt;count[0] += ((UINT4)inputLen &lt;&lt; 3))<span style="mso-spacerun: yes">    </span>&lt; ((UINT4)inputLen &lt;&lt; 3))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;count[1]++;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>context-&gt;count[1] += ((UINT4)inputLen &gt;&gt; 29);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>partLen = 64 - index;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>if (inputLen &gt;= partLen) {<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> MD5_memcpy((POINTER)&amp;context-&gt;buffer[index], (POINTER)input, partLen);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> MD5Transform (context-&gt;state, context-&gt;buffer);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> for (i = partLen; i + 63 &lt; inputLen; i += 64)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>MD5Transform (context-&gt;state, &amp;input[i]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> index = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>else<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> i = 0;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>MD5_memcpy ((POINTER)&amp;context-&gt;buffer[index], (POINTER)&amp;input[i],inputLen-i);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>void MD5Final (digest, context)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char digest[16];<span style="mso-spacerun: yes">                         </span>/* message digest */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>MD5_CTX *context;<span style="mso-spacerun: yes">                                       </span>/* context */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned char bits[8];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int index, padLen;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>Encode (bits, context-&gt;count, 8);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>index = (unsigned int)((context-&gt;count[0] &gt;&gt; 3) &amp; 0x3f);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>padLen = (index &lt; 56) ? (56 - index) : (120 - index);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>MD5Update (context, PADDING, padLen);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>MD5Update (context, bits, 8);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>Encode (digest, context-&gt;state, 16);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>MD5_memset ((POINTER)context, 0, sizeof (*context));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5Transform (state, block)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>UINT4 state[4];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char block[64];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>UINT4 a = state[0], b = state[1], c = state[2], d = state[3], x[16];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>Decode (x, block, 64);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (a, b, c, d, x[ 0], S11, 0xd76aa478); /* 1 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (d, a, b, c, x[ 1], S12, 0xe8c7b756); /* 2 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (c, d, a, b, x[ 2], S13, 0x242070db); /* 3 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (b, c, d, a, x[ 3], S14, 0xc1bdceee); /* 4 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (a, b, c, d, x[ 4], S11, 0xf57c0faf); /* 5 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (d, a, b, c, x[ 5], S12, 0x4787c62a); /* 6 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (c, d, a, b, x[ 6], S13, 0xa8304613); /* 7 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (b, c, d, a, x[ 7], S14, 0xfd469501); /* 8 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (a, b, c, d, x[ 8], S11, 0x698098d8); /* 9 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (d, a, b, c, x[ 9], S12, 0x8b44f7af); /* 10 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (c, d, a, b, x[10], S13, 0xffff5bb1); /* 11 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (b, c, d, a, x[11], S14, 0x895cd7be); /* 12 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> <span style="mso-spacerun: yes"> </span>FF (a, b, c, d, x[12], S11, 0x6b901122); /* 13 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (d, a, b, c, x[13], S12, 0xfd987193); /* 14 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (c, d, a, b, x[14], S13, 0xa679438e); /* 15 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FF (b, c, d, a, x[15], S14, 0x49b40821); /* 16 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (a, b, c, d, x[ 1], S21, 0xf61e2562); /* 17 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (d, a, b, c, x[ 6], S22, 0xc040b340); /* 18 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (c, d, a, b, x[11], S23, 0x265e5a51); /* 19 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (b, c, d, a, x[ 0], S24, 0xe9b6c7aa); /* 20 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (a, b, c, d, x[ 5], S21, 0xd62f105d); /* 21 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (d, a, b, c, x[10], S22,<span style="mso-spacerun: yes">  </span>0x2441453); /* 22 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (c, d, a, b, x[15], S23, 0xd8a1e681); /* 23 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (b, c, d, a, x[ 4], S24, 0xe7d3fbc8); /* 24 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (a, b, c, d, x[ 9], S21, 0x21e1cde6); /* 25 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (d, a, b, c, x[14], S22, 0xc33707d6); /* 26 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (c, d, a, b, x[ 3], S23, 0xf4d50d87); /* 27 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (b, c, d, a, x[ 8], S24, 0x455a14ed); /* 28 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (a, b, c, d, x[13], S21, 0xa9e3e905); /* 29 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (d, a, b, c, x[ 2], S22, 0xfcefa3f8); /* 30 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (c, d, a, b, x[ 7], S23, 0x676f02d9); /* 31 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>GG (b, c, d, a, x[12], S24, 0x8d2a4c8a); /* 32 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (a, b, c, d, x[ 5], S31, 0xfffa3942); /* 33 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (d, a, b, c, x[ 8], S32, 0x8771f681); /* 34 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (c, d, a, b, x[11], S33, 0x6d9d6122); /* 35 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (b, c, d, a, x[14], S34, 0xfde5380c); /* 36 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (a, b, c, d, x[ 1], S31, 0xa4beea44); /* 37 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (d, a, b, c, x[ 4], S32, 0x4bdecfa9); /* 38 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (c, d, a, b, x[ 7], S33, 0xf6bb4b60); /* 39 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (b, c, d, a, x[10], S34, 0xbebfbc70); /* 40 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (a, b, c, d, x[13], S31, 0x289b7ec6); /* 41 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (d, a, b, c, x[ 0], S32, 0xeaa127fa); /* 42 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (c, d, a, b, x[ 3], S33, 0xd4ef3085); /* 43 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (b, c, d, a, x[ 6], S34,<span style="mso-spacerun: yes">  </span>0x4881d05); /* 44 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (a, b, c, d, x[ 9], S31, 0xd9d4d039); /* 45 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (d, a, b, c, x[12], S32, 0xe6db99e5); /* 46 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (c, d, a, b, x[15], S33, 0x1fa27cf8); /* 47 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>HH (b, c, d, a, x[ 2], S34, 0xc4ac5665); /* 48 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (a, b, c, d, x[ 0], S41, 0xf4292244); /* 49 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (d, a, b, c, x[ 7], S42, 0x432aff97); /* 50 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (c, d, a, b, x[14], S43, 0xab9423a7); /* 51 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (b, c, d, a, x[ 5], S44, 0xfc93a039); /* 52 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (a, b, c, d, x[12], S41, 0x655b59c3); /* 53 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (d, a, b, c, x[ 3], S42, 0x8f0ccc92); /* 54 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (c, d, a, b, x[10], S43, 0xffeff47d); /* 55 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (b, c, d, a, x[ 1], S44, 0x85845dd1); /* 56 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (a, b, c, d, x[ 8], S41, 0x6fa87e4f); /* 57 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (d, a, b, c, x[15], S42, 0xfe2ce6e0); /* 58 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (c, d, a, b, x[ 6], S43, 0xa3014314); /* 59 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (b, c, d, a, x[13], S44, 0x4e0811a1); /* 60 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (a, b, c, d, x[ 4], S41, 0xf7537e82); /* 61 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (d, a, b, c, x[11], S42, 0xbd3af235); /* 62 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (c, d, a, b, x[ 2], S43, 0x2ad7d2bb); /* 63 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>II (b, c, d, a, x[ 9], S44, 0xeb86d391); /* 64 */<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>state[0] += a;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>state[1] += b;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>state[2] += c;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>state[3] += d;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>MD5_memset ((POINTER)x, 0, sizeof (x));<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void Encode (output, input, len)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *output;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>UINT4 *input;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int len;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i, j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>for (i = 0, j = 0; j &lt; len; i++, j += 4) {<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[j] = (unsigned char)(input[i] &amp; 0xff);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[j+1] = (unsigned char)((input[i] &gt;&gt; 8) &amp; 0xff);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[j+2] = (unsigned char)((input[i] &gt;&gt; 16) &amp; 0xff);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[j+3] = (unsigned char)((input[i] &gt;&gt; 24) &amp; 0xff);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void Decode (output, input, len)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>UINT4 *output;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char *input;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int len;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i, j;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>for (i = 0, j = 0; j &lt; len; i++, j += 4)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[i] = ((UINT4)input[j]) | (((UINT4)input[j+1]) &lt;&lt; 8) | (((UINT4)input[j+2]) &lt;&lt; 16) | (((UINT4)input[j+3]) &lt;&lt; 24);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5_memcpy (output, input, len)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>POINTER output;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>POINTER input;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int len;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>for (i = 0; i &lt; len; i++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> output[i] = input[i];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MD5_memset (output, value, len)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>POINTER output;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int value;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned int len;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>for (i = 0; i &lt; len; i++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> ((char *)output)[i] = (char)value;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>static void MDPrint (digest)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>unsigned char digest[16];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned int i;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>for (i = 0; i &lt; 16; i++)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> printf (&quot;%02x&quot;, digest[i]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int main (argc, argv)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>int argc;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>char *argv[];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>{<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>FILE *file;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>MD5_CTX context;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>int len;<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>unsigned char buffer[1024], digest[16];<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>if ((file = fopen (argv[1], &quot;rb&quot;)) == NULL)<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> printf (&quot;%s can't be opened\n&quot;, argv[1]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>else {<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> MD5Init (&amp;context);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> while (len = fread (buffer, 1, 1024, file))<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">   </span>MD5Update (&amp;context, buffer, len);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> MD5Final (digest, &amp;context);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> fclose (file);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> printf (&quot;MD%d (%s) = &quot;, 5, argv[1]);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> MDPrint (digest);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'> printf (&quot;\n&quot;);<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'><span style="mso-spacerun: yes">  </span>}<o:p></o:p></span></pre><pre
+style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:.5in;
+margin-bottom:.0001pt'><span style='color:#000066'>}<o:p></o:p></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'>Lets now look at the code Ron Rivest wrote and kill two birds
+with one stone. The first bird is that we know how a great crypt analyst writes
+code and the second is that this is the best way to figure out how MD5 works.
+We have removed some comments and blank lines and some unnecessary code.<o:p></o:p></span></p>
+
+<pre style='margin-top:0in;margin-right:.5in;margin-bottom:0in;margin-left:
+.5in;margin-bottom:.0001pt'><span class=MsoHyperlink><b><a
+href="../../security.html">Back to the main page</a><o:p></o:p></b></span></pre>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+style='color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/cryptography/md5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:40:28 GMT -->
+</html>

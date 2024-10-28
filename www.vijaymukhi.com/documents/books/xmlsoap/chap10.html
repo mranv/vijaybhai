@@ -1,0 +1,837 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap10.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:03 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap10_files/filelist.html">
+<link rel=Edit-Time-Data href="chap10_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2002-01-27T20:29:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:31:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1834</o:Words>
+  <o:Characters>10459</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>87</o:Lines>
+  <o:Paragraphs>20</o:Paragraphs>
+  <o:CharactersWithSpaces>12844</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>10</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>SOAP Faults</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We all have weaknesses, and SOAP
+is no exception. SOAP has certain inherent lacunae, which are termed as SOAP
+fault codes. In all, there are four fault codes: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>ClientFaultCode<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>ServerFaultCode<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>MustUndersatndCode<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>VersionMismatchFaultCode. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this chapter, we shall
+discuss these fault codes threadbare, and delve upon details such as- when and
+why these faults occur.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>[WebServiceBinding()]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : WebService<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>throw new SoapException(&quot;vijay&quot;,
+SoapException.ClientFaultCode);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>catch ( System.Exception e)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.ToString());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>z.bat</u><o:p></o:p></p>
+
+<p class=ILoutput>del *.exe<o:p></o:p></p>
+
+<p class=ILoutput>del *.dll<o:p></o:p></p>
+
+<p class=ILoutput>wsdl aa.wsdl<o:p></o:p></p>
+
+<p class=ILoutput>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILoutput>csc a.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILoutput>a<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>System.Web.Services.Protocols.SoapException:
+System.Web.Services.Protocols.SoapException: vijay<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;faultcode&gt;soap:Client&lt;/faultcode&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;faultstring&gt;System.Web.Services.Protocols.SoapException: vijay at
+zzz.abc()&lt;/faultstring&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;detail /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc in the asmx
+file, throws an exception called SoapException. The exception is generated by
+calling the SoapException constructor with two parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is a message,
+which specifies the error that occurred.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter reveals the
+type of error that occurred. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter can have
+four possible values, out of which, we have specified the value of
+'ClientFaultCode'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value of ClientFaultCode
+represents a SOAP fault code, and not an error. It mainly signifies that the
+client SOAP payload is neither properly formatted, nor does it contain all the
+requisite data. This could occur in situations where a user id and password are
+expected, but are not contained in the SOAP packet. The client is also
+forewarned not to rebound the same packet, since it contains errors. In the
+client program, the exception is caught in 'e', which is an instance of the
+Exception class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP trace depicts the SOAP
+response packet, which holds all the details related to the exception. The
+exception thrown by the asmx file is sent across the net, in the form of a SOAP
+fault. The Body element is followed by the Fault element, which in turn, has a
+child element called soap:Client. This child element reveals the exception code
+as ClientFaultCode.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The faultstring element first
+specifies the name of the Exception, followed by the string 'vijay', which is
+supplied as the first parameter to the SoapException constructor. This is
+followed by the class and function names that have thrown the exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>throw new
+SoapException(&quot;vijay&quot;,SoapException.ServerFaultCode);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;faultcode&gt;soap:Server&lt;/faultcode&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;faultstring&gt;<o:p></o:p></p>
+
+<p class=ILoutput>System.Web.Services.Protocols.SoapException: vijay at
+zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/faultstring&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;detail /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter value of
+ServerFaultCode notifies us that a fault has occurred on the server, while the
+SOAP payload that was sent by the client, was being processed. In this case,
+the error did not occur because the data carried by the SOAP packet is
+faulty.<span style="mso-spacerun: yes">   </span>In fact, the error could be
+attributed to any one of the myriad problems, such as- the network being down,
+the server being busy, et al. The client is expected to retransmit the same
+data, after just a short time gap.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third fault code that we
+shall be analyzing is, the MustUndersatndCode. Since the SOAP element carries
+an element with an attribute of MustUnderstand set to 1, the server is unable
+to decipher the element on receiving it; and resultantly, it throws an error.
+Thus, the exception is thrown by the server, and not by the client. Under these
+circumstances, the client must not resend the payload, and even if it does, the
+MustUnderstand attribute must be set to 0.</span><span style='color:red'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last fault code that we
+shall examine is VersionMismatchFaultCode, which occurs whenever an invalid
+namespace is sighted in the Envelope element. Using this fault code, the server
+sends a signal to the client, indicating that an error has occurred. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Invoke function has adequate
+potency to distinguish between a normal packet and a Soap Fault. So, whenever
+it encounters a fault, it throws an exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>throw new System.Exception(&quot;vijay&quot;);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;faultcode&gt;<o:p></o:p></p>
+
+<p class=ILoutput>soap:Server<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/faultcode&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;faultstring&gt;<o:p></o:p></p>
+
+<p class=ILoutput>System.Web.Services.Protocols.SoapException: Server was
+unable to process request. ---&gt; System.Exception: vijay at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/faultstring&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;detail /&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the asmx file, instead of a
+SoapException, it is a normal Exception that is thrown.<span
+style="mso-spacerun: yes">  </span>The .Net framework is extremely smart, in
+that, it converts this Exception into a SoapException, and assigns the value of
+ServerFaultCode to the fault Code.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>[WebServiceBinding()]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : WebService<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public XmlNode abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n = d.CreateNode(XmlNodeType.Element,&quot;sonal&quot;,
+&quot;mukhi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode c = d.CreateNode(XmlNodeType.Element, &quot;vijay&quot;,
+&quot;hell&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.AppendChild(c);<o:p></o:p></p>
+
+<p class=ILprg>XmlAttribute a = d.CreateAttribute(&quot;a1&quot;,
+&quot;bad&quot;);<o:p></o:p></p>
+
+<p class=ILprg>a.Value = &quot;good&quot;;<o:p></o:p></p>
+
+<p class=ILprg>c.Attributes.Append(a);<o:p></o:p></p>
+
+<p class=ILprg>return n;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;sonal xmlns=&quot;mukhi&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;vijay n1:a1=&quot;good&quot; xmlns:n1=&quot;bad&quot;
+xmlns=&quot;hell&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/sonal&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResult&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Many of you may consider XML to
+be a gobbledy-gook or a mere verbiage! Hence, we have taken a slight detour
+into the realm of the XmlNode class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we start by
+creating an empty XmlDocument object 'd', and then, utilizing the CreateNode
+function, we create an element called 'sonal', within the namespace called
+'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first parameter of the
+CreateNode function specifies the type of entity that must be created. The last
+parameter to this function refers to the namespace that the entity generates.
+This function then returns an XmlNode object, which is stored in the object n.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, another node named
+'c', containing the element 'vijay' in the namespace 'hell', is created. Since
+we want this element to be the child of the element 'sonal', the AppendChild
+function of node 'n' is used, with the parameter of 'c'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, the CreateAttribute
+function is used to associate attributes to the elements. This function creates
+an attribute a1, and places it in the n1 namespace. It is for this reason that
+the attribute a1 has a prefix n1, pointing to the uri named 'bad', which is our
+second parameter. Every attribute requires a value. Therefore, the Value
+property of the attribute class is initialized to the specific value of 'good'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, to associate this
+property with the node c, the collection property named Attributes is used. The
+Append function of this collection adds the attribute.<span
+style="mso-spacerun: yes">  </span>Since the return value of the function abc
+is specified as 'n', the abcResult element in the SOAP element displays the
+entire XmlNode.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services.Protocols;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>[WebServiceBinding()]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : WebService<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod()]<o:p></o:p></p>
+
+<p class=ILprg>public void abc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n = d.CreateNode(XmlNodeType.Element,&quot;sonal&quot;,
+&quot;mukhi&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode c = d.CreateNode(XmlNodeType.Element, &quot;vijay&quot;,
+&quot;hell&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n.AppendChild(c);<o:p></o:p></p>
+
+<p class=ILprg>XmlAttribute a = d.CreateAttribute(&quot;a1&quot;,
+&quot;bad&quot;);<o:p></o:p></p>
+
+<p class=ILprg>a.Value = &quot;good&quot;;<o:p></o:p></p>
+
+<p class=ILprg>c.Attributes.Append(a);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n1 =
+d1.CreateNode(XmlNodeType.Element,&quot;sonal1&quot;, &quot;mukhi1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode c1 = d1.CreateNode(XmlNodeType.Element,
+&quot;vijay3&quot; , &quot;&quot;);<o:p></o:p></p>
+
+<p class=ILprg>n1.AppendChild(c1);<o:p></o:p></p>
+
+<p class=ILprg>XmlDocument d2 = new XmlDocument();<o:p></o:p></p>
+
+<p class=ILprg>XmlNode n2 =
+d2.CreateNode(XmlNodeType.Element,&quot;sonal2&quot;, &quot;mukhi2&quot;);<o:p></o:p></p>
+
+<p class=ILprg>XmlNode [] m = new XmlNode[2];<o:p></o:p></p>
+
+<p class=ILprg>m[0] = n1;<o:p></o:p></p>
+
+<p class=ILprg>m[1] = n2;<o:p></o:p></p>
+
+<p class=ILprg>System.Exception e = new System.Exception(&quot;haha&quot;);<o:p></o:p></p>
+
+<p class=ILprg>throw new
+SoapException(&quot;vijay&quot;,SoapException.ServerFaultCode
+,&quot;sonal&quot;, n , m , e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;faultcode&gt;soap:Server&lt;/faultcode&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;faultstring&gt;System.Web.Services.Protocols.SoapException:
+vijay ---&gt; System.Exception: haha at zzz.abc()&lt;/faultstring&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;faultactor&gt;sonal&lt;/faultactor&gt; <o:p></o:p></p>
+
+<p class=ILoutput>- &lt;sonal xmlns=&quot;mukhi&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;vijay
+n1:a1=&quot;good&quot; xmlns:n1=&quot;bad&quot; xmlns=&quot;hell&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/sonal&gt;<o:p></o:p></p>
+
+<p class=ILoutput>- &lt;sonal1 xmlns=&quot;mukhi1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;vijay3
+xmlns=&quot;&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/sonal1&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;sonal2
+xmlns=&quot;mukhi2&quot; /&gt; <o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the same analogy, we first
+create a simple XmlNode named 'n'. Thereafter, we create two more XmlNodes
+named 'n1' and 'n2'. One child node is added to the node n1, whereas, no child
+nodes are appended to the node n2. Once this is done, an array of XmlNodes
+named 'm', with a size of 2 is created, and<span style="mso-spacerun: yes"> 
+</span>its two members are initialised to n1 and n2, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SoapException that gets
+thrown at this stage, has six parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter that contains
+the value of 'vijay', is the name of the message, which eventually gets
+converted to the fault string.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter is the fault
+code named SoapException.ServerFaultCode. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third parameter is the Actor.
+The element is called 'faultactor', and the value assigned is 'sonal'. The actor
+is the cause of the fault. Normally, it should contain the line number or some
+other information, which helps in identifying the error. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The fourth parameter is the XmlNode
+object. This object must contain the detailed specifics of the error that occurred.
+Here, the actual lines of code or variables that caused the error, may be
+specified. Since an XmlNode is required, supplying an entire formatted XML
+document would also suffice.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The fifth parameter is an array of
+XmlNodes, which can be initialized to any content that we desire.<span
+style="mso-spacerun: yes">  </span>Normally, the contents of the body element
+are embodied in the parameters discussed so far. However, for this parameter,
+the specifics not related to the body, are laid down. Thus, we encounter
+'sonal1' and 'sonal2' at the end of the Body element. The 'detail' tag is
+missing at this stage.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The sixth parameter is the
+Exception, whose constructor value gets merged into the fault string.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>a.abc();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>catch ( System.Web.Services.Protocols.SoapException e)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.Actor);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.Code);<o:p></o:p></p>
+
+<p class=ILprg>if ( e.Detail == null)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Detail is null&quot;);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.OtherElements[0].InnerXml);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.OtherElements[1].InnerXml);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.ToString());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>sonal<o:p></o:p></p>
+
+<p class=ILoutput>http://schemas.xmlsoap.org/soap/envelope/:Server<o:p></o:p></p>
+
+<p class=ILoutput>Detail is null<o:p></o:p></p>
+
+<p class=ILoutput>&lt;vijay n1:a1=&quot;good&quot; xmlns:n1=&quot;bad&quot;
+xmlns=&quot;hell&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;vijay3 xmlns=&quot;&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILoutput>System.Web.Services.Protocols.SoapHeaderException:
+System.Web.Services.Protocols.SoapException: vijay ---&gt; System.Exception:
+haha<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The asmx file remains unaltered
+for this program. Here, we have attempted to display all the members of the
+SoapException object 'e'. The 'Actor' property displays the value of 'sonal',
+followed by the Fault code member Code. The value of Code is not merely
+'Server', but is preceded by a lengthy URI and a colon.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This evinces the fact that the
+SOAP Fault payload content is copied into properties, such as Actor, by the
+Invoke function. However, for reasons unknown to us, the 'detail' property does
+not get filled up at all. Since the 'if' statement is true, the value of the
+property is not displayed; instead, a text string is displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The OtherElements property is an
+array of 2 XmlNodes. Thus, we use the InnerXml property to display the entire
+node, using an index element. As was the case earlier, the Exception carries
+the strings of 'vijay' and 'haha'. Thus, all the data that we enclose and
+dispatch in the Exception, is made available to the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>throw new
+SoapHeaderException(&quot;vijay&quot;,SoapException.ServerFaultCode
+,&quot;sonal&quot;, m , e);<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;faultcode&gt;soap:Server&lt;/faultcode&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;faultstring&gt;System.Web.Services.Protocols.SoapHeaderException:
+vijay ---&gt; System.Exception: haha at zzz.abc()&lt;/faultstring&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/soap:Fault&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Whenever an Exception occurs within the SOAP headers, a
+SoapHeaderException should be thrown. Everything remains unchanged, but for the
+Exception name, which gets altered. Also, the SOAP response displays the
+changes from SoapException to SoapHeaderException in the Exception.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap10.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:05 GMT -->
+</html>

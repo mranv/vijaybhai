@@ -1,0 +1,945 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/rootkit/stopadevicedriverfrombeingloaded.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:41 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="stopadevicedriverfrombeingloaded_files/filelist.html">
+<title>stop a device driver from being loaded</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>6</o:Revision>
+  <o:TotalTime>1409</o:TotalTime>
+  <o:Created>2004-12-27T10:57:00Z</o:Created>
+  <o:LastSaved>2004-12-14T10:46:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>1095</o:Words>
+  <o:Characters>6244</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>52</o:Lines>
+  <o:Paragraphs>12</o:Paragraphs>
+  <o:CharactersWithSpaces>7668</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:HideGrammaticalErrors/>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:10.0pt;
+	font-family:Arial;
+	color:windowtext;
+	mso-font-kerning:0pt;
+	font-weight:normal;
+	font-style:italic;}
+h6
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	color:#000066;
+	mso-text-raise:3.0pt;
+	letter-spacing:1.0pt;
+	font-weight:bold;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:8.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:18.0pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";
+	color:windowtext;}
+@page Section1
+	{size:595.45pt 841.7pt;
+	margin:.5in .5in .5in .5in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<table border=1 cellspacing=0 cellpadding=0 width="94%" bgcolor="#eeeeff"
+ style='width:94.8%;background:#EEEEFF;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='height:15.1pt'>
+  <td width="100%" valign=top style='width:100.0%;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.1pt'>
+  <h6><span style='font-size:10.0pt;font-family:"Bookman Old Style"'>Stop a
+  Device Driver from being Loaded</span><sup><span style='font-size:11.0pt;
+  mso-bidi-font-size:10.0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h6>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoTitle><span style='mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>We have had enough
+about processes and threads and files and hiding them. This chapter is
+different. It starts off with telling<span style="mso-spacerun: yes"> 
+</span>us how you can stop a device driver from being loaded by our device
+driver.<span style="mso-spacerun: yes">  </span>Here goes<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSYSAPI NTSTATUS NTAPI ZwSetValueKey(HANDLE
+KeyHandle,PUNICODE_STRING ValueName,ULONG TitleIndex,ULONG Type,PVOID
+Data,ULONG DataSize);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef struct <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceCounterTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int NumberOfServices;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned char *ParamTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>} sdt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>__declspec(dllimport) sdt
+KeServiceDescriptorTable;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef NTSTATUS (NTAPI
+*qtype)(HANDLE,PUNICODE_STRING,ULONG,ULONG,PVOID,ULONG);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>qtype OldZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS NewZwSetValueKey(HANDLE
+KeyHandle,PUNICODE_STRING ValueName,ULONG TitleIndex,ULONG Type,PVOID
+Data,ULONG DataSize)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>PVOID Object;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>WCHAR buf[1024];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>int bytes;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>WCHAR *p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObReferenceObjectByHandle(KeyHandle,0,0,KernelMode,&amp;Object,NULL);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObQueryNameString(Object,(PUNICODE_STRING)buf,sizeof(buf),&amp;bytes);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObDereferenceObject(Object);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>//p<span style="mso-spacerun: yes">  </span>=
+((PUNICODE_STRING)buf)-&gt;Buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = buf + 4;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if
+(wcsnicmp(L&quot;\\Registry\\Machine\\System\\ControlSet001\\Services&quot;, p,
+47) == 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;%S&quot;,p);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;ValueName=%S
+bytes=%d&quot;,ValueName-&gt;Buffer,bytes);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if (_wcsicmp(L&quot;Type&quot;,
+ValueName-&gt;Buffer)==0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return STATUS_ACCESS_DENIED;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>status =
+OldZwSetValueKey(KeyHandle,ValueName,TitleIndex,Type,Data,DataSize);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>long no;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverDispatcher(PDEVICE_OBJECT
+pDeviceObject, PIRP Irp)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;IRP_MJ_CREATE\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>IoCompleteRequest(Irp, IO_NO_INCREMENT);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>VOID DriverUnload(PDRIVER_OBJECT DriverObject)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Driver Unloading&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)OldZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverEntry(PDRIVER_OBJECT
+driverObject, PUNICODE_STRING RegistryPath)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>char *p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;DriverUnload = DriverUnload;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;MajorFunction[IRP_MJ_CREATE] =
+DriverDispatcher;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Vijay Driver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = (char *) ZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = p + 1;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>no = *(long *)p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>OldZwSetValueKey =
+(qtype)KeServiceDescriptorTable. ServiceTableBase [no];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)NewZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverDispatcher(PDEVICE_OBJECT
+pDeviceObject, PIRP pIrp)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>IoCompleteRequest(pIrp, IO_NO_INCREMENT);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>PKTIMER<span style='mso-tab-count:1'>         </span>gTimer;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>PKDPC<span style='mso-tab-count:1'> </span>gDPCP;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>VOID DriverUnload(PDRIVER_OBJECT DriverObject)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Unloading&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeCancelTimer( gTimer );<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ExFreePool( gTimer );<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ExFreePool( gDPCP );<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>__int64 l1,l2,diff;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>VOID abc(PKDPC Dpc,PVOID DeferredContext,PVOID
+sys1,PVOID sys2)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeQuerySystemTime((PLARGE_INTEGER)&amp;l2);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>diff = l2 - l1;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;l1=%I64d l2=%I64d
+diff=%I64d&quot;,l1,l2,diff);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>diff = diff/10000000;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Diff1=%d&quot;,diff);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>LARGE_INTEGER timeout;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverEntry(PDRIVER_OBJECT
+driverObject, PUNICODE_STRING RegistryPath)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;MajorFunction[IRP_MJ_CREATE]
+= DriverDispatcher;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;DriverUnload = DriverUnload;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Vijay 2&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>gTimer = ExAllocatePool
+(NonPagedPool,sizeof(KTIMER));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>gDPCP =
+ExAllocatePool(NonPagedPool,sizeof(KDPC));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeInitializeTimer (gTimer);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeInitializeDpc (gDPCP,abc,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeSetTimerEx (gTimer,timeout,5000,gDPCP);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeQuerySystemTime((PLARGE_INTEGER)&amp;l1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSYSAPI NTSTATUS NTAPI ZwSetValueKey(HANDLE
+KeyHandle,PUNICODE_STRING ValueName,ULONG TitleIndex,ULONG Type,PVOID
+Data,ULONG DataSize);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef struct <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceCounterTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int NumberOfServices;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned char *ParamTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>} sdt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>__declspec(dllimport) sdt
+KeServiceDescriptorTable;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef NTSTATUS (NTAPI
+*qtype)(HANDLE,PUNICODE_STRING,ULONG,ULONG,PVOID,ULONG);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>qtype OldZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>__int64 l1,l2,diff;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS NewZwSetValueKey(HANDLE
+KeyHandle,PUNICODE_STRING ValueName,ULONG TitleIndex,ULONG Type,PVOID
+Data,ULONG DataSize)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>PVOID Object;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>WCHAR buf[1024];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>int bytes;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>WCHAR *p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObReferenceObjectByHandle(KeyHandle,0,0,KernelMode,&amp;Object,NULL);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObQueryNameString(Object,(PUNICODE_STRING)buf,sizeof(buf),&amp;bytes);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>ObDereferenceObject(Object);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>//p<span style="mso-spacerun: yes">  </span>=
+((PUNICODE_STRING)buf)-&gt;Buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = buf + 4;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if
+(wcsnicmp(L&quot;\\Registry\\Machine\\System\\ControlSet001\\Services&quot;, p,
+47) == 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;%S&quot;,p);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;ValueName=%S
+bytes=%d&quot;,ValueName-&gt;Buffer,bytes);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeQuerySystemTime((PLARGE_INTEGER)&amp;l2);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>diff = l2 - l1;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>diff = diff/10000000;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if (_wcsicmp(L&quot;Type&quot;,
+ValueName-&gt;Buffer)==0 &amp;&amp; diff &gt;= 25)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return STATUS_ACCESS_DENIED;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>status =
+OldZwSetValueKey(KeyHandle,ValueName,TitleIndex,Type,Data,DataSize);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>long no;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverDispatcher(PDEVICE_OBJECT
+pDeviceObject, PIRP Irp)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;IRP_MJ_CREATE\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>IoCompleteRequest(Irp, IO_NO_INCREMENT);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>VOID DriverUnload(PDRIVER_OBJECT DriverObject)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Driver Unloading&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)OldZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverEntry(PDRIVER_OBJECT
+driverObject, PUNICODE_STRING RegistryPath)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>char *p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeQuerySystemTime((PLARGE_INTEGER)&amp;l1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;DriverUnload = DriverUnload;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>driverObject-&gt;MajorFunction[IRP_MJ_CREATE]
+= DriverDispatcher;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Vijay Driver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = (char *) ZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>p = p + 1;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>no = *(long *)p;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>OldZwSetValueKey =
+(qtype)KeServiceDescriptorTable. ServiceTableBase [no];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)NewZwSetValueKey;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSYSAPI NTSTATUS NTAPI ZwOpenFile(PHANDLE
+phFile,ACCESS_MASK DesiredAccess,POBJECT_ATTRIBUTES
+ObjectAttributes,PIO_STATUS_BLOCK pIoStatusBlock,ULONG ShareMode,ULONG
+OpenMode);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef struct <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int *ServiceCounterTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned int NumberOfServices;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>unsigned char *ParamTableBase;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>} sdt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>__declspec(dllimport) sdt
+KeServiceDescriptorTable;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>typedef NTSTATUS (NTAPI *qtype)(PHANDLE,ACCESS_MASK,POBJECT_ATTRIBUTES,PIO_STATUS_BLOCK,ULONG,ULONG);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>qtype OldZwOpenFile;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS NewZwOpenFile(PHANDLE
+phFile,ACCESS_MASK DesiredAccess,POBJECT_ATTRIBUTES
+ObjectAttributes,PIO_STATUS_BLOCK pIoStatusBlock,ULONG ShareMode,ULONG OpenMode)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;ZwOpenFile&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if ( ObjectAttributes != 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>int i;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>i =
+wcsstr(ObjectAttributes-&gt;ObjectName-&gt;Buffer,L&quot;r2&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Name=%S
+i=%d&quot;,ObjectAttributes-&gt;ObjectName-&gt;Buffer,i);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>if ( i != 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return STATUS_ACCESS_DENIED;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>status =
+OldZwOpenFile(phFile,DesiredAccess,ObjectAttributes,pIoStatusBlock,ShareMode,OpenMode);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return status;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>long no;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverDispatcher(PDEVICE_OBJECT
+pDeviceObject, PIRP Irp)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;IRP_MJ_CREATE\n&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>IoCompleteRequest(Irp, IO_NO_INCREMENT);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>VOID DriverUnload(PDRIVER_OBJECT DriverObject)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>DbgPrint(&quot;Driver Unloading&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)OldZwOpenFile;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>NTSTATUS DriverEntry(PDRIVER_OBJECT
+driverObject, PUNICODE_STRING RegistryPath)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
+font-family:"Bookman Old Style"'>char *p;<o:p></o:p></span></p>
+
+<pre><span style='mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style";
+mso-fareast-font-family:"Times New Roman"'>driverObject-&gt;DriverUnload = DriverUnload;<o:p></o:p></span></pre>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>driverObject-&gt;MajorFunction[IRP_MJ_CREATE]
+= DriverDispatcher;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>DbgPrint(&quot;Vijay
+Driver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>p = (char *)
+ZwOpenFile;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>p = p + 1;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>no = *(long *)p;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>OldZwOpenFile = (qtype)KeServiceDescriptorTable.
+ServiceTableBase [no];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>_asm cli<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)NewZwOpenFile;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>_asm sti<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>return(STATUS_SUCCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:.5in'><span style='font-size:10.0pt;
+mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;tab-stops:.5in'><span
+style='font-size:10.0pt;mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=MsoHyperlink><b><a href="../../security.html">Back to the main page</a></b></span><span
+style='color:#000066'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify;tab-stops:.5in'><span
+style='font-size:10.0pt;mso-bidi-font-size:8.0pt;font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/rootkit/stopadevicedriverfrombeingloaded.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:42 GMT -->
+</html>

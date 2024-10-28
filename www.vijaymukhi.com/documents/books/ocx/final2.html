@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0038)http://users.neca.com/vmis/final2.html -->
+<HTML>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:44 GMT -->
+<HEAD>
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<TITLE>The Makings Of An OCX Container</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4522.1800" name=GENERATOR></HEAD>
+<BODY>
+<H1>The Makings Of An OCX Container</H1>
+<H2>Putting the OCX in it's place</H2>With <I>OLE</I> 1.0, only embedded objects 
+were supported. This meant that all objects opened as separate windows. But it 
+&nbsp;would be preferable to have the objects appear as a part of our 
+application. The user should not be aware of the fact that he is dealing with 
+two or more separate applications. This need &nbsp;was satisfied &nbsp;when 
+in-place activation was introduced in <I>OLE</I> 2.0.<BR>With in-place 
+activation, the server appears within the container window. This means that the 
+server window is a child within &nbsp;the container window. Read my lips <I>"A 
+child within the container window</I>".<BR>As explained earlier, <I>DoVerb()</I> 
+is responsible for the <I>OCX</I> display. The first parameter to 
+<I>DoVerb()</I> decides the nature of display. Hence, in the function 
+<I>DoVerb()</I> in Progarm 1, replace the first parameter by 
+<I>OLEIVERB_SHOW</I>. This indicates that the <I>OCX</I> should appear as an 
+in-place active object. Sadly this doesn't happen.<BR>Earlier we had said that 
+the <I>OLE</I> interface has no code. We have to add code to implement any and 
+every feature that we require. We have provided no support for in-place 
+activation, so how can we expect the <I>OCX</I> to be displayed in-place?<BR>Add 
+code from Progarm 2 to Program 1. This provides the &nbsp;function 
+implementations required for an <I>OCX</I> to appear in-place.<BR>
+<H4>Program 2</H4><PRE> void MFrameWnd::OnPaint()
+ {
+   CFrameWnd::OnPaint();
+ }
+ 
+ void MFrameWnd::ObjCreate(CLSID z_TempClsid)
+ {
+   IClassFactory *z_pClassFactory;
+ 
+   z_pOleClientSite = new MOleClientSite;
+   z_pInPlaceFrame = new MOleInPlaceFrame;
+   z_pOleInPlaceSite = new MOleInPlaceSite;
+   CoGetClassObject(z_TempClsid,1,0,IID_IClassFactory,(void**)&amp; z_pClassFactory);
+   z_pClassFactory-&gt; CreateInstance(0,IID_IOleObject,(void**)&amp; z_pOleObject);
+   z_pOleObject-&gt; SetClientSite((IOleClientSite*)z_pOleClientSite);
+   z_pOleObject-&gt; DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }  
+ void* _export _cdecl MOleInPlaceSite::GetWindow (HWND * lphwnd)
+ {
+  *lphwnd = z_hFWnd;
+   return 0;
+ }
+ 
+ void* &nbsp;_export _cdecl &nbsp;MOleInPlaceSite::GetWindowContext(IOleInPlaceFrame &nbsp;**lplpFrame, IOleInPlaceUIWindow **, &nbsp;RECT &nbsp;*lprcPosRect,RECT *,OLEINPLACEFRAMEINFO *lpFrameInfo)
+ {
+   _fmemset(lpFrameInfo,0,sizeof(OLEINPLACEFRAMEINFO));
+   *lplpFrame = (IOleInPlaceFrame*)z_pInPlaceFrame;
+   ::CopyRect(lprcPosRect,&amp; z_Rect);
+   lpFrameInfo-&gt; hwndFrame = z_hFWnd;
+   return 0;
+ }
+ 
+ void* _export _cdecl MOleClientSite::QueryInterface (REFIID riid , void **ppvObj )
+ {
+   if (riid == IID_IOleInPlaceSite)
+   {
+    *ppvObj = z_pOleInPlaceSite;
+     return 0;
+   }
+   return ResultFromScode(E_NOTIMPL);
+ }
+</PRE>Once again use <I>Insert Control...</I> sub-option place the <I>OCX</I> 
+<B><I>Button</i></B> as an object within our container. This time the <I>OCX</I> 
+will appear to be a part and &nbsp;parcel of our window. The <I>OCX</I> is now 
+said to appear as an <I>in-place</I> active object.<BR><I>ObjCreate()</I> has 
+been modified to facilitate in-place activation. The classes 
+<I>MOleClientSite</I>, <I>MOleInPlaceFrame</I> and <I>MOleInPlaceSite</I> are 
+our stand-ins for the interfaces <I>IOleClientSite</I>, <I>IOleInPlaceFrame</I> 
+and <I>IOleInPlaceSite</I> respectively. We have created an &nbsp;instance of 
+each in <I>ObjCreate()</I>.<BR>So far <I>we</I> have called functions in the 
+<I>OCX</I>. We have asked &nbsp;the <I>OCX</I> for information. In a similar 
+fashion, the <I>OCX</I> also wants to know more about the container. To do so, 
+it requires a pointer from the container. <BR>The container has to use the 
+<I>IOleObject</I> function <I>SetClientSite()</I> to pass it's 
+<I>IOleClientSite</I> pointer to the <I>OCX</I>. Thus, we pass the 
+<I>MOleClientSite</I> pointer to <I>SetClientSite()</I> after suitable casting. 
+The <I>OCX</I> on receiving the pointer through <I>SetClientSite()</I> will use 
+it to determine if the container supports in-place editing by asking for an 
+<I>IOleInPlaceSite</I> pointer. This it does by calling <I>QueryInterface()</I> 
+of <I>MOleClientSite</I> with <I>IID_IOleInPlaceSite.</I>The <I>OCX</I> uses the 
+<I>MOleInPlaceSite</I> pointer passed &nbsp;to it to call two functions from 
+this interface: <I>GetWindow()</I> and <I>GetWindowContext()</I>. If the 
+<I>OCX</I> is to appear in-place within the container, then it needs to know the 
+handle &nbsp;to the parent window. In the function <I>GetWindow()</I>, we pass 
+&nbsp;a pointer &nbsp;to &nbsp;the &nbsp;handle of the container's window 
+&nbsp;back &nbsp;to &nbsp;the <I>OCX</I>.<BR>It &nbsp;is the function 
+<I>GetWindowContext()</I> that makes crucial information regarding the container 
+available to the <I>OCX</I>. It has five parameters. The container is expected 
+to pass the address of it's <I>IOleInPlaceFrame</I> object to the <I>OCX</I> 
+using the first parameter. <BR>The third is a pointer to a <I>RECT 
+</I>structure. This <I>RECT</I> structure holds the area in which the <I>OCX</I> 
+should appear when in-place active. We use the global <I>CRect</I> object 
+<I>z_Rect</I> that holds the initial &nbsp;dimensions of the <I>OCX</I> to 
+initialize this parameter. <BR>The last and the most important parameter is a 
+pointer to an <I>OLEINPLACEFRAMEINFO</I> structure. This structure holds details 
+such as whether the container is an MDI application, pointer to the frame window 
+etc. We initialize just one member of &nbsp;the structure to hold the handle to 
+the container window. This is the only &nbsp;member of the structure that 
+<I>has</I> to be initialized. This is why we use the <I>_fmemset()</I> function 
+to set all other members of the structure to <B><I>0</i></B> at the start of 
+<I>GetWindowContext()</I>.<BR>The interface <I>IOleInPlaceFrame</I> is required 
+only if we are going to merge the <I>OCX</I> menus with the container menu; 
+bring in the <I>OCX</I>'s toolbar and for other such actions. As of now, we do 
+not use any function of this interface, but cannot do without it either. If we 
+do not pass the address of an <I>IOleInPlaceFrame</I> instance to the <I>OCX</I> 
+in the <I>GetWindowContext()</I> function then the <I>OCX</I> will appear 
+embedded and not in-place.<BR>The first parameter to <I>DoVerb()</I> is 
+<I>OLEIVERB_SHOW</I> to indicate that the <I>OCX</I> should appear in-place. It 
+is passed the pointer to the interface <I>MOleClientSite</I> as the &nbsp;third 
+parameter. In addition, the address of <I>z_Rect</I> is passed as the &nbsp;last 
+parameter to <I>DoVerb()</I>. This indicates &nbsp;the &nbsp;size and position 
+that the <I>OCX</I> is to occupy in the &nbsp;container's window.<BR>In the 
+above explanation, you might have noticed that every thing seemed cut and dry. 
+Use <I>SetClientSite()</I> before <I>DoVerb()</I> &nbsp;to pass the 
+<I>IOleClientSite()</I> pointer &nbsp;to the <I>OCX</I>. The <I>OCX</I> will 
+then use this pointer to call <I>QueryInterface()</I> with 
+&nbsp;<I>IID_IOleInPlaceSite</I>. Use <I>GetWindow()</I> and 
+<I>GetWindowContext()</I> &nbsp;of &nbsp;<I>IOleInPlaceSite</I> to pass all 
+relevant information to the <I>OCX</I> etc.<BR>But things are not always as 
+self-evident as they seem. Nowhere in the <I>OLE</I> documentation are the steps 
+to follow in &nbsp;writing a container and/or a server stated 
+explicitly.<BR>This sequence was something that <I>we</I> have figured out using 
+our own devices. Before, we tackled the <I>OCX</I> container &nbsp;we had worked 
+extensively on the <I>OLE</I> containers and both &nbsp;DLL and EXE servers that 
+were written in C/C++ and studied the interaction between them in detail. We 
+read between the lines and used native &nbsp;wisdom to piece together the 
+complete &nbsp;picture. (<A href="http://users.neca.com/vmis/small.html">Small 
+is Beautiful</A>).<BR>In the above example, the <I>OCX</I> expects the 
+<I>IOleClientSite</I> function <I>GetWindow()</I> to return the window 
+&nbsp;handle to it. Similarly, <I>GetWindowContext()</I> is expected to 
+&nbsp;provide the <I>OCX</I> with other information necessary for in-place 
+activation. If we do not provide the code in either <I>GetWindow()</I> or 
+<I>GetWindowContext()</I> &nbsp;the <I>OCX</I> will not appear in-place. 
+Consider another scenario. What if &nbsp;the <I>OCX</I> does not return an 
+<I>IOleObject</I> pointer in <I>CreateInstance()</I>? The entire process will 
+come to a grinding halt.<BR>While all through the <I>OLE</I> documentation 
+alludes to what has to be done in the various functions of the interfaces, never 
+ever does it state <I>when</I> the functions are to be used. Thus, <I>OLE</I> 
+will work if and only if both participants follow certain rules. As long as 
+everyone tows the line, the <I>OLE</I> apparatus works just fine. But one step 
+out of line and the whole system collapses; faster than a house of 
+cards.<BR>Unfortunately, the rules of <I>OLE</I> are <I>unstated</I>. Rules 
+everyone &nbsp;know exist but cannot pin-point. As of now, trial and error is 
+the only way that one learns about the rules of <I>OLE</I>. To say that the path 
+to <I>OLE</I> is strewn with obstacles is an understatement of 
+understatements.<BR>
+<H2>Some meat on the bones</H2>Next we will add a few features to the container. 
+For example, if an user clicks within the container window but outside &nbsp;of 
+&nbsp;the <I>OCX</I> area when the <I>OCX</I> is in-place active, then &nbsp;the 
+<I>OCX</I> will get hidden. And what's more! An image of it will be 
+&nbsp;displayed on screen. There are several other such additions that have been 
+made. <BR>
+<H4>Program 3</H4><PRE> MFrameWnd::MFrameWnd()
+ {
+   Create(0,"OCX Container");
+   z_pMenu = new CMenu;
+   z_pMenu-&gt; LoadMenu(IDR_MENU1);
+   SetMenu(z_pMenu);             
+   z_pTracker &nbsp;= new CRectTracker(&amp; z_Rect,CRectTracker::solidLine);
+ }
+ 
+ void MFrameWnd::ObjCreate(CLSID z_TempClsid)
+ {
+  IClassFactory *z_pClassFactory;
+   char *z_sName;
+   
+   z_pOleClientSite = new MOleClientSite;
+   z_pInPlaceFrame = new MOleInPlaceFrame;
+   z_pOleInPlaceSite = new MOleInPlaceSite;
+   CoGetClassObject(z_TempClsid,1,0,IID_IClassFactory,(void**)&amp; z_pClassFactory);
+   z_pClassFactory-&gt; CreateInstance(0,IID_IOleObject,(void**)&amp; z_pOleObject);
+   z_pOleObject-&gt; SetClientSite((IOleClientSite*)z_pOleClientSite);
+   z_pOleObject-&gt; DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+   z_nActive = TRUE;
+ }
+ 
+ void MFrameWnd::OnPaint()
+ {
+   if(z_pOleObject)
+   {                           
+     SIZEL z_sizel;
+     CPaintDC z_DC(this);
+ 
+     if(!z_nActive)
+     {
+       z_pTracker-&gt; m_nStyle = &nbsp;CRectTracker::resizeInside|CRectTracker::solidLine;
+       OleDraw(z_pOleObject,DVASPECT_CONTENT,z_DC.m_hDC,&amp; z_Rect);
+     }                                                                         
+     else
+       z_pTracker-&gt; m_nStyle = CRectTracker::solidLine;
+       z_pTracker-&gt; Draw(&amp; z_DC);     
+       z_sizel.cx &nbsp;= XformWidthInPixelsToHimetric(z_DC.m_hDC,(z_pTracker- &gt; m_rect.right -
+        z_pTracker-&gt; m_rect.left));
+       z_sizel.cy &nbsp;= XformWidthInPixelsToHimetric(z_DC.m_hDC,
+        (z_pTracker- &gt; m_rect.bottom - z_pTracker-&gt; m_rect.top));
+       z_pOleObject-&gt; SetExtent(DVASPECT_CONTENT,&amp; z_sizel);
+       ReleaseDC(&amp; z_DC);
+   }
+   CFrameWnd::OnPaint();
+ }
+ 
+ void MFrameWnd::OnLButtonDown(UINT,CPoint)
+ { 
+   z_nActive = FALSE;
+   z_pOleObject-&gt; DoVerb(OLEIVERB_HIDE,0,(IOleClientSite*)z_pOleClientSite,
+     -1,m_hWnd,&amp; z_Rect);
+ }                                                                                                            
+   
+ void MFrameWnd::OnLButtonDblClk(UINT,CPoint z_Point)
+ {
+     if(!z_nActive &amp; &amp;  z_Rect.PtInRect(z_Point)) 
+     {
+         z_nActive = TRUE;
+         z_pOleObject-&gt; DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,
+           -1,m_hWnd,&amp; z_Rect);
+     }
+ } 
+ 
+ void MFrameWnd::OnMouseMove(UINT z_nFlags,CPoint z_Point)
+ {                               
+   int z_nDraw = 0;
+   if(!z_nActive &amp; &amp;  (z_nFlags &amp;  MK_LBUTTON) &amp; &amp;  z_Rect.PtInRect(z_Point))                                           
+   {
+       z_nDraw = 1;
+       z_pTracker-&gt; Track(this,z_Point);
+   }                                                      
+   if(z_nDraw)      
+     {
+       z_Rect = z_pTracker-&gt; m_rect;
+       Invalidate();
+     } 
+ }    
+</PRE>The &nbsp;<I>OCX</I> will appear in-place. Notice that the <I>OCX</I> is 
+now given a thin black line as a border. Click within the container window but 
+not in the area occupied by the <I>OCX</I>. This will cause the actual 
+<I>OCX</I> to be hidden from &nbsp;view, that is it is de-activated, and an 
+image of it will be displayed instead. Note a change in the border. The image 
+has a black solid-line border with the dots along the inside of the 
+line.<BR>Click on the <I>OCX</I> image and drag the mouse around. The <I>OCX</I> 
+image will move to the new location. Click on a dot along the border and drag 
+the mouse. This will allow us to re-size the <I>OCX</I>. To re- activate the 
+<I>OCX</I>, double click on the image. The <I>OCX</I> will appear in-place 
+active at &nbsp;it's new position and in the new size.<BR>In <I>ObjCreate()</I>, 
+we set the boolean variable <I>z_nActive</I> to <I>TRUE</I>. This indicates that 
+the <I>OCX</I> is in-place active. <I>z_nActive </I>is used to hold the active 
+status of the <I>OCX</I>. Every time the <I>OCX</I> is hidden it will be set to 
+<I>FALSE</I>. <BR>When &nbsp;the <I>OCX</I> appeared as an embedded object in 
+our container, &nbsp;you must have noticed that it opened as a separate 
+&nbsp;window. When we bring in an <I>OCX</I> as an in-place active object, all 
+&nbsp;that happens is that the window of the container is set as the parent 
+&nbsp;to the window of the <I>OCX</I>. The window of &nbsp;the <I>OCX</I>, thus, 
+appears as a child within the container window. It has just a border and no 
+caption or menu. As long as the <I>OCX</I> is active and we are within the 
+bounds of it's &nbsp;window all the messages are passed to it's call-back 
+function else &nbsp;they are sent to the call-back function of the 
+container.<BR>A user may want to change the size and location of an in-place 
+active <I>OCX</I> interactively. Since, the <I>OCX</I> window &nbsp;is a child 
+within the container window with just a border, there &nbsp;is no way that we 
+can directly change it's dimensions and position. So we resort to a bit of 
+subterfuge. What if we had a rectangle around the <I>OCX</I>? The dimensions and 
+position of which we could change with a mouse. We could then manipulate the 
+&nbsp;rectangle and pass it's new size and/or position to the <I>OCX</I>. The 
+<I>OCX</I> can use this information to redraw itself so as to occupy the new 
+size and/or position. Such a rectangle can be created using the <I>MFC</I> and 
+is called a <B><I>tracker</i></B>.<BR>The class <I>CRectTracker</I> of the 
+<I>MFC</I> is used to implement a tracker in our application. In the constructor 
+of the class <I>MFrameWnd,</I> we create a <I>CRectTracker</I> &nbsp;object. 
+This object &nbsp;is initially set to have the same dimensions &nbsp;and 
+position as the <I>OCX</I>. We have stipulated that the tracker is to initially 
+appear as a solid line coinciding with the &nbsp;borders of the <I>OCX</I>. The 
+advantage of using this class is that it provides built-in support that allows 
+us to re-size and &nbsp;move the tracker with the aid of a mouse. The style of 
+the tracker &nbsp;is changed &nbsp;so that the user is provided with a visual 
+&nbsp;feedback &nbsp;on the status of the <I>OCX</I>.<BR>Every time we want to 
+change the size and/or &nbsp;position &nbsp;of &nbsp;the <I>OCX</I>, &nbsp;we 
+first click within the container window but outside of the area of the 
+<I>OCX</I> to de-activate it. The message <I>WM_LBUTTONDOWN</I> will be sent to 
+the container &nbsp;window's call-back function. <I>OnLButtonDown()</I> will get 
+executed. In this &nbsp;function, we use <I>DoVerb()</I> with 
+<I>OLEIVERB_HIDE</I> as the first parameter. This will hide the <I>OCX</I> 
+window from view. What is now displayed is an image of &nbsp;the <I>OCX</I>. 
+<I>z_nActive</I> is set to <I>FALSE</I> to indicate that the <I>OCX</I> is no 
+longer active.<BR>Then, we click anywhere within the area bounded by the tracker 
+rectangle and drag it around. The <I>CRectTracker</I> function <I>Track()</I> 
+used in <I>OnMouseMove()</I> will be executed. It will update the 
+<I>CRectTracker</I> variable <I>m_rect</I> to hold the new size and/or location 
+of the tracker. We update our global variable <I>z_Rect</I> to hold these new 
+dimensions and then repaint the container window so that the <I>OCX</I> image 
+appears at the new location.<BR>In <I>OnPaint()</I> we initially check the 
+status of <I>z_nActive</I> to determine if the <I>OCX</I> is active or hidden 
+&nbsp;and appropriately change the style of the tracker.<BR>When the <I>OCX</I> 
+is not in-place active, the image of &nbsp;the <I>OCX</I> has to be drawn and 
+this drawing is handled by the <I>OLE</I> API <I>OleDraw()</I>. To 
+<I>OleDraw()</I>, we pass the <I>IOleObject</I> pointer of &nbsp;the 
+&nbsp;<I>OCX</I>. <I>DVASPECT_CONTENT</I> specifies that the image of &nbsp;the 
+<I>OCX</I> is to be rendered. We also pass <I>OleDraw()</I> a device context to 
+the container window and the area where the image is to be drawn. 
+<I>OleDraw()</I> uses all this data to draw a spitting image of the actual 
+<I>OCX</I>.<BR>The <I>OCX</I> also has to be informed of it's &nbsp;new 
+&nbsp;dimensions. <I>OLE</I> sets standards for any all information exchanges 
+&nbsp;that are to take place. One such standard states that whenever dimensions 
+are to be passed between applications, they must always be in <I>HIMETRIC</I> 
+units. We convert the width and height &nbsp;which are in pixels to 
+<I>HIMETRIC</I> using <I>XformWidthInPixelsToHimetric()</I> and 
+<I>XformHeightInPixelsToHimetric()</I> respectively and store them in the 
+<I>SIZEL</I>&nbsp;structure. Both of these are <I>OLE</I> UI functions. We pass 
+the <I>SIZEL</I> structure which holds the new dimensions to&nbsp;the <I>OCX</I> 
+through the&nbsp;function <I>SetExtent()</I> of &nbsp;the&nbsp;&nbsp;interface 
+<I>IOleObject</I>.<BR>Experience &nbsp;shows &nbsp;that these dimensions in 
+<I>HIMETRIC</I> are converted back to pixel units by the <I>OCX</I>. Then why 
+pass dimensions in <I>HIMETRIC</I>? Because <I>OLE</I> says so. If you write 
+your own container and <I>OCX</I> then you can pass dimensions back and forth in 
+pixels. But then nobody else who follows the <I>OLE</I> set standards will be 
+able to communicate &nbsp;with you.<BR>Double click on the image to re-activate 
+the <I>OCX</I>. Once again, a <I>DoVerb() </I>with <I>OLEIVERB_SHOW</I> as the 
+first parameter is executed. In this case, in <I>OnPaint()</I>, the style of the 
+tracker will be changed to indicate that the <I>OCX</I> is active and it will be 
+displayed at the new position and size set using the tracker.<BR>
+<H2>The OCX in action</H2>We had mentioned before that verbs provoke action 
+in&nbsp;the <I>OCX</I>. However, the <I>OCX</I> has to have support for 
+&nbsp;the action. What do we mean by support? Consider <I>OLEIVERB_OPEN</I>. 
+When this verb is invoked on the <I>OCX</I>, there should be code provided in 
+the &nbsp;<I>OCX</I> &nbsp;so that it opens as an embedded object. 
+<BR>Consequently, this means that the <I>OCX</I> should have code for all the 
+different verbs that it can be invoked with. However, it is not mandatory that 
+all the <I>OCX</I>'s or indeed all <I>OLE</I> servers, should support all the 
+verbs. It is upto the programmer writing &nbsp;the <I>OCX</I> to decide the 
+verbs that it will support. <BR>In the next program, we have demonstrated the 
+effect of a few &nbsp;of the verbs. We have assumed that all the <I>OCX</I>es 
+brought into this container support these verbs.<BR>
+<H4>Program 4</H4><PRE> void MFrameWnd::ObjCreate(CLSID z_TempClsid)
+ {
+   IClassFactory *z_pClassFactory;
+   char *z_sName;
+   CMenu *z_pAddMenu,*z_pPopMenu,*z_pSubMenu;
+   
+   z_pOleClientSite = new MOleClientSite;
+   z_pInPlaceFrame = new MOleInPlaceFrame;
+   z_pOleInPlaceSite = new MOleInPlaceSite;
+   CoGetClassObject(z_TempClsid,1,0,IID_IClassFactory,(void**)&amp; z_pClassFactory);
+   z_pClassFactory-&gt; CreateInstance(0,IID_IOleObject,(void**)&amp; z_pOleObject);
+   z_pOleObject-&gt; SetClientSite((IOleClientSite*)z_pOleClientSite);
+   z_pOleObject-&gt; DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+   z_nActive = TRUE;
+   z_pSubMenu = z_pMenu-&gt; GetSubMenu(1);
+   z_pAddMenu = new CMenu;
+   z_pAddMenu-&gt; LoadMenu(IDR_MENU2);
+   z_pPopMenu = z_pAddMenu-&gt; GetSubMenu(0);
+   z_sName = (char*) malloc(10);
+   z_pOleObject-&gt; GetUserType(0,&amp; z_sName);
+   z_pSubMenu-&gt; AppendMenu(MF_ENABLED|MF_STRING|MF_POPUP,(UINT)z_pPopMenu-&gt; m_hMenu,z_sName);
+   free(z_sName);
+ }
+ 
+ void MFrameWnd::PrimaryVerb()
+ {
+   z_pOleObject-&gt; DoVerb(OLEIVERB_PRIMARY,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }
+ 
+ void MFrameWnd::ShowVerb()
+ {
+   z_pOleObject-&gt; DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }
+ 
+ void MFrameWnd::OpenVerb()
+ {
+   z_nActive = FALSE;
+   z_pOleObject-&gt; DoVerb(OLEIVERB_OPEN,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }
+ 
+ void MFrameWnd::HideVerb()
+ {
+   z_nActive = FALSE;
+   z_pOleObject-&gt; DoVerb(OLEIVERB_HIDE,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }
+ 
+ void MFrameWnd::UIActivateVerb()
+ {
+   z_nActive = TRUE;
+   z_pOleObject-&gt; DoVerb(OLEIVERB_UIACTIVATE,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }
+ 
+ void MFrameWnd::PropertiesVerb()
+ {
+   z_pOleObject-&gt; DoVerb(OLEIVERB_PROPERTIES,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp; z_Rect);
+ }      
+</PRE>View the pop-up under the main menu-option <I>Edit...</I>. There will be a 
+pop-up <I>Button Control</I> added to the end. This pop-up menu will hold six 
+verbs that can be invoked on the <I>OCX</I>. See the effect of the different 
+verbs on the <I>OCX</I>.<BR>In <I>ObjCreate()</I>, we retrieve a handle to the 
+pop-up associated with the main menu option <I>Edit...</I>. To the end of this 
+pop-up we add a pop-up of the verbs. This pop-up is a part of &nbsp;a menu 
+resource; <I>IDR_MENU2</I>; in the <I>RC</I> file of &nbsp;the container. A 
+handle to this pop-up menu is obtained and is used in <I>AppendMenu()</I>. 
+<BR>We wanted the text for this pop-up to indicate the name of the <I>OCX</I> 
+used. This name is obtained from the <I>OCX</I> with the help of the 
+<I>IOleObject</I> function <I>GetUserType()</I>. When we call the function, the 
+<I>OCX</I> fills up a previously allocated string &nbsp;with it's name. We 
+append this string as the pop-up to the existing menu. We use the message map 
+&nbsp;entries &nbsp;to trap messages from this pop-up and associate functions 
+with them. All that these functions do is they call <I>DoVerb()</I> with the 
+appropriate verb. <BR>It is interesting to see the effect of the 
+<I>OLEIVERB_PROPERTIES</I> verb on the <I>OCX</I>. Selecting the sub-option 
+<I>Properties</I> from the pop-up will call the function 
+<I>PropertiesVerb()</I>. This will bring up a dialog box &nbsp;titled <I>`Button 
+Control Properties'</I>. What you will see is a sneak preview of a significant 
+feature of <I>Windows '95</I> in action! <BR>The dialog box that you see is the 
+properties dialog box. Associated with each <I>OCX</I> there could be several 
+properties, &nbsp;for example, color. To provide the user with an easy and 
+standard method of changing the properties of an object, <I>Microsoft</I> has 
+come up with the concept of <I>Property Pages</I>. <BR>A property page could be 
+seen as a dialog box in which all the required information about one or more 
+properties is available. For example, a property page dealing with fonts has 
+information about the current font, point size, nature of font (bold, 
+&nbsp;italics, etc.) and so on displayed in it. Naturally, this information can 
+be modified. <BR>Some commonly used properties such as color, font etc. have 
+been provided with standard property pages by <I>Microsoft</I>. For other 
+properties unique property pages can be designed and implemented. A collection 
+of all the property pages associated with a particular <I>OCX</I> is the 
+properties dialog box for that <I>OCX</I>. <BR>In the <I>`Button Control 
+Properties'</I> dialog box, there are two rectangles at the top titled 
+<I>`General'</I> and <I>`Fonts'</I> respectively. These are called <I>tabs</I>. 
+Clicking on any one of them brings up the property page associated with the 
+title. By default, in this case, the dialog box displays the property page 
+associated with <I>`General'.</I> This property page holds a single edit control 
+titled <I>`Caption'.</I> Type in a string into this edit control. Click on the 
+<I>`Apply &nbsp;Now'</I> button &nbsp;to see the changes made being applied to 
+the <I>OCX</I>. In this way, the <I>`Caption'</I> property can be changed from 
+the property page entitled <I>`General'</I>. <BR>Next click on the tab 
+<I>`Fonts'.</I> This brings up the property page associated with fonts. This is 
+a standard property page provided by <I>Microsoft</I>. <BR>The properties dialog 
+box will also be displayed when we &nbsp;select the <I>Primary...</I> 
+sub-option. Thus, a &nbsp;<I>DoVerb()</I> with <I>OLEIVERB_PRIMARY</I> as it's 
+first parameter will produce the same results as a <I>DoVerb()</I> with 
+<I>OLEIVERB_PROPERTIES</I>. Property pages are explained in greater detail later 
+when we deal with properties of &nbsp;the <I>OCX</I>. We reiterate that the 
+verbs are to be implemented by the <I>OCX</I>. The container has absolutely 
+nothing to do with &nbsp;the verbs.<BR>
+<H2>A choice in the matter</H2>In the above programs, we had hard-coded the name 
+of the <I>OCX</I> to be activated. Ideally, the user should be able to select an 
+<I>OCX</I> from those available at run-time.<BR>All the <I>OLE</I> servers are 
+registered with <I>`reg.dat'</I>, the registration database. This is true of the 
+<I>OCX</I>es &nbsp;too. So, &nbsp;we can read <I>`reg.dat'</I> to populate a 
+listbox with &nbsp;the names of &nbsp;the available controls. This will allow 
+the user to select the <I>OCX</I> that is to be used.<BR>Registering objects 
+with the registration database calls for a bit of history. In the case of 
+<I>OLE</I> servers, all you had to do was have an ASCII file with all details of 
+the <I>OLE</I> server. This <I>`.reg'</I> file contained information like the 
+<I>CLSID</I> of the server, the name of the server, the name of the 
+<I>`.exe'</I> or <I>`.dll'</I> file, the verbs and so on. The <I>`.reg'</I> file 
+used a program called <I>REGEDIT</I> to register the <I>OLE</I> server 
+&nbsp;with the registration database, <I>`reg.dat'</I>.<BR><I>REGEDIT</I> does 
+not&nbsp;resort to any mysterious mantra. It merely uses&nbsp;standard 
+<I>Windows</I> API like <I>`RegOpenKey()'</I>, <I>`RegSetKey()'</I> and so on to 
+write to the registration database. <BR>Displaying all the available <I>OLE</I> 
+servers in a container program was child's play&nbsp;with the&nbsp;<I>OLE</I> UI 
+function <I>OleUIInsertObject()</I>. On&nbsp;executing this function the 
+<I>OLE</I> servers are displayed in a standard dialog box titled <I>`Insert 
+Object'</I>.<BR>With the advent of <I>OCX</I>es, this standard <I>`Insert 
+&nbsp;Object'</I> dialog has undergone a sea-change as seen in 
+&nbsp;<I>Microsoft Access 2.0</I>. In the new <I>`Insert Object'</I> dialog box 
+an additional radio-button is provided for <I>OCX</I>es. Selecting &nbsp;this 
+radio-button enables us to exclusively see the registered 
+<I>OCX</I>es.<BR>However, there is no documentation on how this new <I>`Insert 
+Object'</I> dialog box can be obtained and made a part of the <I>OCX</I> 
+container. There must be <I>something</I> in the <I>OCX</I> registration code 
+that differentiates it from an conventional <I>OLE</I> server.<BR>We once again 
+had to turn our attention to the <I>OCX</I> samples to understand the 
+registration code. But in this particular &nbsp;case the <I>OCX</I> samples too 
+were no big help. All <I>OCX</I> samples provided with <I>Visual C++</I> use the 
+<I>MFC.</I> They have been generated using the <I>Control Wizard</I>. These 
+applications &nbsp;have &nbsp;<I>OCX</I> registration code built into them and 
+hence do not require a separate <I>`.reg'</I> file.<BR>Well, our 
+<I>never-say-die</I> spirit carried us through &nbsp;this. After sifting through 
+the code in the <I>OCX</I> samples we isolated the code used by an <I>OCX</I> to 
+register itself. A single helper function; <I>AfxOleRegisterControlClass()</I>. 
+We converted this function to the basic API registration functions only to 
+realise that the only difference between the information in the registration 
+code for an <I>OCX</I> and that in a <I>`.reg'</I> file for an <I>OLE</I> server 
+is the presence of the keyword <B><I>`Control'</i></B>. <BR>Thus, we can easily 
+have a <I>`.reg'</I> file to register an <I>OCX</I> which has the line 
+HKEY_CLASSES_ROOT\CLSID\TheActualCLSIDOfTheControl\Control in addition to all 
+the details that are normally present in &nbsp;the <I>`.reg'</I> file for an 
+<I>OLE</I> server.<BR>In the following program we have created our own 
+<I>`Insert Control'</I> dialog box which displays the names of only the 
+<I>OCX</I>es from the registration database. <BR>
+<H4>Program 5</H4><PRE> void MFrameWnd::InsertControl()
+ {
+   MDialog z_Dialog(IDD_DIALOG1);
+ 
+   z_Dialog.DoModal();
+ }
+ 
+ MDialog::MDialog(int ID):CDialog(ID)
+ {
+   z_nID = ID;
+ }
+ 
+ BOOL MDialog::OnInitDialog()
+ {
+   CDialog::OnInitDialog();  
+   if(z_nID==IDD_DIALOG1)
+   {
+     long z_lCount = 0;
+     CListBox *z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+       
+     while(1)
+     {
+       HKEY z_Root,z_Root1,z_Root2;
+       char *z_sName,*z_sName1,*z_sName2;
+       long z_lCopied;
+       
+       z_sName = (char*) malloc(100);
+       z_sName1 = (char*) malloc(100);
+       z_sName2 = (char*) malloc(100);
+       z_lCopied = 100;
+       RegOpenKey(HKEY_CLASSES_ROOT,"",&amp; z_Root);
+       if((RegEnumKey(z_Root,z_lCount,z_sName,100)))
+         break;
+       z_lCount++;
+       strcpy(z_sName2,z_sName);                
+       strcpy(z_sName1,z_sName);
+       strcat(z_sName1,"\\CLSID");
+       RegOpenKey(HKEY_CLASSES_ROOT,z_sName1,&amp; z_Root1);
+       RegQueryValue(z_Root1,0,z_sName,&amp; z_lCopied);
+       z_lCopied = 100;
+       strcpy(z_sName1,"CLSID\\");
+       strcat(z_sName1,z_sName);
+       strcat(z_sName1,"\\Control");
+       if(!RegOpenKey(HKEY_CLASSES_ROOT,z_sName1,&amp; z_Root2))
+       {
+         RegQueryValue(z_Root,z_sName2,z_sName,&amp; z_lCopied); 
+         z_sPrgID.SetAt(z_sName,z_sName2);     
+         z_pListBox-&gt; AddString(z_sName);
+       }  
+       free(z_sName);
+       free(z_sName1);
+       free(z_sName2);
+       RegCloseKey(z_Root);
+       RegCloseKey(z_Root1);
+       RegCloseKey(z_Root2);
+     }           
+     z_pListBox-&gt; SetCurSel(0);
+     return TRUE;                        
+   }                      
+   return TRUE;
+ }
+ 
+ void MDialog::OnOK()
+ {
+   if(z_nID == IDD_DIALOG1)
+   {
+     char *z_sPID;
+     CListBox *z_pListBox;
+     int z_nIndex;
+     CString z_sTemp,z_sString;
+     
+     z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+     z_nIndex = z_pListBox-&gt; GetCurSel();  
+     z_pListBox-&gt; GetText(z_nIndex,z_sString);
+     z_sPrgID.Lookup(z_sString,z_sTemp);
+     z_sPID = z_sTemp.AllocSysString();    
+     EndDialog(0);
+     CLSIDFromString(z_sPID,&amp; z_Clsid);
+     z_pFrameWnd-&gt; ObjCreate(z_Clsid);            
+     ::SysFreeString(z_sPID);
+   }       
+   else
+     EndDialog(0);
+ }
+</PRE>When we select the menu-option <I>Insert &nbsp;Control...</I>, we create 
+an <I>MDialog</I> object and pass it the ID of the dialog resource to be 
+associated with it. The ID is stored in the global variable <I>z_nID.</I> Next, 
+the <I>CDialog</I> function <I>DoModal()</I> is used to display the dialog 
+box.<BR>In <I>OnInitDialog()</I>, we use the registration database functions of 
+the <I>Windows</I>&nbsp;API to read <I>`reg.dat'</I>. <I>RegOpenKey()</I> is 
+used to obtain a handle to required keys. Then, we use <I>RegEnumKey()</I> to 
+access each individual sub-key.<BR>The <I>while</I> loop reads individual 
+entries in <I>`reg.dat'</I> and uses suitable string concatenation to read the 
+<I>CLSID</I>. Using the <I>CLSID</I>, we determine whether the entry is an 
+<I>OCX</I> by searching for the keyword <I>Control</I>.<BR>If it is then the 
+<I>CMapStringToString</I> object, <I>z_sPrgID</I>, is used to store both the 
+human readable name of the &nbsp;<I>OCX</I> and the <I>ProgID</I> of &nbsp;the 
+<I>OCX</I> as strings. <I>CMapStringToString</I> one of &nbsp;the MFC collection 
+classes. The name acts as the key in the map which stores the <I>ProgID</I> as 
+the value. In addition, the name of the <I>OCX</I> is added as an element in the 
+listbox of the dialog. Thus, the listbox is populated with the names of all 
+&nbsp;registered <I>OCX</I>es.<BR>When &nbsp;the user selects an <I>OCX</I> and 
+clicks on the &nbsp;<I>OK</I> button, <I>OnOK()</I> gets executed. We determine 
+the <I>OCX</I> selected by the user in the list box and search <I>z_sPrgID</I> 
+for the allied <I>ProgID</I>. <I>CLSIDFromString()</I> will search 
+<I>`reg.dat'</I> for the <I>CLSID</I> associated with this <I>ProgID</I>. The 
+<I>CLSID</I> is then passed to <I>ObjCreate()</I> where it is used by 
+<I>CoGetClassObject()</I> to activate the <I>OCX</I>.<BR>
+<P><A href="http://users.neca.com/vmis/final3.html">Continue</A> 
+</P></BODY>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:44 GMT -->
+</HTML>

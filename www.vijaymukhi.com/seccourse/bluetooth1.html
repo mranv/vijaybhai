@@ -1,0 +1,63 @@
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.*;
+import javax.bluetooth.*;
+import java.util.*;
+public class blue1 extends MIDlet implements DiscoveryListener
+{
+Form mForm;Display mDisplay;
+RemoteDevice rd1;
+DiscoveryAgent d;
+Vector records = new Vector();
+public synchronized void  startApp()
+{
+try
+{
+mForm = new Form("Vijay & Sonal");
+LocalDevice l;
+l = LocalDevice.getLocalDevice();
+String s = l.getFriendlyName();
+mForm.append(s + ",");
+String s2 = l.getBluetoothAddress();
+mForm.append(s2 + "\n");
+d = l.getDiscoveryAgent();
+d.startInquiry(DiscoveryAgent.GIAC,this);
+mDisplay = Display.getDisplay(this);
+mDisplay.setCurrent(mForm);
+wait();
+mForm.append("Inquiry Over\n");
+UUID[] uuids = new UUID[1];
+uuids[0] = new UUID(0x1002);
+if ( rd1 == null )
+mForm.append("rd1 is null\n");
+int serviceSearch = d.searchServices(null, uuids, rd1, this);
+mForm.append("No of Services found " + records.size() + "\n");
+}
+catch (Exception e){}
+}
+public void deviceDiscovered(RemoteDevice rd, DeviceClass cod)
+{
+rd1 = rd;
+String s="",s1="";
+try
+{
+s = rd.getFriendlyName(false);
+} catch(Exception e) {}
+s1 = rd.getBluetoothAddress();
+mForm.append("Bluetooth device name " + s + " " + s1 + "\n");
+}
+public void inquiryCompleted(int discType)
+{
+synchronized (this)
+{
+notify();
+}
+}
+public void servicesDiscovered(int transID, ServiceRecord[] servRecord)
+{
+records.addElement(servRecord[0]);
+}
+public void serviceSearchCompleted(int transID, int respCode){}
+public void destroyApp(boolean unconditional) {}
+public void pauseApp() {}
+}
+

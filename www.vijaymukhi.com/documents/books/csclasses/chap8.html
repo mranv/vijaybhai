@@ -1,0 +1,1484 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:01 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap8_files/filelist.html">
+<link rel=Edit-Time-Data href="chap8_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-11-06T19:07:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:09:00Z</o:LastSaved>
+  <o:Pages>11</o:Pages>
+  <o:Words>3185</o:Words>
+  <o:Characters>18155</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>151</o:Lines>
+  <o:Paragraphs>36</o:Paragraphs>
+  <o:CharactersWithSpaces>22295</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>8</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>The DTD</span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Validations
+in XML</span></u><b><span style='mso-bidi-font-size:12.0pt;color:windowtext'><o:p></o:p></span></b></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So far, we have only read an XML
+file, without catering to special cases, wherein, either an entity has been
+used, or data has to be validated as per the element. The XmlTextReader class is
+the most optimum choice for reading an XML file, barring the cases where data
+has to be validated, or in cases where an entity has to be replaced with a
+value. For such purposes, the XmlValidatingReader class is more suited. This
+class is derived from XmlReader, and it conducts three types of validations-
+DTD, XDR and XSD schema validations. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This class is used when the
+primary task is either to conduct data validations or to resolve general
+entities or to provide support for default entities. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlValidatingReader r = null;</p>
+
+<p class=ILprg>XmlParserContext p;</p>
+
+<p class=ILprg>p = new XmlParserContext(null, null, &quot;vijay&quot;, null,
+null, &quot;&lt;!ENTITY pr '100'&gt;&quot;,&quot;&quot;,&quot;&quot;,
+XmlSpace.None);</p>
+
+<p class=ILprg>r = new XmlValidatingReader (&quot;&lt;vijay mukhi='great'
+price='Rs <span style='font-family:"Bookman Old Style"'>&amp;</span>pr;'&gt;&lt;/vijay&gt;&quot;,
+XmlNodeType.Element, p);</p>
+
+<p class=ILprg>r.ValidationType = ValidationType.None;</p>
+
+<p class=ILprg>r.MoveToContent();</p>
+
+<p class=ILprg>while (r.MoveToNextAttribute())</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} = {1}&quot;, r.Name, r.Value);</p>
+
+<p class=ILprg>} </p>
+
+<p class=ILprg>r.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>mukhi = great</p>
+
+<p class=ILoutput>price = Rs 100</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To create the object p of type
+XmlParserContext, the constructor with nine parameters of XmlParserContext
+class is called. The nine parameters are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter refers to the
+NameTable type. It has a value of null.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter refers to
+NamespaceManager type. It also has a value of null.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third Parameter is the DocType,
+i.e. the root tag 'vijay'.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The fourth parameter is the pubid
+for the external DTD file. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The fifth parameter is the sysid for
+the external DTD file. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The sixth parameter is the internal
+DTD, where an ENTITY declaration &lt;!ENTITY pr '100'&gt; has been created.
+This simply states that the word 'pr' is preceded by a '&amp;' and followed by
+a semi-colon must be replaced with the string '100'. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The seventh parameter in sequence is
+the location from where the fragment is to be loaded, i.e. the base URI.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The eighth parameter stands for the
+xml:lang scope.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The ninth parameter stands for the
+xml:space scope. </p>
+
+<p class=ILbase><span style='color:windowtext'>The parameters to the
+constructor of XmlValidatingReader class are similar to those of the
+XmlTextReader, which we had encountered earlier. This class is derived from the
+XmlTextReader as well as the IXmlLineInfo interface.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are five different values
+that a Validationtype can be initialized to: <o:p></o:p></span></p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>1. The first is Auto, which validates only when the DTD or
+schema information is found. </p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>2. The second is DTD, which validates based on the
+instructions found in the DTD. </p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>3. The third option, which creates an XML 1.0 non-validation
+parser, validates the default attributes and resolves entities without using
+the DOCTYPE. Thus, if the root tag is changed from 'vijay' to 'vijay1', no
+errors will be generated. Placing the ValidationType statement within comments
+will generate the following exception: </p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&quot;Unhandled Exception:
+System.Xml.Schema.XmlSchemaException: The root element name must match the
+DocType name. An error occurred at (1, 2).&quot;</p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>4. The fourth option is XSD, which validates as per the XSD
+schemas.<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>5. The fifth option is XDR, which validates as per the XDR
+schemas. In our program we have set this property to a value of None. </p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the required properties are
+set, the MoveToContent function is used to move to the first element, 'vijay'.
+The next function, MoveToNextAttribute returns a value of True when there are
+attributes remaining to be read. Otherwise, it returns a value of False. In our
+case, it is similar to the MoveToFirstElement function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The while loop repeats twice,
+since there are two attributes. The Name and Value properties for the first
+attribute are displayed as 'mukhi' and 'great'. This is very similar to what we
+have observed in the earlier program. The name for the second attribute is
+displayed as 'price'. However, its value is not the same, because it has an
+entity &amp;pr;. The XmlValidatingReader replaces the entity pr with the string
+'100', prior to displaying the value.<span style="mso-spacerun: yes"> 
+</span>Therefore, the output is displayed as 'price' and 'Rs. 100'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>using System.Xml.Schema;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>XmlValidatingReader v = new XmlValidatingReader(r);</p>
+
+<p class=ILprg>v.ValidationType = ValidationType.DTD;</p>
+
+<p class=ILprg>v.ValidationEventHandler += new ValidationEventHandler (abc);</p>
+
+<p class=ILprg>while(v.Read());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void abc(object s, ValidationEventArgs a)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Severity:{0}&quot;, a.Severity);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Message:{0}&quot;, a.Message);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay1 &gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:The root element name must match the DocType name. An
+error occurred at file:///c:/csharp/b.xml(3, 2).</p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:The 'vijay' element is not declared. An error
+occurred at file:///c:/csharp/b.xml(3, 2).</p>
+
+<p class=ILbase><span style='color:windowtext'>In the above program, to begin
+with, an object r that looks like XmlTextReader is created, and then, it is
+passed to the constructor of XmlValidatingReader, while object v is being
+created. The ValidationType of the object v is modified to DTD. The
+ValidationEventHandler event is set to the function abc, which gets called
+whenever an error occurs. Under the aegis of the Read function, the entire XML
+file is validated, using the while loop, and the function abc is notified
+whenever an error is chanced upon. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the function abc, the values
+contained in the properties - Severity and Message, of the ValidationEventArgs
+parameter 'a', are printed. The Severity property reveals whether it is an
+error or warning, whereas, the Message property contains the precise text of the
+error or warning. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above case, an error is
+generated because the DOCTYPE expects the root element to be 'vijay1', whereas,
+it has been specified as 'vijay'. When no error message is displayed, it may be
+inferred that no errors have been found. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>The
+DTD</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Using the above C# program, we
+shall now create our own DTD file. Therefore, we shall modify only the b.xml
+and b.dtd files. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT vijay &gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A DTD is generally very
+protracted. So, an internal DTD is rarely used. If it is used, its contents
+have to be placed within [] brackets. To use an external DTD, we use the words
+SYSTEM followed by the name of the DTD file, which is b.dtd, in this case. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In b.dtd, an element 'vijay' is
+created by inserting the reserved characters '&lt;!', followed by ELEMENT, and
+finally by the element name 'vijay'. When we run the C# program 'a', the
+following error is generated:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.XmlException: This is an
+invalid content model. Line 1, position 17.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An error in the DTD file has
+resulted in the generation of an un-handled exception. The error occurred due
+to an incomplete ELEMENT statement.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT vijay EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The addition of the word EMPTY
+salvages the situation. By specifying the word EMPTY, it is amply clear that
+the element named 'vijay' is an empty element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'vijay' has invalid child element '#PCDATA'.
+An error occurred at file:///c:/csharp/b.xml(3, 8).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DTD file states, with
+absolute clarity, that the ELEMENT 'vijay' is EMPTY. However, an open tag
+&lt;vijay&gt; and a close tag &lt;/vijay&gt;have been added to the XML file.
+Therefore, an error message is generated, which, as usual, is unintelligible. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Instead of using tags such as
+'vijay', let us consider a DTD that has been implemented in real life. This one
+is used for the WML, or the Wireless Markup Language. The rules or syntax of
+WML are available as a DTD. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our book titled 'WML and
+WMLScript', we have endeavoured to elucidate the concept of a DTD. You are at
+liberty to refer to the book. However, we must caution you that, the approach
+and the explanation used here is entirely at variance with the one used in the
+earlier book.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has invalid child element '#PCDATA'. An
+error occurred at file:///C:/csharp/b.xml(3, 6).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The word 'vijay' has merely been
+replaced by the word 'wml'. The error generated is akin to the earlier one. At
+this juncture, we introduce a 'card' into the DTD file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has incomplete content. Expected
+'card'. An error occurred at file:///c:/csharp/b.xml(4, 3).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every WML document must commence
+with the root tag 'wml'. In the DTD file, we have placed the word 'card' within
+round brackets, along with wml. This signifies that the wml tag must contain a
+tag or an element called 'card'. Since there is no card in the XML file, an
+error is reported, stating that a card is expected, and on account of its
+unavailability, the wml element is incomplete.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:The 'card' element is not declared. An error occurred
+at file:///c:/csharp/b.xml(4, 2)</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We add the card tag as a single
+tag to our XML file, in an endeavour to eliminate the error. But, as we have
+not specified 'card' as a valid element in the DTD file, yet another error
+message is displayed. Unless 'card' appears as an ELEMENT in the DTD file, it
+is not possible to use it in the XML file. Therefore, we now include 'card' as
+an EMPTY element in b.dtd<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, all the errors just vanish.
+In the DTD file, we had affirmed that the element 'card' shall be empty i.e. it
+will not have any content. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML file depicted below
+displays an error, because the 'card' tag is not a single tag any longer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'card' has invalid child element '#PCDATA'.
+An error occurred at file:///C:/csharp/b.xml(4, 7).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The error message displayed here
+is very similar to the one seen with the wml tag.<o:p></o:p></span></p>
+
+<p class=ILoutput>The element 'wml' has an invalid child element '#PCDATA'</p>
+
+<p class=ILbase><span style='color:windowtext'>A slight modification to the XML
+file is desirable, before we endeavour to eliminate the error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>hi</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'card' has invalid child element 'Text'. An
+error occurred at file:///c:/csharp/b.xml(4, 7).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Inserting the word 'hi' between
+the card tags results in a slightly altered error messages. In place of PCDATA,
+we get to see Text. Resorting to the following modifications to the DTD file,
+both the error messages can be eliminated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (#PCDATA)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To eradicate the errors, the
+EMPTY word is replaced with #PCDATA, enclosed within round brackets. The word
+PCDATA is an acronym for Parseable Character Data. In plain English, it
+represents text that can be entered from the keyboard. Thus, we are at liberty
+to write as many lines of text as we want, within the card tag. Even if the
+word 'hi' is removed from within the tags, no error is generated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Our DTD expects a root tag or
+starting tag of wml. Only a card tag can be inserted amidst within this tag,
+which is capable of containing limitless content. Insertion of anything else in
+this tag is a sure recipe for disaster.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has invalid content. Expected ''. An
+error occurred at file:///c:/csharp/b.xml(6, 2).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above error has occurred
+because, the DTD clearly specifies that the root tag wml must have one, and
+only one, occurrence of the tag called 'card' within it. Here, we have created
+two tags, thereby, causing the error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (#PCDATA)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The * symbol, placed after the
+round brackets, is indicative of the fact that, it can be replaced with zero to
+infinite values. Thus, the XML file can now either have zero or countless card
+elements. If you do not give credence to this statement of ours, you may either
+delete all the card elements from the XML file, or add numerous cards. Either
+way, no error will be generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)+&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (#PCDATA)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Replacing the symbol * with a +
+transforms the meaning from 'zero to infinity' to 'one to infinity'. The only
+difference between the * symbol and the + symbol is that, the + sign mandates
+at least one occurrence of the element whereas, the * signs makes it optional.
+Thus, in the aboveXMLfile, at least a single card element is required.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)?&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (#PCDATA)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last of the special
+characters is the symbol ?<span style="mso-spacerun: yes">  </span>that
+specifies the number of elements to be from 'zero or one'. Thus in the XML file,
+we may have either one card element or none at all. The presence of two or more
+cards will generate an error. You should try out various possible combinations
+for each of the symbols *, + and?.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;p&gt; hi &lt;/p&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (p)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT p (#PCDATA)&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>No error is generated because,
+in the DTD file, we have now stated that, the card element can have a tag p,
+which can contain any text. We have, however, done away with the provision of
+placing any text within the card tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Add in a new modification to the
+file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;p&gt; &lt;b/&gt; &lt;/p&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (p)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT p (br | b)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT br EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT b EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DTD appears extensively
+complicated. The p tag is now competent of containing only two tags, br and b.
+Text is not allowed any more. The | sign signifies the OR condition, which
+implies that either tag b or tag br is allowed. The two aforesaid tags are
+defined as EMPTY tags. To summarise, our DTD states that the p tag can contain
+a single tag of either b or br.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>&lt;p&gt; &lt;b/&gt; &lt;br/&gt;&lt;/p&gt;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'p' has invalid content. Expected ''. An
+error occurred at file:///c:/csharp/b.xml(5, 11). </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>All is not well, because we are allowed
+to place either a 'b' or a 'br' at a time, but not both together. To remedy the
+situation, we place a * symbol after the p tag.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (p)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT p (br | b)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT br EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT b EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above DTD provides us the
+flexibility of having multiple p tags within n number of cards. These, in turn,
+may have as many b or br tags as desired. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>By replacing the b tag with
+#PCDATA, a p tag is in a position to accommodate multiple br tags, as well as an
+indefinite amount of text. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;!ELEMENT p (br | #PCDATA)*&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;head /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card,head)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT head EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above DTD file permits the
+wml tag to contain a card tag, which is then to be strictly followed by a head
+tag. The comma signifies that one tag is to be followed by the other. If we
+refrain from using the head tag in the XML file, the following error message
+will be generated:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has incomplete content. Expected
+'head'. An error occurred at file:///C:/csharp/b.xml(5, 3).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;head /&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has invalid content. Expected 'card'.
+An error occurred at file:///c:/csharp/b.xml(4, 2).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the order of the tags is
+interchanged, an error is thrown. The card tag must be followed by the head
+tag. Besides, there is a restriction imposed that there can be only one
+insertion of each tag. If there are multiple insertions, it will result in an
+error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;head /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card+,head?)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT head EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the plus sign is inserted
+after the card, it allows the use of more that one card tag in the file. The ?
+sign denotes 'zero or one' insertions of the head tag. Thus, we can have more
+than one card tag and have either a single head tag or none at all. If the head
+tag is present, it must be placed after the card tag, since the order of the
+tags is sacrosanct. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;head /&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:Element 'wml' has invalid content. Expected ''. An
+error occurred at file:///c:/csharp/b.xml(6, 2).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Draconian restrictions
+imposed by the DTD file prohibit us from altering the sequence of the above
+tags. The card tag has to come first, followed by the head tag. We cannot
+interchange a head tag with a card tag.<span style="mso-spacerun: yes"> 
+</span>So, the only solution to this problem is to abide by the stipulated
+sequence.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card+,head?,template*)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT head EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT template EMPTY&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the DTD file, we have added a
+* symbol to the entire set of tags, which make up the wml element. The set
+consists of the following individual elements in a sequential order:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>More than one card tags.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Zero or one head tag. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Zero to many template tags. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This set can constitute of
+numerous permutations and combinations of the above conditions, in the
+specified order. Thus, the card and head can appear together, or the card can
+appear by itself without the head tag, or the template tag may not be present
+at all, and so on.<span style="mso-spacerun: yes">  </span>Every occurrence,
+however, needs to begin with a card tag.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ATTLIST card aa CDATA #IMPLIED&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, the card
+tag has an attribute called aa initialized to 'hi'. To implement an attribute,
+we include the word ATTLIST, which is a short form for 'a list of attributes',
+in the DTD file. This is followed by the name of the tag that the attribute is
+associated with. Then, the actual name of the attribute aa is specified,
+followed by the datatype it will hold, which is character data, in our case.
+The last parameter, #IMPLIED permits the attribute aa to be optional.
+Therefore, even if you remove it, no error will be generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card /&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ATTLIST card aa CDATA #IMPLIED bb CDATA #REQUIRED&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:The required attribute 'bb' is missing. An error
+occurred at file:///c:/csharp/b.xml(4, 2).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The error message clearly
+mentions that the attribute bb is missing. The #REQUIRED demands the presence
+of attribute bb, along with the card, whenever the card tag is used. Further,
+the attributes are to be placed one after the other. However, the order of
+placement is not significant. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><!--[if supportFields]><span style='font-size:10.0pt;mso-bidi-font-size:
+9.5pt'><span style='mso-element:field-begin'></span>xe &quot;b.xml&quot;</span><![endif]--><!--[if supportFields]><span
+style='font-size:10.0pt;mso-bidi-font-size:9.5pt'><span style='mso-element:
+field-end'></span></span><![endif]--><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card bb=&quot;no&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>No errors are generated since
+the attribute bb, which is mandatory, has been specified. You can avoid aa,
+since it is implied.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;no&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ATTLIST card aa<span style="mso-spacerun: yes">  </span>(hi
+| bye ) &quot;bye&quot;&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:'no' is not in the enumeration list. An error
+occurred at file:///c:/csharp/b.xml(4, 7).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The values assigned to attributes
+can be restricted to specific values. This can be achieved by specifying the
+values along with ATTLIST in the DTD file and using the OR sign<span
+style="mso-spacerun: yes">  </span>(|) as the separator. The attribute aa can
+only be assigned the value of either 'hi' or 'bye'. Specifying any other value
+would result in an error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the attribute is not
+initialized, it assumes the default value of 'bye'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The error disappears because the
+attribute has been assigned a value of 'hi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card EMPTY&gt;</p>
+
+<p class=ILprg>&lt;!ATTLIST card aa ID #IMPLIED&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have created an attribute aa,
+with a data type of ID. This does not result in any error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Severity:Error</p>
+
+<p class=ILoutput>Message:'hi' is already used as an ID. An error occurred at
+file:///c:/csharp/b.xml(5, 7).</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The card tag can be used
+multiple times, due to the presence of the * sign in the DTD file. By
+associating the type of ID to the attribute aa, it is guaranteed that the same
+value of 'hi' is not assigned to the attribute. The error message conveys that
+'hi' has already been assigned as an ID to the attribute aa, and hence, it
+cannot be used again.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi&quot;/&gt;</p>
+
+<p class=ILprg>&lt;card aa=&quot;hi1&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we assign a different value
+to the attribute, the error is dispensed with. Thus, a data type of ID
+guarantees that the attribute shall never have a duplicate value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE wml SYSTEM &quot;b.dtd&quot; &gt;</p>
+
+<p class=ILprg>&lt;wml&gt;</p>
+
+<p class=ILprg>&lt;card&gt;</p>
+
+<p class=ILprg>Hi <span style='font-family:"Bookman Old Style"'>&amp;</span>sonal;</p>
+
+<p class=ILprg>&lt;/card&gt;</p>
+
+<p class=ILprg>&lt;/wml&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.dtd</u></p>
+
+<p class=ILprg>&lt;!ELEMENT wml (card)*&gt;</p>
+
+<p class=ILprg>&lt;!ELEMENT card (#PCDATA)*&gt;</p>
+
+<p class=ILprg>&lt;!ENTITY sonal &quot;hi&quot; &gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Entities have been touched upon earlier. Here, the word
+'sonal' will be replaced with 'hi'. This is called an Entity Reference. The DTD
+file requires an ENTITY word with the variable 'sonal', and the value 'hi'.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap8.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:03 GMT -->
+</html>

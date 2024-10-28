@@ -1,0 +1,489 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/firewalln.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:09 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="Firewalln_files/filelist.html">
+<title>Firewall</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2005-06-28T10:09:00Z</o:Created>
+  <o:LastSaved>2005-06-28T10:09:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>843</o:Words>
+  <o:Characters>4810</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>40</o:Lines>
+  <o:Paragraphs>9</o:Paragraphs>
+  <o:CharactersWithSpaces>5907</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Firewall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We now teach you how to
+build a firewall. A firewall is nothing but a device driver that prevents
+network packets from reaching our Operating system. We will write a simple
+device driver that prevents ICMP packets from reaching our OS. We will drop all
+ping packets<span style="mso-spacerun: yes">  </span>that arrive at our OS.
+What we can do from ICMP, we can do for all network protocols.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We start with creating a
+directory driver1 in C: and first create the file y.c that will load and unload
+our device driver.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>y.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>#include &lt;windows.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>SC_HANDLE m,s;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>void main(int argc, char
+**argv)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if ( argv[1][1] == 'i')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>m=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS
+);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>CreateService(m,&quot;vijay&quot;,&quot;mukhi&quot;,SERVICE_ALL_ACCESS,SERVICE_KERNEL_DRIVER,SERVICE_DEMAND_START,SERVICE_ERROR_NORMAL,&quot;C:\\driver1\\vijay.sys&quot;,0,0,0,0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>s=OpenService(m,&quot;vijay&quot;,SERVICE_ALL_ACCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>StartService(s, 0, 0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>SERVICE_STATUS<span
+style="mso-spacerun: yes">  </span>status;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>m= OpenSCManager
+(0,0,SC_MANAGER_ALL_ACCESS );<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>s=OpenService(m,&quot;vijay&quot;,SERVICE_ALL_ACCESS);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ControlService(s,
+SERVICE_CONTROL_STOP, &amp;status);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Our driver loading
+program can be called as y –I to load and y –u to unload. We use simple service
+manager functions to first Open the service manager using the function
+OpenSCManager. We then use the CreateService function to create a service called
+vijay and it is here that we specify that we are not looking at a normal ring 3
+service but a device driver vijay.sys in C:\driver1. We then use the
+OpenService function to open the service vijay and<span style="mso-spacerun:
+yes">  </span>finally use the StartService function to start it. When we want
+to unload the driver, we open the Sc manager, Open the service and now use the
+ControlService service to stop it. To build the exe file we use z.bat.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Z.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>del y.exe<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>cl y.c<span
+style="mso-spacerun: yes">  </span>advapi32.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Same batch file we have
+been using all along. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>b.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>cd \winddk\2600.1106\bin<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>call setenv
+c:\winddk\2600.1106<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>cd \driver1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>del r.obj<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>del vijay.sys<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>cl
+-Ic:\winddk\2600.1106\inc\ddk\wxp -Ic:\winddk\2600.1106\inc\crt -D_X86_=1 /c
+/Gz r.c<o:p></o:p></span></p>
+
+<p class=MsoBodyText>link -subsystem:native,5.01 -entry:DriverEntry@8
+-out:vijay.sys r.obj c:\winddk\2600.1106\lib\wxp\i386\ntoskrnl.lib</p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>To build the driver we
+use the bat file b.bat. The code as always is in r.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>#include &lt;ntddk.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>#include &lt;ndis.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>#include
+&lt;ipFirewall.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>struct IPPacket<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>UCHAR hlen:4,ver:4,tos;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>USHORT len,id,frag;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>UCHAR ttl,protocol;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>USHORT checksum;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ULONG src,dst;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>FORWARD_ACTION
+firewallfunc(VOID **rawdata,UINT a,UINT *b, UCHAR *c,VOID *d,UINT e,struct
+IPRcvBuf<span style="mso-spacerun: yes">  </span>**f)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>char *p;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>struct IPRcvBuf *buff; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>struct IPPacket *ipp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>buff =(struct IPRcvBuf *)
+*rawdata; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>DbgPrint(&quot;cbFilterFunction
+%d&quot;,buff-&gt;ipr_size);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ipp = (struct IPPacket
+*)buff-&gt;ipr_buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>p = (char *)ipp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>DbgPrint(&quot;%d.%d.%d.%d
+--&gt; %d.%d.%d.%d&quot;,p[12],p[13],p[14],p[15],p[16],p[17],p[18],p[19]);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>if(ipp-&gt;protocol == 1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return<span
+style="mso-spacerun: yes">  </span>DROP;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return FORWARD;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>NTSTATUS ActivateFirewall(int
+activate)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>UNICODE_STRING fname;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>PDEVICE_OBJECT device;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>PFILE_OBJECT file;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>IP_SET_FIREWALL_HOOK_INFO
+hook;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>PIRP irp;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>RtlInitUnicodeString(&amp;fname,
+L&quot;\\Device\\Ip&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>DbgPrint(&quot;SetFilterFunction
+%S&quot;,fname.Buffer);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>IoGetDeviceObjectPointer
+(&amp;fname,STANDARD_RIGHTS_ALL, &amp;file, &amp;device);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hook. FirewallPtr<span
+style="mso-spacerun: yes">  </span>= firewallfunc;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>hook.Add = activate;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>irp =
+IoBuildDeviceIoControlRequest (IOCTL_IP_SET_FIREWALL_HOOK,device,(PVOID)
+&amp;hook,sizeof(hook),0,0,0,0,0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>IoCallDriver(device,
+irp);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return STATUS_SUCCESS;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>void
+UnloadDriver(PDRIVER_OBJECT d)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>DbgPrint(&quot;Unloading
+driver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ActivateFirewall(FALSE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>NTSTATUS DriverEntry
+(PDRIVER_OBJECT d,PUNICODE_STRING r)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>DbgPrint(&quot;Vijay1&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>d-&gt; DriverUnload =
+UnloadDriver;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>ActivateFirewall (TRUE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>return STATUS_SUCCESS;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We are now writing a
+firewall driver which to start with is a driver that like all other drivers has
+a DriverEntry function. Here we simply set the DriverUnload member to <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>UnloadDriver which will
+be called when we unload our driver. We do not create any links but call a
+function ActivateFirewall that sets our device driver to act as a firewall. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>We initialize fname with
+a Unicode string \Device\Ip and then get a handle to this device name in the
+device structure using the IoGetDeviceObjectPointer function. We then place the
+address of our function firewallfunc in the FirewallPtr<span
+style="mso-spacerun: yes">  </span>member of the hook structure that we want to
+be called each time a packet arrives on our network card. By setting the Add
+member of the hook structure to true or 1 we are activating the function, 0
+means do not call the function any more. All that we now need to do is use the
+IoBuildDeviceIoControlRequest to build an IRP which can be send across to the
+device driver \Device\Ip. The ioctl associated with the IRP is IOCTL_IP_SET_FIREWALL_HOOK.
+The IoCallDriver will send the Irp across to the device driver whose handle is
+stored in the device object. From now on every time a packet arrives at the
+network card, our function firewallfunc will get called. The first parameter is
+a pointer to a structure IPRcvBuf. This has two<span style="mso-spacerun:
+yes">  </span>members that interest us.<span style="mso-spacerun: yes"> 
+</span>Ipr_size that has the size of the packet and irp_buffer that points to
+the actual data. We set two pointers to this buffer variable. The char * is
+used to display the IP address in dotted decimal, the ipp pointer points to an
+actual IP header. If the packet is ICMP the protocol member will be 1, we
+return an enum DROP that has a value 1. Whenever the original drive receives
+this value, it does not send the packet to the OS. If it receives a zero, it
+means that we want the driver to forward it to the next driver in the chain or
+to the OS running in ring 3. This is how easy it is to implement a firewall as
+a device driver. Simply send the Ip device driver the address of a function to
+be called. This function will now return a DROP or FORWARD depending upon
+whether it wants others to see the packet. Setting the Add member to 0 in
+Driver Unload will stop our function from being called.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/firewalln.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:10 GMT -->
+</html>

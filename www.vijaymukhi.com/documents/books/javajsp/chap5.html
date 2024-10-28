@@ -1,0 +1,1216 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap5.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+  <tr> 
+    <td height="22911" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC"> 
+            <div align="center"><b><font size="+1">5. Java Server Pages</font></b></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Introduction</p>
+      <p>Based on servlet technology, Java Server Pages (JSP) is one of the most 
+        important elements of Java server programming.</p>
+      <p>Java Server Pages combine HTML or XML with nuggets of Java code to produce 
+        dynamic web pages. Each page is automatically compiled to a servlet by 
+        the JSP engine the first time it is requested, and then executed. JSP 
+        provides a variety of ways to talk to Java classes, servlets, applets 
+        and the web server.</p>
+      <p>NOTE: We'll be explaining JSP using the Java Server Development Kit or 
+        the JSWDK which can be downloaded from Sun's site at www.javasoft.com. 
+        All new development on JSP/servlets has been passed on to the apache team. 
+        The reason we are teaching you the older version is because it is easier. 
+        There are cosmetic changes from the one we are doing to the jakarta version 
+        which we will go back to in the last chapter.</p>
+      <p>Download the zip file from the Sun site on the Internet and unzip it. 
+        It will create a sub directory jswdk-1.0.1. cd into this sub directory 
+        and then move into the bin sub directory. Here run a batch file named 
+        startserver. If you get an error in the Java Web Server window and if 
+        you are using jdk 1.2.2 like we are, add the following to the classpath 
+        variable.</p>
+      <p>set CLASSPATH=c:\jdk1.2.2\lib\tools.jar;%CLASSPATH%</p>
+      <p><br>
+        A Simple Java Server Page </p>
+      <p>Let us begin by creating a simple jsp file. To do so, create a file that 
+        has a .jsp extension and save this file to the examples\jsp subdirectory. 
+        You can save it in the examples subdirectory or the jsp subdirectory, 
+        either is fine. We have named the file e1.jsp and it contains only one 
+        word, 'hi'.<br>
+        e1.jsp<br>
+        hi</p>
+      <p> Open this file in the browser by giving the url as <br>
+        http://127.0.0.1:8080/examples/jsp/e1.jsp </p>
+      <p>'hi' will now be displayed in your browser window. </p>
+      <p>Congratulations! You have written the world's smallest JSP program. The 
+        browser initially takes a long time to show you the result but in future 
+        it will be very quick. </p>
+      <p>Now go to the subdirectory named work, where you will find a subdirectory 
+        ending with the word examples. Change to this directory.</p>
+      <p>C:\jswdk-1.0.1\work&gt;dir</p>
+      <p> Volume in drive C is SONAL<br>
+        Volume Serial Number is 0661-13EE<br>
+        Directory of C:\jswdk-1.0.1\work</p>
+      <p>. &lt;DIR&gt; 06-05-00 7:31p .<br>
+        .. &lt;DIR&gt; 06-05-00 7:31p ..<br>
+        %3A808~1 &lt;DIR&gt; 06-05-00 7:31p %3A8080%2Fexamples<br>
+        %3A808~2 &lt;DIR&gt; 06-05-00 7:31p %3A8080%2F<br>
+        0 file(s) 0 bytes<br>
+        4 dir(s) 2,629.67 MB free</p>
+      <p>C:\jswdk-1.0.1\work&gt;cd %3A808~1</p>
+      <p><br>
+        This is your first JSP file. You will find 3 files there, one java file, 
+        one class file and one dat file. If you look at their names, they are 
+        very long but they all contain e1. </p>
+      <p>C:\jswdk-1.0.1\work\%3A8080%2Fexamples&gt;dir</p>
+      <p> Volume in drive C is SONAL<br>
+        Volume Serial Number is 0661-13EE<br>
+        Directory of C:\jswdk-1.0.1\work\%3A8080%2Fexamples</p>
+      <p>. &lt;DIR&gt; 06-05-00 7:31p .<br>
+        .. &lt;DIR&gt; 06-05-00 7:31p ..<br>
+        JSP_00~1 JAV 2,615 06-05-00 7:31p jsp_0005ce_00031_0002ejspe1_jsp_1.java</p>
+      <p>C_0003~1 DAT 59 06-05-00 7:31p C_0003a.<br>
+        jswdk_0002d_00031_0005f_00030_0005f_00031.examples.jspe1.dat</p>
+      <p>C_0003A &lt;DIR&gt; 06-05-00 7:32p C_0003a</p>
+      <p>JSP_00~1 CLA 2,530 06-05-00 7:32p jsp_0005ce_00031_0002ejspe1.class</p>
+      <p> 3 file(s) 5,204 bytes<br>
+        3 dir(s) 2,629.66 MB free</p>
+      <p>C:\jswdk-1.0.1\work\%3A8080%2Fexamples&gt;</p>
+      <p>Now open the java file by saying edit *.java </p>
+      <p>package C_0003a.jswdk_0002d_00031_0005f_00030_<br>
+        0005f_00031.examples.jsp;</p>
+      <p>import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        import javax.servlet.jsp.*;<br>
+        import java.io.PrintWriter;<br>
+        import java.io.IOException;<br>
+        import java.io.FileInputStream;<br>
+        import java.io.ObjectInputStream;<br>
+        import java.util.Vector;<br>
+        import com.sun.jsp.runtime.*;<br>
+        import java.beans.*;<br>
+        import com.sun.jsp.JspException;<br>
+        public class jsp_0005ce_00031_0002ejspe1_jsp_1 extends HttpJspBase {</p>
+      <p> static char[][] _jspx_html_data = null;</p>
+      <p> public jsp_0005ce_00031_0002ejspe1_jsp_1( ) {<br>
+        }</p>
+      <p> private static boolean _jspx_inited = false;</p>
+      <p> public final void _jspx_init() throws JspException {<br>
+        ObjectInputStream oin = null;<br>
+        int numStrings = 0;<br>
+        try {<br>
+        FileInputStream fin = new FileInputStream(&quot;work\\%3A8080%2Fexamples\\C_0003a.<br>
+        jswdk_0002d_00031_0005f_00030_0005f_00031.<br>
+        examples.jspe1.dat&quot;);<br>
+        oin = new ObjectInputStream(fin);<br>
+        _jspx_html_data = (char[][]) oin.readObject();<br>
+        } catch (Exception ex) {<br>
+        throw new JspException(&quot;Unable to open data file&quot;);<br>
+        } finally {<br>
+        if (oin != null)<br>
+        try { oin.close(); } catch (IOException ignore) { }<br>
+        }<br>
+        }</p>
+      <p> public void _jspService(HttpServletRequest request, HttpServletResponse 
+        response)<br>
+        throws IOException, ServletException {</p>
+      <p> JspFactory _jspxFactory = null;<br>
+        PageContext pageContext = null;<br>
+        HttpSession session = null;<br>
+        ServletContext application = null;<br>
+        ServletConfig config = null;<br>
+        JspWriter out = null;<br>
+        Object page = this;<br>
+        String _value = null;<br>
+        try {</p>
+      <p> if (_jspx_inited == false) {<br>
+        _jspx_init();<br>
+        _jspx_inited = true;<br>
+        }<br>
+        _jspxFactory = JspFactory.getDefaultFactory();<br>
+        response.setContentType(&quot;text/html&quot;);<br>
+        pageContext = _jspxFactory.getPageContext(this, request, response,&quot;&quot;, 
+        true, 8192, true);<br>
+        application = pageContext.getServletContext();<br>
+        config = pageContext.getServletConfig();<br>
+        session = pageContext.getSession();<br>
+        out = pageContext.getOut();</p>
+      <p> out.print(_jspx_html_data[0]);</p>
+      <p> } catch (Throwable t) {<br>
+        if (out.getBufferSize() != 0)<br>
+        out.clear();<br>
+        throw new JspException(&quot;Unknown exception: &quot;, t);<br>
+        } finally {<br>
+        out.flush();<br>
+        _jspxFactory.releasePageContext(pageContext);<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>Edit shows you a Java program which has been created by the Java Web 
+        Server. The JSP file that you ran from the browser was converted into 
+        a servlet. The static data in the jsp file was stored in a new file with 
+        the .dat extension in the subdirectory work. The JSP engine writes this 
+        code for you. All your html code is stored in the file with the .dat extension. 
+        At first _jspx_init is called which opens the .dat file with the static 
+        text. Then _jspService is called. Now you know why it takes a long time 
+        for the output to show up in the browser. It takes some time to convert 
+        the jsp file into a servlet and then compile the servlet to a .class file 
+        and then run the servlet.</p>
+      <p>JSP Expressions</p>
+      <p>A JSP Expression is a great tool for embedding values within your HTML 
+        code. Anything between &lt;%= and %&gt; tags will be evaluated, converted 
+        to a string, and then displayed.</p>
+      <p>Now let's create another file where we start with hi and then send %=&quot;bye&quot; 
+        %. </p>
+      <p>e2.jsp<br>
+        hi<br>
+        &lt;%= &quot;bye&quot; %&gt;<br>
+        no</p>
+      <p>Partial Output of the servlet code generated by the jsp engine for the 
+        .jsp file is enclosed with the dotted lines..</p>
+      <p>----------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e2.jsp&quot;;from=(1,3);to=(1,10)]<br>
+        out.print( &quot;bye&quot; );<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        --------------------</p>
+      <p>When you view this file in your browser, it will display hi, bye and 
+        no, all on the same line.</p>
+      <p>Note that you must save the file as e2.jsp and not e1.jsp.</p>
+      <p>Let's understand what we have just done. The JSP engine takes over and 
+        it saves hi to disk in the .dat file. Then it sees the tag '&lt;%'. It 
+        understands this character and for it anything within &lt;% %&gt; is JSP. 
+        A tag is anything that starts with an angle bracket. '&lt;%' is also used 
+        in Active Server Pages. The '=' sign tells the engine to add the line 
+        'out.print' in the Java program and also whatever is given in double quotes 
+        as a parameter to print. It automatically puts the open and close bracket 
+        and a semicolon at the end. The next line with 'no' is also saved to disk 
+        as another array. </p>
+      <p>In effect, you have saved two arrays of chars on disk. If you look at 
+        the code, it all looks the same. The only difference is that it says print 
+        the first array, then the newly added line, out.print(&quot;bye&quot;), 
+        and then it finally print the second array. </p>
+      <p>_jspx_init uses the function readObject to read the contents of the .dat 
+        file into an array _jspx_html_data. Thus the array member _jspx_html_data[0] 
+        will contain hi and _jspx_html_data[1] will contain bye. out looks like 
+        JspWriter and is initialized in _jspService. It is used to create the 
+        html file which will be sent across.</p>
+      <p>e3.jsp<br>
+        hi<br>
+        &lt;% out.println(&quot;no&quot;); %&gt;<br>
+        bye</p>
+      <p>------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e3.jsp&quot;;from=(1,2);to=(1,22)]<br>
+        out.println(&quot;no&quot;); <br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        ------------------</p>
+      <p>Now remove the '=' sign in the JSP file and write out.println (&quot;no&quot;); 
+        Since there is no '=' sign, the jspengine does not add its own out.print. 
+        This jsp statement gets added in as is. The JSP engine assumes it to be 
+        Java code. This means that if you do not write good Java code here, you 
+        will get horrible errors. This happens when javac compiles the Java program. 
+        They will be displayed in your Java server window. </p>
+      <p>This implies that whenever you put an '=' sign, you must use something 
+        that will be converted to a string in Java. This is because the out.print 
+        that is added takes only a single string as its parameter. </p>
+      <p>Hence bye is enclosed within double quotes. Try giving it without quotes 
+        and you will be presented with an error. The bye is assumed to be a variable. 
+        If you put a semicolon then it takes the semicolon as a part of the double 
+        quotes. There is supposed to be no space between the % and =. It must 
+        be typed in like this, &lt;%= </p>
+      <p>In a nutshell, we have html code and then there are Java Server Pages, 
+        where we have html, and Java code within that html. The html tags and 
+        text are saved to disk and the Java code comes as is. Thus in a jsp program 
+        we get to mix html and java code. All the java code written so far can 
+        be placed in a jsp program along with html but within the &lt;% tag. </p>
+      <p>e4.jsp<br>
+        hi<br>
+        &lt;%= bye %&gt;<br>
+        no</p>
+      <p>Output in Browser<br>
+        Error: 500<br>
+        Unable to compile class for JSP </p>
+      <p>Error message in the java server window.<br>
+        com.sun.jsp.runtime.JspServlet: init<br>
+        Scratch dir for the JSP engine is: work\%3A8080%2Fexamples<br>
+        IMPORTANT: Do not modify the generated servlets<br>
+        Unhandled error! You might want to consider having an error page to report 
+        such<br>
+        errors more gracefully<br>
+        com.sun.jsp.JspException: Compilation failed:work\%3A8080%2Fexamples\jsp_0005ce_<br>
+        00032_0002ejspe2_jsp_2.java:69: Undefined variable: bye<br>
+        out.print( bye );<br>
+        ^<br>
+        1 error</p>
+      <p>at com.sun.jsp.compiler.Main.compile(Main.java:347)<br>
+        at com.sun.jsp.runtime.JspLoader.loadJSP(JspLoader.java:135)<br>
+        at com.sun.jsp.runtime.JspServlet$JspServletWrapper.loadIfNecessary(JspS<br>
+        ervlet.java:77)<br>
+        at com.sun.jsp.runtime.JspServlet$JspServletWrapper.service(JspServlet.j<br>
+        ava:87)<br>
+        at com.sun.jsp.runtime.JspServlet.serviceJspFile(JspServlet.java:218)<br>
+        at com.sun.jsp.runtime.JspServlet.service(JspServlet.java:294)<br>
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:840)<br>
+        at com.sun.web.core.ServletWrapper.handleRequest(ServletWrapper.java:155<br>
+        )<br>
+        at com.sun.web.core.Context.handleRequest(Context.java:414)<br>
+        at com.sun.web.server.ConnectionHandler.run(ConnectionHandler.java:139)</p>
+      <p>Here it assumed that bye was a variable and the error is detected by 
+        javac on compiling the servlet generated by the jsp engine.</p>
+      <p>Moving on to the next example, where we are now writing System.out.println(&quot;no&quot;) 
+        within the % tag. <br>
+        e5.jsp<br>
+        hi<br>
+        &lt;% System.out.println(&quot;no&quot;); %&gt;<br>
+        bye</p>
+      <p>----------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e5.jsp&quot;;from=(1,2);to=(1,29)]<br>
+        System.out.println(&quot;no&quot;); <br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        -----------------<br>
+        Output in Server Window<br>
+        no<br>
+        There is no '=' following the %, so it is included as it is in the Java 
+        file. The 'no' will not be shown on your screen but in the server's dos 
+        box. To display something on the screen, you can't use System.out.println, 
+        instead you must use out.println. </p>
+      <p>If you carefully study the code, you will observe that there are seven 
+        variables created and one of them is out. Hence in JSP you are allowed 
+        to use out and you can use any of these seven variables in your program. 
+        These are the predefined objects available to you. System.out.println 
+        can also be used anywhere in a jsp tag as it is a valid java statement. 
+        Do not forget the terminating semicolon as java code written in a tag 
+        is added verbatim to the function _jspx_service().</p>
+      <p>JSP Declarations</p>
+      <p>A JSP declaration can be thought of as the definition of class level 
+        variables and methods that are to be used throughout the page.</p>
+      <p>In the next example, we have hi and then bye. The JSP code begins with 
+        int j preceded by an exclamation, and thereafter it has int i with a semicolon. 
+      </p>
+      <p>e6.jsp<br>
+        hi<br>
+        &lt;%! int j; %&gt;<br>
+        bye<br>
+        &lt;% int i; %&gt;</p>
+      <p>--------------------<br>
+        public class jsp_0005ce_00036_0002ejspe6_jsp_1 extends HttpJspBase {<br>
+        static char[][] _jspx_html_data = null;<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e6.jsp&quot;;from=(1,3);to=(1,11)]<br>
+        int j; <br>
+        // end</p>
+      <p> public jsp_0005ce_00036_0002ejspe6_jsp_1( ) {<br>
+        }<br>
+        -------------------<br>
+        -------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        out.print(_jspx_html_data[1]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e6.jsp&quot;;from=(3,2);to=(3,10)]<br>
+        int i; <br>
+        // end<br>
+        out.print(_jspx_html_data[2]);<br>
+        -----------------------</p>
+      <p>Whenever anything is put in an exclamation it is called a declaration. 
+        This is done outside any function but within the class that is public. 
+        The line int j comes up when your class starts with {. Whenever you put 
+        any statement in &lt;%, it is placed in jspservice and becomes local. 
+        It is visible from then onwards. If you want to make a variable global 
+        then use an exclamation. You can create functions and global variables 
+        in a class. Unlike C, where 'global' is applicable to the file, here it 
+        is limited to a class. </p>
+      <p>Now we will mix java with html code. <br>
+        e7.jsp<br>
+        hi<br>
+        &lt;% int i = 6;<br>
+        if ( i == 6 ) %&gt;<br>
+        bye</p>
+      <p>---------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e7.jsp&quot;;from=(1,2);to=(2,14)]<br>
+        int i = 6;<br>
+        if ( i == 6 ) <br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        -------------<br>
+        At first, the variable i which is of type int is initialized to the value 
+        6. Then the if statement checks to see if i == 6. The next line after 
+        the comments will print bye only if i holds the value 6, otherwise it 
+        will do nothing. Since the bye is pure html, we have to end the jsp tag 
+        and close the JSP scriptlet. The final code looks like this, if (i == 
+        6) out.println (&quot;bye&quot;); What ever is given in &lt;% %&gt; is 
+        kept as it is while the html statements become part of the array of chars.</p>
+      <p>But what is the purpose of all this? This is a method of generating dynamic 
+        code. The Perl family of scripting languages generates the entire page. 
+        The focus is on Perl writing the entire html page whereas ASP, PHP, JSP 
+        opted to have an html page where the code would be inserted. In the html 
+        page, you can put ASP, PHP or Java code to give the page dynamism and 
+        free yourself of the tedium of trying to create every possible page the 
+        visitor must be shown by hand. The file that you are writing is an html 
+        file, which means you can use an existing html editor. </p>
+      <p>For Java Server Pages, servlets are the foundation. Normally, a web page 
+        has a static template i.e. things which are permenant. With JSP, you separate 
+        the static and the dynamic, and insert dynamism into a web page. We will 
+        also use beans extensively in the Java Server Pages and one of the chapters 
+        will explain to you how you can create your own custom tags. </p>
+      <p>A JSP page is a text-based document that describes how to process a request 
+        and create a response. </p>
+      <p>JSP pages in servlet classes are what Sun calls its web components and 
+        these pages are delivered by a JSP container. When you look at a JSP page, 
+        you will see 3 classes of scripting elements. These are declarations, 
+        scriptlets and expressions.</p>
+      <p>The following example has been taken from the Net from a great FAQ that 
+        we stumbled upon. We don't mind if you take our programs too. We have 
+        not mentioned any names here because there were too many brains behind 
+        it. <br>
+        e8.jsp<br>
+        &lt;% for (int i = 1; i&lt;= 4 ; i++) { %&gt;<br>
+        &lt;H&lt;%=i%&gt;&gt;Hello&lt;/H&lt;%=i%&gt;&gt;<br>
+        &lt;% } %&gt;<br>
+        hi</p>
+      <p>The code looks complicated but you can easily understand it.</p>
+      <p>The for statement goes on four times. Since the for statement is not 
+        part of html, it is enclosed within the % and the angle brackets. The 
+        '{' bracket starts the for loop. The set of statements to be executed 
+        within the for is a combination of HTML and JSP. H is an html tag that 
+        stands for heading. Along with H is a number that displays the heading 
+        in a different format. We have not used a number directly because we want 
+        it to be the value of i. i is a variable initialized in the for loop. 
+        The &lt;%= is used to display the value of i which is 1 as of now. Hence 
+        the tag becomes H1. Following this is Hello. To close the tag, the same 
+        rules are followed, the closing tag becomes &lt;/H1&gt;. The '}' bracket 
+        within the % and the angle brackets is used to close the for loop. When 
+        i becomes 2, the statement will be &lt;H2&gt;Hello&lt;/H2&gt; and the 
+        same follows for 3 and 4. This is how Hello can be seen in all 4 tags. 
+      </p>
+      <p>View the actual code in the Java file and you will realize that it is 
+        much easier to comprehend. </p>
+      <p>View Source</p>
+      <p>&lt;H1&gt;Hello&lt;/H1&gt;</p>
+      <p>&lt;H2&gt;Hello&lt;/H2&gt;</p>
+      <p>&lt;H3&gt;Hello&lt;/H3&gt;</p>
+      <p>&lt;H4&gt;Hello&lt;/H4&gt;</p>
+      <p>hi</p>
+      <p>-------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e8.jsp&quot;;from=(0,2);to=(0,34)]<br>
+        for (int i = 1; i&lt;= 4 ; i++) { <br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e8.jsp&quot;;from=(1,5);to=(1,6)]<br>
+        out.print(i);<br>
+        // end<br>
+        out.print(_jspx_html_data[2]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e8.jsp&quot;;from=(1,20);to=(1,21)]<br>
+        out.print(i);<br>
+        // end<br>
+        out.print(_jspx_html_data[3]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e8.jsp&quot;;from=(2,2);to=(2,5)]<br>
+        } <br>
+        // end<br>
+        out.print(_jspx_html_data[4]);</p>
+      <p>out.print(_jspx_html_data[0]);<br>
+        for (int i = 1; i&lt;= 4 ; i++) { <br>
+        out.print(_jspx_html_data[1]);<br>
+        out.print(i);<br>
+        out.print(_jspx_html_data[2]);<br>
+        out.print(i);<br>
+        out.print(_jspx_html_data[3]);<br>
+        } <br>
+        out.print(_jspx_html_data[4]);<br>
+        ------------------</p>
+      <p>There are 5 sets of html data in the JSP file. The first one is blank, 
+        the second one is &lt;h, the next one is &gt;hello&lt;/h, the third set 
+        is &gt; and then finally, there is hi. These are the different values 
+        assigned to the variables in the for loop. <br>
+        _jspx_html_data[1] = &lt;h<br>
+        i 1,2,3,4<br>
+        _jspx_html_data[2] = &gt;hello&lt;/h<br>
+        i 1,2,3,4<br>
+        _jspx_html_data[3] = &gt;<br>
+        _jspx_html_data[4] = hi</p>
+      <p><br>
+        If you look at e.dat, it shows data as 5. </p>
+      <p>dat file<br>
+        5<br>
+        -<br>
+        &lt;H<br>
+        -<br>
+        &gt;Hello&lt;/H<br>
+        -<br>
+        &gt;<br>
+        -<br>
+        -</p>
+      <p>Let's go one step further, give two hyphens after %. Whenever you start 
+        with a &lt;%- and end it with -%&gt;, it signals a comment. </p>
+      <p>e9.jsp<br>
+        hi<br>
+        &lt;%- vijay mukhi -%&gt;<br>
+        bye</p>
+      <p>The good thing about comments is that they soon disappear. They are present 
+        only in your JSP file and will not be seen in the servlet. That's why 
+        we have written my name there, it doesn't show up. So whenever you want 
+        to include comments but hide them from the client, this is what you use. 
+        All this happens on the server, nothing comes over on to the client hence 
+        nobody knows of it. If you want normal comments, use the html comments 
+        which are given as &lt;!- .</p>
+      <p>JSP Directives</p>
+      <p>A JSP Directive is a statement that gives the JSP engine information 
+        for the page that follows. Anything with a &lt;%@ sign is called a Directive. 
+        In the following program, we have used a directive named page. The other 
+        possible directives in JSP1.0 are include and taglib. </p>
+      <p>e10.jsp<br>
+        &lt;%@ page info=&quot;vijay&quot; %&gt;</p>
+      <p>public String getServletInfo() {<br>
+        return &quot;vijay&quot;;<br>
+        }</p>
+      <p><br>
+        The compiler generates different kinds of code depending upon the directive 
+        you use. The effects are global. Here we say page info=vijay. A page is 
+        a directive and info is an attribute. The attribute is given a value; 
+        vijay in this case. On doing so, the JSP engine actually creates a function 
+        named getServletinfo and this function returns the value given to info 
+        i.e. vijay. </p>
+      <p>e11.jsp<br>
+        hi<br>
+        &lt;%@ page import=&quot;java.applet.*&quot; %&gt;</p>
+      <p>-----------------<br>
+        package C_0003a.jswdk_0002d_00031_0005f_00030_0005f_00031.examples.jsp;</p>
+      <p>import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        import javax.servlet.jsp.*;<br>
+        import java.io.PrintWriter;<br>
+        import java.io.IOException;<br>
+        import java.io.FileInputStream;<br>
+        import java.io.ObjectInputStream;<br>
+        import java.util.Vector;<br>
+        import com.sun.jsp.runtime.*;<br>
+        import java.beans.*;<br>
+        import com.sun.jsp.JspException;<br>
+        import java.applet.*;<br>
+        -------------</p>
+      <p>When you give import as an attribute and then look at the Java generated 
+        file, you will see that at the end of the imports, there is import java.applet.*. 
+        You don't have to put a semicolon. This means that if you are a referring 
+        to some Java code in some classes, you don't have to preface them i.e. 
+        give full names, you just put imports. In case you have more than one 
+        import, then separate them using commas, they will all be added at the 
+        end. If there are two similar imports, it is not considered an error. 
+        A point to be noted here is that if the match is found earlier in the 
+        file, then the import added by you is not used. </p>
+      <p>e12.jsp<br>
+        hi<br>
+        &lt;%@ page extends=&quot;java.util.Dictionary&quot; %&gt;</p>
+      <p>--------------<br>
+        public class jsp_0005ce_00031_00032_0002ejspe12_jsp_1 extends java.util.Dictionary 
+        {<br>
+        ---------------</p>
+      <p>Normally, extends is not used because by default every class extends 
+        HttpJspBase. But if you do so then HttpJspBase is replaced with java.util.Dictionary. 
+        At times, when you want to write complicated code then you can have a 
+        class that is derived from HttpJspBase, from which you can further extend 
+        your classes. You must derive from HttpJspBase or else you will end up 
+        with a load of errors. </p>
+      <p>e13.jsp<br>
+        hi<br>
+        &lt;%@ page implements=&quot;java.util.Dictionary&quot; %&gt;</p>
+      <p><br>
+        Implements follows the same rules as that of extends. The JSP engine adds 
+        a line to the class with implements. It gives an error and no java file 
+        is generated as in this case as well, Dictionary is a class not an interface.<br>
+        e14.jsp<br>
+        &lt;%@ page buffer=&quot;1000&quot; %&gt;<br>
+        hi</p>
+      <p>------------<br>
+        pageContext = _jspxFactory.getPageContext(this, request, response,&quot;&quot;,true,1024000, 
+        true);<br>
+        ---------</p>
+      <p>Since we have given the buffer as 1000, the getPageContext function makes 
+        the buffer parameter 1000KB i.e. 1000 multiplied by 1024. This is the 
+        amount of buffering space required. Buffering improves speed since its 
+        better to write a larger number of characters at one go than a small number 
+        many times.</p>
+      <p>You will have multiple requests being sent to your web server. You may 
+        want either one instance of the servlet or you may want 20 of them running 
+        at a time. If you want the servlet to create multiple instances of itself 
+        then you must give isThreadsafe=false. The default is true.<br>
+        e15.jsp<br>
+        &lt;%@ page isThreadSafe=&quot;false&quot; %&gt;<br>
+        &lt;b&gt;hi</p>
+      <p>---------------<br>
+        public class jsp_0005ce_00031_00035_0002ejspe15_jsp_1 extends HttpJspBase 
+        implements SingleThreadModel<br>
+        -----------------</p>
+      <p>By saying isThreadSafe=false, the JSP engine will implement SingleThreadModel 
+        and it can load multiple instances of the servlet instead of one. This 
+        class in that sense doesn't have any function prototypes and hence we 
+        don't have to add any code in the file. It can however, check to see if 
+        we have implemented certain interfaces.</p>
+      <p>e16.jsp<br>
+        &lt;%@ page session=&quot;false&quot; %&gt;<br>
+        Bye</p>
+      <p>Most of these attributes have a default value of true or false, so you 
+        don't need to specify them. There is one more attribute named session. 
+        By default, session is true, so you see the session object in _jspservice 
+        function. </p>
+      <p>The following are the variables that are created in the _jspservice function:</p>
+      <p>JspFactory _jspxFactory = null;<br>
+        PageContext pageContext = null;<br>
+        HttpSession session = null;<br>
+        ServletContext application = null;<br>
+        ServletConfig config = null;<br>
+        JspWriter out = null;<br>
+        Object page = this;<br>
+        String _value = null;</p>
+      <p>When you make the page session false, session that looks like HttpSession, 
+        is not created at all.</p>
+      <p>The next script has the contentType initialized to text/plain. By default, 
+        the value assigned to this attribute is text/html. </p>
+      <p>e17.jsp<br>
+        &lt;%@ page contentType=&quot;text/plain&quot; %&gt;<br>
+        &lt;b&gt;Bye</p>
+      <p>----------<br>
+        response.setContentType(&quot;text/plain&quot;);<br>
+        ----------</p>
+      <p>The tag b is not recognized by the browser anymore and thus we see &lt;b&gt; 
+        Bye in the browser. The Content type depends upon the file being sent 
+        over.</p>
+      <p>If you initialize IsErrorPage to true, it will actually create an object 
+        called exception that looks like Throwable. This is then initialized by 
+        the getAttribute function.</p>
+      <p>e18.jsp<br>
+        &lt;%@ page isErrorPage=&quot;true&quot; %&gt;<br>
+        hi</p>
+      <p>-----------<br>
+        Throwable exception=(Throwable) request.getAttribute(&quot;javax.servlet.jsp.jspException&quot;);<br>
+        ------------</p>
+      <p>The request variable is given to us as a parameter in the jspservice 
+        function. getAttribute takes one parameter which is a variable and returns 
+        a value. Instead of a variable we call it an attribute. This is used to 
+        initialize the new variable named exception which looks like jspException. 
+        The concept of exceptions has already been discussed in one of the previous 
+        chapters.<br>
+        <br>
+        Import saves us the trouble of typing too much. Here we have a function 
+        named abc which has been defined in the public area. Thus the declaration 
+        or the exclamation sign has been used. Basically, it throws an IOException. 
+        The reason why we have page import=java.io* is because it is easier to 
+        say IOException than java.io.IOException. The minute the function abc 
+        is called, an exception will be thrown. Somebody has to be there to receive 
+        this exception. <br>
+        e19.jsp<br>
+        &lt;%@ page errorPage=&quot;f1.jsp&quot; %&gt;<br>
+        &lt;%@ page import=&quot;java.io.*&quot; %&gt;<br>
+        &lt;html&gt;<br>
+        &lt;%! void abc() throws IOException<br>
+        {<br>
+        throw new IOException(&quot;hi bye&quot;);<br>
+        }<br>
+        %&gt;</p>
+      <p>&lt;%<br>
+        //try<br>
+        //{<br>
+        abc();<br>
+        //}<br>
+        //catch ( Exception e) {}<br>
+        %&gt;<br>
+        &lt;/html&gt;</p>
+      <p>If we stop here , in the browse we get the following error .<br>
+        Error: 404<br>
+        No detailed message </p>
+      <p>We start by using page directive errorPage, which is also an attribute 
+        and its value is a jsp file f1.jsp. If you look at the code you will realize 
+        that it throws new HandleErrorPageException, which has f1.jsp as a parameter. 
+        f1.jsp is your error page and because of this throw, it will now go to 
+        f1.jsp. In abc we have a throw, we throw an IOException. Since an exception 
+        is thrown, the catch in the servlet will catch it as the try and catch 
+        around abc have been commented out. The servlet catch has HandleErrorPageException, 
+        where the first parameter is f1.jsp and the last one is out. out is used 
+        to display output. t is throwable as a parameter to catch. If you look 
+        at f1.jsp, it has to start with isErrorPage=true and we use exception.printStackTrace 
+        to print where the exception took place. <br>
+        f1.jsp<br>
+        &lt;%@ page isErrorPage=&quot;true&quot; %&gt;<br>
+        &lt;%<br>
+        out.println(&quot;&lt;pre&gt;&quot;);<br>
+        PrintWriter pw = response.getWriter();<br>
+        exception.printStackTrace(pw);<br>
+        out.println(&quot;&lt;/pre&gt;&quot;);<br>
+        %&gt;</p>
+      <p>Output<br>
+        java.io.IOException: hi bye<br>
+        at C_0003a.jswdk_0002d_00031_0005f_00030_0005f_00031.<br>
+        examples.jsp.jsp_0005ce_00031_00039_0002ejspe19_jsp_1.</p>
+      <p>abc(jsp_0005ce_00031_00039_0002ejspe19_jsp_1.java:23)<br>
+        at C_0003a.jswdk_0002d_00031_0005f_00030_0005f_00031.<br>
+        examples.jsp.jsp_0005ce_00031_00039_0002ejspe19_jsp_1.<br>
+        _jspService(jsp_0005ce_00031_00039_0002ejspe19_jsp_1.java:82)<br>
+        at com.sun.jsp.runtime.HttpJspBase.service(HttpJspBase.java:87)<br>
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:840)<br>
+        at com.sun.jsp.runtime.JspServlet$JspServletWrapper.service(JspServlet.java:88)<br>
+        at com.sun.jsp.runtime.JspServlet.serviceJspFile(JspServlet.java:218)<br>
+        at com.sun.jsp.runtime.JspServlet.service(JspServlet.java:294)<br>
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:840)<br>
+        at com.sun.web.core.ServletWrapper.handleRequest(ServletWrapper.java:155)<br>
+        at com.sun.web.core.Context.handleRequest(Context.java:414)<br>
+        at com.sun.web.server.ConnectionHandler.run(ConnectionHandler.java:139)</p>
+      <p>&lt;pre&gt;<br>
+        &lt;/pre&gt;</p>
+      <p>------------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e19.jsp&quot;;from=(3,3);to=(7,0)]<br>
+        void abc() throws IOException<br>
+        {<br>
+        throw new IOException(&quot;hi bye&quot;);<br>
+        }<br>
+        // end</p>
+      <p>In _jspservice<br>
+        out.print(_jspx_html_data[0]);<br>
+        out.print(_jspx_html_data[1]);<br>
+        out.print(_jspx_html_data[2]);<br>
+        out.print(_jspx_html_data[3]);<br>
+        // begin [file=&quot;C:\\jswdk-.0.1\\examples\\jsp\\e19.jsp&quot;;from=(8,2);to=(14,0)]<br>
+        <br>
+        //try<br>
+        //{<br>
+        abc();<br>
+        //}<br>
+        //catch ( Exception e) {}<br>
+        // end<br>
+        out.print(_jspx_html_data[4]);<br>
+        } catch (Throwable t) {<br>
+        if (out.getBufferSize() != 0)<br>
+        out.clear();<br>
+        throw new HandleErrorPageException(&quot;f1.jsp&quot;, t, out);<br>
+        } finally {<br>
+        out.flush();<br>
+        _jspxFactory.releasePageContext(pageContext);<br>
+        }<br>
+        ------------</p>
+      <p>f1.jsp error page<br>
+        -----------<br>
+        out.print(_jspx_html_data[0]);<br>
+        out.print(_jspx_html_data[1]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\f1.jsp&quot;;from=(1,2);to=(6,0)]<br>
+        <br>
+        out.println(&quot;&lt;pre&gt;&quot;);<br>
+        PrintWriter pw = response.getWriter();<br>
+        exception.printStackTrace(pw);<br>
+        out.println(&quot;&lt;/pre&gt;&quot;);<br>
+        // end<br>
+        out.print(_jspx_html_data[2]);<br>
+        -------------</p>
+      <p>exception.printStackTrace prints out the text. In this way you can have 
+        a separate page for error handling. All that you should do is create a 
+        page named anything.jsp and in every JSP page redirect the errors to it. 
+      </p>
+      <p>Within the try and catch is abc, so the code of abc will be called. You 
+        can have a 'try' and 'catch' within another 'try' and 'catch' pair, nested 
+        as many levels deep as you want. abc throws an IOException, so the exception 
+        will be called.<br>
+        e19a.jsp<br>
+        &lt;%@ page errorPage=&quot;f1.jsp&quot; %&gt;<br>
+        &lt;%@ page import=&quot;java.io.*&quot; %&gt;<br>
+        &lt;html&gt;<br>
+        &lt;%! void abc() throws IOException<br>
+        {<br>
+        throw new IOException(&quot;hi bye&quot;);<br>
+        }<br>
+        %&gt;<br>
+        &lt;%<br>
+        try<br>
+        {<br>
+        abc();<br>
+        }<br>
+        catch ( Exception e) <br>
+        {<br>
+        System.out.println(&quot;hi in exception&quot;);<br>
+        }<br>
+        %&gt;<br>
+        &lt;/html&gt; </p>
+      <p>Now that we have uncommented the try and catch near abc, the earlier 
+        catch was not called and down in the web server window we see hi in exception, 
+        which proves that only the inner try catch was activated.</p>
+      <p>e20.jsp<br>
+        hi<br>
+        &lt;%@ include file=&quot;aa.html&quot; %&gt;<br>
+        Bye</p>
+      <p><br>
+        C:\jswdk-1.0.1\examples\jsp&gt;edit aa.html<br>
+        in aa.html</p>
+      <p>-------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        out.print(_jspx_html_data[1]);<br>
+        ---------------<br>
+        dat file<br>
+        2 <br>
+        hi </p>
+      <p>Output in browser<br>
+        hi in aa.html Bye </p>
+      <p>A @ in a JSP file signals a directive. The earlier examples had 'page', 
+        while in the program shown above, we use include. include takes a string 
+        which has to be filename which is aa.html here. e20.jsp contains hi, then 
+        the include and finally a bye. aa.html simply contains 'In aa.html'. </p>
+      <p>As always, your entire JSP is converted into a .dat file. Since it is 
+        on two lines, you will see only two prints in the Java file.</p>
+      <p>The point that we are trying to make is that the .dat file is made at 
+        the time of the creation of the servlet. This is called the Translation 
+        Phase. You can change aa.html, add some more text and then refresh the 
+        server. The new text within the html file will not be displayed because 
+        the .dat file isn't created again. </p>
+      <p>The only way to incorporate the new changes is by either recompiling 
+        the Java file or stopping and restarting the server.Stopserver deletes 
+        all the files in the work directory, so all the files are created from 
+        scratch when you want to view them.</p>
+      <p>There are two phases in JSP. One of them is the Translation Phase, which 
+        it happens only once. Then, the service function 'jspservice' is called 
+        for every request. </p>
+      <p>So far we have included a .html file, so now let's try it out with JSP. 
+      </p>
+      <p>e21.jsp<br>
+        hi<br>
+        &lt;%@ include file=&quot;aa.jsp&quot; %&gt;<br>
+        Bye<br>
+        aa.jsp<br>
+        no<br>
+        &lt;%= new java.util.Date() %&gt;<br>
+        lously</p>
+      <p>----------------<br>
+        .java file for e21.jsp<br>
+        out.print(_jspx_html_data[0]);<br>
+        out.print(_jspx_html_data[1]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\aa.jsp&quot;;from=(1,3);to=(1,25)]<br>
+        out.print( new java.util.Date() );<br>
+        // end<br>
+        out.print(_jspx_html_data[2]);<br>
+        --------------------</p>
+      <p>There is no java file for aa.jsp.</p>
+      <p>dat file<br>
+        3<br>
+        hi<br>
+        -<br>
+        no<br>
+        -<br>
+        lousy</p>
+      <p><br>
+        Bye</p>
+      <p>With this example you will realize that if you have JSP code in include, 
+        then all the JSP code will be put in the service function. Thus whenever 
+        you want something dynamic, create a JSP file and use it with the include 
+        directive. Now each time you click on refresh the date function will be 
+        reexecuted, so you see a different date and time every time. </p>
+      <p>Let's go one step further. </p>
+      <p>e22.jsp<br>
+        hi<br>
+        &lt;jsp:include page=&quot;zz.jsp&quot; flush=&quot;true&quot; /&gt;<br>
+        bye</p>
+      <p>zz.jsp<br>
+        no<br>
+        bad</p>
+      <p>We now have 2 java files created for the 2 jsp files.<br>
+        ---------------------<br>
+        The java file for e22.jsp</p>
+      <p>out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e22.jsp&quot;;from=(1,0);to=(1,42)]<br>
+        out.flush();<br>
+        pageContext.include(&quot;zz.jsp&quot;);<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        -----------------<br>
+        -----------------<br>
+        The java file for zz.jsp<br>
+        out.print(_jspx_html_data[0]);<br>
+        -----------------</p>
+      <p>The first line in e22.jsp has hi and the second line is jsp:include page=&quot;zz.jsp&quot; 
+        within angle brackets. If you notice there is no % sign like we had earlier. 
+        Such a line is called an 'action'. Each time you refresh the file, it 
+        gets the filename and requests the server for that file. Unlike the earlier 
+        example, this is dynamic. </p>
+      <p>When you see the generated java code, there is no data stored anywhere, 
+        so you check the .dat file. In the Java file, the array size is 2, for 
+        hi and bye, hence you see 0 and 1. pageContext.include is what the jsp:include 
+        is converted to in the Java file. It is this pageContext.include that 
+        regenerates the file each time. Now the problem with using include as 
+        an action is that you cannot have Java code with it and in addition, you 
+        cannot change headers and cookies.</p>
+      <p>e23.jsp<br>
+        hi<br>
+        &lt;jsp:include page=&quot;a40.html&quot; flush=&quot;true&quot; /&gt;<br>
+        bye</p>
+      <p>a40.html<br>
+        bye</p>
+      <p>-----------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e23.jsp&quot;;from=(1,0);to=(1,44)]<br>
+        out.flush();<br>
+        pageContext.include(&quot;a40.html&quot;);<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        ------------------</p>
+      <p>In e23.jsp, the first line is hi. Then a40.html, which contains bye, 
+        is included. Now change 'bye' in the html file to 'over' and click on 
+        refresh. This time you will see over instead of bye. include here is an 
+        action.</p>
+      <p>In the next script, we have a new action called forward. </p>
+      <p>e24.jsp<br>
+        hi<br>
+        &lt;jsp:forward page=&quot;cc.jsp&quot; /&gt;<br>
+        bye</p>
+      <p>cc.jsp<br>
+        no<br>
+        &lt;%= new java.util.Date() %&gt;<br>
+        lousy</p>
+      <p>------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e24.jsp&quot;;from=(1,0);to=(1,29)]<br>
+        if (true) {<br>
+        out.clear();<br>
+        pageContext.forward(&quot;cc.jsp&quot;);<br>
+        return;<br>
+        }<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        ------------------</p>
+      <p>This example introduces a new action named forward. page=cc.jsp implies 
+        that we are sending a page with it. Hence every time you try to load e23.jsp, 
+        you will be forwarded to cc.jsp. Forward becomes pagecontext.forward in 
+        the Java file. This will simply go to the page mentioned. A valid question 
+        to ask here would be, 'will it come back to e23.jsp?' The answer is no. 
+        That's because the last line before the closing brace is a return. So 
+        whenever you have forward as an action, the file passed to pagecontext.forward 
+        becomes your active html file and everything else is forgotten. </p>
+      <p>Bear in mind that the http protocol is a stateless protocol. Each time 
+        you connect to the web server you are disconnected after you receive the 
+        page. So if you are on the Amazon.com site and you buy 6 books, moving 
+        from one page to the other, it becomes a session and this session has 
+        to be tracked. This is where the session object comes into use.</p>
+      <p>z.htm<br>
+        &lt;html&gt;<br>
+        &lt;form action=e26.jsp&gt;<br>
+        &lt;input type='text' name='aa'&gt;<br>
+        &lt;input type='submit' value='click'&gt;<br>
+        &lt;/form&gt;<br>
+        &lt;/html&gt;</p>
+      <p><br>
+        e26.jsp<br>
+        &lt;%= request.getParameter(&quot;aa&quot;) %&gt;</p>
+      <p>------------------<br>
+        out.print(_jspx_html_data[0]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\webpages\\e26.jsp&quot;;from=(0,3);to=(0,31)]<br>
+        out.print( request.getParameter(&quot;aa&quot;) );<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        --------------------</p>
+      <p>Run in browse is follows</p>
+      <p>http://127.0.0.1:8080/examples/jsp/z.html</p>
+      <p><br>
+        If you write bye in the text box and click on the button you will see 
+        bye in the browser and in the address bar of the browser</p>
+      <p>http://127.0.0.1:8080/examples/jsp/e26.jsp?aa=bye</p>
+      <p>If you want to read data from a form, you can say request.getParameter(&quot;aa&quot;) 
+        where aa is some name that you have given in the form. This returns bye 
+        since that is what we typed in our text box. The form has an action which 
+        will execute the JSP code on the server when the user clicks on the submit 
+        button. This will bring up a new page with the url containing ?aa=bye. 
+        The JSP engine then sends the value 'bye' to be displayed on the screen.</p>
+      <p>When the button named submit is clicked, the browser will look for a 
+        tag named form and within that tag an attribute named action. It will 
+        then create a url with action and at the end add a ?. Now it takes all 
+        the input statements, figures out what you have written in them and converts 
+        then to a name value pair seperated by '=', like so<br>
+        aa=bye</p>
+      <p>With JSP it is very easy to extract these values, thereby making it the 
+        preferred tool for Web programmers. </p>
+      <p>In the following example we have created two functions, one named jspInit 
+        and the other named jspDestroy. <br>
+        e26.jsp<br>
+        &lt;%!<br>
+        public void jspInit()<br>
+        {<br>
+        super.jspInit();<br>
+        System.out.println(&quot;jspinit&quot;);<br>
+        }<br>
+        public void jspDestroy()<br>
+        {<br>
+        super.jspDestroy();<br>
+        System.out.println(&quot;jspdestroy&quot;);<br>
+        }<br>
+        %&gt;<br>
+        hi</p>
+      <p>----------------<br>
+        public class jsp_0005ce_00032_00036_0002ejspe26_jsp_1 extends HttpJspBase 
+        {<br>
+        static char[][] _jspx_html_data = null;<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\e26.jsp&quot;;from=(0,3);to=(11,0)]<br>
+        public void jspInit()<br>
+        {<br>
+        super.jspInit();<br>
+        System.out.println(&quot;jspinit&quot;);<br>
+        }<br>
+        public void jspDestroy()<br>
+        {<br>
+        super.jspDestroy();<br>
+        System.out.println(&quot;jspdestroy&quot;);<br>
+        }<br>
+        // end<br>
+        ---------------<br>
+        Whenever a class extends HttpJspBase, the service function within HttpJspBase 
+        is called. This service calls jspInit once and only once when the class 
+        is loaded or initialized. It is not like _jspservice, which is called 
+        multiple times. jspDestroy is called when the servlet is destroyed. We 
+        will need our own jspInit if we want to initialize our variables or if 
+        we want certain code to be executed only once and similarly jspDestroy 
+        can be used to release the memory used by variables or do anything at 
+        the end. But it is difficult to pin point as to when jspDestroy will be 
+        called. Super is used to call the code in the original class. </p>
+      <p>In the next script, we have response.sendRedirect and within the round 
+        brackets a url has been specified. The job of this function is to take 
+        you to the site that has been passed as a parameter. This page then becomes 
+        the active Page. </p>
+      <p>e27.jsp<br>
+        &lt;% response.sendRedirect(&quot;http://127.0.0.1:8080/examples/jsp/e9.jsp&quot;); 
+        %&gt;</p>
+      <p>Normally, one is not supposed to write anything before or after sendRedirect. 
+        But if you do write something, it will not be displayed. <br>
+        e28.jsp<br>
+        hi &lt;p&gt; bye<br>
+        &lt;% response.sendRedirect(&quot;http://127.0.0.1:8080/examples/jsp/e9.jsp&quot;); 
+        %&gt;<br>
+        no &lt;p&gt; good</p>
+      <p>http://127.0.0.1:8080/examples/jsp/e9.jsp</p>
+      <p>The address bar in the browser also changes its url, which means that 
+        the browser asked for a new url.</p>
+      <p>Every http page starts with a header. Normally, it will be 200 OK. 200 
+        is called the http status code. There are around 20 to 30 predefined status 
+        codes, where 200 means OK, 404 is file not found and so on. Redirection 
+        has a status code of 304. In the next script, we have response.setStatus. 
+        <br>
+        e29.jsp<br>
+        &lt;%<br>
+        response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);<br>
+        response.setHeader(&quot;Location&quot;,&quot;/examples/jsp/e9.jsp&quot;);<br>
+        %&gt;</p>
+      <p>SC_MOVED_PERMANENTLY is a status code informing the browser to read the 
+        next header line because the file has been moved. The next line sets the 
+        header variable Location to a location or a url from where the file is 
+        to be picked up. When you use response.sendRedirect or you use setStatus 
+        the status code is sent over to the client with more information in the 
+        header. When this reaches the browser, the browser asks for the new file, 
+        which in our case is e9.jsp. Finally, the user sees e9.jsp. </p>
+      <p>Now let's take a case where we want the user to visit a certain page, 
+        barring which he will not be allowed to browse our site. It's like a login 
+        page and unless the user doesn't go there first, he can't browse through 
+        the rest of the site. <br>
+        e30.jsp<br>
+        &lt;%@ page session=&quot;true&quot; %&gt;<br>
+        login<br>
+        &lt;%<br>
+        HttpSession s = request.getSession(true);<br>
+        if ( s.getValue(&quot;EID&quot;) == null )<br>
+        {<br>
+        String s1 = (String ) response.encodeRedirectUrl(&quot;e31.jsp?Origin=e30.jsp&quot;);<br>
+        System.out.println(s1);<br>
+        response.sendRedirect(s1);<br>
+        }<br>
+        else<br>
+        out.println(&quot;&lt;h1&gt;hi&quot;);<br>
+        %&gt;</p>
+      <p>e31.jsp<br>
+        &lt;%<br>
+        session.putValue(&quot;EID&quot;,&quot;sonal&quot;);<br>
+        String s1=(String)<br>
+        response.encodeRedirectURL(request.getParameter(&quot;Origin&quot;));<br>
+        System.out.println(&quot;e31 &quot; + s1);<br>
+        response.sendRedirect(s1);<br>
+        %&gt;</p>
+      <p>Also see the output in the Java Web Server. In the browser it shows.<br>
+        login <br>
+        hi </p>
+      <p>Here we have two files, e30.jsp and e31.jsp. The directive, page session=&quot;true&quot;, 
+        is not required but we will retain it. Then we have login as the text 
+        to be displayed. s is a variable that looks like HttpSession and it is 
+        initialized to the return value of request.getSession. This function returns 
+        details of the current session. getSession will either create a new session 
+        or will return a handle to the current session. Of all the variables, 
+        we are currently interested in the value of the variable EID which you 
+        must put in capital letters. Since we haven't declared a variable named 
+        EID, it will be null for now. </p>
+      <p>response.encodeRedirectUrl will create a url of the string given within 
+        the brackets and return a string. This is stored in s1. response.sendRedirect 
+        will take you straight to e31.jsp</p>
+      <p>In e31.jsp, session.putValue creates the variable EID and initializes 
+        it to 'sonal'. request.getParameter will return the value of Origin, which 
+        is e30.jsp, and as previously mentioned response.encodeRedirectUrl will 
+        convert this into a url. Finally, there is a redirection to e30.jsp again. 
+        Within e30.jsp the value of EID is already set, which is why you will 
+        not see login again. Instead you see hi. This proves that both s and the 
+        session are the same. </p>
+      <p>What we are trying to say is that as long as it is the same user on the 
+        website, he will not have to login again, but if the user shuts down the 
+        browser and starts another copy, the entire process has to be repeated. 
+        The next program provides further insight into sessions.<br>
+        e32.jsp<br>
+        &lt;%@ page session=&quot;true&quot; %&gt;<br>
+        hi<br>
+        &lt;%<br>
+        HttpSession s = request.getSession(true);<br>
+        s.putValue(&quot;vij&quot;,&quot;sonal&quot;);<br>
+        %&gt;</p>
+      <p>e33.jsp<br>
+        &lt;%@ page session=&quot;true&quot; %&gt;<br>
+        Bye<br>
+        &lt;%<br>
+        HttpSession s = request.getSession(true);<br>
+        %&gt;<br>
+        &lt;%= s.getValue(&quot;vij&quot;) %&gt;</p>
+      <p>In e32.jsp, we first write hi. request.getSession will return the current 
+        session handle which is stored in s. Then s.putValue will create 'vij' 
+        if not present and initialize it to 'sonal'. </p>
+      <p>The next page where we have bye is along the same lines as earlier. s 
+        is a handle to HttpSession. s.getValue of vij will return 'sonal'.</p>
+      <p>We first want you to run e33.jsp. Here, you will see bye and null because 
+        at the moment vij has no value. After doing so, run e32.jsp. You will 
+        see hi on this page and now once again reload e33.jsp. You will see 'sonal' 
+        displayed on your screen. </p>
+      <p>The point to be noted here is that there are two types of objects, implicit 
+        objects and explicit objects. Session and out are examples of implicit 
+        objects; they are already created. The explicit objects are not created 
+        by default, they have to be created and initialized. This is what you 
+        will learn in the next chapter. </p>
+      <p>Applets are not allowed to write data to disk but with servlets no such 
+        rules apply. The next example confirms this.<br>
+        e34.jsp<br>
+        &lt;%@ page import=&quot;java.io.*&quot; isErrorPage=&quot;true&quot; 
+        %&gt;<br>
+        &lt;%<br>
+        try<br>
+        {<br>
+        PrintWriter p=new PrintWriter(new FileOutputStream(&quot;pp.txt&quot;));<br>
+        p.println(&quot;hi&quot;);<br>
+        p.close();<br>
+        }<br>
+        catch ( Exception e) {<br>
+        e.printStackTrace();<br>
+        }<br>
+        %&gt;</p>
+      <p>C:\jswdk-1.0.1&gt;dir pp.txt</p>
+      <p> Volume in drive C is SONAL<br>
+        Volume Serial Number is 0661-13EE<br>
+        Directory of C:\jswdk-1.0.1</p>
+      <p>PP TXT 4 06-13-00 3:15p pp.txt<br>
+        1 file(s) 4 bytes<br>
+        0 dir(s) 2,652.13 MB free</p>
+      <p>C:\jswdk-1.0.1&gt;type pp.txt</p>
+      <p>hi</p>
+      <p>FileOutputStream is used when you want to open a particular file in output 
+        mode i.e. for writing. Since the file named pp.txt is not present on the 
+        disk, it will first be created. To write to this file you need a handle 
+        to it. new PrintWriter will return a handle to this file, so p now becomes 
+        a pointer to pp.txt. We then say p.println (&quot;hi&quot;) which will 
+        write the text 'hi' to the file. You can give the complete path along 
+        with the filename, or use the default which is the jswdk-1.0.1 subdirectory. 
+        If you want to read from a file then use FileInputStream instead of FileOutputStream. 
+        <br>
+        When you execute the command 'type pp.txt' in c:\jswdk-1.0.1, it will 
+        print hi on the screen.</p>
+      <p>For the grand finale of this chapter, we have one last example.</p>
+      <p>The web-inf directory has a file named servlet.properties. This example 
+        prints the properties and their values within this file. We had done something 
+        similar in the servlet chapter. We have not shown you the contents of 
+        this file as it will obviously differ on your machine.<br>
+        e35.jsp<br>
+        &lt;%@ page import=&quot;java.util.*&quot; %&gt;<br>
+        &lt;%!<br>
+        ServletConfig cfg;<br>
+        public void jspInit()<br>
+        {<br>
+        cfg = getServletConfig();<br>
+        for ( Enumeration e = cfg.getInitParameterNames(); e.hasMoreElements();){<br>
+        String name = (String) e.nextElement();<br>
+        String value = cfg.getInitParameter(name);<br>
+        System.out.println(name+&quot;=&quot;+value);<br>
+        }<br>
+        }<br>
+        %&gt;</p>
+      <p>keepgenerated=true</p>
+      <p>servlet.properties has things like keepgenerated=true. This property, 
+        if it is true, will not delete the Java code from the work directory once 
+        it has been created and compiled.</p>
+      <p>Normally, when you have errors, you would like them to be displayed on 
+        your web page and not on the console of the web server. To do so, you 
+        say setErrorToClient=true. The client will now see the errors in his browser. 
+        They will now nolonger be displayed on the server console. </p>
+      <p>In our program, getServletConfig allows us to find the parameters that 
+        have been set by the Java Web Server. This returns an object that looks 
+        like ServletConfig(). cfg.getInitParameterNames() returns an enumeration 
+        which in turn has a member hasMoreElements. e.nextElement gives us the 
+        name of the element and getInitParameter along with the name will tell 
+        us its value. Thus, they are all stored as a name-value pair. Since we 
+        only have one property at the moment, it will display keepgenerated and 
+        its value true and then the for loop will terminate.</p>
+      <p>Conclusion</p>
+      <p>Java Server Pages bring together the power of Java Servlets and HTML 
+        coding thereby give the developers a powerful method to create Server-Side 
+        web applications. In this chapter, we learnt the following: </p>
+      <p>A Java Server Page file consists of HTML tags, content, JSP directives, 
+        JSP declarations, JSP scriptlets and action tags. Initially, the JSP engine 
+        parses the JSP file which then generates a new servlet with the desired 
+        content. If the file changes, then a new servlet is generated; otherwise, 
+        the compiled version is used. <br>
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap5.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

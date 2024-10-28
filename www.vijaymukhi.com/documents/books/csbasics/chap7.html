@@ -1,0 +1,2290 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:26 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap7_files/filelist.html">
+<link rel=Edit-Time-Data href="chap7_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Function Overloading and Inheritance - C# The Basics - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-09-27T10:57:00Z</o:Created>
+  <o:LastSaved>2001-09-27T10:59:00Z</o:LastSaved>
+  <o:Pages>15</o:Pages>
+  <o:Words>3585</o:Words>
+  <o:Characters>20436</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>170</o:Lines>
+  <o:Paragraphs>40</o:Paragraphs>
+  <o:CharactersWithSpaces>25096</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Impact;
+	panose-1:2 11 8 6 3 9 2 5 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:36.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:Impact;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:ChapName;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:"Chap Name";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"base text of the book";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:48.0pt'>7</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1>Function Overloading and Inheritance</h1>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Its not what you get but what you give that makes you a
+richer person. Unfortunately, this little gem is understood only be a few and
+giving remains largely a one way street.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This chapter explains function overloading, the params
+parameter and inheritance. We start with function overloading.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Function Overloading <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(10);<o:p></o:p></p>
+
+<p class=programs>a.abc(&quot;bye&quot;);<o:p></o:p></p>
+
+<p class=programs>a.abc(&quot;no&quot;,100);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot; + i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void abc(string i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot; + i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void abc(string i,int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot; + i + j);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc10<o:p></o:p></p>
+
+<p class=DOSPROMPT>abcbye<o:p></o:p></p>
+
+<p class=DOSPROMPT>abcno100<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The class yyy has three functions, all of them having the
+same name abc. The distinction between them is in the data types of the
+parameters. They are all different. In C# we are allowed to have functions with
+the same name, but having different data types parameters. The advantage is
+that we call the function by the same name as by passing different parameters,
+a different function gets called. This feature is called function overloading.
+All is fine only if the parameter types to the function are different. We do
+not have to remember a large number of functions by name.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The only reason why function overloading works is that C#
+does not know a function by name, but by its signature. A signature denotes the
+full name of the function. Thus the name of a function or its signature is the
+original function name plus the number and data types of its individual
+parameters.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public int abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void<span style="mso-spacerun: yes"> 
+</span>Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,12): error CS0111: Class 'zzz' already defines a
+member called 'abc' with the same parameter types<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here we have two functions abc which differ only in the
+values they return. As return values do not count in the function signature and
+the function names are similar, hence the error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void abc(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void abc(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void abc(string p)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void<span style="mso-spacerun: yes"> 
+</span>Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,14): error CS0111: Class 'zzz' already defines a
+member called 'abc' with the same parameter types<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We have 2 abc's, that accept an int and differ only in the
+addition of a modifier static. They have the same signature as modifiers like
+static are not considered as part of the function signature. Also, in the next
+program, we have two abc's with different access modifiers which differ in the
+parameters, hence signature/name changes causing an error.<o:p></o:p></p>
+
+<p class=cbasetext><span style='color:red'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=programs><u><span style='color:black'>a.cs</span></u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>void abc(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc( out int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i = 10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc( ref int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void<span style="mso-spacerun: yes"> 
+</span>Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><span style='color:red'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=DOSPROMPT><span style='color:black'>Compiler Error</span><o:p></o:p></p>
+
+<p class=DOSPROMPT>Microsoft (R) Visual C# Compiler Version 7.00.9254 [CLR
+version v1.0.2914]<o:p></o:p></p>
+
+<p class=DOSPROMPT>Copyright (C) Microsoft Corp 2000-2001. All rights reserved.<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(10,6): error CS0663: 'abc' cannot define overloaded
+methods which differ only on ref and out<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,6): (Location of symbol related to previous error)<o:p></o:p></p>
+
+<p class=cbasetext><span style='color:red'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=cbasetext><span style='color:black'>The signature consists of not only
+the parameter data types, but also the kind of parameters i.e. out ref etc. As
+function abc takes an int with different modifiers i.e. out etc, the signature
+on each is different. The signature of a method consists of its name and number
+and types of its formal parameters. The return type of a function is not part
+of the signature. No two functions can have the same signature and also
+non-members cannot have the same name as members.<span style="mso-spacerun:
+yes">  </span></span><span style='color:red'><o:p></o:p></span></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A function/method can be called by four different types of
+parameters. These are pass by value, reference, output and finally parameter
+arrays. The parameter modifier is not part of the function signature. Lets now
+understand what parameter arrays are all about.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Params Parameter <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A method declaration creates a separate declaration space.
+This means that anything created in a method is lost at the end of the method.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc(int i,string i) {}<o:p></o:p></p>
+
+<p class=programs>public void pqr(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><span style='font-size:11.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(3,23): error CS0100: The parameter name 'i' is a
+duplicate<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,8): error CS0136: A local variable named 'i' cannot
+be declared in this scope because it would give a different meaning to 'i',
+which is already used in a 'parent or current' scope to denote something else<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Parameter names have to be unique. Also, we cannot have a
+parameter and a variable created in a function block with the same name.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In pass by value, the value of the variable is passed. In
+the case of ref and out, the address of the reference is passed.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string s = &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abc(ref s,ref s);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(ref string a, ref string b) {<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>a=&quot;no&quot;;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>b = &quot;yes&quot;;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>s = &quot;maybe&quot;;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi<o:p></o:p></p>
+
+<p class=DOSPROMPT>no<o:p></o:p></p>
+
+<p class=DOSPROMPT>yes<o:p></o:p></p>
+
+<p class=DOSPROMPT>maybe<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You are allowed to pass the same ref parameter as many times
+as you desire. In the function abc the string s has a value of hi. Then by
+changing the string b to no, we are actually changing the string s to no as s
+is passed by reference. Variables a and s refer to the same string in memory.
+Changing one changes the other. Again changing b also changes s as they refer
+to the same string. Thus variables a, b and s refer to the same string in
+memory.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abc(2,&quot;hi&quot;,&quot;bye&quot;,&quot;no&quot;);<o:p></o:p></p>
+
+<p class=programs>abc(20,&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>abc(2);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>foreach ( string s in b)<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s + &quot; &quot; + i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>bye 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>no 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi 20<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We will encounter a situation where we would like to pass a
+variable number of arguments to a function. This is not possible as of now as
+C# is extremely finicky about the number and type of data we pass to a
+function. If we pass a string where an int is expected, C# starts screaming
+like a baby. If we want to pass a variable number of arguments to a function,
+we have to use a keyword params. This keyword can only be applied to the last
+parameter. Therefore the variable number of arguments can only come at the end.
+In the case of function abc, the first parameter has to be an int, the
+rest<span style="mso-spacerun: yes">  </span>of them can be from zero to an
+infinite number of strings. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [] b , int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,18): error CS0231: A params or __arglist parameter
+must be the last parameter in a formal parameter list<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The params keyword in this version has to be at the end only
+as stated above. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abc(2,3,4);<o:p></o:p></p>
+
+<p class=programs>abc(20,1);<o:p></o:p></p>
+
+<p class=programs>abc(2);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params int [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>foreach ( int s in b)<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s + &quot; &quot; + i); } }<o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>3 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>4 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>1 20<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# is smart enough if the penultimate parameter and the
+params have the same data type. The first int is stored in the variable i, the
+rest are made part of the array b.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [][] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [,] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,6): error CS0225: The params parameter must be a
+single dimensional array<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The data type of the params parameter must be, as the error
+message states, a single dimensional array. Thus [][] is allowed but not [,].
+You are also not allowed to combine the params keyword with ref or out.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string [] s =
+{&quot;hi&quot;,&quot;bye&quot;,&quot;no&quot;};<o:p></o:p></p>
+
+<p class=programs>abc(2,s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>foreach ( string s in b)<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s + &quot; &quot; + i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>bye 2<o:p></o:p></p>
+
+<p class=DOSPROMPT>no 2<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You are allowed to pass an array of strings instead of
+individual strings as parameters. Here s is an array of strings which has been
+initialized using the short form. Internally when we call the function abc, C#
+converts the array of strings into individual strings.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string [] s1 = {&quot;hi&quot;,&quot;bye&quot;};<o:p></o:p></p>
+
+<p class=programs>abc(2,s1,&quot;hell&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params string [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(11,1): error CS1502: The best overloaded method match
+for 'zzz.abc(int, params string[])' has some invalid arguments<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(11,7): error CS1503: Argument '2': cannot convert from
+'string[]' to 'string'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Mixing and matching is not allowed in C#. What we assumed C#
+would do is to add the last string hell to the array of strings s1 or convert
+s1 to individual strings and then add the string hell to it. Perfectly logical
+we thought. Only if wishes were horses…<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Internally before calling the function abc, it collects all
+the individual parameters and converts it into one big array for the params
+statement.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int [] a = {1,2,3};<o:p></o:p></p>
+
+<p class=programs>abc(2,a);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[1]);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params int [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>b[1] = 100;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>100<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The output produced is proof of concept. The array member
+a[1] has an initial value of 2 and in the function abc we change it to 100. The
+original changes, this means that the array is given to the function abc.<o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int a = 10;<o:p></o:p></p>
+
+<p class=programs>abc(2,100,a,20);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i , params int [] b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>b[1] = 100;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this case C# creates an array containing 100 10 and 20.
+We are changing the second member to 100 which has nothing to do with the
+variable a. As abc has no knowledge of a, how on earth can abc change the value
+of the int a? Thus it stays the same.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>zzz z = new zzz();<o:p></o:p></p>
+
+<p class=programs>z.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abc(2);<o:p></o:p></p>
+
+<p class=programs>abc(2,3);<o:p></o:p></p>
+
+<p class=programs>abc(2,3,5,6);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(int i, int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;two ints &quot;+ i + &quot;
+&quot; + j);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>void abc(params int [] a)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;params a&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>params a<o:p></o:p></p>
+
+<p class=DOSPROMPT>two ints 2 3<o:p></o:p></p>
+
+<p class=DOSPROMPT>params a<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here we are discussing function overloading. C# is extremely
+bright though partial. It does not like the params statement and treats it like
+a stepchild. When we call abc with one int, C# can only call the abc that takes
+a<span style="mso-spacerun: yes">  </span>params as a parameter as it matches
+one int. An array can contain one member. The fun starts with the abc that is
+being called with two ints. Here we have a dilemma. C# can call the params abc
+or the abc with two ints. As mentioned earlier, C# treats the params as a
+second class citizen and therefore chooses the abc with two ints. When there
+are more than two ints like in the third invocation, C# has no choice but to
+grudgingly choose the abc with the params. C# chooses the params as a last
+resort before flagging an error.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void ff(params object[] b) {<o:p></o:p></p>
+
+<p class=programs>foreach (object o in b) {<o:p></o:p></p>
+
+<p class=programs>Console.Write(o.GetType().FullName + &quot; &quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>static void Main() {<o:p></o:p></p>
+
+<p class=programs>object[] a = {1, &quot;Hello&quot;, 123.456};<o:p></o:p></p>
+
+<p class=programs>object o = a;<o:p></o:p></p>
+
+<p class=programs>ff(a);<o:p></o:p></p>
+
+<p class=programs>ff((object)a);<o:p></o:p></p>
+
+<p class=programs>ff(o);<o:p></o:p></p>
+
+<p class=programs>ff((object[])o);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Int32 System.String System.Double <o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Object[] <o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Object[] <o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Int32 System.String System.Double <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the first case we are passing the function ff an array of
+object that looks like object. We will tell you a little later that all classes
+are derived from object. The function ff receives an array of objects b. In the
+foreach we know that the object class has a function GetType that returns an
+object that looks like Type, which in turn has a function called FullName which
+returns the name of the type. We see three different types displayed. In the
+second invocation of ff we are casting a to an object. There is no conversion
+available from converting an object to an object array i.e. object [].
+Therefore a one element object [] is created. It's the same case in the third
+invocation and the last explicitly casts to an object array.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void ff(params object[] b) {<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(b.GetType().FullName);<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(b.Length);<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(b[0]);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>static void Main() {<o:p></o:p></p>
+
+<p class=programs>object[] a = {1, &quot;Hello&quot;, 123.456};<o:p></o:p></p>
+
+<p class=programs>ff((object)a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Object[]<o:p></o:p></p>
+
+<p class=DOSPROMPT>1<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Object[]<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Inheritance <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>xxx a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx <o:p></o:p></p>
+
+<p class=programs>{ <o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,1): error CS0117: 'xxx' does not contain a definition
+for 'abc'<o:p></o:p></p>
+
+<p class=cbasetext>The class yyy contains 2 functions and one instance
+variable. The class xxx contains no code and no variables at all. An empty
+class does not denote any error as we are able to instantiate an object that
+looks like xxx. The error comes about because the class xxx has no function
+called abc. However the class yyy has a function abc. Would it not be
+great<span style="mso-spacerun: yes">  </span>if we were allowed to use all the
+code in the class yyy from xxx. Easier said than done, we guess! <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>xxx a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error disappears and the abc<span style="mso-spacerun:
+yes">  </span>in yyy gets executed. If after the name of the class you write :
+yyy i.e. the name of another class, a lot happens at once. xxx is now said to
+have been derived from yyy. What that means is all the code we wrote in yyy can
+now be used in xxx. It is if we actually wrote all the code that is contained
+in yyy in xxx. If we had created an object that looks like yyy, everything that
+the object could do, now an object that looks like xxx can also do. But we have
+not written a<span style="mso-spacerun: yes">  </span>line of code in xxx. We
+are made to believe that xxx has one variable i and two functions abc and pqr
+as yyy contains these two functions. Here we are teaching you the concepts of
+inheritance where yyy will now be called the base class, xxx the derived class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>xxx a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;xxx abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Warning<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(23,13): warning CS0108: The keyword new is required on
+'xxx.abc()' because it hides inherited member 'yyy.abc()'<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output <o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Nothing in the world stops class xxx from creating a
+function abc i.e. one with the same name as in the base class . C# simply gives
+us a warning. When we run a.abc(), C# first checks whether the class xxx (as a
+looks like xxx) has a function called abc. If it does not, then it will check
+in the base class. Earlier abc was only available in the base class and hence
+got executed. Here as it is already there in xxx, it gets called from xxx and
+not yyy. Remember the derived classes get a first shot at execution, then the
+base class. The reason being, the base class may have a number of functions and
+for various reasons you may not be satisfied with what they do. You should have
+the right to have your copy of the function to be called. In other words the
+derived classes functions override the ones in the base class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>xxx a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;xxx abc&quot;);<o:p></o:p></p>
+
+<p class=programs>base.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>What if you want the best of both worlds? You may want to
+call the base classes abc first and then yours or vice versa. To accomplish
+this, C# gives you a reserved word, something free called base. The word base
+can be used in any derived class. It means call the function off the base
+class. Simple. Thus base.abc will call the function abc from yyy the base class
+of xxx.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>xxx a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;xxx abc&quot;);<o:p></o:p></p>
+
+<p class=programs>base.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output <o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>There is only one small change made to the program and that
+is base.abc is replaced by base.pqr. In this case the function pqr from the
+class yyy gets called. Base is very general purpose. It lets you access members
+of the base class from the derived class. You cannot use base in yyy as yyy is
+not derived from any class. Thus base can only be used in derived classes.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,1): error CS0117: 'yyy' does not contain a definition
+for 'xyz'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this case, xxx is derived from yyy and not vice versa.
+Thus xxx can use all the members of yyy. Inheritance does not work backwards.
+Whatever members xxx comprises do not permeate upwards to yyy. Class xxx may
+now have a function xyz but it cannot give it to class yyy and thus an error
+occurs.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A class inherits everything from its base class except the
+constructors and destructors. If a class c is derived from class b, which in
+turn has been derived from class a, class c inherits all the members declared
+in class b and also class a. This concept is called transitive. A derived class
+can inherit all the members of the base class but cannot subtract or remove
+members off that base class. A derived class can hide members of the base class
+by creating functions by the same name. The original member in the base class
+remains unchanged and unaffected by whatever is happening in the derived class.
+It remains unchanged in the base class, it is simply not visible in the derived
+class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A class member can either be a static member belonging to
+the class or an instance member belonging to the instance i.e. accessible
+through the object and not the class. The default is non-static.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A class is also called a data structure. It consists of data
+members like constants, fields and events and function members like methods,
+properties, indexers, operators, constructors, static constructors and
+destructors. A class within a class is called a nested class. Thus we can place
+11 different types of entities in a class. Function members are the only
+members of a class that contain executable code. A class creation creates a new
+declaration space. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>All classes derive from object . Object is the mother of all
+classes. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz : object <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If you do not derive from any class, then the C# compiler
+automatically adds :object to your class definition. Object, the only class to
+have this feature is not derived from any class. It is the ultimate base class
+of all classes in the C# hierarchy. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>class aa <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bb : aa<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Class aa is the base class of bb . The documentation however
+calls aa the direct base class of bb. Thus the base classes of bb are aa and
+object. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class aa : System.Delegate<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bb : System.Enum<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class cc : System.Array<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class dd : System.ValueType<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,7): error CS0644: 'aa' cannot inherit from special
+class 'System.Delegate'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(10,7): error CS0644: 'bb' cannot inherit from special
+class 'System.Enum'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(13,7): error CS0644: 'cc' cannot inherit from special
+class 'System.Array'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(16,7): error CS0644: 'dd' cannot inherit from special
+class 'System.ValueType'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You cannot derive a class from the above 4 classes as they
+are special.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class aa <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bb <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class cc : aa, bb<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(9,16): error CS0527: 'bb' : type in interface list is
+not an interface<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A class can only be derived from one<span
+style="mso-spacerun: yes">  </span>more class . You are not permitted to derive
+from two or more classes i.e. multiple inheritance is not supported. Thus every
+class has one and only one base class.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class aa : bb<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bb<span style="mso-spacerun: yes">  </span>: cc <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class cc : aa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(13,7): error CS0146: Circular base class definition
+between 'cc' and 'aa'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>class aa is derived from bb. Class bb in turn is derived
+from cc and cc is derived from aa. This results in a circular definition. class
+aa is derived from bb and cc, as bb is derived from cc. As cc is also derived
+from aa class,<span style="mso-spacerun: yes">  </span>bb also derives from
+this class which is aa. Thus aa is derived from aa which is a logical
+impossibility.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Equating Objects <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>a = b;<o:p></o:p></p>
+
+<p class=programs>b = a;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx {<o:p></o:p></p>
+
+<p class=programs>public int j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,5): error CS0029: Cannot implicitly convert type
+'xxx' to 'yyy'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,5): error CS0029: Cannot implicitly convert type
+'yyy' to 'xxx'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# has a very simple rule. It does not like you to equate
+different objects to each other. Thus an object that looks like yyy cannot be
+equated to one that looks like xxx and vice versa. Thus the error. Another
+example - you cannot take an int and equate it to a string . C# is extremely
+strict when it comes to dealing with different data types.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>a = b;<o:p></o:p></p>
+
+<p class=programs>b = a;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,5): error CS0029: Cannot implicitly convert type
+'yyy' to 'xxx'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>There is however one way out. On account of this way, one of
+the errors disappeared. The only time we are allowed to equate dissimilar data
+types is when we derive from them. Lets explain this in detail. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When we create an instance of yyy by saying new, we are
+creating two objects at one go, one that looks like yyy and the other that
+looks like object. All classes in C# are finally derived from object. As xxx is
+derived from yyy, when we say new xxx, we are creating 3 objects, one that
+looks like yyy, one that looks like xxx and finally object. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus when we write a = b, b looks like xxx, yyy and object
+and as a looks like yyy, there is a match at yyy. Consequence? No error. Even
+though a and b have the same values, using a we can only access the members of
+yyy, even though had we used b we could access xxx also. We have devalued the
+potency of a . The error arises at b = a, because the class yyy is less/smaller
+than the class xxx . The class xxx has yyy and more. We cannot have a larger
+class on the right and a smaller class on the left. a only represents a yyy
+whereas b expects a xxx which is a xxx and yyy. The basic rule is that we can
+only equate dissimilar objects if they are derived from each other. You can
+equate an object of a base class to a derived class but not vice versa.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>a = b;<o:p></o:p></p>
+
+<p class=programs>b = (xxx) a;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Though we broke a C# rule on equating objects, we did not
+get an error because of the cast . A () is called a cast. Within the brackets
+we put the name of a class. A cast is the great leveler. When we write b = a,
+C# expects the right hand side of the equal to to be a b i.e. a xxx . Instead
+it finds a i.e. a yyy . So by applying a cast, we are for the moment converting
+the yyy object into an xxx. This strategy satisfies the rules of C# on only
+equating similar objects. Remember it is only for the duration of the line that
+a becomes a xxx and not a yyy.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>a = (yyy) b;<o:p></o:p></p>
+
+<p class=programs>b = (xxx) a;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,6): error CS0030: Cannot convert type 'xxx' to 'yyy'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,6): error CS0030: Cannot convert type 'yyy' to 'xxx'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Unfortunately casting works only if one of the two classes
+is<span style="mso-spacerun: yes">  </span>derived from the other. You cannot
+cast any two objects to each other.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int i = 10;<o:p></o:p></p>
+
+<p class=programs>char j = 'A';<o:p></o:p></p>
+
+<p class=programs>i = j;<o:p></o:p></p>
+
+<p class=programs>j = i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,5): error CS0029: Cannot implicitly convert type
+'int' to 'char'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We are allowed to convert a char into a int as i = j but not
+the other way round as j = i.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:28 GMT -->
+</html>

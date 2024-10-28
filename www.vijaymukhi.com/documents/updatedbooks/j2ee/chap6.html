@@ -1,0 +1,2962 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/updatedbooks/j2ee/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:41:57 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap6_files/filelist.html">
+<title>EJB – Enterprise Java Beans</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Mr. Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>8</o:TotalTime>
+  <o:Created>2005-05-14T08:24:00Z</o:Created>
+  <o:LastSaved>2005-05-14T08:24:00Z</o:LastSaved>
+  <o:Pages>16</o:Pages>
+  <o:Words>6309</o:Words>
+  <o:Characters>39200</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>968</o:Lines>
+  <o:Paragraphs>561</o:Paragraphs>
+  <o:CharactersWithSpaces>45138</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>9.35 pt</w:DrawingGridHorizontalSpacing>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-font-kerning:0pt;
+	text-decoration:underline;
+	text-underline:single;}
+h2
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:11.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Trebuchet MS";
+	font-weight:normal;
+	text-decoration:underline;
+	text-underline:single;}
+h3
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:15.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Trebuchet MS";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+code
+	{mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:595.45pt 841.7pt;
+	margin:.5in .5in .5in .5in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:604460359;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-2016280074 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:1178696174;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1025625748 67698703 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:1546483302;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-708560178 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	margin-left:1.0in;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:1804423750;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1025625748 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1992058448;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1025625748 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h3>EJB – Enterprise Java Beans</h3>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoBodyText><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This chapter focuses on how to create the smallest
+EJB bean and call it from a JavaServlet. This chapter is a little complex as
+there are a lot of things we have to do and hence please follow every step with
+surgical precision. The guys at sun have given a batch file called asadmin that
+will be used extensively to register whatever our objects with the J2EE server
+or application server. This batch file is present in the c:\Sun\appserver\bin
+directory.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt'>Asadmin.bat<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>call C:\Sun\AppServer\config\asenv.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set Path=%AS_INSTALL%\bin;%AS_ICU_LIB%;%PATH%<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&quot;%AS_JAVA%\bin\java&quot;
+-Dcom.sun.aas.instanceRoot=%AS_INSTALL% -Dserver.name=server
+-Djava.library.path=&quot;%AS_INSTALL%\bin&quot;;&quot;%AS_ICU_LIB%&quot;
+-Dcom.sun.aas.configRoot=&quot;%AS_CONFIG%&quot;
+-Djava.endorsed.dirs=&quot;%AS_INSTALL%\lib\endorsed&quot; -cp
+&quot;%AS_INSTALL%\lib&quot;;&quot;%AS_INSTALL%\lib\appserv-rt.jar&quot;;&quot;%AS_INSTALL%\lib\appserv-ext.jar&quot;;&quot;%AS_INSTALL%\lib\j2ee.jar&quot;;&quot;%AS_INSTALL%\lib\admin-cli.jar&quot;;&quot;%AS_INSTALL%\lib\appserv-admin.jar&quot;;&quot;%AS_INSTALL%\lib\commons-launcher.jar&quot;;&quot;%AS_ANT_LIB%\ant.jar&quot;;&quot;%AS_ANT_LIB%\optional.jar&quot;;&quot;%AS_IMQ_LIB%\imqadmin.jar&quot;
+com.sun.enterprise.cli.framework.CLIMain<span style="mso-spacerun: yes"> 
+</span>%*<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>asenv.bat<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_ANT=C:\Sun\AppServer\lib\ant<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_ANT_LIB=C:\Sun\AppServer\lib\ant\lib<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_POINTBASE=C:\Sun\AppServer\pointbase<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_WEBSERVICES_LIB=C:\Sun\AppServer\lib<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_PERL=C:\Sun\AppServer\lib\perl<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_NSS=C:\Sun\AppServer\bin<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_NSS_BIN=C:\Sun\AppServer\lib\admincgi<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_IMQ_LIB=C:\Sun\AppServer\imq\lib<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_IMQ_BIN=C:\Sun\AppServer\imq\bin<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_CONFIG=C:\Sun\AppServer\config<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_INSTALL=C:\Sun\AppServer<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_JAVA=C:\Sun\AppServer\jdk<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set
+AS_ACC_CONFIG=C:\Sun\AppServer\domains\domain1\config\sun-acc.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_JHELP=C:\Sun\AppServer\lib<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_ICU_LIB=C:\Sun\AppServer\bin<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_LOCALE=en_US<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>set AS_DEF_DOMAINS_PATH=C:\Sun\AppServer\domains<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The batch file asadmin.bat does two things. One it
+calls the asenv batch file that simply sets up the environment for the next
+command that calls the java program and specifies the class CLIMain. This class
+is the one that registers all the objects with the appserver.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>If you use windows like we do, you will first need
+to start the Appserver or start the default domain and there is a menu option
+that does it for us. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS";mso-bidi-font-family:Tahoma'>Start-Programs-
+Sun Microsystems- J2ee 1.4 SDK – Start Default Server <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This calls another batch file, asadmin-pause<span
+style="mso-spacerun: yes">  </span>as<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>C:\Sun\AppServer\lib\asadmin-pause.bat
+start-domain<span style="mso-spacerun: yes">   </span>domain1<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt'>Asadmin-pause.bat<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>call &quot;C:\Sun\AppServer\config\asenv.bat&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>call &quot;%AS_INSTALL%\bin\asadmin.bat&quot; %*<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>pause<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Someone sleeping at sun as the asenv.bat file is
+being called twice. The asadmin-pause bat file simply calls the asadmin.bat
+file. The sun J2EE server has a concept of multiple domains, which we will
+explain later. We need to tell the application server the name of the domain it
+needs to work in or place all our applications. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>When we install the appserver, we have one domain
+domain1 created for us. If you are like us and would like to start from
+scratch, we will show you how to create a domain. But please, please understand
+that all the applications and other objects registered with the domain will be
+lost. We would first like you to start the default domain from the menu.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Starting a appserver takes time and the first
+message tells us that the log file server.log present in
+C:\sun\appserver\domains\domain1\logs directory will contain all activity
+taking place. When the app server starts, pressing any key at the pause will
+close the initial window. We would now like to stop the app server.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>asadmin stop-domain domain1<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We use the argument stop-domain and the name of the
+domain domain1 as the second parameter. This stops the domain domain1 after
+some time. Then we run the next command that actually deletes the domain.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>asadmin delete-domain domain1<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>It is this command that actually removes the
+directory domain1 under domain. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Finally lets create a new domain called domain1.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>asadmin create-domain --adminport 4848<span
+style="mso-spacerun: yes">  </span>domain1<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The only added option we have to specify is the
+port that we will use to connect whenever we would like to administer the
+domain. The default HTTP port is 80, we will use 8080 for our http connections
+and for administration we will use port 4848 because this is what sun is
+comfortable with.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Now that we have created on our domain domain1 from
+scratch, lets us now write our smallest application. But first start the
+default domain yourselves or from the menu option. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We will first create a sub-directory ejb3 and
+within this create another subdirectory src. We will place all our files in
+this directory src. This is not necessary but all the coders who have coded in
+J2EE, place the code in the src directory. Being superstitious so will we. Then
+all the files that will be generated by the system, will be stored in the build
+directory from ejb3. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Not necessary again. We would like to see all our
+files in one directory, but the J2EE world believes that unless you do not
+spread your files, over a zillion directories, a million levels deep, they are
+not happy. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>There are about 11 files to be created in the src
+subdirectory. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l3 level1 lfo4;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file build.xml in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt'>Build.xml<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;project default=&quot;vijay&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;target name=&quot;vijay&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;delete dir=&quot;../build&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;mkdir dir=&quot;../build&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;javac srcdir=&quot;.&quot;
+destdir=&quot;../build&quot;
+classpath=&quot;C:\Sun\AppServer\lib\j2ee.jar&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar
+destfile=&quot;../build/VijayWarContainsServlet.war&quot;
+update=&quot;true&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;.&quot;
+includes=&quot;starthtmlfile.html,VijayJsp.jsp&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;../build&quot;
+includes=&quot;VijayServletClass.class&quot;
+prefix=&quot;WEB-INF/classes/&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;.&quot;
+includes=&quot;sun-web.xml,web.xml&quot;<span style="mso-spacerun: yes"> 
+</span>prefix=&quot;WEB-INF&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar destfile=&quot;../build/VijayJarContainsEJB.jar&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;../build/&quot;
+includes=&quot;VijayRemoteInterface.class,VijayEJBClass.class,VijayHomeInterface.class&quot;
+/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;metainf dir=&quot;.&quot;
+includes=&quot;ejb-jar.xml,sun-ejb-jar.xml&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar
+destfile=&quot;../build/VijayFinalEar.ear&quot;<span style="mso-spacerun:
+yes">  </span>update=&quot;true&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;metainf dir=&quot;.&quot;
+includes=&quot;application.xml&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;../build&quot;
+includes=&quot;VijayJarContainsEJB.jar,VijayWarContainsServlet.war&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;exec executable=&quot;cmd.exe&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;arg line=&quot; /c C:/Sun/AppServer/bin/asadmin
+deploy --user admin --password vijay712 --host office --port 4848 --name
+VijayAppName<span style="mso-spacerun: yes"> 
+</span>../build/VijayFinalEar.ear&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/exec&gt;<span style="mso-spacerun: yes">  
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/target&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;target name=&quot;vijay1&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;exec executable=&quot;cmd.exe&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;arg line=&quot; /c C:/Sun/AppServer/bin/asadmin
+undeploy --user admin --password vijay712 --host office --port 4848
+VijayAppName&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/exec&gt;<span style="mso-spacerun: yes">  
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/target&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/project&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Ant is the default build tool used and hence the
+first file we create is build.xml. We start with the project tag and specify
+the default project as vijay. In this target we first delete the directory c:\ejb3\build
+using the delete dir task as this contains all files generated by the J2EE
+tools. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This directory is then recreated using the task
+mkdir. Once the directory is created, using the java compiler javac, the java
+files in the current directory, src, are compiled with the jar file in the
+classpath. However the compiled class files are placed in the build
+directory.<span style="mso-spacerun: yes">  </span>There are four java files in
+the src directory which get compiled.<span style="mso-spacerun: yes"> 
+</span>As mentioned earlier the ant tasks like to be presented with directories
+where they performs their work. Thus the four class files will be created in
+c:\ejb3\build.<span style="mso-spacerun: yes">  </span>The java files are given
+below in the chapter.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The jar task builds our first war or web
+application archive file. We could have used the war file, but chose to use the
+jar task as a jar or war or ear files are basically the same but used for
+different purposes. They are all zip archives. The file called
+VijayWarContainsServlet.war will be created in the build directory.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>An entity that begins with Vijay is created. The
+update attribute is set to true though not required. All that it does is if the
+destfile already exists, the files are added to the existing file thus not
+creating a new destfile. The zipfileset attribute details the files that will
+be added to the ear file. The dir attribute specifies a directory from which
+all files present will be added to the archive. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>However we may want only some files from the
+current directory to be added to the first war file. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Thus using the includes attribute, individually the
+file names are specified or we could also give wildcards. Thus the first
+zipfileset task adds two files starthtmlfile.html and VijayJsp.jsp to the
+archive. Then the second zipfileset takes one file VijayServletClass.class<span
+style="mso-spacerun: yes">  </span>from the build directory and adds it to the
+archive. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This means that the first java program is called
+VijayServletClass.java. This class file will go into the WEB-INF/classes
+directory within the archive as the prefix attribute is given this value.
+Finally the WEB-INF directory within the archive gets the files web-xml and
+sun-web.xml. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The J2EE world uses xml files to specify what is
+present in the archive and and what files are for deployment. This is a major
+use of xml. But before we understand the java files, we first take a look at
+what the two xml files contain. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in'><b><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file web.xml in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>web.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;web-app&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;servlet&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;servlet-name&gt;VijayServletName&lt;/servlet-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;servlet-class&gt;VijayServletClass&lt;/servlet-class&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/servlet&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;servlet-mapping&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;servlet-name&gt; VijayServletName
+&lt;/servlet-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;url-pattern&gt;/VijayServletUrl&lt;/url-pattern&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/servlet-mapping&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref-name&gt;ejb/VijayJNDIName&lt;/ejb-ref-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref-type&gt;Session&lt;/ejb-ref-type&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;home&gt;VijayHomeInterface&lt;/home&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;remote&gt;VijayRemoteInterface&lt;/remote&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-link&gt;VijayEJBName&lt;/ejb-link&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;welcome-file-list&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;welcome-file&gt;starthtmlfile.html&lt;/welcome-file&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/welcome-file-list&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/web-app&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We then briefly touched this deployment Descriptor
+before. It starts with the root element web-app. Then moving to the bottom is
+the welcome-file-list element that tells us that if we do not specify a file
+name, the one sent across will be starthtmlfile.html. The question is how do we
+activate this file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><a href="http://localhost:8080/VijayContextRoot/">http://localhost:8080/VijayContextRoot/</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We write the above Url in the browser keeping in
+mind that the J2EE server runs on the same machine and the default port is 8080
+and not 80. We would like to access our application by using the name
+VijayContextRoot. This name must be defined someplace in a xml file. This file
+will be dealt with a little later.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file Starthtmlfile.html in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h2><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt'>Starthtmlfile.html<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;html&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;form method=&quot;POST&quot;
+action=&quot;/VijayContextRoot/VijayServletUrl&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;p&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;input type=&quot;submit&quot;
+value=&quot;Process&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/form&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/html&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This is a very simple file. All that it does is has
+a text box called name and a submit button with a label of Process. When we
+write some text in the text box and then click on the button, the Url written
+in the browser will be <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><a
+href="http://localhost:8080/VijayContextRoot/VijayServletUrl">http://localhost:8080/VijayContextRoot/VijayServletUrl</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Thus the J2EE server will now have to resolve the
+name VijayServletUrl as the name VijayContextRoot is the name or context root
+of our application.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The words VijayServletUrl identify a servlet and is
+called a url-pattern. If we look at the web.xml file, we will come across an
+element servlet-mapping. This contains an element url-element which defines the
+word VijayServletUrl. This tells the server that whenever a url is of Url
+pattern, execute a servlet with a name VijayServletName as it is the value of
+element servlet-name. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The only problem is the class that contains the
+code of the servlet called VijayServletName. All that we need to do is go a
+little up in the same file web.xml till we come across the servlet element<span
+style="mso-spacerun: yes">  </span>that defines all servlets in the war file.
+Thus the servlet-name tag gives us the name of the servlet and the servlet-class
+tag the servlet name which is VijayServletClass. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The .class extension is not necessary. This is how
+the Url VijayServletUrl gets mapped to the servlet file VijayServletClass. This
+is what the xml files are good for. They contain all the glue that binds
+everything together. The tag ejb-ref will be done later as this deals with
+Enterprise Java Beans or EJB’s. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Coming back to the other xml file, sun-web.xml,
+this file is present in the includes, but as we have not created it, we get no
+errors at all. Thus we have created one war file already and if we look at the
+directory structure using the WinZip program , this is what we will see.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We<span style="mso-spacerun: yes">  </span>have a
+total of five files in the archive. We had only four files. The extra file is
+called a manifest file Manifest.mf in the meta-inf directory. Its contents
+are<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Manifest.mf<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Manifest-Version: 1.0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Ant-Version: Apache Ant 1.5.3 <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Created-By: 1.4.2_02-b03 (Sun Microsystems Inc.)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Nothing useful. The files VijayJsp.jsp and
+starthtmlfile.html are in the root. The file VijayServletClass.class file is in
+the WEB-INF/classes and the web.xml file in the web-inf directory. Thus this
+war file basically contains everything but our EJB which is being packaged in
+the next file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Now lets proceed to the second archive which contains
+the EJB. This archive is called VijayJarContainsEJB.jar. We keep all our
+servlets and jsp’s and html files in a war file as they gets executed by the
+Tomcat server which is part of the Apache group. The EJB are executed by the
+sun application server. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This is why by convention, EJB’s are in a jar file
+and servlets in a war file. Both are zip archives. Every EJB is made up of two
+interfaces and one class file. In our case the interface files are
+VijayRemoteInterface and VijayHomeInterface and the class is VijayEJBClass. The
+deployment descriptors<span style="mso-spacerun: yes">  </span>are two xml
+files, ejb-jar.xml and sun-ejb-jar.xml. These files are placed in the meta-inf
+directory using the task metainf. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in'><b><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file ejb-jar.xml in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ejb-jar.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;session&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;display-name&gt;VijayEJBName&lt;/display-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;home&gt;VijayHomeInterface&lt;/home&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;remote&gt;VijayRemoteInterface&lt;/remote&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-class&gt;VijayEJBClass&lt;/ejb-class&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/session&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The file ejb-jar.xml starts with the root tag of
+ejb-jar followed by the tag enterprise-beans and session. Then the tag
+display-name tells us that the name of the EJB is VijayEJBName. This is the
+name that we will give to our EJB and refer to it. Every EJB has two interfaces
+which are called the home and remote interface. The home interface definition
+is as follows.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file VijayHomeInterface.java in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayHomeInterface.java<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public interface VijayHomeInterface extends
+javax.ejb.EJBHome<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public VijayRemoteInterface create() throws
+java.rmi.RemoteException, javax.ejb.CreateException; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The interface VijayHomeInterface extends the
+EJBHome class and has only one function called create. Most java functions
+throw exceptions and these are part of the method signature and cannot be
+avoided. The function create is used to create the remote interface
+VijayRemoteInterface.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file VijayRemoteInterface.java in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface.java<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public interface VijayRemoteInterface extends
+javax.ejb.EJBObject<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public String ourEJBfunction() throws
+java.rmi.RemoteException; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The remote interface is derived from EJBObject and
+contains a list of all functions that comprise our bean. We would like our bean
+to have only one function ourEJBfunction that will return a string and throw a
+exception if an error occurs.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The actual code of our EJB will be in the third
+java file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file VijayEJBClass.java in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayEJBClass.java<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public class VijayEJBClass implements
+javax.ejb.SessionBean<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void setSessionContext (javax.ejb.SessionContext
+ctx)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;setSessionContext&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbRemove()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbRemove&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbPassivate()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbPassivate&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbActivate()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbActivate&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbCreate() throws
+java.rmi.RemoteException, javax.ejb.CreateException<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbCreate&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public String ourEJBfunction() throws
+java.rmi.RemoteException<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ourEJBfunction&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>return &quot; EJB16 &quot;; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This class does not extend a class but
+implements<span style="mso-spacerun: yes">  </span>SessionBean. Thus we
+have<span style="mso-spacerun: yes">  </span>no choice but to bring in the five
+functions setSessionContext, ejbRemove, ejbPassivate, ejbActivate and ejbCreate.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We will explain the use of these later. The above
+five functions are a must and if we do not want to get a runtime error we need
+to also implement the method ourEJBfunction. This method will be called from
+the servlet and simply return a string. We have placed the println functions in
+every method as we would want to know when the system calls the above
+functions. These println’s will show in the log file server.log.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Coming back to the ejb-jar file, we use the three
+tags home, remote and ejb-class to specify the names of the three EJB classes
+and interfaces. Now lets look at the file sun-ejb-jar.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file sun-ejb-jar.xml in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>sun-ejb-jar.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;sun-ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jndi-name&gt;VijayJNDIName&lt;/jndi-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/sun-ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This file has the root element sun-ejb-jar followed
+by the tags enterprise-beans and ejb. This file is used to map the name of the
+EJB VijayEJBName denoted by the element ejb-name and the JNDI name
+VijayJNDIName. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The Java Naming and Directory Interface is a way of
+naming something so that others can find it. It is one of the pillars of the
+java world. Thus in our servlet<span style="mso-spacerun: yes">  </span>we will
+refer to the JNDIName VijayJNDIName and get the name of the EJB and from there
+the classes that represent the bean.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>In the file web.xml, we use the syntax
+ejb/VijayJNDIName as the reference to the bean and once again stated the three
+classes/interfaces that represent our bean. Also the type of the bean is
+Session as there are many bean types. Looking into the jar file in WinZip we
+see the following files.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Six files with the meta-inf directory containing
+the system created Manifest.mf file and the two xml files ejb-jar.xml and
+sun-ejb-jar.xml. The other three class files are present in the root.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>In the web.xml file we use the element ejb-ref to
+connect the JNDI name VijayJNDIName to the type of bean Session and the three
+classes/interfaces that represent the bean. We are duplication this information
+twice. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Finally in build.xml we have created the third
+file, VijayFinalEar.ear. An EAR file is a enterprise application resource file
+and contains all the archives created so far. Thus we first include the jar and
+war file and in the meta-inf<span style="mso-spacerun: yes">  </span>directory
+the first xml file to be read application.xml.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file application.xml in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>application.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;application&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb&gt;VijayJarContainsEJB.jar&lt;/ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;web&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;web-uri&gt;VijayWarContainsServlet.war&lt;/web-uri&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;context-root&gt;VijayContextRoot&lt;/context-root&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/web&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/application&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The ear file is the final file that packages our
+application. The file application.xml tells the App server the contents of this
+file. A EAR file is made up of modules and our ear file has two modules and we
+have thus two module tags. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The first specifies VijayJarContainsEJB.jar as the
+first module file with no tags describing its contents as it only contains
+EJB’s. The second module is the one that contains the servlets and jsp’s and
+its name is denoted by the tag<span style="mso-spacerun: yes"> 
+</span>VijayWarContainsServlet.war. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The<span style="mso-spacerun: yes">  </span>tag
+context-root is the one that specifies the name of the application to be used
+in the Url, VijayContextRoot. Now when we run the ant program it creates the
+files advertised and we must register this ear file with the system. The task
+exec is what we use for this. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This task lets us execute any executable we want
+and we specify the command prompt cmd.exe as the value of the executable
+attribute. Then we specify the arguments to using the attribute line and task
+arg. We can not specify a batch file as the name of the executable as the
+CreateProcess command used gives us an error. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Basically all that we are doing is running the
+asadmin batch file specifying the option deploy to deploy the file
+VijayFinalEar.ear specified at the end. For the deploy option we need to
+specify the user name admin, the password vijay712 that we specified at the
+time of installation.<span style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Then the name of the host office and the admin port
+number 4848.<span style="mso-spacerun: yes">  </span>The name of the
+application VijayAppName<span style="mso-spacerun: yes">  </span>if not
+specified defaults to the name of the ear file. This command could also be run
+by us and the application would get deployed. When we install or deploy the
+application, the words uri VijayContextRoot denote the application. When we
+write the url<span style="mso-spacerun: yes">  </span><a
+href="http://localhost:8080/VijayContextRoot/">http://localhost:8080/VijayContextRoot/</a>
+in the browser, the system looks up the context root and displays the initial
+file specified in the web.xml file. Then when we click on the button it invokes
+the servlet as explained earlier. Lets now look at the servlet code.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='mso-list:l4 level1 lfo1;tab-stops:list .5in'><b><span
+     style='font-size:10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'>Create
+     file VijayServletClass.java in c:\ejb3\src<o:p></o:p></span></b></li>
+</ul>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayServletClass.java<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.servlet.*; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.io.*;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.servlet.http.*; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.naming.*; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.rmi.PortableRemoteObject;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public class VijayServletClass extends HttpServlet<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void doPost (HttpServletRequest
+request,HttpServletResponse response) throws ServletException, IOException<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;doPost&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayHomeInterface m_VijayHomeInterface;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface m_VijayRemoteInterface;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>InitialContext m_InitialContext;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>try<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_InitialContext = new
+javax.naming.InitialContext(); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Object m_Object =
+m_InitialContext.lookup(&quot;java:comp/env/ejb/VijayJNDIName&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_VijayHomeInterface=(VijayHomeInterface)PortableRemoteObject.narrow(m_Object,VijayHomeInterface.class);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_VijayRemoteInterface =
+m_VijayHomeInterface.create();<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>catch(Exception e) {return;}<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>String s = m_VijayRemoteInterface.ourEJBfunction()
++ &quot; servlet16 &quot;;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>request.setAttribute(&quot;ourattribute&quot;, s); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>response.setContentType(&quot;text/html&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ServletContext m_ServletContext =
+getServletContext();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>RequestDispatcher m_RequestDispatcher; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_RequestDispatcher =
+m_ServletContext.getRequestDispatcher(&quot;/VijayJsp.jsp&quot;); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_RequestDispatcher.include(request, response); <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>return;<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>A servlet in the java world drives from the class
+HttpServlet. As the method is post in the file starthtmlfile.html, the function
+doPost gets called. This functions signature specifies the exceptions it
+throws. We need a handle to our EJB object and all that we have is the name
+VijayJNDIName from the xml files. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Thus we create a object m_InitialContext of<span
+style="mso-spacerun: yes">  </span>type class InitialContext that comes from
+the JNDI namespace using the new keyword as always. It is the class
+InitialContext that is the class used for performing naming lookups.<span
+style="mso-spacerun: yes">  </span>We first use the lookup method passing it
+the JNDI name of the object we want. This function requires the JNDI that
+follows a certain format. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The java:comp/env is reserved. In the xml file we
+specified the JNDI name as ejb/VijayJNDIName. The lookup function locates the
+object for us and returns a reference to us. In our case it is our EJB. Java
+uses RMI or Remote Method Invocation for distributed computing. The class
+PortableRemoteObject comes from the javax.rmi namespace. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This class has a static method narrow that simply
+does an extra error check. The Object m_Object that we retrieved using the
+lookup method is as mentioned before a reference to our EJB. Our EJB actually
+is made up of two interfaces and a class. The interface that represents our EJB
+is aptly called VijayHomeInterface. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>What we need is a extra error check that the Object
+m_Object can be casted into a VijayHomeInterface object. For this we use the
+narrow method passing it the object that we want to check the type conversion
+and the class we will cast to VijayHomeInterface. As narrow returns a Object a
+lower type , we need the cast. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We could have done without the narrow method and
+directly casted m_VijayHomeInterface to m_Object as
+m_VijayHomeInterface=(VijayHomeInterface)m_Object but as the J2EE sample uses
+narrow, we decided so shall we. Thus the first interface that we get for a EJB
+is the home interface. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This is why it is called the home interface. It
+also has only one method create. This method is what we use to give us the
+Remote Interface m-VijayRemoteInterface. If you remember it is in the Remote
+Interface that we specify all the methods the EJB supports. Thus from the JNDI
+lookup method we get at the Home interface and from there the remote interface.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The code of the methods is stored in the
+VijayEJBClass but we do not directly instantiate this object, the EJB system
+does it for us. This is why we need to specify all the three classes/interfaces
+in the xml files. We call the only function in the EJB ourEJBfunction. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This returns a string s that we use to create a
+attribute ourattribute. We use the request and response objects that we passed
+as parameters. We would want to pass these values to our jsp page. To call a
+jsp page from our servlet we first need to create a RequestDispatcher object. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>To do this we first use the getServletContext
+method in the HttpServlet class or better still from the GenericServlet class.
+It is a convenience method and returns a ServletContext object from the
+servlet's </span><code><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt;
+font-family:"Trebuchet MS"'>ServletConfig</span></code><span style='font-size:
+10.5pt;mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'> object. The
+getRequestDispatcher method in the interface ServletContext takes a string
+which is the path of a resource. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This path name must start with a / which makes it
+relative to the context root. The function returns a RequestDispatcher object
+which is nothing but a wrapper for the resource in our case the jsp file. This
+resource can be static or dynamic.<span style="mso-spacerun: yes">  </span>This
+interface has two methods only forward and include. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The include method calls the jsp file and passes it
+the request and response objects. The jsp file can now pick up the value of the
+text box called name and also the attribute ourattribute. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1 style='margin-left:.5in;text-indent:-.25in;mso-list:l4 level1 lfo1;
+tab-stops:list .5in'><![if !supportLists]><span style='font-size:10.5pt;
+mso-bidi-font-size:10.0pt;font-family:Symbol;font-weight:normal;text-decoration:
+none;text-underline:none'>·<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>Create
+file VijayJsp.jsp in c:\ejb3\src<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt;font-weight:normal'>VijayJsp.jsp<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;% String s1 =
+request.getParameter(&quot;name&quot;); %&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;% String s2 = (String)
+request.getAttribute(&quot;ourattribute&quot;); %&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Hi1 &lt;%= s1%&gt;, &lt;%= s2%&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>A jsp file first gets converted into a java servlet
+and then compiled and then executed. We use the same request object that we
+passed to retrieve the Parameter name, the name of the text box and the
+attribute ourattribute in two strings s1 and s2. We then display the two
+strings. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Finally if we look at the log file server.log we
+will realize that four of our methods get called.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>doPost<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>setSessionContext<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ejbCreate<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ourEJBfunction<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The doPost kicks it off and the first method to be
+called in our EJB is the setSessionContext method. We do nothing here but
+technically we should store the SessionContext passed to us. Then our EJB gets
+created by the lookup method so the ejbCreate method gets called. Finally we
+ourselves call our EJB method ourEJBfunction.<o:p></o:p></span></p>
+
+<div style='border:none;border-bottom:solid windowtext 3.0pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext 3.0pt;
+padding:0in;mso-padding-alt:0in 0in 1.0pt 0in'><span style='font-size:10.5pt;
+mso-bidi-font-size:12.0pt;font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman";mso-fareast-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='mso-special-character:line-break;
+page-break-before:always'>
+</span>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1><span style='font-size:14.5pt;mso-bidi-font-size:10.0pt;text-decoration:
+none;text-underline:none'>EJB and a Java application<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The earlier example had the bean being called from
+a web page. In this example we will have it called from a Java application. A
+directory ejb4 is created with a sub directory src to store all the files. As
+before we start with the build.xml file first. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>build.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;project name=&quot;cart&quot;
+default=&quot;vijay&quot; basedir=&quot;.&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;target name=&quot;vijay&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;delete dir=&quot;../build&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;mkdir dir=&quot;../build&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;javac srcdir=&quot;.&quot;
+destdir=&quot;../build&quot;
+classpath=&quot;C:\Sun\AppServer\lib\j2ee.jar&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar
+destfile=&quot;../build/VijayJarContainsEJB.jar&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;../build&quot;
+includes=&quot;VijayEJBClass.class,VijayRemoteInterface.class,VijayHomeInterface.class,
+IdVerifier.class &quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;metainf dir=&quot;.&quot;
+includes=&quot;ejb-jar.xml,sun-ejb-jar.xml&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar destfile=&quot;../build/VijayJarContainsMain.jar
+&quot; manifest=&quot;MANIFEST.mf&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;zipfileset dir=&quot;../build&quot;
+includes=&quot;VijayClient.class&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;metainf dir=&quot;.&quot;
+includes=&quot;application-client.xml,sun-application-client.xml&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jar
+destfile=&quot;../build/VijayFinalEar.ear&quot; update=&quot;true&quot;&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;fileset dir=&quot;../build&quot;
+includes=&quot;VijayJarContainsEJB.jar&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;fileset dir=&quot;../build&quot;
+includes=&quot;VijayJarContainsMain.jar&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;metainf dir=&quot;.&quot;
+includes=&quot;application.xml&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;exec executable=&quot;cmd.exe&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;arg line=&quot; /c C:/Sun/AppServer/bin/asadmin
+deploy --user admin --password vijay712 --host office --port 4848
+--virtualservers server --force=true --name VijayAppName --upload=true
+../build/VijayFinalEar.ear&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/exec&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/target&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;target name=&quot;vijay1&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;exec executable=&quot;cmd.exe&quot; &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;arg line=&quot; /c C:/Sun/AppServer/bin/asadmin
+undeploy --user admin --password vijay712 --host office --port 4848
+VijayAppName&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/exec&gt;<span style="mso-spacerun: yes">  
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/target&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/project&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The file starts with the optional project name
+called cart and an optional basedir pointing to the current directory in
+addition to the mandatory options. The default value for the basedir attribute
+is always the current directory. The default target is vijay as before and
+viajy1 to undeploy the application.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>All source files are placed in the src directory
+wherein now there are four java files, 3 for the EJB and one for our
+application and the build files are placed in the build directory, which gets
+created every time the batch file is executed.<span style="mso-spacerun:
+yes">    </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The first jar file created is the one that contains
+the EJB and is aptly named VijayJarContainsEJB.jar, this file is placed in the
+build directory by the jar task. Then using the zipfileset task, three class
+files are added to the above jar file. A EJB is always structured into a
+minimum of three files. The first is the home file or interface
+VijayHomeInterface. This interface simply contains a method create. We get a
+reference to this object and use the create method to get a
+VijayRemoteInterface object or the remote object. It is this remote interface
+that contains the list of methods supported by the EJB. The actual code is
+present in a third class that we call VijayEJBClass. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The big guys at sun prefer this structure when
+coding an EJB. The xml deployment files go into the meta-inf directory. For a
+EJB there are two, ejb-jar.xml and sun-ejb-jar.xml. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>sun-ejb-jar.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;sun-ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;unique-id&gt;1&lt;/unique-id&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jndi-name&gt;VijayJNDIName&lt;/jndi-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/sun-ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This file starts with the root element sun-ejb-jar
+followed by the enterprise-beans element. The unique-id element is optional and
+as the name recommends gives our bean a unique number or id. Choose any number
+that you want to represent your EJB. The next two elements ejb-name and
+jndi-name create a link between the jndi name and the EJB. The ejb-name can be
+only one but the jndi name can be many. We will explain the link between the
+two when we do other types of EJB’s. The ejb-name must match the display name
+of the bean. The enterprise-beans will contain one ejb element for each bean
+the deployment file defines. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The unique-id element is generated by the system
+that creates the xml files and should be automatically updated each time the
+EJB is redeployed by the EJB tools. As developers, we should not change this
+id. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ejb-jar.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;display-name&gt;VijayEJBDisplayName&lt;/display-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;session&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;display-name&gt;VijayEJBDisplayName1&lt;/display-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;home&gt;VijayHomeInterface&lt;/home&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;remote&gt;VijayRemoteInterface&lt;/remote&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-class&gt;VijayEJBClass&lt;/ejb-class&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;session-type&gt;Stateful&lt;/session-type&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;transaction-type
+&gt;Container&lt;/transaction-type&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;security-identity &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;use-caller-identity/&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/security-identity&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/session&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/enterprise-beans&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;assembly-descriptor &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;container-transaction &gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-intf &gt;Remote&lt;/method-intf&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-name&gt; getContents
+&lt;/method-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;trans-attribute
+&gt;Required&lt;/trans-attribute&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/container-transaction&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;container-transaction&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-intf&gt;Remote&lt;/method-intf&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-name&gt;removeBook&lt;/method-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-params&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-param&gt;java.lang.String&lt;/method-param&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/method-params&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;trans-attribute&gt;NotSupported&lt;/trans-attribute&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/container-transaction&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;container-transaction&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-name&gt;VijayEJBName&lt;/ejb-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-intf&gt;Remote&lt;/method-intf&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-name&gt;addBook&lt;/method-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-params&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;method-param&gt;java.lang.String&lt;/method-param&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/method-params&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/method&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;trans-attribute&gt;Required&lt;/trans-attribute&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/container-transaction&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/assembly-descriptor&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb-jar&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This file ejb-jar.xml is where the actual contents
+of the EJB are defined and you rightly noticed it is much larger than the
+previous version. The root element is ejb-jar. The first tag is the display
+name which gets used by EJB tools to display the name of the EJB, it is
+different from its actual name. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>There are two display names that are for the jar
+and the session. We do not get to see these names used anywhere. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Then comes the start of all the beans specified by
+the enterprise-beans element. This is really the start of the file. Our bean is
+a session bean and now follows all the properties of the session bean. Bear in
+mind that there are many more types of bean. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The first tag in session is the display name of the
+bean. Then comes the name of our bean VijayEJBName<span style="mso-spacerun:
+yes">  </span>as stated by the ejb-name element. This is followed by the home,
+remote and ejb-class elements as explained earlier. We have two sub session
+types, Stateful and Stateless and every bean has two transaction management
+types, Container or Bean. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The EJB world has security built-in. We will be
+executing methods present in the EJB. While doing this, should we use the
+callers security identity or should a special run-as identity element run-as be
+used. We are using the callers identity as the security identity by specifying
+the element use-caller-identity. The element container-transaction decides the
+scope of the transaction. These scopes apply when we execute a bean method. The
+method element specifies the start of the method and then we have the real name
+of the Ejb VijayEJBName to which the method belongs. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We need a way to distinguish a single method that
+has the same signature or prototype but is defined in multiple ways in the home
+and component interfaces. The method-intf element is used for this purpose.
+This element can take four values, Home , Remote, Local and LocalHome. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>In our case, we are specifying the method getContents
+which represents the method in the Remote interface VijayRemoteInterface. Had
+we use Home then the reference would be to a similar method in our Home
+interface VijayHomeInterface. However, we do not have a method getContents in
+the Home interface. If we did and the signature was the same, we would have to
+have a unique of identifying which interface the method we are defining belongs
+to. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Every transaction has boundaries and the
+trans-attribute decides how these are handled. It can take up to six values.
+Transactions happen only when we invoke the bean methods. The six values it can
+take are NotSupported, Supports, Required, RequiresNew, Mandatory and Never.
+For each method we repeat all the above elements. The method removeBook takes
+parameters and thus there will be one method-param element for each parameter
+under the element method-params. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The method removeBook is not present in our Remote
+interface or EJB class but we do not get an error. Thus the deployment files
+are only an indication of what to expect. Also in the build file we mention the
+class file IdVerifier.class and even that is missing, but no error.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Now we build the second jar file, that contains the
+actual application called VijayJarContainsMain.jar. We add the manifest file
+ourselves called Manifest.mf instead of having the system generate it.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>Manifest.mf<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Manifest-Version: 1.0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Created-By: 1.4.0 (Sun Microsystems Inc.)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Main-Class: VijayClient<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>A manifest file in this case tells anyone that the
+Main-Class in the jar file will be a class called VijayClient. It is this class
+that contains the Main function and it should be the first to get executed. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The metainf task tells us that there are two xml
+files in this jar, application-client.xml and sun-application-client.xml. Lets
+look at them in detail.<o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>application-client.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;application-client&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;display-name&gt;VijayDisplayName&lt;/display-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref-name&gt;ejb/VijayEJBRefName&lt;/ejb-ref-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref-type&gt;Session&lt;/ejb-ref-type&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;home&gt;VijayHomeInterface&lt;/home&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;remote&gt;VijayRemoteInterface&lt;/remote&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/application-client&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><u><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>sun-application-client.xml<o:p></o:p></span></u></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;sun-application-client&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb-ref-name&gt;ejb/VijayEJBRefName&lt;/ejb-ref-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;jndi-name&gt;VijayJNDIName&lt;/jndi-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/ejb-ref&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/sun-application-client&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Both these files are necessary even though there is
+duplicate information somewhere else. Where the<span style="mso-spacerun:
+yes">  </span>display name is used we will come to later and the rest of the
+application-client file specifies the names of the home and remote interface
+and the type of the EJB session and its reference name. The same name
+VijayEJBRefName is used in the second xml file sun-application.xml to link with
+the jndi name VijayJNDIName.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Finally we create a third and final archive
+VijayFinalEar.ear that contains<span style="mso-spacerun: yes">  </span>the two
+jar files we have build and the main deployment descriptor application.xml.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>application.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;application&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;description&gt;Application
+description&lt;/description&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;display-name&gt;VijayDisplayName1&lt;/display-name&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;java&gt;VijayJarContainsMain.jar&lt;/java&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;ejb&gt;VijayJarContainsEJB.jar&lt;/ejb&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/module&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;/application&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This file will contain two module statements as we
+have two modules VijayJarContainsMain.jar and VijayJarContainsEJB.jar and the
+Display Name VijayDisplayName1.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The application is deployed using the asadmin
+command and it is called VijayAppName using the name option. On deployment, a
+subdirectory called VijayAppName, the name of our application gets created
+under C:\sun\appserver\domains\domain1\applications\j2ee-apps. The following
+files also get copied into this directory as shown above.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of
+C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;DIR&gt;<span style="mso-spacerun:
+yes">          </span>META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;DIR&gt;<span style="mso-spacerun:
+yes">          </span>VijayJarContainsEJB_jar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;DIR&gt;<span style="mso-spacerun:
+yes">          </span>VijayJarContainsMain_jar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayAppNameClient.jar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName\META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>MANIFEST.MF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>application.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>sun-application.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of
+C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName\VijayJarContainsEJB_jar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayHomeInterface.class<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface.class<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayEJBClass.class<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;DIR&gt;<span style="mso-spacerun:
+yes">          </span>META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of
+C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName\VijayJarContainsEJB_jar\META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>1,378 ejb-jar.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>107 MANIFEST.MF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>930 sun-ejb-jar.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of
+C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName\VijayJarContainsMain_jar<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>1,706 VijayClient.class<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>&lt;DIR&gt;<span style="mso-spacerun:
+yes">          </span>META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Directory of
+C:\Sun\AppServer\domains\domain1\applications\j2ee-apps\VijayAppName\VijayJarContainsMain_jar\META-INF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>275 application-client.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>125 MANIFEST.MF<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>434 sun-application-client.xml<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>To start with in the VijayAppName directory we get
+three subdirectories and a jar file called Client.jar with the application name
+VijayAppName prefaced. Then the two jar files have they own sub-directories. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The Meta-Inf directory simply has the Manifest and
+the two application files application.xml and sun-application.xml. The EJB jar
+file directory has the three class files and the meta-inf directory has the two
+xml files and the system generated manifest.mf file. Ditto for the main Client
+file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>To run the client we use the batch file appclient.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoBodyText><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt'>&gt;appclient
+-client
+c:\sun\appserver\domains\domain1\applications\j2ee-apps\VijayAppName\VijayAppNameClient.jar
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This gives us the following output.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Vijay<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Sonal<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The appclient batch file calls Java to run the<span
+style="mso-spacerun: yes">  </span>Main function in the jar file specified by
+the client parameter.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Now lets look at the client file that will talk to
+our EJB.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>VijayClient.java<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.util.*;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.naming.Context;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.naming.InitialContext;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.rmi.PortableRemoteObject;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public class VijayClient<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public static void main(String[] args)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>try<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Context m_Context = new InitialContext();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Object m_Object = m_Context.lookup(&quot;java:comp/env/ejb/VijayEJBRefName&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayHomeInterface m_VijayHomeInterface =
+(VijayHomeInterface)PortableRemoteObject.narrow(m_Object,VijayHomeInterface.class);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface m_VijayRemoteInterface =
+m_VijayHomeInterface.create(&quot;Sonal Mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_VijayRemoteInterface.addBook(&quot;Vijay&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_VijayRemoteInterface.addBook(&quot;Sonal&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_VijayRemoteInterface.addBook(&quot;Mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Vector m_Vector = new Vector();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_Vector = m_VijayRemoteInterface.getContents();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Enumeration m_Enumeration = m_Vector.elements();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>while (m_Enumeration.hasMoreElements())<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>String title = (String)
+m_Enumeration.nextElement();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(title);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.exit(0);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>} catch (Exception ex)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.err.println(&quot;Caught an unexpected
+exception!&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>ex.printStackTrace();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.exit(1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The name of the java file is VijayClient.java and
+as it is a application, it contains the main function. There is not much
+difference between a servlet calling a EJB and a java application. We start by
+creating a InitialContext or a Context class. The InitialContext class is
+derived from the Context interface. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We use the same lookup method where we specify the
+name of the EJB ref name VijayEJBRefName and not the JNDI name. This is how an
+EJB is identified, with its ref name. The element ejb-ref is present in two xml
+files, application-client and sun-application-client. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The JNDI name is used for later references to the
+EJB. The lookup method returns an Object of type VijayHomeInterface and the
+narrow method is used to confirm the typecast. Using the home interface we need
+to get at the Remote interface and we use the create function to do this. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>VijayHomeInterface.java<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.rmi.RemoteException;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.ejb.CreateException;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.ejb.EJBHome;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public interface VijayHomeInterface extends EJBHome<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface create(String i) throws
+RemoteException,CreateException; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayRemoteInterface create() throws
+RemoteException,CreateException; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This time the create method takes one string as a
+parameter and throws two exceptions. This is why when we call this create
+function we have to pass a string as a parameter. It is this create that
+returns a Remote interface. The interface has both create methods, one with a
+parameter and the other without one. But first lets look at the VijayEJBClass file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>VijayEJBClass.java<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.util.*;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.ejb.*;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public class VijayEJBClass implements SessionBean<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Vector m_Vector;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbCreate() throws CreateException<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_Vector = new Vector();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbCreate void&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbCreate(String s) throws
+CreateException<span style="mso-spacerun: yes">  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;ejbCreate one&quot; + s);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_Vector = new Vector();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void addBook(String title)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>System.out.println(&quot;addBook&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>m_Vector.addElement(title);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public Vector getContents()<span
+style="mso-spacerun: yes">   </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>return m_Vector;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbRemove() {}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbActivate() {}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void ejbPassivate() {}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void setSessionContext(SessionContext
+sc)<span style="mso-spacerun: yes">    </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The ejbCreate function earlier had no parameters
+but now has one string. The value of this string is what we have passed in the
+Client program,<span style="mso-spacerun: yes">  </span>Sonal Mukhi. Thus we
+have two ejbCreate methods. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The file ejb-jar.xml contains a element
+session-type. If its value is Stateful, then the ejbCreate method gets called
+with one parameter. Change it to Stateless, and the ejbCreate method with no
+parameters gets called. The file server.log is where the output gets written
+to. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<h1><span style='font-size:10.5pt;mso-bidi-font-size:10.0pt'>VijayRemoteInterface.java<o:p></o:p></span></h1>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.util.*;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import javax.ejb.EJBObject;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>import java.rmi.RemoteException;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public interface VijayRemoteInterface extends
+EJBObject<span style="mso-spacerun: yes">   </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public void addBook(String title) throws
+RemoteException;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>public Vector getContents() throws RemoteException;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>The remote interface defines two methods, whereas
+the ejb-jar.xml specified three. We are calling the addBook method thrice and
+passing it a string. This will call the addBook method in the
+VijayEJBClass.java file. But before that in our ejbCreate method that get
+called once, we create a object that is of type Vector. A Vector object stores
+other objects for us. In the addBook implementation we simply call the
+addElement method of Vector to store the string passed. This is why we use the
+Vector class, it knows how to handle multiple objects. Coming back to our
+client, we create a new Vector object and call the second method in our EJB
+getContents that simply returns the Vector object created in the EJB. Now back
+to our client file. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>We use the elements method of a vector class to
+give us a list of the objects in the Vector as an enumeration. A while loop is
+put use to iterate over all the objects. The hasMoreElements<span
+style="mso-spacerun: yes">  </span>method of the enumeration returns a true if
+there are more elements, false if there are none.<span style="mso-spacerun:
+yes">  </span>The nextElement method returns to us the active element which we
+print out. Thus we are using the bean to store all the objects for us in a
+Vector object.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>When we run the asadmin command as<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>VijayAppName &lt;j2ee-application&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>adminapp &lt;web-module&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>Command list-components executed successfully.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.5pt;mso-bidi-font-size:12.0pt;
+font-family:"Trebuchet MS"'>This shows is that our application VijayAppName has
+been successfully registered with the system. We then start the Admin console
+by clicking on the menu option. We login in as admin and our password vijay712.
+We then click on the key in front of the words application in the left
+pane.<span style="mso-spacerun: yes">  </span>Then again on the key in front of
+Enterprise Applications where we will see our application VijayAppName. Then we
+will click on our applications and see its location matches ours and that it is
+enabled. Scrolling down its tells us that we have two sub-components
+VijayDisplayName of type AppClientModule and VijayJarContainsEJB.jar of type
+EJBModule. Thus our application got successfully registered with asadmin.<o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/updatedbooks/j2ee/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:41:58 GMT -->
+</html>

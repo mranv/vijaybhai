@@ -1,0 +1,1416 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/vbnet/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:03:25 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap7_files/filelist.html">
+<link rel=Edit-Time-Data href="chap7_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Visual Basic.Net - The Basics - 7. Exception Handling</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-02-18T20:01:00Z</o:Created>
+  <o:LastSaved>2002-02-18T20:02:00Z</o:LastSaved>
+  <o:Pages>11</o:Pages>
+  <o:Words>3155</o:Words>
+  <o:Characters>17989</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>149</o:Lines>
+  <o:Paragraphs>35</o:Paragraphs>
+  <o:CharactersWithSpaces>22091</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=101 height=75 id="_x0000_i1025" src=bpb.gif></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>7. Exception Handling</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Henceforth, all the topics would
+be covered in considerable depth. In one of the previous chapters, we
+enlightened you about the errors that occurred only at run time, which the
+compiler could not detect. These errors are termed as 'exceptions'. The occurrence
+of an exception signifies that something extra-ordinary has transpired, which
+need not necessarily be an error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For instance, in a subroutine,
+some of the potential errors that may occur are:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The parameter supplied to it could
+be incorrect.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>There could be difficulty in opening
+a file on disk, etc.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since a subroutine has no means
+of returning values to indicate success or failure, it becomes difficult to
+identify the cause or the type of error that has occurred.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To be bailed out of a
+predicament like this, the concept of exceptions comes in handy. For every
+distinct type of error that occurs, a unique exception can be thrown.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;vbc a.vb<o:p></o:p></p>
+
+<p class=ILoutput>&gt;a<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Exception: Hi<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Throw statement is the only
+pathway to execute an exception. This keyword requires an Exception object.
+Therefore, the object 'a' is declared as an instance of the Exception class,
+where the parameter of &quot;hi&quot; is passed to the constructor. The Throw
+statement now 'throws' or 'raises' an exception, and displays the error message
+as &quot;Hi&quot;. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On running the above program, a
+mammoth dialog box pops up. We request you to click on the 'No' button, or else
+you could be transported to the Debugger.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Exception: hi<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above example sheds some
+more light on the concept of Exception Handling. The main sub has a shared sub
+named abc, whose sole task is to throw an exception. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output displayed validates
+the fact that a part of the code can throw exceptions too. Since the sub abc
+throws an exception, the output points to the sub. However, since the sub abc
+is called from Main sub, Main also gets displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, whenever we come across
+multiple lines referring to an exception, we have to read them in a specific
+sequence, i.e. front to back. The closest sub is the one that is responsible
+for throwing the exception, and the other subs are the ones that contain the
+previous subs. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, a point to be borne in
+mind is that the program comes to a grinding halt when an exception gets
+thrown. As a consequence of this, none of the code, either in the sub abc or in
+the sub main, gets called thereafter, and the application comes to an end.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Under certain situations, this
+type of abrupt ending of the program is totally unacceptable, since any sub
+called from any of the classes could throw an exception and bring the program
+to a standstill. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next program reveals as to
+how this can be prevented from occurring.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Before abc<o:p></o:p></p>
+
+<p class=ILoutput>In Catch<o:p></o:p></p>
+
+<p class=ILoutput>After try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program neither
+displays any exception dialog box, nor does it quit on encountering the 'throw'
+statement. It completes execution upto the very end. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first WriteLine function
+executes normally, followed by the call to the sub abc. Thereafter, the sub
+throws an exception, as a result of which, all the lines of code after the
+'throw' get ignored.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The significant point here is
+that, the sub abc has been placed in a try-catch clause, which is why the
+dialog box does not get displayed. Instead, the program executes code in the
+'catch', and then, moves out gracefully at the end try statement. No code gets
+called after the sub abc has been called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, by placing all the
+exception handling code within the catch, all the probable exceptions can be
+suitably catered for. The code that is to be placed in the catch block is left
+entirely to your discretion.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Depending upon the situation,
+you may either place all the subs and functions in one gigantic 'try and catch'
+statement, or place them in individual 'try and catch' statements. Visual
+Basic.Net has no rules in this regard. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception when i &lt;= 5<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Before abc<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Exception: hi<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we run the above program,
+the offending dialog box gets displayed, as before. This happens because, in
+addition to the Exception argument, the 'catch' clause also requires a 'when'
+clause along with a condition. We have created a variable i and set its value
+to 10. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>While catching the exception,
+the condition is evaluated. Since the condition results in a value of False,
+the catch is overlooked, thus leaving it to the system to handle the exception.
+It behaves as though the catch statement never existed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception when i &lt;= 5<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch i &lt;= 5&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception when i &gt; 5<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch i &gt; 5&quot;)<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.ToString)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Before abc<o:p></o:p></p>
+
+<p class=ILoutput>In Catch i &gt; 5<o:p></o:p></p>
+
+<p class=ILoutput>System.Exception: hi<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=ILoutput>After try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program does not
+display any dialog boxes, since it contains two catch statements:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first one handles exceptions
+when the value of the variable i is less than 5.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second one caters to the
+exceptions when the value of i is greater than 5.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, depending on the value of
+the variable i, one of the two catch statements gets called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we change the condition of
+the first catch to 'when i &gt; 5', even though both the conditions are the
+same, Visual Basic.Net does not complain. This is because, the moment any one
+of the conditions gets satisfied, all the other conditions get ignored.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string representation of the
+exception object is displayed using the sub ToString, which is similar to the
+manner in which error messages are displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;First try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch <o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In second Catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After first try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In First catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After second try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>First try<o:p></o:p></p>
+
+<p class=ILoutput>Before abc<o:p></o:p></p>
+
+<p class=ILoutput>In second Catch<o:p></o:p></p>
+
+<p class=ILoutput>After first try<o:p></o:p></p>
+
+<p class=ILoutput>After second try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above program, there are
+two try statements, one ensconced within the other. In the first try statement,
+the WriteLine function gets executes. In the second try statement, the
+WriteLine function gets executes once again, without much ado!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The exception thrown by the sub
+abc is caught in the catch of the inner try statement. Once the catch completes
+execution of its code, the program moves from the inner try to the outer try.
+Since the exception has already been caught and handled by the inner try, the
+outer catch does not catch it again.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, as long as one of the
+catch statements is able to catch the exception that has been thrown in the
+try, the other catch statements will behave as though no exception was thrown.
+This would occur even if the condition of the second try statement is
+satisfied. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, as long as even one catch
+statement in the sequence catches the exception, none of the other catch
+statement gets called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch &quot;)<o:p></o:p></p>
+
+<p class=ILprg>finally<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Finally&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch <o:p></o:p></p>
+
+<p class=ILoutput>In Finally<o:p></o:p></p>
+
+<p class=ILoutput>After try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'finally' clause is an
+integral part of the 'try-catch-finally' statements. The exception that is
+thrown can be easily caught in one of the catch statements. However, when there
+are multiple catch statements, only one of them will get executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One problem that could befall us
+is that, there could be some common code that needs to be executed for all the
+catch statements. One solution is to repeat the same code in each 'catch'
+statement. The other option would be to use the 'finally' clause. After all the
+statements in the 'catch' block have been executed, just before the 'try'
+clause ends, the code placed in the 'finally' block gets called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, comment out the line of
+code that calls the sub abc, thereby, evading all exceptions that get thrown.
+Thus, when the program is executed, no exceptions are thrown. Nevertheless, the
+code written in the 'finally' clause gets called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;First try&quot;)<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>try<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;Before abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>abc<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;After abc&quot;)<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>catch when i &gt;= 100<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;In second Catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>finally <o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;In second finally&quot;)<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After first try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In First catch&quot;)<o:p></o:p></p>
+
+<p class=ILprg>finally <o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In first finally&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After second try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>First try<o:p></o:p></p>
+
+<p class=ILoutput>Before abc<o:p></o:p></p>
+
+<p class=ILoutput>In second finally<o:p></o:p></p>
+
+<p class=ILoutput>In First catch<o:p></o:p></p>
+
+<p class=ILoutput>In first finally<o:p></o:p></p>
+
+<p class=ILoutput>After second try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program initiates two new
+concepts. As before, there are two 'try' statements. The sub abc throws an
+exception, which the catch is unable to catch since the variable i has a value
+less than 100, thereby causing the condition to evaluate to false. Now, the
+onus falls on the outer try to catch the exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However, before exiting the
+inner try, it first calls the 'finally' clause of the inner 'try-catch-finally'
+block, and then, it executes code in the outer 'catch' statement. Thereafter,
+it executes the 'finally' block of the outer 'catch' statement. In case, the
+outer 'catch' fails to catch the exception, the system will display the
+appalling dialog box, which has been shown earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub pqr<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception()<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>pqr<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch Exception<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This example is a variation of
+the above example. It proves that when the exception has to be caught, it moves
+up the sub hierarchy. Thus, the concept is that someone somewhere should be
+able to catch the exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Main subroutine calls abc,
+which in turn calls pqr. The sub pqr throws the exception. Since there is no
+catch block in pqr, the catch within the sub abc should normally get called.
+However, there is no catch present in the abc block, due to which, the catch in
+the main function is evoked. The catch in the Main block displays 'In Catch
+Exception'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However, if the sub Main too
+does not provide for the catch clause, the exception based dialog box will get
+displayed. Thus, the presence of at least one try catch in the Main subroutine
+is strongly prescribed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch &quot;)<o:p></o:p></p>
+
+<p class=ILprg>exit try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch 1&quot;)<o:p></o:p></p>
+
+<p class=ILprg>finally<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Finally&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After try&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception(&quot;hi&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After throw&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch <o:p></o:p></p>
+
+<p class=ILoutput>In Finally<o:p></o:p></p>
+
+<p class=ILoutput>After try<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The program introduces the
+statement of 'Exit Try', which ceases to process all the 'catch' statements,
+and exits from the 'try' gracefully. Thus, the second occurrence of the
+WriteLine function does not get executed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The job of Exit Try is to
+abandon the try statement instantly. However, the program is not permitted to
+sneak out of the try statement, without first paying homage to the finally
+clause. The output reveals that the code in the finally clause has been
+executed before the 'try' ended.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span>e as
+System.Exception<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch &quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as xxx<o:p></o:p></p>
+
+<p class=ILprg>a = new xxx()<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILprg>class xxx <o:p></o:p></p>
+
+<p class=ILprg>Inherits System.Exception<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An exception is simply any class
+that is derived from the exception class. The class xxx is an exception
+handling class, since it derives from the class exception. In the sub abc, an
+exception of type xxx is thrown. Note that it is not of type Exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However in the catch, the
+exception that is caught is of type Exception, and not of type xxx. This is
+absolutely permissible, since all exceptions get caught by the type Exception,
+since they derive from it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span>e as xxx<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch xxx&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span>e as
+System.Exception<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as xxx<o:p></o:p></p>
+
+<p class=ILprg>a = new xxx()<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILprg>class xxx <o:p></o:p></p>
+
+<p class=ILprg>Inherits System.Exception<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch xxx<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The appropriate approach to
+catch exceptions would be to check the exceptions that are thrown by a sub. The
+above program has only one sub abc, which throws only one exception of type
+xxx. However, if ten different types of exceptions are thrown, then good
+programming practice dictates that each of the ten exceptions should be caught
+using different catch statements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every catch should handle its
+exception individually. The exception that is not handled separately can be
+caught by the type Exception. Now, merely reverse the exceptions of the earlier
+program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span>e as
+System.Exception<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span>e as xxx<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch xxx&quot;)<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch Exception<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This creates a quandary, since
+the second exception of type xxx shall never get caught. This is because, the
+first exception is of type Exception, which will catch all the exceptions.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch when i &lt;= 5<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception i &lt;=
+5&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as xxx<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception xxx&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception when i &gt; 100<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception i &gt;
+100&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception when i = 10<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception i = 10&quot;)<o:p></o:p></p>
+
+<p class=ILprg>catch<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Catch Exception&quot;)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as System.Exception<o:p></o:p></p>
+
+<p class=ILprg>a = new System.Exception()<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILprg>class xxx<o:p></o:p></p>
+
+<p class=ILprg>Inherits System.Exception<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>In Catch Exception i = 10<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above example amply
+substantiates the fact that, a program can contain multiple catch statements,
+which can have a combination of both, the 'exception' and the 'when' clause.
+However, for the exception to be caught, both these conditions must be
+satisfied.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first catch ascertains
+whether the value contained in variable i is less than or equal to 5.<span
+style="mso-spacerun: yes">  </span>Since i has been initialized to 10, the
+condition fails, thereby ignoring the catch for the exception. The second catch
+catches all exceptions of type xxx. The condition of this catch statement also
+does not get satisfied, since the exception thrown is of type Exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third catch contains both,
+an Exception type, as well as a 'when' clause. The Exception to be caught is of
+type Exception, which evaluates to true. However, the when clause evaluates to
+false since i is not greater than 100. As a result, the catch does not get
+called.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last catch clause meets both
+the conditions. Therefore, the final outcome is a value of True. Thus, we can
+build as many conditions as we like in a 'catch' statement. However, for an
+exception to be caught, all the conditions must be met. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The rationale behind the concept
+of exception handling is that, it enables us to catch errors that occur during
+program execution while allowing the program to continue running. Thus, every
+program must have at least one try and catch encompassing the entire code, or
+else, the user may encounter the irksome dialog box, which could scare the wits
+out of him!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Keep in mind that even code
+written by Microsoft or other software companies could generate exceptions,
+which need to be caught. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Exceptions are deemed to be very
+useful in the context of constructors, since constructors are incapable of
+returning a value. Constructors contain considerable amount of code, and if any
+of the code fails, there is no mechanism by which the constructor can notify
+such failure. The best resolution of such a situation is to throw an exception.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Another convenience of
+exceptions is when multiple files are opened concurrently in an application.
+Each file requires almost identical error checks to be performed on it. No
+programmer of sound mind would want to write the same error check multiple
+times. Hence, he is bound to take the easy way out by refraining from including
+error checks altogether. This could result in fatal errors. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To avoid such a situation, a try-catch
+statement can be incorporated, which will ensure that all error handling code
+is placed in a single location. This simplifies the procedure of error checks
+while using multiple files, and it obviates the need to use the same code
+repetitively.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Visual Basic supports two types
+of exceptions:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Structured - which have been
+explicated earlier. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Unstructured - which are so named
+due to their heritage. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The statement 'On Error' has
+been implemented. However, we will not be explaining this concept in this book.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The one thing to be borne in
+mind is that structured and unstructured exceptions cannot be used
+simultaeously in the program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.vb</u><o:p></o:p></p>
+
+<p class=ILprg>public class zzz <o:p></o:p></p>
+
+<p class=ILprg>dim shared i as integer = 10<o:p></o:p></p>
+
+<p class=ILprg>shared sub Main() <o:p></o:p></p>
+
+<p class=ILprg>try<o:p></o:p></p>
+
+<p class=ILprg>abc<o:p></o:p></p>
+
+<p class=ILprg>catch e as System.Exception <o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(e.HelpLink &amp; &quot;.&quot; +
+e.Message &amp; &quot;.&quot; + e.Source &amp; &quot;.&quot; +
+e.StackTrace<span style="mso-spacerun: yes">  </span>&amp; &quot;.&quot; &amp;
+e.TargetSite.ToString)<o:p></o:p></p>
+
+<p class=ILprg>end try<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>shared sub abc<o:p></o:p></p>
+
+<p class=ILprg>dim a as xxx<o:p></o:p></p>
+
+<p class=ILprg>a = new xxx(&quot;vijay&quot;)<o:p></o:p></p>
+
+<p class=ILprg>Throw a<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILprg>class xxx<o:p></o:p></p>
+
+<p class=ILprg>Inherits System.Exception<o:p></o:p></p>
+
+<p class=ILprg>public sub new(i as string)<o:p></o:p></p>
+
+<p class=ILprg>mybase.new(i)<o:p></o:p></p>
+
+<p class=ILprg>end sub<o:p></o:p></p>
+
+<p class=ILprg>end class<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>.vijay.a.<span style="mso-spacerun: yes">   </span>at
+zzz.abc()<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main().Void
+abc()<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, we have
+endeavoured to print out most of the properties of the Exception class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first property of HelpLink
+displays a null value. This property is used to locate the help file that
+provides greater details about the Exception that is thrown. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next member is Message,
+which furnishes some more information about the Exception that was thrown. The
+message displayed is normally the string that is passed to the constructor. We
+have passed a value of 'vijay' to the xxx constructor. The class xxx is derived
+from the Exception class. The first line in the constructor of this class calls
+the base class and assigns it the string that has been passed to it. Due to
+this, the text 'vijay' gets displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If you place the base class call
+within comments, the Message property will display 'Exception of type xxx was
+thrown'. This is the default string assigned to the Message property. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The a.exe application is
+executed. It has been created from the Visual Basic.Net source file named a.vb.
+Due to this, the Source property has been assigned the value of 'a'. When the
+Visual Basic.Net compiler is executed using the command vbc /out:b.exe a.vb,
+the name of the exe file changes to b.exe, thereby resulting in the Source
+property now displaying 'b'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The StackTrace property is
+responsible for listing the subs that are responsible for throwing the
+exception. As mentioned earlier, this list has to be read in a specific
+sequence. The first line contains the sub that has thrown the exception. The
+subsequent subs are the ones that contain the preceding subroutine. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The TargetSite property is of
+type MethodBase, which represents a method that throws the exception. The
+ToString function displays the signature of the function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A sub does not return a value,
+and hence, is not a function. The word Void denotes no return type. A function
+which has a return type of void, actually does not return any value at all.
+This makes the sub a function with a void return type. Subs are included in
+Visual Basic.Net because they were an integral part of the old VB language.<o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/vbnet/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:03:29 GMT -->
+</html>

@@ -1,0 +1,1289 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+  <tr> 
+    <td height="24152" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC"> 
+            <div align="center"><b><font size="+1">4. Files and Streams</font></b></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Introduction</p>
+      <p>Now that we have laid the groundwork for developing servlets, let's get 
+        back to the basics. This chapter carries on from where we left off in 
+        the first two chapters. It details a few more features of the Java Programming 
+        language. </p>
+      <p>Let's understand the first program in this chapter, where we have two 
+        simple classes. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet {<br>
+        public void init()<br>
+        {<br>
+        xxx a,b;<br>
+        a = new xxx();<br>
+        System.out.println(a.i);<br>
+        b = new xxx();<br>
+        System.out.println(b.i);<br>
+        }<br>
+        }<br>
+        class xxx {<br>
+        public int i = 6;<br>
+        xxx()<br>
+        {<br>
+        i++;<br>
+        System.out.println(&quot;In Const xxx &quot; + i);<br>
+        } <br>
+        }<br>
+        C:\javaprg&gt;appletviewer a.html</p>
+      <p>In Const xxx 7<br>
+        7<br>
+        In Const xxx 7<br>
+        7</p>
+      <p>You can have as many classes as you like in a file, but only one of them 
+        can be declared public. You will get an error if you make more than one 
+        class public. Add public to the xxx class as well and it will display 
+        an error as shown below.</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:14: Public class xxx must be defined in a file called &quot;xxx.java&quot;.<br>
+        public class xxx<br>
+        ^<br>
+        1 error</p>
+      <p>In this program, class zzz is declared as public but class xxx is not. 
+        a and b are two objects that look like xxx. Let us remind you that here 
+        you do not call the constructor; it is called by new at the time the object 
+        is created. The next line is, a=new xxx(). In the constructor, i, which 
+        has the value 6, will now become 7. The next line, System.out.println 
+        prints the value of i as 7. Hence you see the output as<br>
+        In Const xxx 7 </p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In Const xxx 7<br>
+        7<br>
+        In Const xxx 7<br>
+        7</p>
+      <p></p>
+      <p>The statement b=new xxx() creates one more variable named i. This is 
+        because new creates the variables again. a.i and b.i will both have the 
+        same value. A point to be noted here is that the functions don't get created 
+        again. Functions can be shared but not variables.</p>
+      <p>The next example includes the word static which precedes the variable 
+        i. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        xxx a,b;<br>
+        a = new xxx();<br>
+        System.out.println(a.i);<br>
+        b = new xxx();<br>
+        System.out.println(b.i);<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public static int i = 6;<br>
+        xxx()<br>
+        {<br>
+        i++;<br>
+        System.out.println(&quot;In Const xxx &quot; + i);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In Const xxx 7<br>
+        7<br>
+        In Const xxx 8<br>
+        8</p>
+      <p><br>
+        When you say static and run the program, you will notice that a.i displays 
+        7 and b.i displays 8. This means that i in xxx gets created only once. 
+        In the previous example, where the word 'static' was not included, if 
+        you had created 100 instances of xxx there would have been 100 i's. Remember, 
+        the code is not replicated each time you say new. It is only the variables 
+        that get recreated. </p>
+      <p>Functions are stored in one area of memory and variables in another. 
+        Each time you say new, it checks to see if the function exists in memory. 
+        If it exists, then the function isn't added. In other words, functions 
+        are loaded into memory only once, but the variables within the class are 
+        created afresh each time. </p>
+      <p>An object is an instance of a class and when a class is instantiated, 
+        the variables are created afresh. i as a variable is now related to the 
+        object and not to the class. Whereas static variables have nothing to 
+        do with the object, they go with the class. You don't have to say new 
+        to access the static variable. This is shown in the next program.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        xxx a;<br>
+        public void init()<br>
+        {<br>
+        System.out.println(a.i);<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public static int i = 9;<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>9<br>
+        In this program, 'a' looks like xxx. We have not used new anywhere. We 
+        have a static variable i in the class xxx. System.out.println with a.i 
+        will print 9 on the screen. Here, if we make 'a' local, the compiler will 
+        return with an error saying that it has not been initialized. </p>
+      <p>public void init()<br>
+        {<br>
+        xxx a;<br>
+        System.out.println(a.i);<br>
+        }</p>
+      <p>The compiler error will be:</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:9: Variable a may not have been initialized.<br>
+        System.out.println(a.i);<br>
+        ^<br>
+        1 error</p>
+      <p>'a' was made global so it does not have to be initialized. a.i displays 
+        9, which means that there is one and only one i. We repeat, static variables 
+        can be accessed without creating the object. </p>
+      <p>Here's another example to prove the same point</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        xxx a,b;<br>
+        public void init()<br>
+        {<br>
+        System.out.println(a.i);<br>
+        b.i = 20;<br>
+        System.out.println(a.i);<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public static int i = 9;<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>9<br>
+        20</p>
+      <p>At first a.i will print 9. Then b.i is initialized to 20. b.i and a.i 
+        are the same because i is a static variable and is shared. So when you 
+        say a.i again, the value of i is 20. As you can see, you don't have to 
+        create an object to use static variables. </p>
+      <p>The next program introduces the concept of a static function that returns 
+        void.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        xxx a;<br>
+        public void init()<br>
+        {<br>
+        a.abc();<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public static void abc()<br>
+        {<br>
+        System.out.println(&quot;hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>Here a.abc calls the function abc in the class xxx. Once the function 
+        is called 'hi' is printed on the screen. <br>
+        c:\javaprg&gt;appletviewer a.html</p>
+      <p>hi</p>
+      <p>The need for static functions will be discussed a little later in this 
+        chapter.</p>
+      <p>In the following program, the static variable 'i' is declared to be private.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        xxx a,b;<br>
+        public void init()<br>
+        {<br>
+        System.out.println(a.i);<br>
+        b.i = 20;<br>
+        System.out.println(a.i);<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        private static int i=10;<br>
+        }</p>
+      <p>C:\javaprg&gt;javac zzz.java<br>
+        zzz.java:7: Variable i in class xxx not accessible from class zzz.<br>
+        System.out.println(a.i);<br>
+        ^<br>
+        zzz.java:8: Variable i in class xxx not accessible from class zzz.<br>
+        b.i = 20;<br>
+        ^<br>
+        zzz.java:9: Variable i in class xxx not accessible from class zzz.<br>
+        System.out.println(a.i);<br>
+        ^<br>
+        3 errors<br>
+        The default is private, which means that only the class members can access 
+        the variable. &quot;Outsiders are not allowed!&quot; i.e. anyone outside 
+        the class is not allowed to access it. Try to trespass and you will definitely 
+        see the watchdog, the error.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        xxx a;<br>
+        public void init()<br>
+        {<br>
+        a=new xxx();<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        private static int i=10;<br>
+        xxx()<br>
+        {<br>
+        i++;<br>
+        System.out.println(&quot;In Const &quot;+i);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In Const 11</p>
+      <p>Here xxx increments the value of i by saying i++ and display its value. 
+        Only the constructors and functions in xxx have access to i. The variables 
+        'a' and 'b', though created in zzz and in the very same file, are not 
+        allowed to access i. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc()<br>
+        {<br>
+        }<br>
+        }<br>
+        class yyy extends xxx<br>
+        {<br>
+        public void abc()<br>
+        {<br>
+        }<br>
+        }</p>
+      <p>In the above program, apart from zzz there are two more classes, xxx 
+        and yyy. Class xxx has a function called abc. Class yyy extends xxx and 
+        also has a function named abc. This will not result in any compilation 
+        errors.</p>
+      <p>The next program introduces a small change. Here the word 'final' precedes 
+        void abc(). <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public final void abc()<br>
+        {<br>
+        }<br>
+        }<br>
+        class yyy extends xxx<br>
+        {<br>
+        public void abc()<br>
+        {<br>
+        }<br>
+        }<br>
+        C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:13: The method void abc() declared in class yyy cannot override 
+        the final method of the same signature declared in class xxx. Final methods 
+        cannot be overridden.<br>
+        public void abc()<br>
+        ^<br>
+        1 error</p>
+      <p>Final methods cannot be changed or overrriden. Since abc has been made 
+        final, the class yyy cannot have another function abc. The abc in xxx 
+        is final, thus you can't change it. </p>
+      <p>It is not without purpose that such a concept has been introduced in 
+        Java. Let's understand the rationale behind it.</p>
+      <p>Let us assume that you have your own class with a final function. Others 
+        will derive from it, but if they want to override the same function, they 
+        will not be allowed to do so. They will get the error shown above. Without 
+        the use of final there is no guarantee that the function will not be overridden. 
+        Thus to prevent the overriding of a function, it must be made final. </p>
+      <p>Now, in xxx, we are creating a function named abc. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws IOException<br>
+        {<br>
+        }<br>
+        }</p>
+      <p></p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:7: Class IOException not found in throws.<br>
+        public void abc() throws IOException<br>
+        ^<br>
+        1 error</p>
+      <p>The function abc throws an exception, or to be more specific, it throws 
+        IOException. The full name is java.io.IOException, hence we need to import 
+        java.io.* </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (Exception e){System.out.println(e.getMessage());}<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws IOException<br>
+        {<br>
+        throw new IOException(&quot;hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>hi</p>
+      <p>A function takes parameters and along with it, it can also throw exceptions. 
+        This tells us more about the function. </p>
+      <p>This program has x that looks like xxx and is created on the same line 
+        by saying new xxx(). This does not give us any problems at all. The next 
+        line has x.abc(), where we call this function. abc returns a void and 
+        throws an IOException. Within the curly braces, the command 'throw' is 
+        used to actually throw the exception. Here, it throws the predefined exception, 
+        which is IOException. Before the exception is thrown, it must be created. 
+        It is created with the help of 'new'. We are calling the constructor, 
+        which takes one parameter, in this class. A couple of lines later we will 
+        show you how to create your own exceptions. </p>
+      <p>Every exception thrown must be caught, so catch catches Exception, which 
+        is the base class for all exceptions. System.out.println prints the return 
+        value of e.getMessage. e looks like Exception and the getMessage function 
+        in e displays &quot;hi&quot;. &quot;hi&quot; is displayed because this 
+        is what was given in the constructor. You can have as many catches as 
+        you want for the different exceptions you want to catch. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (IOException e){System.out.println(&quot;In IOException &quot;+e.getMessage());}<br>
+        catch (Exception e){System.out.println(&quot;In Exception &quot; + e.getMessage());}</p>
+      <p>finally<br>
+        {<br>
+        System.out.println(&quot;All over&quot;);<br>
+        }<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws IOException<br>
+        {<br>
+        throw new IOException(&quot;hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In IOException hi<br>
+        All over</p>
+      <p>Here's one more example where we catch IOException and then Exception 
+        e. Since abc throws an IOException, the IOException will be called and 
+        not the second one. Once the first catch is executed, the execution of 
+        the other catches stops. </p>
+      <p>Reversing the catch order will generate an error. </p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:13: catch not reached.<br>
+        catch (IOException e){System.out.println(&quot;In IOException &quot;+e.getMessage());}<br>
+        ^<br>
+        1 error</p>
+      <p>In the try and catch, we have introduced a new word 'finally'. The code 
+        in the curly braces, which has been given after the word 'finally' is 
+        called when everything is over. Hence you see 'All over'. 'finally' gets 
+        called irrespective of the throws. To check this, comment out the throw 
+        and you will still see 'All over'. </p>
+      <p>'finally' is used to execute code at the end of 'try' and 'catch' pair. 
+        It can be used to close a file that was opened in the program. The file 
+        will be closed irrespective of whether the exception takes place or not. 
+      </p>
+      <p>Ready for something interesting? We are now going to show you how to 
+        create your own exception.<br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (Exception e){System.out.println(e.getMessage());}<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws ppp<br>
+        {<br>
+        throw new ppp(&quot;hi&quot;);<br>
+        }<br>
+        }<br>
+        class ppp extends Exception<br>
+        {<br>
+        ppp(String p)<br>
+        {<br>
+        System.out.println(&quot;In const &quot; + p);<br>
+        }<br>
+        }<br>
+        C:\javaprg&gt;appletviewer a.html</p>
+      <p>In const hi<br>
+        null</p>
+      <p>Here we are calling our exception ppp which extends Exception, the base 
+        class of all exceptions. Then we create a constructor, which accepts one 
+        parameter 'p'. This value is displayed using System.out.println. There 
+        you go! Exception created.</p>
+      <p>When we say x.abc, at first abc in xxx gets called and it immediately 
+        throws an exception. This will call the constructor in ppp. The p in the 
+        constructor has the value 'hi', hence we see 'In const hi'. But e.getMessage 
+        does not return any value, so we see null. Since we do not have the getMessage 
+        function, the one in Exception is called and it returns a null.</p>
+      <p>In our next program, we have added the getMessage function in ppp and 
+        the statement returned is &quot;Sonal&quot;. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (Exception e){System.out.println(e.getMessage());}<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws ppp<br>
+        {<br>
+        throw new ppp(&quot;hi&quot;);<br>
+        }<br>
+        }<br>
+        class ppp extends Exception<br>
+        {<br>
+        ppp(String p)<br>
+        {<br>
+        System.out.println(&quot;In const &quot; + p);<br>
+        }<br>
+        public String getMessage()<br>
+        {<br>
+        return &quot;Sonal&quot;;<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In const hi<br>
+        Sonal</p>
+      <p>To print the value returned by e.getMessage, our getMessage will be called 
+        and thus you see 'Sonal'. </p>
+      <p>This is not the correct way to go about doing things, so we now set it 
+        in the right way.</p>
+      <p>When we create an object, our constructor is given 'hi' as a parameter. 
+        This constructor should call the original constructor and give it the 
+        same string. Then, the getMessage function in our code should receive 
+        the value returned by the original function, which will be the value to 
+        be returned back.</p>
+      <p>The next program implements these two things. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (Exception e){System.out.println(e.getMessage());}<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws ppp<br>
+        {<br>
+        throw new ppp(&quot;hi&quot;);<br>
+        }<br>
+        }<br>
+        class ppp extends Exception<br>
+        {<br>
+        ppp(String p)<br>
+        {<br>
+        super(p);<br>
+        System.out.println(&quot;In const &quot; + p);<br>
+        }<br>
+        public String getMessage()<br>
+        {<br>
+        String s;<br>
+        s = super.getMessage();<br>
+        return s;<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In const hi<br>
+        hi</p>
+      <p>In ppp, we have super(p) which must be written on the very first line. 
+        It is used to call code in the original. By original we mean the class 
+        that we have derived from. In our case, the constructor in Exception will 
+        be called with one parameter p. This constructor stores the string. In 
+        getMessage, we again have super.getMessage. super.getMessage will call 
+        getMessage from the base class, which is Exception. The getMessage returns 
+        a string, which is stored in the variable s and then we simply return 
+        s. Now the program will work in the required manner. </p>
+      <p>Our next example is slightly larger. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.io.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x = new xxx();<br>
+        x.abc();<br>
+        }<br>
+        catch (Exception e){System.out.println(e.getMessage());}<br>
+        finally<br>
+        {<br>
+        System.out.println(&quot;All over&quot;);<br>
+        }<br>
+        }<br>
+        }<br>
+        class xxx<br>
+        {<br>
+        public void abc() throws ppp<br>
+        {<br>
+        throw new ppp(&quot;hi&quot;);<br>
+        }<br>
+        }<br>
+        class ppp extends Error<br>
+        {<br>
+        ppp(String p)<br>
+        {<br>
+        super(p);<br>
+        System.out.println(&quot;In const &quot; + p);<br>
+        }<br>
+        public String getMessage()<br>
+        {<br>
+        String s;<br>
+        s = super.getMessage();<br>
+        System.out.println(&quot;In getmessage &quot;+s );<br>
+        return s;<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In const hi<br>
+        All over<br>
+        In getmessage hi<br>
+        In getmessage hi<br>
+        In getmessage hi<br>
+        ppp: hi<br>
+        at xxx.abc(zzz.java:23)<br>
+        at zzz.init(zzz.java:10)<br>
+        at sun.applet.AppletPanel.run(AppletPanel.java:333)<br>
+        at java.lang.Thread.run(Thread.java:479)</p>
+      <p>Class zzz has a variable x as an object that looks like xxx. The statement, 
+        x.abc, calls the function abc which throws an exception called ppp. The 
+        constructor gets called, hence 'In const hi' is displayed. This is the 
+        first line of output. Then 'finally' gets called because of which 'All 
+        over' is displayed. The catch code will be the next to be called and because 
+        we have System.out.println, it will constantly print e.getMessage, which 
+        contains 'hi'. Once all this is over, it will tell you that there was 
+        an error int xxx.abc at zzz.init. <br>
+        The reason why all this happens is that we are not deriving ppp from Exception 
+        but instead we are deriving from Error. The error messages are to be read 
+        in the reverse order: The error is in xxx.abc, which has been called from 
+        zzz.init and AppletPanel.run calls init and so on.</p>
+      <p>Building Applications</p>
+      <p>So far you have been building Applets, now let's build Applications. 
+      </p>
+      <p>Applets and applications are very similar in appearance, with one key 
+        difference: A Java application is an independent piece of software; an 
+        applet is not. The applet is loaded and run by a browser or viewer. In 
+        fact, the HotJava browser is just a Java application. </p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        }</p>
+      <p>Start by saying public class qqq { }. Here, no import statements are 
+        used. When you run the program by saying javac, you get a file named qqq.class 
+        and no errors. To see the application work, instead of appletviewer, run 
+        another program called java.</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>Exception in thread &quot;main&quot; java.lang.NoSuchMethodError: main</p>
+      <p>This program gives an error saying that you don't have a function called 
+        main. </p>
+      <p>At times, you may get a different error that looks like the statement 
+        given below</p>
+      <p>Exception in thread &quot;main&quot; java.lang.NoClassDefFoundError: 
+        qqq<br>
+        Then you must set the classpath to the current directory. In order to 
+        do so give the command</p>
+      <p>&gt;set CLASSPATH=.;%CLASSPATH%</p>
+      <p>So far we have been using Java as a programming language. We have written 
+        code that executes in a browser. Whenever code runs in a browser, it is 
+        called an applet. This time we want our code to run as a standalone application. 
+        To do so, we require a program called Java, also known as the Java Virtual 
+        Machine. We will go in depth into the differences between an applet and 
+        an application just a little later. As of now, it is important to understand 
+        that a Java applet can't read and write to a file on disk, whereas a Java 
+        application can do anything that any executable can do. </p>
+      <p>In the next program, we have added a function named main.</p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String a[])<br>
+        {<br>
+        System.out.println(&quot;Hi &quot;);<br>
+        }<br>
+        }</p>
+      <p>Earlier, in this chapter, we discussed static variables and static functions 
+        where we explained that we don't have to create an object to access them. 
+        main here is a function and it takes an array of strings named a. You 
+        may choose to name the array as you please. main has been declared public, 
+        otherwise, it won't be visible. main has also been made static so that 
+        it is available to Java without creating the object that looks like qqq. 
+        Static functions are always available irrespective of you using new or 
+        not. main returns void because it is not returning anything here. The 
+        order is important, you cannot mess with it. First you must say public 
+        or private, then static and then give the return value. Compile it and 
+        then say java qqq. It will display 'hi'. <br>
+        C:\javaprg&gt;java qqq</p>
+      <p>hi</p>
+      <p>Now let's print out a[0] and a[1]. </p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String a[])<br>
+        {<br>
+        System.out.println(a[0]);<br>
+        System.out.println(a[1]);<br>
+        }<br>
+        }</p>
+      <p>Run the compiler and then say java qqq. It will give an error saying, 
+        ArrayIndexOutOfBoundsException.</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>Exception in thread &quot;main&quot; java.lang.ArrayIndexOutOfBoundsException: 
+        0<br>
+        at qqq.main(qqq.java:5)</p>
+      <p>Say java qqq one at the command prompt, this will first show one on the 
+        screen and then give the same error. </p>
+      <p>C:\javaprg&gt;java qqq one</p>
+      <p>one<br>
+        Exception in thread &quot;main&quot; java.lang.ArrayIndexOutOfBoundsException: 
+        1<br>
+        at qqq.main(qqq.java:6)</p>
+      <p>To eliminate the error, say java qqq one two. </p>
+      <p>C:\javaprg&gt;java qqq one two</p>
+      <p>one<br>
+        two</p>
+      <p>Simply saying java qqq does not create an array of strings because no 
+        parameters have been given after qqq. java qqq one will create only one 
+        element in the array because only one argument is specified. Hence printing 
+        the second member will give an error because the array is limited to only 
+        one member. The last command that you tried, java qqq one two, creates 
+        two elements and since you are displaying two members you see no errors. 
+        Elements in the array are created with respect to the parameters specified. 
+        What we are trying to say here is that if you go beyond the bounds of 
+        the array, an exception will be generated.</p>
+      <p>The next program is a generic one, which displays all the command line 
+        arguments without showing any errors. </p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String a[])<br>
+        {<br>
+        int i;<br>
+        for ( i = 0 ; i &lt; a.length ; i++)<br>
+        System.out.println(a[i]);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq one<br>
+        one</p>
+      <p>C:\javaprg&gt;java qqq one two three<br>
+        one<br>
+        two<br>
+        three</p>
+      <p>In Java, an array class has a member called length. If you say java qqq 
+        one, a.length will be 1 because there is only one member. java qqq one 
+        two three will make a.length 3 as there are three members. Since the condition 
+        is i&lt; a.length, the value of i will start from 0 and keep changing 
+        till it is less than 3 i.e. 2. System.out.println will therefore print 
+        a[0] ,a[1], a[2]. This is how, depending on the parameters passed, all 
+        the members of the array can be displayed. </p>
+      <p>Now, let's try writting data to the disk. <br>
+        qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        }<br>
+        catch (Exception e){e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>In this program, fos is an object that looks like FileOutputStream. We 
+        know how much shortcuts are appreciated, so to avoid writing the full 
+        name the import statement has been used. To create a new instance FileOutputStream 
+        requires one parameter, the name of the file. Our subdirectory is c:\javaprg 
+        and the file name we want to use is z.ser. Similarly, make sure you give 
+        the complete path to the constructor. fos is now an object that looks 
+        like FileOutputStream. The name FileOutputStream itself suggests that 
+        the file will be in output mode, i.e. we can write to the file. Stop here, 
+        compile the file and run it. You will find that z.ser is created in the 
+        subdirectory but it's size is 0 bytes.</p>
+      <p>Now to write to this file.<br>
+        To do that, another object is needed that looks like ObjectOutputStream. 
+        This class takes the FileOutputStream variable as a parameter and so we 
+        pass fos to it. It is closed on the next line.</p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>Compile this program and run it. A directory listing in the javaprg subdirectory 
+        will display the file size as 4 bytes.</p>
+      <p>The bytes are shown in dec, char and hex below. </p>
+      <p>172 ac<br>
+        237 &iacute; ed<br>
+        0 0<br>
+        5 - 5</p>
+      <p>Now we will actually write to this file.You may wish to write strings 
+        and many more things to the file. oos is used to write to fos, fos stands 
+        for z.ser. In the program below, we are simply writing AB. </p>
+      <p></p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(&quot;AB&quot;);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){e.getMessage();}<br>
+        } <br>
+        }</p>
+      <p>Check the size of the file. It is a very small file and the size is 9 
+        bytes. You can also see 2, which is the length of the string and then 
+        AB. </p>
+      <p>172 ac<br>
+        237 &iacute; ed<br>
+        0 0<br>
+        5 - 5<br>
+        116 t 74<br>
+        0 0<br>
+        2 2<br>
+        65 A 41<br>
+        66 B 42</p>
+      <p>In the program below, we are writing two strings to the file. One string 
+        is AB and the other is CDE. The output is shown below. </p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(&quot;AB&quot;);<br>
+        oos.writeObject(&quot;CDE&quot;);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>You will notice that the string always starts with 116, followed by 0. 
+        After that, we have the length of the string and then the string itself. 
+      </p>
+      <p>172 ac<br>
+        237 &iacute; ed<br>
+        0 0<br>
+        5 - 5<br>
+        116 t 74<br>
+        0 0<br>
+        2 2<br>
+        65 A 41<br>
+        66 B 42<br>
+        116 t 74<br>
+        0 0<br>
+        3 3<br>
+        67 C 43<br>
+        68 D 44<br>
+        69 E 45</p>
+      <p>You can't be satisfied with just this, can you? So let's write an entire 
+        object to a file in one stroke. </p>
+      <p><br>
+        qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        xxx x;<br>
+        x = new xxx();<br>
+        try<br>
+        {<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(x);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){e.getMessage();}<br>
+        }<br>
+        }<br>
+        class xxx implements Serializable<br>
+        {<br>
+        public int i=6;<br>
+        String s = &quot;hi&quot;;<br>
+        }</p>
+      <p>In the above program, x is an object that looks like xxx. It has two 
+        members - int i and String s. writeObject with x will write the entire 
+        object to the file. </p>
+      <p>Class xxx implements Serializable. This is an interface but it does not 
+        have any functions. So,it is assumed that it only has variables. ObjectOutputStream 
+        is used to take the entire object and write it to disk in one stroke. 
+      </p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        xxx x;<br>
+        FileInputStream fos = new FileInputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectInputStream oos = new ObjectInputStream(fos);<br>
+        x = ( xxx ) oos.readObject();<br>
+        System.out.println(x.i);<br>
+        System.out.println(x.s);<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }<br>
+        class xxx implements Serializable<br>
+        {<br>
+        public int i=60;<br>
+        String s = &quot;Byes&quot;;<br>
+        }</p>
+      <p><br>
+        Instead of FileOutputStream and ObjectOutputStream, the above program 
+        uses FileInputStream and ObjectInputStream. In the previous example, we 
+        had writeObject and here we have readObject. We have to cast it to xxx. 
+        Now when you print x.i and x.n, the value will be that of the earlier 
+        program, it doesn't take the new values. </p>
+      <p>C:\javaprg&gt;java qqq<br>
+        6<br>
+        hi</p>
+      <p>Let's see how arrays can be saved to the disk. </p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        String a[];<br>
+        a = new String[2];<br>
+        a[0] = &quot;hi&quot;;<br>
+        a[1] = &quot;Nono&quot;;<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(a);<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>The concept of arrays has already been explained. Here 'a', an array 
+        of strings, is created. a[0] is initialized to 'hi' and a[1] to 'Nono'. 
+        Using writeObject, the entire array is written to disk. 'a' has the length 
+        of the array so it knows how much to write. </p>
+      <p>Thinking of taking a break? Great idea! But please do so after trying 
+        out the next program. The next program will read from the same file into 
+        an array. So you need to try this right now.</p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        String a[];<br>
+        FileInputStream fos = new FileInputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectInputStream oos = new ObjectInputStream(fos);<br>
+        a = (String [] ) oos.readObject();<br>
+        System.out.println(a[0]);<br>
+        System.out.println(a[1]);<br>
+        System.out.println(a.length);<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>hi<br>
+        Nono<br>
+        2</p>
+      <p>First run the earlier program where you wrote the array to the disk and 
+        then the current one. In this program, readobject will read from the file. 
+        Whatever is read in is assigned to a. Since we have cast the output to 
+        an array of strings, 'a' now contains the data as Strings. Therefore, 
+        it displays 'hi' and 'Nono' and the length is displayed as 2. </p>
+      <p>Multi-Dimensional Arrays</p>
+      <p>Let's understand multidimensional arrays. In Java, there is no such thing 
+        as a multidimensional array. Arrays are limited to one dimension. But 
+        what if you need more complex data structures such as two or three dimensions? 
+        For this you can fake multidimensional structures by building arrays within 
+        arrays.</p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        String a[][] = {{ &quot;a1&quot;,&quot;a2&quot;,&quot;a3&quot;} , { &quot;b1&quot;,&quot;b2&quot;,&quot;b3&quot;} 
+        };<br>
+        int i;<br>
+        for ( i = 0 ; i&lt;a.length ; i++)<br>
+        {<br>
+        System.out.println(a[i][0]);<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>a1<br>
+        b1</p>
+      <p>In order to create multidimensional arrays use two square brackets. In 
+        this program, the multidimensional array is of strings, so it is declared 
+        as string a [ ] [ ]. At the same time, the array is also being initialized 
+        using curly braces. Since there are two sets of curly brackets, we can 
+        say that we have an array a[2],[3]. Each one of them is an array and each 
+        one has 3 members.</p>
+      <p>The for loop starts by initializing i to 0. a.length will give you 2 
+        because the array only has two members, each one of them in turn is an 
+        array, so their length should be three. When we say println a[i][0], it 
+        is a[0][0]. This will print the first member of the first array, that 
+        is, a1. When i becomes 1 we are printing a[1][0] and this will print b1. 
+      </p>
+      <p>The next program enables you to print all the members in the array. </p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        String a[][] = {{ &quot;a1&quot;,&quot;a2&quot;,&quot;a3&quot;} , { &quot;b1&quot;,&quot;b2&quot;,&quot;b3&quot;} 
+        };<br>
+        int i,j;<br>
+        for ( i = 0 ; i&lt;a.length ; i++)<br>
+        {<br>
+        System.out.println(a[i][0]);<br>
+        for ( j = 0 ; j &lt; a[i].length ; j++)<br>
+        {<br>
+        System.out.println(a[i][j]);<br>
+        }<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>a1<br>
+        a1<br>
+        a2<br>
+        a3<br>
+        b1<br>
+        b1<br>
+        b2<br>
+        b3</p>
+      <p>The objective here is to print all the members in the array. i in the 
+        for loop is initialized to 0; the condition is i&lt;a.length. a.length 
+        will give 2. So the println will print the value in a[0][0], which is 
+        a1. Then we have another for loop within the earlier for. j in the loop 
+        gets initialized to 0; the condition is j &lt; a[i].length. The length 
+        here will be 3 because the first array has 3 members. Remember, a[0] and 
+        a[1] are both arrays. So j will be 0,1,2 and thus will print all members 
+        of the array.</p>
+      <p>The same is applicable to ints also. The following program demonstrates 
+        this.</p>
+      <p>qqq.java<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        int [][] m;<br>
+        m = new int[3][];<br>
+        int i;int k = 1;<br>
+        for ( i = 0 ; i &lt; m.length ; i++)<br>
+        {<br>
+        m[i] = new int[2];<br>
+        m[i][0] = k++;<br>
+        m[i][1] = k++;<br>
+        }<br>
+        for ( i = 0; i &lt; m.length ; i++)<br>
+        {<br>
+        System.out.println(m[i][0]);<br>
+        System.out.println(m[i][1]);<br>
+        System.out.println(&quot;-&quot;);<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>1<br>
+        2<br>
+        -<br>
+        3<br>
+        4<br>
+        -<br>
+        5<br>
+        6<br>
+        -</p>
+      <p>Here, the variable has been created in a slightly different manner. You 
+        can create it either by saying int m[ ] [ ] or int [ ][ ]m. The square 
+        brackets can be put before or after the variable, it's just a question 
+        of syntax. They both mean the same thing. m=new int[3][ ] will create 
+        3 arrays but how many members each of them will hold is not known. It 
+        has been left blank for the moment. Then we have a for statement where 
+        m.length will be 3 because there are 3 arrays, so the for will go on three 
+        times. </p>
+      <p>In the for, we say m[i] = new int[2]. This is how we initialize these 
+        arrays. Since i is 0, the 0th member of the array will hold two values. 
+        m[i][0] is actually m[0][0], which we are initializing to the value of 
+        k. k as of now is 0 which is the value given to m[0][0]. k++ will increment 
+        the value by 1, so k becomes 1. This is given to m[0][1]. When the bracket 
+        is reached, i will be incremented by 1, so it becomes 1. m[1] is now an 
+        array which will have 2 elements. And m[i][0] is now m[1][0] which refers 
+        to the second array and the 0 th element in the array. Since k has not 
+        been initialized again, k will retain its original value and will keep 
+        incrementing.</p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        String a[][] = {<br>
+        { &quot;a1&quot;,&quot;a2&quot;,&quot;a3&quot; },{ &quot;b1&quot;,&quot;b2&quot;,&quot;b3&quot; 
+        }};<br>
+        //a = new String[3][2];<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(a);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        } <br>
+        }</p>
+      <p>In this program, the multidimensional array has 2 arrays each with 3 
+        members. It could have been created as shown in the comment and we could 
+        have initialized every member later. It really doesn't make any difference. 
+        With writeObject, the entire object will be written to disk. </p>
+      <p><br>
+        The next program reads from the file and prints it in the form of an array. 
+        <br>
+        qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        String a[][];int i,j;<br>
+        FileInputStream fos = new FileInputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectInputStream oos = new ObjectInputStream(fos);<br>
+        a = (String [][] ) oos.readObject();<br>
+        System.out.println(a.length);<br>
+        for ( i = 0 ; i &lt; a.length ; i++)<br>
+        {<br>
+        for ( j = 0 ; j &lt; a[i].length ; j++)<br>
+        System.out.println(a[i][j]);<br>
+        }<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>2<br>
+        a1<br>
+        a2<br>
+        a3<br>
+        b1<br>
+        b2<br>
+        b3</p>
+      <p>Here, we want to read all the strings, so we read the object into a. 
+        The for statement initializes i to 0 and it keeps incrementing i till 
+        it is less than the length, which is 2. This for will go on twice, the 
+        second for is the one that prints a1, a2, a3 in the first round and b1, 
+        b2, b3 in the second round. <br>
+        See how easy it is to write and read an array of strings. Let's see if 
+        we can work with chars as comfortably.</p>
+      <p>The difference between an array of chars and an array of strings is that 
+        a char holds a single entity whereas a string holds multiple entities. 
+      </p>
+      <p>The following program has a multidimensional array with 2 arrays each 
+        3 members large. The values given are 'a' 'b' 'c' 'd' 'e' 'f'. </p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        char a[][] = {<br>
+        { 'a','b','c' },{ 'd','e','f' }};<br>
+        FileOutputStream fos = new FileOutputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectOutputStream oos = new ObjectOutputStream(fos);<br>
+        oos.writeObject(a);<br>
+        oos.close();<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>As previously, we are writing the object in one stroke to the file and 
+        in a similar way we are reading it from the file.</p>
+      <p>qqq.java<br>
+        import java.io.*;<br>
+        public class qqq<br>
+        {<br>
+        public static void main(String argv[])<br>
+        {<br>
+        try<br>
+        {<br>
+        char a[][];<br>
+        FileInputStream fos = new FileInputStream(&quot;c:\\javaprg\\z.ser&quot;);<br>
+        ObjectInputStream oos = new ObjectInputStream(fos);<br>
+        a = (char [][] ) oos.readObject();<br>
+        System.out.println(a[0]);<br>
+        System.out.println(a[0][0]);<br>
+        System.out.println(a[1]);<br>
+        }<br>
+        catch (Exception e){System.out.println(&quot;bye&quot;);e.getMessage();}<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;java qqq</p>
+      <p>abc<br>
+        a<br>
+        def</p>
+      <p>a[0] within the println prints all the characters in one stroke. To print 
+        individual characters we have to be specific, like a[0][0] is 'a' and 
+        so on. a[0] will print the entire string 'abc' and a[1] will print out 
+        the entire string 'def'. </p>
+      <p>Thus the crux is that using ObjectInputStream and ObjectOutputStream 
+        you can read and write arrays to the disk. </p>
+      <p>Conclusion</p>
+      <p>In this chapter, you learnt about static variables and static functions 
+        and gained some insight into the concept of constructors.We also showed 
+        you how you can create your own exceptions. </p>
+      <p>Apart from the applets that you have been creating, you are now able 
+        to create applications. Using ObjectInputStream and ObjectOutputStream 
+        you can read and write arrays to the disk. After readig this hapter, we 
+        hope you are now well versed with the concept of multidimensional arrays 
+        in connection with objects and classes.<br>
+      </p>
+      <p><br>
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

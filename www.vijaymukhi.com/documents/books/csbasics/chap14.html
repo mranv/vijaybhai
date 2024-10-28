@@ -1,0 +1,1897 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap14.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:40 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap14_files/filelist.html">
+<link rel=Edit-Time-Data href="chap14_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Attributes, The Reflection API And Conditionals - C# The Basics - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-09-27T11:08:00Z</o:Created>
+  <o:LastSaved>2001-09-27T11:10:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>2940</o:Words>
+  <o:Characters>16761</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>139</o:Lines>
+  <o:Paragraphs>33</o:Paragraphs>
+  <o:CharactersWithSpaces>20583</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Impact;
+	panose-1:2 11 8 6 3 9 2 5 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:Impact;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:36.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:48.0pt'>14</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>Attributes, The Reflection API And Conditionals</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Attributes <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,2): error CS0246: The type or namespace name 'vijay'
+could not be found (are you missing a using directive or an assembly
+reference?)<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Anything in a square bracket is called an attribute. We
+tried to create an attribute called vijay, which C#, for some reason, does not
+seem to recognize.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>All that we have done is created a class vijay that has been
+derived from the class System.Attribute and the error simply disappears. Thus
+an attribute is simply a class that derives from System.Attribute. To
+understand attributes lets take an example with structures.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.i = 65536+512+3;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.i + &quot; &quot; + a.j + &quot;
+&quot; + a.k);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>struct yyy {<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public short j;<o:p></o:p></p>
+
+<p class=programs>public byte k;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>66051 0 0<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A simple revision once again. We have created a structure a,
+that looks like yyy and initialized only one member i. Hence we see the
+warnings. The other members j and k get a default value of zero.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>unsafe public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(sizeof(byte) + &quot; &quot; +
+sizeof(short) + &quot; &quot; + sizeof(int) + &quot; &quot; + sizeof(long));<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>&gt;csc a.cs<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(4,27): error CS0227: Unsafe code may only appear if
+compiling with /unsafe<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error here says that you have to use the /unsafe option
+while compiling any unsafe code.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>&gt;csc a.cs /unsafe<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>1 2 4 8<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We shall explain the modifier unsafe in the next chapter.
+Sizeof tells us how much memory C# allocates for a data type. A byte is
+allocated one memory location, short 2, int 4 and a long 8.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.i = 65536+512+3;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.i + “ “ + a.j + “ “ + a.k);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[StructLayout(LayoutKind.Explicit)]<o:p></o:p></p>
+
+<p class=programs>struct yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[FieldOffset(0)] public int i;<o:p></o:p></p>
+
+<p class=programs>[FieldOffset(0)] public short j;<o:p></o:p></p>
+
+<p class=programs>[FieldOffset(0)] public byte k;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>66051 515 3<o:p></o:p></p>
+
+<p class=cbasetext><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=cbasetext><span style='color:black'>We are using an attribute
+StructLayout that belongs to the namespace System.Runtime.InteropServices. In
+the earlier program, we had used an attribute called vijay. Thus, StructLayout
+is a class derived from Attribute. We are passing a parameter LayoutKind.Explicit
+to it. The output now differs dramatically.</span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Every variable is stored in memory. FieldOffset indicates
+the starting position of the variable within the memory location. Offset of 0
+will position i, j, and k, all three variables at the same memory address of a.
+Explicit requires FieldOffset to be mentioned as we are explicitly laying the
+order for the variables held in the strucuture.LayoutKind.Sequential and
+LayoutKind.Auto gives different memory locations to each of the variable. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We will explain the reasons a little later in the coming
+chapter ‘Unsafe Code’. We have seen how important attributes are so lets delve
+deeper into them.<o:p></o:p></p>
+
+<p class=programs><u>a.cs </u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijayAttribute : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijayAttribute]<o:p></o:p></p>
+
+<p class=programs>class yyy1<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We are allowed a little leeway in the name of the attribute.
+By convention, the attribute class should end with the word Attribute and when
+we use the attribute, the name attribute is optional.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;)]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(10,2): error CS1501: No overload for method 'vijay'
+takes '1' arguments<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We had used the attribute StructLayout earlier where we
+passed a parameter. When we do the same thing with our attribute vijay, we get
+the above error. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;)]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We forgot to add a constructor that accepts a string as a
+parameter. If we had passed a number to our attribute vijay, we would have to
+create a constructor that accepts an int. Thus if we pass 2 parameters to
+vijay, we need the appropriate constructor.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;,10,mukhi = 200)]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(13,16): error CS0103: The name 'mukhi' does not exist
+in the class or namespace 'vijay'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>What we tried to do is, take a word called mukhi and
+initialize it to 200. C# comes back and tells us that it does not know what
+mukhi is.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;,10,mukhi = 200)]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>mukhi, now, is called a named parameter. It can also be
+termed as a property.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>public string sonal<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>get <o:p></o:p></p>
+
+<p class=programs>{ <o:p></o:p></p>
+
+<p class=programs>return &quot;ss&quot;; <o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>set <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs><span style="mso-spacerun: yes"> </span>; <o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;,10, mukhi = 200, sonal =
+&quot;bye&quot;)]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A named parameter is a non-static field or a non-readonly
+property. A positional parameter is what we pass on to a constructor. We have 2
+positional parameters as our constructor has two parameters and mukhi and sonal
+are our named parameters. The named parameters come after the positional ones.
+The positional parameter's order is important, but the named parameters can be
+in any order. If we don't follow this rule we will get an error as follows. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(19,22): error CS1016: Named attribute argument expected<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When we place the attribute before a function, the error
+disappears.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs </u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[AttributeUsage(AttributeTargets.Class)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>public string sonal<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>get { return &quot;ss&quot;; }<o:p></o:p></p>
+
+<p class=programs>set { ; }<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;,10, sonal = &quot;bye&quot;,mukhi = 200
+)]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(24,2): error CS0592: Attribute 'vijay' is not valid on
+this declaration type. It is valid on 'class' declarations only.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>AttributeUsage is one more attribute class derived from
+Attribute. It gives us the option to decide where the user can use the Attribute.
+The parameter in this case is class and hence we can use it only in front of a
+class and not in front of a method. The default is anywhere.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>The Reflection API<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Reflection or Introspection is when you look within to find
+out about your true self. In the same way we need a method by means of which,
+our program can find out all about a class. We need to know how many methods,
+properties etc while our program is executing or running. This distinction is
+important and we could always read the documentation if we wanted to know more
+about the functionality of a class. But, C# gives us a large number of
+functions that tell us the innards of a class. These functions put together
+have to be used in a certain way. The functions have to be called in a certain order
+and the parameters to them have to conform to certain data types. This concept
+is called an API or a Application Program Interface. In short, an API is how a
+programmer uses functions to get a desired result.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m;<o:p></o:p></p>
+
+<p class=programs>m = typeof(int);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name + &quot; &quot; +
+m.FullName);<o:p></o:p></p>
+
+<p class=programs>m = typeof(System.Int32);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name + &quot; &quot; +
+m.FullName);<o:p></o:p></p>
+
+<p class=programs>m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name + &quot; &quot; +
+m.FullName);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Int32 System.Int32<o:p></o:p></p>
+
+<p class=DOSPROMPT>Int32 System.Int32<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy yyy<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Typeof is a keyword. It needs a class name as a parameter.
+In the first case, we are specifying a class called int. typeof returns an
+object that looks like Type. This class has two members Name, which gives the
+name of the class and FullName which is the name preceded with the name of the
+Namespace. When we use int as the name of the class, the member Name does not
+display int but Int32; we mentioned earlier int is an alias for a structure
+Int32 in the System namespace. This is what FullName tells us. We thus have
+visible proof that int is an alias for a structure. yyy is class belonging to
+no namespace and hence the Name and FullName members are similar.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>MemberInfo [] n;<o:p></o:p></p>
+
+<p class=programs>n = m.GetMembers();<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(n.Length);<o:p></o:p></p>
+
+<p class=programs>foreach ( MemberInfo a in n)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(a.Name);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy {<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>private int pqr( int i ) { return 0;}<o:p></o:p></p>
+
+<p class=programs>protected string xyz (string g , int p) {return
+&quot;&quot;;}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>6<o:p></o:p></p>
+
+<p class=DOSPROMPT>GetHashCode<o:p></o:p></p>
+
+<p class=DOSPROMPT>Equals<o:p></o:p></p>
+
+<p class=DOSPROMPT>ToString<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>GetType<o:p></o:p></p>
+
+<p class=DOSPROMPT>.ctor<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We are now displaying the members of a class yyy. The class
+Type has a function called GetMembers that returns an array of type MemberInfo.
+Every array has a field called Length that returns the size of the array. In
+our specific case it is 6. We then use a foreach to run through each member of
+the MemberInfo array and are displaying the name of each function using the
+field Name from the class MemberInfo. <o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>MemberInfo [] n;<o:p></o:p></p>
+
+<p class=programs>n = m.GetMembers();<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(n.Length);<o:p></o:p></p>
+
+<p class=programs>foreach ( MemberInfo a in n)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine((MemberInfo)a + &quot; &quot; +
+a.DeclaringType);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy {<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>public int pqr( int i ) { return 0;}<o:p></o:p></p>
+
+<p class=programs>public string xyz (string g , int p) {return &quot;&quot;;}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>9<o:p></o:p></p>
+
+<p class=DOSPROMPT>Int32 i yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>Int32 GetHashCode() System.Object<o:p></o:p></p>
+
+<p class=DOSPROMPT>Boolean Equals(System.Object) System.Object<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.String ToString() System.Object<o:p></o:p></p>
+
+<p class=DOSPROMPT>Void abc() yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>Int32 pqr(Int32) yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.String xyz(System.String, Int32) yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>System.Type GetType() System.Object<o:p></o:p></p>
+
+<p class=DOSPROMPT>Void .ctor() yyy<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The first concept you need to be clear with is that we can
+inspect only details of public members and protected or private like pqr and
+xyz. Also variables are part of the members of a class. The MemberInfo object
+has a ToString function that displays the entire function in all its glory
+including parameters and their data types. The names of the parameter variables
+are however not being displayed. The DeclaringType member returns the class
+name that the member belongs to. Thus we can differentiate which class created
+the function.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let us now display the attributes used on a class.<o:p></o:p></p>
+
+<p class=programs><span style='font-size:11.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m;<o:p></o:p></p>
+
+<p class=programs>m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name);<o:p></o:p></p>
+
+<p class=programs>foreach(object a in m.GetCustomAttributes (true))<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[AttributeUsage(AttributeTargets.All)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string s1,s2;int i1;<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>return s1+&quot; &quot; + s2+&quot; &quot; + i1 + &quot;
+&quot; + mukhi;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>s1=s;i1=i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public string sonal<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>get { return s2; }<o:p></o:p></p>
+
+<p class=programs>set { s2 = value; }<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi1&quot;,10, sonal = &quot;bye1&quot;,mukhi =
+200 )]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi2&quot;,100, sonal = &quot;bye2&quot;,mukhi =
+2000 )]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi3&quot;,1000, sonal = &quot;bye3&quot;,mukhi =
+2 )]<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi1 bye1 10 200<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>GetCustomAttributes takes a boolean as parameter and returns
+an array of objects. The ToString function of the attribute class gets called
+which will decide what string the attribute stands for.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m;<o:p></o:p></p>
+
+<p class=programs>m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name);<o:p></o:p></p>
+
+<p class=programs>foreach(MethodInfo a in m.GetMethods())<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>object [] b = a.GetCustomAttributes(true);<o:p></o:p></p>
+
+<p class=programs>foreach(Attribute c in b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(c);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><span style="mso-spacerun:
+yes"> </span>[AttributeUsage(AttributeTargets.All)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string s1,s2;int i1;<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>return s1+&quot; &quot; + s2+&quot; &quot; + i1 + &quot;
+&quot; + mukhi;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>s1=s;i1=i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public string sonal<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>get { return s2; }<o:p></o:p></p>
+
+<p class=programs>set { s2 = value; }<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi1&quot;,10, sonal = &quot;bye1&quot;,mukhi =
+200 )]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi2&quot;,100, sonal = &quot;bye2&quot;,mukhi =
+2000 )]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi3&quot;,1000, sonal = &quot;bye3&quot;,mukhi =
+2 )]<o:p></o:p></p>
+
+<p class=programs>public void pqr() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi2 bye2 100 2000<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi3 bye3 1000 2<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The object m looks like Type. As explained earlier, we are
+calling a function called GetMethods which returns an array of MethodInfo's. a
+loops through each one. We have two methods and the foreach gets executed
+twice. Once for abc and then for pqr. The GetCustomAttributes also exists in a
+MethodInfo class that returns an array of objects representing our attributes.
+We iterate through each, displaying what the ToString function returns. As we
+have only one attribute per function, the second for each gets<span
+style="mso-spacerun: yes">  </span>executed only once.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m;<o:p></o:p></p>
+
+<p class=programs>m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name);<o:p></o:p></p>
+
+<p class=programs>foreach(MethodInfo a in m.GetMethods())<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>object [] b = a.GetCustomAttributes(true);<o:p></o:p></p>
+
+<p class=programs>foreach(Attribute c in b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>if ( c is vijay ) <o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(c);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[AttributeUsage(AttributeTargets.All)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>string s1,s2;int i1;<o:p></o:p></p>
+
+<p class=programs>public int mukhi;<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>return s1+&quot; &quot; + s2+&quot; &quot; + i1 + &quot;
+&quot; + mukhi;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public vijay(string s ,int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>s1=s;i1=i;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public string sonal<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>get { return s2; }<o:p></o:p></p>
+
+<p class=programs>set { s2 = value; }<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi1&quot;,10, sonal = &quot;bye1&quot;,mukhi =
+200 )]<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi2&quot;,100, sonal = &quot;bye2&quot;,mukhi =
+2000 )]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi3&quot;,1000, sonal = &quot;bye3&quot;,mukhi =
+2 )]<o:p></o:p></p>
+
+<p class=programs>public void pqr() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>There is no change at all in the output. A function can be
+decorated with as many attributes as you like. We would like to filter out
+certain attributes.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>using System.Reflection;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Type m;<o:p></o:p></p>
+
+<p class=programs>m = typeof(yyy);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m.Name);<o:p></o:p></p>
+
+<p class=programs>foreach(MethodInfo a in m.GetMethods())<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>object [] b = a.GetCustomAttributes(true);<o:p></o:p></p>
+
+<p class=programs>foreach(Attribute c in b)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>if ( c is vijay ) <o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(c);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>return &quot;vijay&quot;;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vijay1 : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override string ToString()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>return &quot;vijay&quot;;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay()]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>[vijay()]<o:p></o:p></p>
+
+<p class=programs>[vijay1()]<o:p></o:p></p>
+
+<p class=programs>public void pqr() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>vijay<o:p></o:p></p>
+
+<p class=DOSPROMPT>vijay<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We have two attribute classes vijay and vijay1. The function
+pqr has been decorated with 2 attributes whereas abc with only one. However we
+do not see vijay1 in the output as the 'c is vijay' makes the if statement true
+only for the attribute vijay and not vijay1. For the function pqr
+GetCustomAttributes returns an array of size two, but the if statement is true
+only for one of them, the one with the attribute name vijay. This is because of
+the 'is'. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>if ( a is yyy)<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;a yyy&quot;);<o:p></o:p></p>
+
+<p class=programs>xxx b = new yyy();<o:p></o:p></p>
+
+<p class=programs>if ( b is xxx)<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;b xxx&quot;);<o:p></o:p></p>
+
+<p class=programs>if ( b is yyy)<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;b yyy&quot;);<o:p></o:p></p>
+
+<p class=programs>int d = 10;<o:p></o:p></p>
+
+<p class=programs>if ( d is yyy)<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;b yyy&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>a yyy<o:p></o:p></p>
+
+<p class=DOSPROMPT>b xxx<o:p></o:p></p>
+
+<p class=DOSPROMPT>b yyy<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We would like to know the data type of an object at runtime.
+C# offers you a keyword 'is' that lets you check the data type of an object. a
+looks like yyy and 'is' results in true. B looks like xxx but is initialized to
+a new yyy. Thus it doubles up for a yyy and a xxx resulting in the next two
+is's returning true. D is an int and not a yyy, so the last 'is' is false.<o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Attributes Revisited <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Positional parameters are a must whereas names parameters
+are optional. Attribute parameters can be a bool, byte, char, short, int, long,
+float and double. These are the simple types that C# supports. Other data types
+are string, enums, objects arrays etc.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Attribute usage has a position parameter which specifies the
+elements where the attribute can be used. The default is All. It also has one
+named parameter called AllowMultiple. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[AttributeUsage(AttributeTargets.All)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;)][vijay(&quot;hi1&quot;)]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,15): error CS0579: Duplicate 'vijay' attribute<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>By default we cannot use the same attribute twice on any
+entity.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Runtime.InteropServices;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>[AttributeUsage(AttributeTargets.All,AllowMultiple=true)]<o:p></o:p></p>
+
+<p class=programs>class vijay : System.Attribute<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public vijay(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi&quot;)][vijay(&quot;hi1&quot;)]<o:p></o:p></p>
+
+<p class=programs>[vijay(&quot;hi2&quot;) , vijay(&quot;hi3&quot;)]<o:p></o:p></p>
+
+<p class=programs>public void abc() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We get no error as by default the AllowMultiple named
+parameter has a value of false. If we set its value to true, we are allowed to
+use multiple attributes on any entity. The above two forms are similar and
+either one can be used. Attribute permits us to set declarative information for
+various program entities for use by someone else at run time.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Conditionals <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[Conditional(&quot;vijay&quot;)]<o:p></o:p></p>
+
+<p class=programs>public void abc() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When we run the above program we get no output at all. In
+other words the function abc does not get called at all. This is inspite of
+writing a.abc().<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>#define vijay<o:p></o:p></p>
+
+<p class=programs>using System.Diagnostics;<o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[Conditional(&quot;vijay&quot;)]<o:p></o:p></p>
+
+<p class=programs>public void abc() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Any line beginning with a # is read by the C# pre-processor,
+a program that starts before the C# compiler starts. It has words like #define
+which creates a variable or word called vijay. In a programming language, a
+variable has to have a value, but in the preprocessor scheme of things, it
+may/maynot have a value. However if we do not give it a value, like in this
+case, the variable is only set to have been defined or created. Anything in []
+brackets is an Attribute class. Earlier we had not created a variable vijay and
+hence the entire code of abc was left out of the executable file. Not only
+that, but all calls to function abc were eliminated from our code. All of this
+by defining or not defining a variable vijay. This is what we passed as the
+attribute to Conditional. We can create functions that are omitted during
+compilation depending upon a preprocessing symbol.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When we write code, we add a lot of code for debugging
+purposes. This code is to help the programmer debug code. After a function
+works, it is error free, we do not require any of this debugging code. One way
+to eliminate this debugging code is by making the functions conditional. The
+resulting code is called a 'Retail build' and the debugging version, obviously
+a 'Debug build'. A Retail build is much smaller in size and obviously much
+faster. The #define has to be at the start of code.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Another way of achieving the same result is by eliminating
+the #define from the code and creating a preprocessor symbol as an option to
+the compiler.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>&gt;csc a.cs /d:vijay<o:p></o:p></p>
+
+<p class=cbasetext>The compiler option is /d and the colon is part of the
+syntax. Following the colon is the name of the preprocessor symbol. In this
+case, it is vijay. We’ve discussed preprocessors in one of the earlier
+chapters.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>using System;<o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>[Obsolete]<o:p></o:p></p>
+
+<p class=programs>public void abc() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,1): warning CS0612: 'yyy.abc()' is obsolete<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Many a times we create functions in a class which we would
+not want the user to use, as these functions were useful years ago, but are now
+obsolete. The only way to warn the user that some time in the future we will no
+longer support these functions is by marking them with the attribute Obsolete.
+We see the warning as displayed above but the program runs as normal.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap14.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:42 GMT -->
+</html>

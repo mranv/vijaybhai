@@ -1,0 +1,1215 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/sdthook.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:11 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="sdthook_files/filelist.html">
+<title>SDT Hooking</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>246</o:TotalTime>
+  <o:Created>2006-06-26T12:00:00Z</o:Created>
+  <o:LastSaved>2006-06-26T12:00:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>3867</o:Words>
+  <o:Characters>22044</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>183</o:Lines>
+  <o:Paragraphs>44</o:Paragraphs>
+  <o:CharactersWithSpaces>27071</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>SDT hooking</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Understanding exports</p>
+
+<p class=MsoNormal>f.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>void abc()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>void pqr()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>void xyz()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>f.def</p>
+
+<p class=MsoNormal>LIBRARY f.dll</p>
+
+<p class=MsoNormal>EXPORTS</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>abc @2</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>pqr @5</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>xyz @12</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Cl /c f.c</p>
+
+<p class=MsoNormal>link /def:f.def /dll f.obj</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We have created a dll f.dll that three exported methods abc,
+pqr and xyz with ordinal numbers of 2 5 and 10.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>void main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>int i;</p>
+
+<p class=MsoNormal>HANDLE hfile,hfile1;</p>
+
+<p class=MsoNormal>unsigned char *pmappedfile;</p>
+
+<p class=MsoNormal>hfile = CreateFile(&quot;f.dll&quot;,GENERIC_WRITE |
+GENERIC_READ,0,0,OPEN_EXISTING,0,0);</p>
+
+<p class=MsoNormal>hfile1 = CreateFileMapping (hfile, 0, PAGE_READWRITE, 0, 0,
+0);</p>
+
+<p class=MsoNormal>pmappedfile = (unsigned char
+*)MapViewOfFile(hfile1,FILE_MAP_ALL_ACCESS,0,0,0);</p>
+
+<p class=MsoNormal>printf(&quot;pmappedfile=%p\n&quot;,pmappedfile);</p>
+
+<p class=MsoNormal>IMAGE_DOS_HEADER *pimagedosheader<span style="mso-spacerun:
+yes">  </span>= (IMAGE_DOS_HEADER *)pmappedfile;</p>
+
+<p class=MsoNormal>IMAGE_FILE_HEADER *pimagefileheader = (IMAGE_FILE_HEADER
+*)(pmappedfile + pimagedosheader-&gt;e_lfanew +4);</p>
+
+<p class=MsoNormal>IMAGE_OPTIONAL_HEADER *pimageoptionalheader =
+(IMAGE_OPTIONAL_HEADER *)((unsigned char
+*)pimagefileheader+sizeof(IMAGE_FILE_HEADER));</p>
+
+<p class=MsoNormal>DWORD beginexportsrva,startoffile;</p>
+
+<p class=MsoNormal>beginexportsrva =
+pimageoptionalheader-&gt;DataDirectory[0].VirtualAddress;</p>
+
+<p class=MsoNormal>printf(&quot;beginexportsrva=%p Size=%x
+\n&quot;,beginexportsrva,pimageoptionalheader-&gt;DataDirectory[0].Size);</p>
+
+<p class=MsoNormal>PIMAGE_EXPORT_DIRECTORY pexportdirectory;</p>
+
+<p class=MsoNormal>pexportdirectory = (PIMAGE_EXPORT_DIRECTORY)(pmappedfile +
+beginexportsrva);</p>
+
+<p class=MsoNormal>printf(&quot;pexportdirectory=%p\n&quot;,pexportdirectory);</p>
+
+<p class=MsoNormal>char *nameoffile;</p>
+
+<p class=MsoNormal>nameoffile<span style="mso-spacerun: yes">  </span>=
+(PSTR)(pexportdirectory-&gt;Name + pmappedfile);</p>
+
+<p class=MsoNormal>printf(&quot;FileName:%s %x\n&quot;, nameoffile,nameoffile);</p>
+
+<p class=MsoNormal>printf(&quot;Ordinal Numbers Starting From:%08X\n&quot;,
+pexportdirectory-&gt;Base);</p>
+
+<p class=MsoNormal>printf(&quot;Number of functions:%08X\n&quot;,
+pexportdirectory-&gt;NumberOfFunctions);</p>
+
+<p class=MsoNormal>printf(&quot;Number of Names:%08X\n&quot;,
+pexportdirectory-&gt;NumberOfNames);</p>
+
+<p class=MsoNormal>printf(&quot;Address of functions array
+rva=%08x\n&quot;,pexportdirectory-&gt;AddressOfFunctions);</p>
+
+<p class=MsoNormal>printf(&quot;Address of names array
+rva=%08x\n&quot;,pexportdirectory-&gt;AddressOfNames);</p>
+
+<p class=MsoNormal>printf(&quot;Address of ordinals array
+rva=%08x\n&quot;,pexportdirectory-&gt;AddressOfNameOrdinals);</p>
+
+<p class=MsoNormal>long *pfunctionsactual;</p>
+
+<p class=MsoNormal>short *pordinalsactual;</p>
+
+<p class=MsoNormal>pfunctionsactual = (long *)((int)pexportdirectory-&gt;AddressOfFunctions<span
+style="mso-spacerun: yes">  </span>+ pmappedfile);</p>
+
+<p class=MsoNormal>pordinalsactual<span style="mso-spacerun: yes">  </span>=
+(short *)((int)pexportdirectory-&gt;AddressOfNameOrdinals + pmappedfile);</p>
+
+<p class=MsoNormal>char **ppnamesactual;</p>
+
+<p class=MsoNormal>ppnamesactual = (char<span style="mso-spacerun: yes"> 
+</span>**)((int)pexportdirectory-&gt;AddressOfNames + pmappedfile);</p>
+
+<p class=MsoNormal>printf(&quot;\ni <span style="mso-spacerun:
+yes"> </span>Entry Pt<span style="mso-spacerun: yes">  </span>Ordn<span
+style="mso-spacerun: yes">  </span>Name\n&quot;);</p>
+
+<p class=MsoNormal>for ( i=0; i &lt; pexportdirectory-&gt;NumberOfFunctions;
+i++ )</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DWORD startoffunctionsrva = pfunctionsactual[i];</p>
+
+<p class=MsoNormal>DWORD j;</p>
+
+<p class=MsoNormal>if ( startoffunctionsrva == 0 )<span style="mso-spacerun:
+yes">  </span></p>
+
+<p class=MsoNormal>continue;<span style="mso-spacerun: yes">   </span></p>
+
+<p class=MsoNormal>printf(&quot;%d<span style="mso-spacerun: yes"> 
+</span>%08X<span style="mso-spacerun: yes">  </span>%4u&quot;, i ,
+startoffunctionsrva, i + pexportdirectory-&gt;Base ); </p>
+
+<p class=MsoNormal>for ( j=0; j &lt; pexportdirectory-&gt;NumberOfNames; j++ )</p>
+
+<p class=MsoNormal>if ( pordinalsactual[j] == i )</p>
+
+<p class=MsoNormal>printf(&quot;<span style="mso-spacerun: yes"> 
+</span>%s&quot;, ppnamesactual[j] + (int)pmappedfile);</p>
+
+<p class=MsoNormal>printf(&quot;\n&quot;);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>printf(&quot;Array of Address of Functions\n&quot;);</p>
+
+<p class=MsoNormal>for ( i = 0 ; i &lt; pexportdirectory-&gt;NumberOfFunctions;
+i++)</p>
+
+<p class=MsoNormal>printf(&quot;%d %08X\n&quot;,i,pfunctionsactual[i]);</p>
+
+<p class=MsoNormal>printf(&quot;Array of NameOrdinals\n&quot;);</p>
+
+<p class=MsoNormal>for ( i = 0 ; i &lt; pexportdirectory-&gt;NumberOfNames;
+i++)</p>
+
+<p class=MsoNormal>printf(&quot;%d %08X\n&quot;,i,pordinalsactual[i]);</p>
+
+<p class=MsoNormal>printf(&quot;Names of functions\n&quot;);</p>
+
+<p class=MsoNormal>for ( i = 0 ; i &lt; pexportdirectory-&gt;NumberOfNames;
+i++)</p>
+
+<p class=MsoNormal>printf(&quot;%d %08X %s\n&quot;,i,ppnamesactual[i] +
+(int)pmappedfile , ppnamesactual[i]<span style="mso-spacerun: yes">  </span>+
+(int)pmappedfile);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>pmappedfile=00340000</p>
+
+<p class=MsoNormal>beginexportsrva=00009A50 Size=78</p>
+
+<p class=MsoNormal>pexportdirectory=00349A50</p>
+
+<p class=MsoNormal>FileName:f.dll 349ab6</p>
+
+<p class=MsoNormal>Ordinal Numbers Starting From:00000002</p>
+
+<p class=MsoNormal>Number of functions:0000000B</p>
+
+<p class=MsoNormal>Number of Names:00000003</p>
+
+<p class=MsoNormal>Address of functions array rva=00009a78</p>
+
+<p class=MsoNormal>Address of names array rva=00009aa4</p>
+
+<p class=MsoNormal>Address of ordinals array rva=00009ab0</p>
+
+<p class=MsoNormal>i<span style="mso-spacerun: yes">  </span>Entry Pt<span
+style="mso-spacerun: yes">  </span>Ordn<span style="mso-spacerun: yes"> 
+</span>Name</p>
+
+<p class=MsoNormal>0<span style="mso-spacerun: yes">  </span>00001000<span
+style="mso-spacerun: yes">     </span>2<span style="mso-spacerun: yes"> 
+</span>abc</p>
+
+<p class=MsoNormal>3<span style="mso-spacerun: yes">  </span>00001010<span
+style="mso-spacerun: yes">     </span>5<span style="mso-spacerun: yes"> 
+</span>pqr</p>
+
+<p class=MsoNormal>10<span style="mso-spacerun: yes">  </span>00001020<span
+style="mso-spacerun: yes">    </span>12<span style="mso-spacerun: yes"> 
+</span>xyz</p>
+
+<p class=MsoNormal>Array of Address of Functions</p>
+
+<p class=MsoNormal>0 00001000</p>
+
+<p class=MsoNormal>1 00000000</p>
+
+<p class=MsoNormal>2 00000000</p>
+
+<p class=MsoNormal>3 00001010</p>
+
+<p class=MsoNormal>4 00000000</p>
+
+<p class=MsoNormal>5 00000000</p>
+
+<p class=MsoNormal>6 00000000</p>
+
+<p class=MsoNormal>7 00000000</p>
+
+<p class=MsoNormal>8 00000000</p>
+
+<p class=MsoNormal>9 00000000</p>
+
+<p class=MsoNormal>10 00001020</p>
+
+<p class=MsoNormal>Array of NameOrdinals</p>
+
+<p class=MsoNormal>0 00000000</p>
+
+<p class=MsoNormal>1 00000003</p>
+
+<p class=MsoNormal>2 0000000A</p>
+
+<p class=MsoNormal>Names of functions</p>
+
+<p class=MsoNormal>0 00349ABC abc</p>
+
+<p class=MsoNormal>1 00349AC0 pqr</p>
+
+<p class=MsoNormal>2 00349AC4 xyz</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The CreateFile method gives us a file handle on f.dll. We
+then use the CreateFileMapping method to give us a file mapping handle. We also
+supply the permissions which are read and write. This mapping handle is used to
+load the file into memory using the MapViewOfFile method. In our case the file
+is loaded in memory at location 00340000.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The MapViewOfFile method actually is used by the windows
+loader to load the file into memory. Thus each section is loaded on a page boundary
+which is 4k. If we did not have such a method we would have to write code
+ourselves to align the file as the windows loader would have done so. We start
+a PE file with a IMAGE_DOS_HEADER followed by the signature of the file PE00.
+This is followed by three back to back structure, the IMAGE_FILE_HEADER the
+IMAGE_OPTIONAL_HEADER and the IMAGE_SECTION_HEADER.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes"> </span></p>
+
+<p class=MsoNormal>The optional header ends with a series of DataDirectory
+structures that have two members Virtual Address and Size. The first data
+director tells us where the exports structures start. Thus the variable
+beginexportsrva will give us the RVA of where the export directory structure
+starts. Add to this the start of the file and we will get the actual address.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This export structure has lots of fields, we will display
+the ones that we want like the name of the dll f.dll. The base member tells us
+the first ordinal number which in our case is 2.<span style="mso-spacerun:
+yes">  </span>We have three array that make up the export directory. The array
+of ordinals and names will have the same number of members 3. This is because
+we have three exported functions. The array of function addresses will have as
+many members as the highest ordinal number minus the base. In our case this
+value is 12 – 2 or 10. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>At the end of the program we are actually displaying the
+three arrays. The array of names contains the RVAs of the names of the
+functions. The array of ordinals contains some numbers and the array of
+function addresses contains in our case 10 members. We start by iterating the
+function addresses array. We loop back if we have a function address of 0. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we find a<span style="mso-spacerun: yes">  </span>array
+entry with a non zero value we display this value as the entry point of the
+function. We then use the index or array offset as the ordinal number plus
+base. Thus for function with a entry point of 1020 the ordinal number is 10 + 2
+or 12. We next find this number 10 in the name ordinals array. It is found as
+the third entry which has a index or array offset of 2. This number 2 is used
+as the index into names array to give us a value of xyz.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Coming to our code, we scan the arrays of function entry
+points and I is used as the index or ordinal number. If we find a entry point
+of 0 we continue. We then scan the ordinal array for a value of i. The minute
+we do we use the index j to give us the name of the function. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>SDT Hooking</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>d.cpp</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;aclapi.h&gt;</p>
+
+<p class=MsoNormal>struct UNICODE_STRING</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>USHORT<span style="mso-spacerun: yes"> 
+</span>Length,MaximumLength;</p>
+
+<p class=MsoNormal>PWSTR<span style="mso-spacerun: yes">  </span>Buffer;</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct OBJECT_ATTRIBUTES </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>ULONG Length;</p>
+
+<p class=MsoNormal>HANDLE RootDirectory;</p>
+
+<p class=MsoNormal>UNICODE_STRING *ObjectName;</p>
+
+<p class=MsoNormal>ULONG Attributes;</p>
+
+<p class=MsoNormal>long a[2];</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>struct SYSTEM_MODULE_INFORMATION</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>ULONG a[2];</p>
+
+<p class=MsoNormal>PVOID Base;</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>VOID (WINAPI *RtlInitUnicodeString)(UNICODE_STRING
+*DestinationString, const wchar_t *SourceString);</p>
+
+<p class=MsoNormal>long (WINAPI *NtOpenSection)(PHANDLE SectionHandle,
+ACCESS_MASK DesiredAccess,OBJECT_ATTRIBUTES<span style="mso-spacerun: yes"> 
+</span>*ObjectAttributes);</p>
+
+<p class=MsoNormal>long (WINAPI *NtMapViewOfSection)(HANDLE
+SectionHandle,HANDLE<span style="mso-spacerun: yes"> 
+</span>ProcessHandle,PVOID *BaseAddress,ULONG ZeroBits,ULONG
+CommitSize,LARGE_INTEGER *SectionOffset,PULONG<span style="mso-spacerun: yes"> 
+</span>ViewSize, int<span style="mso-spacerun: yes">  </span>InheritDisposition,
+IN ULONG<span style="mso-spacerun: yes">  </span>AllocationType,ULONG<span
+style="mso-spacerun: yes">  </span>Protect);</p>
+
+<p class=MsoNormal>long (WINAPI *NtQuerySystemInformation)(UINT, PVOID, ULONG,
+PULONG);</p>
+
+<p class=MsoNormal>HMODULE hntdll;</p>
+
+<p class=MsoNormal>OBJECT_ATTRIBUTES oAttr;</p>
+
+<p class=MsoNormal>UNICODE_STRING uStr;</p>
+
+<p class=MsoNormal>PACL dacl,newDacl;</p>
+
+<p class=MsoNormal>PSECURITY_DESCRIPTOR sd;</p>
+
+<p class=MsoNormal>EXPLICIT_ACCESS ea;</p>
+
+<p class=MsoNormal>HANDLE hPhyMem,fp, hfile1;</p>
+
+<p class=MsoNormal>LPVOID exePtr,pBuffer;</p>
+
+<p class=MsoNormal>char
+*ptr,**nativeApiNames,**ppnamesactual,*pmappedfile1,*pmappedfile;</p>
+
+<p class=MsoNormal>PIMAGE_SECTION_HEADER psectionheader;</p>
+
+<p class=MsoNormal>IMAGE_FILE_HEADER *pimagefileheader;</p>
+
+<p class=MsoNormal>IMAGE_DOS_HEADER *pimagedosheader;</p>
+
+<p class=MsoNormal>IMAGE_OPTIONAL_HEADER *pimageoptionalheader;</p>
+
+<p class=MsoNormal>PIMAGE_EXPORT_DIRECTORY pexportdirectory;</p>
+
+<p class=MsoNormal>SYSTEM_MODULE_INFORMATION *smi;</p>
+
+<p class=MsoNormal>long *pfunctionsactual,beginexportsrva,j,diff ,serviceNum,
+apiAddr; </p>
+
+<p class=MsoNormal>short *pordinalsactual;</p>
+
+<p class=MsoNormal>DWORD
+sdtAddr,pAddr,len,start,serviceTableAddr,sdtCount,wantedBytes,hookCount,i;</p>
+
+<p class=MsoNormal>void main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>hntdll = GetModuleHandle(&quot;ntdll.dll&quot;);</p>
+
+<p class=MsoNormal>*(FARPROC *)&amp;RtlInitUnicodeString =
+GetProcAddress(hntdll, &quot;RtlInitUnicodeString&quot;);</p>
+
+<p class=MsoNormal>*(FARPROC *)&amp;NtOpenSection = GetProcAddress(hntdll,
+&quot;NtOpenSection&quot;);</p>
+
+<p class=MsoNormal>*(FARPROC *)&amp;NtMapViewOfSection = GetProcAddress(hntdll,
+&quot;NtMapViewOfSection&quot;);</p>
+
+<p class=MsoNormal>*(FARPROC *)&amp;NtQuerySystemInformation =
+GetProcAddress(hntdll, &quot;ZwQuerySystemInformation&quot;);</p>
+
+<p class=MsoNormal>RtlInitUnicodeString(&amp;uStr,L&quot;\\device\\physicalmemory&quot;);</p>
+
+<p class=MsoNormal>oAttr.Length = sizeof(OBJECT_ATTRIBUTES);</p>
+
+<p class=MsoNormal>oAttr.Attributes = 0x00000040L;</p>
+
+<p class=MsoNormal>oAttr.ObjectName = &amp;uStr;</p>
+
+<p class=MsoNormal>NtOpenSection(&amp;hPhyMem,READ_CONTROL|WRITE_DAC,&amp;oAttr);</p>
+
+<p class=MsoNormal>GetSecurityInfo(hPhyMem,SE_KERNEL_OBJECT,
+DACL_SECURITY_INFORMATION,0,0,&amp;dacl,0,&amp;sd);</p>
+
+<p class=MsoNormal>ea.grfAccessPermissions = SECTION_MAP_WRITE;</p>
+
+<p class=MsoNormal>ea.grfAccessMode = GRANT_ACCESS;</p>
+
+<p class=MsoNormal>ea.Trustee.ptstrName = &quot;vijay&quot;;</p>
+
+<p class=MsoNormal>SetEntriesInAcl(1,&amp;ea,dacl,&amp;newDacl);</p>
+
+<p class=MsoNormal>SetSecurityInfo(hPhyMem,SE_KERNEL_OBJECT,DACL_SECURITY_INFORMATION,0,0,newDacl,0);</p>
+
+<p class=MsoNormal>NtOpenSection(&amp;hPhyMem,SECTION_MAP_READ|SECTION_MAP_WRITE,&amp;oAttr);</p>
+
+<p class=MsoNormal>fp = CreateFile(&quot;c:\\windows\\system32\\ntoskrnl.exe&quot;,GENERIC_READ|GENERIC_WRITE,0,0,OPEN_EXISTING,0,0);</p>
+
+<p class=MsoNormal>hfile1 = CreateFileMapping (fp, 0, PAGE_READWRITE, 0, 0, 0);</p>
+
+<p class=MsoNormal>pmappedfile = (char
+*)MapViewOfFile(hfile1,FILE_MAP_ALL_ACCESS,0,0,0);</p>
+
+<p class=MsoNormal>pimagedosheader<span style="mso-spacerun: yes">  </span>=
+(IMAGE_DOS_HEADER *)pmappedfile;</p>
+
+<p class=MsoNormal>pimagefileheader = (IMAGE_FILE_HEADER *)(pmappedfile +
+pimagedosheader-&gt;e_lfanew +4);</p>
+
+<p class=MsoNormal>pimageoptionalheader = (IMAGE_OPTIONAL_HEADER *)((char
+*)pimagefileheader+sizeof(IMAGE_FILE_HEADER));</p>
+
+<p class=MsoNormal>beginexportsrva =
+pimageoptionalheader-&gt;DataDirectory[0].VirtualAddress;</p>
+
+<p class=MsoNormal>pexportdirectory = (PIMAGE_EXPORT_DIRECTORY)(pmappedfile +
+beginexportsrva);</p>
+
+<p class=MsoNormal>pfunctionsactual = (long
+*)((int)pexportdirectory-&gt;AddressOfFunctions<span style="mso-spacerun:
+yes">  </span>+ pmappedfile);</p>
+
+<p class=MsoNormal>pordinalsactual<span style="mso-spacerun: yes">  </span>=
+(short *)((int)pexportdirectory-&gt;AddressOfNameOrdinals<span
+style="mso-spacerun: yes">  </span>+ pmappedfile);</p>
+
+<p class=MsoNormal>ppnamesactual = (char<span style="mso-spacerun: yes"> 
+</span>**)((int)pexportdirectory-&gt;AddressOfNames<span style="mso-spacerun:
+yes">  </span>+ pmappedfile);</p>
+
+<p class=MsoNormal>for ( i=0; i &lt; pexportdirectory-&gt;NumberOfFunctions;
+i++ )</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>for ( j=0; j &lt; pexportdirectory-&gt;NumberOfNames; j++ )</p>
+
+<p class=MsoNormal>if ( pordinalsactual[j] == i &amp;&amp;
+strcmp(ppnamesactual[j]<span style="mso-spacerun: yes">  </span>+ (long)pmappedfile
+, &quot;KeServiceDescriptorTable&quot;) == 0)</p>
+
+<p class=MsoNormal>sdtAddr = pfunctionsactual[i];</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>printf(&quot;sdtAddr=%x\n&quot;,sdtAddr);</p>
+
+<p class=MsoNormal>pBuffer = malloc(50000);</p>
+
+<p class=MsoNormal>NtQuerySystemInformation(11,pBuffer,50000,0);</p>
+
+<p class=MsoNormal>smi = (SYSTEM_MODULE_INFORMATION *)((char *)pBuffer + 4);</p>
+
+<p class=MsoNormal>pAddr = sdtAddr + (DWORD)smi-&gt;Base - 0x80000000;</p>
+
+<p class=MsoNormal>printf(&quot;smi-&gt;Base=%x pAddr=%x\n&quot;,smi-&gt;Base,
+pAddr);</p>
+
+<p class=MsoNormal>len = 0x2000;</p>
+
+<p class=MsoNormal>LARGE_INTEGER viewBase;</p>
+
+<p class=MsoNormal>viewBase.QuadPart = (ULONGLONG)pAddr;</p>
+
+<p class=MsoNormal>NtMapViewOfSection(hPhyMem,(HANDLE)-1,(void
+**)&amp;ptr,0,len,&amp;viewBase,&amp;len,1,0,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>pAddr = viewBase.LowPart;</p>
+
+<p class=MsoNormal>printf(&quot;pAddr=%x ptr=%x len=%x\n&quot;,pAddr,ptr,len);</p>
+
+<p class=MsoNormal>start = sdtAddr + (DWORD)smi-&gt;Base - 0x80000000 - pAddr;</p>
+
+<p class=MsoNormal>serviceTableAddr = *((DWORD *)(&amp;ptr[start]));</p>
+
+<p class=MsoNormal>sdtCount = *(((DWORD *)(&amp;ptr[start])) + 2);</p>
+
+<p class=MsoNormal>printf(&quot;start=%x serviceTableAddr=%x
+sdtCount=%d\n&quot;,start,serviceTableAddr,sdtCount);</p>
+
+<p class=MsoNormal>pAddr = serviceTableAddr - 0x80000000;</p>
+
+<p class=MsoNormal>printf(&quot;pAddr=%x\n&quot;);</p>
+
+<p class=MsoNormal>len = 0x2000;</p>
+
+<p class=MsoNormal>viewBase.QuadPart = (ULONGLONG) pAddr;</p>
+
+<p class=MsoNormal>NtMapViewOfSection(hPhyMem,(HANDLE)-1,(void
+**)&amp;ptr,0,len,&amp;viewBase,&amp;len,1,0,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>pAddr = viewBase.LowPart;</p>
+
+<p class=MsoNormal>start = serviceTableAddr - 0x80000000 - pAddr;</p>
+
+<p class=MsoNormal>printf(&quot;pAddr=%x start=%x\n&quot;,pAddr,start);</p>
+
+<p class=MsoNormal>nativeApiNames = (char **)malloc(sizeof(char *) * sdtCount);</p>
+
+<p class=MsoNormal>fp =
+CreateFile(&quot;c:\\windows\\system32\\ntdll.dll&quot;, GENERIC_READ,FILE_SHARE_READ,0,OPEN_EXISTING,0,0);</p>
+
+<p class=MsoNormal>hfile1 = CreateFileMapping(fp,0,PAGE_READONLY,0,0,0);</p>
+
+<p class=MsoNormal>pmappedfile1 = (char
+*)MapViewOfFile(hfile1,FILE_MAP_READ,0,0,0);</p>
+
+<p class=MsoNormal>pimagedosheader<span style="mso-spacerun: yes">  </span>=
+(IMAGE_DOS_HEADER *)pmappedfile1;</p>
+
+<p class=MsoNormal>pimagefileheader = (IMAGE_FILE_HEADER *)(pmappedfile1 +
+pimagedosheader-&gt;e_lfanew +4);</p>
+
+<p class=MsoNormal>pimageoptionalheader = (IMAGE_OPTIONAL_HEADER *)((unsigned
+char *)pimagefileheader+sizeof(IMAGE_FILE_HEADER));</p>
+
+<p class=MsoNormal>psectionheader = (PIMAGE_SECTION_HEADER)((char
+*)pimageoptionalheader + sizeof(IMAGE_OPTIONAL_HEADER));</p>
+
+<p class=MsoNormal>beginexportsrva =
+pimageoptionalheader-&gt;DataDirectory[0].VirtualAddress;</p>
+
+<p class=MsoNormal>diff = (INT)(psectionheader-&gt;VirtualAddress -
+psectionheader-&gt;PointerToRawData);</p>
+
+<p class=MsoNormal>pexportdirectory = (PIMAGE_EXPORT_DIRECTORY)(pmappedfile1 +
+beginexportsrva - diff);</p>
+
+<p class=MsoNormal>pfunctionsactual = (long
+*)((int)pexportdirectory-&gt;AddressOfFunctions - diff + pmappedfile1);</p>
+
+<p class=MsoNormal>pordinalsactual<span style="mso-spacerun: yes">  </span>=
+(short *)((int)pexportdirectory-&gt;AddressOfNameOrdinals - diff +
+pmappedfile1);</p>
+
+<p class=MsoNormal>ppnamesactual = (char<span style="mso-spacerun: yes"> 
+</span>**)((int)pexportdirectory-&gt;AddressOfNames - diff + pmappedfile1);</p>
+
+<p class=MsoNormal>for ( i=0; i &lt; pexportdirectory-&gt;NumberOfFunctions;
+i++ )</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>apiAddr = (DWORD)pfunctionsactual[i] - diff +
+(int)pmappedfile1;</p>
+
+<p class=MsoNormal>serviceNum = *(DWORD *)((char *)apiAddr + 1);</p>
+
+<p class=MsoNormal>for ( j=0; j &lt; pexportdirectory-&gt;NumberOfNames; j++ )</p>
+
+<p class=MsoNormal>if ( pordinalsactual[j] == i &amp;&amp; serviceNum<span
+style="mso-spacerun: yes">  </span>&lt;= sdtCount)</p>
+
+<p class=MsoNormal>nativeApiNames[serviceNum] = ppnamesactual[j] - diff +
+(int)pmappedfile1;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>DWORD *serviceTable = (DWORD *)(&amp;ptr[start]);</p>
+
+<p class=MsoNormal>DWORD *fileServiceTable = (DWORD *)((DWORD)pmappedfile +
+(DWORD)serviceTableAddr - (DWORD)smi-&gt;Base);</p>
+
+<p class=MsoNormal>printf(&quot;%x:%x\n&quot;,serviceTable[0],fileServiceTable[0]);</p>
+
+<p class=MsoNormal>printf(&quot;%x:%x\n&quot;,serviceTable[0] -
+(DWORD)smi-&gt;Base,fileServiceTable[0]);</p>
+
+<p class=MsoNormal>for(i = 0; i &lt; sdtCount; i++)</p>
+
+<p class=MsoNormal>{<span style='mso-tab-count:7'>                                                                                  </span></p>
+
+<p class=MsoNormal>if( (serviceTable[i] - (DWORD)smi-&gt;Base + 0x400000) !=
+fileServiceTable[i])</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>printf(&quot;%-25s %3X at %X %x
+%x\n&quot;,nativeApiNames[i],i,serviceTable[i],serviceTable[i] -
+(DWORD)smi-&gt;Base + 0x400000,fileServiceTable[i]);</p>
+
+<p class=MsoNormal>hookCount++;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>printf(&quot;%u\n&quot;, hookCount);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>sdtAddr=82480</p>
+
+<p class=MsoNormal>smi-&gt;Base=804d7000 pAddr=559480</p>
+
+<p class=MsoNormal>pAddr=559000 ptr=379000 len=2000</p>
+
+<p class=MsoNormal>start=480 serviceTableAddr=804e26a8 sdtCount=284</p>
+
+<p class=MsoNormal>pAddr=4056bf</p>
+
+<p class=MsoNormal>pAddr=4e2000 start=6a8</p>
+
+<p class=MsoNormal>805862de:4af2de</p>
+
+<p class=MsoNormal>af2de:4af2de</p>
+
+<p class=MsoNormal>ZwQueryDirectoryFile<span style="mso-spacerun: yes">      
+</span>91 at B21C3026 320ec026 49d4a5</p>
+
+<p class=MsoNormal>ZwQuerySystemInformation<span style="mso-spacerun: yes">  
+</span>AD at B21C3000 320ec000 4a54aa</p>
+
+<p class=MsoNormal>2</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>C:\sonal3&gt;y -u</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>C:\sonal3&gt;d</p>
+
+<p class=MsoNormal>sdtAddr=82480</p>
+
+<p class=MsoNormal>smi-&gt;Base=804d7000 pAddr=559480</p>
+
+<p class=MsoNormal>pAddr=559000 ptr=379000 len=2000</p>
+
+<p class=MsoNormal>start=480 serviceTableAddr=804e26a8 sdtCount=284</p>
+
+<p class=MsoNormal>pAddr=4056bf</p>
+
+<p class=MsoNormal>pAddr=4e2000 start=6a8</p>
+
+<p class=MsoNormal>805862de:4af2de</p>
+
+<p class=MsoNormal>af2de:4af2de</p>
+
+<p class=MsoNormal>0</p>
+
+<p class=MsoNormal style='tab-stops:246.75pt'><span style='mso-tab-count:1'>                                                                                  </span></p>
+
+<p class=MsoNormal>DbgView output</p>
+
+<p class=MsoNormal>DriverEntry1 b21c3026 b21c3000</p>
+
+<p class=MsoNormal>KeServiceDescriptorTable=804e26a8 0 11c</p>
+
+<p class=MsoNormal>Enteries 805862de 8056fded 8058945b</p>
+
+<p class=MsoNormal>hooked functions NewZwQueryDirectoryFile=b21c3026
+NewZwQuerySystemInformation=b21c3000</p>
+
+<p class=MsoNormal>Unloading1</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This program detects whether our SDT table has been hooked.
+The method GetModuleHandle assumes that a dll has been loaded in memory
+and<span style="mso-spacerun: yes">  </span>returns the starting address of
+that dll. In the case of Windows two dll’s are loaded in memory<span
+style="mso-spacerun: yes">  </span>nt.dll.dll and kernel32.dll. The starting
+address of nt.dll.dll in the case of Windows XP SP2 is 7c900000. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then use the GetProcAddress<span style="mso-spacerun:
+yes">  </span>function to get the address of 4 functions which are present in
+nt.dll.dll. These are RtlInitUnicodeString,<span style="mso-spacerun: yes"> 
+</span>NtOpenSection, NtMapViewOfSection and<span style="mso-spacerun: yes"> 
+</span>ZwQuerySytemInformation. All these functions may reside in nt.dll.dll
+but there code is a stub to move to ring 0 where the actual code of the
+function actually is. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We now want to talk to our device driver called
+/device/physicalmemory whose job is to give us a virtual address in ring 3 so
+that we can write to physical memory in ring 0. Thus we will give this driver
+an RVA from 2GB and it will return to us a virtual address in ring 3. Each time
+we read or write to this virtual address we are actually reading or writing a
+address in ring 0. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>All strings in Windows are now Unicode and hence we use the
+RtlInitUnicodeString method to give us a Unicode string in uStr which is
+\device\physicalmemory. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The method NtOpenSection is what we will use to open a
+handle to our device driver. The only problem is that ring 3 programs like ours
+cannot use this driver unless we say please. We first need permission to access
+this driver. Thus we call the method NtOpenSection with the address of our
+handle and then attributes we want on the open handle. Here we want to from
+read the driver as well as change the Discretionarily Access List to gives us
+permission denoted by the macro WRITE_DAC.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The third parameter is a structure of type OBJECT_ATTRIBUTES
+of which we always initialize the length member to the size of the structure.
+The attributes member is set to a value which means that the name is case
+insensitive and the ObjectName member to the Unicode structure physicalmemory.
+The hPhyMem handle now allows us to read and change the permissions on the
+driver.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The GetSecurityInfo method takes a device handle which
+represents a kernel object and gives us the security descriptor associated with
+that object as the last parameter. Now we want the user vijay to be granted
+access to write to the device. We first create a new ACL or access control list
+by using the function SetEntriesInAcl which merges the dacl and the new
+permissions in ea. Then we actually add this new acl using the SetSecurityInfo
+method to the device. This is how we can now open the handle to the device with
+write permissions.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A better way would for Microsoft to give write access for
+all devices to Administrator, would save a lot of our time.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The file ntoskrnl.exe which is loaded in ring 0 has an
+exported method called KeServiceDescriptorTable. This is pointer to a structure
+in ring 0. We scan the array of functions entry points and then scan the array
+of ordinal numbers. We use this index j to give us the name of the method. If
+it is KeServiceDescriptorTable we store the entry point in the variable stdAddr
+which is 82480. This means that this value is relative to the start of<span
+style="mso-spacerun: yes">  </span>ntoskrnl.exe. The next question is where
+does ntoskrnl.exe start in memory.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first allocate an area of memory 50000 bytes using malloc
+and call ZwQuerySystemInformation with value of 11 which means list of modules
+loaded. The value returned in pBuffer will contain a series of back to back
+structures of type SYSTEM_MODULE_INFORMATION. These structures are preceded by
+a long that tells us number of structures present.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We take a shortcut and assume that the first structure is
+that of ntoskrnl and the base member tells us where this structure starts in
+memory. The other shortcut is that the area of memory should be arbitrary<span
+style="mso-spacerun: yes">  </span>fixed at 50000, we should call the function
+with a pBuffer of 0 which will then tells us whether the amount of memory
+specified as the size of the buffer as the third parameter is right or not. We
+do this in a loop until we get success and if not we increase this parameter by
+a certain value.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We are told that ntoskrnl.exe starts at 804d7000. Thus the
+KeServiceDescriptorTable start at 804d7000 + 82480. We will subtract 80000000
+from this value to give us a RVA from 2 GB which is stored in<span
+style="mso-spacerun: yes">  </span>pAddr which gets a value of 559480. Thus we
+could have got the same value by adding 4d7000 and 82480.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now starts the actual program. We call NtMapViewOfSection
+that takes a handle which in our case is to physicalmemory and then a pointer
+to a virtual address. This pointer ptr will contain a memory location which
+when we write to will actual write to a ring 0 address. We specify a
+LARGE_INTEGER to specify a physical address from the start of 2 GB. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The pAddr member contains a RVA of
+KeServiceDescriptorTable.<span style="mso-spacerun: yes">  </span>The len is
+passed twice once to specify the size of memory to be mapped and the second
+time an address to tell us how much memory has been mapped. The value of pAddr
+which was 559480 has been set to 559000 because even though we asked for a
+mapping of memory 559480 the system has returned a page boundary address which
+is 559000. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The first 12 bits of a page address is 0. Thus if we write
+to 379000 we are writing to 559480. This gives us a problem as we now have to
+account for some extra bytes. Ptr does not stand for KeServiceDescriptorTable
+but to the start of the page table that contains this value.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The sdtAddr tells us where KeServiceDescriptorTable starts
+82480 which we cannot change at all and we add the difference from 2G where
+ntoskrnl.exe starts which gives us 4d7000. Thus this is a RVA which tells us
+where KeServiceDescriptorTable begins. We however have a problem as the value
+of pAddr has changed and hence we subtract this new value which gives us a
+start or a difference of 480. We have lost the old value of pAddr and hence we
+have to recalculate.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now ptr is a pointer to the actual SSDT table provided we
+add the count offset of 480. Thus the array of function pointers begins at
+804e26a8. The next member plus 1 contains<span style="mso-spacerun: yes"> 
+</span>the actual number of functions which is stored in variable sdtCount<span
+style="mso-spacerun: yes">  </span>and has a value of 284.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The serviceTableAddr is the address of an array and we need
+to find a virtual memory pointer that we can use to reference this array from
+ring 3. We thus subtract 2 gb from this value to give us an RVA of 40567. We
+once again set len to the same value it has of 0x2000 and call the same MapView
+method. We are given a value of 4e2000 instead of the value we had asked for.
+We there fore subtract the original servicetable address from kernel base and
+also subtract the new page table address. This gives us a value of start of 6a8
+which is the offset from the start of the page for the function pointer array.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Normally the VirtualAddress and PointerToRawData should be
+the same. If there is a difference than we have to subtract this difference all
+the time. Bytes 2,3 ,4 and 5 from the start of any function in nt.dll.dll
+contains the service numbers. This is value moved into eax in the prologue of
+the function. We need to create an array of function names using these service
+numbers and not the ordinal numbers. The service numbers have nothing to do
+with ordinal numbers. We iterate as per the number of functions, we then read
+the service numbers using the entry point of each function and we place the
+name of the function in the array using the service number. We need to make
+sure that the service number does not exceed the number pointed to by the
+KeServiceDescriptorTable.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Finally we come to the countdown. The serviceTable member is
+initialized to the start of the function pointer array using the ptr variable
+with start as the offset. The ntoskrnl.exe resides in ring 0 and
+serviceTableAddr - (DWORD)smi-&gt;Base will tell us where this array begins
+from the start of the file. Pmappedfile tells us where the file ntoskrnl starts
+from the beginning of memory. The problem is that KeServiceDescriptorTable
+contains the address of a structure and one of the members is the address of
+the array. This array is not exported and hence we need another way of getting
+at this address. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus serviceTable contains the actual pointer to the real
+sdt table whereas fileServiceTable is the pristine values from disk. The next
+problem is that the file values are numbers like 4af2de whereas the one in
+memory is 805862de. We thus subtract the kernel base from this to get a number
+af2de. We have to add 400000 to this value as all exe files under windows start
+at this memory location.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In DbgView we can see that the two functions that we have
+hooked in the driver have the same values in the output of our program b21c3026
+b21c3000.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>e.bat</p>
+
+<p class=MsoNormal>del d.exe</p>
+
+<p class=MsoNormal>del d.obj</p>
+
+<p class=MsoNormal>cl d.cpp advapi32.lib</p>
+
+<p class=MsoNormal>y -i</p>
+
+<p class=MsoNormal>d</p>
+
+<p class=MsoNormal>y -u</p>
+
+<p class=MsoNormal>d</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>r.c</p>
+
+<p class=MsoNormal>#include &lt;ntddk.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;string.h&gt;</p>
+
+<p class=MsoNormal>typedef struct </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>unsigned
+int *ServiceTableBase;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>unsigned
+int *ServiceCounterTableBase;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>unsigned
+int NumberOfServices;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>unsigned
+char *ParamTableBase;</p>
+
+<p class=MsoNormal>} sdt;</p>
+
+<p class=MsoNormal>__declspec(dllimport) sdt KeServiceDescriptorTable;</p>
+
+<p class=MsoNormal>NTSYSAPI NTSTATUS NTAPI ZwQuerySystemInformation(ULONG
+SystemInformationClass,PVOID SystemInformation,ULONG
+SystemInformationLength,PULONG ReturnLength);</p>
+
+<p class=MsoNormal>NTSTATUS (NTAPI*OldZwQuerySystemInformation)(ULONG
+SystemInformationCLass,PVOID SystemInformation,ULONG
+SystemInformationLength,PULONG ReturnLength);</p>
+
+<p class=MsoNormal>NTSTATUS NewZwQuerySystemInformation(ULONG
+SystemInformationClass,PVOID SystemInformation,ULONG
+SystemInformationLength,PULONG ReturnLength)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>NTSTATUS
+rc;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>rc =
+OldZwQuerySystemInformation(SystemInformationClass,SystemInformation,SystemInformationLength,ReturnLength);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>//DbgPrint(&quot;rc=%d
+Class=%d Length=%d
+return=%x&quot;,rc,SystemInformationClass,SystemInformationLength,ReturnLength);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>return rc;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSYSAPI NTSTATUS NTAPI ZwQueryDirectoryFile(HANDLE
+hFile,HANDLE hEvent,PIO_APC_ROUTINE IoApcRoutine,PVOID
+IoApcContext,PIO_STATUS_BLOCK pIoStatusBlock,PVOID FileInformationBuffer,ULONG
+FileInformationBufferLength,FILE_INFORMATION_CLASS FileInfoClass,BOOLEAN
+bReturnOnlyOneEntry,PUNICODE_STRING PathMask,BOOLEAN bRestartQuery);</p>
+
+<p class=MsoNormal>typedef NTSTATUS (*qtype)(HANDLE hFile,HANDLE
+hEvent,PIO_APC_ROUTINE IoApcRoutine,<span style="mso-spacerun: yes">  
+</span>PVOID IoApcContext,<span style="mso-spacerun: yes">    
+</span>PIO_STATUS_BLOCK pIoStatusBlock,PVOID FileInformationBuffer,ULONG FileInformationBufferLength,FILE_INFORMATION_CLASS
+FileInfoClass,BOOLEAN bReturnOnlyOneEntry,PUNICODE_STRING PathMask,BOOLEAN
+bRestartQuery);</p>
+
+<p class=MsoNormal>qtype OldZwQueryDirectoryFile;</p>
+
+<p class=MsoNormal>NTSTATUS NewZwQueryDirectoryFile(HANDLE hFile,HANDLE
+hEvent,PIO_APC_ROUTINE IoApcRoutine,PVOID IoApcContext,PIO_STATUS_BLOCK
+pIoStatusBlock,PVOID FileInformationBuffer,ULONG
+FileInformationBufferLength,FILE_INFORMATION_CLASS FileInfoClass,BOOLEAN
+bReturnOnlyOneEntry,PUNICODE_STRING PathMask,BOOLEAN bRestartQuery)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>NTSTATUS
+rc;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>rc=OldZwQueryDirectoryFile(hFile,hEvent,IoApcRoutine,IoApcContext,pIoStatusBlock,FileInformationBuffer,FileInformationBufferLength,FileInfoClass,bReturnOnlyOneEntry,PathMask,bRestartQuery);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>return(rc);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>long no,no1;</p>
+
+<p class=MsoNormal>VOID DriverUnload(PDRIVER_OBJECT DriverObject)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>DbgPrint(&quot;Unloading1&quot;);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>_asm cli</p>
+
+<p class=MsoNormal><span style='mso-tab-count:2'>                        </span>KeServiceDescriptorTable.ServiceTableBase[no1]=(unsigned
+int)OldZwQuerySystemInformation;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)OldZwQueryDirectoryFile;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>_asm sti</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS DriverEntry(PDRIVER_OBJECT driverObject,
+PUNICODE_STRING RegistryPath)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>char *p;</p>
+
+<p class=MsoNormal>DbgPrint(&quot;DriverEntry1 %x
+%x&quot;,NewZwQueryDirectoryFile,NewZwQuerySystemInformation);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>driverObject-&gt;DriverUnload
+= DriverUnload;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>p = (char
+*) ZwQueryDirectoryFile;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>p = p + 1;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>no = *(long
+*)p;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>p = (char
+*) ZwQuerySystemInformation;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>p = p + 1;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>no1 =
+*(long *)p;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>OldZwQuerySystemInformation=
+KeServiceDescriptorTable. ServiceTableBase [no1];</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>DbgPrint(&quot;KeServiceDescriptorTable=%x
+%x
+%x&quot;,KeServiceDescriptorTable,KeServiceDescriptorTable.ServiceTableBase,&amp;KeServiceDescriptorTable.ServiceTableBase);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>DbgPrint(&quot;Enteries
+%08x %08x %08x&quot;, KeServiceDescriptorTable.
+ServiceTableBase[0],KeServiceDescriptorTable.ServiceTableBase[1],KeServiceDescriptorTable.
+ServiceTableBase[2]);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>DbgPrint(&quot;hooked
+functions NewZwQueryDirectoryFile=%x NewZwQuerySystemInformation=%x&quot;,NewZwQueryDirectoryFile,NewZwQuerySystemInformation);</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>OldZwQueryDirectoryFile=
+(qtype)KeServiceDescriptorTable. ServiceTableBase [no];</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>_asm cli</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>KeServiceDescriptorTable.ServiceTableBase[no]=(unsigned
+int)NewZwQueryDirectoryFile;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>KeServiceDescriptorTable.ServiceTableBase[no1]=(unsigned
+int)NewZwQuerySystemInformation;</p>
+
+<p class=MsoNormal><span style='mso-tab-count:1'>            </span>_asm sti</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='mso-tab-count:2'>                        </span>return(STATUS_SUCCESS);</p>
+
+<p class=MsoNormal>}</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/sdthook.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:12 GMT -->
+</html>

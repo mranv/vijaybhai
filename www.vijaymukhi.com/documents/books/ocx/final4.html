@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0038)http://users.neca.com/vmis/final4.html -->
+<HTML>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<TITLE>The Makings Of An OCX Container</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 5.50.4611.1300" name=GENERATOR></HEAD>
+<BODY>
+<H2>Methods: A function by any other name means just the same</H2>The next 
+program displays the names of the OCX methods in a list box within a dialog. All 
+we do in this program is sequentially access each element of the link-list that 
+stores the method details. We pick up the name of the method, it's return type, 
+the names and data types of the parameters. We&nbsp;then use suitable string 
+concatenation to display the resultant string in the list box.<BR>The link-list 
+is our way of doing things. We do not know how <I>Microsoft</I> did it. 
+<H4>Program 7</H4><PRE> BOOL MDialog::OnInitDialog()
+ {
+ CDialog::OnInitDialog(); 
+ if(z_nID==IDD_DIALOG1)
+ {
+  
+  // Retain all previously existing code 
+ 
+ }      
+ else
+ {            
+  CListBox* z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+  FData *z_pFDNext;
+  
+  z_pFDNext = z_pFDFirst;
+  while(z_pFDNext)
+  {
+  char *z_sTemp;
+  
+  z_sTemp = (char*) malloc(50);
+  sprintf(z_sTemp,"%s    %s(",z_VarType[z_pFDNext-&gt; z_nRType],z_pFDNext-&gt; z_sFName);
+  if(z_pFDNext-&gt; z_nNumParams)
+    for(int z_nParams = 0; z_nParams &lt; z_pFDNext-&gt; z_nNumParams; z_nParams++)
+    {
+     if(z_nParams)
+      strcat(z_sTemp,",");
+     strcat(z_sTemp,z_VarType[z_pFDNext-&gt; z_pPTypes[z_nParams]]);
+     strcat(z_sTemp," ");
+     strcat(z_sTemp,z_pFDNext-&gt; z_sPName[z_nParams]);
+    }
+  strcat(z_sTemp,")");
+  z_pListBox-&gt; AddString(z_sTemp);
+  free(z_sTemp);
+  z_pFDNext = z_pFDNext-&gt; z_pNext;
+  }     
+  z_pListBox-&gt; SetCurSel(0);
+  return TRUE;
+ }             
+ return TRUE;
+ }       
+ 
+ void MFrameWnd::Methods()
+ {
+ MDialog z_Dialog(IDD_DIALOG3);
+ 
+ z_Dialog.DoModal();
+ }
+</PRE>Select an OCX for display. Choose the <I>Methods...</I> sub-option under 
+<I>Display</I>. This will bring up a dialog box with all the methods of the OCX 
+listed in it. In <I>OnInitDialog()</I>, we read the relevant details about the 
+OCX's methods from the link-list. Using suitable string concatenation, we 
+populate a list box in the dialog box.<BR>
+<H2>Executing a function: At the touch of a button</H2>Executing the <I>OCX</I> 
+methods is no simple task. The conventional practice whereby a function is 
+executed by using it's name along with parameters is no longer applicable. This 
+is because the methods are a part of the <I>OCX</I> and we are calling them from 
+the container. Moreover, these are not functions that are a part of an 
+interface. So the <I>OLE</I> way&nbsp;of <I>QueryInterface()</I> cannot be used 
+either.<BR><I>Microsoft</I> has defined an interface, <I>IDispatch</I>, to 
+handle this situation. As mentioned before every method, property and event of 
+the <I>OCX</I> has an ID. These IDs are used to access them. If we want to 
+execute a certain method, primarily we have to pass it's ID to the <I>OCX</I>. 
+In addition, we have to pass the parameters of the method to the <I>OCX</I> and 
+obtain the return value, if any. <BR>All this is accomplished by calling the 
+function <I>Invoke()</I> of the <I>IDispatch</I> interface of the <I>OCX</I>. It 
+is the responsibility of this function to execute the <I>OCX</I> method 
+indicated by the ID. Talking about the semantics does not help. We have to see 
+it work. The following code will display a dialog in which the methods of the 
+<I>OCX</I> are displayed. The user of the <I>OCX</I> can select the method to be 
+executed and enter parameters that are to be passed to it. The user can then 
+click on a button to execute the method.<BR>
+<H4>Program 8</H4><PRE> BOOL MDialog::OnInitDialog()
+ {
+ CDialog::OnInitDialog(); 
+ if(z_nID==IDD_DIALOG1)
+ {
+  
+  // Retain all previously existing code 
+ 
+ }      
+ else
+ {            
+  CListBox* z_pListBox;
+  FData *z_pFDNext;                   
+  
+  z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+  z_pFDNext = z_pFDFirst;
+  while(z_pFDNext)
+  {
+  char *z_sTemp = (char*) malloc(50);
+ 
+  sprintf(z_sTemp,"%s    %s(",z_VarType[z_pFDNext-&gt; z_nRType],z_pFDNext-&gt; z_sFName);
+  if(z_pFDNext-&gt; z_nNumParams)
+   for(int z_nParams = 0; z_nParams &lt; z_pFDNext-&gt; z_nNumParams; z_nParams++)
+   {
+   if(z_nParams)
+    strcat(z_sTemp,",");
+   strcat(z_sTemp,z_VarType[z_pFDNext-&gt; z_pPTypes[z_nParams]]);
+   strcat(z_sTemp," ");
+   strcat(z_sTemp,z_pFDNext-&gt; z_sPName[z_nParams]);
+   }
+   strcat(z_sTemp,")");
+   z_pListBox-&gt; AddString(z_sTemp);
+   free(z_sTemp);
+   z_pFDNext = z_pFDNext-&gt; z_pNext;
+  }     
+  CEdit *z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+  z_pEdit-&gt; ShowWindow(0);
+  return TRUE;
+ }                          
+ return TRUE;
+ }       
+ 
+ void MFrameWnd::Single()
+ {
+ MDialog m_Dialog(IDD_DIALOG5);
+ 
+ m_Dialog.DoModal();
+ }
+ 
+ void MDialog::Select()
+ {          
+ if(z_nID==IDD_DIALOG5)
+ {
+  CListBox* z_pListBox;
+  CEdit *z_pEdit;
+  int z_nIndex;
+  CString z_sSel;               
+  
+  
+  z_pListBox=(CListBox*)GetDlgItem(IDC_LIST1);
+  z_nIndex = z_pListBox-&gt; GetCurSel();
+  z_pListBox-&gt; GetText(z_nIndex,z_sSel);
+  z_pFDSearch = z_pFDFirst;
+  while(z_pFDSearch)
+  {
+  if(z_sSel.Find(z_pFDSearch-&gt; z_sFName) == -1)
+   z_pFDSearch = z_pFDSearch-&gt; z_pNext; 
+  else
+   break;
+  }
+  z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+  if(z_pFDSearch-&gt; z_nNumParams)
+  {
+  z_pEdit-&gt; SetWindowText("");
+  z_pEdit-&gt; ShowWindow(1);
+  } 
+  else
+  z_pEdit-&gt; ShowWindow(0);
+ }
+ }
+ 
+ void MDialog::SingleFunc()
+ {
+  DISPPARAMS z_DispParam;
+  VARIANTARG *z_Varg;    
+  VARIANT z_Variant;
+  IDispatch *z_pDispatch;  
+  CEdit *z_pEdit;
+  
+  _fmemset(&amp; z_DispParam,0,sizeof(DISPPARAMS));
+  z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+  if(z_pFDSearch-&gt; z_nNumParams)
+  {
+  z_DispParam.cArgs = z_pFDSearch-&gt; z_nNumParams;
+  z_Varg = (VARIANTARG*) malloc (z_pFDSearch-&gt; z_nNumParams * sizeof(VARIANTARG));
+  for(int  z_nTemp  =  0;z_nTemp &lt; z_pFDSearch-&gt; z_nNumParams;z_nTemp++)
+  {
+   char *z_sData;
+   int z_nCopied;
+   
+   z_sData = (char*)malloc(15);
+   z_nCopied = z_pEdit-&gt; GetLine(z_nTemp,z_sData,15); 
+   *(z_sData + z_nCopied)='\0'; 
+   Initialize(z_Varg,z_sData,z_nTemp);
+   free(z_sData);
+  }
+  z_DispParam.rgvarg = z_Varg;
+  } 
+  z_pOleObject-&gt; QueryInterface(IID_IDispatch,(void**)&amp; z_pDispatch);
+  z_pDispatch-&gt; Invoke(z_pFDSearch-&gt; z_lDispID,IID_NULL,1033,DISPATCH_METHOD,&amp; z_DispParam,&amp; z_Variant,0,0);   
+  RetVal(&amp; z_Variant);
+  z_pDispatch-&gt; Release(); 
+  if(z_pFDSearch-&gt; z_nNumParams)
+  free(z_Varg);
+ }
+ 
+ void MDialog::Initialize(VARIANT *z_VargTemp,char *z_sParams,int z_nIndex)
+ {
+ z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex - 1].vt = z_pFDSearch-&gt; z_pPTypes[z_nIndex];
+ if(!strcmp(z_VarType[z_pFDSearch-&gt; z_pPTypes[z_nIndex]] ,"VT_I2"))
+  z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex &nbsp;- 1].iVal=atoi(z_sParams);
+ if(!strcmp(z_VarType[z_pFDSearch-&gt; z_pPTypes[z_nIndex]] ,"VT_I4"))
+  z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex &nbsp;- 1].lVal=atol(z_sParams);
+ if(!strcmp(z_VarType[z_pFDSearch-&gt; z_pPTypes[z_nIndex]] ,"VT_R4"))
+  z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex &nbsp;- 1].fltVal=(float)atof(z_sParams);
+ if(!strcmp(z_VarType[z_pFDSearch-&gt; z_pPTypes[z_nIndex]] ,"VT_BSTR"))
+ { 
+  z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex &nbsp;- 1].bstrVal=(char*) malloc(strlen(z_sParams) + 1);
+  strcpy(z_VargTemp[z_pFDSearch-&gt; z_nNumParams - z_nIndex - 1].bstrVal,z_sParams);
+ }
+ }
+ 
+ void MDialog::RetVal(VARIANT *z_pVariant)
+ {  
+ char z_sTemp[200];        
+ VARTYPE z_Vt;
+ z_Vt = z_pVariant-&gt; vt;
+ if(z_Vt &gt; 13)                                 
+  z_Vt = z_Vt - 2; 
+ if(!strcmp(z_VarType[z_Vt],"VT_I2"))
+  sprintf(z_sTemp,"Data  Type  =  %s\nValue  = %d",z_VarType[z_Vt],z_pVariant-&gt; iVal);
+ if(!strcmp(z_VarType[z_Vt],"VT_I4"))
+  sprintf(z_sTemp,"Data  Type  =  %s\nValue  = %ld",z_VarType[z_Vt],z_pVariant-&gt; lVal); 
+ if(!strcmp(z_VarType[z_Vt],"VT_R4"))
+  sprintf(z_sTemp,"Data  Type  =  %s\nValue  = %4.3f",z_VarType[z_Vt],z_pVariant-&gt; fltVal);
+ if(!strcmp(z_VarType[z_Vt],"VT_BSTR"))
+  sprintf(z_sTemp,"Data  Type  =  %s\nValue  = %s",z_VarType[z_Vt],z_pVariant-&gt; bstrVal);
+ if(!strcmp(z_VarType[z_Vt],"VT_EMPTY"))
+  strcpy(z_sTemp,"No return value");
+ MessageBox(z_sTemp,"The return value details"); 
+ } 
+</PRE>Select the sub-option <I>Invoke A Single Method...</I> under the 
+<I>Edit</I> menu option. This will bring up a dialog titled <I>`Executing Single 
+Methods'</I> which has a list box populated with the names of the <I>OCX</I> 
+methods, the names and data types of the parameters and the return type of the 
+method.<BR>There is a multi-line edit control in which we are to enter each 
+of&nbsp;the&nbsp;parameters on a separate line and in the proper order. This 
+edit control is displayed only when the user selects a method that is to be 
+passed some parameters. In the case of methods where&nbsp;there are no 
+parameters to be passed, the edit control is hidden from view. <BR>We select the 
+method to be executed from the listbox by highlighting it. When we have entered 
+the parameters; if any; we are to click on the push button labelled 
+<I>'Invoke'</I>. This will cause the selected method to be executed.<BR>The 
+function <I>Single()</I> gets executed when we select the menu option <I>Invoke 
+A Single Method...</I>. The function displays the appropriate dialog box. In 
+<I>OnInitDialog()</I>, we use the details stored in the link-list holding the 
+information about the methods and appropriate string concatenation to populate 
+the listbox in the dialog.<BR>The function <I>Select()</I> is responsible for 
+the display of the edit control. This function is called every time the user 
+selects a new method from the list box. This is accomplished by the use of the 
+<I>ON_LBN_SELCHANGE()</I> macro. <I>Select()</I> uses the link-list to determine 
+if the selected function is to be passed any parameters and appropriately 
+displays or hides the edit control. When the user clicks on the <I>`Invoke'</I> 
+button, the function <I>SingleFunc()</I> gets executed. As stated earlier, to 
+execute an <I>OCX</I> method, we use the function <I>Invoke()</I> of the 
+<I>IDispatch</I> interface of the <I>OCX</I>.<BR>The parameters to the accessed 
+<I>OCX</I> method are passed using <I>VARIANTARG</I> structures. The number of 
+parameters vary from method to method and hence we create an array of 
+<I>VARIANTARG</I> structures. The length of this array is equal to the number of 
+parameters that a method requires.<BR>The <I>VARIANTARG</I> structure contains a 
+variable <I>vt</I> that is initialized to hold the data type of the parameter. 
+We use the enumerators listed under <I>VARENUM</I> in assigning a value to 
+<I>vt</I>. Since, the type of variable required to hold the data would change 
+with the data type; the <I>VARIANTARG</I> structure is provided with a 
+union.<BR>The union consists of variables of different data types. The variable 
+of the union selected for initialization depends on the data type of the 
+parameter. The <I>VARIANTARG</I> structure will, thus, hold the data type and 
+the actual value of the parameter.<BR>There is a catch to the situation. 
+<B><I>The array of </I>VARIANTARG<I> structures has to be initialized in the 
+reverse order. That is the last member of the array of </I>VARIANTARG<I> 
+structure will hold details about the first parameter</i></B>.<BR>In 
+<I>Initialize()</I>, we use the data type of the parameter read from the 
+link-list to convert the data which is in the form of a string to the 
+appropriate type. The data type determines the appropriate variable in the union 
+of the <I>VARIANTARG</I> structure to be initialized. We have to pass the array 
+of the <I>VARIANTARG</I> structures to the <I>OCX</I>. In addition, we have also 
+to indicate the number of parameters. This information is packaged into a 
+<I>DISPPARAMS</I> structure.<BR>The <I>DISPPARAMS</I> structure holds the number 
+of parameters of the method. It has an element that is to be initialized to 
+point to the start of the array of <I>VARIANTARG</I> structures. Thus, the 
+<I>OCX</I> will retrieve all information from the <I>DISPPARAMS</I> structure 
+and execute the selected method.<BR><I>Invoke()</I> is to be passed a total of 
+eight parameters. &nbsp;The first is the ID of the method to be executed. This 
+helps the <I>OCX</I> &nbsp;identify &nbsp;the &nbsp;method &nbsp;to &nbsp;be 
+&nbsp;executed. The <I>Invoke()</I> function, besides being used to 
+execute&nbsp;methods, can also be used to access properties of the <I>OCX</I>. 
+We have to indicate the nature of the operation <I>Invoke()</I> is being used 
+for. The fourth parameter to <I>Invoke()</I> indicates the nature of the 
+accessed member of the <I>OCX</I>. In this case, it is set to 
+<I>DISPATCH_METHOD</I>. The fifth parameter is used to pass the loaded 
+<I>DISPPARAMS</I> structure to the <I>OCX.</I> <BR>Merely executing a method is 
+not enough. It is also essential that we are able to reap the benefits of what 
+we sow. The return value from the method executed is just as important. This 
+value is returned into a <I>VARIANT</I> structure. The address of the 
+<I>VARIANT</I> structure is passed as the sixth parameter of the function 
+<I>Invoke()</I>. It is upto the user of the function to extract the return value 
+from this structure.<BR><I>VARIANT</I> is another name for a <I>VARIANTARG</I> 
+structure. To extract the return values from this structure we first determine 
+the data type of the return value. This is stored in the variable <I>vt</I> of 
+the <I>VARIANT</I> structure. Just as with the <I>VARIANTARG</I> structure, the 
+value in <I>vt</I> decides which element in the union within the structure will 
+hold the actual value returned from the <I>OCX</I> method. For example, if 
+<I>vt</I> is equal to <B><I>VT_I2</i></B>, the data is stored in the member 
+<B><I>iVal</i></B> of the union within the&nbsp;<I>VARIANT </I>structure. If 
+<I>vt</I> is <B><I>VT_BSTR</i></B>, the return value is stored in 
+<I>bstrVal</I>.<BR>In the above explanation, what we didn't tell you is that the 
+return value is always stored in the same fashion in the union. How it is 
+accessed differs depending on the data type. The function <I>RetVal()</I> is 
+dedicated to handling return values. It extracts the data type from the 
+<I>VARIANT</I> structure and uses it to convert the data into a string. This 
+string is displayed in a messagebox.<BR>
+<H2>Executing multiple functions: The more the merrier</H2>The above method of 
+executing <I>OCX</I> functions is rarely followed in real-life. In true-to-life 
+applications a user would write the name of the function and it's parameters as 
+a part of the code. For example in the case of <I>Visual Basic</I>; calls to 
+<I>OCX</I> methods will be written by the user as a part of the script. 
+<I>Visual Basic</I> will determine if a function call refers &nbsp;to &nbsp;an 
+<I>OCX</I> method. If yes, then it uses <I>Invoke()</I> to call the appropriate 
+<I>OCX</I> method. This means that we could call one or more <I>OCX</I> methods 
+as and when required. The following program will allow us to call more than one 
+<I>OCX</I> method at a time. <BR>
+<H4>Program 9</H4><PRE> 
+ void MFrameWnd::Multiple()
+ {
+  MDialog z_Dialog(IDD_DIALOG6);
+ 
+  z_Dialog.DoModal();
+ }
+ 
+ void MDialog::Many()
+ {
+  CEdit *z_pEdit;
+  int z_nCount;
+  
+  z_pEdit=(CEdit*)GetDlgItem(IDC_EDIT1);
+  z_nCount = z_pEdit-&gt; GetLineCount();
+  for (int z_nTemp = 0; z_nTemp &lt; z_nCount;z_nTemp++)
+  {
+   char *z_sSel;
+   int z_nLen;
+   
+   z_sSel = (char*)malloc(30);
+   z_nLen=z_pEdit-&gt; GetLine(z_nTemp,z_sSel,30);                               
+   
+   if(!z_nLen)
+      break;
+   z_sSel[z_nLen] = '\0';
+   FuncExec(z_sSel);    
+   free(z_sSel);
+  }                   
+ } 
+ 
+ void MDialog::FuncExec(char *z_sSel)
+ {   
+  DISPPARAMS z_DispParam;
+  VARIANTARG *z_Varg;
+  VARIANT z_Variant;                        
+  IDispatch *z_pDispatch;
+  int z_nPos;
+  char *z_sFName;
+ 
+  _fmemset(&amp; z_DispParam,0,sizeof(DISPPARAMS));  
+  z_pFDSearch = z_pFDFirst;
+  z_nPos = strcspn(z_sSel,"(");
+  z_sFName = (char*)malloc(strlen(z_sSel) + 1);
+  strcpy(z_sFName,z_sSel);
+  z_sFName[z_nPos] = '\0'; 
+  while(z_pFDSearch)
+  {                
+   if(!strcmp(z_pFDSearch-&gt; z_sFName,z_sFName))
+    break;
+   z_pFDSearch= z_pFDSearch-&gt; z_pNext;
+  }
+  free(z_sFName);
+  while(z_nPos &gt; = 0)
+  {
+   z_sSel++;
+   z_nPos--;
+  }  
+  if(z_pFDSearch-&gt; z_nNumParams)
+  {
+   z_DispParam.cArgs=z_pFDSearch-&gt; z_nNumParams;
+   z_Varg = (VARIANTARG*) malloc (z_pFDSearch-&gt; z_nNumParams * sizeof(VARIANTARG));
+   for(int z_nTemp1 = 0; z_nTemp1 &lt; z_pFDSearch-&gt; z_nNumParams ;z_nTemp1++)
+   {
+        char *z_sParams = (char*)malloc(10);
+       z_nPos = 0;
+       while(( *z_sSel  != ' ') &amp; &amp; ( *z_sSel !=',') &amp; &amp; (*z_sSel != ')'  ))
+       {
+         *(z_sParams + z_nPos)=*z_sSel;
+         z_nPos++;     
+         z_sSel++;
+       }                     
+       *(z_sParams + z_nPos)= '\0';
+       z_sSel++;
+       Initialize(z_Varg,z_sParams,z_nTemp1); 
+       free(z_sParams);
+     }
+     z_DispParam.rgvarg=z_Varg;
+   } 
+   z_pOleObject-&gt; QueryInterface(IID_IDispatch,(void**)&amp; z_pDispatch);
+   z_pDispatch-&gt; Invoke(z_pFDSearch- &gt; z_lDispID,IID_NULL,1033,DISPATCH_METHOD,&amp; z_DispParam,&amp; z_Variant,0,0);                                           
+   RetVal(&amp; z_Variant);
+   z_pDispatch-&gt; Release();                                                        
+ }
+
+</PRE>Select &nbsp;the &nbsp;<I>Invoke Multiple Methods...</I> sub-option under 
+<I>Edit</I>. This will bring up a dialog box in which the methods of the 
+selected <I>OCX</I> are displayed in a list-box. In the edit control within the 
+dialog, enter the methods to be executed in the 
+format:<BR><CODE>NameOfFunction(Param 1,Param 2...,Param n)</CODE><BR>Each 
+&nbsp;method &nbsp;is added on a separate line. Click on the button 
+<I>`Invoke'</I> to see the methods executed one-by-one in the order that they 
+have been entered.<BR><I>OnInitDialog()</I> is once again responsible for 
+populating the listbox of the dialog. When the user clicks on <I>'Invoke'</I>, 
+the function <I>Many()</I> gets executed. All this function does is it picks up 
+each string from the multi-line edit control and passes it to <I>FuncExec()</I>. 
+In <I>FuncExec()</I>, we use string parsing to determine the name of the method. 
+The methods link-list is searched to determine the number and type of the 
+parameters for the method. If the method has any parameters we create a suitable 
+length array of <I>VARIANTARG</I> structures.<BR>We extract each parameter value 
+in turn from the string read from the edit control. The extracted parameter 
+value is in the form of a string and is passed to <I>Initialize()</I>. This 
+routine is repeated for each parameter of the method. The <I>DISPPARAMS</I> 
+structure is appropriately initialized and then <I>Invoke()</I> is called. Thus, 
+the method gets executed. <I>RetVal()</I> is called to display the return values 
+if any. This entire process is repeated for every method entered in the edit 
+control.<BR><I>PowerBuilder</I> and <I>Visual Basic</I> are examples of the kind 
+of applications that would eventually act as <I>OCX</I> containers. Each of 
+these has it's own programming language. We did not want to write our own 
+programming language because it would add a lot of extraneous code, code that 
+has more to do with UI than with <I>OLE</I>. So we execute methods the way we 
+do. This is not only true of methods but also of properties and events.<BR>
+<P><A href="http://users.neca.com/vmis/final5.html">Continue</A> 
+</P></BODY>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

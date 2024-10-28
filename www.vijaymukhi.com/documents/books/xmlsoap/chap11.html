@@ -1,0 +1,2606 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap11.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:05 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap11_files/filelist.html">
+<link rel=Edit-Time-Data href="chap11_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>12</o:TotalTime>
+  <o:Created>2002-01-27T20:31:00Z</o:Created>
+  <o:LastSaved>2002-01-27T22:09:00Z</o:LastSaved>
+  <o:Pages>21</o:Pages>
+  <o:Words>6877</o:Words>
+  <o:Characters>39200</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>326</o:Lines>
+  <o:Paragraphs>78</o:Paragraphs>
+  <o:CharactersWithSpaces>48140</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>11</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>ASP.Net WebServices</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The very purpose of this chapter
+is to introduce the use of complex regular expressions, to specify the content
+that should be selected in an HTML file. People have invested millions of
+dollars in building the html infrastructure. Hence, it cannot be simply wished
+away.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An html file could contain stock
+prices, which needs to be extracted with minimal effort.<span
+style="mso-spacerun: yes">  </span>Besides, there are web sites like Barnes and
+Noble or Amazon, which run a bookshop online. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>These servers contains a script
+written in any scripting language, which accepts a parameter, such as- an ISBN
+number, and retrieves a book that tallies with this number, from its database.
+Thus, it is essential to command the ability to pass parameters to a program,
+which is running on the web server. The custom extensions are one of the
+various ways of using the already existent infrastructure.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This modus operandi is termed as
+screen or html scrapping, wherein, the contents of an html file are accessed,
+and the values are extracted as per our bidding. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Web site can now be converted
+into a Web Service by employing the extant logic and data. Thus, the knowledge
+of ASP.NET is put to effective use, thereby, evading the compulsion to dabble
+around with protocols of HTTP.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u></p>
+
+<p class=ILprg>&lt;html&gt;</p>
+
+<p class=ILprg>&lt;script language=&quot;C#&quot; runat=&quot;server&quot;&gt;</p>
+
+<p class=ILprg>public void Page_Load(Object o, EventArgs E) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>try </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz m= new zzz();</p>
+
+<p class=ILprg>abc1Matches n = m.abc1();</p>
+
+<p class=ILprg>a1.InnerHtml = n.aa;</p>
+
+<p class=ILprg>a2.InnerHtml = n.cc;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>catch (Exception e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>a3.InnerHtml = &quot;Error &quot; + e.ToString();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>&lt;/script&gt;</p>
+
+<p class=ILprg>&lt;form runat=&quot;server&quot;&gt;</p>
+
+<p class=ILprg>&lt;span id=&quot;a1&quot; runat=&quot;server&quot;/&gt;</p>
+
+<p class=ILprg>&lt;p&gt;</p>
+
+<p class=ILprg>&lt;span id=&quot;a2&quot; runat=&quot;server&quot;/&gt;</p>
+
+<p class=ILprg>&lt;p&gt;</p>
+
+<p class=ILprg>&lt;span id=&quot;a3&quot; runat=&quot;server&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/form&gt;</p>
+
+<p class=ILprg>&lt;/body&gt;</p>
+
+<p class=ILprg>&lt;/html&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/1999/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot; xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;</p>
+
+<p class=ILprg>&lt;types&gt;</p>
+
+<p class=ILprg>&lt;s:schema targetNamespace=&quot;http://tempuri.org/&quot;
+attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:element name=&quot;s1&quot; type=&quot;s:string&quot;
+nullable=&quot;true&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/s:schema&gt;</p>
+
+<p class=ILprg>&lt;/types&gt;</p>
+
+<p class=ILprg>&lt;message name=&quot;i1&quot;/&gt;</p>
+
+<p class=ILprg>&lt;message name=&quot;o1&quot;&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;Body&quot; element=&quot;s0:s1&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/message&gt;</p>
+
+<p class=ILprg>&lt;portType name=&quot;p1&quot;&gt;</p>
+
+<p class=ILprg>&lt;operation name=&quot;abc1&quot;&gt;</p>
+
+<p class=ILprg>&lt;input message=&quot;s0:i1&quot;/&gt;</p>
+
+<p class=ILprg>&lt;output message=&quot;s0:o1&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/operation&gt;</p>
+
+<p class=ILprg>&lt;/portType&gt;</p>
+
+<p class=ILprg>&lt;binding name=&quot;b1&quot; type=&quot;s0:p1&quot;&gt;</p>
+
+<p class=ILprg>&lt;http:binding verb=&quot;GET&quot;/&gt;</p>
+
+<p class=ILprg>&lt;operation name=&quot;abc1&quot;&gt;</p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/a.html&quot;/&gt;</p>
+
+<p class=ILprg>&lt;input&gt;</p>
+
+<p class=ILprg>&lt;http:urlEncoded/&gt;</p>
+
+<p class=ILprg>&lt;/input&gt;</p>
+
+<p class=ILprg>&lt;output&gt;</p>
+
+<p class=ILprg>&lt;text
+xmlns=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;&gt;</p>
+
+<p class=ILprg>&lt;match name='aa' pattern='bb&amp;gt;(.*?)&amp;lt;'/&gt;</p>
+
+<p class=ILprg>&lt;match name='cc' pattern='dd&amp;gt;(.*?)&amp;lt;'/&gt;</p>
+
+<p class=ILprg>&lt;/text&gt;</p>
+
+<p class=ILprg>&lt;/output&gt;</p>
+
+<p class=ILprg>&lt;/operation&gt;</p>
+
+<p class=ILprg>&lt;/binding&gt;</p>
+
+<p class=ILprg>&lt;service name=&quot;zzz&quot;&gt;</p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:b1&quot;&gt;</p>
+
+<p class=ILprg>&lt;http:address location=&quot;http://localhost&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/port&gt;</p>
+
+<p class=ILprg>&lt;/service&gt;</p>
+
+<p class=ILprg>&lt;/definitions&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>using System.Xml.Serialization;</p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Web.Services.Protocols;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz : System.Web.Services.Protocols.HttpGetClientProtocol
+{</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>this.Url = &quot;http://localhost&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.HttpMethodAttribute
+(typeof(System.Web.Services.Protocols.TextReturnReader),
+typeof(System.Web.Services.Protocols.UrlParameterWriter))]</p>
+
+<p class=ILprg>public abc1Matches abc1() {</p>
+
+<p class=ILprg>return ((abc1Matches)(this.Invoke(&quot;abc1&quot;, (this.Url +
+&quot;/a.html&quot;), new object[0])));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class abc1Matches </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.MatchAttribute
+(&quot;bb&gt;(.*?)&lt;&quot;)]</p>
+
+<p class=ILprg>public string aa;</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.MatchAttribute(&quot;dd&gt;(.*?)&lt;&quot;)]</p>
+
+<p class=ILprg>public string cc;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.html</u></p>
+
+<p class=ILprg>&lt;HTML&gt;</p>
+
+<p class=ILprg>&lt;HEAD&gt;</p>
+
+<p class=ILprg>&lt;bb&gt;vijay&lt;/bb&gt;</p>
+
+<p class=ILprg>&lt;/HEAD&gt;</p>
+
+<p class=ILprg>&lt;BODY&gt;</p>
+
+<p class=ILprg>&lt;dd&gt;Mukhi&lt;/dd&gt;</p>
+
+<p class=ILprg>&lt;/BODY&gt;</p>
+
+<p class=ILprg>&lt;/HTML&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>a.bat</u></p>
+
+<p class=ILoutput>del *.dll</p>
+
+<p class=ILoutput>del zzz.cs</p>
+
+<p class=ILoutput>wsdl aa.wsdl</p>
+
+<p class=ILoutput>csc /t:library zzz.cs</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Vijay</p>
+
+<p class=ILoutput>Mukhi</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the aspx file is loaded in the
+browser, the code specified in the Page_Load function is called first. Here, we
+first create an object 'm', as an instance of class zzz. This class is present
+in the dll, which gets created in the bin folder. Once the object has been
+created, we call a function named abc1, from this class. The return value of
+this function, which is an abc1Matches object, is stored in the object 'n'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abc1Matches class is present
+in the proxy dll. It contains two members named aa and cc, both of type string.
+The function abc1 first initializes the two members, and thereafter, returns
+this object. The values contained in them are then displayed, using the two
+spans, viz.a1 and a2. If an error occurs, the text of the error is displayed,
+using the span a3.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If you attempt to load the aspx
+file without creating the dll, an error would be generated. To create these two
+classes in the dll, the presence of a WSDL file is inescapable. So, we create
+the wsdl file manually, and then, run the WSDL program on it. Once the .cs file
+is created, the library is formed, by employing the services of the csharp
+compiler. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As usual, the wsdl file has the
+root tag definitions embedded in it, containing countless namespace prefixes.
+Then, we encounter the type element, which simply defines an element s1. Its
+type belongs to the string type in the XML schema world. Since this is our
+second rendezvous with the wsdl file, we will elude delving into the minute
+details, for instance- the types referring to a schema document, et al. Next,
+we find two messages:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>i1 - It is an empty message.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>o1 - It has one part called Body,
+which has the likeness to an element of a string type. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Messages use the portType
+element. Notwithstanding the fact that the messages are blank, the element must
+be specified. The part name is called Body, although any other name would also
+have sufficed, since it is not referred to anywhere in the program. This
+message contains a string text. Had we so desired, we could have completely
+omitted the types section; and instead, we could have inserted the part element
+with the following: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;part type=&quot;s:string&quot;/&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However, this is an allusive way
+or a convoluted way of stating the same thing. Messages are the foot soldiers
+for the portType, and they define an operation. Thus, the message element
+called p1 defines an operation abc1, which is to be performed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An operation expects an input
+and an output type. The messages assign the contents to these types. The
+message i1 assigns a value of 'null' to the input type, whereas, the message o1
+assigns a string to the output type. The binding b1 accepts the details from a
+portType, and it conjoins the verb GET to it. The verb cannot have arbitrary
+names like 'vijay', POST, PUT, etc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Assigning an incorrect value to
+the verb will bring the WSDL to a grinding halt. As a consequence of this, the
+zzz.cs file that gets generated, would be erroneous. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The operation element specifies
+the name of the html file that we want to work with. The / symbol is of utmost
+significance, since it indicates that, the file will be found in the root of
+the web server's directory, i.e. at c:\inetpub\wwwroot. The input is specified
+as http:urlencoded. As a result of this, all values that are sent across, shall
+be URL encoded. It is the http specification, which finally determines the url.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, if we have two textboxes
+named a1 and a2, containing 'vijay' and 'mukhi' respectively, the URL shall
+contain the following: a1=vijay&amp;a2=mukhi.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The vital component of the above
+exercise is the output element. The text element specifies the default
+namespace for the elements that follow, and it is well nigh impossible to
+mutate these URIs. They are hard-wired into the WSDL program. However, when we
+go to the above URI's, we do not chance upon anything of interest. In this
+case, the URI informs us that there is no valid page at the Microsoft site.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we come across the two
+match elements, named aa and cc. These are the two elements that are referred
+to, in the aspx file. We will elucidate the pattern in due course. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, there is a service
+called zzz, which is the name of our class. It is followed by the port
+bindings, which specify the newly created binding known as b1. The address of
+a.html is also present on the server, i.e. localhost. When we run the WSDL program
+on this wsdl file, it will result in the creation of a file called zzz.cs,
+embodying a class called zzz. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above WSDL file is grossly
+deviant from what we have utilized so far, since SOAP is conspicuous by its
+absence right now. The class zzz is derived from the class
+HttpGetClientProtocol. The Url property does not specify either the asmx file
+or any other file; it only contains the machine name.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the proxy, the attribute of
+HttpMethodAttribute that has been specified, has never been sighted so far,
+since the client had been using SOAP. This attribute is pressed into action
+only when clients begin to use the HTTP-GET or HTTP-POST methods. This
+attribute is responsible for determining the following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The serialization that would occur,
+for parameters that are sent across the wire to a WebService. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The manner in which the result that
+has been returned, would be received.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Most of these attribute classes
+cannot be inherited, since they are sealed classes. The first parameter to the
+constructor is a Type, which embodies a class that is used to deserialize the
+response from the web service. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is no help or
+documentation available for the class TextReturnReader. Hence, we are not in a
+position to elaborate on it. The second parameter in the attribute is the
+UrlParameterWriter class, which serializes the parameters for the web service.
+In this case too, we feel stranded, since the help pages for this class appear
+to be either stolen, or misplaced. There could also be a distant possibility
+that Microsoft never got around to fabricating them. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute applies to the
+function abc1, which corresponds with the name of the operation. The return
+type consists of the name of the function 'abc1', with the word 'Matches'
+appended to it. The return value, i.e. class abc1Matches, contains two string
+variables, viz. aa and cc. This is because, there exist two match elements with
+identical names.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The fucntion abc1 then calls the
+familiar Invoke function, with the first parameter as abc1. The second parameter
+is a string, which finally crystallizes into http://localhost/a.html. The third
+parameter indicates that no parameters exist. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When abc is called, it returns
+an object, which looks like 'abc1Matches'. The two spans are initialized, with
+the help of these two variables. In the class abc1Matches, each of the
+variables contains an attribute of MatchAttribute. As is evident from the name,
+the attributes that are to be matched, have been specified. The singular
+parameter to the constructor is a regular expression, which locates a string in
+the html file, a.html.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The html file contains two tags
+named bb and dd. The two variables in the abc1Matches object, i.e. aa and cc,
+are assigned the values 'vijay' and 'Mukhi', respectively.<span
+style="mso-spacerun: yes">  </span>This happens since these words are enclosed
+in the tags 'bb' and 'dd', correspondingly. Finally, these variables are
+displayed in the span elements. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the contents placed
+between the tags in an html file are picked up, merely by creating a WSDL file
+with a match element.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>GET Request</u></p>
+
+<p class=ILoutput>GET /a.html HTTP/1.1</p>
+
+<p class=ILoutput>User-Agent Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services
+Client Protocol 1.0.2914.16)</p>
+
+<p class=ILoutput>Connection: Keep-Alive</p>
+
+<p class=ILoutput>Host:localhost</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>GET Response</u></p>
+
+<p class=ILoutput>HTTP/1.1 200 OK</p>
+
+<p class=ILoutput>Server: Microsoft-IIS/5.0</p>
+
+<p class=ILoutput>Date: Fri, 19 Oct 20 01 02:54:07 GMT</p>
+
+<p class=ILoutput>Content-Type: text/html</p>
+
+<p class=ILoutput>Accept-Ranges: bytes</p>
+
+<p class=ILoutput>Last-Modified: Wed, 17 Oct 2001 09:44:20 GMT</p>
+
+<p class=ILoutput>ETag: &quot;0f2624bf056c11:9ca&quot;</p>
+
+<p class=ILoutput>Content-Length: 83</p>
+
+<p class=ILoutput>&lt;HTML&gt;</p>
+
+<p class=ILoutput>&lt;HEAD&gt;</p>
+
+<p class=ILoutput>&lt;bb&gt;vijay&lt;/bb&gt;</p>
+
+<p class=ILoutput>&lt;/HEAD&gt;</p>
+
+<p class=ILoutput>&lt;BODY&gt;.</p>
+
+<p class=ILoutput>&lt;dd&gt;Mukhi&lt;/dd&gt;.</p>
+
+<p class=ILoutput>&lt;/BODY&gt;</p>
+
+<p class=ILoutput>&lt;/HTML&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;http:address location=&quot;http://localhost:8080&quot;
+/&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to ameliorate our
+understanding of the above example, we effect a minute alteration to the WSDL
+file. This is done by way of modifying the port number to 8080 in the address
+element; subsequent to which, we run the file a.bat. The SOAP trace program is
+set to 'unformatted trace', since we are interested in deciphering the HTTP
+headers, which are transported to and fro.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The formatted option only gives
+the SOAP payload, which does not get generated in the above case. The trace,
+very clearly and cogently reveals that the Get request asks for the a.html file
+from the server. The web server concedes to this request, and in doing so,
+returns the entire HTML file. The SOAP data is nowhere in sight at the moment!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When the Invoke function scrutinizes
+the parameters, it awakens to the fact that, this function is distinct from the
+Invoke function that used to get called earlier. It is privy to the fact that
+it has to pick up the html file using the HTTP protocol, and that, an object
+has to be returned in another object, which is an instance of abc1Matches. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, in order to assign values
+to the two variables 'aa' and 'cc', the pattern is matched in the html file.
+The variable 'aa' contains a pattern that begins with the name of tag 'bb'. This
+tag is followed by the &gt; and &lt; symbols, which enclose a pattern that is
+in accordance with the rules governing a regular expression. We will not
+sermonize on the topic of regular expressions. We shall only divulge the
+following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The . symbol matches a single
+character.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The * symbol matches one or more
+characters.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>If we remove the quantifier?, all
+characters will be matched, because the ? symbol chooses the least match.</p>
+
+<p class=ILbase><span style='color:windowtext'><span style='mso-tab-count:1'>            </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the WSDL file, the pattern
+attribute is written as bb&amp;gt;(.*?)&amp;lt;. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence with the tag name
+'bb'. Since we cannot insert the &lt; and &gt; symbols in an XML file, as these
+are reserved symbols, we use the more elaborate form, i.e. &amp;gt;. The open
+and close symbols are part and parcel of the syntax. An error will be generated
+if they are dispensed with. The actual pattern eventually matches the smallest
+content in the tag 'bb'. The value 'vijay' is then supplied to the variable aa.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The pattern matching is
+fashioned by the Invoke function, after it receives the html file. In this
+manner, we can access the content of any tag in an html file, with the least
+amount of effort.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.html</u></p>
+
+<p class=ILprg>&lt;bb&gt;vijay is good&lt;/bb&gt;</p>
+
+<p class=ILprg>&lt;bb&gt;vijay1&lt;/bb&gt;</p>
+
+<p class=ILprg>&lt;ddd&gt;Mukhi1&lt;/ddd&gt;</p>
+
+<p class=ILprg>&lt;dd&gt;Mukhi&lt;/dd&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>vijay is good </p>
+
+<p class=ILoutput>Mukhi1 </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The a.html file is now modified
+to encompass only the required tags. All the other tags, like Body, can be
+eradicated with effortless ease. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file now contains two
+occurrences of the tag bb. However, the output displays only the first
+occurrence of the tag. Resorting to the same analogy, the second tag name has
+been modified from dd to ddd. Furthermore, treading close on the heels of ddd,
+there subsists another tag named dd. However, the content of ddd is displayed,
+since it works on the basis of 'first come first served'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u></p>
+
+<p class=ILprg>&lt;%@ Page Language=&quot;c#&quot; %&gt;</p>
+
+<p class=ILprg>&lt;%@ Import Namespace=&quot;System.Net&quot; %&gt;</p>
+
+<p class=ILprg>&lt;Script runat=&quot;server&quot;&gt;</p>
+
+<p class=ILprg>public void abc(Object s, EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>abc1Matches m;</p>
+
+<p class=ILprg>m = a.abc1(t1.Text,&quot;Bye&quot;);</p>
+
+<p class=ILprg>l1.Text = m.aa;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>&lt;/Script&gt;</p>
+
+<p class=ILprg>&lt;asp:Label id=l1 runat=&quot;server&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/font&gt;&lt;/P&gt;&lt;FONT face=arial&gt;&lt;B&gt;</p>
+
+<p class=ILprg>&lt;P&gt;</p>
+
+<p class=ILprg>&lt;form runat=&quot;server&quot;&gt;</p>
+
+<p class=ILprg>&lt;asp:TextBox id=t1 runat=&quot;server&quot; /&gt;&lt;P&gt;</p>
+
+<p class=ILprg>&lt;asp:Button runat=&quot;server&quot; Text=&quot;Click&quot;
+OnClick=&quot;abc&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/form&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.html</u></p>
+
+<p class=ILprg>&lt;HTML&gt;</p>
+
+<p class=ILprg>&lt;TITLE&gt;Vijay.com:name:XML .NET&lt;/TITLE&gt;</p>
+
+<p class=ILprg>&lt;/html&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;message name=&quot;i1&quot;&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;mukhi&quot; type=&quot;s:string&quot;/&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;sonal&quot; type=&quot;s:string&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/message&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>&lt;text
+xmlns=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;&gt;</p>
+
+<p class=ILprg>&lt;match name=&quot;aa&quot;
+pattern=&quot;TITLE&amp;gt;vijay.com.name.(.*?)&amp;lt;&quot;
+ignoreCase=&quot;true&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/text&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public abc1Matches abc1(string mukhi, string sonal) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return ((abc1Matches)(this.Invoke(&quot;abc1&quot;, (this.Url +
+&quot;/a.html&quot;), new object[] {mukhi, sonal})));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class abc1Matches {</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.MatchAttribute(&quot;TITLE&gt;vijay.com.name.(.*?)&lt;&quot;,
+IgnoreCase=true)]</p>
+
+<p class=ILprg>public string aa;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u></p>
+
+<p class=ILoutput>GET /a.html?mukhi=13&amp;sonal=Bye HTTP 1.1</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>XML.Net</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above aspx file, the
+function abc creates the zzz object as before, with one exception, i.e. the
+abc1 function accepts two parameters, both of which are strings. Therefore, in
+the wsdl file, we must incorporate a mechanism of specifying parameters to the
+function. To facilitate this, we carry out the requisite revisions to the WSDL
+file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the earlier program, the
+message named i1 was devoid of any content or parts. But now, we inset two
+parts in the message, viz. 'mukhi' and 'sonal'. In a GET method, these parts
+merely comport themselves as parameters to the operation, which consumes this
+part. The operation abc1 then simply creates a function abc1, which accepts two
+string parameters, 'vijay' and 'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second change incorporated
+in the wsdl file relates to the match element. Here, the pattern attribute is
+specified in the form of a Regular Expression, which would be employed to extract
+data. We intend to extract data contained in the tag TITLE, which has static or
+boilerplate text in the following format:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>the word 'vijay',</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>followed by any single character,</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>followed by the word 'com',</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>followed by any character,</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>followed by the word 'name',</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>and finally, followed by any
+character. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the resultant pattern that
+is specified is as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style='mso-tab-count:1'>            </span>TITLE&amp;gt;vijay.com.name.(.*?)&amp;lt
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the variable aa would contain
+the text that follows the pattern, upto the end of the tag. There are books
+aplenty on the topic of expressions. Therefore, we have decided to refrain from
+developing it any further.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the extra attribute
+ignoreCase is 'true', the casing will be ignored completely. Thus, it is of no
+consequence whether we specify 'vijay' in capitals or in small letters in the
+html file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the zzz.cs file, the function
+abc1 contains two string parameters, viz. 'mukhi' and 'sonal'. Further, the
+abc1Matches class copies not only the regular expression, but also the
+attributes. The SOAP request simply appends the values of the variables 'mukhi'
+and 'vijay' to the URL, as though they were names of html elements. The
+variables are separated by the &amp; symbol, in accordance with the rules of
+URL encoding.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.aspx</u></p>
+
+<p class=ILprg>&lt;%@ Page Language=&quot;c#&quot; %&gt;</p>
+
+<p class=ILprg>&lt;Script runat=&quot;server&quot;&gt;</p>
+
+<p class=ILprg>public void Page_Load(Object s, EventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if ( Request[&quot;mukhi&quot;] == &quot;13&quot; )</p>
+
+<p class=ILprg>Response.Write(&quot;&lt;HTML&gt;&lt;TITLE&gt;Vijay.com:name:XML
+.NET1&lt;/TITLE&gt;&lt;/HTML&gt;&quot;);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>Response.Write(&quot;&lt;HTML&gt;&lt;TITLE&gt;Vijay.com:name:XML
+.NET2&lt;/TITLE&gt;&lt;/HTML&gt;&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>&lt;/Script&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;http:binding verb=&quot;GET&quot;/&gt;</p>
+
+<p class=ILprg>&lt;operation name=&quot;abc1&quot;&gt;</p>
+
+<p class=ILprg>&lt;http:operation location=&quot;/b.aspx&quot;/&gt;</p>
+
+<p class=ILprg>&lt;input&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have made a singular change to
+our aa.wsdl file. The name of the file, or location in the operation element,
+has been changed from a.html to b.aspx. This location could be any one of
+these- an aspx file or a pl (PERL) program, or any other script file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file b.aspx will now send across
+a different TITLE content, depending upon the contents of the parameter named
+'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, if we run the program by
+typing 13 into the textbox, the file b.aspx, will be called. It is for the
+first time that the Request, with the name of the parameter 'mukhi' enclosed
+within square brackets [ ], representing the indexer, will hold a value of 13. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Hence, the 'if' statement will
+transmit the HTML file containing NET1. In the second round, the result will
+contain NET2, which would then be sent across.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.aspx</u></p>
+
+<p class=ILprg>&lt;%@ Page Language=&quot;C#&quot; Debug=&quot;true&quot; %&gt;</p>
+
+<p class=ILprg>&lt;%@ Import Namespace=&quot;mmm&quot;%&gt;</p>
+
+<p class=ILprg>&lt;%@ Import
+Namespace=&quot;System.Web.Services.Protocols&quot; %&gt;</p>
+
+<p class=ILprg>&lt;script runat=server&gt;</p>
+
+<p class=ILprg>public void Page_Load() {</p>
+
+<p class=ILprg>s1.InnerHtml = &quot;&quot;;</p>
+
+<p class=ILprg>s2.InnerHtml = &quot;&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc(Object sender, EventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>sss s = new sss();</p>
+
+<p class=ILprg>aaa a = new aaa();</p>
+
+<p class=ILprg>a.User = u.Value;</p>
+
+<p class=ILprg>a.Password = p.Value;</p>
+
+<p class=ILprg>s.a1 = a;</p>
+
+<p class=ILprg>try</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>string r = s.abc();</p>
+
+<p class=ILprg>s1.InnerHtml = r;</p>
+
+<p class=ILprg>} </p>
+
+<p class=ILprg>catch (SoapException so) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>s2.InnerHtml = so.Message;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>&lt;/script&gt;</p>
+
+<p class=ILprg>&lt;form runat=server&gt;</p>
+
+<p class=ILprg>Username:</p>
+
+<p class=ILprg>&lt;input type=text id=u runat=server /&gt;</p>
+
+<p class=ILprg>&lt;BR&gt;</p>
+
+<p class=ILprg>Password:</p>
+
+<p class=ILprg>&lt;input type=text id=p runat=server /&gt;</p>
+
+<p class=ILprg>&lt;P&gt;</p>
+
+<p class=ILprg>&lt;input type=submit runat=server OnServerClick=&quot;abc&quot;
+value=&quot;Click&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/form&gt;</p>
+
+<p class=ILprg>&lt;span id=s1 runat=server /&gt;</p>
+
+<p class=ILprg>&lt;span id=s2 runat=server /&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</p>
+
+<p class=ILprg>&lt;definitions
+xmlns:s=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:http=&quot;http://schemas.xmlsoap.org/wsdl/http/&quot;
+xmlns:mime=&quot;http://schemas.xmlsoap.org/wsdl/mime/&quot;
+xmlns:tm=&quot;http://microsoft.com/wsdl/mime/textMatching/&quot;
+xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;
+xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:s0=&quot;http://tempuri.org/&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;
+xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;&gt;</p>
+
+<p class=ILprg>&lt;types&gt;</p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot; elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:element name=&quot;e1&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:complexType /&gt;</p>
+
+<p class=ILprg>&lt;/s:element&gt;</p>
+
+<p class=ILprg>&lt;s:element name=&quot;abcResponse&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:complexType&gt;</p>
+
+<p class=ILprg>&lt;s:sequence&gt;</p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;abcResult&quot; nillable=&quot;true&quot; type=&quot;s:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;/s:sequence&gt;</p>
+
+<p class=ILprg>&lt;/s:complexType&gt;</p>
+
+<p class=ILprg>&lt;/s:element&gt;</p>
+
+<p class=ILprg>&lt;s:element name=&quot;a1&quot; type=&quot;s0:aaa&quot; /&gt;</p>
+
+<p class=ILprg>&lt;s:complexType name=&quot;aaa&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:sequence&gt;</p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;User&quot; nillable=&quot;true&quot; type=&quot;s:string&quot; /&gt;</p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;Password&quot; nillable=&quot;true&quot; type=&quot;s:string&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;/s:sequence&gt;</p>
+
+<p class=ILprg>&lt;/s:complexType&gt;</p>
+
+<p class=ILprg>&lt;/s:schema&gt;</p>
+
+<p class=ILprg>&lt;/types&gt;</p>
+
+<p class=ILprg>&lt;message name=&quot;i1&quot;&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot; element=&quot;s0:e1&quot;
+/&gt;</p>
+
+<p class=ILprg>&lt;/message&gt;</p>
+
+<p class=ILprg>&lt;message name=&quot;o1&quot;&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;parameters&quot;
+element=&quot;s0:abcResponse&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/message&gt;</p>
+
+<p class=ILprg>&lt;message name=&quot;Va&quot;&gt;</p>
+
+<p class=ILprg>&lt;part name=&quot;aaa&quot; element=&quot;s0:a1&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/message&gt;</p>
+
+<p class=ILprg>&lt;portType name=&quot;pt&quot;&gt;</p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;</p>
+
+<p class=ILprg>&lt;input message=&quot;s0:i1&quot; /&gt;</p>
+
+<p class=ILprg>&lt;output message=&quot;s0:o1&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/operation&gt;</p>
+
+<p class=ILprg>&lt;/portType&gt;</p>
+
+<p class=ILprg>&lt;binding name=&quot;b1&quot; type=&quot;s0:pt&quot;&gt;</p>
+
+<p class=ILprg>&lt;soap:binding transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;
+style=&quot;document&quot; /&gt;</p>
+
+<p class=ILprg>&lt;operation name=&quot;abc&quot;&gt;</p>
+
+<p class=ILprg>&lt;soap:operation soapAction=&quot;http://tempuri.org/abc&quot;
+style=&quot;document&quot; /&gt;</p>
+
+<p class=ILprg>&lt;input&gt;</p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;</p>
+
+<p class=ILprg>&lt;soap:header n1:required=&quot;true&quot;
+message=&quot;s0:Va&quot; part=&quot;aaa&quot; use=&quot;literal&quot;
+xmlns:n1=&quot;http://schemas.xmlsoap.org/wsdl/&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/input&gt;</p>
+
+<p class=ILprg>&lt;output&gt;</p>
+
+<p class=ILprg>&lt;soap:body use=&quot;literal&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/output&gt;</p>
+
+<p class=ILprg>&lt;/operation&gt;</p>
+
+<p class=ILprg>&lt;/binding&gt;</p>
+
+<p class=ILprg>&lt;service name=&quot;sss&quot;&gt;</p>
+
+<p class=ILprg>&lt;port binding=&quot;s0:b1&quot;&gt;</p>
+
+<p class=ILprg>&lt;soap:address
+location=&quot;http://localhost:8080/qqqs/a.asmx&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/port&gt;</p>
+
+<p class=ILprg>&lt;/service&gt;</p>
+
+<p class=ILprg>&lt;/definitions&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>sss.cs</u></p>
+
+<p class=ILprg>namespace mmm </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>using System.Diagnostics;</p>
+
+<p class=ILprg>using System.Xml.Serialization;</p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Web.Services.Protocols;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>[System.Web.Services.WebServiceBindingAttribute(Name=&quot;b1&quot;,
+Namespace=&quot;http://tempuri.org/&quot;)]</p>
+
+<p class=ILprg>public class sss :
+System.Web.Services.Protocols.SoapHttpClientProtocol {</p>
+
+<p class=ILprg>public aaa a1;</p>
+
+<p class=ILprg>public sss() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>this.Url = &quot;http://localhost:8080/qqqs/a.asmx&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapHeaderAttribute(&quot;a1&quot;)]</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute(&quot;http://tempuri.org/abc&quot;,
+RequestElementName=&quot;e1&quot;,
+Use=System.Web.Services.Description.SoapBindingUse.Literal,
+ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]</p>
+
+<p class=ILprg>public string abc()<span style="mso-spacerun: yes">  </span>{</p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[0]);</p>
+
+<p class=ILprg>return ((string)(results[0]));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Xml.Serialization.XmlRootAttribute(&quot;a1&quot;,
+Namespace=&quot;http://tempuri.org/&quot;, IsNullable=false)]</p>
+
+<p class=ILprg>public class aaa : SoapHeader {</p>
+
+<p class=ILprg>public string User;</p>
+
+<p class=ILprg>public string Password;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Client a.bat</u></p>
+
+<p class=ILprg>del *.dll</p>
+
+<p class=ILprg>del *.cs</p>
+
+<p class=ILprg>wsdl aa.wsdl /namespace:mmm</p>
+
+<p class=ILprg>csc.exe /t:library<span style="mso-spacerun: yes"> 
+</span>sss.cs</p>
+
+<p class=ILprg>copy sss.dll .\bin </p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>web.config</u></p>
+
+<p class=ILprg>&lt;configuration&gt;</p>
+
+<p class=ILprg>&lt;system.web&gt;</p>
+
+<p class=ILprg>&lt;compilation&gt;</p>
+
+<p class=ILprg>&lt;assemblies&gt;</p>
+
+<p class=ILprg>&lt;add assembly=&quot;System.Security&quot;/&gt;</p>
+
+<p class=ILprg>&lt;/assemblies&gt;</p>
+
+<p class=ILprg>&lt;/compilation&gt;</p>
+
+<p class=ILprg>&lt;httpModules&gt;</p>
+
+<p class=ILprg>&lt;add name=&quot;w1&quot; type=&quot;yyy, zzz&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/httpModules&gt;</p>
+
+<p class=ILprg>&lt;/system.web&gt;</p>
+
+<p class=ILprg>&lt;/configuration&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>global.asax</u></p>
+
+<p class=ILprg>&lt;%@ Language=&quot;C#&quot; %&gt;</p>
+
+<p class=ILprg>&lt;%@ Import Namespace=&quot;System.Security.Principal&quot;
+%&gt;</p>
+
+<p class=ILprg>&lt;%@ Import Namespace=&quot;System.IO&quot; %&gt;</p>
+
+<p class=ILprg>&lt;script runat=server&gt;</p>
+
+<p class=ILprg>public void w1_OnAuthenticate(object o, eee e) {</p>
+
+<p class=ILprg>abc(&quot;global.asax w1_OnAuthenticate&quot;);</p>
+
+<p class=ILprg>if ((e.Us == &quot;vijay&quot;) &amp;&amp; (e.Pass ==
+&quot;mukhi&quot;))</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>string [] s = new string[1];</p>
+
+<p class=ILprg>s[0] = &quot;Customer&quot;;</p>
+
+<p class=ILprg>e.qqq(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc(string s) {</p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);</p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);</p>
+
+<p class=ILprg>w.WriteLine(s);</p>
+
+<p class=ILprg>w.Flush();</p>
+
+<p class=ILprg>w.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>&lt;/script&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;ttt&quot;
+%&gt;</p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Web.Services.Protocols;</p>
+
+<p class=ILprg>public class a1 : SoapHeader {</p>
+
+<p class=ILprg>public string User;</p>
+
+<p class=ILprg>public string Password;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class ttt : WebService {</p>
+
+<p class=ILprg>public a1 a;</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>[SoapHeader(&quot;a&quot;)]</p>
+
+<p class=ILprg>public string abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;asmx abc&quot;);</p>
+
+<p class=ILprg>if (User.IsInRole(&quot;Customer&quot;))</p>
+
+<p class=ILprg>return &quot;Role customer&quot;;</p>
+
+<p class=ILprg>if (User.Identity.IsAuthenticated)</p>
+
+<p class=ILprg>return &quot;Valid user&quot;;</p>
+
+<p class=ILprg>return &quot;Not Authenticated&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc(string s) {</p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);</p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);</p>
+
+<p class=ILprg>w.WriteLine(s);</p>
+
+<p class=ILprg>w.Flush();</p>
+
+<p class=ILprg>w.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Web;</p>
+
+<p class=ILprg>using System.Security.Principal;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>using System.Xml.XPath;</p>
+
+<p class=ILprg>using System.Web.Services.Protocols;</p>
+
+<p class=ILprg>using <span style="mso-spacerun:
+yes">  </span>System.Collections.Specialized;</p>
+
+<p class=ILprg>public class eee: EventArgs {</p>
+
+<p class=ILprg>IPrincipal pu;</p>
+
+<p class=ILprg>HttpContext c;</p>
+
+<p class=ILprg>string<span style='mso-tab-count:1'>    </span>u;</p>
+
+<p class=ILprg>string<span style='mso-tab-count:1'>    </span>p;</p>
+
+<p class=ILprg>public eee(HttpContext co, string us, string pass)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;eee 1&quot;);</p>
+
+<p class=ILprg>c = co;</p>
+
+<p class=ILprg>u = us;</p>
+
+<p class=ILprg>p = pass;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public<span style="mso-spacerun: yes">  </span>HttpContext Cont </p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get<span style="mso-spacerun: yes">  </span>{ </p>
+
+<p class=ILprg>abc(&quot;Context &quot;);</p>
+
+<p class=ILprg>return c;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public IPrincipal Prin</p>
+
+<p class=ILprg>{ </p>
+
+<p class=ILprg>get {</p>
+
+<p class=ILprg>abc(&quot;get Principal &quot;);</p>
+
+<p class=ILprg>return pu;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>set {</p>
+
+<p class=ILprg>abc(&quot;set Principal &quot;);</p>
+
+<p class=ILprg>pu = value;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void qqq(string[] roles)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;qqq 1&quot;);</p>
+
+<p class=ILprg>GenericIdentity i = new GenericIdentity(Us);</p>
+
+<p class=ILprg>Prin = new GenericPrincipal (i, roles);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string Us</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>get {</p>
+
+<p class=ILprg>abc(&quot;get User &quot;);</p>
+
+<p class=ILprg>return u; </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>set {</p>
+
+<p class=ILprg>abc(&quot;set User &quot;);</p>
+
+<p class=ILprg>u = value; </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public string Pass</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>get</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;get Password&quot;);</p>
+
+<p class=ILprg>return p; </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>set</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;set Password&quot;);</p>
+
+<p class=ILprg>p = value; </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc(string s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);</p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);</p>
+
+<p class=ILprg>w.WriteLine(s);</p>
+
+<p class=ILprg>w.Flush();</p>
+
+<p class=ILprg>w.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public delegate void ddd(Object sender,<span
+style="mso-spacerun: yes">  </span>eee e);</p>
+
+<p class=ILprg>public sealed class yyy : IHttpModule </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ddd e = null;</p>
+
+<p class=ILprg>public event ddd Authenticate </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>add </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;yyy Authenticate Add&quot;);</p>
+
+<p class=ILprg>e += value;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>remove </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e -= value;</p>
+
+<p class=ILprg>abc(&quot;6&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void Init(HttpApplication a) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;yyy Init&quot;);</p>
+
+<p class=ILprg>a.AuthenticateRequest += new EventHandler(xyz);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void xyz(Object o, EventArgs ev) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>abc(&quot;yyy xyz&quot;);</p>
+
+<p class=ILprg>HttpApplication a = (HttpApplication)o;</p>
+
+<p class=ILprg>HttpContext co = a.Context;</p>
+
+<p class=ILprg>Stream s = co.Request.InputStream;</p>
+
+<p class=ILprg>long p = s.Position;</p>
+
+<p class=ILprg>abc(p.ToString());</p>
+
+<p class=ILprg>string s3 = &quot;&quot;;</p>
+
+<p class=ILprg>int i;</p>
+
+<p class=ILprg>NameValueCollection c;</p>
+
+<p class=ILprg>HttpRequest r = co.Request; </p>
+
+<p class=ILprg>c=r.Headers; </p>
+
+<p class=ILprg>string[] s1 = c.AllKeys;</p>
+
+<p class=ILprg>abc(s1.Length.ToString());</p>
+
+<p class=ILprg>for (i = 0; i&lt;s1.Length; i++) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>s3 = &quot;Key: &quot; + s1[i] + &quot;=&quot;;</p>
+
+<p class=ILprg>string[] s2=c.GetValues(s1[i]);</p>
+
+<p class=ILprg>abc(s3 + s2[0]);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>if (co.Request.ServerVariables[&quot;HTTP_SOAPACTION&quot;] ==
+null)</p>
+
+<p class=ILprg>return;</p>
+
+<p class=ILprg>XmlDocument d1 = new XmlDocument();</p>
+
+<p class=ILprg>string u;</p>
+
+<p class=ILprg>string pa;</p>
+
+<p class=ILprg>try </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d1.Load(s);</p>
+
+<p class=ILprg>s.Position = p;</p>
+
+<p class=ILprg>d1.Save(&quot;C:\\b.txt&quot;);</p>
+
+<p class=ILprg>s.Position = p;</p>
+
+<p class=ILprg>XmlNodeList no = d1.GetElementsByTagName(&quot;User&quot;);</p>
+
+<p class=ILprg>XmlNode n = no[0];</p>
+
+<p class=ILprg>u = n.InnerText;</p>
+
+<p class=ILprg>pa = d1.GetElementsByTagName(&quot;Password&quot;).Item(0).InnerText;</p>
+
+<p class=ILprg>abc(u + &quot; &quot; + pa);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>catch (Exception ee) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>s.Position = p;</p>
+
+<p class=ILprg>XmlQualifiedName na = new XmlQualifiedName(&quot;Sonal&quot;);</p>
+
+<p class=ILprg>SoapException so = new SoapException( &quot;Error in SOAP&quot;,
+na, ee);</p>
+
+<p class=ILprg>throw so;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>eee e1;<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>e1 = new eee(co, u , pa); </p>
+
+<p class=ILprg>e(this, e1);</p>
+
+<p class=ILprg>if (e1.Us != null)</p>
+
+<p class=ILprg>e1.Cont.User = e1.Prin;</p>
+
+<p class=ILprg>return;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc(string s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>FileStream fs = new FileStream(&quot;c:\\a.txt&quot;,
+FileMode.Append, FileAccess.Write);</p>
+
+<p class=ILprg>StreamWriter w = new StreamWriter(fs);</p>
+
+<p class=ILprg>w.WriteLine(s);</p>
+
+<p class=ILprg>w.Flush();</p>
+
+<p class=ILprg>w.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void Dispose()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Server a.bat</u></p>
+
+<p class=ILprg>csc /t:library zzz.cs</p>
+
+<p class=ILprg>copy zzz.dll .\bin</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.txt</u></p>
+
+<p class=ILprg>yyy Init</p>
+
+<p class=ILprg>yyy Authenticate Add</p>
+
+<p class=ILprg>yyy xyz</p>
+
+<p class=ILprg>0</p>
+
+<p class=ILprg>6</p>
+
+<p class=ILprg>Key: Content-Length=442</p>
+
+<p class=ILprg>Key: Content-Type=text/xml; charset=utf-8</p>
+
+<p class=ILprg>Key: Expect=100-continue</p>
+
+<p class=ILprg>Key: Host=localhost</p>
+
+<p class=ILprg>Key: User-Agent=Mozilla/4.0 (compatible; MSIE 6.0; MS Web
+Services Client Protocol 1.0.2914.16)</p>
+
+<p class=ILprg>Key: SOAPAction=&quot;http://tempuri.org/abc&quot;</p>
+
+<p class=ILprg>vijay mukhi</p>
+
+<p class=ILprg>eee 1</p>
+
+<p class=ILprg>global.asax w1_OnAuthenticate</p>
+
+<p class=ILprg>get User </p>
+
+<p class=ILprg>get Password</p>
+
+<p class=ILprg>qqq 1</p>
+
+<p class=ILprg>get User </p>
+
+<p class=ILprg>set Principal </p>
+
+<p class=ILprg>get User </p>
+
+<p class=ILprg>Context </p>
+
+<p class=ILprg>get Principal </p>
+
+<p class=ILprg>asmx abc</p>
+
+<p class=ILprg>yyy xyz</p>
+
+<p class=ILprg>vijay mukhi111</p>
+
+<p class=ILprg>eee 1</p>
+
+<p class=ILprg>global.asax w1_OnAuthenticate</p>
+
+<p class=ILprg>get User </p>
+
+<p class=ILprg>get Password</p>
+
+<p class=ILprg>get User </p>
+
+<p class=ILprg>Context </p>
+
+<p class=ILprg>get Principal </p>
+
+<p class=ILprg>asmx abc</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.txt</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</p>
+
+<p class=ILprg>&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Header&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;a1
+xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;User&gt;vijay&lt;/User&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>&lt;Password&gt;mukhi&lt;/Password&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span><span
+style="mso-spacerun: yes">  </span>&lt;/a1&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Header&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;e1
+xmlns=&quot;http://tempuri.org/&quot; /&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;</p>
+
+<p class=ILprg>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>- &lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>- &lt;soap:Header&gt;</p>
+
+<p class=ILoutput>- &lt;a1 xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;User&gt;vijay&lt;/User&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;Password&gt;mukhi&lt;/Password&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/a1&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Header&gt;</p>
+
+<p class=ILoutput>- &lt;soap:Body&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;e1
+xmlns=&quot;http://tempuri.org/&quot; /&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>- &lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>- &lt;soap:Body&gt;</p>
+
+<p class=ILoutput>- &lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;abcResult&gt;Role Customer&lt;/abcResult&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is our single largest
+program so far, which is a reason enough for you to follow our instructions to
+the T. Firstly, create a folder qqq in the root, and then within it, create two
+more folders named 'client' and 'server'. Stay put! Now, you need to create a
+bin folder within each of the 'client' and 'server' subdirectories. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having created the
+required physical subdirectories, we then have to create two virtual
+directories:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>qqqc - it points to folder
+c:\qqq\client</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>qqqs - it points to c:\qqq\server</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The screens displayed below
+would facilitate the creation of these virtual directories.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1028"
+  src="chap11/image1.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1029"
+  src="chap11/image2.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=373 id="_x0000_i1030"
+  src="chap11/image3.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=373 id="_x0000_i1031"
+  src="chap11/image4.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.3</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.4</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=374 id="_x0000_i1032"
+  src="chap11/image5.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=372 id="_x0000_i1033"
+  src="chap11/image6.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.5</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.6</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=372 id="_x0000_i1034"
+  src="chap11/image7.jpg"></p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1035"
+  src="chap11/image8.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.7</p>
+  </td>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 11.8</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, write the above a.aspx program
+in the c:\qqq\client subdirectory. First of all, we set the 'debug' mode to
+'true', in order that the error messages, if any, become visible.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Almost the entire code is placed
+in namespaces. Here, the namespace mmm contains the code. Hence, we import a
+namespace called mmm. Finally, at the end of the aspx file, exist two spans:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first called s1, which displays
+the return value.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second s2, which displays the
+error message, if any.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Page_Load function gets called
+immediately, prior to the page being sent across. It merely initializes the
+InnerHtml property of the spans to 'null', so that they do not display
+anything.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, there exist two textboxes
+named 'u' and 'p', together with a button. The user is required to enter the
+username and password, and then, click on the button. When the button is
+clicked, the function abc gets called. This function gets executed on the
+server, and creates two objects:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>One is an instance of the class sss.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The other is an instance of the
+class aaa.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As is evident, these classes are
+user-defined classes that are present in a dll, which is placed in the bin
+folder, within the client subdirectory. The aaa class has two members named
+User and Password, which are initialized to the values entered in the textboxes
+'u' and 'p'. Thereafter, the 'a1' member of the sss class is initialized to
+this object 'a', which is an instance of the class aaa. The abc function is
+called next from sss, and the return value is stored in a string named
+'r'.<span style="mso-spacerun: yes">  </span>The InnerHtml property of the span
+is then set to 'r', to facilitate the value to be finally displayed in the
+browser window. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If an exception is thrown by the
+function abc, the code in the 'catch' block gets called, whereupon, the
+exception message is displayed using the span, with the id of s2. Thus, it is
+either the return value of the function abc or the exception message which is
+displayed in the browser. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The aa.wsdl file generates the
+code for the function abc. So, let us scurry through the wsdl file. Most of it
+has already been expounded earlier. As always, the file begins with the root
+element definitions, which are followed by a number defined namespaces. Then,
+an element e1 is created, which is empty in nature. Another element abcResponse
+is also created, containing a single element named abcResult. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The element a1 of type aaa
+contains two elements, viz. User and Password. The type aaa is responsible for
+initiating the class aaa in the client, which is eventually employed to send
+across the header. The message i1 has one part, containing an element e1. Since
+this element is devoid of any contents, the part and the message have no
+contents, whatsoever. The other part is assigned to the second message o1,
+which represents the return packet from the server. The element of the second
+part is abcResponse, which is a string. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The header is represented by the
+message va, which has an element called a1. This in turn, contains the two
+header elements. The portType 'pt' represents the operation abc, where the
+input is represented by the message i1, and the output is represented by the
+message o1. To summarize, abc does not accept any input, and returns its output
+in the form of a string.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The binding b1 accepts the
+portType pt. The style of the binding is 'document', and a literal is used for
+the input body element. Thus, in the input element, the SOAP packet is designed
+to hold a Body, as well as a header that contains the message named Va.
+Finally, the service is assigned the name 'sss'. Therefore, the names assigned
+to the client file and the class will also be sss. The binding used is 'b1',
+and the address element specifies the complete url of the code, which is as
+follows: http://localhost:8080/qqqs/a.asmx.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are no surprises in store
+for you in sss.cs, or in the client program generated by the WSDL program. The
+header class is aaa, and the variable that carries the header is a1.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abc function is bestowed
+with a million attributes from the SoapDocumentMethod attribute; however
+currently, none of these are of any significance, since the function abc has
+been called without any parameters. Resultantly, the encoding that is used, is
+also meaningless. The batch file a.bat merely calls the wsdl program, in order
+to generate the proxy file named sss.cs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The csc compiler compiles the
+sss.cs file into a dll. This dll is then copied into the bin folder, since it
+is peremptory for the entire code that is called from the aspx file, to dwell
+in the bin subdirectory. We reiterate it yet again, that the following files
+should reside in the folder c:\qqq\client, and the dll should be placed in the
+bin subdirectory.<span style="mso-spacerun: yes">  </span>Thus, the files and
+their corresponding paths are as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>\qqq\client\a.aspx</p>
+
+<p class=ILoutput>\qqq\client\aa.wsdl</p>
+
+<p class=ILoutput>\qqq\client\bin\sss.dll</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Having dealt with the client,
+let us now progress on to the files that are required at the server's side. The
+following files will reside in the folder c:\qqq\server:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>\qqq\server\web.config</p>
+
+<p class=ILoutput>\qqq\server\global.asax</p>
+
+<p class=ILoutput>\qqq\server\a.asmx</p>
+
+<p class=ILoutput>\qqq\server\zzz.cs</p>
+
+<p class=ILoutput>\qqq\server\bin\zzz.dll</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The very first file that we
+anatomize is the web.config file. This file is a pure XML file, and contains
+settings that determine the configuration that the web server would use. The
+file must be present in the root directory of the web server, since the server
+utilizes the settings that are located in the file. So, this file is created in
+the directory c:\qqq\server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The root tag configuration is
+followed by a system.web element. This element boasts of two children, viz. a
+compilation section and an httpModules section. As the name itself suggests,
+the compilation section contains all the compilation settings. However, in this
+case, there is only one setting named 'assemblies'. The 'assemblies' section
+signals the need for an assembly System.Security, as it is a point of reference
+for the code included in any file. Then, we encounter the httpModules element,
+which provides succor in configuring the HttpModules that have been used in the
+application. One of these modules gets added to our application.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The type attribute has two
+entities, separated by a comma. The first is the name of a class, i.e. yyy,
+while the second is the name of the dll, i.e. zzz.dll. The file zzz.dll
+contains the code and encloses the class yyy within it. This arrangement is
+termed as a class/assembly combo. The attribute name is specified as w1, which
+is used to refer to code in the assembly zzz.dll.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We would be examining the file
+global.asax in a short while from now. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, let us investigate the
+output file a.txt, which comprises of the particulars about the functions that
+are called, and the details as regards when they get called. The first function
+to be called is Init, which belongs to the class yyy, and resides in zzz.cs.
+The zzz.dll file is located in the server\bin folder. The class yyy is
+fabricated as a sealed class, since we do not want anyone to derive from it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This class is derived from the
+Interface IHttpModule, which contains only two methods, Init and Dispose. The
+Init function prepares the yyy class to receive requests, while the Dispose
+function is used for the winding up tasks.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Init function is passed an
+object of type HttpApplication as a parameter. This class has methods,
+properties and events that are required for representing application objects in
+the ASP.Net world. All that we do in the Init function is, to set the event
+AuthenticateRequest to the function xyz. Thus, whenever a request needs to be
+authenticated, the function xyz gets called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we have a property called
+Authenticate, which is called by the framework. Since this property is of type
+event, it does not have a 'get' or 'set' accessor, instead, it has an 'add' and
+a 'remove'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Whenever a function is to be
+added to the event, the add accessor is called. When a function is to be
+removed, the remove accessor is called. The value member contains the function
+that is to be added or removed. Before long, we would be able to discern which
+function is being added to the accessor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The property has a type ddd,
+which is a delegate that takes two parameters, viz. an Object and an eee class.
+The eee class is derived from EventArgs, and is the first class in the zzz.cs
+file. None of the functions would ever get called, if the code in the Init
+function was placed within comments. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After Init and Authenticate, the
+next function to be called is xyz. The first parameter to this function is an
+HttpApplication object, and the second parameter is an object, which is derived
+from EventArgs. This parameter is seldom accessed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The HttpApplication object has a
+member Context, which represents the HTTP context in which we operate. The
+value of the context is stored in a variable called 'co'. It is indeed possible
+for us to write an entire book with effortless ease, expounding all the workings
+of an HttpContext object; however, we have chosen to refrain from it. What we
+require is a property Request of type HttpRequest, which contains a property
+named InputStream, of type Stream. This stream object is stored in 's', and it
+is used for reading the entire SOAP payload passed to the function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>But prior to that, we determine
+the current position of the file pointer by displaying the Position parameter.
+The a.txt file unravels the fact that, the pointer is located at the very
+beginning. We store this value zero in a variable p, which we would be using
+subsequently.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The code that is inserted next,
+is very similar to the program that was used to display the headers, when an
+HttpRequest object was supplied. There are a total of six headers, whose names
+and values are entered into the file a.txt. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The header HTTP_SOAPACTION
+confirms the fact that the payload is actually a SOAP payload. Using the name
+of the header as an indexer to the ServerVariables property, we ascertain the
+value embodied in it. If the value is null, the request is not regarded as a
+SOAP formatted request; instead, it is treated as a normal HTTP request.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A SOAP payload is an XML
+document. Therefore, an empty XmlDocument object d1 is created. Then, the data
+that is associated with the Stream 's' or the SOAP payload, is loaded with the
+help of the Load function. The Position property of the XML document is
+reverted back to the starting position. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, using the Save
+function, the SOAP payload is written to disk in the file b.txt. This file,
+when viewed, is espied to be identical to the SOAP request that is sent across.
+The SOAP request has a header that contains the user name and password instead
+of it being shown in the body. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we use a deviant approach
+to retrieve the values, since we do not intend to implement the method that was
+used earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function
+GetElementsByTagName accepts a parameter that signifies the name of the element
+that we are interested in, viz. User. This function returns a list of nodes in
+XmlNodeList, which contains the element User. Since there is only one element
+called User, we use the indexer to access this XmlNode object 'n'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InnerText property then
+facilitates access to the content. The value retrieved is stored in the
+variable u. By using a similar mechanism, the contents of the element password
+are retrieved. The values that are displayed, provide ample evidence of our
+treading the right track. However, if things go adrift; for instance, if the
+User and Password elements do not exist in the header, a full-fledged SOAP
+Exception will be sent across.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we create an object that
+bears a resemblance to class eee. This class is derived from the class
+EventArgs, and hence, it can be used as the second parameter in all the event
+handling code, which needs an object derived from EventArgs. The object which
+looks like eee, is created by calling its constructor and assigning it three
+parameters, the HttpContext object 'co', the strings 'u'<span
+style="mso-spacerun: yes">  </span>and 'pa' .<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>They contain the user name and
+password, both of which have been extracted from the header. Please note that
+the code in the asmx file will not be called anywhere in the near future.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The constructor of the class
+eee, stores the values passed in the three variables c, u and p. The variables
+are also used in the properties of Cont, Us and Pass. The variables merely act
+as fronts for the properties. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Along the same lines, the
+variable 'p' is used for the property Prin. If we so desire, we can make the
+variables public, and replace the property Us with u.<span style="mso-spacerun:
+yes">  </span>But, it has been reiterated time and again that, it is the
+properties that are to be used, and not variables. Albeit, a variable could
+have served our purpose equally well, in the above case. As the saying goes,
+&quot; Old habits die hard!&quot; <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, one of the functions is
+called, using the event e. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So far, we were oblivious to the
+identity of the function that was passed in the value parameter. However, it is
+about time that we lifted the veil off the mystery. The function's name is w1_OnAuthenticate,
+and it is located in the file global.asax. This function is called with two
+parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first is the sender, the class
+'yyy'.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second is the 'eee' object,
+which stores the HttpContext object, the user name and the password.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This file is called the ASP.NET
+application file. It contains code that responds to application level events
+that occur.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As was the case with the config
+file that was discussed earlier, the global.asax file ought to be residing in
+the root directory of the web server, in order<span style="mso-spacerun: yes"> 
+</span>to get a right output of the application. This file is compiled into the
+class generated by the framework. Since the web server completely forbids
+access to this file, no one can gain access to its contents by using a URL.
+This file contains all the application or session handlers. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function name in the asax
+file has to begin with the name 'w1', followed by the underscore symbol,
+finally followed by the name of the event 'OnAuthenticate'. The second
+parameter 'eee' is used to verify the user name and password, using the
+properties Us and Pass. These in turn, refer to the properties of Us and Pass.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the SOAP header contains the
+user name 'vijay' and the password 'mukhi', then and only then, does the
+function qqq get called in the 'eee' class. To put it differently, it implies
+that if the user name and password are any different from the ones that have
+been specified above, the qqq function will not be called. This function is
+passed an array of strings, having a size of 1, since it contains only a
+solitary string named Customer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the qqq function, we create
+an object i, which is an instance of class GenericIdentity. This class is
+derived from the interface Iidentity and it represents a user, on behalf of
+whom, certain code gets executed. We pass the name of the user<span
+style="mso-spacerun: yes">    </span>('vijay' in this case), to the constructor
+of the GenericIdentity class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Another class named
+GenericPrincipal is created, whose sole task is to check the membership of the
+user, in a set of roles. Thus, the constructor is provided with an array of
+role names that the user belongs to. Our user belongs to a single role of
+'Customer'. The Principal is then stored in the property Prin.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style='mso-tab-count:1'>            </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, let us refocus on the class
+yyy and the function xyz. Here, the property Us, which contains the user name,
+is verified to determine if it is null or not. In this case, the user name is
+not null. Therefore, the principal object that we created in the qqq function
+is first retrieved. Thereafter, using the Cont property, the HttpContext object
+that is passed to the eee object, through the eee constructor, is retrieved.
+This Context object has a property User of type IPrincipal, which stipulates
+the security information for the HTTP request. This IPrincipal object belongs
+to the singular role named Customer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the function xyz
+accomplishes its task, the function abc gets called from the asmx file. Thus,
+it is the final function to be called in the sequence. Here, we merely use the
+same User object, which is set to the IPrincipal object, and call the function
+IsInRole. As the role is Customer, the 'if' statement results in true. Then,
+the password is changed to 'mukhi11'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At this stage, the qqq function
+does not get called. Hence, the IsInRole function returns false. Also, since
+the Authenticated property is not set to true, the second 'if' statement
+returns false. In the a.txt file, he second call after the HTTP headers is no
+more visible. If we had so desired, we could have changed the IsAuthenticated
+property to true, and depending upon the user name, attached the user to more
+than one group.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The vital point that we intend to convey through this
+program is that, before the asmx file appears on the scene, the code in the dll
+file and the asax file, gets called. Also, any changes made to the property get
+reflected only in the asmx file.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap11.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:21 GMT -->
+</html>

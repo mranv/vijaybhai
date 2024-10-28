@@ -1,0 +1,1765 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:53 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap2_files/filelist.html">
+<link rel=Edit-Time-Data href="chap2_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-11-05T20:48:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:07:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>4625</o:Words>
+  <o:Characters>26366</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>219</o:Lines>
+  <o:Paragraphs>52</o:Paragraphs>
+  <o:CharactersWithSpaces>32379</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>2</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Internet Classes</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before weaving our way into the
+Internet, let us investigate a few more fundamentals about the C# programming
+language, in order to acquire a superior appreciation of internet programming. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>No computer in the world is
+equipped to recognize the letters of the alphabet on its own. Therefore, an
+internal representation has to be used. One such representation is called
+ASCII, which allots a number falling between 0 to 255, to each of the letters.
+Here, each letter is represented by a byte, which is an 8-bit number. For
+instance, the letter 'A' is represented by the number 65, while the letter 'a'
+is represented by the number 97. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>However, languages such as
+Japanese and Chinese are remarkably visual, and require a larger range of numbers
+to represent them in totality. In order to accommodate the requirement of these
+languages, the computer industry came out with a standard called UNICODE, which
+can represent every known language in the world in its entirety. But, to
+accomplish this, this standard imposes the condition that every character in
+the language should be represented by a 16-bit number, and not by an 8-bit
+number.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>byte i = 65;</p>
+
+<p class=ILprg>System.Console.WriteLine(i);</p>
+
+<p class=ILprg>System.Console.WriteLine((char)i);</p>
+
+<p class=ILprg>i = (byte)'A';</p>
+
+<p class=ILprg>System.Console.WriteLine(i);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>65</p>
+
+<p class=ILoutput>A</p>
+
+<p class=ILoutput>65</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The C# language takes cognizance
+of the fact that the byte data type represents a number ranging from 0 to 255. Thus,
+by default, the WriteLine function displays the number that the byte
+represents. If we typecast the byte i to a char, the WriteLine function
+displays its ASCII equivalent instead. The C# language had to indoctrinate a
+new data type called 'char', which could represent a UNICODE character or a
+number ranging from 0 to 65535, since a byte is too diminutive to be able to
+accommodate this range of values. A literal or char 'A' cannot be initialized
+to a byte, since we cannot equate a smaller 8-bit data type to a larger 16-bit
+data type. Therefore, a cast operator has to be used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>char i = 'A';</p>
+
+<p class=ILprg>System.Console.WriteLine(i);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>A</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A variable of char data type
+cannot be equated to a number. It can only be initialized to a literal. The
+WriteLine function prefers to receive the 'char' data type, since it can
+display the value as a letter of the alphabet. Thus, the 'char' data type is
+used to store 16 bit UNICODE characters, while the 'byte' data type is employed
+to store small numbers. The 'string' data type is used for a sequence of
+UNICODE characters.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>byte [] i = new byte[5];</p>
+
+<p class=ILprg>i[0] = 65; i[1] = 66;</p>
+
+<p class=ILprg>System.Console.WriteLine(i);</p>
+
+<p class=ILprg>char [] j = new char[5];</p>
+
+<p class=ILprg>j[0] = 'A'; j[1] = 'B';</p>
+
+<p class=ILprg>System.Console.WriteLine(j);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>System.Byte[]</p>
+
+<p class=ILoutput>AB</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Dealing with an array of bytes
+is not as straightforward and uncomplicated as dealing with an array of chars. In
+case of an array of bytes, the WriteLine function merely displays the data type
+of the array, whereas, in the case of an array of chars, it displays the entire
+array. Thus, we need a technique, by means of which, we are able to display the
+bytes present in the form of an array of bytes, using the WriteLine function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>byte [] i = new byte[5];</p>
+
+<p class=ILprg>i[0] = 65; i[1] = 66; i[2] = 67;i[3] = 68;</p>
+
+<p class=ILprg>string s = System.Text.Encoding.ASCII.GetString(i, 1, 2);</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>BC</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The namespace
+System.Text.Encoding has a class called ASCII, which contains a static function
+GetString. This function accepts three parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The array of bytes,
+which is to be converted into a string.</p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The starting point
+in the array ( in our case, 1) refers to the second element in the Array, which
+is the letter 'B'. </p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The number of
+characters or the length of the string. We have specified it as 2. Hence, only
+2 characters are seen. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function returns a string,
+which is displayed by employing the WriteLine function.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This methodology thereby,
+assists in converting a certain number of bytes from a byte array into a
+string, which can then be effortlessly printed by the WriteLine function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The rationale for introducing
+this function in this chapter is due to the existence of a large number of
+functions that return data as an array of bytes. The approach demonstrated
+above may be employed, to display such data in all such cases. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>string s1 = &quot;vmukhi&quot;; </p>
+
+<p class=ILprg>byte[] i; </p>
+
+<p class=ILprg>char [] j = s1.ToCharArray();</p>
+
+<p class=ILprg>i = System.Text.Encoding.ASCII.GetBytes(j); </p>
+
+<p class=ILprg>string s = System.Text.Encoding.ASCII.GetString(i, 0, 5);</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>vmukh</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We now need to resolve another
+quandary. In the internet-related classes, functions read and write data in the
+form of an array of bytes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We are comfortable dealing with
+strings, as they are the most natural data type available for representing data.
+However, this data type has to be converted into an array of bytes, if it has
+to be transmitted. But, there is no direct mechanism of attaining this
+conversion. The only possibility is to write our own function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The string is first converted
+into an array of chars, using ToCharArray method in the string class. As of
+now, there exists no magic formula in the string class, which can directly
+provide an array of bytes. So, we are compelled to utilize the GetBytes
+function from the ASCII class, which accepts a character array and converts it
+into an array of bytes. This is an additional step that needs to be executed in
+the conversion process.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last two lines of the above
+program merely verify whether all data has been supplied correctly or otherwise.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>byte [] a;</p>
+
+<p class=ILprg>a= abc(&quot;ABC&quot;);</p>
+
+<p class=ILprg>string s = System.Text.Encoding.ASCII.GetString(a, 0, 3);</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static byte [] abc( string a)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>byte [] b = new byte[a.Length];</p>
+
+<p class=ILprg>System.Console.WriteLine(a.Length);</p>
+
+<p class=ILprg>for ( int i = 0 ; i &lt; a.Length ; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(a[i]);</p>
+
+<p class=ILprg>b[i] = (byte)a[i];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>return b;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>3</p>
+
+<p class=ILoutput>A</p>
+
+<p class=ILoutput>B</p>
+
+<p class=ILoutput>C</p>
+
+<p class=ILoutput>ABC</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we write our
+own function that accepts a string as a parameter, and returns an array of bytes.
+This function eliminates the intermediate step of converting the string into an
+array of chars, prior to its final conversion into an array of bytes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Length member in the string
+returns the length of the string, and also determines the size of the byte
+array, which is to be created. In the 'for' loop, every individual character
+can be accessed, one at a time, by using the indexer property of the string
+class. Concurrently, the byte array is also filled up. The need for a cast
+operator has been explained earlier. Finally, at the end of the function, we
+return this freshly filled up array, and thereafter, display the byte array.
+The array is displayed merely to corroborate that all actions have been
+executed as planned. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>File
+Handling</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>FileStream f = new FileStream(&quot;c:\\z.txt&quot;,
+FileMode.Open, FileAccess.Read);</p>
+
+<p class=ILprg>byte [] a;</p>
+
+<p class=ILprg>a = new byte[512];</p>
+
+<p class=ILprg>int b = f.Read(a, 0, 512);</p>
+
+<p class=ILprg>Console.WriteLine(b);</p>
+
+<p class=ILprg>string s = System.Text.Encoding.ASCII.GetString(a, 0, b);</p>
+
+<p class=ILprg>Console.Write(s);</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">      </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>z.txt</u></p>
+
+<p class=ILprg>vijay</p>
+
+<p class=ILprg>mukhi</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>12</p>
+
+<p class=ILoutput>vijay</p>
+
+<p class=ILoutput>mukhi</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We start by creating an object
+f, which is an instance of class FileStream. The function is assigned the name of
+the file that we want to work with, along with the mode in which it is to be
+opened. The two parameters, FileMode.Open and FileAccess.Read, are enums, which
+open a file for reading.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Read function in the file
+stream reads the file. The function has 3 parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is a byte array.
+The data from the file is to be read into this array.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter is the offset
+position.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third parameter is the maximum
+number of bytes to be read.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the Read function shall
+attempt to read upto 512 bytes from the file, until it reaches the end of the
+file. Since the file contains only the words 'vijay mukhi', the output is 12,
+which represents the number of bytes read. This is followed by the data, i.e.
+vijay mukhi. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now browse through the
+data sent by a web server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>WebRequest r =
+WebRequest.Create(&quot;http://www.vijaymukhi.com&quot;);</p>
+
+<p class=ILprg>WebResponse re = r.GetResponse();</p>
+
+<p class=ILprg>Stream s = re.GetResponseStream();</p>
+
+<p class=ILprg>Byte[] a = new Byte[51200];</p>
+
+<p class=ILprg>int b = s.Read(a, 0, 51200);</p>
+
+<p class=ILprg>Console.WriteLine(b);</p>
+
+<p class=ILprg>Console.Write(System.Text.Encoding.ASCII.GetString(a, 0, b));</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">      </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1085</p>
+
+<p class=ILoutput>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0
+Frameset//EN&quot;</p>
+
+<p class=ILoutput>&quot;http://www.w3.org/TR/REC-html40/frame.dtd&quot;&gt;</p>
+
+<p class=ILoutput>&lt;html&gt;</p>
+
+<p class=ILoutput>&lt;head&gt;</p>
+
+<p class=ILoutput>&lt;title&gt;Vijay Mukhi's Technology
+cornucopia&lt;/title&gt;</p>
+
+<p class=ILoutput>&lt;/head&gt;</p>
+
+<p class=ILoutput>&lt;frameset frameborder=&quot;0&quot;
+framespacing=&quot;0&quot; border=&quot;0&quot; cols=&quot;*&quot;
+rows=&quot;97,*&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frame
+marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
+src=&quot;heading.html&quot; name=&quot;heading&quot; noresize
+scrolling=&quot;no&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frameset
+frameborder=&quot;0&quot; framespacing=&quot;0&quot; border=&quot;0&quot;
+cols=&quot;210,*&quot; rows=&quot;*&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frameset
+frameborder=&quot;1&quot; framespacing=&quot;0&quot; border=&quot;0&quot;
+cols=&quot;*&quot; rows=&quot;0,*&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frame
+marginwidth=&quot;0&quot; marginheight=&quot;0&quot; src=&quot;code.html&quot;
+name=&quot;code&quot; noresize scrolling=&quot;no&quot;
+frameborder=&quot;0&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frame
+marginwidth=&quot;5&quot; marginheight=&quot;5&quot;
+src=&quot;menu_empty.html&quot; name=&quot;menu&quot; noresize
+scrolling=&quot;auto&quot; frameborder=&quot;0&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/frameset&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;frame
+marginwidth=&quot;5&quot; marginheight=&quot;5&quot; src=&quot;main.html&quot;
+name=&quot;text&quot; noresize&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/frameset&gt;</p>
+
+<p class=ILoutput>&lt;noframes&gt;</p>
+
+<p class=ILoutput>&lt;p&gt;The &lt;code&gt;NOFRAMES&lt;/code&gt; element is to
+be used to give useful content to people with browsers that cannot display
+frames.<span style="mso-spacerun: yes">  </span>One example is Lynx, a
+text-based browser.&lt;/p&gt;</p>
+
+<p class=ILoutput>&lt;/noframes&gt;</p>
+
+<p class=ILoutput>&lt;/frameset&gt;</p>
+
+<p class=ILoutput>&lt;/html&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We expect you to either have a
+web server installed on your machine, or at least be connected to the net. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every machine on the internet is
+recognized by a name. For example. the Microsoft site is known as
+www.microsoft.com; the Java site on the net is known as www.javasoft.com; and
+my site is known as www.vijaymukhi.com. However, every machine is also known by
+the common name of 'localhost'. When the address specified in the browser is
+www.microsoft.com, the web server of that machine sends across an HTML file to
+the browser. The file that is sent across is either named index.html or
+default.html. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above program, we would
+like to simulate the functioning of a browser, i.e. we want to fetch an HTML
+file from a web server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the System.Net namespace,
+there is a class called WebRequest that has a static function called Create.
+This function requires the name of the machine that runs a web server. While
+reading this book, in case you are not connected to the Internet, you may use
+'http://localhost/' as the name of the machine. Or else, you may connect to a
+site on the net such as www.vijaymukhi.com. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A WebRequest object r is
+returned by the Create function. The WebRequest class has another function
+called GetResponse, which returns a WebResponse object. The value returned is
+stored in a variable called re. Calling the method GetResponseStream from the
+WebResponse object returns a Stream object that can be utilized to read the
+HTML file sent across by the web server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file handling concepts,
+learnt a short while ago, may be applied here too. The interaction between our
+program and the web server is handled by two classes, i.e. WebRequest and
+WebResponse. We have no inkling as to what each class accomplishes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to read the HTML file
+off the Stream object, we create a byte array having a size of 51200.
+Thereafter, we employ the Read function to read 51200 bytes, from the inception
+of the stream, into the array. The value returned by the Read function is
+indicative of the number of bytes that have been read off the stream. On
+displaying this value, the number obtained is less then 51200 (in our case it
+is 1085), and not 51200. Therefore, despite our having commanded the Read
+function to read upto 51200 bytes, it read only 1085 bytes. This is because it
+encountered an End Of File mark after having read 1085 bytes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In case of an error, the
+WebResponse object displays a Status code. Few of the values that may be
+assigned to this Status code, are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>200 indicates 'success'.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>403 indicates 'permission denied'.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>404 indicates that the 'file name
+does not exist'.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since no errors are visible in
+our case, we assume the status code to be 200. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, the byte array is
+converted into a string, so that it can be displayed using the GetString
+function. Therefore, we see the first 1085 bytes of the HTML file, sent by the
+web server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>WebRequest r =
+WebRequest.Create(&quot;http://www.yahoo.com&quot;);</p>
+
+<p class=ILprg>WebResponse re = r.GetResponse();</p>
+
+<p class=ILprg>Stream s = re.GetResponseStream();</p>
+
+<p class=ILprg>Byte[] a = new Byte[51200];</p>
+
+<p class=ILprg>int b = s.Read(a, 0, 51200);</p>
+
+<p class=ILprg>while (b &gt; 0)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(System.Text.Encoding.ASCII.GetString(a, 0, b));</p>
+
+<p class=ILprg>b = s.Read(a, 0, 512);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">      </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We are not in a position to
+estimate the file size of the HTML file, which has been sent by the web server.
+So, we take recourse to the 'while' loop in situations of incertitude or
+perplexity. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Read function returns a
+zero, when there is no more data to be read from the stream. Thus, the 'while'
+loop terminates when the value of b becomes zero. Therefore, the last line of
+the output would always display a zero. In fact, we can regulate the number of
+bytes that we want the Read function to read off the stream. Here, we specify a
+value of 512. The framework enjoys the license to ignore this number. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to retrieve a specific
+file off the web server, such as a.html, we add the name of the file at the end
+of the URL. If the file appertains to the local hard disk, the Create function
+will be written as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>WebRequest r =
+WebRequest.Create(&quot;http://localhost/a.html&quot;);</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next query which is likely
+to vex our minds is: Where would the file a.html be stored on the hard disk? The
+answer to this depends upon the web server installed on the machine. In case of
+IIS or PWS from Microsoft, the file a.html would be placed in the sub-directory
+c:\inetpub\wwwroot. Reading a file sent by a web server is similar to reading a
+file from the local disk. Therefore, we do not have to discover two separate
+ways of reading the same thing.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Uri u = new Uri(&quot;http://www.yahoo.com&quot;);</p>
+
+<p class=ILprg>HttpWebRequest wr = (HttpWebRequest) WebRequest.Create(u);</p>
+
+<p class=ILprg>AsyncCallback a = new AsyncCallback(abc);</p>
+
+<p class=ILprg>IAsyncResult r = (IAsyncResult) wr.BeginGetResponse(a,wr);</p>
+
+<p class=ILprg>Console.ReadLine();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>static void abc(IAsyncResult ar)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>HttpWebRequest r = (HttpWebRequest) ar.AsyncState;</p>
+
+<p class=ILprg>HttpWebResponse re = (HttpWebResponse) r.EndGetResponse(ar);</p>
+
+<p class=ILprg>Stream s = re.GetResponseStream();</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Status code: &quot; + re.StatusCode);</p>
+
+<p class=ILprg>Byte[] a = new Byte[51200];</p>
+
+<p class=ILprg>int b = s.Read(a, 0, 51200);</p>
+
+<p class=ILprg>while (b &gt; 0)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(System.Text.Encoding.ASCII.GetString(a, 0, b));</p>
+
+<p class=ILprg>b = s.Read(a, 0, 512);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program displays the
+same output as before, but with a difference. It follows a dissimilar method of
+writing code. In the previous example, the Read function waited till the data
+was received from the Internet. When we are connected to the Internet, this
+wait could be indefinite. This effectively would disable the program from
+proceeding any further. While awaiting data, the program cannot carry out any
+other activity. Thus, to avoid squandering of time and resources, we need a
+mechanism, by means of which, the program can be intimated about the receipt of
+data for the HTML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The static function Create, now
+accepts a URI as a parameter. To create this URI object, we pass the same URI
+string as a parameter to the constructor. The return value of this function is
+stored in a HttpWebRequest object, since this class is derived from the class
+WebRequest. This class has a function BeginGetResponse, which accepts two
+parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first is an AsyncCallback
+delegate, which requires the name of a function. In the C# world, a delegate
+simply stands-in for a function to be called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter is a State
+object. Despite our not making any use of any state related information, we are
+not allowed to supply a null value. It is mandatory to supply a value, without
+which, an error is generated. Thus, we specify the object wr, of type
+HttpWebRequest, as the parameter. Under normal circumstances, we are required
+to create a State object and furnish it as a parameter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After a certain time duration,
+data arrives from the web server, and the function abc gets called. This
+function is passed IAsyncResult as a parameter, which has a property
+AsyncState. Since this is an Object, we cast it to HttpWebRequest.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We require an HttpWebResponse
+object, in order to obtain a Stream object, which will be employed to read the
+file received from the web server. The HttpWebRequest class has a
+EndGetResponse function, which accepts an IAsyncResult as a parameter, and
+returns a HttpWebResponse object. This object, in turn, is derived from the
+HttpResponse class. This function terminates the asynchronous request. The
+remaining code is similar to the above program. We however, are at liberty to
+execute other tasks, while the file is being received. Normally, a separate
+thread runs the function abc in an asynchronous manner.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Uri u = new Uri(&quot;http://www.yahoo.com&quot;);</p>
+
+<p class=ILprg>HttpWebRequest w = (HttpWebRequest) WebRequest.Create(u);</p>
+
+<p class=ILprg>IAsyncResult r = (IAsyncResult) w.BeginGetResponse(new
+AsyncCallback(abc),w);</p>
+
+<p class=ILprg>Console.ReadLine();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>static void abc(IAsyncResult ar)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>HttpWebRequest r = (HttpWebRequest) ar.AsyncState;</p>
+
+<p class=ILprg>HttpWebResponse re = (HttpWebResponse) r.EndGetResponse(ar);</p>
+
+<p class=ILprg>int b = 0;</p>
+
+<p class=ILprg>char[] a = new char[512];</p>
+
+<p class=ILprg>StreamReader rd = new StreamReader(re.GetResponseStream(),
+System.Text.Encoding.UTF8);</p>
+
+<p class=ILprg>StringWriter w = new StringWriter();</p>
+
+<p class=ILprg>b = rd.Read(a, 0, 512);</p>
+
+<p class=ILprg>while (b != 0 )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>w.Write(a, 0, 512);</p>
+
+<p class=ILprg>b= rd.Read(a, 0, 512);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Message = &quot; + w.ToString());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are a myriad ways of
+achieving the same output. In our case, we have presented a program that
+displays the same output as before, by using a different set of classes. The
+variations are only in the function abc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We first create an array of
+chars and not bytes. Thereafter, a StreamReader object rd, which is derived
+from TextReader, is created. This class has the ability to read characters from
+the Stream object supplied to it. The second parameter to the constructor is
+the encoding-type to be used, while reading character input from a stream. The
+Stream class is designed for byte input-output only. By default, it takes the
+UTF-8 encoding. Thus, we did not have to pass it as a parameter. It does not
+default to the ANSI code page for the current system. The advantage of UTF-8 is
+that, it handles Unicode characters appropriately, with localized versions of
+the operating system.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The StreamReader class is
+similar to the Stream class, in that, its Read function accepts an array of
+chars and not an array of bytes. The return value also remains the same. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, the StringWriter
+class concatenates this series of chars. Thus, the StringWriter object w,
+stores the HTML file as one large string, which gets appended by the Write
+function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We could also have used the
+WriteLine function to display the array of chars.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Domain
+Name System</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>String s = Dns.GetHostName();</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>vmukhi</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Whenever we need to connect to any
+computer, the machine's IP address has to be determined. Every machine on the
+Internet is identified by a unique number, which is called the machine's IP
+address. This number is of a 'long' data type. Since it is humanly impossible
+to memorize 4 billion numbers, every machine is also allotted a name. The
+system that maps a name to its corresponding IP address, is called the Domain
+Name System (DNS). <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The class Dns contains only
+static entities, and hence, it is called a static class. One of its members is
+called GetHostName, which returns the name of the machine on which the current
+program is being executed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As we mentioned earlier, every
+machine by default, is assigned the name of localhost. While installing Windows
+2000, we have proactively assigned it the name of 'vmukhi'. Hence, the output
+shows 'vmukhi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>IPHostEntry i =
+Dns.GetHostByName(&quot;www.microsoft.com&quot;);</p>
+
+<p class=ILprg>IPAddress [] a = i.AddressList;</p>
+
+<p class=ILprg>foreach ( IPAddress j in a)</p>
+
+<p class=ILprg>System.Console.WriteLine(j.ToString()+ &quot; &quot; +
+j.Address);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>207.46.130.45 763506383</p>
+
+<p class=ILoutput>207.46.230.229 -437899569</p>
+
+<p class=ILoutput>207.46.131.91 1535323855</p>
+
+<p class=ILoutput>207.46.131.199 -947704113</p>
+
+<p class=ILoutput>207.46.230.219 -605671729</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every web server or client on
+the Internet is known by an IP address and a corresponding name. Moreover, the
+name on the Internet, such as, www.microsoft.com, may not necessarily be
+restricted to a single IP address. It may have multiple IP addresses mapped
+onto it. This is what the above program demonstrates.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function GetHostByName is
+called and given the domain name, whose IP addresses are to be retrieved. An
+object is returned, which is an instance of IPHostEntry. This class has a
+property AddressList, which returns an array of IPAddress objects. A single object
+is assigned to each IP address represented by the domain name. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An IP address is a protracted
+number. It comprises of four numbers, each having a value, which falls within
+the range of 0 to 255. Thus, we can represent an IP address in the dotted decimal
+notation, where the four numbers are separated from each other by a dot.
+Displaying the Address member directly exhibits a long number. You can
+ascertain as to which of these is more readable. The 'foreach' statement is
+used to iterate through the array.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>IPHostEntry i =
+Dns.GetHostByName(&quot;www.microsoft.com&quot;);</p>
+
+<p class=ILprg>String [] a = i.Aliases;</p>
+
+<p class=ILprg>foreach ( String j in a)</p>
+
+<p class=ILprg>System.Console.WriteLine(j);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>www.microsoft.com</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An IP address may contain other
+DNS names, which resolve to the same address. In this case, there are none.
+Thus, it is evident that the Microsoft site on the net has no other aliases or
+names.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>IPHostEntry i =
+Dns.GetHostByName(&quot;www.microsoft.com&quot;);</p>
+
+<p class=ILprg>String a = i.HostName;</p>
+
+<p class=ILprg>System.Console.WriteLine(a);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>www.microsoft.akadns.net</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The property HostName gives us
+the DNS name of the host. The HostName for www.microsoft.com happens to be
+www.microsoft.akadns.net.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>IPAddress i = IPAddress.Parse(&quot;207.46.130.45&quot;);</p>
+
+<p class=ILprg>System.Console.WriteLine(i.ToString()+ &quot; &quot; +
+i.Address);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>207.46.130.45 763506383</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At times, we may wish to convert
+a dotted decimal IP address to an int, i.e. an actual long number. The Parse
+function in IPAddress accepts a dotted decimal IP address as a string, and
+returns an object that is an instance of IPAddress. We then display the value
+as a string and an int. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>How do we achieve the reverse
+process? We may want to convert an IP Address from a dotted decimal notation,
+into an instance of IP Address. At other times, we may want to convert an
+IPAddress, which is in the form of a string, into the dotted decimal notation.
+The same function can be used to accomplish both these predilections.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>String s = Dns.IpToString(763506383);</p>
+
+<p class=ILprg>System.Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>207.46.130.45</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The IP addresses are capable of
+being converted from an int format into a dotted decimal string or quad
+representation, by using the IpToString function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>IPHostEntry i = Dns.Resolve(&quot;www.microsoft.com&quot;);</p>
+
+<p class=ILprg>System.Console.WriteLine(i.AddressList[0].ToString());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>207.46.230.229</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function Resolve in the Dns
+class, has no complications. We may be interested in an IP address,
+representing either a single domain name or multiple domain names. One of the
+solutions is, to use the function GetHostByName. Alternatively, the Resolve
+function may be used to achieve the same output. <o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Servers
+and Clients</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></p>
+
+<p class=ILbase><u><span style='color:windowtext'>Server program</span></u><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.Net.Sockets;</p>
+
+<p class=ILprg>using System.Text;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DateTime n;<span style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>String s1;<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(13); </p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>while (true)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before&quot;);</p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After&quot;);</p>
+
+<p class=ILprg>n = DateTime.Now;</p>
+
+<p class=ILprg>s1 = n.ToShortDateString() + &quot; &quot; +
+n.ToLongTimeString();</p>
+
+<p class=ILprg>Byte[] b = Encoding.ASCII.GetBytes(s1.ToCharArray());</p>
+
+<p class=ILprg>s.Send(b, b.Length, 0);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Sent &quot; + s1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><u><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></p>
+
+<p class=ILbase><u><span style='color:windowtext'>Client program</span></u><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>b.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.Net.Sockets;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Text;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main(String[] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpClient t = new TcpClient();</p>
+
+<p class=ILprg>Byte[] r = new Byte[32];</p>
+
+<p class=ILprg>t.Connect(&quot;127.0.0.1&quot;, 13);</p>
+
+<p class=ILprg>Stream s = t.GetStream();</p>
+
+<p class=ILprg>int n = s.Read(r, 0, r.Length);</p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(r);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Received &quot; + n );</p>
+
+<p class=ILprg>Console.WriteLine(a);</p>
+
+<p class=ILprg>t.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Server Dos box</u></p>
+
+<p class=ILoutput>Before</p>
+
+<p class=ILoutput>After</p>
+
+<p class=ILoutput>Sent 09/13/2001 17:35:48</p>
+
+<p class=ILoutput>Before</p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Client Dos box</u></p>
+
+<p class=ILoutput>Received 20</p>
+
+<p class=ILoutput>09/13/2001 17:35:48</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have supplied the following
+two programs, which are to be executed in two different DOS boxes: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>a TCP server program. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>a TCP client program. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Server is to be executed
+first, since the client expects the server to be running. So, lets understand
+the server program first.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DateTime class provides
+access to the current date and time, in a multitude of formats. We first create
+an object, which is an instance of the TcpListener class. Thereafter, the
+constructor is passed a parameter of 13. It has no other significance, other
+than being called a Port Number. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Most people, when online, either
+surf the net, or download files, or send E-mail. These activities have certain
+rules/protocols that are required to be followed for successful execution of the
+task. We cannot have separate machines to handle each of the above protocols.
+Therefore, the programs/servers are executed on the same machine; however, they
+work on a specified number called, the Port Number. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every packet of data is tagged
+with a number, which specifies the protocol that the packet belongs to. There
+is a world-wide body called IANA (Internet Assigned Numbers Authority), which
+determines the number to be assigned to each protocol. Some of them are as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The World Wide Web has been
+allocated the number 80</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>FTP has been allocated the number 21
+</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>E-mail has been allocated the number
+25. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, if we notice a packet with
+a port number 80, we would immediately understand that the packet is carrying
+data for the World Wide Web, i.e. the www protocol.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The TcpListener class
+constructor requires the Port Number, since our server only accepts packets
+that carry this number. We have asked our server to listen, and accept packets
+on port 13. The first 1024 port numbers are reserved by IANA for various
+protocols. The rest of the numbers may be utilized by us, for our own
+protocols. The number 13 falls within the range of reserved port numbers.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>TCP stands for Transmission
+Control Protocol. Every TCP server needs a function to kick start the entire
+process. This function is called 'Start'. As of now, we are neither aware of,
+nor care about what 'start' actually does. We are only apprehensive and aware
+about the fact that, if this function is not called, none of the clients would
+ever be able to connect to our server. The TcpListener class is used
+extensively while writing an Internet server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Around 20 years ago, a large
+number of networking protocols existed. A networking protocol merely consists
+of a series of numbers in a specific format, which two machines transmit to
+each other, in order to facilitate communication. It was extremely complex and
+cumbersome for programmers to comprehend the numerous networking protocols.
+TCP/IP was also one such protocol. At that time, nobody would have known that,
+it would turn out to be the world's most dominant networking protocol, in the
+days to come. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A group of programmers banded
+together and came out with a series of functions, which could generate the
+bytes for a large number of networking protocols. For reasons unknown, they
+named these functions as Sockets API. Thus, a networking coder is traditionally
+known as a Sockets programmer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the case of C#, we have a
+class called Socket. TcpListener is derived from it. The advantage of using
+socket classes like TCPListener is that, functions like 'Start', call a
+tremendous amount of code from other Sockets classes. So, we do not have to
+delve into the innards of sockets programming, in order to be able to use them.
+The TCPListener class, in a sense, provides us with networking services at a
+higher level of abstraction, than what could have been achieved, by using the
+Socket class directly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On running our server ‘a’, we
+only notice a single word 'Before'. Thereafter, our server seems to wait
+forever. This wait is attributable to the Accept function. In computer
+parlance, it goes off to sleep. Our server waits till some TCP client connects
+to our server on port 13. This wait could extend till eternity. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The time has come to try and
+comprehend as to what a TCP client program is.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The TCPClient class is similar
+to a TcpListener class. This class has functions that use the code from Sockets
+classes and offer assistance in writing a TCP client program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Connect function connects to
+a server. Therefore, it requires the domain name or IP address of the machine,
+which we desire to connect to. Further, the port number also needs to be
+specified. We have specified the port number as 13. This is because our server
+only accepts packets marked with the port number 13. When the Connect function
+attempts to connect to the server, the server moves beyond the Accept function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function Accept in the
+server, returns an instance of a Socket class. This object now becomes a
+handle, and is used to return data back to the client. The DateTime class has a
+static member called 'Now', which gives the current date and time. Since the
+value is a DateTime object, we use one of the many functions in the DateTime
+class, to display the date as a string in a specific format. Here, we use two
+functions, ToShortDateString and ToLongDateString; and store the concatenated
+string value in a variable s1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This string is now required to
+be sent across to the client. To accomplish this, we need to convert the date in
+the string, into an array of bytes. So, we first convert the string s1 to an
+array of chars, and then, employ the GetBytes function to convert this array of
+chars into an array of bytes. The socket class has a function called 'Send'. It
+accepts a byte array as the first parameter and the length of the array as the
+second parameter; and eventually sends the data to the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At the client end, the GetStream
+function is used to obtain a Stream object. Then, using the good old Read
+function, the bytes in the Stream are read into a byte array. Finally, the byte
+array is converted into a string, and then its contents are displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>In one of our other C# books, we had demonstrated how the Web
+client connects to the Webserver on port 80. This program had used a set of
+classes distinct from the ones used here. But, in the ultimate analysis, they
+all call code from the Sockets class.<span style="mso-spacerun: yes">  </span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:55 GMT -->
+</html>

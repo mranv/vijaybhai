@@ -1,0 +1,306 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap7.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center" height="0%">
+  <tr> 
+    <td height="4730" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC" height="16"> 
+            <div align="center"><font size="+1"><b>7. Java Beans </b></font></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Beans in the Market </p>
+      <p>If you go to any marketplace and enquire about the types of beans available, 
+        you are bound to get a variety of answers. There are french beans, large 
+        beans, small beans etc.,. and then some intelligent friend of your's might 
+        say that Java Beans are available as well. We'll leave all the other beans 
+        to the vegetable vendors and cooks to figure out and talk of Java Beans 
+        in this chapter. </p>
+      <p>Before we try and figure out what a Java Bean is, let's explore the world 
+        of COMPONENTS and CONTAINERS. Let's try and get the basics clear with 
+        a true to life example. </p>
+      <p>Suppose we had two programmers and a client. Programmer A has come out 
+        with the latest E-MAIL program with a great user interface. The client 
+        hires A and is ready to buy his program, but fortunately or unfortunately 
+        the client is weak in English, and sends programmer A a letter saying 
+      </p>
+      <p>&quot; I will take your prouduct only if you can inculude spelcheck in 
+        it.&quot; <br>
+        Signed : client </p>
+      <p>Seeing the pitiable state of his client's English, A takes it to be his 
+        moral responsibility to include spellcheck in his program. He neither 
+        has the time nor the patience to sit down and write a speller-checker 
+        program. So, he goes to the market, buys a speller-checker from B and 
+        includes it in his E-MAIL program. Now B's program is a component, which 
+        is added to A's program(container). Not every programmer who wrote the 
+        speller-checker could get the sign the deal with A(container). Only that 
+        program, which complied with, or followed all the set of rules put forth 
+        by A got it. </p>
+      <p>We should drive home the fact that a COMPONENT must follow a certain 
+        set of rules given by the CONTAINER. Sun Microsystems developed a set 
+        of rules to enable java programs to be used as components, which they 
+        named 'Java Beans'. They also developed a reference container for these 
+        Java Beans to show the world the rules to be followed while using them. 
+      </p>
+      <p>Create a subdirectory to work in. We have named our directory jb. </p>
+      <p>Bare Minimum Requirements for learning Java Beans <br>
+        1. Windows Operating System (95/98/NT) <br>
+        2. JDK 1.1.x </p>
+      <p>c:\jb\&gt;edit zzz.java </p>
+      <p>zzz.java <br>
+        import java.applet.* ;<br>
+        import java.awt .* ;<br>
+        public class zzz extends Applet<br>
+        { <br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawString(&quot;FrenchBean&quot;,10,10);<br>
+        }<br>
+        }</p>
+      <p>This Program ends here.!!! <br>
+        We had this printed, just in case you were trying to turn pages, unable 
+        to believe that a Java Bean (an eight lettered word ), can be such a simple 
+        program. Then, what was all the hype about the technology we mentioned 
+        earlier ?</p>
+      <p>There is one thing every person must understand about any new technology. 
+        It always makes life easier by doing all the complex jobs for us. So to 
+        succeed in the market it has to be very simple to use. </p>
+      <p>Enough philosophy for now, let's get down to work . Java Bean is just 
+        another java program which can be used as a component in a container. 
+      </p>
+      <p>An Ode to the Jars: </p>
+      <p>Bungee jumping, skiing, scuba diving and surfing the net are the hobbies 
+        of millions, the world around, but did you ever try to think why surfing 
+        the net comes last on the list of hobbies ? It's because of the amount 
+        of time you have to wait before things come to you.</p>
+      <p>When a person goes to a site on the Net and asks for some information, 
+        he is connected to the site where this information is available. The required 
+        data is in the form of a html document i.e. he first connects to the server, 
+        and gets the html document. Before being shown, the application (let's 
+        suppose it is some animation software), might ask for some .gif files, 
+        or some .class files etc. So, for retrieving each file, a special request 
+        has to be sent to the the server and the bytes have to be transferred 
+        to the client. Moreover, there is a lot of congestion on the net since 
+        the servers may be busy. Thus, the time taken for the transfer of the 
+        required bytes depends on the quality of the line, congestion on the server 
+        (too many clients accessing the same server) etc. Statistically speaking, 
+        even if we were to send you a message saying &quot;Hello&quot;, 40 additional 
+        bytes of data (called as a TCP/IP header) would have to be transferred 
+        along with this message. So the gist is that each time there is a transfer 
+        of actual meaningful data from or to the client, there is a lot of over 
+        head involved. </p>
+      <p>Suppose your friend had given you a mystery novel. You start reading 
+        it and are interested. By the time you reached the climax and the mystery 
+        situation, you find out that the second half of the book is missing. Anxious 
+        to read the later chapters, you visit your friend, but in vain, as he's 
+        left for some other place and wouldn't be returning until later the next 
+        day. As there is no other alternative, you wait. Had you friend been thoughtful, 
+        he would have given you the other part too! </p>
+      <p><br>
+        Sun Microsystems has been thoughtful enough and they introduced the concept 
+        of JARS. All the .class and other files relating to a particular application 
+        are compressed and put in the jar. So when the client asks for the html 
+        program containing the bean, the server is kind enough to send you the 
+        whole jar. Now you have all the information at one go. The client does 
+        not have to connect to the server again and again for the files relating 
+        to the particular program. In this way, both the server and the client 
+        save time. This has been done to make the life of net surfers easier. 
+        Mind you, the previous program can be called as a Java Bean only when 
+        put in a jar file. </p>
+      <p>To compile zzz.java , give the following command </p>
+      <p>c:\jb&gt;javac zzz.java </p>
+      <p>In order to create the manifest file, create a file with .mf extension. 
+        Here we give the filename as zzz.mf</p>
+      <p>c:\jb&gt;edit zzz.mf // The manifest file </p>
+      <p>zzz.mf <br>
+        Manifest-Version: 1.0<br>
+        Name: zzz.class <br>
+        Java-Bean: True </p>
+      <p>The jar program creates a .jar file. It is a utility provided by Sun 
+        which puts all the required files of a particular application into the 
+        jar file.</p>
+      <p>c:\jb&gt;jar cfm zzz.jar zzz.mf zzz.class </p>
+      <p>c:\jb&gt;dir /w<br>
+        Volume in drive C has no label.<br>
+        Volume Serial Number is 1AD6-0B09</p>
+      <p> Directory of C:\jb</p>
+      <p>[.] [..] zzz.java zzz.class zzz.mf zzz.jar<br>
+        4 File(s) 1,320 bytes<br>
+        2 Dir(s) 545,153,024 bytes free</p>
+      <p>The cfm options to jar file mean the following.</p>
+      <p> -c create new archive<br>
+        -f specify archive file name<br>
+        -m include manifest information from specified manifest file</p>
+      <p>The new archive to be created is given first, then the manifest file 
+        which contains the bean information and lastly the .class files which 
+        belong to the application. Note that only one class can be called a bean. 
+        The other class files that you specify are more like supportive files 
+        that contain code. </p>
+      <p> c:\jb&gt;copy zzz.jar c:\progra~1\bdk1.1\jars </p>
+      <p>Sun Microsystem has a bean development kit which can be downloaded from 
+        their site. We have installed bdk1.1 . Here they have created a reference 
+        container for Java Beans, called the beanbox. The container looks at the 
+        jars subdirectory for all the jar files which have to be implemented in 
+        the Bean Development Kit (BDK). Hence we copy our .jar file into this 
+        subdirectory</p>
+      <p>Now to see our bean work, we change to the bdk subdirectory and run a 
+        batch file viz. run.bat</p>
+      <p>c:\jb&gt;cd c:\progra~1\bdk1.1\beanbox<br>
+        c:\Program Files\BDK1.1\beanbox&gt;run</p>
+      <p>Voila! Our Java Bean - zzz is right there at the bottom of the Beanbox 
+        toolbar. Click and drag zzz into the beanbox container and you'll see 
+        a &quot;Frenchbean&quot; on the screen. Now, to bring the explicit button 
+        to the beanbox, we first click on the button and position the mouse on 
+        the container and then we click. Now that we have both a button and our 
+        Java Bean (zzz)in the beanbox container, let's learn how to connect both 
+        of them.<br>
+        First, we click on the freshly brought button and then look into the various 
+        options in the EDIT menuitem. Now, logically speaking, we want to see 
+        what the buttonpush can do for us, hence we checkout the action performed 
+        in the buttonpush option of the Events submenuitem.</p>
+      <p>On clicking the action performed for a buttonpush, we find a jazzy red 
+        line with one end fixed at the button and the other end, free to move 
+        with the mouse. Now position the mouse on zzz and click on it. By doing 
+        this, we are actually connecting the button with our zzz Java Bean. As 
+        soon as we click on the zzz Java Bean, an Event Target Dialog (a dialog 
+        box with this heading) pops up. This dialog box has a big list of functions 
+        which can be assigned to our pushbutton. Of the many functions in the 
+        dialog box only one seems to be both familiar and mysterious i.e. hide. 
+        So we select it and click on OK.</p>
+      <p>Now let's emulate the disappearing act of Houdini. Press the pushbutton 
+        with a mouse click and see the &quot;Frenchbean&quot; disappear i.e. the 
+        Java Bean (zzz) in the beanbox container disappears. </p>
+      <p>The Fundamentals of a Property : </p>
+      <p>Now, it's time for some fun. To begin with, we first select the juggler 
+        icon from the toolbox (beanbox frame) and bring it into our Container. 
+        Can we interact with the juggler? This is the first question we should 
+        ask. The answer is, YES WE CAN !! </p>
+      <p>There is a small window named the property sheet next to the beanbox 
+        container. This window has a property named animationrate which can be 
+        changed. By changing the value of the property, you will see the juggler 
+        juggling either slower or faster than before. </p>
+      <p>What is a property? </p>
+      <p>It is a variable that can be changed by the user. Now, It is very easy 
+        to create a variable and initialize it in the program itself. You can 
+        then have conditions and code that are executed when the variable is greater 
+        than some value or less than a certain value. When you change the value 
+        in the property sheet, a variable has to be created that accepts new values 
+        at run time and shows the effect immediately. To incorporate this feature, 
+        every variable has to have two functions that have to be preceded by either 
+        a get or a set. Such variables are called properties. </p>
+      <p>Only two things can be done to a variable. You can either 'get' it or 
+        'set' it.</p>
+      <p>example :<br>
+        When i is initialised to 10 by giving<br>
+        i = 10 <br>
+        we are setting the variable i to 10 .</p>
+      <p>and when i is used on the right side of the equalto i.e. <br>
+        something = i + 4, we are getting (returning) the value stored in variable 
+        i. </p>
+      <p>The function which has 'set' has to be given a value whereas the function 
+        which has 'get' has to return some value.</p>
+      <p>zzz.java <br>
+        import java.applet.* ;<br>
+        import java.awt.* ;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        int aa =10 ;<br>
+        public void paint (Graphics g)<br>
+        {<br>
+        g.drawString (&quot;Great&quot; + aa, 1, 1) ;<br>
+        }<br>
+        public void setxx(int i)<br>
+        {<br>
+        aa = i ;<br>
+        }<br>
+        public int getxx ( )<br>
+        {<br>
+        return aa ;<br>
+        }<br>
+        }</p>
+      <p>Create a batch file with the following commands and then execute it</p>
+      <p>a.bat <br>
+        javac zzz.java<br>
+        jar cfm zzz.jar zzz.mf zzz.class <br>
+        cd c:\progra~1\bdk1.1\beanbox<br>
+        run</p>
+      <p>Now when you bring in the bean into the container, you will see xx with 
+        the value 10 as a property in the PropertySheet. You can change this value 
+        and the resultant value will then be displayed in the Container.</p>
+      <p>When xx =10, we see &quot; Great 10 &quot; in the beanbox and if we change 
+        it to xx = 100, we see &quot; Great 100&quot; in the beanbox .</p>
+      <p><br>
+        Simulating our own function</p>
+      <p>Previously, to make something disappear, we clicked on action performed 
+        for a push button and chose a target method ( assigned to the push button 
+        ) i.e . hide . We can now have our own function in the Event Target Dialog. 
+        For this we make modifications to the previous program.</p>
+      <p>Remove the &quot;getxx&quot; and the &quot;setxx&quot; functions from 
+        the previous program, and put the following function in the code</p>
+      <p>public void abc( )<br>
+        {<br>
+        aa = 1000;<br>
+        repaint ();<br>
+        }</p>
+      <p>Run the file a.bat. Bring the bean in the container and then the explicit 
+        button. Proceed to the Event Target Dialog by clicking on action performed 
+        of a buttonpush as before. The function abc() that we included in our 
+        code is up on the list. Select it and then click on OK. Now click on the 
+        button and see the value change on the screen.</p>
+      <p>&quot;Great 10 &quot; now becomes &quot; Great 1000&quot; </p>
+      <p>We've chosen names like abc so that we can easily find them as the first 
+        entry on the list.<br>
+      </p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap7.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

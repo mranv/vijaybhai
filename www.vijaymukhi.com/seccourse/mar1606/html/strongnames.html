@@ -1,0 +1,335 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/strongnames.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:36 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="strongnames_files/filelist.html">
+<title>strong names</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>55</o:TotalTime>
+  <o:Created>2006-03-17T10:11:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:11:00Z</o:LastSaved>
+  <o:Pages>4</o:Pages>
+  <o:Words>560</o:Words>
+  <o:Characters>3192</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>26</o:Lines>
+  <o:Paragraphs>6</o:Paragraphs>
+  <o:CharactersWithSpaces>3920</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Assembly.Load(&quot;myDll,Version=1.0.0.1,Culture=neutral,PublicKeyToken=9b35aa32c18d4fb1&quot;);</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Sn –k a.snk</p>
+
+<p class=MsoNormal>Sn –k b.snk</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first use the strong name command sn to create for us two
+unique public key private key pairs in files a.snk and b.snk. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.cs</p>
+
+<p class=MsoNormal>public class zzz </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>aaa a = new aaa();</p>
+
+<p class=MsoNormal>System.Console.WriteLine(a.abc());</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b.cs</p>
+
+<p class=MsoNormal>public class aaa</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>public string abc()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>return &quot;vijay&quot;;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Z.bat</p>
+
+<p class=MsoNormal>del a.exe</p>
+
+<p class=MsoNormal>del b.dll</p>
+
+<p class=MsoNormal>csc /target:library b.cs</p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We create a dll b.dll which has one function abc in class
+aaa which is called in the console application a.cs. We have created a batch
+file z.bat that automates the whole process. When we run a.bat we see vijay
+displayed as the output.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now lets change a single line in z.bat as follows</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll /keyfile:a.snk</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>error CS1577: Assembly generation failed -- Referenced
+assembly 'b' does not</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>have a strong
+name</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>All that we did was associate the file a.exe with a strong
+name. By doing this we have made sure that any assembly that it now refers to
+must also have a strong name. The assembly b.dll has no strong name associated
+with it and hence we get a error. Thus if we associate a strong name with a exe
+file it can only code from a dll that has a strong name. Lets now look at the
+same problem the other way around.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>csc /target:library b.cs /keyfile:b.snk</p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We give a strong name to the file b.dll by associating the
+public key private key stored in b.snk. We get no error as a exe file with no
+strong name can call other code in a dll that has a strong name. This should e
+obvious as code in mscorlib.dll is called by us, this dll has a strong name,
+code that calls it normally does not.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>csc /target:library b.cs /keyfile:b.snk</p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll /keyfile:a.snk</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The way out is to make sure that both assemblies a.exe and
+b.dll have a strong name associated with them to get no error.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Z.bat</p>
+
+<p class=MsoNormal>csc /target:library b.cs</p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll<span style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We now simply run z.bat as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This gives us the exe file a.exe. All our C# code gets
+converted to a intermediate language or IL. All code written in any .Net
+language gets converted to IL. We have a tool called ildasm that tells us what
+is present in our assemblies. We run this tool as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Ildasm a.exe /out:a.il</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This creates a file called a.il and we show you a small part
+of it.</p>
+
+<p class=MsoNormal>a.il</p>
+
+<p class=MsoNormal>.assembly extern b</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.ver 0:0:0:0</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>.assembly a</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.hash algorithm
+0x00008004</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.ver 0:0:0:0</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>It shows us that we are referring to the assembly b using
+the extern keyword and both assembly a and b have no public key. We change
+z.bat as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>csc /target:library b.cs /keyfile:b.snk</p>
+
+<p class=MsoNormal>csc a.cs /r:b.dll<span style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.il</p>
+
+<p class=MsoNormal>.assembly extern b</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.publickeytoken =
+(AB 8E 30 32 1B 02 45 03 )<span style="mso-spacerun:
+yes">                         </span>// ..02..E.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.ver 0:0:0:0</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>.assembly a</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.hash algorithm
+0x00008004</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">  </span>.ver 0:0:0:0</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Assembly a has not changed at all, but assembly b has now a
+public key token. We now run ildasm on b.dll</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Ildasm b.dll /out:b.il</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This gives us in assembly b as keyword that is called
+publickey. This keyword has the same value when we run a program called secutil</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>secutil -hex -strongname b.dll</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This show us the same public key that we see in the file
+b.il which is too large to be displayed in our tutorial. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>sn -Tp b.dll</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we run the sn command with the Tp option we see the
+same public key bit now we also see a public key token which is the same that
+is displayed for assembly b. We now change our bat file to include the /keyfile
+option for a.exe and we now see another public key in the file a.il for the
+assembly a. This is how we add a public key into our assembly. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Sn –p a.snk c.snk</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The –p option takes the public key stored in the file a.snk
+and copies it to c.snk which is only 160 bytes large. This public key can be
+viewed in a hex editor and is the same as show by the above programs.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/strongnames.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:37 GMT -->
+</html>

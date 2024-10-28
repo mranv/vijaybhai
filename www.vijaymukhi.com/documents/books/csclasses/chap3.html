@@ -1,0 +1,2376 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:55 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap3_files/filelist.html">
+<link rel=Edit-Time-Data href="chap3_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-11-05T20:50:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:07:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>5947</o:Words>
+  <o:Characters>33899</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>282</o:Lines>
+  <o:Paragraphs>67</o:Paragraphs>
+  <o:CharactersWithSpaces>41630</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=ILbase><span style='color:windowtext'><img width=64 height=48
+id="_x0000_i1025" src=bpb.jpg><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>3</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Remoting</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We embark upon this chapter by
+initiating the concept of 'remoting' and attempting to unravel it by using a
+diminutive example. In 'remoting', there exists a 'client' program on one machine,
+which may be located anywhere in the world, and a 'server' program on another
+machine. The client program thereafter, calls a function in the server program.
+The server, after having executed the function, delivers the return value of
+the function, back to the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To effect and bring the
+abovementioned scenario to fruition, we have employed three programs named
+o.cs, s.cs and c.cs. Furthermore, to avoid calling the compiler command for
+each one of them individually, we have placed the compile commands in a batch
+file named a.bat. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>public zzz() {</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     </span>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     </span>}</p>
+
+<p class=ILprg>~zzz() {</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Destructor&quot;);</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>public String abc() {</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>Console.WriteLine(&quot;Vijay Mukhi2&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>return
+&quot;Sonal&quot;;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class sss {</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>RemotingConfiguration.RegisterWellKnownServiceType(</p>
+
+<p class=ILprg>Type.GetType(&quot;zzz,o&quot;), &quot;eee&quot;,
+WellKnownObjectMode.SingleCall);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.WriteLine(&quot;Press &lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>public static void
+Main()</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>zzz a =
+(zzz)Activator.GetObject(typeof(zzz), &quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>if (a == null)</p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>else </p>
+
+<p class=ILprg>Console.WriteLine(a.abc());</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>} </p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u></p>
+
+<p class=ILprg>csc.exe /t:library o.cs</p>
+
+<p class=ILprg>csc.exe s.cs</p>
+
+<p class=ILprg>csc.exe /r:o.dll c.cs</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output in server dos box</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Vijay Mukhi2</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in client dos box</u></p>
+
+<p class=ILoutput>Sonal</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We simulate the 'remoting'
+behaviour by bringing two dos boxes into play. We run the client program in one
+box and the server program in the other box.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The file o.cs is created with a
+class zzz, which derives from the class MarshalByRefObject. This abstract
+class, belonging to the System namespace, cannot be used in isolation. Hence,
+it requires a class that derives from it. A class of this kind permits remote
+objects to call code from it. There exist a constructor and destructor, which
+furnish information regarding the time of creation and destruction of an
+object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A function called abc is
+created, which displays 'Vijay Mukhi2' by using the WriteLine function and
+then, returns the name of 'Sonal'. Other programs can call the function abc,
+merely by deriving a class from MarshalByRefObject. The file o.cs is compiled
+into a dll, using the /target:library option. Understanding the abovementioned
+explanation does not require the genius of a rocket scientist.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall now go ahead and write
+a simple server program named s.cs. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>c is an object, which is an
+instance of class TcpChannel, in the namespace
+System.Runtime.Remoting.Channels.Tcp. The constructor is assigned a port number,
+on which, the other machine can establish communication with it. The protocol
+used here is known as TCP/IP, where TCP stands for Transmission Control
+Protocol and IP implies Internet Protocol. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The port number facilitates the
+creation of a channel between two machines. The number that we have selected
+for the port is 8085. This is because all the samples provided by Microsoft use
+this number. It must obviously be a lucky mascot for that Company. You may
+select any other number, as long the same number is used for the client and the
+server. Hereinafter, whenever a client connects on port 8085, the TCP/IP stack
+or the Windows Internet Software keeps the server apprised about the
+connection. The server, in turn, keeps a listening vigil on port 8085. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The namespace,
+System.Runtime.Remoting contains a class ChannelServices, which has a static
+function RegisterChannel. This function accepts an IChannel interface as a
+parameter and thereafter, registers the Channel object with the channel
+services. The main activities of this function are not known. It suffices to
+say that, without this function, the TCPChannel object that has been created,
+would not be effective. The class TCPChannel derives from a large number of
+interfaces, such as IChannelSender, IChannel, IChannelReceiver,
+IDictionary,<span style="mso-spacerun: yes">  </span>ICollection and
+IEnumerable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The most imperative function
+that the server has to call is, the one that registers the function abc in
+class zzz, contained in the file o.dll. The name of this static function is
+RegisterWellKnownServiceType, of the class RemotingConfiguration, belonging to
+the namespace System.Runtime.Remoting. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This function takes three
+parameters, beginning with a type object that represents the name of the
+assembly that contains the object to be registered. Our object is located in a
+dll. It could even be located in an executable. The name 'o' of the dll file is
+passed as the second parameter to the GetType Object. The first parameter to
+this function is the name of the class that represents the object. In case the
+class is located in a namespace, the full name has to be furnished. The GetType
+object returns a Type object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second parameter of the
+function RegisterWellKnownServiceType, represents a URI, or a Universal
+Resource Identifier. It could be any original word that helps in identification
+of functions in the class zzz. This is referred to as an 'endpoint', where the
+object shall be published. The client does not connect to the class zzz
+directly, but to an endpoint. In our case, the URI is eee. It points indirectly
+to the class zzz, which is the object that needs to be remoted.<span
+style="mso-spacerun: yes">  </span>Any string may be used, provided the same
+string is used by the client too. Had we wished to connect using ASP.Net, we
+would have been compelled to use zzz.soap, as the endpoint.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last parameter specifies the
+mode, which may assume any of the two values, i.e. SingleCall or Singleton. The
+data type is an enum named WellKnownObjectMode, which only embodies the two
+abovementioned values. The mode specifies the 'lifetime' of the object, i.e.
+the frequency of its creation. If we specify the mode as SingleCall, a new
+instance of the object zzz will be created each time a message is received. If
+it is assigned the value of Singleton, an instance of zzz will be created only
+once, and all the clients shall interact with it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On compiling s.cs, an executable
+named s.exe will be generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client code, which calls
+code from the remote object is placed in the file c.cs. In this file, we
+commence with the 'using' statement, in order to introduce the namespaces for
+the classes. Thereafter, a TcpChannel is created, but unlike a server, it is
+devoid of a port number. The port number assigned to the client is of no
+significance, since it is not binding on the client to listen to any request.
+Therefore, a random value is assigned as the port number. RegisterChannel
+registers the TcpChannel c. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we use the static function
+GetObject from the Activator class in the system namespace. This function
+accepts two parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first parameter is of data type
+Type, which represents the class that we wish to instantiate.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second parameter is the URI of
+the object, which is to be instantiated. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The URI follows a specific
+sequence, which is as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>It commences with the protocol that
+is required for communication. In our case, it is tcp. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>This is followed by the machine name
+on which the server resides. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our case, everything is
+located on a single machine. Hence, we use the machine name 'localhost'. The
+machine name is by suffixed with a colon. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>This is succeeded by the port
+number. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Finally, the endpoint created in the
+server is to be specified. In this case, it is eee. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abovementioned sequence has
+to be maintained, and all the above items are mandatory. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This function returns an object
+that is an instance of class zzz, which we store in object 'a'. If the object
+'a' has a value of null, it generates an error and displays a suitable error
+message. Otherwise, the function abc of the object 'a' is called, and the
+return value is displayed using the WriteLine function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On compiling c.cs, an error is
+generated. So, we provide a reference to the dll named o.dll, since the class
+zzz is present in it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In one of the dos boxes, we
+first run the server 's'. On the surface of it, it appears as though only the
+string &quot;Press &lt;enter&gt; to exit&quot; has been displayed. But in the
+background, the server has been registered as a sink for all those functions
+that need to call the function abc, from its endpoint eee. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we merely press the Enter
+key, the ReadLine function, whose raison d'être is to prevent our server from
+quitting out, actually exits. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we run the client in a
+separate dos box, the server dos box displays 'Constructor' twice. This
+establishes the fact that the server has located the class zzz in the assembly
+o.dll and instantiated it. The server instantiates the object that is to be
+remoted, to enable the framework to read the metadata present in the assembly.
+This is part of its registration process. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, it displays the
+string 'VijayMukhi 2' in the server dos box, since the client has called the
+function abc. The client dos box displays 'Sonal', which is the return value of
+the function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client program quits out
+gracefully, whereas, the server cools its heels, waiting for other calls. The
+server destroys the current object, and the framework keeps a listening vigil
+for other clients, which may be eager to connect on previously registered
+channels. When the Enter key is pressed, it results in the termination of the
+server program. Thus, the destructor gets called. We are, however, not certain
+whether an object perishes or survives when a program quits out. In any case,
+as far as the C# language is concerned, this is not in our control. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Constructor gets called
+twice: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>On the first occasion, the framework
+reads the metadata .</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>On the second occurrence, the client
+interacts with an instance of the object zzz. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Destructor also gets called
+twice, since the framework brazenly destroys the two zzz objects which had been
+created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client has to initially
+locate the server, and thereafter, connect to it, so that the zzz object gets
+instantiated. The client requires a function to execute this task and to return
+an object, which is an instance of zzz. However, the actual object dwells on
+another computer, which could be ensconced at a geographically dispersed
+location. Thereafter, the function GetObject returns a simulation of the zzz
+object, which it instantiates. For all practical purposes, it is under the
+delusion that it is the real zzz object, though in reality, the object has been
+indirectly created on another machine. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, GetObject returns a
+'proxy' for the remote object. The literal meaning of the word 'proxy' is 'a
+surrogate of the original'. This proxy then directs the call to the original
+object residing on an alternative machine. The return value of the GetObject
+function is indicative of whether the object was successfully created on the
+remote machine or not. A null value indicates an error. The function abc is
+called from the remote zzz object, after the object has been successfully
+instantiated. However, a.abc() actually interacts with the proxy object, which
+in turn, forwards the call to the remote machine. The remotely located program
+executes the function abc, and thereafter, dispatches the return value over to
+the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Two other programs named 'proxy'
+and 'stub' are also brought into play, in order to accomplish the task of
+'remoting'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now analyze this process
+from a fresh perspective. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>At the outset, we need to create
+two sub-directories, r2 and r3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>c:\csharp&gt;md r2</p>
+
+<p class=ILoutput>c:\csharp&gt;md r3</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we are required to copy
+the server file s.cs and o.cs to the sub-directory r2, and the client file c.cs
+to the sub-directory r3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>C:\csharp&gt;copy s.cs r2</p>
+
+<p class=ILoutput>C:\csharp&gt;copy o.cs r2</p>
+
+<p class=ILoutput>C:\csharp&gt;copy c.cs r3</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>C:\csharp\r2&gt; csc s.cs</p>
+
+<p class=ILoutput>C:\csharp\r2&gt; csc /t:library o.cs</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>C:\csharp\r3&gt; csc c.cs</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>c.cs(11,7): error CS0246: The type or namespace name 'zzz'
+could not be found (are you missing a using directive or an assembly
+reference?)</p>
+
+<p class=ILoutput>c.cs(12,11): error CS0103: The name 'a' does not exist in the
+class or namespace 'ccc'</p>
+
+<p class=ILoutput>c.cs(15,19): error CS0246: The type or namespace name 'a'
+could not be found (are you missing a using directive or an assembly
+reference?)</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On compiling the two files
+placed in the sub-directory r2, no errors are generated. However, on compiling
+the client program in the sub-directory r3, an error is generated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We hit a roadblock at this
+juncture, since the file c.cs requires the assembly file in which, the remoted
+object, o.dll resides. You may argue that the prerequisite of placing the dll
+in the client's sub-directory defeats the very purpose of 'remoting'. However,
+the presence of the file is obligatory only for the metadata of the class zzz.
+The motivation for doing this will be elucidated shortly. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>C:\csharp\r3&gt; copy c:\csharp\r2\o.dll </p>
+
+<p class=ILoutput>C:\csharp\r3&gt; csc c.cs /r:o.dll</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, we copy the assembly file
+o.dll from the sub-directory r2, into the sub-directory r3, and thereafter,
+recompile it. Now, we add a tangy dash of lime to the mundane and bland routine
+given above, to give it a slight twist. The string VijayMukhi2 is modified to
+VijayMukhi3. The library is recompiled to produce a dll file in the
+sub-directory r2.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>C:\csharp\r2&gt;edit o.cs</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>public String abc() </p>
+
+<p class=ILoutput>{</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">     
+</span>Console.WriteLine(&quot;Vijay Mukhi3&quot;);</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">      </span>return
+&quot;Sonal&quot;;</p>
+
+<p class=ILoutput>}</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>C:\csharp\r2&gt;csc /t:library o.cs</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>As a consequence, the copies of
+the function abc, which reside in the two subdirectories r2 and r3, become
+dissimilar. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output in server dos box</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Vijay Mukhi3</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in client dos box</u></p>
+
+<p class=ILoutput>Sonal</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server program and the client
+program are run in their respective directories. On doing so, it becomes
+evident that, even though the client had a copy of the dll in its own
+sub-directory, it still called the function abc from o.dll, which was resident
+in the sub-directory of the server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, the output displayed
+is 'Vijay Mukhi3', and not 'Vijay Mukhi2'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In real life, the code placed in
+the directories r2 and r3 would actually be dwelling within geographically
+dispersed machines. The metadata of the object should be provided to the
+client, for the sole purpose of compilation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>~zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Destructor&quot;);</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>public String abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Vijay Mukhi2&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>return &quot;Sonal &quot; ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public String pqr(string s) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Sonal Mukhi2&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>return &quot;VMCI &quot; + s ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class sss </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(</p>
+
+<p class=ILprg>&quot;nnn.zzz,o&quot;), &quot;eee&quot;,
+WellKnownObjectMode.SingleCall);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.WriteLine(&quot;Press &lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>using nnn;</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>public static void
+Main()</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>zzz a =
+(zzz)Activator.GetObject(typeof(zzz), &quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span><span
+style="mso-spacerun: yes">  </span>if (a == null)</p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>else </p>
+
+<p class=ILprg>Console.WriteLine(a.abc());</p>
+
+<p class=ILprg>Console.WriteLine(a.pqr(&quot;hell&quot;));</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>} </p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output Client</u></p>
+
+<p class=ILoutput>Sonal</p>
+
+<p class=ILoutput>VMCI hell</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in server dos box</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Vijay Mukhi2</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Sonal Mukhi2</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall now initiate a few
+modifications in the three files, o.cs, s.cs and o.cs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>o.cs : Microsoft insists that all
+classes must reside in a namespace. Therefore, class zzz has been made part of
+the nnn namespace.<span style="mso-spacerun: yes">  </span>A function named pqr
+has been introduced, which accepts a string parameter and returns the same
+string. The return value is prefixed with the acronym 'VMCI', which stands for
+my institute, i.e. Vijay Mukhi's Computer Institute.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>s.cs : The server has the name
+of the class nnn.zzz located within the function RegisterWellKnownServiceType.
+It has no regard for the functions belonging to the class zzz, since its
+primary focus is on the endpoint that represents the class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>c.cs : Internally within<span
+style="mso-spacerun: yes">  </span>the client, the class has been renamed as
+nnn.zzz.<span style="mso-spacerun: yes">  </span>Since we abhor the process of
+writing the same ungainly names repeatedly, we use the keyword 'using' with
+nnn. As a result of this, every occurrence of zzz is replaced by nnn.zzz. So,
+the typeof keyword encounters the class name nnn.zzz.<span style="mso-spacerun:
+yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function pqr is called with
+a single parameter. It is imperative to have the metadata available at this
+stage, since it contains the following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The name of the class</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>All the functions that the class
+carries</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The signatures of the functions. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is a form of code
+validation, which ensures that inappropriate signatures are not used while the
+functions in the client are being called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output generated by these
+two programs is very predictable. There is just a slight departure from the
+expected output, in the case of the server window. Whenever a function from the
+remote server is to be executed, the constructor in the class is called.
+However, the output of the destructors is highly unpredictable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, it is possible for us
+to pass parameters to functions, even if the function is being remoted. Its
+demeanor is very similar to that of calling the function off the same machine.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Interfaces</span></u><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>sh.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public interface iii</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>String pqr(String s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject, iii</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public String pqr(string s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Sonal Mukhi2&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>return &quot;VMCI &quot; + s ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class sss </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(</p>
+
+<p class=ILprg>&quot;nnn.zzz,o&quot;), &quot;eee&quot;,
+WellKnownObjectMode.SingleCall);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>System.Console.WriteLine(&quot;Press
+&lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>using nnn;</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpChannel c = new TcpChannel();</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>iii
+a=(iii)Activator.GetObject(typeof(nnn.iii),&quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>if (a == null)</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(a.pqr(&quot;hell&quot;));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.bat</u></p>
+
+<p class=ILprg>del *.exe</p>
+
+<p class=ILprg>del *.dll</p>
+
+<p class=ILprg>csc.exe /t:library sh.cs</p>
+
+<p class=ILprg>csc.exe /t:library /r:sh.dll o.cs</p>
+
+<p class=ILprg>csc.exe<span style="mso-spacerun: yes">  </span>s.cs</p>
+
+<p class=ILprg>csc.exe /r:sh.dll c.cs</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output Server</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Sonal Mukhi2</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output Client</u></p>
+
+<p class=ILoutput>VMCI hell</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Interfaces are employed to
+overcome the requirement of placing the entire code of a class in an assembly,
+which is resident on the client machine.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file sh.cs, a simple
+interface called iii is created in the namespace nnn, possessing a single
+function pqr. It is imperative for all classes that derive from this interface,
+to incorporate this function. The interface iii is compiled to a dll, and it
+does not require the /r: switch, since it does not refer to any external
+modules. The file carries only the metadata, and does not contain any code. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the object o.cs, class zzz is
+derived from both, the class MarshalByRefObject and the interface iii. Thus, it
+is essential to implement the function pqr in the class zzz. While compiling
+the file o.cs, a reference must be provided to the file sh.dll, which contains
+the metadata for the interface iii.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server does not get affected
+in the least by any modifications carried out in the object. This is by virtue of
+the framework, which registers a class zzz and not the interface iii. There is
+no necessity for the server to refer to any of the assemblies of o.dll and
+sh.dll.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client program, the
+GetObject function instantiates an object of type iii, and not from the class
+zzz. Whether the code is called from an interface or a class, is of no
+significance. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The prime benefit of using an
+interface is that the C# compiler does not need to introduce the assembly
+o.dll, which contains a sizeable amount of code. The assembly file sh.dll is
+adequate, since it provides the metadata of the interface. For example, Jack
+can create the interface iii on a separate machine and then, send across the
+file sh.dll to his client Jil. She can, in turn, use it on her machine, thereby
+meeting the requirements of the complier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The endpoint represents a zzz
+class, which in turn, represents an interface named iii, as well as, an object
+called MarshalByRefObject. A request for an iii object in the client does not
+generate any error, since the endpoint represents a zzz instance, which
+encompasses an iii instance.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We use the file a.bat to compile
+all the above four files with a single stroke. This program evinces how we can
+separate the definition from the implementation. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the next program, the file
+s.cs remains unchanged.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public String pqr(string s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Sonal Mukhi2&quot;);<span
+style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>return &quot;VMCI &quot; + s ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Messaging;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static ManualResetEvent e;</p>
+
+<p class=ILprg>public delegate String ddd(String s);</p>
+
+<p class=ILprg>public static void Main(string [] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e = new ManualResetEvent(false);</p>
+
+<p class=ILprg>TcpChannel c = new TcpChannel();</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>zzz o = (zzz)Activator.GetObject(typeof(zzz),
+&quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>if (o == null)</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>AsyncCallback cb = new AsyncCallback(ccc.abc);</p>
+
+<p class=ILprg>ddd d = new ddd(o.pqr);</p>
+
+<p class=ILprg>IAsyncResult ar = d.BeginInvoke(&quot;Vijay&quot;, cb, null);</p>
+
+<p class=ILprg>Console.WriteLine(ar.IsCompleted);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>e.WaitOne();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void abc(IAsyncResult ar)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ddd d<span style="mso-spacerun: yes">  </span>=
+(ddd)((AsyncResult)ar).AsyncDelegate;</p>
+
+<p class=ILprg>Console.WriteLine(d.EndInvoke(ar));</p>
+
+<p class=ILprg>Console.WriteLine(ar.IsCompleted);</p>
+
+<p class=ILprg>e.Set();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output Client</u></p>
+
+<p class=ILoutput>False</p>
+
+<p class=ILoutput>VMCI Vijay</p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output Server</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Sonal Mukhi2</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In one of the earlier examples,
+we had called the pqr function from our client. At this point, a network
+message was transmitted to the server, which executed the function abc and
+dispatched the outcome back to the client. There is a likelihood that the
+function executed in the server, could have taken hours to complete execution.
+So, the client would have had to wait eternally for the server. Therefore, this
+method is prodigiously wasteful in terms of time and resources. Thus, whenever
+a 'synchronous call' is made to the remote object, the client has to cease all
+activities, till it receives a response from the server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It would prove to be a lot more
+efficacious if the client could be allowed to continue doing its job, while the
+server is busy executing the function. On completion of the task, the server
+could notify the client. In other words, we do not want the client to 'wait' or
+'block'. This mechanism can be implemented by employing an 'asynchronous call'
+to the function. In such cases, the call is made by the client. Therefore, only
+the code in the client needs modification.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the chapter on Threads, we
+had learnt about the ManualResetEvent event object. We had set it to a value of
+False. In such situations, the client will wait on the WaitOne function, till
+the Set function is called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A delegate is a type safe way of
+calling a method in an oblique manner. We have created a delegate ddd that accepts
+a string as a parameter, and it returns a string. The framework can execute a
+function in an asynchronous mode provided, we represent it as a delegate. Here,
+the callback function has been represented by the use of a delegate. For those
+who have earned their spurs on C/C++, it would be a revelation that delegates
+are actually 'pointers to functions'. The function pqr, which has been called
+in an asynchronous mode, accepts as well as returns a string. Therefore, it is
+amply evident that the delegate uses the same parameters and return types.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we were writing a book on
+Intermediate Language, IL (an assembler language to which all code in the .NET
+world gets converted), we had discovered that a delegate finally gets converted
+into a class. In our case, the delegate ddd contains a large number of
+functions, which get added to it. Two such functions are, BeginInvoke and
+EndInvoke. The main role of these functions is to call code that is written by
+the system or runtime. Hence, they are called native functions.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, an object cb, which
+is an instance of a delegate AsyncCallback, is created. The constructor of this
+class is passed a function abc, which is notified as soon as the remote
+function completes execution. The callback function abc is passed an
+IAsyncResult parameter, since this function matches the declaration of the
+delegate. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we create a delegate d of
+type ddd, whose constructor is assigned the function name pqr, which is to be
+executed in an asynchronous manner. The BeginInvoke function is called next. It
+is passed the parameter string, which is to be transmitted to the remote
+function named pqr. The second parameter to this function is another function
+called cb, which also requires to be notified after all the action has been wrapped
+up. This delegate allusively represents the function abc in the class ccc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The BeginInvoke function returns
+an IAsyncResult, which lies inert at this stage. The parameters passed to it
+are similar to the ones provided to our event handling function abc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The remote function may take
+excessive time to execute. Therefore, to avoid wasting time, the client
+continues with its work. Once the call is completed, the framework ensures that
+the function abc is called with the parameter representing the return value. To
+figure out the return value, we simply cast the parameter to a ddd object, and
+call the function EndInvoke off it. This return value is displayed in the
+client dos box. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For Asynchronous calls, we
+create two delegates, one for the callback function, and the other for the
+remote method. Function BeginInvoke calls the remote function, which in turn,
+calls the function abc. When the call ceases, EndInvoke is called to receive
+the return values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The IAsyncResult consists of
+five properties, one of which is IsCompleted. Initially, this property returns
+False, since the asynchronous call has not been completed. However, in the
+function abc, it returns True, since the remote call has run its course and is
+done with. The EndInvoke function plays no role in ending the remote call. If
+we display the value contained in the IsCompleted property, prior to the
+EndInvoke function, a value of True would get displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>sh.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class fff : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void xyz(String t)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(t);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc /t:library sh.cs</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public String pqr(String s,fff f)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>f.xyz(&quot;Hi&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;pqr called&quot;);</p>
+
+<p class=ILprg>return &quot;VMCI &quot; + s;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc /t:library o.cs /r:sh.dll</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class sss </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(</p>
+
+<p class=ILprg>&quot;nnn.zzz,o&quot;), &quot;eee&quot;,
+WellKnownObjectMode.SingleCall);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.WriteLine(&quot;Press &lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc s.cs</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main(string [] args) {</p>
+
+<p class=ILprg>TcpChannel c = new TcpChannel(8086);</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>fff f = new fff();</p>
+
+<p class=ILprg>zzz o =
+(zzz)Activator.GetObject(typeof(nnn.zzz),&quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>if (o == null)</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>Console.WriteLine(o.pqr(&quot;Vijay&quot;,f));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc /r:sh.dll /r:o.dll c.cs</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in server dos box</u></p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Pqr called</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in client dos box</u></p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILoutput>VMCI Vijay</p>
+
+<p class=ILbase><span style='color:windowtext'>More often than not, the code
+for the server remains unchanged. In this program, our objective is to call a
+function remotely, having a parameter which is of a 'user-defined' type.
+Therefore, in the file sh.cs, we have a class called fff, which is derived from
+the class MarshalByRefObject. It contains a simple function called xyz, which
+displays a string that is passed as a parameter. The program centers around
+passing an instance of a user-defined class fff, as a parameter to the function
+pqr.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the object file o.dll, the
+class zzz has a function pqr, which accepts two parameters viz. a string s, and
+an object f. The object f is an instance of the class fff. Using the object f,
+the xyz function is called. This function is passed the string 'hi'. The rest
+of the code remains unaltered. The server, as mentioned earlier, is not
+modified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client c.cs merely creates
+an object f, as an instance of class fff. This object is then passed as a
+parameter to pqr, without paying any cognizance to the fact that, the data shall
+be sent to another computer located in some other part of the world. The client
+couldn't care less, since this class is derived from the class
+MarshalByRefObject. This is the only prerequisite imposed on it, when instances
+of user-defined type are used as parameters.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>While compiling, references are
+to be given to the files o.dll and sh.dll, since both contain the metadata
+information required for error checking. The output in the client box displays
+'Hi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>You should note that a port
+number has been furnished in the client program. Earlier, the port number had
+been provided only in the server program. By having two ports registered, the
+framework can use the two port numbers for different purposes. While one port
+number may be used to enable the Client to pass parameters to the server, the
+other may be used to permit the server to pass parameters to the client. This
+facilitates bi-directional communication between servers and clients, thereby,
+permitting the use of remote parameters.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Passing
+by value</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>sh.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[Serializable]</p>
+
+<p class=ILprg>public class fff</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>int j = 1;</p>
+
+<p class=ILprg>public fff()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor &quot; + j);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void xyz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>j++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public int aaa()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return j;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public fff pqr(fff o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>o.xyz();</p>
+
+<p class=ILprg>o.xyz();</p>
+
+<p class=ILprg>return o;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main(string [] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpChannel c = new TcpChannel(8086);</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>fff p = new fff();</p>
+
+<p class=ILprg>zzz o = (zzz)Activator.GetObject(typeof(nnn.zzz),&quot;Tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>if (o == null)</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Could not locate server&quot;);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Before &quot; + p.aaa());</p>
+
+<p class=ILprg>fff a = o.pqr(p);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;After<span style="mso-spacerun: yes"> 
+</span>&quot; + a.aaa() + &quot; &quot; + p.aaa());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Server Output</u></p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u></p>
+
+<p class=ILoutput>Constructor 1</p>
+
+<p class=ILoutput>Before 1</p>
+
+<p class=ILoutput>After 3 1</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file sh.cs, we have two
+functions, aaa and xyz, and a single variable j. Their roles are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The constructor displays the value
+of variable j.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The function xyz increments its
+value by one. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The function aaa returns the value
+of the variable. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The variable j could have been
+accessed directly, by making it public. Instead, the program uses functions to access
+it. The fff class, for some reason, has to be made Serializable.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file o.cs, the object zzz
+contains a function pqr. This function accepts an fff instance as a parameter,
+and then returns a object of the same type. The xyz function in fff is called
+twice. An object that is an instance of a particular class, is different from
+another object, which may be an instance of the same class.<span
+style="mso-spacerun: yes">  </span>There is no difference in the functions
+contained in the objects, since the code is identical amongst the instances.
+The variation occurs by virtue of the values of the instance variables,
+contained in these objects. Thus, the variable j will possess dissimilar values
+in the varied instances of the same class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client, a new fff
+instance named 'p' is created. The constructor is called, which results in
+display of the text &quot;Constructor 1&quot;, since the current value of the
+object j is 1. The value in j is again printed, by calling the function aaa. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, function pqr is
+called with the parameter p, which is an fff object. The value of the variable
+j, which is contained in p, is presently 1. The function pqr calls the function
+xyz from the class fff twice. As a consequence of this, the value of j
+increases by 2. The fff instance, which is returned back by this function, is
+stored in 'a'. The WriteLine function then prints the value of j from both the
+fff objects, p and a. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object p is local to the
+client. Therefore, p.aaa would always display the value 1. The object 'a' that
+has been 'remoted', prints the value of j as 3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The names of objects are of no
+consequence at all, across computers. They are not visible in the IL code
+generated either. While remoting, the values in the local objects get handed
+over to a remote function. The modified value of the variable is displayed only
+in the new instance of the object. The local instance continues to display the
+original value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Singleton</span></u><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class zzz : MarshalByRefObject</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Constructor&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>~zzz()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Destructor&quot;);</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>public String pqr() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;pqr&quot;);<span style="mso-spacerun:
+yes">                        </span></p>
+
+<p class=ILprg>return &quot;VMCI &quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">    </span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>public class sss </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(&quot;</p>
+
+<p class=ILprg>nnn.zzz,o&quot;), &quot;eee&quot;,
+WellKnownObjectMode.Singleton);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.WriteLine(&quot;Press &lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main(string [] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpChannel c1 = new TcpChannel();</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c1);</p>
+
+<p class=ILprg>zzz o = (zzz)Activator.GetObject(typeof(zzz),&quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(o.pqr()); </p>
+
+<p class=ILprg>Console.WriteLine(o.pqr()); </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Server Output</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u></p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object zzz, which is to be remoted,
+resides in file o.cs and has a single function pqr, which returns 'VMCI'. It
+also contains a constructor and a destructor. However, its contents are nothing
+earth shaking.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have only carried out a
+single modification in the server program. The last parameter to the function
+RegisterWellKnownServiceType is changed to Singleton. This is suggestive of the
+fact that, all requests to the remoting object are to be handled by the same
+instance of zzz. It does not create a separate instance of the object, every
+time the framework receives a request. As the name itself suggests, Singleton
+means 'single' or 'only one entity'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client calls the function
+pqr twice. However, the constructor is called only once at the beginning, in
+order to read the metadata. The object is not created repeatedly on each
+request. Therefore, neither the constructor, nor the destructor is called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>s.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>namespace nnn {</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>public class sss {</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>public static void
+Main() {</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>TcpChannel c = new
+TcpChannel(8085);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>HttpChannel c1 =
+new HttpChannel(8086);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     </span><span
+style="mso-spacerun: yes"> </span>ChannelServices.RegisterChannel(c1);</p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(&quot;</p>
+
+<p class=ILprg>nnn.zzz,o&quot;),&quot;eee&quot;,
+WellKnownObjectMode.Singleton);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.WriteLine(&quot;Press &lt;enter&gt; to exit...&quot;);</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">     
+</span>System.Console.ReadLine();</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>using System.Runtime.Remoting;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;</p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;</p>
+
+<p class=ILprg>namespace nnn</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public class ccc</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main(string [] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel();</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);</p>
+
+<p class=ILprg>TcpChannel c1 = new TcpChannel();</p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c1);</p>
+
+<p class=ILprg>zzz o =
+(zzz)Activator.GetObject(typeof(zzz),&quot;http://localhost:8086/eee&quot;);</p>
+
+<p class=ILprg>zzz o1 =
+(zzz)Activator.GetObject(typeof(zzz),&quot;tcp://localhost:8085/eee&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(o1.pqr()); </p>
+
+<p class=ILprg>Console.WriteLine(o1.pqr()); </p>
+
+<p class=ILprg>Console.WriteLine(o.pqr()); </p>
+
+<p class=ILprg>Console.WriteLine(o.pqr()); </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Server Output</u></p>
+
+<p class=ILoutput>Press &lt;enter&gt; to exit...</p>
+
+<p class=ILoutput>Constructor</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Destructor</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u></p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILoutput>VMCI</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server has created two
+channels; one is the normal channel named TcpChannel, while the other one is
+called an HttpChannel. A separate port number has to be allotted to each of
+these channels. Therefore, the number 8085 is assigned to the TCP channel,
+while the number 8086 is assigned to the HTTP channel. The registration process
+does not delve into mundane issues, such as, the type of channel that has been
+used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client creates both, an
+HttpChannel object, as well as a TcpChannel object. However, it does not
+specify the port numbers to the constructors. The GetObject function is used to
+specify a proxy. A major modification that has been incorporated here is, the
+HttpChannel being prefixed with http:, and the TcpChannel being prefixed with
+tcp:. The endpoint URI is retained as eee. The http channel connects to the
+server on port 8086, while the tcp channel connects to the server on port 8085.
+If you interchange the port numbers, the program will pause endlessly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The pqr function is called, by
+utilizing the http channel and the tcp channel. Since the call is made 4 times,
+'pqr' is also displayed 4 times on our screen.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have not used a stopwatch to
+time the output generation; however, we were able to conclude that, the HTTP
+(Hyper Text Transfer Protocol), is much slower than the TCP (Transmission
+Control Protocol). This difference in the speeds of HTTP and TCP occurs because
+HTTP uses both SOAP (the Simple Object Access Protocol) and XML, which slows it
+down, whereas, TCP uses a binary protocol, which makes it relatively faster. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>A Singleton object preserves its state between function
+invocations, since it is not created each time that the function is invoked. A
+port number is not specified while registering a client channel, since the
+framework assigns it internally. This is dependent upon the task to be
+performed, such as, listening or connecting. The framework connects to a remote
+channel, using the URI specified. If we actually specify a port number in the
+client, it starts behaving like a server, i.e. it too listens on the specified
+port.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:57 GMT -->
+</html>

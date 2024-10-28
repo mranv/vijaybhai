@@ -1,0 +1,697 @@
+<html>
+<!-- Mirrored from www.vijaymukhi.com/documents/books/ocx/final5.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<head>
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<TITLE>The Makings Of An OCX Container</TITLE>
+</head>
+
+<BODY>
+<H2>Properties: Variables of the OCX</H2>
+Properties of an <i>OCX</i> are essentially variables. They could be of three 
+types. The explanation to follow assumes that the <i>OCX</i> has been written 
+in the <i>MFC</i> and has been generated using the <b><i>Control</i></b> and <b><i>Class 
+Wizards</i></b>. You may accuse us of double standards but as of now the only 
+convenient method of writing <i>OCX</i>es is to use the Wizards. We have written 
+our own C++ <i>OCX</i> but that  is material for another news-letter.<BR>
+The <i>Stock Properties</i> are those that deal with standard <i>OCX</i> features such as Caption, BackColor etc. If the <i>OCX</i> is implemented using the <i>MFC</i> then these properties have a default implementation associated with them.<BR>
+The second type of properties are referred to as <i>Member Variables</i>. These are properties created by the <i>OCX</i> developer. When an <i>OCX</i> is generated using the <b><i>Wizards</i></b>, every property of the type <i>Member Variable</i> has a function associated with it. The name of the function is <i>OnNameOfVariableChanged()</i>. This function is called every time the value of the property changes. For example, if we have a property <i>`aa'</i>, then <i>OnAaChanged()</i> gets called. Typically, these are properties that do not affect the user interface in any manner.<BR>
+The <i>Get/Set Properties</i> are those where two functions are generated for each property. The function <i>GetNameOfVariable()</i> is called whenever the user of the <i>OCX</i> needs to know the value of the property. The function <i>SetNameOfVariable()</i> is called when the value is to be changed. For example, a property <i>`ww'</i> of the type Get/Set will have functions <i>GetWw()</i> and <i>SetWw()</i> associated with it. These are properties that normally affect the user-interface in some manner.<BR>
+When the user accesses the properties, then he is unaware of the type of the property. This distinction in the nature of the properties is created by and matters to only the <i>OCX</i>. The properties of the <i>OCX</i> are also accessed using an <i>IDispatch</i> interface and it's <i>Invoke()</i> function. But before we can access and change the properties of the <i>OCX</i>, let us display them in a dialog.<BR>
+<H4>Program 10</H4> 
+<PRE>
+ BOOL MDialog::OnInitDialog()
+ {
+   CDialog::OnInitDialog();  
+   if(z_nID==IDD_DIALOG1)
+   {
+     
+     // Retain all previously existing code  
+ 
+   }                      
+   else
+   {
+     CListBox *z_pListBox;
+     PData *z_pNext;
+       
+     z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+     z_pNext = z_pPDFirst;
+     while(z_pNext)
+     {
+      char *z_sTemp = (char*) malloc(100);
+     
+       if(z_pNext-&#62 z_nPtr)
+         sprintf(z_sTemp,"%s*    %s",z_VarType[z_pNext-&#62 z_nPropType],z_pNext-&#62 z_sPropName);
+       else
+         sprintf(z_sTemp,"%s     %s",z_VarType[z_pNext-&#62 z_nPropType],z_pNext-&#62 z_sPropName);
+       z_pListBox-&#62 AddString(z_sTemp);
+       z_pNext = z_pNext-&#62 z_pNext;
+       free(z_sTemp);
+     }
+     z_pListBox-&#62 SetCurSel(0);
+     return TRUE;
+   }                                                                                                       
+   return TRUE;
+ }                          
+                                                                                                                                     
+ void MFrameWnd::Properties()
+ {
+   MDialog z_Dialog(IDD_DIALOG2);
+  
+   z_Dialog.DoModal();
+ }
+</PRE>
+Choose the sub-option <i>Properties...</i> under <i>Display</i>. The dialog box that opens holds all the properties of the <i>OCX</i> in a list box along with their data types.<BR>
+<H2>Changing property values: A Change of scene</H2>
+<H4>Program 11</H4>
+<PRE>
+ void MDialog::MulProp()
+ {
+     CAUUID z_Cauuid;
+     ISpecifyPropertyPages *z_pPropertyPages;
+ 
+     z_pOleObject-&#62 QueryInterface(IID_ISpecifyPropertyPages,(void**)&amp z_pPropertyPages);
+ 
+     z_pPropertyPages-&#62 GetPages(&amp z_Cauuid);
+     OleCreatePropertyFrame(0, 10,20,"AruSuv",1,(IUnknown**)&amp z_pOleObject,z_Cauuid.cElems,z_Cauuid.pElems,1033,0,0);   
+     z_pPropertyPages-&#62 Release();
+ }  
+ 
+ void MFrameWnd::ChangeProperty()
+ {
+   MDialog z_Dialog(IDD_DIALOG10); 
+   z_Dialog.DoModal();
+ }
+ 
+ void MDialog::Accept()
+ {
+   VARIANTARG z_Varg;
+   DISPPARAMS z_DispParam;
+   IDispatch *z_pDispatch;
+   CString z_sSel;
+   PData *z_pPDSearch;
+   CEdit *z_pEdit;
+   CListBox *z_pListBox;
+   int z_nIndex;
+   char *z_sVal;
+   DISPID z_lDispid;
+   
+   _fmemset(&amp z_DispParam,0,sizeof(DISPPARAMS));
+   z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+   z_pListBox=(CListBox*)GetDlgItem(IDC_LIST2);
+   z_nIndex = z_pListBox-&#62 GetCurSel();
+   z_pListBox-&#62 GetText(z_nIndex,z_sSel);
+   z_pPDSearch = z_pPDFirst;
+   while(z_pPDSearch)
+   {
+     if(z_sSel.Find(z_pPDSearch-&#62 z_sPropName) == -1)
+       z_pPDSearch = z_pPDSearch-&#62 z_pNext; 
+     else
+       break;
+   }      
+   z_sVal=(char*)malloc(20);
+   z_pEdit-&#62 GetWindowText(z_sVal,20);
+   z_Varg.vt = z_pPDSearch-&#62 z_nPropType;
+   z_DispParam.cArgs =1 ;
+   z_DispParam.cNamedArgs=1;      
+   z_lDispid =-3;
+   z_DispParam.rgdispidNamedArgs=&amp z_lDispid; 
+   z_DispParam.rgvarg=&amp z_Varg;
+   if(z_pPDSearch-&#62 z_nPropType==VT_I2)
+     z_Varg.iVal=atoi(z_sVal); 
+   if(z_pPDSearch-&#62 z_nPropType==VT_BOOL)
+     z_Varg.bool=atoi(z_sVal);                                                              
+   if(z_pPDSearch-&#62 z_nPropType==VT_I4 );
+     z_Varg.lVal=atol(z_sVal);                                                            
+   if(z_pPDSearch-&#62 z_nPropType==VT_R4)
+     z_Varg.fltVal=(float)atof(z_sVal);                                                            
+   if(z_pPDSearch-&#62 z_nPropType==VT_BSTR)
+   {
+     z_Varg.bstrVal=(char*) malloc(strlen(z_sVal) + 1);
+     strcpy(z_Varg.bstrVal,z_sVal);
+   }
+   z_pOleObject-&#62 QueryInterface(IID_IDispatch,(void**)&amp z_pDispatch);
+   z_pDispatch-&#62 Invoke(z_pPDSearch-&#62z_lDispID,IID_NULL,1033,DISPATCH_PROPERTYPUT,&amp z_DispParam,0,0,0);
+   free(z_sVal);  
+   z_pDispatch-&#62 Release();
+ }
+ 
+ void MDialog ::DispPropPage()
+ {
+   OleCreatePropertyFrame(0, 10,20,"AruSuv",1,(IUnknown**)&amp z_pOleObject,1,&amp z_PropClsid,1033,0,0);
+ } 
+ 
+ void MDialog::PropValue()
+ {
+   DISPPARAMS z_DispParam; 
+   CEdit *z_pEdit;
+   VARIANT z_Varg;
+   IDispatch *z_pDispatch;
+   CListBox* z_pListBox;
+   int z_nIndex;
+   CString z_sSel;
+   PData *z_pPDSearch;
+   char *z_sDisplay;
+   IPerPropertyBrowsing *z_pPerPropBrowsing;
+   CButton *z_pButton;
+   
+   _fmemset(&amp z_DispParam,0,sizeof(DISPPARAMS));
+   z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+   z_pListBox=(CListBox*)GetDlgItem(IDC_LIST2);
+   z_nIndex = z_pListBox-&#62 GetCurSel();
+   z_pListBox-&#62 GetText(z_nIndex,z_sSel);
+   z_pPDSearch = z_pPDFirst;
+   while(z_pPDSearch)
+   {
+     if(z_sSel.Find(z_pPDSearch-&#62 z_sPropName) == -1)
+       z_pPDSearch = z_pPDSearch-&#62 z_pNext; 
+     else
+       break;
+   }   
+   z_pOleObject-&#62 QueryInterface(IID_IDispatch,(void**)&amp z_pDispatch);
+   z_pDispatch-&#62 Invoke(z_pPDSearch- &#62 z_lDispID,IID_NULL,1033,DISPATCH_PROPERTYGET,&amp z_DispParam,&amp z_Varg,0,0);
+   z_sDisplay=(char*)malloc(25);
+   strcpy(z_sDisplay,"");
+   if(z_Varg.vt==VT_I2)
+     itoa(z_Varg.iVal,z_sDisplay,10);
+   if(z_Varg.vt==VT_BOOL)
+     itoa(z_Varg.bool,z_sDisplay,10);
+   if(z_Varg.vt==VT_I4)
+     ltoa(z_Varg.lVal,z_sDisplay,10);
+   if(z_Varg.vt==VT_R4)
+     _gcvt(z_Varg.fltVal,3,z_sDisplay);
+   if(z_Varg.vt==VT_BSTR)
+     strcpy(z_sDisplay,z_Varg.bstrVal);                                                           
+   z_pEdit-&#62 SetWindowText(z_sDisplay);
+   free(z_sDisplay);          
+   z_pOleObject-&#62 QueryInterface(IID_IPerPropertyBrowsing,(void**)&amp z_pPerPropBrowsing);
+   z_pPerPropBrowsing-&#62 MapPropertyToPage(z_pPDSearch-&#62 z_lDispID,&amp z_PropClsid);
+   z_pButton =(CButton*)GetDlgItem(IDC_PROPPAGE);
+   if(z_PropClsid!=IID_NULL)
+       z_pButton-&#62 ShowWindow(1); 
+   else
+   z_pButton-&#62 ShowWindow(0); 
+   z_pPerPropBrowsing-&#62 Release();
+   z_pDispatch-&#62 Release();
+ }
+
+</PRE>
+The <i>`Change Properties'</i> dialog is displayed when we select <i>`Change Properties...'</i> sub-option under <i>Edit</i>. In this dialog box, select any one of the properties listed. The current value of the property is displayed in the edit control. Next, type in a value in this edit control and click on <i>Accept</i>. This has the effect of passing the value in the edit control to the <i>OCX</i>. This is verified by selecting the property again and this time seeing the new value displayed.<BR>
+As we select some properties, note that the button <i>`More...'</i>  appears adjacent to the edit control. Click on this button to see the property page associated with that particular property being displayed. The user can change values using this page too. Click on the <i>`All Properties'</i> button. This opens a dialog box where all the property pages of the <i>OCX</i> are displayed. This allows the user to change more than just one property at a time.<BR>
+Every time we select a new property in the listbox, <i>PropValue()</i> gets executed. In this function, we search the link-list for a match for the selected property. We determine it's ID and use it as the first parameter to <i>Invoke().</i> Thus, once again <i>Invoke()</i> is used to get the value of the property from the <i>OCX</i>.<BR>
+The only change made to the <i>Invoke()</i> statement is that we use <i>DISPATCH_PROPERTYGET</i> to indicate that we want the value of the indicated property to be returned to us in the <i>VARIANT</i> structure.
+A series of <i>if</i> statements use the data type provided in the <i>VARIANT</i> structure to ensure that the value returned will be converted to a string using the appropriate function. This string is then displayed in the edit control.<BR>
+One way to change the value of the property is to key in the value and then pass it on to the <i>OCX</i> using appropriate functions. However, this technique is not always satisfactory. Consider a case where the user needs to change the font. In such a case, the above mentioned methodology is highly inadequate. This is due to the fact that the specifications for a font  are many; the size, the typeface, the color etc. So, what we need  is a  more intuitive system whereby the user can see the effect of the changes to be made by him. A preview of sorts. This is where property pages make a difference. Rings a bell? We told you all this the first time property pages were introduced.<BR>
+Each property page is a dialog which provides a better method of changing property values. For example, the property page for fonts provides a listing of the available fonts, an ability to change the size and other such attributes of the selected fonts. It also displays a sample of text in the selected font. This enables the user to see the effect of any changes instantly.<BR>
+A similar situation arises when we want to change the picture of an <i>OCX</i>. Thus, every time a more interactive system of changing values is required a property page is used. For the oft-used properties such as Color, Font, Picture etc. there are standard property pages defined. These are a <i>Microsoft</i> set guideline to the implementation of property pages. The standard property pages are present in <i>oc25.dll.</i> Thus, this DLL gets loaded whenever these property pages are to be referenced. This DLL handles all the associated responsibility such as informing the <i>OCX</i> of the changed value etc.<BR>
+For properties specific to an <i>OCX</i>, the writer of the <i>OCX</i> can create his own property pages. If it seems that a property page is a glorified Common Dialog Box; no more, no less; then you are not too far off the mark. The only  difference is that unlike a Common Dialog Box, every property page has to be registered with <i>`reg.dat'</i>. The standard property pages are registered with <i>`reg.dat'</i> at the time of installation of MSVC. The registration of property pages is necessary so that they can be re-used in future by other applications too. <BR>
+A property may or may not have a property page associated with it. Thus, we have to interrogate the <i>OCX</i> to deduce if there is any property page associated with a property. The interface  <i>IPerPropertyBrowsing</i> is dedicated to handling such requests. We obtain a pointer to this interface from the <i>OCX</i> and then use it's <i>MapPropertyToPage()</i> method.<BR>
+The <i>OCX</i> uses <i>MapPropertyToPage()</i> to maintain a list of properties and associate property pages. This function is passed the ID of the property as the first  parameter and the address of a <i>CLSID</i> structure as the second. If there is a property page for the property then the <i>OCX</i> fills up the <i>CLSID</i> structure with the <i>CLSID</i> of the property page while otherwise the structure is set to <i>IID_NULL</i>. If the structure holds an <i>IID_NULL</i> then we do not display the button <i>`More...'</i> else we do. <BR>
+<i>DispPropPage()</i> gets executed when we click on <i>More...</i>. We use an <i>OLE</i> API <i>OleCreatePropertyFrame()</i> to display the standard Properties dialog box. One of the parameters to this function decides the number of property pages to be displayed. Another one states <i>which</i> property page(s) are to be displayed. The second and third parameters are the x and the y co-ordinates of the top-left corner of the dialog with respect to the screen. Next is the title that will be displayed. <BR>
+Every OCX developer can create property pages. These custom property pages can later be used by others. To access property pages that are have been created by different <i>OCX</i>es, we have to load them into memory. Thus, <i>CoCreateInstance()</i> to load each of them and the pointers obtained are stored in an array. <BR>
+This is the array passed as the sixth parameter of the function <i>OleCreatePropertyFrame()</i> with the fifth stating the number of elements in the array. The seventh parameter is the number of property pages and the eighth is an array. This array holds the <i>CLSID</i>s of all property pages that are to be displayed. <i>OleCreatePropertyFrame()</i> uses the <i>CLSID</i>s to search each the specified <i>OCX</i>es for the property pages. In our case, we search only the <i>OCX</i> that is currently in-place active. <BR>
+The dialog that is displayed is called the standard Property Frame and will deal with all issues such as informing the <i>OCX</i> of changes in property values, displaying the appropriate page for each property etc. We have duplicated the functionality of the <i>`Apply Now'</i> button with the <i>`Accept'</i> button in our dialog box.<BR>
+When we click on the button <i>`Accept'</i>, <i>Accept()</i> gets executed. In this function, we determine the property selected from the list box and use the link-list to determine it's data type and ID. The <i>DISPPARAMS</i> and the <i>VARIANTARG</i> structures are appropriately initialized as explained before. This time <i>Invoke()</i> is called with <i>DISPATCH_PROPERTYPUT</i>. This will set the value of the property in the <i>OCX</i> to that passed in the <i>DISPPARAMS</i> structure.<BR>
+The above method is suitable if we were to display a single property page at a time. If the property frame dialog is to hold all the property pages then a different tack is to be used. The <i>OCX</i> will have an implementation of the interface <i>ISpecifyPropertyPages</i>. This interface is dedicated to indicating the set of property pages associated with an <i>OCX</i>.  It  is derived from <i>IUnknown</i> and has just one additional function <i>GetPages()</i>. <BR>
+<i>GetPages()</i> is passed one parameter; the address of a <i>CAUUID</i> structure. This structure holds two elements. One is an array of <i>GUID</i> structures. The <i>OCX</i> will initialize the array to hold the GUIDs of all property pages in use. The second element of <i>CAUUID</i> structure is a <i>unsigned long</i> variable that holds the number of property pages.<BR>
+<i>MulProp()</i> is executed when we select the <i>All Properties...</i> button. We use <i>GetPages()</i> of <i>ISpecifyPropertyPages</i> to fill a <i>CAUUID</i> structure. The information held in this structure is passed to <i>OleCreatePropertyFrame()</i>. Using this information <i>OleCreatePropertyFrame()</i> now displays all the property pages associated with the <i>OCX</i>.<BR>
+<H2>Events: An enigma unraveled</H2>
+All <i>Windows</i> programming is event driven. An event is a generic term that is used to describe a happening, anything that an application can sense. A <i>Windows</i> application is notified of the happening with a message sent to it's call-back function. It is upto the user to trap the messages and associate code with them. For example, a mouse click is an event so is a timer message. This is true of the <i>OCX</i> too. The <i>OCX</i> developer will define events and indicate <i>when</i> an event will get triggered. An event may be triggered in different ways: 
+<UL><LI> By a Windows message such as <i>WM_TIMER</i> or a user action driven message such as <i>WM_LBUTTONDOWN</i>.<BR>
+<LI> Because of code written either in the container or the <i>OCX</i>.</UL><BR>
+The code that gets executed when an event occurs is added by the user of the <i>OCX</i>. <BR>
+Events are best explained using <i>Microsoft Visual Basic</i> as a model. In <i>Visual Basic</i>, consider the case where a button is used within a form. We want a message box to be displayed when we click on the button at run-time. So at design time, we access the Code window for the <i>`clicked'</i> event of the button and add code for a message box to it. The Code window is an user-interface feature provided by <i>Visual Basic</i> to allow the user an intuitive way to add code for individual events. Each event has it's own Code window. The code gets executed at run-time.<BR>
+It is the <b><i>user</i></b> who adds code for more than one event of the control. All this code is saved and executed when the event occurs. Who stores the code that has been added for each event is the moot point. Each control can be used in different applications. Code for the events will vary from application to application. Thus, it is the responsibility of each application, i.e. the <i>container</i>; to save the code.<BR>
+Since, it is the container that saves the code, it will also be responsible to execute it when the event occurs. The event will always be sensed by the <i>OCX</i>. The <i>OCX</i> will then have to inform the container about the occurrence so that it may execute the code for the event.<BR>
+Before we go deeper into events, let us display all  available <i>OCX</i> events in a dialog box.<BR>
+<H4>Program 12</H4>
+<PRE>
+ BOOL MDialog::OnInitDialog()
+ {
+   CDialog::OnInitDialog();  
+   if(z_nID==IDD_DIALOG1)
+   {
+     
+     // Retain all previously existing code  
+ 
+   }                      
+   else 
+   {                                                
+     CListBox* z_pListBox;
+     FData *z_pFDNext;
+ 
+     z_pListBox = (CListBox*)GetDlgItem(IDC_LIST1);
+     z_pFDNext = z_pEDFirst;
+     while(z_pFDNext)
+     {
+       char *z_sTemp = (char*) malloc(50);
+       sprintf(z_sTemp,"%s              %s(",z_VarType[z_pFDNext->z_nRType],z_pFDNext->z_sFName);
+       if(z_pFDNext->z_nNumParams)
+         for(int z_nParams = 0; z_nParams &#60 z_pFDNext->z_nNumParams;  z_nParams++)
+         {
+           if(z_nParams)
+             strcat(z_sTemp,",");
+           strcat(z_sTemp,z_VarType[z_pFDNext->z_pPTypes[z_nParams]]);
+           strcat(z_sTemp," ");
+           strcat(z_sTemp,z_pFDNext->z_sPName[z_nParams]);
+       }
+       strcat(z_sTemp,")");
+       z_pListBox->AddString(z_sTemp);
+       free(z_sTemp);
+       z_pFDNext = z_pFDNext->z_pNext;
+     }                   
+     z_pListBox->SetCurSel(0);
+     return TRUE;
+   }                                                                                                                                                          
+   return TRUE;
+ }  
+ 
+ void MFrameWnd::Events()
+ {
+   MDialog z_Dialog(IDD_DIALOG4);
+  
+   z_Dialog.DoModal();
+ }
+</PRE> 
+In <i>OnInitDialog()</i>, we use the link-list and string concatenation to populate the listbox. The dialog box will be displayed when we select <i>Events...</i> sub-option under <i>Display</i>. <BR>
+Now that we know all the events available for the <i>OCX</i>, let us add code and see that the code gets executed when the event occurs.<BR>
+<H4>Program 13</H4>
+<PRE>
+ void MFrameWnd::ObjCreate(CLSID z_TempClsid)
+ {
+   IClassFactory *z_pClassFactory;
+   char *z_sName;
+   CMenu *z_pMenu,*z_pAddMenu,*z_pPopMenu,*z_pSubMenu;
+   IConnectionPointContainer *z_pCPContain;
+   IConnectionPoint *z_pCPoint;
+   ULONG z_lCookie; 
+     
+   z_pOleClientSite = new MOleClientSite;
+   z_pInPlaceFrame = new MOleInPlaceFrame;
+   z_pOleInPlaceSite = new MOleInPlaceSite;
+   z_pDispatch =  new MDispatch;
+   CoGetClassObject(z_TempClsid,1,0,IID_IClassFactory,(void**)&amp z_pClassFactory);
+   z_pClassFactory-> CreateInstance(0,IID_IOleObject,(void**)&amp z_pOleObject);
+   z_pOleObject->SetClientSite((IOleClientSite*)z_pOleClientSite);
+   z_pOleObject->DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp z_Rect);
+   z_nActive = TRUE;
+   z_pMenu = GetMenu();
+   z_pSubMenu = z_pMenu->GetSubMenu(1);
+   z_pAddMenu = new CMenu;
+   z_pAddMenu->LoadMenu(IDR_MENU2);
+   z_pPopMenu = z_pAddMenu->GetSubMenu(0);
+   z_sName = (char*) malloc(10);
+   z_pOleObject->GetUserType(0,&amp z_sName);
+   z_pSubMenu->AppendMenu(MF_ENABLED|MF_STRING|MF_POPUP,(UINT)z_pPopMenu->m_hMenu,z_sName);
+   free(z_sName);
+   
+   InitArray();                       
+   z_lCookie=10; 
+   z_pOleObject->
+ QueryInterface(IID_IConnectionPointContainer,(void**)&amp z_pCPContain);
+   z_pCPContain->FindConnectionPoint(z_ClsidEvents,&amp z_pCPoint);                                                                                                
+   z_pCPoint->Advise((IUnknown*)z_pDispatch,&amp z_lCookie);
+   z_pCPoint->Release();                               
+   z_pCPContain->Release();
+ }
+ 
+ void MDialog::Save()
+ { 
+   CData *z_pTemp;   
+   FData *z_pEDSearch;
+   CString z_sSel;     
+   CListBox* z_pListBox;
+   BOOL z_nExists;
+   int z_nSel, z_nCount;    
+   CEdit *z_pEdit;
+     
+   z_pListBox = CListBox*)GetDlgItem(IDC_LIST1);                 
+   z_nSel = z_pListBox->GetCurSel();
+   z_pTemp = 0;
+   z_pListBox->GetText(z_nSel,z_sSel);
+   z_nExists = FALSE;
+   z_pEDSearch = z_pEDFirst;
+   while(z_pEDSearch)
+   {
+     if(z_sSel.Find(z_pEDSearch->z_sFName) == -1)
+       z_pEDSearch = z_pEDSearch->z_pNext;    
+     else   
+       break;  
+   }
+   z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+   z_nCount = z_pEdit->GetLineCount();
+   if(!z_pCDFirst)
+   {
+     z_pCDFirst = new CData;
+     z_pCDPrev = z_pCDFirst;  
+     z_pCDPrev->z_pNext = 0;
+   }                                                
+   else
+   {
+     CData *z_pNext;
+     
+     z_pNext= z_pCDFirst;
+     while(z_pNext)
+     {
+       if(z_pNext->z_lDispID == z_pEDSearch->z_lDispID) 
+       {
+         z_nExists = TRUE;
+         break;
+       }  
+       else
+         z_pNext = z_pNext->z_pNext;        
+     }
+     if(!z_nExists)
+     {
+       z_pNext = new CData;
+       z_pCDPrev->z_pNext = z_pNext;
+       z_pCDPrev = z_pNext;
+       z_pCDPrev->z_pNext = 0;
+     }
+     else                     
+     {
+       z_pTemp = z_pCDPrev;
+       z_pCDPrev = z_pNext;
+     }
+   }
+   z_pCDPrev->z_sFunction = (char**)malloc( z_nCount * sizeof(char*));
+   for(int z_nTemp = 0; z_nTemp<z_nCount; z_nTemp++)
+   {
+     int z_nCopied; 
+     z_pCDPrev->z_sFunction[z_nTemp] = (char*)malloc(100);
+     z_nCopied = z_pEdit->GetLine(z_nTemp,z_pCDPrev->z_sFunction[z_nTemp],100);
+     *(*(z_pCDPrev->z_sFunction + z_nTemp) + z_nCopied) = '\0';
+   }
+   z_pCDPrev->z_lDispID = z_pEDSearch->z_lDispID;
+   z_pCDPrev->z_nCount = z_nCount;
+   if(z_nExists)
+     z_pCDPrev = z_pTemp;
+  }
+   
+   void MDialog::Test1()
+   {
+     Test();
+   } 
+   
+   void MDialog::Test(BOOL z_nFlag,CData *z_pCDSearch)
+   {
+     CEdit *z_pEdit;   
+     int z_nCount;   
+           
+     if(!z_nFlag)                               
+     {
+       z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+       z_nCount = z_pEdit->GetLineCount();
+     }                                           
+     else
+       z_nCount=z_pCDSearch->z_nCount;
+     for( int z_nTemp = 0; z_nTemp < z_nCount; z_nTemp++)
+    {
+      char *z_sStore;
+      int z_nCopied;                         
+ 
+      z_sStore =(char*)malloc(100);
+      if(!z_nFlag)
+     {
+       z_nCopied = z_pEdit->GetLine(z_nTemp,z_sStore,100);
+       z_sStore[z_nCopied]='\0'; 
+     }                                                 
+     else
+       strcpy(z_sStore,z_pCDSearch->z_sFunction[z_nTemp]);
+     if(*z_sStore == '0')                           
+     {
+       z_sStore++;                            
+       ::MessageBox(0,"Windows API","Function!",0);
+     } 
+     else if(*z_sStore =='1')
+     {
+       z_sStore ++;
+       FuncExec(z_sStore);
+     }     
+     else   
+       ::MessageBox(0,"Unrecognisable Command","Error!",0);
+       free(z_sStore); 
+   }
+ }                                                                                                                         
+ 
+ void MFrameWnd::Execute()
+ {
+   z_pDialog = new MDialog(IDD_DIALOG7);
+   z_pDialog->DoModal();
+ }
+                                                
+ void* _export _cdecl MDispatch::Invoke(DISPID dispidMember,REFIID,LCID,unsigned short,DISPPARAMS  *pdispparams,VARIANT  * pvarResult,EXCEPINFO*,unsigned int*) 
+ { 
+   if(dispidMember != -705  &amp &amp   dispidMember != -709 &amp &amp dispidMember != -706
+   &amp &amp  dispidMember != -501 &amp &amp  dispidMember != -701 &amp &amp  dispidMember != -710 )
+     {
+       CData *z_pCDSearch = z_pCDFirst;
+        while(z_pCDSearch)
+        {                                
+         if(z_pCDSearch->z_lDispID == dispidMember)
+           break;
+         else
+         z_pCDSearch = z_pCDSearch->z_pNext;         
+        }
+       if(z_pCDSearch)
+         z_pDialog->Test(1,z_pCDSearch);
+     }                      
+     return 0;
+ }
+ 
+ void* _export _cdecl MDispatch::QueryInterface (REFIID , void  ** ppvObj)
+ {
+   *ppvObj = this;
+   return 0; 
+ }
+ 
+ void* _export _cdecl MOleClientSite::QueryInterface ( REFIID riid  , void **ppvObj )
+ {
+   if ( riid == IID_IOleInPlaceSite)
+   {
+     *ppvObj = z_pOleInPlaceSite;
+     return 0;
+   }
+   if ( riid == IID_IDispatch)
+   {
+     *ppvObj = z_pDispatch;
+     return 0;
+   }
+   return ResultFromScode(E_NOTIMPL);
+ } 
+</PRE> 
+Once the <i>OCX</i> has been chosen for display, select the <i>Executing Events...</i> sub-option under <i>Edit</i> menu-option. The dialog contains a list-box that holds the  names of the events. Select any one event. The edit control will be used to add code for this event. <BR>
+The code for an <i>OCX</i> event might consist not only of the <i>OCX</i> methods but also of functions from the Windows API. When the code is being executed, each function name will be compared against the names of the <i>OCX</i> functions for a match. If no match is found, then the Windows API is searched for a function of this name. If the function does not fall into either of the categories, then an error is flagged.<BR>
+Implementing this feature without adding considerable amounts of code is not feasible. To overcome this hurdle and to enhance understanding, we have designed a unique method. We have assumed that all <i>OCX</i> methods will be prefaced with <b><i>1</i></b>. These functions will get executed. All those lines of code that are prefaced with <b><i>0</i></b> are considered to be a part of the Windows API. Any other prefix for a line of code will be flagged as an error.<BR>
+Thus, if <i>aaa()</i> is an <i>OCX</i> method and if the code that is entered in the edit control is:<BR>
+<PRE>  
+   1aaa()<BR>
+   0bbb()<BR>
+   2ccc()<BR>
+   ddd()<BR>
+</PRE>
+then <i>aaa()</i> will be executed. <i>bbb()</i> will bring up a dialog that states that it is a part of the Windows API. We do realise that <i>bbb()</i> is not a part of the API. It is only deemed so by the prefix assigned to it. It is only an illustrative example. Real-life containers will have robust error-checks to verify validity of the function. The functions <i>ccc()</i> and <i>ddd()</i> will flag an error.
+Click on <i>`Test'</i> to see the code being executed. This is equivalent to the <i>Preview</i> feature that most products such as <i>PowerBuilder</i> support. Click on <i>`Save'</i> to save the code. The code will be associated with the event that was highlighted in the list-box at the time of clicking on <i>`Save'</i>.<BR>
+We assume for ease of explanation that the code is added to the <i>`clicked'</i> event. Close the dialog  box. Click on the <i>OCX</i>. The code saved for the event gets executed. Similarly, if the code was added to the <i>`timer'</i> event, then every time a <i>WM_TIMER</i> message was sent to the <i>OCX</i>, it would get executed.
+Consider this about an <i>OCX</i>, for methods, all details are decided by the <i>OCX</i>. This means that not only does the <i>OCX</i> decide the name of the method and it's parameters but also the code within the method. The user of the <i>OCX</i> just calls this method with the requisite number and type of parameters.<BR>
+The container uses the <i>IDispatch</i> of the <i>OCX</i> to execute methods. The container obtains the <i>IDispatch</i> pointer by calling <i>QueryInterface()</i> in the <i>OCX</i> with <i>IID_IDispatch</i>. This <i>IDispatch</i> pointer is said to be an <b><i>incoming</i></b> pointer for the container. 
+Any pointer obtained by calling the <i>QueryInterface()</i> with the appropriate <i>IID</i> is called an <b><i>incoming</i></b> pointer and the interface it points to is called as the <b><i>incoming</i></b> interface.<BR>
+Events fall into a very special category. Let's explain what we mean by <i>special</i>. The <i>OCX</i> defines the events that it supports. It also senses the occurance of the event. It is the responsibility of the OCX to inform the container that an event has occured. But it is the user of the <i>OCX</i> who writes the code for the event while it is the container that saves and executes this code.<BR>
+Since the container executes the event code, the <i>IDispatch</i> that handles events <i>has</i> to be implemented in it. This means that the container implements an interface for the <i>OCX</i>. The container then passes this <i>IDispatch</i> pointer to the OCX. This pointer is called an <b><i>outgoing pointer</i></b> and the <i>IDispatch</i> interface implemented in the container is called the <b><i>outgoing interface</i></b>.<BR>
+The <i>OCX</i> can support multiple outgoing interfaces. As of now, outgoing interfaces are used only for events. But as ever <i>Microsoft</i> has an eye on the future. It has developed a system to handle outgoing pointers. The OCX has one <i>IConnectionPoint</i> interface implemented for each outgoing pointer. Since, there can be multiple outgoing pointers the <i>OCX</i> implements an <i>IConnectionPointContainer</i> interface. This interface manages the different <i>IConnectionPoint</i> interfaces. For reasons best known to <i>Microsoft</i>, the <i>OCX</i> can obtain a pointer to the container's <i>IDispatch</i> interface through a convoluted mechanism.<BR>
+First the container uses <i>QueryInterface()</i> to obtain a pointer to the interface <i>IConnectionPointContainer</i> in the <i>OCX</i>. We then have to use the <i>FindConnectionPoint()</i> method of this interface to obtain a pointer to an <i>IConnectionPoint</i> interface. The first parameter to this function is the <i>uuid</i> of the events type info while the second parameter is the address of the <i>IConnectionPoint</i> interface.<BR>
+Next, we execute the the method <i>Advise()</i> of <i>IConnectionPoint</i>. This function expects an <i>IUnknown</i> pointer as it's first parameter. We have passed it the <i>MOleClientSite</i> pointer. The <i>OCX</i> on recieving this pointer calls the <i>MOleClientSite</i> method <i>QueryInterface()</i> with the <i>uuid</i> of the events. We, the container, are expected to return our <i>IDispatch</i> pointer at this point.<BR>
+At long last, the <i>OCX</i> recieves the container's <i>IDispatch</i> pointer. You must be wondering why one has to go all the way to the moon and back so that the <i>OCX</i> may get the container's <i>IDispatch</i> pointer. Well join the club, we are equally mystified!<BR>
+The structure <b><i>CData</i></b> is used to store the code added for an event. It also stores the ID of the event. The code for each  event is stored in a separate structure all of which are a part of the final link-list. <i>z_pEDFirst</i> stores the address of the first element of the list. The link-list is initialized by <i>Save()</i>. <i>Test()</i> will merely parse each line of code. If the pre-fix is <b><i>1</i></b>, then it passes on the handling to <i>FuncExec(),</i> otherwise it will display an appropriate message box. <BR>
+When an event occurs in the <i>OCX</i>, it calls the function <i>Invoke()</i> of the container's <i>IDispatch</i>. The <i>OCX</i> passes the <i>ID</i> of the event as the first parameter to <i>Invoke()</i>. It is this <i>ID</i> that is used to identify the event that has been invoked. In <i>Invoke()</i>, we use the <i>ID</i> to search the link-list for a match. We, then, access the code stored in the link-list and execute it.<BR>
+Once again, events is something that we have figured out. The manual is conspicuously silent on the how's, when's and wherefore's of the event implemetation. If you have a copy of <i>Microsoft OLE Control Developer's Kit: User's Guide & Reference</i> from the <i>The Six Volume Documentation Collection For Microsoft Visual C++ Version 2.0 for Win32</i>, then read pages 325-326 for an overview of incoming and outgoing pointers. Drop us a line if you survive the ordeal.<BR>
+<H2>Ambient Properties: Container's charter</H2> 
+So far, we have accessed and changed information that is a part of the <i>OCX</i>. The container too has properties that can be passed to the <i>OCX</i>. These are called <i>Ambient Properties</i>. As far as the <i>OCX</i> is concerned, these are read-only properties. The <i>OCX</i> can read the values of these properties but cannot change them. There are fourteen ambient properties provided to us.<BR>
+Why would the <i>OCX</i> want to know of the containers properties? Well, consider the case of <i>AmbientBackColor</i>. This is the back color of the container. The <i>OCX</i> can use this value to maintain color co-ordination. Support for ambient properties is implemented by the container. It has nothing to do with the <i>OCX</i>. Even if the container does nothing about the ambient properties, the operation of the <i>OCX</i> is in no way affected.<BR>
+In  the following example, we have used just two of the standard ambient properties:<BR>
+<H4>Program 14</H4>
+<PRE>
+ BOOL MDialog::OnInitDialog()
+ {
+   CDialog::OnInitDialog();  
+   if(z_nID==IDD_DIALOG1)
+   {
+     
+     // Retain all previously existing code  
+ 
+   }                      
+   else 
+     {
+       CEdit *z_pEdit;
+       char *z_sDisplay;
+       
+       z_sDisplay = (char*)malloc(10); 
+       z_pEdit=(CEdit*)GetDlgItem(IDC_EDIT1);
+       ltoa(z_lSelColor,z_sDisplay,10);
+       z_pEdit->SetWindowText(z_sDisplay);
+       free(z_sDisplay);
+       if(z_nUIDead)
+         CheckRadioButton(IDC_RADIO1,IDC_RADIO2,IDC_RADIO1);
+       else
+         CheckRadioButton(IDC_RADIO1,IDC_RADIO2,IDC_RADIO2);
+       return TRUE;  
+     }                                                                                                                                                  
+   return TRUE;
+ }  
+ 
+ void MFrameWnd::OnPaint()
+ {
+   if(z_pOleObject)
+   {                           
+       
+     SIZEL z_sizel;
+     CPaintDC z_DC(this);
+      
+     z_sizel.cx = XformWidthInPixelsToHimetric(z_DC.m_hDC,(z_pTracker->m_rect.right - z_pTracker->m_rect.left));
+     z_sizel.cy  = XformWidthInPixelsToHimetric(z_DC.m_hDC,(z_pTracker->m_rect.bottom - z_pTracker->m_rect.top));
+     if(z_nUIDead &amp &amp !z_nActive)
+     {
+       z_pTracker->m_nStyle  =   CRectTracker::resizeInside|CRectTracker::solidLine;
+       OleDraw(z_pOleObject,DVASPECT_CONTENT,z_DC.m_hDC,&amp z_Rect);
+     }                                                                         
+     else
+       z_pTracker->m_nStyle = CRectTracker::solidLine;
+       z_pTracker->Draw(&amp z_DC);     
+       ReleaseDC(&amp z_DC);
+       z_pOleObject->SetExtent(DVASPECT_CONTENT,&amp z_sizel);
+   }
+   CFrameWnd::OnPaint();
+ }                                    
+ 
+ void MFrameWnd::OnLButtonDown(UINT z_nFlags,CPoint z_Point)
+{                     
+   z_nActive = FALSE;
+   z_pOleObject->DoVerb(OLEIVERB_HIDE,0,(IOleClientSite*)z_pOleClientSite,- 1,m_hWnd,&amp z_Rect);
+ }                                                                                                            
+   
+ void MFrameWnd::OnLButtonDblClk(UINT z_nFlags,CPoint z_Point)
+ {
+   if(!z_nUIDead &amp &amp !z_nActive &amp &amp z_Rect.PtInRect(z_Point))                                                            
+   {
+     z_nActive = TRUE;
+     z_pOleObject->DoVerb(OLEIVERB_SHOW,0,(IOleClientSite*)z_pOleClientSite,-1,m_hWnd,&amp z_Rect);
+   }
+ }                                                                                                              
+ 
+ void MFrameWnd::OnMouseMove(UINT z_nFlags,CPoint z_Point)
+ {                               
+   int z_nDraw = 0;
+ 
+   if(!z_nUIDead)
+   {
+     if(!z_nActive &amp &amp (z_nFlags & MK_LBUTTON) &amp &amp z_Rect.PtInRect(z_Point))      {
+       z_nDraw = 1;
+       z_pTracker->Track(this,z_Point);
+     }                                                      
+     if(z_nDraw)      
+     {
+       z_Rect = z_pTracker->m_rect;
+       Invalidate();
+     } 
+   }
+ }    
+ 
+ void MFrameWnd::AmbientProperties()
+ {
+   MDialog z_Dialog(IDD_DIALOG11);
+ 
+   z_Dialog.DoModal();
+ }
+ 
+ void MDialog::UIDead()
+ {
+   int z_nChecked;
+   IOleControl *z_pOleControl;                                                                             
+   
+   z_nChecked = GetCheckedRadioButton(IDC_RADIO1,IDC_RADIO2);
+   if(z_nChecked==IDC_RADIO1)
+   {
+     z_pOleObject->DoVerb(OLEIVERB_HIDE,0,(IOleClientSite*)z_pOleClientSite,-1,z_hFWnd,&amp z_Rect);
+     z_nUIDead = TRUE;
+     z_nActive = FALSE;
+     Invalidate();
+   }                      
+   else 
+     z_nUIDead = FALSE;
+   z_pOleObject->QueryInterface(IID_IOleControl,(void**)&amp z_pOleControl);
+   z_pOleControl->OnAmbientPropertyChange(DISPID_AMBIENT_UIDEAD);
+   z_pOleControl->Release();
+ }
+ 
+ void MDialog::AmbBackColor()
+ {
+     CColorDialog *z_pColorDialog;
+     char *z_sDisplay;                                                         
+     CEdit *z_pEdit;
+     IOleControl *z_pOleControl;
+     
+     z_pColorDialog = new CColorDialog;
+     z_pColorDialog->SetCurrentColor(z_lSelColor);
+     z_pColorDialog->DoModal();
+     z_lSelColor = z_pColorDialog->GetColor();
+     z_sDisplay = (char*)malloc(10);    
+     ltoa(z_lSelColor,z_sDisplay,10);
+     z_pEdit = (CEdit*)GetDlgItem(IDC_EDIT1);
+     z_pEdit->SetWindowText(z_sDisplay);  
+     free(z_sDisplay);
+     z_pOleObject->QueryInterface(IID_IOleControl,(void**)&amp z_pOleControl);
+     z_pOleControl->OnAmbientPropertyChange(DISPID_AMBIENT_BACKCOLOR);
+ }
+
+void*   _export   _cdecl   MDispatch::Invoke(DISPID   dispidMember,REFIID,LCID,unsigned   short,DISPPARAMS  *pdispparams,VARIANT *pvarResult,EXCEPINFO *,unsigned  int*) 
+ { 
+   if(dispidMember == -701 || dispidMember == -501 )
+   {                             
+     pvarResult->vt=VT_I4;
+     pvarResult->lVal=m_pFrameWnd->m_nSelColor;
+   }                           
+   else if(dispidMember == -710)
+   {                             
+     pvarResult->vt=VT_BOOL;
+     pvarResult->bool=m_pFrameWnd->m_nUIDead;
+   }
+   else  if(dispidMember  != -705  &amp &amp  dispidMember  !=  -709  &amp &amp dispidMember  != -706)
+   {
+     CData *m_pCDSearch = m_pCDFirst;
+     while(m_pCDSearch)
+     {
+       if(m_pCDSearch->m_lDispID == dispidMember)
+         break;
+       else
+         m_pCDSearch = m_pCDSearch->m_pNext;
+     }
+     if(m_pCDSearch)
+       m_pDialog->Test(1,m_pCDSearch);
+   }
+   return 0;
+ }     
+</PRE> 
+Select the  menu-option <i>Ambient Properties...</i> under <i>Edit</i>. This will display a dialog with two ambient properties; <i>Ambient BackColor</i> and <i>UIDead</i>; listed in it. Select the button <i>`More...</i>'. This opens the <i>Color</i> dialog box. This dialog box is a part of the Windows' Common Dialog Boxes. Select a color and click on <i>`OK</i>'. A numeric value representing the new color is displayed in the edit control.<BR>
+For <i>UIDead</i>, select <i>TRUE</i>. Click on <i>`OK'</i> to close the dialog box. Now try and move the <i>OCX</i> around in the container or double-click on it to activate it. None of our efforts are met with success. This is because we have set the <i>UIDead</i> ambient property to <i>TRUE</i>. Use the <i>`Ambient Properties'</i> dialog box to set this ambient property back to <i>FALSE</i> and everything works just as before.
+<i>AmbBackColor()</i> is executed when we click on the button <i>`More...'</i>. In this function, we use the class <i>CColorDialog</i> that is a part of the <i>MFC</i> to display the Color dialog box. The function <i>SetCurrentColor()</i> will ensure that this dialog displays the current value of <i>Ambient  BackColor</i> as that selected on display. The <i>DoModal()</i> function terminates when we close this dialog box. <i>GetColor()</i> is used to retrieve a number corresponding to the current selected color in the dialog. This number is displayed in the edit control. The value of the color is stored in <i>z_lSelColor</i>.<BR>
+The <i>OCX</i> is notified about changes in the container's ambient properties via it's <i>IOleControl</i> interface. The container uses the <i>OnAmbientPropertyChange()</i> function of this interface to notify the <i>OCX</i>. This function merely notifies the <i>OCX</i> of the change. The <i>OCX</i> then calls <i>Invoke()</i> in the container's <i>IDispatch</i> implementation to determine the  new  value.  <i>Invoke()</i> uses the <i>VARIANT</i> structure passed to it by the <i>OCX</i> to return the new value.<BR>
+<i>UIDead()</i> is called when we select either of the radio-buttons. In this function, depending on whether <i>TRUE</i> or <i>FALSE</i> is selected, we appropriately set a boolean variable <i>z_nUIDead.</i> If <i>TRUE</i> is selected, then the <i>OCX</i> is hidden using <i>DoVerb()</i>.<BR>
+If the ambient property <i>UIDead</i> is <i>TRUE,</i> then <i>z_nUIDead</i> is also <i>TRUE</i>. <i>OnMouseMove()</i>, <i>OnPaint()</i>, <i>OnLButtonDblClk()</i> have been re-written such that as long as this variable is <i>TRUE</i> there is no moving of the <i>OCX</i>, no re-activating it or triggering of events.
+In <i>OnInitDialog()</i>, we use the values stored in <i>z_lSelColor</i> and <i>z_nUIDead</i> to display the value of the color and selecting the appropriate radio-button.<BR>
+All the work in handling the ambient properties is done by the container. Doesn't that make sense, since they are the container's properties anyway?<BR><P>
+<A HREF = "final6.html">Continue</A>
+</BODY>

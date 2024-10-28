@@ -1,0 +1,3730 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:47:59 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap7_files/filelist.html">
+<link rel=Edit-Time-Data href="chap7_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-11-06T19:04:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:08:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>8777</o:Words>
+  <o:Characters>50030</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>416</o:Lines>
+  <o:Paragraphs>100</o:Paragraphs>
+  <o:CharactersWithSpaces>61440</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>7</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>XML Classes</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>eXtensible Markup Language i.e.
+XML is a subset of the Standard Generalized Markup Language (SGML), which is an
+ISO standard numbered ISO 8879. SGML was perceived to be remarkably colossal and
+extremely convoluted to be put to any pragmatic use. Thus, a subset of this
+language, XML, was developed to work seamlessly with both SGML and HTML. XML
+may be considered as a restricted form of SGML, since it conforms to the rules
+of an SGML document.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>XML was created in the year 1996
+under the auspices of the World Wide Web Consortium (W3C), under the
+chairmanship of Jon Bosak. This group spelt out 10 ground rules for XML, with
+'ease of use' as its fundamental philosophy. From thereon, the expectations
+reached a threshold wherein, XML was expected to eradicate world poverty and
+generally rid the world of all its tribulations. To be precise, XML was
+overvalued, way beyond realistic levels. There are people who appear to be
+extremely infatuated by XML, even though they may not have read through a
+single rule or specification of the language. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The specifications of XML laid
+down by its three primary authors- Tim Bray, Jean Paoli and C. M.
+Sperberg-McQueen, are accessible at the web site http://www.w3.org/XML.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>XML documents consists entities
+comprising of Characters or Markups. An XML file is made up of a myriad
+components, which shall be unravelled one at a time, after we have discerned
+the basic concepts of this language. We commence this chapter by introducing a
+program that generates an XML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we use a class
+called XmlTextWriter, which comes from the System.Xml namespace. An instance
+'a' of the XmlTextWriter class is created, by passing two parameters to the
+constructor:<o:p></o:p></span></p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The first
+parameter, b.xml, is a string and represents the name of the file to be
+created. If the file exists in the current directory, it gets deleted and then
+recreated, but with zero bytes. </p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The second
+parameter is null. It represents the Encoding type used.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Unicode is a standard whereby
+each character is assigned 16 bits.<span style="mso-spacerun: yes">  </span>All
+the languages in the world can now be easily represented by this standard. In
+the .Net world, we are furnished with classes whose methods facilitate
+conversion of arrays and strings made up of Unicode characters, to and from
+arrays made up of bytes alone. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The System.Text namespace has a
+large number of Encoding implementations, such as the following: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The ASCII Encoding encodes the
+Unicode characters as 7-bit ASCII.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The UTF8 Encoding class encodes
+Unicode characters using UTF-8 encoding. </p>
+
+<p class=ILbase><span style='color:windowtext'>UTF-8 stands for UCS
+Transformation Format 8 bit. It supports all Unicode characters. It is normally
+accessed as code page 65001. UTF-8 is the default value and represents all the
+letters from the English alphabet. Here, since we have specified the second
+parameter as null, the default value of UTF-8 encoding is taken.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we execute the program at
+this stage, you would be amazed by the fact that no file by the name of b.xml
+will be displayed. To enable this to happen, a function named Flush needs to be
+called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each time we ask the class
+XmlTextWriter to write to a file, it may not oblige immediately, but may place
+the output in a buffer. Only when the buffer becomes full, will it write to the
+file. This approach is pursued to avoid the overhead of accessing the file on
+the disk repetitively. This improves efficiency. The Flush function flushes the
+buffer to the file stream, but it does not close the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Close function has to be
+employed to execute the twin tasks of flushing the buffer to the file, and
+closing the file. It is sagacious to call Flush, and then call Close, even
+though Close is adequate to carry out both these tasks.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we have called a function
+called WriteStartDocument from the XmlTextWriter class, which does not take any
+parameters. It produces the line &lt;?xml version=&quot;1.0&quot;?&gt;, in the
+file b.xml. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Any line that begins with
+&lt;?xml is called an XML declaration. Every entity in XML is described as a
+node. Every XML file must begin with an XML Declaration node. There can be only
+one such node in our XML file and it must be placed on the first line.
+Following it is an attribute called version, which is initialized to a value of
+1.0. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XML specifications lucidly
+stipulate that there would be no attribute called version in the next version
+of the software. Even if there is, its value would be indeterminate. In other
+words, in the foreseeable future, the only mandatory attribute would be
+version=1.0.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next vital declaration is
+the DOCTYPE declaration. Every XML file must have one DOCTYPE declaration, as
+it specifies the root tag. In our case, the root tag would be 'vijay'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An XML file is made up of tags,
+which are words enclosed within angular brackets. The file also contains rules,
+which bind the tags. The next three parameters of the function WriteDocType are
+presently specified as null. You may refer to the documentation to decipher the
+remaining values, since these may be used in place of null. If this does not
+appeal to you, you may have to hold your horses, till we furnish the
+explanation at an appropriate time.<o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the earlier example, all the
+nodes were displayed on the same line. We would indubitably desire that every
+node be displayed on a new line. The property Formatting in XmlTextWriter, is
+used to accomplish this task. Formatting can be assigned only one of the
+following two values: Indented or None. By default, the value assigned is None.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Indented option indents the
+child elements by 2 spaces. The magnitude of the indent may be altered, by
+stipulating a new value for the Indentation field. In our program, we want the
+indent to be 3 spaces deep. Hence, we stipulate the value as 3. As is evident,
+all nodes do not get indented. For example, the DOCTYPE node does not get
+indented; instead, it is placed on a new line. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The IndentChar property may be
+supplied with the character that is to be employed for indentation. By default,
+a space character is used for this purpose. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function WriteStartElement
+accepts a single parameter, which is the tag name, to be written to the XML
+file. This is an oft-repeated instruction, to be iterated in almost every
+program, since an XML file basically comprises of tags. A tag normally has a
+start point and an end point, and it confines entities within these two
+extremities. However, there are tags that do not accept any entities. Such tags
+end with a / symbol.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay wife=&quot;sonal&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The newly added function
+WriteAttributeString accepts two parameters, which it writes in the form of a
+name-value pair. Thus, along with 'vijay', we see the attribute named 'wife',
+having a value of 'sonal'. An attribute is analogous to an adjective of the
+English language, in that, it describes the object. In our case, it describes
+the tag 'vijay'. It divulges additional information about the properties of a
+tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>XML does not interpret the
+contents of these tags. The word 'wife' or the value 'sonal', have no special
+significance for XML, which is absolutely unconcerned about the information
+provided within the tags.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;surname&quot;, &quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay wife=&quot;sonal&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;surname&gt;mukhi&lt;/surname&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An element represents entities
+within a tag. We have a tag surname containing the value 'mukhi'. We can have
+multiple tags within the root tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have been reiterating the
+fact that we need to adhere to specific rules. You may steer clear of the
+beaten path and interchange the following two newly added functions as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>a.WriteElementString(&quot;surname&quot;, &quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As a fallout of this
+interchange, the following exception will be thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: Token
+StartAttribute in state Content would result in an invalid XML document.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This exception is triggered off
+due to the fact that the attribute must be specified first. Then, and only
+then, should the child tags within the tag, be specified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;friend&quot;,&quot;two&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;surname&quot;, &quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;books&quot;, &quot;67&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay wife=&quot;sonal&quot; friend=&quot;two&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;surname&gt;mukhi&lt;/surname&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;books&gt;67&lt;/books&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To summarize, the WriteDocType function
+specifies the root tag, the WriteStartElement the tag, the
+WriteAttributeString, the attributes for the active tag and WriteElementString
+function, a tag within a tag. We can enumerate as many attributes as we desire.
+They will eventually be clustered together. The WriteElementString function is
+also capable of creating as many tags, as are needed under a tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file b.xml, we see two
+attributes and two tags, under the root tag 'vijay'.<span style="mso-spacerun:
+yes">   </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;friend&quot;,&quot;two&quot;);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay friend=&quot;two&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;mukhi
+wife=&quot;sonal&quot; /&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, 'vijay' is
+the root tag, with the attribute 'friend', which is assigned a value of 2. It
+also has a child tag 'mukhi' having the attribute of 'wife' initialized to
+'sonal'. Both the tags, 'vijay' and 'mukhi', are created using the function
+WriteStartElement. Unlike function WriteElementString, which creates a start
+and end tag, WriteStartElement creates only a start tag.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A tag too can be endowed with
+attributes. The active tag is the last inserted by the WriteStartElement
+function. Functions such as WriteAttributeString, act on the active tag. Thus,
+we notice that the attribute of 'wife' has the tag 'mukhi' and not 'vijay'.
+Finally, since the tag 'mukhi' is devoid of any contents, it ends with a /
+symbol on the same line. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;friend&quot;,&quot;two&quot;);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.WriteFullEndElement();</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay friend=&quot;two&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;mukhi
+wife=&quot;sonal&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;/mukhi&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function WriteFullEndElement
+marks the end of the active tag. Therefore, the single tag 'mukhi', does not
+end with a / symbol on the same line. It has an ending tag instead. Both these
+possibilities are equally valid in this case. But, if the tags embody any
+contents, then both the start and the end tags are mandatory. In such
+situations, a single empty tag would just not suffice.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>//a.WriteComment(&quot;comment 1&quot;);</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.WriteComment(&quot;comment 1&quot;);</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteComment(&quot;comment 2&quot;);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.WriteComment(&quot;comment 3&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;surname&quot;, &quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!--comment 1--&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;!--comment 2--&gt;</p>
+
+<p class=ILprg>&lt;vijay wife=&quot;sonal&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;!--comment 3--&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;surname&gt;mukhi&lt;/surname&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every programming language
+extends the facility of writing comments, even though it may be a seldom used
+feature. Programmers insert comments amidst their code to document or explain
+the functioning of their programs. At times, comments assist in deciphering the
+code from the programmer's perspective. Practically, it may be easier to teach
+an elephant how to tap-dance, than to convince a programmer to write comments.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the XML world, comments begin
+with &lt;!-, and end with --&gt;. This is somewhat similar to the HTML syntax.
+In fact, the rules of HTML are written in XML. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Comments are like a liquid,
+since they can be moulded to fit-in anywhere, except on the first line of a
+program. The first line in an XML file has to be a declaration. If you dispense
+with the comments given with the function WriteComment, an exception will be
+thrown with the following message:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException:
+WriteStartDocument should be the first call.</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, functions such as
+WriteComment, can be used to insert comments anywhere in the code, primarily
+for the purpose of documentation, which would enable even an alien from outer
+space to decipher the code better.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteProcessingInstruction (&quot;sonal&quot;,
+&quot;mukhi=no&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;?sonal
+mukhi=no?&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A line beginning with &lt;?, Is
+called a Processing Instruction (PI). This line is inserted using the function
+WriteProcessingInstruction, and is passed two parameters: <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>the first is the name of the
+processing instruction.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>the second is the text that is to be
+inserted for the processing instruction. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Procession Instruction is used
+by XML to communicate with other programs during the performance of certain
+tasks. XML does not have the wherewithal to execute instructions. It therefore
+delegates this task to the XML processor. The processor is a program that is
+able to recognise an XML file. When it encounters the processing instruction,
+and if it is able to understand it, it executes it. In cases where it cannot
+comprehend it, the processor simply ignores the instruction. This is the
+methodology by which XML communicates with external programs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our program, the instruction
+'sonal' is ignored, as it does not provide any meaningful input to the
+processor.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;mukhi&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An XML file mainly consists of
+strings and tags. The WriteString function is very extensively exploited, since
+it writes content/strings between tags. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, the text
+'mukhi' is enclosed within the tags of 'vijay'. Even though we have not explicitly
+asked the XmlTextWriter class to close the tag, the ending tag has been used
+because there exists some content after the opening tag. <o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;friend&quot;,&quot;two&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;hi&quot;);</p>
+
+<p class=ILprg>//a.WriteAttributeString (&quot;friend&quot;,&quot;three&quot;);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;friend&quot;,&quot;two&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;bye&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay friend=&quot;two&quot;&gt;hi&lt;mukhi friend=&quot;two&quot;&gt;bye&lt;/mukhi&gt;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function WriteString can be
+inserted almost anywhere in the program. The first WriteString function writes
+'hi' between the tags of 'vijay', while the second WriteString function writes
+'bye' between the tags of 'mukhi'. The WriteString is aware of the active tag.
+Therefore, it inserts the text accordingly. Here also, if we uncomment the
+line, a.WriteAttributeString(&quot;friend&quot;,&quot;three&quot;), the
+following exception will be generated.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>Unhandled Exception: System.InvalidOperationException: Token
+StartAttribute in state Content would result in an invalid XML document.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>XML is very strict and
+meticulous in the sense that, it expects a certain order to be maintained, or
+else, it throws an exception. For instance, an element or a tag has to be
+created first. Only then, can all the attributes be written; and finally, the
+text or content has to be supplied. We are not permitted to write the text
+first and enter the attributes later. In the XmlTextWriter class, there is no
+going back. It is a one-way path, which only moves in the forward direction.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteCharEntity ('A');</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>#x41;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>During our exploratory journey
+of XML, we shall discuss a large number of characters that are 'reserved'. They
+have a special significance and cannot be used literally. These Unicode characters
+have to be written in a hex format. The function WriteCharEntity performs this
+task. It accepts a char or a Unicode character as a parameter and returns a
+number in hex, prefaced with the &amp;# symbol. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For those who do not understand
+hexadecimal and consider it Greek and Latin, 41 hex is equal to ASCII 65, which
+is the ASCII value for the capital letter A. You can pass different characters
+to this function and see their equivalent hex values.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteCData(&quot;mukhi <span style='font-family:"Bookman Old Style"'>&amp;</span>
+&lt;sonal&gt;&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;&lt;![CDATA[mukhi <span style='font-family:"Bookman Old Style"'>&amp;</span>
+&lt;sonal&gt;]]&gt;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program introduces a
+new function called WriteCData, which creates a node called CDATA. The
+parameter passed to this function is placed as it is, but is enclosed within
+square brackets. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A CDATA section is used whenever
+we want to use characters such as &lt;, &gt;, &amp; and the likes, in their
+literal sense, which would otherwise be mistaken for Markup characters. Thus, in
+the above program, the CDATA section that contains the symbol &amp;, interprets
+it as the literal character &amp;, and not as a special character. Also,
+&lt;sonal&gt; is not recognized as a tag in this section. A CDATA section
+cannot be nested within another CDATA section.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;&lt;A&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>&quot;);</p>
+
+<p class=ILprg>a.WriteCData(&quot;&lt;A&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>lt;A<span
+style='font-family:"Bookman Old Style"'>&amp;</span>gt;<span style='font-family:
+"Bookman Old Style"'>&amp;</span>amp;</p>
+
+<p class=ILprg>&lt;![CDATA[&lt;A&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>]]&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program illustrates certain
+characters that are special to XML. These are the obvious characters, such as
+&lt;, &gt; and &amp;, since they are used whilst an XML file is being created.
+Thus, whenever XML comes across the following symbols, it replaces them with
+the symbols depicted against each:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>&lt; is replaced with '&amp;lt;' </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>&gt; is replaced with '&amp;gt;' </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>&amp; is replaced with '&amp;amp;'. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the same string that contains
+the above mentioned special characters is placed within a CDATA statement, gets
+written verbatim, without any conversions.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteEntityRef(&quot;Hi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>Hi;&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The entity ref is very
+straightforward to understand. The string passed to the function WriteEntityRef
+is placed in the XML file, preceded by a '&amp;' sign and followed by a
+semi-colon. An entity ref in XML is equivalent to a variable. It is included to
+provide flexibility to the program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus in the above code, a
+variable called 'hi' is created. The task of stating what 'hi' signifies, can
+be defined in the XML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteRaw(&quot;&lt;A&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;&lt;A&gt;<span style='font-family:"Bookman Old Style"'>&amp;</span>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteRaw function writes the
+characters passed to it, without carrying out any conversions. The above XML
+file is obviously erroneous, as no end tag has been specified for the tag A.
+Also, no name has been specified after the &amp; sign.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>Boolean b = true;</p>
+
+<p class=ILprg>a.WriteElementString(&quot;Logical&quot;,
+XmlConvert.ToString(b));</p>
+
+<p class=ILprg>Int32 c = -2147483648;</p>
+
+<p class=ILprg>a.WriteElementString(&quot;SmallInt&quot;,
+XmlConvert.ToString(c));</p>
+
+<p class=ILprg>Int64 d = 9223372036854775807;</p>
+
+<p class=ILprg>a.WriteElementString(&quot;Largelong&quot;,
+XmlConvert.ToString(d));</p>
+
+<p class=ILprg>Single e = ((Single)22)/((Single)7);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;Single&quot;,
+XmlConvert.ToString(e));</p>
+
+<p class=ILprg>Double f = 1.79769313486231570E+308;</p>
+
+<p class=ILprg>a.WriteElementString(&quot;Double&quot;,
+XmlConvert.ToString(f));</p>
+
+<p class=ILprg>DateTime h = new DateTime(2001, 07, 08 ,22, 0, 30, 500);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;DateTime&quot;, XmlConvert.ToString(h));</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;Logical&gt;true&lt;/Logical&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;SmallInt&gt;-2147483648&lt;/SmallInt&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;Largelong&gt;9223372036854775807&lt;/Largelong&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;Single&gt;3.142857&lt;/Single&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>&lt;Double&gt;1.7976931348623157E+308&lt;/Double&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;DateTime&gt;2001-07-08T22:00:30.5000000+05:30&lt;/DateTime&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above example contains a
+plethora of data types such as, boolean, int, double and Data Time.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlConvert class has a large
+number of static functions that help us convert one data type to another. One
+such function is the ToString function. For types such as int or long, the
+smallest and the largest values are used, in order to check the veracity of the
+ToString function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ToString function is overloaded
+to handle many more data types than we have shown. The point here is that, it
+is possible for us to convert any data type into a string and write it to disk.
+This factor gains immense importance when data is being received from a
+database, and requires to be converted into a string in an XML file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteStartAttribute(&quot;hi&quot;, &quot;mukhi&quot;,
+&quot;xxx:yyy&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;1-861003-78&quot;);</p>
+
+<p class=ILprg>a.WriteEndAttribute();<span style="mso-spacerun: yes">    
+</span></p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay hi:mukhi=&quot;1-861003-78&quot;
+xmlns:hi=&quot;xxx:yyy&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, we have
+introduced the WriteStartAttribute function. As is apparent from its name, it
+starts an attribute. The first parameter to this function is 'hi', which is the
+namespace, to which the prefix of the attribute belongs. The second parameter
+'mukhi' is the name of the attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The names assigned to attributes
+and tags may not always result in a unique name. A programmer may inadvertently
+create a tag or an attribute with a name that already exists. How then does XML
+decide what the tag denotes?<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To help resolve such potential
+conflicts, each tag or entity is prefaced with a name known as the namespace.
+This is followed by a colon sign. Normally, meaningful names are assigned,
+rather than words like 'hi'. Prefixes or namespaces like xmlns, are reserved by
+XML. The concept of namespaces in XML is identical to the concept of namespaces
+in C#.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third parameter is a Uniform
+Resource Identifier (URI). This parameter reveals greater details about the
+location of the namespace. It informs XML that somewhere within the document,
+additional information about the namespace 'hi' is available. In this case it
+is at xxx:yyy. As the WriteStartAttribute function does not specify any value
+for the attribute, the WriteString function is employed to assign the value
+1-861003-78, to the attribute 'mukhi' in the namespace 'hi'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;xmlns&quot;, &quot;bk&quot;, null,
+&quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>string p = a.LookupPrefix(&quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>a.WriteStartAttribute(p, &quot;mukhi&quot;,
+&quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;sonal&quot;);</p>
+
+<p class=ILprg>a.WriteEndAttribute();<span style="mso-spacerun: yes">    
+</span></p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay xmlns:bk=&quot;sonal:wife&quot; bk:mukhi=&quot;sonal&quot;
+/&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, the function
+WriteAttributeString is called with four parameters. The first, as always, is
+the name of the namespace, i.e. xmlns. The second is the name of the attribute
+i.e. bk, which is suffixed to the name of the namespace, as xmlns:bk. The third
+parameter is the namespace URI. In the earlier program, we had specified the
+value of xxx:yyy for the URI. For this program, since the namespace xmlns is a
+reserved namespace, the URI parameter is specified as null. The last parameter
+is the value of the attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As a consequence, the above
+function takes the form of an attribute consisting of xmlns:bk=sonal:wife. The
+next function LookupPrefix, accepts a namespace URI and returns the prefix. As
+the parameter supplied to this function is sonal:wife, the prefix returned is
+bk, which is stored in p.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteStartAttribute then
+uses the following:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>'bk' as the namespace,</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>'mukhi' as the name of the
+attribute, and</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>'sonal:wife' as the namespace URI. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the attribute 'mukhi' is prefaced
+with the namespace 'bk'. Finally, the WriteString function assigns the value of
+'sonal' to the attribute bk:mukhi.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;xmlns&quot;, &quot;bk&quot;, null,
+&quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;jjj&quot;, &quot;bk&quot;, &quot;kkk&quot;,
+&quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay xmlns:bk=&quot;sonal:wife&quot;
+jjj:bk=&quot;sonal:wife&quot; xmlns:jjj=&quot;kkk&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this version of the WriteAttributeString
+function, the namespace is jjj and the attribute name is bk, with the value
+sonal:wife. Thus, the attribute becomes jjj:bk=sonal:wife. The third parameter
+to the function is the namespace URI, which is now assigned a value of kkk, instead
+of null. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, one more attribute
+xmlns:jjj gets added, which indicates that the namespace URI is kkk. We notice
+that this attribute does not get added for the xmlns namespace. We have chosen
+the attribute name 'bk' again, just to demonstrate that they belong to
+different namespaces. Therefore, this bk is considered to be a different
+attribute from the earlier bk.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteStartAttribute(null,&quot;sonal&quot;, null);</p>
+
+<p class=ILprg>a.WriteQualifiedName(&quot;mukhi&quot;,
+&quot;http://vijaymukhi.com&quot;);</p>
+
+<p class=ILprg>a.WriteEndAttribute();</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay sonal=&quot;n1:mukhi&quot;
+xmlns:n1=&quot;http://vijaymukhi.com&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the WriteStartAttribute
+function, only the second parameter out of the three parameters, has a value 'sonal,
+which is the name of the attribute. The first parameter, which is the name of
+the namespace and the third parameter, which is the URI of the namespace, are
+both assigned null values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next function,
+WriteQualifiedName assigns a value to the attribute 'sonal'. This function
+takes two parameters, the value 'mukhi' and the namespace URI for the value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value 'mukhi' gets prefaced
+by a namespace n1, which is created dynamically by XML. The name n1 belongs to
+the reserved xmlns namespace and the URI to n1 is specified in the second
+parameter, http://vijaymukhi.com. The method WriteQualifiedName, then looks up
+the prefix within the scope for the given namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;xmlns&quot;,&quot;mukhi&quot;,null,&quot;xxx:yyy&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;Hi &quot;);</p>
+
+<p class=ILprg>a.WriteQualifiedName(&quot;sonal&quot;,&quot;xxx:yyy&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;vijay xmlns:mukhi=&quot;xxx:yyy&quot;&gt;Hi
+mukhi:sonal&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, we first create
+an attribute 'mukhi' in the reserved namespace xmlns. This attribute is then rendered
+a value of xxx:yyy. The WriteString function writes 'Hi' as the content and
+then, the WriteQualifiedName writes the string 'sonal'. However, since 'sonal'
+is a Qualified name, it is prefaced by 'mukhi' and not by xxx:yyy, because
+'mukhi' is equated to xxx:yyy. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The prefix in the scope for the
+namespace is given precedence.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;vijay&quot;,&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;vijay&quot;,&quot;sonal&quot;,&quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;vijay&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> 
+</span>&lt;vijay&gt;mukhi&lt;/vijay&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;vijay
+xmlns=&quot;sonal&quot;&gt;mukhi&lt;/vijay&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As we have just observed, the
+WriteElementString function had only two parameters in the earlier program.
+However, here it has three parameters. The first and the third parameters are
+the same, i.e. the tag name and the value. The newly inducted second parameter
+indicates the namespace 'sonal'. The tag in the first parameter 'vijay', has
+the namespace of sonal. Thus, the XML file contains the tag with the attribute
+of xmlns=sonal.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (Console.Out);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>Output</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;IBM437&quot;?&gt;&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlTextWriter class can
+write to different entities, using the constructor that accepts a single
+parameter. The Console class has a static property out of datatype TextWriter
+that represents the console. Thus, the output is now displayed on the console.
+By default, the encoding attribute is assigned a value of IBM437.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One of the primary reasons for
+designing XML was to introduce validation of the tags in order to produce a
+well-evolved XML file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are a few validations that
+need to be performed in an XML file, such as:<o:p></o:p></span></p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>It should be
+ensured that the basic rules of XML as well as our indigenous rules are
+followed. </p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>Certain tags should
+be placed only within specified tags and cannot be used independently.</p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>The number of times
+a tag is being used can be regulated, since it cannot be used infinite times. </p>
+
+<p class=ILbullets>•<span style='mso-tab-count:1'>   </span>A check should be
+placed on the name and the number of times an attribute is used within a tag.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>All such rules that need to be
+enforced are enunciated in XML parlance and then, placed in a DTD or a Document
+Type Description. The DTD may either be placed in a separate file or may be
+made part of the DOCTYPE declaration. In the XML file shown below, the DTD is
+internal. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, a DTD stores the grammar
+that is permissible in an XML file. The entity refs are also defined in a DTD.
+One of the reasons why HTML is also reffered to as XHTML is that, the rules of
+well-formed html are available in the form of a DTD.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>String s = &quot;&lt;!ELEMENT vijay (#PCDATA)&gt;&quot;;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null, s);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><!--[if supportFields]><span style='font-size:10.0pt;mso-bidi-font-size:
+9.5pt'><span style='mso-element:field-begin'></span>xe &quot;b.xml&quot;</span><![endif]--><!--[if supportFields]><span
+style='font-size:10.0pt;mso-bidi-font-size:9.5pt'><span style='mso-element:
+field-end'></span></span><![endif]--><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay[&lt;!ELEMENT vijay (#PCDATA)&gt;]&gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteDocType function
+accepts four parameters. The first parameter is the starting or root tag 'vijay'.
+Hence, it must contain a value. The last parameter is the subset (as referred
+to by the documentation), which follows the root tag 'vijay'. If you observe
+the DOCTYPE statement carefully, you will notice that an extra pair of square
+brackets [], have been added.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, &quot;a.dtd&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay SYSTEM &quot;a.dtd&quot;&gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The third parameter to
+WriteDocType function specifies the name of the DTD file. In other words, it
+states the URI of the DTD. The second parameter is assigned the value of null.
+Hence, the word SYSTEM is displayed before the name of the file, in the XML
+file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Whenever XML wishes to ensure
+the validity of an XML file, it ascertains the rules from a.dtd. If both
+internal and external DTDs are present, both of them are checked. However, the
+internal DTD is accorded priority. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, &quot;mmm&quot;,
+&quot;a.dtd&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay PUBLIC &quot;mmm&quot; &quot;a.dtd&quot;&gt;</p>
+
+<p class=ILprg>&lt;vijay /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the earlier program, SYSTEM
+was added in the XML file, since the second parameter had been specified as
+null. However, in this program, the second parameter is not null. Hence, the
+word PUBLIC gets added. Thereafter, the string or the id specified in the
+second parameter is added. And then, the dtd in the third parameter is
+specified.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, it is either the
+PUBLIC identifier or the SYSTEM identifier, which would be present. The XML
+program or the processor scanning the XML file, uses the PUBLIC identifier to
+retrieve the content for the entities that use the URI. If it fails, it falls
+back upon to the SYSTEM literal.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument(false);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteStartDocument can take
+a boolean parameter that adds an attribute which could either be 'standalone =
+yes' or 'standalone=no', depending upon the value specified. This attribute
+determines whether the DTD is in an external file or it is internal to the XML
+file. If the standalone has a value of 'yes', it is suggestive of the fact that
+there is no external DTD, and therefore, all the grammatical rules have to be
+placed within the XML file itself. <o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.WriteAttributeString (&quot;wife&quot;,&quot;sonal&quot;);</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.WriteStartAttribute(&quot;hi&quot;, &quot;mukhi&quot;,
+&quot;xxx:yyy&quot;);</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.WriteString(&quot;1-861003-78&quot;);</p>
+
+<p class=ILprg>a.WriteElementString(&quot;surname&quot;, &quot;mukhi&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>System.Console.WriteLine(a.WriteState);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Start</p>
+
+<p class=ILoutput>Prolog</p>
+
+<p class=ILoutput>Prolog</p>
+
+<p class=ILoutput>Element</p>
+
+<p class=ILoutput>Element</p>
+
+<p class=ILoutput>Attribute</p>
+
+<p class=ILoutput>Content</p>
+
+<p class=ILoutput>Closed</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay wife=&quot;sonal&quot;
+hi:mukhi=&quot;1-861003-78&quot; xmlns:hi=&quot;xxx:yyy&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  
+</span>&lt;surname&gt;mukhi&lt;/surname&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlTextWriter object can be
+in any one of six different states. The WriteState property reveals its current
+state. When an XmlTextWriter Object is created, it is in the Start state, as may
+be evident from the fact that, no write method has been called so far. After
+the Close function, the Writer is in the Closed state. When the
+WriteStartDocument and WriteDocType functions are called, they reach the Prolog
+state, because the prolog is being written. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteStartElement function
+actually starts writing to the XML file, thereby, morphing to the Element
+state. The element start tag 'vijay' begins the XML file. The next function
+WriteAttributeString does not change the state, since the element in focus
+still is 'vijay'. The WriteStartAttribute function needs the WriteString to
+complete the attribute. Thus, after the WriteStartAttribute function executes,
+the Text Writer assumes the Attribute mode. The surname attribute becomes the
+content in the XML file. Hence, the state changes to Content mode. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This goes on to prove that the
+TextWriter can possibly be in any one of the above six states, depending upon
+the entities written to the file. While the TextWrtier is in the Attribute
+state, it cannot switch to an element state to write an element. Therefore, it
+throws an exception.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.Namespaces = false;</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;jjj&quot;, &quot;bk&quot;,
+&quot;kkk&quot;, &quot;sonal:wife&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.ArgumentException: Cannot set the
+namespace if Namespaces is 'false'.</p>
+
+<p class=ILoutput>at System.Xml.XmlTextWriter.WriteStartAttribute(String
+prefix, String localName, String ns)</p>
+
+<p class=ILoutput>at System.Xml.XmlWriter.WriteAttributeString(String prefix,
+String localName, String ns, String value) </p>
+
+<p class=ILoutput>at zzz.Main()</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>The TextWriter class has a
+Namespaces property that is read-write, and it has a default value of true. The
+Namespace property is turned off, by setting this property to false. The above
+runtime exception is thrown because, we have attempted to introduce a namespace
+jjj, in the WriteAttributeString function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.QuoteChar = '\'';</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteAttributeString(&quot;jjj&quot;, &quot;bk&quot;);</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay jjj='bk' /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'>Various facets of XML can be
+modified. By using the property QuoteChar, we can modify the default quoting
+character, from double inverted commas to single inverted commas. Since a
+single quote cannot be enclosed within a set of single quotes, we use the
+backslash to escape it. All attributes can now be placed in single quotes
+instead of double quotes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextWriter a = new XmlTextWriter (&quot;b.xml&quot;, null);</p>
+
+<p class=ILprg>a.WriteStartDocument();</p>
+
+<p class=ILprg>a.Formatting = Formatting.Indented;</p>
+
+<p class=ILprg>a.Indentation = 3;</p>
+
+<p class=ILprg>a.WriteDocType(&quot;vijay&quot;, null, null ,null);</p>
+
+<p class=ILprg>a.WriteStartElement(&quot;vijay&quot;);</p>
+
+<p class=ILprg>a.WriteStartAttribute(&quot;hi&quot;, &quot;mukhi&quot;,
+&quot;xxx:yyy&quot;);</p>
+
+<p class=ILprg>a.WriteString(&quot;1-861003-78&quot;);</p>
+
+<p class=ILprg>a.WriteEndAttribute();<span style="mso-spacerun: yes">    
+</span></p>
+
+<p class=ILprg>a.WriteEndElement();</p>
+
+<p class=ILprg>a.WriteEndDocument();</p>
+
+<p class=ILprg>a.Flush();</p>
+
+<p class=ILprg>a.Close();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay&gt;</p>
+
+<p class=ILprg>&lt;vijay hi:mukhi=&quot;1-861003-78&quot;
+xmlns:hi=&quot;xxx:yyy&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Good programming style
+necessitates every 'open' to have a corresponding 'close'. Thus, the Begin functions
+for an Element, Attribute and Document have corresponding Close functions too.
+However, if we do not End them, they close by default and no major calamity
+befalls them. We are using them in the above program as an abandon caution. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The WriteEndDocument function
+puts the Text Writer in the Start mode.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt;color:windowtext'>Reading
+an XML file</span></u><span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;</p>
+
+<p class=ILprg>&lt;!DOCTYPE vijay SYSTEM &quot;a.dtd&quot; [&lt;!ENTITY baby
+&quot;No&quot;&gt;]&gt;</p>
+
+<p class=ILprg>&lt;vijay aa=&quot;no&quot;&gt;</p>
+
+<p class=ILprg>&lt;!--comment 2--&gt;&lt;?sonal<span style="mso-spacerun:
+yes">  </span>mukhi=no?&gt;</p>
+
+<p class=ILprg>Hi<span style='font-family:"Bookman Old Style"'>&amp;</span>baby;</p>
+
+<p class=ILprg>&lt;![CDATA[,mukhi&gt;]]&gt;&lt;aa&gt;bb&lt;/aa&gt;</p>
+
+<p class=ILprg>&lt;/vijay&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt; copy con a.dtd</p>
+
+<p class=ILoutput>Enter</p>
+
+<p class=ILoutput>^Z</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextReader r;</p>
+
+<p class=ILprg>r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>while (r.Read())</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(&quot;{0} D={1} L={2} P={3} &quot;, r.NodeType,
+r.Depth, r.LineNumber, r.LinePosition );</p>
+
+<p class=ILprg>Console.Write(&quot; name={0} value={1}
+AC={2}&quot;,r.Name,r.Value,r.AttributeCount);</p>
+
+<p class=ILprg>Console.WriteLine();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>XmlDeclaration D=0 L=1 P=3 name=xml
+value=version=&quot;1.0&quot; standalone=&quot;yes&quot; AC=2</p>
+
+<p class=ILoutput>Whitespace D=0 L=1 P=39 name= value= AC=0</p>
+
+<p class=ILoutput>DocumentType D=0 L=2 P=11 name=vijay value=&lt;!ENTITY baby
+&quot;No&quot;&gt; AC=1</p>
+
+<p class=ILoutput>Whitespace D=0 L=2 P=54 name= value= AC=0</p>
+
+<p class=ILoutput>Element D=0 L=3 P=2 name=vijay value= AC=1</p>
+
+<p class=ILoutput>Whitespace D=1 L=3 P=16 name= value= AC=0</p>
+
+<p class=ILoutput>Comment D=1 L=4 P=5 name= value=comment 2 AC=0</p>
+
+<p class=ILoutput>ProcessingInstruction D=1 L=4 P=19 name=sonal value=mukhi=no
+AC=0</p>
+
+<p class=ILoutput>Text D=1 L=4 P=36 name= value=Hi AC=0</p>
+
+<p class=ILoutput>EntityReference D=1 L=5 P=4 name=baby value= AC=0</p>
+
+<p class=ILoutput>Whitespace D=1 L=5 P=9 name= value= AC=0</p>
+
+<p class=ILoutput>CDATA D=1 L=6 P=10 name= value=,mukhi&gt; AC=0</p>
+
+<p class=ILoutput>Element D=1 L=6 P=21 name=aa value= AC=0</p>
+
+<p class=ILoutput>Text D=2 L=6 P=24 name= value=bb AC=0</p>
+
+<p class=ILoutput>EndElement D=1 L=6 P=28 name=aa value= AC=0</p>
+
+<p class=ILoutput>Whitespace D=1 L=6 P=31 name= value= AC=0</p>
+
+<p class=ILoutput>EndElement D=0 L=7 P=3 name=vijay value= AC=0</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we read an XML
+file and display all the nodes contained therein. To avoid any errors from
+being displayed, you should create an empty file by the name of a.dtd.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have a class called
+XmlTextReader that accepts a filename as a parameter. We pass the filename
+b.xml to it. This file contains most of the entities present in an XML file.
+The Read function in this class picks up a single node or XML entity at a time.
+It returns true, if there are more nodes to be read, or else, it returns false.
+Thus, when there are no more nodes to be read from the file, the while loop
+ends. The Read function scans the active node and displays its contents in the
+loop. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The NodeType property displays
+the name of the nodetype. As an XML file normally starts with a declaration, the
+NodeType property displays the NodeType as XMLDeclaration, using the ToString
+function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Depth property gets
+incremented by one, every time an element or a tag is encountered. At the
+Declaration statement, the depth is 0. At the EndElement or at the end of the
+tag, its value reduces by one. Thus, the Depth property reveals the number of
+open tags in the file and it can be used for indentation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Line Number indicates the
+line on which the statement is positioned, while the LinePosition property displays
+the position on the line at which the statement begins. The Name property in
+the class reveals the name of the tag, XML. The output displayed by this
+property depends upon the active node type. On acute observation, you shall
+notice that the word XML is not preceded by the symbol &lt;? in the output.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value property relates to
+the name property, in this case, to XmlDeclaration. It displays the entire
+gamut of attributes to the node. As there exist two attributes, version and
+standalone, the property AttributeCount displays a value of 2. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the enter key is pressed
+after the node declaration, it is interpreted as a Whitespace character.
+Whitespace characters are separators, which could consist of an enter, space et
+al. The Position property specifies the character position as 39. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlDeclaration has to be the
+first node in an XML file, and it cannot have any children. The DOCTYPE
+declaration, which is known as a DocumentType Node, displays the name as vijay,
+which is the root node. The value is displayed as &lt;!ENTITY baby
+&quot;No&quot;&gt;, which includes everything except the SYSTEM and a.dtd.
+Thus, in the case of a DocumentType Node, value is the internal DTD. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall encounter the
+Whitespace Node very frequently. Hence, we shall not discuss it hereinafter.
+The Attribute Count will be displayed in the next program. This node can have
+the Notation and Entity as child nodes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next node in sequence is our
+very first element or tag 'vijay', which is the same value that was displayed
+earlier, with the name property for the DocumentType Node. The Value property
+for this element shows null, since tags are devoid of Values. Instead, they
+have Attributes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute Count displays a
+value of one. At the following Whitespace node, the Depth property gets incremented
+by one. This is the only way to ascertain whether we are at the root node or
+not. We now stumble upon a comment, which has no name. The value displayed is
+the value of the comment. And yet again, the &lt;!-characters are not displayed
+along with the value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, a processing
+instruction (PI) is encountered. No whitespace is displayed between the comment
+and the PI, since we have not pressed the Enter key. 'Sonal' becomes the name
+of the program that runs 'vijay'. The rest turns into the value property having
+no attributes. TextNode is displayed next because the text 'Hi' is displayed in
+the XML file. This node too is not assigned any name and the value is depicted
+as 'Hi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>What follows the text is an
+Entity Reference. It is assigned the name 'baby' and is devoid of the ampersand
+sign. Its value is null and it does not have any attributes. The CDATA section
+is given the name as null. The value is assigned the content of the CDATA,
+after stripping away the square brackets. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value of the Depth property
+is incremented by 1. The Text Node follows the element aa. This node does not
+have any name and it displays the value as 'bb'. In the following program, we
+explore the various attributes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r;</p>
+
+<p class=ILprg>r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>while (r.Read())</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(&quot;{0} D={1} L={2}
+P={3}&quot;,r.NodeType,r.Depth,r.LineNumber,r.LinePosition);</p>
+
+<p class=ILprg>Console.Write(&quot; name={0} value={1}
+AC={2}&quot;,r.Name,r.Value,r.AttributeCount);</p>
+
+<p class=ILprg>Console.WriteLine();</p>
+
+<p class=ILprg>if (r.HasAttributes)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i =0; i &lt; r.AttributeCount; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>r.MoveToAttribute(i);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Att {0}={1}&quot;,r.Name,r[i]);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>XmlDeclaration D=0 L=1 P=3 name=xml
+value=version=&quot;1.0&quot; standalone=&quot;yes&quot; AC=2</p>
+
+<p class=ILoutput>Att version=1.0</p>
+
+<p class=ILoutput>Att standalone=yes</p>
+
+<p class=ILoutput>DocumentType D=0 L=2 P=11 name=vijay value=&lt;!ENTITY baby
+&quot;No&quot;&gt; AC=1</p>
+
+<p class=ILoutput>Att SYSTEM=a.dtd</p>
+
+<p class=ILoutput>Element D=0 L=3 P=2 name=vijay value= AC=1</p>
+
+<p class=ILoutput>Att aa=no</p>
+
+<p class=ILoutput>Comment D=1 L=4 P=5 name= value=comment 2 AC=0</p>
+
+<p class=ILoutput>ProcessingInstruction D=1 L=4 P=19 name=sonal value=mukhi=no
+AC=0</p>
+
+<p class=ILoutput>Text D=1 L=4 P=36 name= value=</p>
+
+<p class=ILoutput>Hi AC=0</p>
+
+<p class=ILoutput>EntityReference D=1 L=5 P=4 name=baby value= AC=0</p>
+
+<p class=ILoutput>CDATA D=1 L=6 P=10 name= value=,mukhi&gt; AC=0</p>
+
+<p class=ILoutput>Element D=1 L=6 P=21 name=aa value= AC=0</p>
+
+<p class=ILoutput>Text D=2 L=6 P=24 name= value=bb AC=0</p>
+
+<p class=ILoutput>EndElement D=1 L=6 P=28 name=aa value= AC=0</p>
+
+<p class=ILoutput>EndElement D=0 L=7 P=3 name=vijay value= AC=0</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A property called
+WhiteSpaceHandling is initialized to None, as a result of which, the node Whitespace
+is not visible in the output. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XmlTextReader has a member
+HasAttributes, which returns a True value if the node has attributes and False
+otherwise. Alternatively, we could also have used the property AttributeCount
+to obtain the number of attributes that the node contains.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the node has attributes, a
+'for statement' is used to display all of them. In the loop, we first use the
+function MoveToAttribute to initially activate the attribute. This is achieved
+by passing the number as a parameter to the function. Bear in mind that the
+index starts from Zero and not One.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, the Name property is
+used to display the name of the attribute. If the attribute is not activated,
+the Name property displays the name of the node. This explains the significance
+of the MoveToAttribute function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As you would recall, the
+XmlTextReader class has an indexer for the attributes, and like all indexers,
+it is zero based, i.e. r[0] accesses the value of the first attribute. This is
+how we display the details of all attributes of the node.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the node DOCTYPE, the SYSTEM
+becomes the name of the attribute and the value becomes the name of the DTD
+file. For an element, the attributes are specified in name-value pairs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static XmlTextReader r;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>int declaration=0, pi=0, doc=0, comment=0, element=0,
+attribute=0, text=0, whitespace=0,cdata=0,endelement=0,</p>
+
+<p class=ILprg>entityr=0,entitye=0,entity=0,swhitespace=0,notation=0;</p>
+
+<p class=ILprg>while (r.Read())</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(&quot;{0} D={1} L={2}
+P={3}&quot;,r.NodeType,r.Depth,r.LineNumber,r.LinePosition);</p>
+
+<p class=ILprg>Console.Write(&quot; name={0} value={1}
+AC={2}&quot;,r.Name,r.Value,r.AttributeCount);</p>
+
+<p class=ILprg>Console.WriteLine();</p>
+
+<p class=ILprg>if (r.HasAttributes)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i =0; i &lt; r.AttributeCount; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>r.MoveToAttribute(i);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Att {0}={1}&quot;,r.Name,r[i]);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>switch (r.NodeType)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>case XmlNodeType.XmlDeclaration:</p>
+
+<p class=ILprg>declaration++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.ProcessingInstruction:</p>
+
+<p class=ILprg>pi++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.DocumentType:</p>
+
+<p class=ILprg>doc++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Comment:</p>
+
+<p class=ILprg>comment++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Element:</p>
+
+<p class=ILprg>element++;</p>
+
+<p class=ILprg>if (r.HasAttributes)</p>
+
+<p class=ILprg>attribute += r.AttributeCount;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Text:</p>
+
+<p class=ILprg>text++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.CDATA:</p>
+
+<p class=ILprg>cdata++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.EndElement:</p>
+
+<p class=ILprg>endelement++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.EntityReference:</p>
+
+<p class=ILprg>entityr++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.EndEntity:</p>
+
+<p class=ILprg>entitye++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Notation:</p>
+
+<p class=ILprg>notation++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Entity:</p>
+
+<p class=ILprg>entity++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.SignificantWhitespace:</p>
+
+<p class=ILprg>swhitespace++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>case XmlNodeType.Whitespace:</p>
+
+<p class=ILprg>whitespace++;</p>
+
+<p class=ILprg>break;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Console.WriteLine ();</p>
+
+<p class=ILprg>Console.WriteLine(&quot;XmlDeclaration: {0}&quot;,declaration);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;ProcessingInstruction: {0}&quot;,pi);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;DocumentType: {0}&quot;,doc);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Comment: {0}&quot;,comment);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Element: {0}&quot;,element);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Attribute: {0}&quot;,attribute);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Text: {0}&quot;,text);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Cdata: {0}&quot;,cdata);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;EndElement: {0}&quot;,endelement);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Entity Reference: {0}&quot;,entityr);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;End Entity: {0}&quot;,entitye);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Entity: {0}&quot;,entity);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Whitespace: {0}&quot;,whitespace);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Notation: {0}&quot;,notation);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;Significant Whitespace:
+{0}&quot;,swhitespace);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>XmlDeclaration D=0 L=1 P=3 name=xml
+value=version=&quot;1.0&quot; standalone=&quot;yes&quot; AC=2</p>
+
+<p class=ILoutput>Att version=1.0</p>
+
+<p class=ILoutput>Att standalone=yes</p>
+
+<p class=ILoutput>Whitespace D=0 L=1 P=39 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput>DocumentType D=0 L=2 P=11 name=vijay value=&lt;!ENTITY baby
+&quot;No&quot;&gt; AC=1</p>
+
+<p class=ILoutput>Att SYSTEM=a.dtd</p>
+
+<p class=ILoutput>Whitespace D=0 L=2 P=54 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput>Element D=0 L=3 P=2 name=vijay value= AC=1</p>
+
+<p class=ILoutput>Att aa=no</p>
+
+<p class=ILoutput>Whitespace D=1 L=3 P=16 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput>Comment D=1 L=4 P=5 name= value=comment 2 AC=0</p>
+
+<p class=ILoutput>ProcessingInstruction D=1 L=4 P=19 name=sonal value=mukhi=no
+AC=0</p>
+
+<p class=ILoutput>Text D=1 L=4 P=36 name= value=</p>
+
+<p class=ILoutput>Hi AC=0</p>
+
+<p class=ILoutput>EntityReference D=1 L=5 P=4 name=baby value= AC=0</p>
+
+<p class=ILoutput>Whitespace D=1 L=5 P=9 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput>CDATA D=1 L=6 P=10 name= value=,mukhi&gt; AC=0</p>
+
+<p class=ILoutput>Element D=1 L=6 P=21 name=aa value= AC=0</p>
+
+<p class=ILoutput>Text D=2 L=6 P=24 name= value=bb AC=0</p>
+
+<p class=ILoutput>EndElement D=1 L=6 P=28 name=aa value= AC=0</p>
+
+<p class=ILoutput>Whitespace D=1 L=6 P=31 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput>EndElement D=0 L=7 P=3 name=vijay value= AC=0</p>
+
+<p class=ILoutput>Whitespace D=0 L=7 P=9 name= value=</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>AC=0</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>XmlDeclaration: 0</p>
+
+<p class=ILoutput>ProcessingInstruction: 1</p>
+
+<p class=ILoutput>DocumentType: 0</p>
+
+<p class=ILoutput>Comment: 1</p>
+
+<p class=ILoutput>Element: 1</p>
+
+<p class=ILoutput>Attribute: 0</p>
+
+<p class=ILoutput>Text: 2</p>
+
+<p class=ILoutput>Cdata: 1</p>
+
+<p class=ILoutput>EndElement: 2</p>
+
+<p class=ILoutput>Entity Reference: 1</p>
+
+<p class=ILoutput>End Entity: 0</p>
+
+<p class=ILoutput>Entity: 0</p>
+
+<p class=ILoutput>Whitespace: 6</p>
+
+<p class=ILoutput>Notation: 0</p>
+
+<p class=ILoutput>Significant Whitespace: 0</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program is a
+continuation from where we left off in the previous program. The initial
+portion of the code is identical. A colossal case statement is introduced in
+the program to check the NodeType. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For each Node Type, there is a
+corresponding variable, whose value is incremented by 1 whenever the Node Type
+matches. Then, the values contained in these variables are displayed. For
+inexplicable reasons, the NodeType property does not return the following node
+types - Document, DocumentFragment, Entity, EndEntity, or Notation. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling = WhitespaceHandling.None;</p>
+
+<p class=ILprg>while (r.Read())</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if (r.HasValue)</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0}<span style="mso-spacerun: yes"> 
+</span>{1}={2}&quot;, r.NodeType, r.Name, r.Value);</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} {1}&quot;, r.NodeType, r.Name);</p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">           </span></p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>XmlDeclaration<span style="mso-spacerun: yes"> 
+</span>xml=version=&quot;1.0&quot; standalone=&quot;yes&quot;</p>
+
+<p class=ILoutput>DocumentType<span style="mso-spacerun: yes"> 
+</span>vijay=&lt;!ENTITY baby &quot;No&quot;&gt;</p>
+
+<p class=ILoutput>Element vijay</p>
+
+<p class=ILoutput>Comment<span style="mso-spacerun: yes">  </span>=comment 2</p>
+
+<p class=ILoutput>ProcessingInstruction<span style="mso-spacerun: yes"> 
+</span>sonal=mukhi=no</p>
+
+<p class=ILoutput>Text<span style="mso-spacerun: yes">  </span>=</p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILoutput>EntityReference baby</p>
+
+<p class=ILoutput>CDATA<span style="mso-spacerun: yes">  </span>=,mukhi&gt;</p>
+
+<p class=ILoutput>Element aa</p>
+
+<p class=ILoutput>Text<span style="mso-spacerun: yes">  </span>=bb</p>
+
+<p class=ILoutput>EndElement aa</p>
+
+<p class=ILoutput>EndElement vijay</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The HasValue property simply
+identifies whether a Node can contain a value or not. There are nine nodes that
+can possess values. These nodes are Attribute, CDATA, Comment, DocumentType,
+ProcessingInstruction, Significant Whitespace, Whitespace, Text and
+XmlDeclaration. All the above nodes must have a value, but they need not
+necessarily have a name. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>r.MoveToContent();</p>
+
+<p class=ILprg>string s = r[&quot;mukhi&quot;];</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;sonal&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r[2];</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;vijay mukhi=&quot;no&quot; sonal=&quot;yes&quot;
+aaa=&quot;bad&quot; /&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>no</p>
+
+<p class=ILoutput>yes</p>
+
+<p class=ILoutput>bad</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The MoveToContent function moves
+to the first element in the XML file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, we display the attributes
+using different methods. In the first approach, the indexer is passed a string,
+which is the name of the attribute 'mukhi'. It receives 'no' as the return
+value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the second approach, the
+indexer is passed the integer value 2 as a parameter, to access the value of
+the third attribute, which is 'bad'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Alternatively, the WriteAttribue
+function could have been given the string 'sonal' as a parameter, to return the
+value of the attribute as 'yes'. Thus, there are multiple means to achieving
+the same objective.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>r.MoveToContent();</p>
+
+<p class=ILprg>string s ;</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;aa:bb&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;bb&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;bb&quot;,&quot;sonal:mukhi&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;bb&quot;,&quot;sonal:mukhi&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;bb&quot;,&quot;aa&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>s = r.GetAttribute(&quot;xmlns:aa&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(s);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;vijay xmlns:aa=&quot;sonal:mukhi&quot; aa:bb=&quot;no&quot;
+/&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>no</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>no</p>
+
+<p class=ILoutput>no</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>sonal:mukhi</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The MoveToContent function is
+used in this program, instead of the Read function. In the file b.xml, we have
+an attribute bb in the namespace aa. It is initialized to a value of 'no'. The
+namespace aa has a URI, sonal:mukhi, because of the xmlns declaration. Thus,
+the full name of the attribute becomes aa:bb i.e. prefix, followed by the
+colon, followed by the actual name. As a result, specifying aa:bb results in
+the display of 'no', but only specifying bb as a parameter to GetAttribute
+results in a null value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The full name of an attribute
+includes the name of the namespace too. So, we can use the second form of the
+GetAttribute function that has an overload of two parameters, where the second
+parameter is the name of the URI and not the namespace. Hence, it is acceptable
+to call the function with the URI sonal:mukhi, but if we use the namespace aa,
+no output will be produced.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last GetAttribute utilizes
+the full name xmlns:aa to retrieve the URI for the element. Thus, we can use
+this variant of the GetAttribute function with the URI instead of the
+namespace:name.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>using System.Xml;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>XmlTextReader r = new XmlTextReader(&quot;b.xml&quot;);</p>
+
+<p class=ILprg>r.WhitespaceHandling=WhitespaceHandling.None;</p>
+
+<p class=ILprg>r.MoveToContent();</p>
+
+<p class=ILprg>r.MoveToAttribute(&quot;cc&quot;);</p>
+
+<p class=ILprg>Console.WriteLine(r.Name + &quot; &quot; + r.Value);</p>
+
+<p class=ILprg>Console.WriteLine(r.ReadAttributeValue());</p>
+
+<p class=ILprg>Console.WriteLine(r.Name + &quot; &quot; + r.Value);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u></p>
+
+<p class=ILprg>&lt;vijay aa=&quot;hi&quot; bb=&quot;bye&quot; cc=&quot;no&quot;
+/&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>cc no</p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>No</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, we directly
+focus on the attribute that we are interested in, i.e. cc. The name and value
+properties in XMLTextReader display 'cc' and 'no' respectively. As there are
+numerous attributes of the node remaining to be read, the ReadAttribute
+function returns True. This function is normally used to read text or entity
+reference nodes that constitute the value of the attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The Name property of the XmlTextReader however becomes null
+after the function ReadAttributeValue is called.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap7.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:01 GMT -->
+</html>

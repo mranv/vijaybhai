@@ -1,0 +1,1243 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/windbg.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:15 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="windbg_files/filelist.html">
+<title>windbg</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>324</o:TotalTime>
+  <o:Created>2006-06-26T12:04:00Z</o:Created>
+  <o:LastSaved>2006-06-26T12:04:00Z</o:LastSaved>
+  <o:Pages>11</o:Pages>
+  <o:Words>2360</o:Words>
+  <o:Characters>13453</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>112</o:Lines>
+  <o:Paragraphs>26</o:Paragraphs>
+  <o:CharactersWithSpaces>16521</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Courier;
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:0;
+	mso-generic-font-family:modern;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:3 0 0 0 1 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>WinDBG</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Random stuff</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0 </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>PROCESS 8606b020<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0e88<span
+style="mso-spacerun: yes">    </span>Peb: 7ffdf000<span style="mso-spacerun:
+yes">  </span>ParentCid: 065c</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+3545f000<span style="mso-spacerun: yes">  </span>ObjectTable: e1244418<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">  </span>95.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: OPSCAN.EXE</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>PROCESS 86268020<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 08cc<span
+style="mso-spacerun: yes">    </span>Peb: 7ffdf000<span style="mso-spacerun:
+yes">  </span>ParentCid: 0544</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+3a4fb000<span style="mso-spacerun: yes">  </span>ObjectTable: e1943658<span
+style="mso-spacerun: yes">  </span>HandleCount: 188.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image:
+WINWORD.EXE</p>
+
+<p class=MsoNormal>Displays basic stuff on each process running.<span
+style="mso-spacerun: yes">  </span>The parameter Process is the address of the
+EPROCESS structure in memory. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>To display the Eprocess structure in XP we use</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dt nt!_EPROCESS<span style="mso-spacerun: yes"> 
+</span>8606b020</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x000 Pcb<span
+style="mso-spacerun: yes">              </span>: _KPROCESS</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x06c
+ProcessLock<span style="mso-spacerun: yes">      </span>: _EX_PUSH_LOCK</p>
+
+<p class=MsoNormal>….</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x255
+WorkingSetAcquiredUnsafe : UChar</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x258 Cookie<span
+style="mso-spacerun: yes">           </span>: Uint4B</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The undocumented EPROCESS structure in XP has the pid at
+0x130 and the<span style="mso-spacerun: yes">  </span>image file name at 0x174.
+</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can also use the command to do the same thing</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>dt _EPROCESS 852d88b8</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The value after Cid is the process is of our process in hex.
+We have winword or word running on our machine that has a pid of 2252 or 0x8cc.
+We used task manager to back check.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The PEB is the process environment block which is the same
+for all and begins at 7ffdf000. This is followed by the parent Cid or the
+parent of the pid that created this process. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The object table is the process object address. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !process winword.exe</p>
+
+<p class=MsoNormal>PROCESS 852f7318<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0ef4<span
+style="mso-spacerun: yes">    </span>Peb: 7ffd7000<span style="mso-spacerun:
+yes">  </span>ParentCid: 0544</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+07292000<span style="mso-spacerun: yes">  </span>ObjectTable: e12fcfb8<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">  </span>62.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: windbg.exe</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>VadRoot 860963a0
+Vads 67 Clone 0 Private 2312. Modified 688. Locked 1.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DeviceMap
+e1f02f60</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Token<span
+style="mso-spacerun: yes">                             </span>e10676a0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ElapsedTime<span
+style="mso-spacerun: yes">                       </span>00:29:57.524</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>UserTime<span
+style="mso-spacerun: yes">                          </span>00:00:25.066</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>KernelTime<span
+style="mso-spacerun: yes">                        </span>00:00:01.301</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>QuotaPoolUsage[PagedPool]<span style="mso-spacerun: yes">        
+</span>40212</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>QuotaPoolUsage[NonPagedPool]<span style="mso-spacerun: yes">     
+</span>2800</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Working Set Sizes
+(now,min,max)<span style="mso-spacerun: yes">  </span>(3564, 50, 345) (14256KB,
+200KB, 1380KB)</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>PeakWorkingSetSize<span style="mso-spacerun: yes">               
+</span>3585</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>VirtualSize<span
+style="mso-spacerun: yes">                       </span>45 Mb</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>PeakVirtualSize<span style="mso-spacerun: yes">                  
+</span>46 Mb</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>PageFaultCount<span style="mso-spacerun: yes">                   
+</span>6073</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   
+</span>MemoryPriority<span style="mso-spacerun: yes">                   
+</span>BACKGROUND</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>BasePriority<span
+style="mso-spacerun: yes">                      </span>8</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>CommitCharge<span
+style="mso-spacerun: yes">                      </span>2742</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>THREAD
+85358bd0<span style="mso-spacerun: yes">  </span>Cid 0ef4.0ef8<span
+style="mso-spacerun: yes">  </span>Teb: 7ffdf000 Win32Thread: e10aee70 WAIT:
+(WrUserRequest) UserMode Non-Alertable</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">           
+</span>86094d18<span style="mso-spacerun: yes">  </span>SynchronizationEvent</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>THREAD
+860637e0<span style="mso-spacerun: yes">  </span>Cid 0ef4.06b0<span
+style="mso-spacerun: yes">  </span>Teb: 7ffde000 Win32Thread: e126dcf8 RUNNING
+on processor 0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>THREAD
+85370020<span style="mso-spacerun: yes">  </span>Cid 0ef4.0ae0<span
+style="mso-spacerun: yes">  </span>Teb: 7ffdc000 Win32Thread: 00000000 WAIT:
+(WrLpcReceive) UserMode Non-Alertable</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">           
+</span>86455bf8<span style="mso-spacerun: yes">  </span>Semaphore Limit
+0x7fffffff</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The !process takes the name of the process as a parameter
+and displays details of that one process. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!process
+852f7318<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>This
+displays more information about a process and as we can see 852f7318 is the
+address of the EPROCESS structure.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!process
+ef4<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>The
+process id of winword<span style="mso-spacerun: yes">  </span>is ef4 on our
+machine and thus we can use either the name of the process or the process id or
+the eprocess structure.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!process
+ef4 0<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>shows
+us minimal information about the process and <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!process
+ef4 7 <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>gives
+us more.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The first five bits decide how much information to show. </p>
+
+<p class=MsoNormal>lkd&gt; !object \Device\PhysicalMemory</p>
+
+<p class=MsoNormal>Object: e1001958<span style="mso-spacerun: yes"> 
+</span>Type: (867c0458) Section</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ObjectHeader:
+e1001940</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>HandleCount:
+0<span style="mso-spacerun: yes">  </span>PointerCount: 3</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Directory Object:
+e100f748<span style="mso-spacerun: yes">  </span>Name: PhysicalMemory</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dt nt!_OBJECT_HEADER e1001958</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x000
+PointerCount<span style="mso-spacerun: yes">     </span>: 83886080</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x004
+HandleCount<span style="mso-spacerun: yes">      </span>: 18</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x004
+NextToFree<span style="mso-spacerun: yes">  </span><span style="mso-spacerun:
+yes">     </span>: 0x00000012 </p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x008 Type<span
+style="mso-spacerun: yes">             </span>: 0x00000201 _OBJECT_TYPE</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x00c
+NameInfoOffset<span style="mso-spacerun: yes">   </span>: 0 ''</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x00d
+HandleInfoOffset : 0 ''</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x00e
+QuotaInfoOffset<span style="mso-spacerun: yes">  </span>: 0 ''</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x00f Flags<span
+style="mso-spacerun: yes">            </span>: 0x5 ''</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x010
+ObjectCreateInfo : 0x00000020 _OBJECT_CREATE_INFORMATION</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x010
+QuotaBlockCharged : 0x00000020 </p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x014
+SecurityDescriptor : 0xe100b440 </p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x018 Body<span
+style="mso-spacerun: yes">             </span>: _QUAD</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The !object extension displays stuff about any system object
+like /device/physicalmemory.<span style="mso-spacerun: yes">  </span>The value
+e1001958 tells us the address of the object.<span style="mso-spacerun: yes"> 
+</span>The dt command displays the object header for the object starting at
+e10001958.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We ran the !handle extension which gave us a list of handles
+like</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !handle</p>
+
+<p class=MsoNormal>processor number 0, process 852ddb80</p>
+
+<p class=MsoNormal>PROCESS 852ddb80<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 048c<span
+style="mso-spacerun: yes">    </span>Peb: 7ffd8000<span style="mso-spacerun:
+yes">  </span>ParentCid: 0a74</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+37ecc000<span style="mso-spacerun: yes">  </span>ObjectTable: e132a438<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">  </span>46.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: windbg.exe</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>New version of handle table at e13aa000 with 46 Entries in
+use</p>
+
+<p class=MsoNormal>0004: Object: e100b7e0<span style="mso-spacerun: yes"> 
+</span>GrantedAccess: 000f0003</p>
+
+<p class=MsoNormal>Object: e100b7e0<span style="mso-spacerun: yes"> 
+</span>Type: (867c0ad0) KeyedEvent</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ObjectHeader:
+e100b7c8</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>HandleCount:
+45<span style="mso-spacerun: yes">  </span>PointerCount: 46</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>Directory
+Object: e1005ab8<span style="mso-spacerun: yes">  </span>Name:
+CritSecOutOfMemoryEvent</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>0008: Object: e1a8f7b8<span style="mso-spacerun: yes"> 
+</span>GrantedAccess: 00000003</p>
+
+<p class=MsoNormal>Object: e1a8f7b8<span style="mso-spacerun: yes"> 
+</span>Type: (867c6040) Directory</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ObjectHeader:
+e1a8f7a0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>HandleCount:
+45<span style="mso-spacerun: yes">  </span>PointerCount: 80</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>Directory
+Object: e1001230<span style="mso-spacerun: yes">  </span>Name: KnownDlls</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then ran the object extension on some of the objects
+starting address to get the following listing</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !object 853c2978</p>
+
+<p class=MsoNormal>Object: 853c2978<span style="mso-spacerun: yes"> 
+</span>Type: (867e9040) File</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ObjectHeader:
+853c2960</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>HandleCount:
+1<span style="mso-spacerun: yes">  </span>PointerCount: 1</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Directory Object:
+00000000<span style="mso-spacerun: yes">  </span>Name:
+\WINDOWS\Symbols\ntoskrnl.pdb\32962337F0F646388B39535CD8DD70E82\ntoskrnl.pdb
+{HarddiskVolume1}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !peb</p>
+
+<p class=MsoNormal>PEB at 7ffdf000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The !peb extension gives us the peb or the process
+environment block. We can find the peb of any process using the command</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!peb
+7ffdf000<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>g.c<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>main()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>fopen(&quot;a.c&quot;,&quot;w&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>getch();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!handle
+0 F 85f2a020<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>where
+85f2a020 is the EPROCESS structure address of g.exe<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>07e8: Object: 852bdf90<span style="mso-spacerun: yes"> 
+</span>GrantedAccess: 00120196 (Inherit)</p>
+
+<p class=MsoNormal>Object: 852bdf90<span style="mso-spacerun: yes"> 
+</span>Type: (867e9040) File</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>ObjectHeader:
+852bdf78</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>HandleCount:
+1<span style="mso-spacerun: yes">  </span>PointerCount: 1</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">        </span>Directory
+Object: 00000000<span style="mso-spacerun: yes">  </span>Name: \vm\a.c
+{HarddiskVolume1}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The handle extension allows us to see all the handles that a
+process has opened.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>New Stuff</p>
+
+<p class=MsoNormal>To set windbg working click on menu File, Symbol File Path
+and in the multi line text box write the following
+SRV*c:\windows\symbols*http://msdl.microsoft.com/download/symbols which will
+cache all the symbols in windows/symbols. </p>
+
+<p class=MsoNormal>Also set the environment variable _NT_SYMBOL_PATH to
+c:\windows\symbols</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Converting a virtual address to a physical address.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first write a program d.c in c:\vm as follows.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>d.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>void *p;</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>p = VirtualAlloc(0,24,MEM_COMMIT,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>strcpy(p,&quot;Vijay Mukhi&quot;);</p>
+
+<p class=MsoNormal>printf(&quot;%08x %s\n&quot;,p,p);</p>
+
+<p class=MsoNormal>getch();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>00340000 Vijay Mukhi</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We use method VirtualAlloc to allocate 24 virtual committed
+memory locations that we can read and write. The value of p returned is<span
+style="mso-spacerun: yes">  </span>00340000. We copy my name over the freshly
+allocated memory locations. The byte index of the virtual memory is the lower
+12 bits which is 000. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In kd we use the !process extension to give us the directory
+base.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>PROCESS 852ac020<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0b68<span
+style="mso-spacerun: yes">    </span>Peb: 7ffde000<span style="mso-spacerun:
+yes">  </span>ParentCid: 01b8<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'><span style="mso-spacerun: yes">    </span>DirBase:
+010bb000<span style="mso-spacerun: yes">  </span>ObjectTable: e15cfa38<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">   </span>7.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'><span style="mso-spacerun: yes">    </span>Image: d.exe<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The Dir Base of image d.exe is 010bb000 and the page frame
+number is by righting the above bits by 12 which gives us 010bb. We use the
+!vtop extension which requires two parameters the page frame number 010bb and
+the virtual address 00340000.<span style="mso-spacerun: yes">  </span>The
+DirBase is the physical address of the processes page directory. Normally as
+the last 10 bits are always 0 the DirBase gives us the physical address of the
+page directory table.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !vtop 010bb 340000</p>
+
+<p class=MsoNormal>Pdi 0 Pti 340</p>
+
+<p class=MsoNormal>00340000 Transition 0a94b000 (0a94b)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The number 0a94b000 is the physical address as the first 12
+bits of the virtual; address is 0. If not zero add to the physical address
+which is at the start of the page to get the real address. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>lkd&gt; !dc 0a94b000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'># a94b000 616a6956 754d2079 0069686b 00000000 Vijay
+Mukhi.....<o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The extension !dc displays the bytes at the physical memory.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>e.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>void *p,*q;</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>p = VirtualAlloc(0,24,MEM_COMMIT,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>strcpy(p,&quot;Vijay Mukhi&quot;);</p>
+
+<p class=MsoNormal>printf(&quot;%08x %s\n&quot;,p,p);</p>
+
+<p class=MsoNormal>q = VirtualAlloc(0,24,MEM_COMMIT,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>strcpy(q,&quot;sonal Mukhi&quot;);</p>
+
+<p class=MsoNormal>printf(&quot;%08x %s\n&quot;,q,q);</p>
+
+<p class=MsoNormal>getch();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>00340000 Vijay Mukhi</p>
+
+<p class=MsoNormal>00350000 sonal Mukhi</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>PROCESS 852ac020<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0d04<span
+style="mso-spacerun: yes">    </span>Peb: 7ffd4000<span style="mso-spacerun:
+yes">  </span>ParentCid: 01b8</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+3ba0e000<span style="mso-spacerun: yes">  </span>ObjectTable: e2ae52d8<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">   </span>7.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: e.exe</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>lkd&gt; !vtop 3ba0e 350000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>Pdi 0 Pti 350<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>00350000 3a7cd000 pfn(3a7cd)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>lkd&gt; !dc 3a7cd000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:9.0pt;font-family:Courier;color:black;background:white;
+mso-highlight:white'>#3a7cd000 616e6f73 754d206c 0069686b 00000000 sonal
+Mukhi.....<o:p></o:p></span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We once again run the program d.exe and then the command </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This gives us a list of all processes running and our
+program d.exe<span style="mso-spacerun: yes">  </span>has a dir base of <span
+style='font-size:9.0pt;font-family:Courier;color:black'>0026a000. We then find
+extract the pfn which is 0026a. We run the command<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!ptov
+0026a<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>this
+gives us a list of two columns where the first is the physical address of the
+memory and the second is the virtual address of all memory allocated. The
+display is too large and hence we click on Edit, Open/Close log file to open
+log file after specifying the name in our case C:\a.txt. We then run the above
+command and we see in a.txt that virtual address 950000 has a physical address
+of 7aa9000 which we display using the command<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>!dc
+7aa9000<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>It
+is also a good idea to choose menu View Verbose output. Pressing Ctrl-Break
+will stop the listing but we were not fast enough.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='color:black'>lkd&gt; !pte 00340000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='color:black'><span style="mso-spacerun: yes">               </span>VA
+00340000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='color:black'>PDE at<span style="mso-spacerun: yes">  
+</span>C0300000<span style="mso-spacerun: yes">        </span>PTE at C0000D00<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='color:black'>contains 32512067<span style="mso-spacerun: yes">     
+</span>contains 00000000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='color:black'>pfn 32512 ---DA--UWEV<span style="mso-spacerun: yes"> 
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'>The
+!pte command gives us the PDE and PTE of any virtual address. </span>The
+virtual address for the page directory entry will always start at <span
+style='color:black'>0xC0300000. In our case our PDE index is 0.<span
+style="mso-spacerun: yes">  </span>In the flags D stands for Dirty, U for user
+mode, V for a valid page and W for writable. </span></p>
+
+<p class=MsoNormal><span style='font-size:9.0pt;font-family:Courier;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>lkd&gt; !process 0af4 1</p>
+
+<p class=MsoNormal>Searching for Process with Cid == af4</p>
+
+<p class=MsoNormal>PROCESS 85f9e270<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0af4<span
+style="mso-spacerun: yes">    </span>Peb: 7ffdf000<span style="mso-spacerun:
+yes">  </span>ParentCid: 0160</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+31918000<span style="mso-spacerun: yes">  </span>ObjectTable: e2368658<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">   </span>7.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: d.exe</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>VadRoot 8534b770
+Vads 22 Clone 0 Private 44. Modified 0. Locked 0.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !vad 8534b770</p>
+
+<p class=MsoNormal>VAD<span style="mso-spacerun: yes">     </span>level<span
+style="mso-spacerun: yes">      </span>start<span style="mso-spacerun:
+yes">      </span>end<span style="mso-spacerun: yes">    </span>commit</p>
+
+<p class=MsoNormal>85f42168 ( 1)<span style="mso-spacerun: yes">        
+</span>10<span style="mso-spacerun: yes">       </span>11<span
+style="mso-spacerun: yes">         </span>2 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>86433920 ( 2)<span style="mso-spacerun: yes">        </span><span
+style="mso-spacerun: yes"> </span>20<span style="mso-spacerun: yes">      
+</span>20<span style="mso-spacerun: yes">         </span>1 Private<span
+style="mso-spacerun: yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>8532c6c0 ( 3)<span style="mso-spacerun: yes">        
+</span>30<span style="mso-spacerun: yes">      </span>12f<span
+style="mso-spacerun: yes">         </span>3 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>85f4f4f0 ( 4)<span style="mso-spacerun: yes">       
+</span>130<span style="mso-spacerun: yes">      </span>132<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>86073220 ( 5)<span style="mso-spacerun: yes">       
+</span>140<span style="mso-spacerun: yes">      </span>23f<span
+style="mso-spacerun: yes">         </span>3 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>8604c3f8 ( 6)<span style="mso-spacerun: yes">       
+</span>240<span style="mso-spacerun: yes">      </span>24f<span
+style="mso-spacerun: yes">         </span>6 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>85165598 ( 7)<span style="mso-spacerun: yes">       
+</span>250<span style="mso-spacerun: yes">      </span>25f<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READWRITE </p>
+
+<p class=MsoNormal>852fb890 ( 8)<span style="mso-spacerun: yes">       
+</span>260<span style="mso-spacerun: yes">      </span>275<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>8510acc8 ( 9)<span style="mso-spacerun: yes">       
+</span>280<span style="mso-spacerun: yes">      </span>2bc<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>851476e8 (10)<span style="mso-spacerun: yes">       
+</span>2c0<span style="mso-spacerun: yes">      </span>300<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>852dcbc8 (11)<span style="mso-spacerun: yes">       
+</span>310<span style="mso-spacerun: yes">      </span>315<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>858b1660 (12)<span style="mso-spacerun: yes">       
+</span>320<span style="mso-spacerun: yes">      </span>32f<span
+style="mso-spacerun: yes">         </span>8 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>8666f758 (13)<span style="mso-spacerun: yes">       
+</span>330<span style="mso-spacerun: yes">      </span>332<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>READONLY </p>
+
+<p class=MsoNormal>86485848 (14)<span style="mso-spacerun: yes">       
+</span>340<span style="mso-spacerun: yes">      </span>340<span
+style="mso-spacerun: yes">         </span>1 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>8534b770 ( 0)<span style="mso-spacerun: yes">       
+</span>400<span style="mso-spacerun: yes">      </span>408<span
+style="mso-spacerun: yes">         </span>4 Mapped<span style="mso-spacerun:
+yes">  </span>Exe<span style="mso-spacerun: yes">  </span>EXECUTE_WRITECOPY </p>
+
+<p class=MsoNormal>86529e38 ( 3)<span style="mso-spacerun: yes">       
+</span>410<span style="mso-spacerun: yes">      </span>50f<span
+style="mso-spacerun: yes">         </span>8 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>8605eb28 ( 2)<span style="mso-spacerun: yes">     
+</span>7c800<span style="mso-spacerun: yes">    </span>7c8f3<span
+style="mso-spacerun: yes">         </span>5 Mapped<span style="mso-spacerun:
+yes">  </span>Exe<span style="mso-spacerun: yes">  </span>EXECUTE_WRITECOPY </p>
+
+<p class=MsoNormal>85142368 ( 1)<span style="mso-spacerun: yes">     
+</span>7c900<span style="mso-spacerun: yes">    </span>7c9af<span
+style="mso-spacerun: yes">         </span>5 Mapped<span style="mso-spacerun:
+yes">  </span>Exe<span style="mso-spacerun: yes">  </span>EXECUTE_WRITECOPY </p>
+
+<p class=MsoNormal>852cc9d0 ( 3)<span style="mso-spacerun: yes">     
+</span>7f6f0<span style="mso-spacerun: yes">    </span>7f7ef<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">       </span>EXECUTE_READ </p>
+
+<p class=MsoNormal>85180420 ( 2)<span style="mso-spacerun: yes">     
+</span>7ffb0<span style="mso-spacerun: yes">    </span>7ffd3<span
+style="mso-spacerun: yes">         </span>0 Mapped<span style="mso-spacerun:
+yes">      </span><span style="mso-spacerun: yes"> </span>READONLY </p>
+
+<p class=MsoNormal>8630e520 ( 4)<span style="mso-spacerun: yes">     
+</span>7ffde<span style="mso-spacerun: yes">    </span>7ffde<span
+style="mso-spacerun: yes">         </span>1 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal>85290618 ( 3)<span style="mso-spacerun: yes">     
+</span>7ffdf<span style="mso-spacerun: yes">    </span>7ffdf<span
+style="mso-spacerun: yes">         </span>1 Private<span style="mso-spacerun:
+yes">      </span>READWRITE </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Total VADs:<span style="mso-spacerun: yes">   
+</span>22<span style="mso-spacerun: yes">  </span>average level:<span
+style="mso-spacerun: yes">    </span>6<span style="mso-spacerun: yes"> 
+</span>maximum depth: 14</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The VAD extension gives us the vad map if we pass it the
+root of the vad that we get from the process command. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !pte 340000</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">               </span>VA
+00340000</p>
+
+<p class=MsoNormal>PDE at<span style="mso-spacerun: yes">  
+</span>C0300000<span style="mso-spacerun: yes">        </span>PTE at C0000D00</p>
+
+<p class=MsoNormal>contains 32512067<span style="mso-spacerun: yes">     
+</span>contains 00000000</p>
+
+<p class=MsoNormal>pfn 32512 ---DA--UWEV<span style="mso-spacerun: yes">   
+</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !pfn 32512</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>PFN 00032512 at
+address 81F4A9B0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>flink<span
+style="mso-spacerun: yes">       </span>0000000C<span style="mso-spacerun:
+yes">  </span>blink / share count 0000008D<span style="mso-spacerun: yes"> 
+</span>pteaddress C0300000</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>reference count
+0001<span style="mso-spacerun: yes">   </span>Cached<span style="mso-spacerun:
+yes">     </span>color 0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>restore pte
+00000080<span style="mso-spacerun: yes">  </span>containing page<span
+style="mso-spacerun: yes">        </span>039A7C<span style="mso-spacerun:
+yes">  </span>Active<span style="mso-spacerun: yes">     </span>M<span
+style="mso-spacerun: yes">       </span></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Modified<span
+style="mso-spacerun: yes">   </span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>D2.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>void *p;</p>
+
+<p class=MsoNormal>void abc(int i)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>int x , y , z;</p>
+
+<p class=MsoNormal>x = i &amp; 0x00000fff;</p>
+
+<p class=MsoNormal>y = i &amp; 0x003ff000;</p>
+
+<p class=MsoNormal>y = y &gt;&gt; 12;</p>
+
+<p class=MsoNormal>z = i &amp; 0xffC00000;</p>
+
+<p class=MsoNormal>z = z &gt;&gt; 22;</p>
+
+<p class=MsoNormal>printf(&quot;high 10 bits=%d:0x%x Middle 10 bits=%d:0x%x
+first 12 bits=%d:0x%x %08x\n&quot;,z,z,y,y,x,x,i);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>p = VirtualAlloc(0,24,MEM_COMMIT,PAGE_READWRITE);</p>
+
+<p class=MsoNormal>strcpy(p,&quot;Vijay Mukhi&quot;);</p>
+
+<p class=MsoNormal>printf(&quot;%08x %s\n&quot;,p,p);</p>
+
+<p class=MsoNormal>abc((unsigned int)p);</p>
+
+<p class=MsoNormal>getch();</p>
+
+<p class=MsoNormal>printf(&quot;%08x %s\n&quot;,p,p);</p>
+
+<p class=MsoNormal>getch();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>00340000 Vijay Mukhi</p>
+
+<p class=MsoNormal>high 10 bits=0:0x0 Middle 10 bits=832:0x340 first 12
+bits=0:0x0 00340000</p>
+
+<p class=MsoNormal>00340000 AAAay Mukhi</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We ran the above program and waited on the first getch
+method. Our<span style="mso-spacerun: yes">  </span>PTE is always 0x340. We
+then ran the command</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>PROCESS 850fc6d8<span style="mso-spacerun: yes"> 
+</span>SessionId: 0<span style="mso-spacerun: yes">  </span>Cid: 0a60<span
+style="mso-spacerun: yes">    </span>Peb: 7ffdf000<span style="mso-spacerun:
+yes">  </span>ParentCid: 0bb0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>DirBase:
+1f151000<span style="mso-spacerun: yes">  </span>ObjectTable: e108b6a0<span
+style="mso-spacerun: yes">  </span>HandleCount:<span style="mso-spacerun:
+yes">   </span>7.</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">    </span>Image: d2.exe</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The physical address of the DirBase or Page Directory Table
+is 1f151000. All page table addresses would start with 000 as they represent a
+page of memory which is 4096 bytes large. We use the vtop command as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !vtop 1f151 340000</p>
+
+<p class=MsoNormal>Pdi 0 Pti 340</p>
+
+<p class=MsoNormal>00340000 34c1a000 pfn(34c1a)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Whether we specify the full 20 bit or 32 address of the PDE
+does not matter.<span style="mso-spacerun: yes">  </span>The Page Directory
+entry is 0 and the page table entry is 0x340 and the page frame number is
+34c1a. As our byte offset or the first 12 bits of the virtual address are zero
+the physical address is 34c1a000. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !dc 34c1a000</p>
+
+<p class=MsoNormal>#34c1a000 616a6956 754d2079 0069686b 00000000 Vijay
+Mukhi....</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The dc extension that displays physical addresses simply
+confirms this.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !eb 34c1a000 41 41 41</p>
+
+<p class=MsoNormal>lkd&gt; !dc 34c1a000</p>
+
+<p class=MsoNormal>#34c1a000 61414141 754d2079 0069686b 00000000 AAAay
+Mukhi.....</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The eb extension lets us write to physical memory as bytes.
+We specify a series of bytes in hex separated by spaces or commas. The dc
+extension confirms this and then when we move out of the getch, we see that the
+bytes have actually changed.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We once again d.exe or d2.exe and get the same answer Page
+Directory Entry is 0 and Page Table Entry is 832 or 0x340. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>00340000 Vijay Mukhi</p>
+
+<p class=MsoNormal>high 10 bits=0:0x0 Middle 10 bits=832:0x340 first 12
+bits=0:0x0 00340000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then run the command</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>!process 0 0 </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>this gives us a dirbase of 099ba000. This is the physical
+address of where the PDE begins. There is only one PDE per process and this
+value is stored in the CR3<span style="mso-spacerun: yes">  </span>register. As
+this is the physical address lets see<span style="mso-spacerun: yes"> 
+</span>what the contents are.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !dd 099ba000</p>
+
+<p class=MsoNormal># 99ba000 1b645067 1fc44067 00000000 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The dd extension unlike dc which displays bytes displays
+dwords instead. We see that we have two PTE enteries one for user space and the
+other one for kernel space. The value 1b645067 is actually 1b645 as the 20 bit
+page table address and 067 as the flags or permissions bits. Remember a page
+begins at a boundary of 4k and the first 12 bits are always zero.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lets see what begins at this address. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !dd 1b645000</p>
+
+<p class=MsoNormal>#1b645000 00000000 00000000 00000000 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>What we see are the 1024 DWORDS of the PTE, what we need to
+see is the entry at 832 or 0x340. We multiply this by 4 as each DWORD is 4
+which gives us d00 and add it to the value 1b645000.<span style="mso-spacerun:
+yes">  </span>This gives us a value of 1b645d00. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !dd 1b645d00</p>
+
+<p class=MsoNormal>#1b645d00 1edb2886 00000000 00000000 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This shows us that the pfn or page frame number is 1edb2 and
+the flags are 886. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !dc 1edb2000</p>
+
+<p class=MsoNormal>#1edb2000 616a6956 754d2079 0069686b 00000000 Vijay
+Mukhi.....</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A dc on address 1edb2000 shows us vijay mukhi.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; !vtop 099ba 340000</p>
+
+<p class=MsoNormal>Pdi 0 Pti 340</p>
+
+<p class=MsoNormal>00340000 Transition 1edb2000 (1edb2)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The vtop does what we did. It first extracts the offsets of
+the pdi and pti and then reads the pdi and pte to get at the physical address
+which it displays.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>If we want to know what the bytes are at a certain variable
+we use the db command as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; db PsLoadedModuleList</p>
+
+<p class=MsoNormal>8055a420<span style="mso-spacerun: yes">  </span>a8 03 c1 89
+d0 31 36 89-00 00 00 00 00 00 00 00</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above output confirms that the debugger understands the
+word PsLoadedModuleList and tells us that it starts at 8055a420. Our own code
+that reads the pcr conforms this. We can also see what the bytes present are.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/windbg.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:16 GMT -->
+</html>

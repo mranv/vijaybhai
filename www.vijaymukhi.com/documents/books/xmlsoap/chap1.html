@@ -1,0 +1,2302 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:23 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap1_files/filelist.html">
+<link rel=Edit-Time-Data href="chap1_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>20</o:Revision>
+  <o:TotalTime>78</o:TotalTime>
+  <o:Created>2002-01-27T18:44:00Z</o:Created>
+  <o:LastSaved>2002-01-27T21:46:00Z</o:LastSaved>
+  <o:Pages>20</o:Pages>
+  <o:Words>6878</o:Words>
+  <o:Characters>39206</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>326</o:Lines>
+  <o:Paragraphs>78</o:Paragraphs>
+  <o:CharactersWithSpaces>48147</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>1</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Introduction to Web Services</span></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We embark upon our subject of Web Services with the primary assumption
+that you have read either our book on ASP.NET, or any one of the innumerable
+others, strewn all over the market. So, we will not submerge ourselves into
+every microscopic detail about either the C# programming language or ASP.NET.
+This book is fully dedicated to the understanding and building of Web Services,
+since Microsoft has precluded all the other options for building commercial
+applications for the Net. A Web Service is a piece of program code placed on
+the Server, such that it can thereon be accessed or executed by the entire
+world.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Create a file named a.asmx in the folder c:\inetpub\wwwroot,
+with the contents laid down below. IIS, the web server on our machine, makes
+this directory the root or home directory. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public string abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return &quot;vijay&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Enter the following URL in Internet Explorer: </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets>http://localhost/a.asmx</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>On doing so, an error will be displayed with the following
+message:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Parser Error Message: The page must have a &lt;%@ webservice
+class=&quot;MyNamespace.MyClass&quot; ... %&gt; directive.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Before we advance any further, a few fundamental concepts need
+to be addressed immediately. Even though the file has the extension of asmx, it
+has a striking resemblance to a C# program. The error is a fitting testimony to
+the fact that the IIS web server is capable of recognizing and handling files
+that have the asmx extension. Hence, it seeks out the WebService directive.
+This WebService directive provides information to the web server about the
+class that represents the functioning of a WebService. And, since every asmx
+file must commence with this directive, we incorporate this directive into the
+asmx file.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public string abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return &quot;vijay&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In C#, all the code is encompassed in classes. The class named
+zzz contains a function named abc, which returns a simple string of 'vijay'. On
+entering the URL of http://localhost/a.asmx in Internet Explorer, a page
+bursting with information gets displayed. However, there is no function by the
+name of abc for execution. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>IIS is cognizant of the fact that an asmx file encloses code
+that others may call remotely. Therefore, on stumbling upon a file with the
+extension of asmx, it displays the following large html page:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1038"
+  src="chap1/image1.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>For IIS, the asmx extension denotes Web Services. The language attribute
+has the value of C#. This indicates that the code is written using the C#
+programming language. The value of C# can be replaced with any other .NET
+compatible language. The Class attribute points to the class that contains the
+code, which is to be exposed to the world.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public string abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return &quot;vijay&quot;;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The sole process of converting a normal function into a
+WebService is by augmenting it with the WebMethod attribute. On introducing
+this attribute, you will observe the browser screen change, as shown in Screen
+1.2. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1027"
+  src="chap1/image2.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1046"
+  src="chap1/image3.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.3</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Function abc is now a hyperlink. Clicking on it would lead to a
+display of another screen containing a button labeled as 'invoke'. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now, a click on this button will display the URL with the following
+address: http://localhost/a.asmx/abc?. It would also display the following XML
+file in the browser:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>&lt;string
+xmlns=&quot;http://tempuri.org/&quot;&gt;vijay&lt;/string&gt; </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>This file makes a debut with the xml directive, followed by the
+encoding used. The utf-8 encoding can be regarded as a technical term
+representing English-like statements. The succeeding line embodies the return
+value of 'vijay' in a string tag. The namespace for the string tag is specified
+by employing the xmlns attribute, with the value of tempuri.org. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The above program named a.asmx would be considered to be
+ineffective, if it was capable of being invoked only from the browser. This is
+due to the reason that, not everyone would desire to access a WebService from a
+browser. Furthermore, on certain occasions, the user may not be comfortable,
+using the user interface either. To surmount these limitations, a program
+written in the C# programming language has been provided, whose sole mission is
+to call the Web Service abc, of the server. Create a subdirectory named www on
+C drive and enter the following program in a file named zzz.cs:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>string b; </p>
+
+<p class=ILprg>b = a.abc();</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public string abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost/a.asmx&quot;;</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, new object[0]);</p>
+
+<p class=ILprg>return (string)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc zzz.cs</p>
+
+<p class=ILoutput>&gt;zzz</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>vijay</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Compile the program, using the compiler command csc. This
+command creates an executable file, which can be executed to view the output of
+the program. On doing so, the return value of the function i.e. 'vijay', gets
+displayed on our console. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In file zzz.cs, class zzz derives from class
+SoapHttpClientProtocol, which in turn, has been derived from the following
+classes:</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>HttpWebClientProtocol</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>WebClientProtocol</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Component</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>MarshalByRefObject</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The class SoapHttpClientProtocol has the essential
+infrastructure to call a Web Service from the server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>To begin with, we create an instance 'a' of class zzz in the
+Main function. Then, we call function abc from it. This function is defined in
+the same class, but with an attribute called SoapDocumentMethodAttribute. The
+attribute is not passed any parameters. However, this attribute influences the
+mode of communication that is employed between the Client and Server.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In abc, the value of the Url property is assigned the name of
+the server, which contains the remoted code. Since the programs are being run
+on our local machine, the url is specified with 'localhost'. The file
+containing the web service code is named a.asmx. The Url property is not
+defined in the program, since it originates from the WebClientProtocol class.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>After defining the Url property, a function named 'Invoke' is
+called with two parameters. The remote function is specified as the first
+parameter. An array of objects containing the parameters to the remoted
+function, is furnished as the second parameter. Since abc does not take any
+parameters, an array of objects of size zero, is supplied as the second
+argument. Inexplicably, the Invoke function executes the abc function, which
+dwells in class zzz within the a.asmx file on the server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Although in our case, the client and server are located on the
+same machine, in real life, they could be poles apart in terms of their
+geographical locations. On completing the execution of its code, this function
+returns the string 'vijay' to the client. The return value is stored in an
+array called 'results', having a datatype of 'objects'. Since 'vijay' is the
+only value returned, it gets copied into the first member of the array. The
+value is type cast to a string, and thereafter, duly returned while quitting
+the function. This value is stored in the string variable b, and then,
+displayed to the user.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>All the activities that have been accomplished so far, are
+ensconced in the realm of sheer magic. This is by the reason of the mystery
+that shrouds the mechanism of communication between the client and the server.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>One of the acronyms that you are sure to encounter very often
+in this book is SOAP, which stands for the Simple Object Access Protocol. The
+client and the server talk to each other by employing SOAP. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>So, lets understand what SOAP is all about. We work under the
+assumption that you have downloaded and installed the SOAP toolkit that is
+available on the Microsoft site. This toolkit contains a Trace program, whose
+singular task is to display the data sent by the Client to the Server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now, run the Trace Utility. Its output is shown in Screen 1.5. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=360 id="_x0000_i1039"
+  src="chap1/image4.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.4</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=329 id="_x0000_i1040"
+  src="chap1/image5.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.5</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=330 id="_x0000_i1041"
+  src="chap1/image6.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.6</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Click on the File-New-Formatted Trace menu option, as shown in
+Screen 1.6. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=330 id="_x0000_i1042"
+  src="chap1/image7.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.7</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>On doing so, a dialog box appears, containing the number 8080,
+as shown in Screen 1.7. Since the given value seems acceptable, click on OK.
+The Screen 1.8 displays the new window.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=328 id="_x0000_i1043"
+  src="chap1/image8.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.8</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now, let us carry out slight modifications in the program, in
+order to include the following code:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>string b; </p>
+
+<p class=ILprg>b = a.abc();</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public string abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, new object[0]);</p>
+
+<p class=ILprg>return (string)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Only one minor modification has been effected to the zzz
+program. The number 8080 has been assigned after a colon, with the machine
+name, while assigning a value to the Url property. On recompiling and executing
+the program, the output that is displayed, is the same as was seen earlier. But
+now, we also see a + sign in the first window of the trace program, as depicted
+in Screen 1.9.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=329 id="_x0000_i1044"
+  src="chap1/image9.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 1.9</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Clicking on the + sign displays Message 1. If you click on this
+node, the output in the two panes undergoes transformation. This is reflected
+below. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Client: SOAP Request</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>&lt;soap:Envelope xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Server: SOAP Response</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;vijay&lt;/abcResult&gt; </p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In the networking world, every packet that flows to and fro,
+passes through a number of layers. The first layer is the Internet Protocol
+(IP). It is first followed by the TCP or Transmission Control Protocol, and
+finally, by the Application Layer. The Application Layer may contain any of the
+following protocols:</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>HTTP for the World Wide Web</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>SMTP and POP3 for the E-Mail
+protocols</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>FTP for File Transmission, and so
+on.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The higher-level protocols could be any one of the vast array
+of protocols. Hence, there is an inevitable requirement for a mechanism for
+identifying the protocol. This is achieved as follows: When two computers talk
+to each other, the packets that are created, are stamped with a number. In the
+TCP/IP world, this number is given the nomenclature of 'port number'. Different
+protocols use distinctive port numbers as given below:</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>HTTP protocol uses a port number 80.
+So, every packet on WWW that follows the HTTP protocol, is stamped with this
+number. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Email packets that are sent, have
+the port number of 25.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Email packets that are received,
+have a port number of 110. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>FTP packets have the port number of
+21 marked on them. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>As a consequence, a singular machine is capable of handling
+multiple applications, since they run on different protocols. The first 1024
+protocols are reserved by the Internet Standards Body called - the Internet
+Assigned Numbers Authority (IANA).</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>By default, every web server listens on port 80, which is
+indicative of the fact that, it accepts packets that have the number 80
+imprinted on them. There is no need to cite the port number exclusively, since
+the default values are taken into consideration. Alternatively, even if the url
+had been stipulated as http://localhost:80/a.asmx, events would have occurred
+in the same manner. The http protocol imprints the port number of 80 on every
+packet that it sends across. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>After having altered the port number to 8080, the client
+packets shall now connect to port 8080, rather than to port 80.<span
+style="mso-spacerun: yes">  </span>At this port number, there is a Trace
+program from Microsoft that waits to receive packets, instead of a Web server.
+The trace program ferrets out whatever information is of any significance to it,
+and thereafter, it acts as a client, in that, it sends the packet to the http
+or web server that is listening on port 80. The return packet arrives back at
+the trace program. This is because, as far as the server is concerned, the
+trace program is a client. The invoke function is the one that generates the
+request packet and makes some sense out of the response packet. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Before we proceed any further and delve upon what SOAP is all
+about, let us simulate the working of the Trace program, i.e. we need to write
+a program that would be similar in functionality to the Trace program and would
+also incorporate the workings of the Invoke function. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.Net.Sockets;</p>
+
+<p class=ILprg>using System.Text;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); </p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();</p>
+
+<p class=ILprg>byte [] b = new byte[1000];</p>
+
+<p class=ILprg>int h1 = s.Receive(b);</p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);</p>
+
+<p class=ILprg>System.Console.WriteLine(a);</p>
+
+<p class=ILprg>byte [] c = new byte[10000];</p>
+
+<p class=ILprg>int h2 = s.Receive(c);</p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);</p>
+
+<p class=ILprg>System.Console.WriteLine(a1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Write the program in a text file named a.cs, within the folder
+proxy3, and compile it using the command csc a.cs.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>At the outset, run the program executable a.exe, which is
+located in the proxy3 folder. Confirm that the trace program from the Soap
+Toolkit is turned off. Then, execute the zzz program. If the client throws an
+exception, it can be safely ignored for the moment. Our prime concern at the
+moment is the output in the proxy3 folder.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>POST /a.asmx HTTP/1.1</p>
+
+<p class=ILoutput>User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; MS Web
+Services Client Protocol 1.0.2914.16)</p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=utf-8</p>
+
+<p class=ILoutput>SOAPAction: &quot;http://tempuri.org/abc&quot;</p>
+
+<p class=ILoutput>Content-Length: 299</p>
+
+<p class=ILoutput>Expect: 100-continue</p>
+
+<p class=ILoutput>Connection: Keep-Alive</p>
+
+<p class=ILoutput>Host: localhost</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot; /&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If you have an eye for detail, you would probably have noticed
+that the second half of the output is identical to the output of the Trace
+program. Well begun is half done! We have successfully replicated partial
+functionality of the Trace program. The above output is the outcome of the
+Invoke function, which is achieved when packets are sent to the web server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Initially, let us comprehend the above program, which for
+varied reasons, can be called a Web Spy. A TcpListener object t is a class that
+encapsulates the tcp layer for a web server. The int parameter 8080 signifies
+the specific port number on which, the server shall keep a listening watch. The
+presence of this class makes writing of servers a breeze and a pleasure. This
+is for the reason that, had we used 80 in lieu of 8080, we would have witnessed
+the makings of a web server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The constructor merely stores this number for its internal
+reference. It is the Start function that actually kick-starts the server. The
+AcceptSocket function arrests the execution of the program while it awaits a
+connection. However, if no client connects to the server, the wait may turn out
+to be frustratingly indefinite. To substantiate our claim, you may place some
+WriteLine functions before and after the AcceptSocket function. The ones that
+you place after the AcceptSocket functions, shall not be displayed in the
+output. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The AcceptSocket function waits for a connection on port 8080.
+The zzz program that simulates the working of a client, calls the Invoke
+function, whose sole mission is to dispatch some bytes to the server. As it
+connects to the server on port 8080, the AcceptSocket function in the server
+moves out of its 'blocking' state, and returns an object of type Socket. A
+Socket represents the two endpoints of the connection. It is primarily employed
+to dispatch or receive data. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A byte data type represents an ASCII character or a number
+ranging between 0 and 255. The char data type is used only for UNICODE
+characters. A string is a separate data type altogether. An array of bytes b,
+which has a size of 1000, is created and used along with the Receive function,
+to pick up the data sent by the client to the server. This network programming
+is also called TCP/IP programming or Sockets programming. The Receive function,
+like the AcceptSocket function, is a blocking function. Thus, it should be
+employed only when you are completely convinced that there is some data waiting
+at the socket. The AcceptSocket function is the most vital function, since it
+provides a Socket object or a channel, by means of which, it facilitates
+communication between the server and the client. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In order to display the data that is sent by the Client, we use
+the WriteLine function. The data stored in array b is of type byte array, and
+not a String. Since the WriteLine function is not competent enough to display
+an array of bytes, the GetString function belonging to the Encoding class, is
+used. This function accepts an array of bytes and returns a string. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The client dispatches the data in two consecutive packets.
+Therefore, the Receive function is used twice. The function stores the data in
+two byte arrays named b and c. It also returns the number of bytes that it has
+placed in the array. The values stored in variables h1 and h2 can be printed,
+by bringing the WriteLine function into play. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us now come to terms with the bytes that are sent by a call
+to the Invoke function. This function is very significant, since commenting out
+this function will lead to nothing being displayed in the server dos box. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The RFC for the HTTP protocol runs into reams of paper.
+However, it states that the first set of words sent by the client to server,
+should contain either of the words, such as- GET, POST or HEAD. The words GET
+and POST are always accompanied by a filename. The difference in functionality
+between the two of them, is largely on account of the manner in which the
+parameters are transmitted. </p>
+
+<p class=ILbase>In a GET situation, the parameters are dispatched along with
+the command in a single packet. Moreover, they are legible and distinctly
+discernible. In the case of POST, the data gets sent across in a separate
+packet. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Since the method employed here is POST, two packets are sent to
+the server; one for the headers and the other for the data. The URI of /a.asmx
+follows the POST, as this is the file that was requested for, by the client. As
+the file extension is .asmx, it will be executed on the server, and thereafter,
+the output of the file shall be sent across to the client. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Close on the heels of the HTTP command, is the HTTP version
+number. The version of 1.1 is not very recent. Nonetheless, it is commonly used
+in an HTTP packet. Any word that ends with a colon, is termed as a header
+variable. This definition qualifies User-Agent to be a header variable. The
+value assigned to this variable is the word specified after the colon.
+User-Agent contains the name of the browser, i.e. Mozilla/4.0. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>It is with the means of this mechanism, that a web site
+identifies the browser that has been utilized to visit it. It could either be
+Netscape Navigator or Internet Explorer or a mobile phone browser, or any other
+browser for that matter. The developers of Netscape Navigator, the world's
+second browser, surely weren't deficient in humour department. This explains
+why they chose to call their browser Mozilla. Internet Explorer was quick to
+follow suit, and christened itself as Mozilla, but appended its own
+identification in brackets. The real name and the version number of IE are
+specified within the brackets. In our case, since we are working with a .NET
+product, this aspect is also given a mention. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>All SOAP packets have the header of Content-Type initialized to
+text/xml, which is indicative of the fact that the content is XML based.
+Content-Type is also known as the MIME type, since it describes the type of
+data or document that follows. A few examples of the MIME types are: </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>text/html represents an html file.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>text/plain represents a plain text
+file. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>img/jpg<span style="mso-spacerun:
+yes">  </span>represents a picture file, i.e. a jpg file.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>img/bmp represents a BMP file. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>charset represents the language used and utf-8 represents our
+good old English. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The value assigned to EXPECT, determines whether there is more
+data on the way or not. Since the value contains the word<span
+style="mso-spacerun: yes">  </span>'Continue', it implies that there is more
+data expected. The Content-Length header is the size of the data packet that
+follows the header packet. In our case, it is 299 bytes. This data packet is
+also termed as the SOAP payload. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In the normal course, once the data has been received, the HTTP
+protocol sends a 'close connection' packet, in order to close the connection.
+The Connection header is passed a value that asks the server to close its
+connection to the browser. Once this has been accomplished, and in the event of
+more interaction being required with the other side, the connection needs to be
+re-established all over again. This not only slows down the transfer, but also
+is a tedious and time-consuming process. Thus, to circumvent this protracted
+process, the client on many occasions, requests the server to keep the
+connection alive. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Host identifies the machine from where the file a.asmx has
+to be executed. Since the destination computer is the localhost, the value
+assigned to this variable is localhost. An extra blank line at the end, marks
+the termination of the header packet. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We have deliberately precluded one of the headers called SOAPAction,
+as it does not form a part of the HTTP specification. It has been explicitly
+added by the SOAP standard. The client launches this header, to convey the
+specification or objectives of the packet to the server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The value assigned to this header is a URI that identifies a
+resource on the Internet, and not a URL that points to a particular location.
+The SOAP standard demands the presence of this header in the packet, but it is
+more accommodating about the content or the value assigned to it. This implies
+that the URI that has been stipulated, may not be a resolvable one. Anyway,
+this is nobody's business. SOAP imposes absolutely no restrictions on the
+format of the URI. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A significant number of servers may not be able to appreciate
+this URI. Therefore, there is a possibility that the packet may be dropped, and
+may remain unaccounted for. Furthermore, depending upon the firewall installed,
+the packet may either be allowed to pass through, or it may be filtered out
+from the HTTP packets. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>This field may also be initialized to an empty string, which
+would indicate that no URI is to be specified. In our specific case, it has
+been assigned a reserved value of http://tempuri.org, followed by the name of
+the function that we require it to execute. Despite our not having mentioned
+'tempuri.org' explicitly anywhere in the file, it has got picked up by default.
+Note that it is the URI, and not the URL, which is of prime importance. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Next in line is the actual SOAP payload, which is sent across
+as an XML document. We shall not dwell on the in-depth account or explanation
+of what an XML document looks like, since there are plethora of books available
+on XML, which expound the same. One of the books that we are working on, have
+an indepth study on this topic. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Every XML document starts off with a root or a document tag. In
+the case of a SOAP document, this root tag is called the Envelope. If a tag is
+merely a tag, then a tag created by one, would eventually clash with the tag
+created by the other. Thus, there is a need to segregate tags created by
+different sources. This is achieved by placing them in different namespaces. A
+tag is specified in the format of a namespace prefix, followed by a colon and
+then, the actual name of the tag. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The tags seen in the output have a namespace prefix of 'soap'.
+Every namespace prefix is assigned the value of a URI. So, an attribute named
+soap is first created in the xmlns namespace, which in turn, represents a URI
+of http://schemas.xmlsoap.org/soap/envelope/. The reserved xmlns namespace is
+used exclusively for namespace prefixes.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The SOAP standard specifies the URI of
+http://schemas.xmlsoap.org/soap/envelope/, since there is no pressing need for
+it to incorporate anything. On specifying the above URL in the browser, an XML
+file, or to be more precise, an XML schema file gets displayed. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>An XML schema file represents a series of error checks that can
+be performed on an XML document. This is to ascertain whether the document
+follows certain rules. One of the rules that we have just touched upon is, the
+presence of the root or document tag as 'envelope'. Rules are always sited in
+an XML schema file. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The SQL language of the database world is now being replaced by
+XML. This is a pellucid indication of the predominance of XML in the software
+industry. The DTD's have already been converted to XML, thereby, simplifying
+the specification of a document structure. However, as was stated earlier, a
+URI is indicative only of a name, and anything else that may be mentioned, is a
+bonus. Thus, any system can use the above schema at the specified URL and
+verify if the SOAP document satisfies the rules of SOAP.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>URIs are also created for namespaces such as - xsi and xsd in
+the Schema world. Thus all in all, there are three namespace prefixes defined
+in the output. We could easily use any name other than the namespace prefix
+'soap', as long as it is set to the right value. There are no attributes
+mentioned in the file. In other words, a URI is like beauty, which lies solely
+in the eyes of the beholder. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Envelope tag is followed by a Body tag, which actually
+contains the SOAP message. The name of the function that is to be executed is
+'abc'. Therefore, there is a tag present with the same name. In order to thwart
+the possibility of name clashing, wherein someone somewhere else may also want
+to execute a function named abc, the namespace for the abc element is changed
+to tempuri.org, using the xmlns attribute. Thus, the abc tag now becomes 'sui
+generis', which is unique across the seven seas. The function accepts no
+parameters. So, the abc element has no content whatsoever. This completes the
+explanation of the SOAP payload, sent by the client to the server.</p>
+
+<p class=ILbase><span style='color:blue'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><span style='color:black'>a.cs</span></u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.Net.Sockets;</p>
+
+<p class=ILprg>using System.Text;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); </p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();</p>
+
+<p class=ILprg>byte [] b = new byte[1000];</p>
+
+<p class=ILprg>int h1 = s.Receive(b);</p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);</p>
+
+<p class=ILprg>System.Console.WriteLine(a);</p>
+
+<p class=ILprg>byte [] c = new byte[10000];</p>
+
+<p class=ILprg>int h2 = s.Receive(c);</p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);</p>
+
+<p class=ILprg>System.Console.WriteLine(a1);</p>
+
+<p class=ILprg>TcpClient t1 = new TcpClient();</p>
+
+<p class=ILprg>t1.Connect(&quot;127.0.0.1&quot;, 80);</p>
+
+<p class=ILprg>NetworkStream s1 = t1.GetStream();</p>
+
+<p class=ILprg>s1.Write(b,0,h1);</p>
+
+<p class=ILprg>s1.Write(c, 0,h2 );</p>
+
+<p class=ILprg>byte [] d = new byte[1000];</p>
+
+<p class=ILprg>int h3 =0;</p>
+
+<p class=ILprg>string a2 =&quot;&quot;;</p>
+
+<p class=ILprg>while (s1.DataAvailable)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>h3 = s1.Read(d,0,1000);</p>
+
+<p class=ILprg>a2 = a2+Encoding.ASCII.GetString(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>System.Console.WriteLine(a2);</p>
+
+<p class=ILprg>s.Send(d,h3,SocketFlags.None);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output of proxy</u></p>
+
+<p class=ILoutput>HTTP/1.1 100 Continue</p>
+
+<p class=ILoutput>Server: Microsoft-IIS/5.0</p>
+
+<p class=ILoutput>Date: Wed, 02 Jan 2002 01:40:59 GMT</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>HTTP/1.1 200 OK</p>
+
+<p class=ILoutput>Server: Microsoft-IIS/5.0</p>
+
+<p class=ILoutput>Date: Wed, 02 Jan 2002 01:40:59 GMT</p>
+
+<p class=ILoutput>Cache-Control: private, max-age=0</p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=utf-8</p>
+
+<p class=ILoutput>Content-Length: 361</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:xsi=</p>
+
+<p class=ILoutput>&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XM</p>
+
+<p class=ILoutput>LSchema&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;abcResponse
+xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">     
+</span>&lt;abcResult&gt;vijay&lt;/abcResult&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   
+</span>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>There are a few more lines displayed on the spy console. We
+have not redisplayed the data that was shown earlier, since we see no rationale
+behind reiterating issues time and again. The output shown here is the SOAP
+message that the server sends to the client. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Every HTTP request starts with the version number HTTP/1.1,
+followed by a number that ascertains whether the request was successfully met
+or not. For example, the number 200 OK signifies that the request terms have
+been met, whereas, the code of 404 stands for a 'file not found' on the server.
+These are pre-defined numbers stipulated in the HTTP protocol specification. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Following the error-code, a description of the error or the
+error message is specified without fail. Thereafter, the headers follow. The
+value assigned to Content-Type header as usually is the case, indicates the
+type of the data, i.e. SOAP message that follows. The server name, IIS in our
+case, is specified along with the Server header, and the Content-Length is
+assigned the length of the SOAP response packet. </p>
+
+<p class=ILbase>The SOAP payload starts with the Envelope root, together with
+all the namespace definitions. The Body tag following the Envelope tag has the
+Response of the abc function. Therefore, the tag is abcResponse, with the
+default namespace of tempuri.org. The return value can only be of the string
+type, since there is no concept of data types in XML. Here, we have a tag named
+abcResult, which contains the return value of 'vijay'. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>After having interpreted the process wherein values are
+returned, we shift the spotlight onto the spy program. We have added a
+considerable amount of code to the earlier program, because the spy now
+represents both, the server as well as the client. The server portion has two
+Receive functions, one each for the HTTP header and the SOAP payload. This data
+will now be dispatched to the actual server running on port 80. In a sense, the
+spy program conducts itself like a client communicating to a server on port 80.
+</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The trace program begins as a server listening on port 8080,
+and waits at the AcceptSocket function, since its sole responsibility is to
+await a connection. When the zzz program in the other dos box is executed, it
+connects to this server running on port 8080, thereby, releasing the
+AcceptSocket function from its 'wait' mode. Subsequently, the two byte arrays b
+and c would store the data received from the newly connected client, by calling
+the Receive function. After having restored the data sent by an actual client,
+the program now advances further to enact the role of a client, which connects
+to a real-life web server on port 80.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A TcpListener object is instantiated while writing a server,
+whereas, an object of class TcpClient is employed while writing a Client. The
+object in this program is called t1. The Connect function in the TcpClient
+object is invoked to connect to an actual web server running on port 80. This
+function accepts 2 parameters, viz. the IP address of the server and the port
+number that the server is listening on. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The GetStream function in the TcpClient object returns a
+NetworkStream object. This value is stored in s1. Now, the data collected from
+the original client, stored in the two byte-arrays of b and c, is written to
+the stream. This data is eventually dispatched to the server. Ultimately, the
+data received by the actual client is sent to the actual server. However, during
+this process, the trace program traps the bytes that flow to and fro.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The loop terminates only when there is no more data available
+from the server. The DataAvailable property returns 'true' when there is more
+data to be read from the stream object. Thereafter, with the help of the Read
+function off the stream, the data that has been received from the server, is
+read into a byte-array called d. This array is then sent to the client using
+the Send function. Remember that the socket variable s corresponds to the
+connection with the client, whereas, the socket connection s1 refers to the
+connection with the server.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Thus, to the remoting client, the spy program behaves akin to a
+server, while it acts like a client to the remoting server. This is the methodology
+that we have adopted to appreciate how SOAP operates, when the client and
+server communicate with each other in the world of remoting. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Net;</p>
+
+<p class=ILprg>using System.Net.Sockets;</p>
+
+<p class=ILprg>using System.Text;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>class zzz {</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>TcpClient t1 = new TcpClient();</p>
+
+<p class=ILprg>t1.Connect(&quot;127.0.0.1&quot;, 80);</p>
+
+<p class=ILprg>NetworkStream s1 = t1.GetStream();</p>
+
+<p class=ILprg>string s5;</p>
+
+<p class=ILprg>s5 = &quot;POST /a.asmx HTTP/1.1\nUser-Agent: Mozilla/4.0
+(compatible; MSIE 6.0; MS Web Services Client Protocol 1.0.2914.16)\nContent-Type:
+text/xml; charset=utf-8\nSOAPAction:
+\&quot;http://tempuri.org/abc\&quot;\nContent-Length: 286\nConnection:
+Keep-Alive\nHost: localhost\n\n&quot; ;</p>
+
+<p class=ILprg>Byte[] l1 = Encoding.ASCII.GetBytes(s5);</p>
+
+<p class=ILprg>s1.Write(l1, 0,l1.Length );</p>
+
+<p class=ILprg>string s6;</p>
+
+<p class=ILprg>s6 = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\n&lt;soap:Envelope
+xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;
+xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot;
+xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot;&gt;\n&lt;soap:Body&gt;\n&lt;abc
+xmlns=\&quot;http://tempuri.org/\&quot; /&gt;\n&lt;/soap:Body&gt;\n&lt;/soap:Envelope&gt;&quot;;</p>
+
+<p class=ILprg>Byte[] l2 = Encoding.ASCII.GetBytes(s6);</p>
+
+<p class=ILprg>s1.Write(l2, 0,l2.Length );</p>
+
+<p class=ILprg>Console.WriteLine(l2.Length);</p>
+
+<p class=ILprg>byte [] d = new byte[1000];</p>
+
+<p class=ILprg>String a2 = &quot;&quot;;</p>
+
+<p class=ILprg>while (s1.DataAvailable)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>s1.Read(d,0,1000);</p>
+
+<p class=ILprg>a2 = a2+Encoding.ASCII.GetString(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>System.Console.WriteLine(a2);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output of Spy</u></p>
+
+<p class=ILoutput>286</p>
+
+<p class=ILoutput>HTTP/1.1 100 Continue</p>
+
+<p class=ILoutput>Server: Microsoft-IIS/5.0</p>
+
+<p class=ILoutput>Date: Thu, 04 Oct 2001 08:25:37 GMT</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>HTTP/1.1 200 OK</p>
+
+<p class=ILoutput>Server: Microsoft-IIS/5.0</p>
+
+<p class=ILoutput>Date: Thu, 04 Oct 2001 08:25:37 GMT</p>
+
+<p class=ILoutput>Cache-Control: private, max-age=0</p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=utf-8</p>
+
+<p class=ILoutput>Content-Length: 361</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;
+encoding=&quot;utf-8&quot;?&gt;</p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;vijay&lt;/abcResult&gt;</p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase>This program is merely an icing on the cake. The output is akin
+to what a server sends in response to a SOAP message. It simulates the workings
+of the Invoke function, i.e. it invokes the abc function from the file a.asmx.
+The client program in zzz is not executed in the current program. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us anatomize the workings of the Invoke function. </p>
+
+<p class=ILbase>After having created a TcpClient object t1, a connection is
+established to a web server, i.e. IIS on localhost on port 80. The
+NetworkStream object s1 refers to a stream, by means of which, data will be
+sent to the server. Thereafter, the string s5 is initialized to a string value,
+similar to what the client, or to be more precise, the Invoke function sends to
+the server. In the program, we have initialized s5 to the output received from
+the earlier program. The Write function forwards this string to the server. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The next packet to be sent across is the SOAP payload. As
+before, we take the SOAP payload output from the previous program and
+initialize string s6 to it. This is then transported to the server. The
+Response packet from the server is then displayed on the screen. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Thus, the web server is kept completely in the dark about the
+identity of the sender of the packets. All that it knows is, that it has
+received a SOAP request, and that it must respond to it by sending a SOAP
+response. We have taken a decision against proceeding any further with the
+explanation of the spy program, because we are now reasonably at ease with its
+workings. So, start the trace program from Microsoft and try out the next
+program.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public long abc(int i, long j)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return i + j;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>long b; </p>
+
+<p class=ILprg>b = a.abc(10,21);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public long abc(int i, long j) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{i,j};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, c);</p>
+
+<p class=ILprg>return (long)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>31<u><o:p></o:p></u></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>SOAP Request</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;i&gt;10&lt;/i&gt; </p>
+
+<p class=ILoutput>&lt;j&gt;21&lt;/j&gt; </p>
+
+<p class=ILoutput>&lt;/abc&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>&lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>&lt;soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;31&lt;/abcResult&gt; </p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We have incorporated a few amendments in the asmx file. The
+function abc is still present in the file, but with two parameters passed to
+it, viz. an int i and a long j. A value is then returned back. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The program zzz.cs calls the abc function with two values of 10
+and 21. In the abc function, an array of objects named c is created, with a
+size of 2. We initialize the two members of this array to the values stored in
+the parameters i and j, respectively. The array is then passed to the Invoke
+function. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The SOAP request, unlike earlier, now has the 'abc' element
+with two children, i and j. The launch of these names is a consequence of the
+function being passed two parameters, i and j. Thus, the parameter names are
+considered important. The Attribute placed above the function is also largely
+responsible for it. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Had we changed the order of the initialization and placed the
+variable j before i, the content of the tags would also have changed to 21, 10,
+instead of 10, 21. Thus, the order of the listed parameters is determined by
+the sequence of the parameters in the function. The namespace that abc belongs
+to, always remains the same. The SOAP response also remains unchanged, since
+the result will always be 31, when the two parameters are summed up.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz : System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>int b; </p>
+
+<p class=ILprg>b = a.abc(10,21);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public int abc(int i1, int j1) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{j1,i1};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, c);</p>
+
+<p class=ILprg>return (int)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP request</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>- &lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>- &lt;soap:Body&gt;</p>
+
+<p class=ILoutput>- &lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;i1&gt;21&lt;/i1&gt; </p>
+
+<p class=ILoutput>&lt;j1&gt;10&lt;/j1&gt; </p>
+
+<p class=ILoutput>&lt;/abc&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP Response</u></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;
+?&gt; </p>
+
+<p class=ILoutput>- &lt;soap:Envelope
+xmlns:soap=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;</p>
+
+<p class=ILoutput>- &lt;soap:Body&gt;</p>
+
+<p class=ILoutput>- &lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;0&lt;/abcResult&gt; </p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Body&gt;</p>
+
+<p class=ILoutput>&lt;/soap:Envelope&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In this program, the datatype of 'long' is altered to
+'int'.<span style="mso-spacerun: yes">  </span>Notwithstanding this, there is
+no change in the SOAP output, since only the names of the parameters are sent
+across, and not their data types. The names have been changed to i1 and j1 in
+the function, thereby, resulting in the child elements of i1 and j1 in the SOAP
+payload. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A necessity for a separate function abc is thus justified, as
+the SOAP request picks up the names of the parameters from it. These names must
+match the names in the asmx file, or there could be trouble brewing soon! In
+this case, the asmx file expects the names to be i and j, whereas, we have
+specified them as i1 and j1. No error messages are displayed, but the resultant
+value of the response packet is zero. On realizing that i and j were not
+received, the asmx file assumes them to be zero. Thus, we need to be cautious
+while naming our variables.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public int abc(int i1, int j1)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return i1 - j1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>int b; </p>
+
+<p class=ILprg>b = a.abc(10,21);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public int abc(int j1, int i1) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{j1,i1};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, c);</p>
+
+<p class=ILprg>return (int)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}&nbsp;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>11</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP request</u></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;j1&gt;10&lt;/j1&gt; </p>
+
+<p class=ILoutput>&lt;i1&gt;21&lt;/i1&gt; </p>
+
+<p class=ILoutput>&lt;/abc&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP Response</u></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;11&lt;/abcResult&gt; </p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We have carried out a minor modification in the zzz.cs file.
+The first parameter is named j1, while the second parameter is named i1. Thus,
+the order in the SOAP request appears as j1 followed by i1. Further, the
+parameters passed remain as i1 and j1; and thus, the content remains unchanged,
+i.e. 10 and 21. Thus, we must be very judicious in our choice of mode that is
+employed to send data across. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The SOAP protocol does not perform any error checks. In the
+asmx file, the parameters are named as i1 and j1. Here, j1 is subtracted from
+i1, and the result of this subtraction is sent off as the return value. In this
+context, the sequence is of no significance. Even though the SOAP payload has
+the elements j1 and i1, their order is disregarded, and the names of the
+elements are given importance. Hence, i1 will be assigned the value of 21, and
+j1 will be assigned the value of 10. Thus, the return value will invariably be
+11. You would also have observed that we are only displaying the relevant
+portions that are basic and essential for our understanding of SOAP, and not of
+the entire SOAP packet. Most of the residual code remains unaltered. Hence, it
+has not been displayed.</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public int abc(int i1, int j1)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return i1 + j1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public int pqr(int i, int j)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return i + j;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>int b; </p>
+
+<p class=ILprg>b = a.abc(10,21);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>b = a.pqr(100,210);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public int abc(int i1, int j1) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{i1,j1};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, c);</p>
+
+<p class=ILprg>return (int)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public int pqr(int j, int i) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{i,j};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;pqr&quot;, c);</p>
+
+<p class=ILprg>return (int)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>31</p>
+
+<p class=ILoutput>310</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>1st Message</p>
+
+<p class=ILoutput><u>Request</u></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;i1&gt;10&lt;/i1&gt; </p>
+
+<p class=ILoutput>&lt;j1&gt;21&lt;/j1&gt; </p>
+
+<p class=ILoutput>&lt;/abc&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Response</u></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;31&lt;/abcResult&gt; </p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>2nd<span style="mso-spacerun: yes">  </span>Message</p>
+
+<p class=ILoutput><u>Request</u></p>
+
+<p class=ILoutput>&lt;pqr xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;j&gt;210&lt;/j&gt; </p>
+
+<p class=ILoutput>&lt;i&gt;100&lt;/i&gt; </p>
+
+<p class=ILoutput>&lt;/pqr&gt;</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Response</u></p>
+
+<p class=ILoutput>&lt;pqrResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;pqrResult&gt;310&lt;/pqrResult&gt; </p>
+
+<p class=ILoutput>&lt;/pqrResponse&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We have created another function named pqr in the asmx file,
+and assigned the WebMethod attribute to it. Furthermore, we have created the
+pqr function with the
+[System.Web.Services.Protocols.SoapDocumentMethodAttribute()] attribute in the
+zzz.cs file, and called it from the Main function, as was done in the case of
+'abc'. The trace program now displays two SOAP messages, one for abc and the
+other for pqr. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We were under the impression that the SOAP message would be
+bunched up, which however was not the case. Let us now change track slightly.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public int abc(int i1, int j1)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>return i1 + j1;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><!--[if supportFields]><span style='mso-bidi-font-size:12.0pt'><span
+style='mso-element:field-begin'></span>xe &quot;zzz.cs&quot;</span><![endif]--><!--[if supportFields]><span
+style='mso-bidi-font-size:12.0pt'><span style='mso-element:field-end'></span></span><![endif]--><!--[if supportFields]><span
+style='mso-bidi-font-size:12.0pt'><span style='mso-element:field-begin'></span>xe
+&quot;zzz.cs&quot;</span><![endif]--><!--[if supportFields]><span
+style='mso-bidi-font-size:12.0pt'><span style='mso-element:field-end'></span></span><![endif]--><!--[if supportFields]><span
+style='mso-bidi-font-size:12.0pt'><span style='mso-element:field-begin'></span>xe
+&quot;zzz.cs&quot;</span><![endif]--><!--[if supportFields]><span
+style='mso-bidi-font-size:12.0pt'><span style='mso-element:field-end'></span></span><![endif]--><u>zzz.cs</u></p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>int b; </p>
+
+<p class=ILprg>b = a.abc(10,21);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>yyy.cs</u></p>
+
+<p class=ILprg>public class yyy :
+System.Web.Services.Protocols.SoapHttpClientProtocol</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[System.Web.Services.Protocols.SoapDocumentMethodAttribute()]</p>
+
+<p class=ILprg>public int abc(int i1, int j1) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Url = &quot;http://localhost:8080/a.asmx&quot;;</p>
+
+<p class=ILprg>object [] c;</p>
+
+<p class=ILprg>c = new object[2]{i1,j1};</p>
+
+<p class=ILprg>object[] results = Invoke(&quot;abc&quot;, c);</p>
+
+<p class=ILprg>return (int)results[0];</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&gt;csc /t:library yyy.cs</p>
+
+<p class=ILoutput>&gt;csc zzz.cs /r:yyy.dll</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>You are sure to wonder as to what is the big idea behind this
+program. The program runs in the same fashion as before. All that we have done
+is to broken up zzz into two programs named zzz.cs and yyy.cs. The class zzz is
+not derived from anything at the moment and it calls the abc function. The code
+for this function resides in class yyy. The file yyy.cs is compiled to a dll.
+Therefore, while compiling zzz, the /r switch is specified with yyy.dll.
+However, the output and the SOAP packets remain the same.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A vital point to be borne in mind is that, irrespective of
+where the code resides, the WebService class is called zzz. Although there is
+no mention of class names in the SOAP payload, we are confined to using just a
+single class name in our program. The asmx file may use a different name, but
+it must have only one WebService directive.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;yyy&quot;
+%&gt;</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Parser Error Message: There can be only one 'webservice'
+directive.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Specifying two entries for the WebService directives would be
+asking for trouble. We reiterate that since the SOAP payload does not mention
+the names of a class, only one class can contain a WebService declaration. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Using the above approach, we have tried to highlight a few
+features related to web services. The next chapter introduces a more innovative
+approach of working on these concepts.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:40 GMT -->
+</html>

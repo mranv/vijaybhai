@@ -1,0 +1,605 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>GCC = GNU C COMP</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=4><P>&nbsp;2.GCC Options</P><DIR>
+<DIR>
+
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>GCC = GNU C COMP</P>
+<P>gcc = the wrapper</P></DIR>
+</DIR>
+
+<P>&nbsp;Uptil now, we've really not taught you much about invoking the GNU C Compiler. All we've taught you to do is compile programs without any switches except -o to name the output file, like so...</P>
+<P>gcc a.c -o a</P>
+<P>As you've already seen, this will create an executable file name 'a', which you run by typing './a' at the prompt. In this chapter, we'll explore the different switches that gcc recognizes their effects on the compilation process. We'll also explain (to some degree) what happens when you say 'gcc a.c'.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Header Files</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>&nbsp;First, let's talk about header files in a little more detail. If you remember in Chapter 1 of this book, we introduced the concept of header files. We had you run a program where you used the structure 'FILE' and then we told you to include the header file stdio.h as it had resulted in an error. This leads us to tell you a little something about the preprocessor.</P>
+<P>We'll now examine header files in a little more detail...</P>
+<P>Create a new subdirectory called 'new' with these two files</P>
+</FONT><PRE>a.c
+#include "a.h"
+main()
+{
+printf("hi..%d\n",AA);
+}
+a.h
+#define AA 100
+#gcc a.c -o a
+#./a
+hi..100
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In the file a.c, we have included a header file named 'a.h'. The reason we've used</P>
+<P>#include "a.h"</P>
+<P>instead of </P>
+<P>#include &lt;a.h&gt;</P>
+<P>is because 'a.h' is in the current directory. Only if the header file is part of the standard set supplied with GCC will the &lt;&gt;'s be used.</P>
+<P>The file 'a.h' contains the <I>hash define</I> AA which is equal to 100. So wherever we use AA in the program, it will be replaced by 100. This is called a <B><I>macro</B></I> and can be very useful. For example, in many production programs, you'd use a macro in place of a fixed number. In this way, if you had to change the value of the number, all you'd have to do is edit one hash define, instead of 'search and replacing you're way through a million files. Macros, by convention, are always in uppercase. This makes it easier for the programmer to differentiate between them and variables when reading the program.</P>
+<P>Now let's see what happens when you pass this file to gcc.</P>
+<P>When a file is passed to gcc, it goes through 4 basic processes. The first stage is the preprocessor stage, which we discussed in Chapter 1. The preprocessor goes through your .c files and examines all statements starting with '#'. When it spots a statement like #include "a.h", it picks up the file and <I>adds</I> it to the current .c file. So if in the previous example, 'a.c' was 5 lines long and 'a.h' was 100 lines long, then after the merge, 'a.c' would end up being 105 lines long. </P>
+<P>Now the preprocessor searches for and replaces all the macros that it can find. Once all the replacements are complete, the compiler is called in and given the file.</P>
+<P>Now this is <I>very important</I>, so listen carefully. The file that the compiler sees is <B><I>not</B></I> the original 'a.c'. It sees a modified 'a.c' with all the lines from 'a.h' added and the macros replaced with their correct values. This can lead to some serious problems if the header file contains any errors. It is possible to have macros that behave like simple functions. If there is an error in one of these, it can lead to a lot of confusion! The compiler doesn't know about header files, so when it sees an error, it will report the line number of the file it sees. When you check it up in the original 'a.c', you'll land up on an entirely innocent line! </P>
+<P>If you have no statements beginning with '#' in your program, the preprocessor does nothing.</P>
+<P>By convention a '.c' file contains a C program and a file with a '.i' extension is a preprocessed file and a file with a '.s' extension is an assembler file. Under gcc, the compiler outputs an assembler file. This file is then passed to the assembler which converts the file into an object file ('.o' extension). This object file is then passed to the linker who converts it into an executable binary.</P>
+<P>Type this in at the prompt.</P>
+<P>gcc -save-temps a.c</P>
+<P>These switchs tell gcc to keep the temporary files it creates. Use ls to view the contents of the directory.</P>
+</FONT><PRE>#ls -l 
+total 8
+-rw-r--r-- 1 root root 47 Dec 21 18:55 a.c
+-rw-r--r-- 1 root root 14 Dec 21 18:55 a.h
+#gcc -save-temps a.c
+#ls -l
+total 36
+-rw-r--r-- 1 root root 47 Dec 21 18:55 a.c
+-rw-r--r-- 1 root root 14 Dec 21 18:55 a.h
+-rw-r--r-- 1 root root 71 Dec 21 19:00 a.i
+-rw-r--r-- 1 root root 904 Dec 21 19:00 a.o
+-rwxr-xr-x 1 root root 11683 Dec 21 19:00 a.out
+-rw-r--r-- 1 root root 344 Dec 21 19:00 a.s</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>You'll notice that the .c file has been converted into a.i file by the preprocessor. The compiler then converted the .i file to a .s file. This file is passed to the assembler which then outputs a .o file that is converted into the executable a.out (the default name) by the linker.</P>
+<P>To verify, cat through a.i and you can tell that the preprocessors gone through the header file. Notice that the macro AA does not show up. Instead, we have the number 100 placed in the appropriate location. I'll say this once more, the compiler doesn't know of or see any # statements, the preprocessor takes care of all that.</P>
+<P>#cat a.i</P>
+<P>&nbsp;</P>
+</FONT><PRE># 1 "a.c"
+# 1 "a.h" 1
+# 1 "a.c" 2
+main()
+{
+printf("hi..%d\n",100 );
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now cat the .s file and you'll see that it's pure assembler.</P>
+</FONT><PRE>#cat a.s
+&#9;.file&#9;"a.c"
+&#9;.version&#9;"01.01"
+gcc2_compiled.:
+.section&#9;.rodata
+.LC0:
+&#9;.string&#9;"hi..%d\n"
+.text
+&#9;.align 4
+.globl main
+&#9;.type&#9; main,@function
+main:
+&#9;pushl %ebp
+&#9;movl %esp,%ebp
+&#9;pushl $100
+&#9;pushl $.LC0
+&#9;call printf
+&#9;addl $8,%esp
+.L1:
+&#9;leave
+&#9;ret
+.Lfe1:
+&#9;.size&#9; main,.Lfe1-main
+&#9;.ident&#9;"GCC: (GNU) egcs-2.91.66 19990314/Linux (egcs-1.1.2 release)"</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Cat'ting the other two files will only show gibberish, but the file a.out is executable and saying './a.out' at the prompt will run the program.</P>
+<P>#./a.out</P>
+<P>hi..100</P>
+<P>The program 'gcc' is what's called a driver (or maybe wrapper?) . It doesn't do anything itself, instead it calls other programs one after the other and passes them the correct parameters and switches.</P>
+<P>Why use a driver program instead of calling the preprocessor, compiler, assembler and linker separately? One reason is convenience. The other is portability. The program 'gcc' provides us with a large number of portable switches that affect the behavior of the various programs called. This ensures that your program will compile correctly on various platforms. </P>
+<P>The reason we're going into the grisly details is to explain the inner workings of gcc and to help you understand the process by which executables are produced.</P>
+<P>Let's start working backwards. We'll first examine the linker.</P>
+<P>#gcc -c a.c</P>
+<P>&nbsp;The -c switch tells gcc not to link the file. So we end up with the file 'a.o'. To perform the final step and link the file, we say</P>
+</FONT><PRE>#ld a.o -o a
+ld: warning: cannot find entry symbol _start; defaulting to 08048074
+a.o: In function `main':
+a.o(.text+0x9): undefined reference to `printf'
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This calls the linker 'ld' and tells it to link 'a.o' and create the executable file 'a'. So all that gcc has been doing all this time is calling 'ld' with the -o switch.</P>
+<P>There seems to be a problem here though. We get one warning and one error. We're using the standard function printf(), which hasn't been defined in our C program. The code for this function and many others is to be found in the file libc.so in the directory /usr/lib.</P>
+</FONT><PRE>ls -l /usr/lib/libc.so
+-rw-r--r-- 1 root root 178 Sep 20 14:42 /usr/lib/libc.so</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Since the code for printf() is not present in our .c file, we have to tell 'ld' where to find it.</P>
+</FONT><PRE>ld a.o -o a /usr/lib/libc.so</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We could instead have said </P>
+<P>ld -o a a.o -lc</P>
+<P>which ends up doing the same thing. When you use -lc, the -l is replaced with 'lib' and '.so' is added after 'c'. So we end up with 'libc.so'. 'ld' looks into /lib and /usr/lib by default anyway, so the code for printf() will be picked up. </P>
+<P>Just another way to do the same thing.</P>
+<P>Now type in </P>
+<P>./a</P>
+<P>at the prompt and see the result. Nope, we're not there yet. Bash responds to our attempt to run 'a' by replying that there's no such file or directory to be found. A simple 'ls' proves Bash wrong, 'a' does exist, but Bash refuses to run it.</P>
+</FONT><PRE>#ls -l
+total 12
+-rwxr-xr-x 1 root root 2169 Dec 21 19:07 a
+-rw-r--r-- 1 root root 27 Dec 21 19:06 a.c
+-rw-r--r-- 1 root root 900 Dec 21 19:06 a.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>#./a</P>
+<P>bash: ./a: No such file or directory</P>
+<P>This really isn't Bash's fault. Bash is simply a shell, an interface to the computer. It doesn't know how to load and run executables. It needs the services of the designated loader for ELF files, ld-linux.so.2, which is to be found in the /lib directory. The information about which loader to call is added to the executable when it's being linked. The linker has to be explicitly told which loader to use. So we should actually link up our program like this.</P>
+<P>#ld -o a a.o -lc -dynamic-linker /lib/ld-linux.so.2</P>
+<P>Type in </P>
+<P>./a </P>
+<P>and the program runs...</P>
+</FONT><PRE>#./a
+hi..100
+Segmentation fault (core dumped)
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>...and prompt throws up all over itself.</P>
+<P>We'll need to dig deeper into the inner workings of our program to figure this one out. </P>
+<P>When we run our program, main() isn't the first bit of code to be called. Instead, the <I>startup code</I> executes first. Think back to when we were doing argc and argv[] for the first time. We'd said then that they had been created by Linux and placed on the stack.</P>
+<P>We lied. </P>
+<P>And it's not going to be the last time, you can count on that!</P>
+<P>It's actually the startup code that carries out this function. Once it's done with all it has to do, it calls main(). Now, we have to tell 'ld' where main() is. Actually, the first executable line of code in a program is labeled '_start' by convention. We have to tell 'ld' to use main() as the '_start' of our program. This gets rid of that warning about the absence of '_start' and should ensure that our program runs smoothly.</P>
+<P>Simply add the switch -e followed by the name of the function to use as '_start' and we're done. </P>
+</FONT><PRE>#ld -o a a.o -lc -e main -dynamic-linker /lib/ld-linux.so.2
+#./a
+hi..100</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Segmentation fault (core dumped)</P>
+<P>#</P>
+<P>Hmmmm, the problem persists.</P>
+<P>Well, since we've taken care of the startup, let's tackle the shutdown. We need to add the function exit() to our program to tell Linux that we're through. We pass one parameter to exit(), a number which may have some predefined meaning. This is useful if you're creating a program to be used by shell scripts. They can use the exit value to figure out if program failed, or if it carried out its function successfully. For example, according to convention, an exit value of 0 stands for success and anything else usually implies that an error occurred.</P>
+</FONT><PRE>a.c
+#define "a.h"
+main()
+{
+printf("hi..%d\n",AA);
+exit(10);
+}
+#gcc -c a.c
+#ld -o a a.o -lc -e main -dynamic-linker /lib/ld-linux.so.2
+#./a
+hi..100
+#./a;echo $?
+hi
+10
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Check the exit value by echoing the value of $?, a special shell variable which holds the last returned value. We say</P>
+</FONT><PRE>./a;echo $?</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The semicolon in the middle tells Bash to finish with the first command and then run the second. We get a 10, just as we should.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>More on gcc</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>If you want to see what gcc does behind the scenes, all you need to do is ask!</P>
+<P>Simply use -v to get all the information you wish.</P>
+</FONT><PRE>#gcc -v a.c
+Reading specs from /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/specs
+gcc version egcs-2.91.66 19990314/Linux (egcs-1.1.2 release)
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cpp -lang-c -v -undef -D__GNUC__=2 -D__GNUC_MINOR__=91 -D__ELF__ -Dunix -Di386 -D__i386__ -Dlinux -D__ELF__ -D__unix__ -D__i386__ -D__i386__ -D__linux__ -D__unix -D__i386 -D__linux -Asystem(posix) -Asystem(unix) -Acpu(i386) -Amachine(i386) -Di386 -D__i386 -D__i386__ -D__tune_i386__ a.c /tmp/ccXrgiH7.i
+GNU CPP version egcs-2.91.66 19990314/Linux (egcs-1.1.2 release) (i386 Linux/ELF)
+#include "..." search starts here:
+#include &lt;...&gt; search starts here:
+/usr/i386-redhat-linux/include
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include
+/usr/include
+End of search list.
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cc1 /tmp/ccXrgiH7.i -quiet -dumpbase a.c -version -o /tmp/ccWtDcK4.s
+GNU C version egcs-2.91.66 19990314/Linux (egcs-1.1.2 release) (i386-redhat-linux) compiled by GNU C version egcs-2.91.66 19990314/Linux (egcs-1.1.2 release).
+as -V -Qy -o /tmp/cczCpfJ5.o /tmp/ccWtDcK4.s
+GNU assembler version 2.9.1 (i386-redhat-linux), using BFD version 2.9.1.0.24
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/collect2 -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtbegin.o -L/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66 -L/usr/i386-redhat-linux/lib /tmp/cczCpfJ5.o -lgcc -lc -lgcc /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtend.o /usr/lib/crtn.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The first line tells us that gcc is reading in some specifications from a file in the subdirectory shown. Open it up in a text editor and read it if you wish. This file specifies which programs gcc should call, in what order and with what options.</P>
+<P>We've cleaned up the output a bit to show you the four different steps that go into making an executable.</P>
+</FONT><PRE>
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cpp -lang-c -v -undef -D__GNUC__=2 -D__GNUC_MINOR__=91 -D__ELF__ -Dunix -Di386 -D__i386__ -Dlinux -D__ELF__ -D__unix__ -D__i386__ -D__i386__ -D__linux__ -D__unix -D__i386 -D__linux -Asystem(posix) -Asystem(unix) -Acpu(i386) -Amachine(i386) -Di386 -D__i386 -D__i386__ -D__tune_i386__ a.c /tmp/ccXrgiH7.i
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cc1 /tmp/ccXrgiH7.i -quiet -dumpbase a.c -version -o /tmp/ccWtDcK4.s
+as -V -Qy -o /tmp/cczCpfJ5.o /tmp/ccWtDcK4.s
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/collect2 -m elf_i386 -dynamic-linker /lib/ld-linux.so.2 /usr/lib/crt1.o /usr/lib/crti.o /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtbegin.o -L/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66 -L/usr/i386-redhat-linux/lib /tmp/cczCpfJ5.o -lgcc -lc -lgcc /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtend.o /usr/lib/crtn.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The first program called is cpp, the C PreProcessor, with a whole load of incomprehensible switches.</P>
+<P>The second program calles is cc1, the C Compiler proper. Notice where the output file is created, in the /tmp directory.</P>
+<P>The third program is as or the Assembler.</P>
+<P>Finally we have collect2. Collect2 is a wrapper just like gcc  and it in turn calls 'ld'. Notice the options passed to collect2, they're linker options we've already covered to some extent.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>The Preprocessor</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>We've discussed the last step in the compilation process, now let's tackle the first, the preprocessor, in a little more detail.</P>
+<P>We know that it's named 'cpp', so let's call the program and pass it the name of our .c file.</P>
+</FONT><PRE>#cpp a.c
+bash: cpp: command not found</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Hmmm. Bash couldn't find the program. </P>
+<P>When we type in the name of any program, Bash looks up an environmental variable name PATH. This variable contains a colon-separated list of subdirectories Bash should examine when asked to run a program.</P>
+<P>We can display the value of this variable using the command, echo.</P>
+</FONT><PRE>&nbsp;#echo $PATH
+/sbin:/bin:/usr/sbin:/usr/bin:/usr/X11R6/bin:/root/bin</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Obviously, cpp is not to be found in any of these subdirectories and that's why Bash failed to run the program.</P>
+<P>Digging out 'cpp's location is quite simple. Simply ask 'gcc' for its whereabouts.</P>
+</FONT><PRE># gcc -print-prog-name=cpp
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cpp</PRE>
+<FONT FACE="Courier New" SIZE=2><P>-print-prog-name is a switch that can be used to scope out the location of any program 'gcc' calls. This is where 'cpp' is stored under Redhat Linux 6.1, it could be somewhere else on your system.</P>
+<P>So to call 'cpp', all we do is type out the complete path and then the name of our .c file.</P>
+</FONT><PRE>#/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cpp a.c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>'cpp' will look over our file, searching for all statements starting with '#'. In our case, the only such statement is #include "a.h" which in turn contains only one statement. </P>
+</FONT><PRE># 1 "a.c"
+# 1 "a.h" 1
+# 1 "a.c" 2
+main()
+{
+printf("hi..%d\n",100);
+exit(10);
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>By default, 'cpp' sends everything to the screen. To make sure it ends up in a file, type in the following. Notice that the output files name is 'a.i', as required by convention.</P>
+<P>#/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cpp a.c -o a.i</P>
+<P>This file is identical to the .i file produced earlier. Check and confirm, if you wish.</P>
+<P>On to the compiler, cc1.</P>
+</FONT><PRE># gcc -print-prog-name=cc1
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cc1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Yup, it's in the same directory as 'cpp'. By placing all the executables of one version in their own subdirectory, you can have various versions of GCC coexist on one machine.</P>
+<P>Notice that we're passing the compiler the file 'a.i', <B>not</B> 'a.c'. </P>
+</FONT><PRE>#/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cc1 a.i
+main
+time in parse: 0.000000
+time in integration: 0.000000
+time in jump: 0.000000
+time in cse: 0.000000
+time in gcse: 0.000000
+time in loop: 0.000000
+time in cse2: 0.000000
+time in branch-prob: 0.000000
+time in flow: 0.000000
+time in combine: 0.000000
+time in regmove: 0.000000
+time in sched: 0.000000
+time in local-alloc: 0.000000
+time in global-alloc: 0.000000
+time in sched2: 0.000000
+time in shorten-branch: 0.000000
+time in stack-reg: 0.000000
+time in final: 0.010000
+time in varconst: 0.000000
+time in symout: 0.000000
+time in dump: 0.000000</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The compiler gives us a list of statistics. Most numbers are zero because our program is so small. To get rid of this pedantic display, use the -quiet switch.</P>
+<P>The output file is 'a.s', and it's full of assembler code.</P>
+</FONT><PRE>#ls -l a.s
+-rw-r--r-- 1 root root 380 Dec 21 19:34 a.s</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now that we have the assembler code in our grubby little hands, let's call 'as' onto the stage. The assembler gives us an output file named 'a.out'. It's a little early for that, so we'll force the assembler to give us a file named 'a.o'.</P>
+</FONT><PRE>#as a.s
+# ls -l a.out
+-rw-r--r-- 1 root root 960 Dec 21 19:35 a.out
+#as a.s -o a.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Finally, let's call the linker 'ld'. We end up with an executable named 'a' which runs as expected.</P>
+</FONT><PRE>#ld -o a a.o -e main -lc -dynamic-linker /lib/ld-linux.so.2
+#./a ; echo $?
+hi..100
+10
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now its up to you to decide whether you wish to use the GCC wrapper or you wish to call the programs individually.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Still more on the Preprocessor</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>If you thought we were finally going to shutup about the preprocessor, You're WRONG! </P>
+<P>Here's still more on this essential process.</P>
+</FONT><PRE>b.c
+main()
+{
+printf("hi....%d\n",AA);
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>If you try to compile this program, you'll get an error, because the compiler doesn't know what AA is. It's not a function, it's not a variable, and it's not a turnip. It's a macro that's not been defined anywhere.</P>
+<P>One way to get rid of this error is to add a #define in the '.c' file defining the macro, like so.</P>
+</FONT><PRE>#define AA 100</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Another way to do this to tell 'gcc' to do it for you.</P>
+</FONT><PRE>#gcc b.c -DAA=100
+./a.out
+hi....100</PRE>
+<FONT FACE="Courier New" SIZE=2><P>By using -D, we can define macros at compiler time. This can be really useful for tasks like debugging. Depending on the value passed to key macros here, programs could behave in different ways. A concrete example of this is the Apache web server. When compiling Apache, we use -D to tell Apache where to look for its configuration files. </P>
+<P>Besides user defined macros, there are several macros which come built in with GCC. For example, there is _GNUC__MINOR_. </P>
+</FONT><PRE>b.c
+main()
+{
+printf("hi....%d\n",__GNUC_MINOR__);
+}
+#gcc b.c
+./a.out
+hi....91</PRE>
+<FONT FACE="Courier New" SIZE=2><P>91 is the minor version number of GCC. Notice that it's the same as seen in the pathname for 'cpp'(usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/). 2 is the major version number and 91 is the minor version number.</P>
+<P>Other macros are created without any value associated with them, for example, 'linux'.</P>
+</FONT><PRE>b.c
+#ifdef linux
+#error "1"
+#endif
+main()
+{
+}
+gcc b.c
+b.c:2: #error "1"</PRE>
+<FONT FACE="Courier New" SIZE=2><P>#ifdef is like the if() statement in C. We're saying that if the macro linux has been defined, flag an error. We mark the end of an #ifdef with a #endif. We can use this to figure out if our program is being compiled on Linux, or on some other platform. Whenever 'gcc' is run under Linux, it creates a macro named 'linux'. This can be used to conditionally compile your programs. Depending on what platform it's being compiled on, different parts of program would be compiled. Quite useful really.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Still more on the Linker</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>We'll have to dig deep to really see the switches 'ld' is called with, since it's called through an intermediary, 'collect2'. Copy 'ld', which can be found in /usr/bin, to another file, 'ldbak' for example. We'll now replace the original 'ld' with one of our own design. </P>
+</FONT><PRE>cd /usr/bin
+cp ld ldbak
+ld.c
+main(int argc, char **argv)
+{
+int i;
+for(i=0; i&lt; argc; i++)
+printf("%s\n",argv[i]);
+}
+#gcc ld.c
+#./a.out hi bye
+./a.out
+hi
+bye</PRE>
+<FONT FACE="Courier New" SIZE=2><P>It's pretty obvious what this program does. It simply prints out the command line arguments passed to it.</P>
+</FONT><PRE>#cp a.out ld
+#cd /new
+#gcc a.c
+/usr/bin/ld
+-m
+elf_i386
+-dynamic-linker
+/lib/ld-linux.so.2
+/usr/lib/crt1.o
+/usr/lib/crti.o
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtbegin.o
+-L/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66
+-L/usr/i386-redhat-linux/lib
+/tmp/ccIhoUrW.o
+-lgcc
+-lc
+-lgcc
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/crtend.o
+/usr/lib/crtn.o
+collect2: ld returned 16 exit status
+#cd /usr/bin
+#cp ldbak ld
+#cd /new</PRE>
+<FONT FACE="Courier New" SIZE=2><P>And there you have it. We copy our 'ld' to /usr/bin and compile a program. The switches passed to 'ld' are displayed on the screen. Since this 'ld' isn't doing any of the things expected of it by 'collect2', we get an error, but that's OK. Once we're through, we replace our 'ld' with the original.</P>
+<P>The -m option passed to 'ld' can be very significant and specifies the machine for which code should be generated. </P>
+<P>We've already gone over -dynamic-linker option. The '.o' file and '.so' file both contain code and 'crtbegin' and 'crtend' contain the startup and cleanup code. </P>
+<P>-L specifies the directory in which 'ld' looks for the '.so' files. </P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Switch Overload!</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>There are three basic bits of information that have to be given to 'gcc'. The location of the header files, the libraries and programs like 'cpp', 'cc1', etc. The option print-search-dirs will tell 'gcc' to print out the locations where it will search for these files.</P>
+</FONT><PRE>#gcc -print-search-dirs
+install: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/
+programs: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/:/usr/lib/gcc-lib/i386-redhat-linux/:/usr/lib/gcc/i386-redhat-linux/egcs-2.91.66/:/usr/lib/gcc/i386-redhat-linux/:/usr/i386-redhat-linux/bin/i386-redhat-linux/egcs-2.91.66/:/usr/i386-redhat-linux/bin/
+libraries: /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/:/usr/lib/gcc/i386-redhat-linux/egcs-2.91.66/:/usr/i386-redhat-linux/lib/i386-redhat-linux/egcs-2.91.66/:/usr/i386-redhat-linux/lib/:/usr/lib/i386-redhat-linux/egcs-2.91.66/:/usr/lib/:/lib/i386-redhat-linux/egcs-2.91.66/:/lib/:/usr/lib/i386-redhat-linux/egcs-2.91.66/:/usr/lib/
+#cd /bin
+# cat &gt; cc1.c
+main()
+{
+printf ("In bin\n");
+}
+#gcc cc1.c -o cc1
+#./cc1
+In bin
+&nbsp;
+#cd /new
+#gcc -v a.c
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/cc1 /tmp/ccNeifII.i -quiet -dumpbase a.c -version -o /tmp/ccQE0kOg.s</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>'gcc' looks for the header files in the directories shown when you use the -v switch...</P>
+</FONT><PRE>#gcc -v a.c
+...
+..
+#include "..." search starts here:
+#include &lt;...&gt; search starts here:
+/usr/i386-redhat-linux/include
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include
+/usr/include
+End of search list.
+.. </PRE>
+<FONT FACE="Courier New" SIZE=2><P>...</P>
+<P>Let's dig a little deeper.</P>
+<P>We create a file name 'a.h', with only one statement in it.</P>
+</FONT><PRE>#define AA 1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We'll now place copies of this file with different values for AA in the various directories that 'gcc' looks in.</P>
+</FONT><PRE>#include &lt;a.h&gt;
+main()
+{
+printf("..%d\n",AA);
+}
+a.h
+#define AA 1
+# cd /usr/i386-redhat-linux/include
+a.h
+#define AA 2
+# cd /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include
+a.h
+#define AA 3
+#cd /usr/include
+a.h
+#define AA 4
+#cd /new
+#./a.out
+..2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now know which header file is picked up first.We'll now delete the header file in /usr/i386-redhat-linux/include/ and run 'a.out' again</P>
+</FONT><PRE>#./a.out
+..2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>No go. The content of include files are compiled into programs. We'll have to pass the '.c' file through 'gcc' again.</P>
+</FONT><PRE>#gcc a.c
+#./a.out
+..3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now the header file in /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include is used. If we delete this, the file in /usr/include will be used </P>
+</FONT><PRE>#rm /usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/a.h
+#gcc a.c
+#./a.out
+..4</PRE>
+<FONT FACE="Courier New" SIZE=2><P>and if we delete that as well, we'll get an error. </P>
+</FONT><PRE>#rm /usr/include/a.h
+#gcc a.c
+a.c:1: a.h: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is despite the fact that we still have a spare copy in /new. To have 'gcc' use that, we use the -I switch. This gives the location to look at first for the include files to use.</P>
+</FONT><PRE>#gcc a.c -I/new
+#./a.out
+..1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The directory after -I is looked into before any of the standard locations.</P>
+<P>Place a copy of 'a.h' back into /usr/i386-redhat-linux/include and the directory after -I is still used first. </P>
+<P>#cd /usr/i386-redhat-linux/include</P>
+</FONT><PRE>a.h
+#define AA 2
+#cd /new
+#gcc a.c -I/new
+#./a.out
+..1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now create another directory name /new1 and we place a copy of 'a.h' in here with AA set to 7.</P>
+</FONT><PRE>#mkdir /new1
+#cd /new1
+a.h
+#define AA 7</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now add this directory to a environmental variable named C_INCLUDE_PATH.</P>
+</FONT><PRE>#cd /new
+#export C_INCLUDE_PATH=/new1
+#gcc a.c
+#./a.out
+..7</PRE>
+<FONT FACE="Courier New" SIZE=2><P>That means that this environmental variable is looked at even before the directory specified after -I.</P>
+<P>Let's see what we get if we use -v with the -I switch.</P>
+</FONT><PRE>#gcc -v -I/new a.c
+...
+...
+#include "..." search starts here:
+#include &lt;...&gt; search starts here:
+/new
+/new1
+/usr/i386-redhat-linux/include
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include
+/usr/include
+End of search list.
+...
+..</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We can see our directories there. /new1 is after /new</P>
+<P>Another useful switch is -E, which tells 'gcc' to only call the preprocessor to check the header files for errors.</P>
+</FONT><PRE>#gcc -E a.h 
+#1 "a.h"
+a.h
+#dfine AA 1
+#gcc -E a.h 
+#1 "a.h"
+#dfine AA 1
+a.h
+#define AA 100
+&nbsp;
+a.c
+main()
+{
+printf("hi..%d\n",AA);
+}
+#gcc a.c -include a.h 
+#./a.out
+hi..100</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>a.c contains main() and printf and the header file contains AA 100. </P>
+<P>The 'gcc' wrapper is a pretty smart cookie. When it sees a file with a '.i' extension, it assumes that the preprocessor has already been called and it gives the file to 'cc1' directly. Since our file has not been preprocessed, we get a bagful of errors.</P>
+</FONT><PRE>a.i
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+}
+gcc a.i
+a.i:1: undefined or invalid # directive
+a.i: In function `main':
+a.i:4: `FILE' undeclared (first use in this function)
+a.i:4: (Each undeclared identifier is reported only once
+a.i:4: for each function it appears in.)
+a.i:4: `fp' undeclared (first use in this function)</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We can also use the -DM switch to get a list of all the macros available to our program. Notice that AA is also present.</P>
+</FONT><PRE>a.c
+#include "a.h"
+main()
+{
+printf("..%d\n",AA);
+}
+a.h
+#define AA 1
+&nbsp;
+#gcc -dM -E a.c
+#define __linux__ 1 
+#define linux 1 
+#define __i386__ 1 
+#define __tune_i386__ 1 
+#define AA 1 
+#define __i386 1 
+#define __GNUC_MINOR__ 91 
+#define i386 1 
+#define __unix 1 
+#define __unix__ 1 
+#define __GNUC__ 2 
+#define __linux 1 
+#define __ELF__ 1 
+#define unix 1 
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>If you include stdio.h, you'll get three pages worth of macro names.</P>
+</FONT><PRE>a.c
+#include &lt;stdio.h&gt;
+main()
+{
+printf("hi\n");
+}
+#gcc -dM -E a.c
+&nbsp;
+#define _WINT_T 
+#define __stub_getmsg 
+#define _IO_LEFT 02 
+#define __linux__ 1 
+#define _IO_DELETE_DONT_CLOSE 0x40 
+#define _IO_UPPERCASE 01000 
+#define _IO_NO_READS 4 
+#define _IO_STDIO 040000 
+#define _IO_file_flags _flags 
+#define _IO_off64_t _G_off64_t 
+#define _IO_MAGIC_MASK 0xFFFF0000 
+#define EOF (-1) 
+gcc -E a.c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The printout of -E is very large, but adding a -P will ensure that only the really useful lines of the header file are displayed. Things like the name of the header file and the line numbers will not be displayed. To see the comments, use -C.</P>
+<P>Now we have gcc -M a.c . </P>
+</FONT><PRE># gcc -M a.c
+a.o: a.c /usr/include/stdio.h /usr/include/features.h \
+/usr/include/sys/cdefs.h /usr/include/gnu/stubs.h \
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h \
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h \
+/usr/include/bits/types.h /usr/include/libio.h \
+/usr/include/_G_config.h /usr/include/bits/stdio_lim.h</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>-M will give you output that is required by makefiles. A makefile is a file which helps 'gcc' figure out what programs to call for what source file and when. We'll do this later. So get similar information using -H, though in a slightly more structured way.</P>
+<P>#gcc -H a.c</P>
+</FONT><PRE>/usr/include/stdio.h
+/usr/include/features.h
+/usr/include/sys/cdefs.h
+/usr/include/gnu/stubs.h
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h
+/usr/include/bits/types.h
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
+/usr/include/libio.h
+/usr/include/_G_config.h
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stddef.h
+/usr/lib/gcc-lib/i386-redhat-linux/egcs-2.91.66/include/stdarg.h
+/usr/include/bits/stdio_lim.h</PRE>
+<FONT FACE="Courier New" SIZE=2><P>If these two switches are used together, I'll be given a list of which header files I've included and which header files are included by those header files and so on.</P>
+<P>Here's a better and less confusing way to explain this.</P>
+</FONT><PRE>a.h
+#include "b.h"
+b.h
+#include "c.h"
+c.h
+#define AA 10
+a.c
+#include "a.h"
+main()
+{
+printf("..%d\n",AA);
+}
+#gcc -M a.c
+a.o: a.c a.h b.h c.h</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This tells us that a.h calls b.h which calls c.h. So a.o depends on a.c and a.c depends on a.h which depends on b.h, which in turn depends on c.h.</P>
+</FONT><PRE>#gcc -H a.c
+a.h
+b.h
+c.h</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's the same information in a different format.</P></FONT></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

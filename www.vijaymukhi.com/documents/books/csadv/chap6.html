@@ -1,0 +1,2185 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:40:55 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="Chap6_files/filelist.html">
+<link rel=Edit-Time-Data href="Chap6_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Conversions: Implicit and Explicit - C# Nuts and Bolt - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-09-27T12:16:00Z</o:Created>
+  <o:LastSaved>2001-09-27T12:17:00Z</o:LastSaved>
+  <o:Pages>18</o:Pages>
+  <o:Words>5108</o:Words>
+  <o:Characters>29116</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>242</o:Lines>
+  <o:Paragraphs>58</o:Paragraphs>
+  <o:CharactersWithSpaces>35756</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:Garamond;
+	panose-1:2 2 4 4 3 3 1 1 8 3;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Cprg, li.Cprg, div.Cprg
+	{mso-style-name:"C\#prg";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Coutput, li.Coutput, div.Coutput
+	{mso-style-name:"C\#output";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Cbase, li.Cbase, div.Cbase
+	{mso-style-name:"C\#base";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:15.0pt;font-family:Garamond;
+color:black'>Chapter 6</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-layout-grid-align:none;text-autospace:none'><span
+style='font-size:26.0pt;font-family:Garamond;color:black'>Conversions: </span><span
+style='font-size:26.0pt;font-family:Garamond'>Implicit and Explicit</span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Most of us imply all the time and
+are rarely explicit. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The C# programming language has
+exactly 78 keywords in all. But there are only two types of conversions,
+implicit and explicit. As the name suggest, an explicit conversion has to be
+specifically supplied by using a cast and at all other times, the conversion is
+considered to be implicit.<span style="mso-spacerun: yes">  </span>Conversion
+comes into play when converting from a source type to a target type, which is
+finally the return value of the operator. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a+b);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public implicit operator xxx (int b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(12,8): error CS0556: User-defined conversion must convert
+to or from the enclosing type<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The rules for user-defined
+conversions are extremely simple. They have to accept one parameter, similar to
+unary operators, and must be of the same data type as of the class. Under
+normal circumstances, conversion operators do not have a return type as it
+assumes the return type to be that of the operator type. The return data type
+should directly or indirectly be the data type that is being enclosed within
+the brackets. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new yyy();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>At times, we can catch the
+compiler napping. We are returning a yyy object and not an xxx. As per the
+compiler rules, we should have received an error as we are to return an xxx,
+whereas we are returning a yyy object. May be, as all classes are derived from
+object, so the compiler either misses the error or condones it.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(13,8): error CS0029: Cannot implicitly convert type 'aaa'
+to 'xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We believe the above is a special
+case. Here we are returning an aaa object instead of xxx.<span
+style="mso-spacerun: yes">  </span>The compiler tries to convert the aaa object
+to an xxx object and realizes there is no such conversion possible in class
+yyy. Hence, the error. To remove the error, place an operator xxx in class aaa,
+which will convert the aaa object into an xxx like object. It will make an
+exception only if the return type is the same class that the code resides in.
+We yet are firm in our belief that someone somewhere goofed up. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class yyy {<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator yyy(yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new yyy();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,15): error CS0555: User-defined operator cannot take an
+object of the enclosing type and convert to an object of the enclosing type<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Thus we can only convert from one
+type to another and not to the same type again. It does not make any sense even
+to a madman why we would like to take a yyy object and convert it back again to
+a yyy object. Also, these conversion operators must lie in the same class and
+not in any other class.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>a = b;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator yyy (xxx b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new yyy();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>op xxx<o:p></o:p></p>
+
+<p class=Coutput>op yyy<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The code to convert an xxx object
+to a yyy must reside in the class yyy only. If we create such an operator, it
+will work on a=b, as the xxx object b can now be converted into a yyy like
+object. However, b = a will give an error unless we have an impicit operator
+yyy in class xxx. If there is no such conversion available in class xxx to
+convert a yyy object to an xxx object, a compiler error is generated. This
+conversion cannot reside in yyy or any other class, it has to be in the xxx
+class only.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>a = b;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator yyy (xxx b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new yyy();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>op xxx<o:p></o:p></p>
+
+<p class=Coutput>op yyy<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Should we apologize to the
+compiler? No. Did we lead you up the garden path? No. Every language has
+certain quirks. We want to convert a yyy object to an xxx object and vice
+versa. C# felt it to be too cumbersome to write the code in two separate
+classes. So it made a one time exception to all its rules. You can have a
+conversion operator take a single parameter other than the class data type. We
+have thus broken one golden rule in operator yyy within class yyy. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Class yyy contains a function
+that accepts one parameter, not a yyy object but an xxx object. The code is
+much more compact where logically relevant code is place together. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Remember there is always a method
+behind the madness and at times breaking rules makes the world go round better.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class yyy {<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>interface xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,15): error CS0552: 'yyy.implicit operator xxx(yyy)':
+user-defined conversion to/from interface<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We cannot convert to and from an
+interface. The above restriction is due to the fact that an interface and a
+class differ in concept. A class has code whereas an interface doesn't. Similar
+to water and oil that do not mix and match, we cannot convert from two
+differing concepts.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span>: xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,15): error CS0553: 'yyy.implicit operator xxx(yyy)':
+user-defined conversion to/from base class<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An object that looks like yyy
+also looks like xxx as yyy is derived from xxx. Thus there is already a way for
+a yyy object to scale down and become an xxx object. This is built in the
+inheritance structure. We do not need an operator to do what already happens by
+default. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Converting to a base class is an
+error as we try to duplicate what the compiler has already done for us. In the
+same vein, we cannot convert to an object as the Object class is the base class
+for all classes. All classes implicitly convert to an Object class and these
+conversions are already predefined. We are also not allowed to override a
+predefined conversion. The signature of the operator is its name, return type
+and parameter type. Unlike operators, the return type is part of the signature.
+The keyword implicit and explicit are not part of the signature.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>throw new System.Exception();<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>Exception occurred: System.Exception: An exception of type
+System.Exception was thrown.<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at
+yyy.op_Implicit(yyy b)<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A user-defined operator is not
+supposed to throw an exception. Remember an exception is thrown when something
+goes wrong. We are not supposed to lose information in a user-defined
+conversion. By convention, an implicit operator never throws an exception, whereas
+an explicit one is allowed to. You are permitted to float a convention at your
+own peril.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static xxx op_Implicit(yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(13,19): error CS0111: Class 'yyy' already defines a
+member called 'op_Implicit' with the same parameter types<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>By throwing the above exception,
+we now know that our conversion operator is renamed to a function called
+op_Implicit with one parameter, a yyy object in the above case. What if we have
+two such conversion operators?<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>aaa b = new aaa();<o:p></o:p></p>
+
+<p class=Cprg>xxx c = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>try<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>catch ( System.Exception e) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(e);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>try<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>c = a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>catch ( System.Exception e) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(e);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx (yyy b)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>throw new System.Exception();<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator aaa(yyy c)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>throw new System.Exception();<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>System.Exception: An exception of type System.Exception was
+thrown.<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at
+yyy.op_Implicit(yyy c)<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=Coutput>System.Exception: An exception of type System.Exception was
+thrown.<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at
+yyy.op_Implicit(yyy b)<o:p></o:p></p>
+
+<p class=Coutput><span style="mso-spacerun: yes">   </span>at zzz.Main()<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Here is what surprises us. We
+always thought that two functions could not ever have the same name. Here the
+compiler has converted the implicit functions to have the same name and if we
+had not changed the name of the object in the parameter list from b to c, they
+would have been identical. In the earlier example, where we had a function
+called op_ Implicit, the compiler, gave us an error, but in the above example,
+the compiler actually scales down to two functions with the same name. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>How does it internally separate
+them, we have no idea at all. Life is a drag. One set of rules for the
+compiler, another set for us. The compiler can break rules with impunity, we
+cannot. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>There are seven types of implicit
+conversions, which are identity, implicit numeric, implicit enumeration,
+implicit reference, boxing, implicit constant expression and finally
+user-defined implicit conversions.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We are allowed to equate any type
+to our user-defined type. This type of conversion is called an identity
+conversion where it lets an entity of a particular type to be converted to the
+type we want.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs </u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>sbyte i = 10;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a+i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static string operator + (yyy b,int x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;int &quot; + x;<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static string operator + (yyy b,short x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;short &quot; + x;<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static string operator + (yyy b,decimal x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;decimal &quot; + x;<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>short 10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An implicit numeric conversion
+converts an sbyte to short, int, long, float, double, or decimal. The above
+line is courtesy Mr Documentation. It simply means that whenever the compiler
+sees a byte, it will try and find a matching function or operator that accepts
+a byte as a parameter. In this case, there is no operator + that accepts a byte
+as a parameter. So, the compiler now looks for another function that accepts a
+short as a parameter. If it finds one, it promotes the byte to a short, rolls
+up its sleeves and calls the function. Thus, we get short 10 displayed as the
+result. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>C# does all of this without
+taking our permission. Thus it is called an implicit numeric conversion because
+it happens silently in the background without our knowledge. When we remove the
+code of the operator + that accepts a short, we get the following answer.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>int 10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The answer is very intuitive. The
+compiler starts the whole process explained above once again. It first tries to
+find a function that accepts a short. No luck. The compiler does not give up
+and now tries to find one that accepts an int. Bingo, it finds one so it
+executes the function. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>If we now remove the plus
+operator with the int, then only the one with decimal stays. As per the above
+rules, a match will be found and the function will be called. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The order of conversion is as
+decided by the compiler. We cannot change the above order, all that we can do
+is gracefully accept it and carry on with life. If you notice, this order is
+from small to large in terms of memory allocation by the compiler. The order
+makes a lot of sense now.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>sbyte i = 10;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a+i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static string operator + (yyy b,decimal x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;decimal &quot; + x;<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator string ( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>decimal 10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Strange are the ways of a
+compiler. In the above case, we presumed the compiler would face a dilemma. It
+could either convert the byte to a decimal, or convert a yyy object to a string
+and then call the plus operator. It prefers the first option as it means fewer
+steps to be carried out. Remove the plus operator totally and the second option
+will get executed. The string operator of the class yyy is called which<span
+style="mso-spacerun: yes">  </span>returns a string This is then concatenated
+with 10 to display hi10.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>sbyte i = 10;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(a+i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static string operator + (yyy b,decimal x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;decimal &quot; + x;<o:p></o:p></p>
+
+<p class=Cprg>} <o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator string ( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return &quot;hi&quot;;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator byte ( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return 21;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>decimal 10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The compiler has a one-track
+mind. It always prefers an implicit numeric conversion. It could have converted
+the yyy object to a byte and then called the predefined plus to add two
+numbers. It did not do it then for a string, it will not do it now either for
+two numbers. It has its own preferences on doing things its way. If we remove
+the operator plus code from the class, we get the following error.<span
+style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,26): error CS0034: Operator '+' is ambiguous on
+operands of type 'yyy' and 'byte'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Here the compiler has no
+preferences over calling the string or the byte conversion operators. Hence, it
+flags an error whenever it cannot make up its mind or is in two minds. The
+documentation came up with other rules for the other data types. We have copied
+them and would advise you to remember them on a rainy day. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Byte to short, ushort, int, uint,
+long, ulong, float, double, or decimal. Short to int, long, float, double, or
+decimal. Ushort to int, uint, long, ulong, float, double, or decimal. Int to
+long, float, double, or decimal. Uint to long, ulong, float, double, or
+decimal. Long to float, double, or decimal. Ulong to float, double, or decimal.
+Char to ushort, int, uint, long, ulong, float, double, or decimal and finally
+Float to double. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We have no choice but to have a
+piece of paper with the above rules written down as a ready reckoner. We feel
+very guilty when we copy-paste from the documentation and avoid doing it like
+the plague. However, we have no choice as rules are rules are rules!!.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Finally, a char stores unicode
+characters which are finally numbers. Working with chars is a one-way street.
+You are allowed to convert a char to another data type but not vice versa. For
+instance, a byte cannot be converted to a char.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An implicit enumeration
+conversion lets the number zero be converted to any enum type. This was
+expected, as an enum is nothing but a glorified number with a name.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><b><span style='font-size:14.0pt;font-family:Tahoma;color:windowtext'>Implicit
+Reference conversions<o:p></o:p></span></b></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The above conversions are what we
+have been talking about throughout this book. The only difference is that we
+are pegging a label or a name to what we already know. All reference objects
+can be scaled down to an object without a murmur. A derived class can be scaled
+down to a base class or a base interface. Ditto for interfaces derived from
+each other. Any array type is scaled to System.Array and delegate to
+System.Deleagte. In turn, an array or a delegate can also become an interface
+System.IClonable. The null type can be used to initialize any reference object.
+<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Arrays at times pose a small
+problem. We can equate arrays only if they are of the same dimension and they
+store reference types. Then they become simple objects and a conversion must
+exist to convert one to the other. These do not require any compile time checks
+and do not change the value of the object, they may change the data type only.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Implicit constant conversions
+only deal with constants. They are very simple in nature. An int can be
+converted to a sbyte, byte, short, ushort, uint, or ulong provided the range of
+the destination is not exceeded. In the same way , a ulong can be converted to
+a long. How boring! Makes us feel sleepy writing all this original travail. How
+many times did you yawn? We, a hundred thousand times!<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><b><span style='font-size:14.0pt;font-family:Tahoma;color:windowtext'>Explicit
+Conversions<o:p></o:p></span></b></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Explicit conversions are made up
+of all implicit conversions, explicit numeric conversions, explicit enumeration
+conversions, explicit reference conversions, explicit interface conversions,
+unboxing conversions and finally user-defined explicit conversions. Remember,
+for the last time, an explicit conversion only exists in a cast expression. It
+is like beauty, it can only lie in the eyes of the beholder. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An explicit conversion has a
+large number of useful properties. It may or may not succeed. There is no way
+to prove that explicit conversions will always succeed and that is why they are
+placed in the explicit category. We may lose some information on our path to
+conversion. Perfectly acceptable. They also have vision and can convert from a
+large range of domain types. We can have as many redundant casts as we like in
+a single expression. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>yyy b = (xxx)(aaa) a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator aaa( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op aaa&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( aaa a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator yyy( xxx a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new yyy();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>op aaa<o:p></o:p></p>
+
+<p class=Coutput>op xxx<o:p></o:p></p>
+
+<p class=Coutput>op yyy<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the above case, we have come a
+full circle. We are first converting a yyy object into an aaa object then to an
+xxx object and finally, once again to a yyy object. We can have as many casts
+as we want on a single line and the compiler will do our bidding for us. It
+does not check the veracity of our casting nor does it realize that we are
+coming back to square one. Thus, multiple redundant casts are allowed always.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><b><span style='font-size:14.0pt;font-family:Tahoma;color:windowtext'>Explicit
+numeric conversions<o:p></o:p></span></b></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>char i = 'A';<o:p></o:p></p>
+
+<p class=Cprg>short b = 65;<o:p></o:p></p>
+
+<p class=Cprg>i = b;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,5): error CS0029: Cannot implicitly convert type
+'short' to 'char'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We told you earlier that a char
+cannot be converted to any other data type but the reverse was possible. Now we
+want the above conversion to work, by hook or crook.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>char i = 'A';<o:p></o:p></p>
+
+<p class=Cprg>short b = 65;<o:p></o:p></p>
+
+<p class=Cprg>i = (char)b;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>A<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The only way out is a simple
+cast. Something that was not possible implicitly is now available with a simple
+cast. This is the beauty of an explicit conversion. We are going a step further
+than what the implicit conversion does, hence these conversions are over and
+above the implicit ones. Explicit conversions are more powerful and useful than
+implicit ones. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>One more round of copying from
+the documentation just to make the book complete. These are the conversions
+that are available to us if and only if we use a cast. They are as follows
+verbatim. Sbyte to byte, ushort, uint, ulong, or char. Byte to sbyte and char.
+Short to sbyte, byte, ushort, uint, ulong, or char. Ushort to sbyte, byte,
+short, or char. Int to sbyte, byte, short, ushort, uint, ulong, or char. Uint
+to sbyte, byte, short, ushort, int, or char. Long to sbyte, byte, short,
+ushort, int, uint, ulong, or char. Ulong to sbyte, byte, short, ushort, int,
+uint, long, or char. From char to sbyte, byte, or short. Float to sbyte, byte,
+short, ushort, int, uint, long, ulong, char, or decimal. Double to sbyte, byte,
+short, ushort, int, uint, long, ulong, char, float, or decimal. Decimal to
+sbyte, byte, short, ushort, int, uint, long, ulong, char, float, or double. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>It breaks our heart to
+cut-and-paste from the documentation and fill up pages of our the book. Do we
+have a choice? No. Should you remember all the above rules ? Never, not even on
+a rainy day!<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Thus, we are able to convert from
+one numeric type to another as they are covered by either implicit or explicit
+conversions. The only way to remember the above rule is to try and convert one
+numeric type to another. If we get an error then simply cast. As we are
+permitted to convert from one type to another, we must be prepared to catch
+exceptions being thrown at run time. Also, some information may be lost due to
+the conversion.<span style="mso-spacerun: yes">  </span>The exception gets
+thrown depending upon the context, checked or unchecked. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>byte i = (byte)3.6;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>3<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A float, double or decimal type
+can be cast to an integer type. However, the compiler will not round off the
+double to an integer but instead remove everything after the decimal place. The
+documentation calls this rounding towards zero. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>By now, you must have realized
+that we are reading the documentation with a fine toothcomb. It is, after all,
+the last word on the C# programming language. The last word may not read like a
+snazzy detective novel, but nor does our book. The more we criticize the
+documentation on grounds of legibility, readability, etc, the more we will
+sound like the pot calling the kettle black. People staying in glass houses
+should not throw stones and we have already thrown enough. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Enums work the way for
+conversions as expected and no point cutting more trees to explain what they
+do. We honestly feel you can spend a lifetime writing C# code and yet not use
+an enum ever. The Java programming language does not use enums and nobody
+misses them ever. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>b = (xxx)a;<o:p></o:p></p>
+
+<p class=Cprg>a = (yyy)b;<o:p></o:p></p>
+
+<p class=Cprg>a = b;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx {<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(9,6): error CS0030: Cannot convert type 'xxx' to 'yyy'<o:p></o:p></p>
+
+<p class=Coutput>a.cs(10,5): error CS0029: Cannot implicitly convert type 'xxx'
+to 'yyy'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We have created a standard
+implicit conversion of a yyy object to an xxx object, as usual, by using the
+operator xxx. An explicit operator is not created as we can use only one of the
+modifiers either implicit or explicit. However, each time we use the implicit
+modifier we get a free explicit one also. Thus the line b = (xxx) a does not
+give us any error. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>It is better to use an implicit
+modifier as it also doubles up for an explicit modifier. Thus, we now
+understand that when we equate a byte to an int, it is an implicit modifier as
+it works with and without a cast. Alas, the reverse is not true. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We wrote a conversion from class
+yyy to class xxx and not from xxx to yyy. The last two lines of main give us an
+error. Nothing in life is free and thus we have to actually write the
+conversion ourselves. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx b = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>b = a;<o:p></o:p></p>
+
+<p class=Cprg>b = (xxx)a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static explicit operator xxx( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,5): error CS0029: Cannot implicitly convert type 'yyy'
+to 'xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Now that we have asked for the
+conversion to be explicit, the statement b = a will give an error. This is
+because we have not used a cast and are implying a conversion. The cast on the
+next line, however, passes the muster as it invokes the explicit operator. To sum
+up in a sentence, the implicit conversion operator is a superset of the
+explicit operator. An explicit modifier is to be used only when the programmer
+is to be compelled to use a cast.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Conversions for the last time -
+we promise.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(11,8): error CS0029: Cannot implicitly convert type 'aaa'
+to 'xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the above program, we have the
+operator xxx that accepts one parameter, yyy, as we are in class yyy. This has
+been made abundantly clear in the past. What we were vague about was the return
+type. Nowhere in the world does it say that the user defined conversion
+operator xxx has to return an xxx type. All that it said is that it should
+return an object that can be converted to an xxx. It does not have to, we
+repeat again, return an xxx object. The class aaa does not convert from an aaa
+object to an xxx object and thus the error is generated.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx x = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>x = a;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx yyy&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( aaa a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx aaa&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>op xxx yyy<o:p></o:p></p>
+
+<p class=Coutput>op xxx aaa<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We now get no errors even if the
+operator xxx from class yyy returns an aaa object. This is because the compiler
+can now convert to an xxx using the operator xxx in class aaa. The end result
+brings an xxx object into being. If the object is being indirectly returned
+then you can discount returning the same type as the operator within a class.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>zzz a = new zzz();<o:p></o:p></p>
+
+<p class=Cprg>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=Cprg>xxx c = new xxx();<o:p></o:p></p>
+
+<p class=Cprg>aaa d = new aaa();<o:p></o:p></p>
+
+<p class=Cprg>a.abc(b);<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public void abc(xxx x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;abc xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public void abc(aaa x)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;abc aaa&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static explicit operator xxx ( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op xxx&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator aaa( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;op aaa&quot;);<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa {<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>op aaa<o:p></o:p></p>
+
+<p class=Coutput>abc aaa<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The function abc is overloaded to
+accept either an xxx or an aaa object. We are passing it however, a yyy object.
+The compiler will first check whether there is some way to convert a yyy object
+to either an xxx or an aaa object. It finds two such operators in the class
+yyy. Therefore it does not give us an error at this point, as the two operators
+are not at the same level of importance for the compiler. One of them, the
+operator aaa is implicit so the compiler gives it a greater importance than the
+explicit operator. Hence, operator aaa gets called. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>If both were implicit, then we
+would get an error as the compiler in confused state will not know which
+operator to call. If both were explicit, a different error results and the
+compiler will not call any. In one case, it is a problem of plenty, and in the
+second case, a problem of scarcity. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Thus an implicit can stand in for
+an explicit but not vice versa. The above statement means that if we explicitly
+cast the object in the function abc to an aaa i.e. a.abc((aaa)b), it would yet
+call the implicit operator aaa in class yyy. However, the converse is not true.
+If we explicitly cast parameter b to a xxx, it will always call the operator
+xxx in class yyy irrespective of the modifier explicit or implicit. In case you
+have a tendency to forget, look at it in this way; an implicit is the elder,
+more intelligent brother and explicit is the younger, less developed brother.
+Implicit is the superset of explicit. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( yyy a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new aaa();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class aaa<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator bbb( aaa a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new bbb();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class bbb<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static implicit operator xxx( bbb a)<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>return new xxx();<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(11,8): error CS0029: Cannot implicitly convert type 'aaa'
+to 'xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>However, the compiler does not go
+far enough for us. It stops short. For various reasons known only to the
+compiler, it does not look beyond a class for user-defined conversions. This
+means that in the above case an error will be generated as within aaa, it will
+only check for an operator that can convert an aaa object into an xxx object. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>But when the compiler digs
+deeper, it finds a way out. The compiler can covert an aaa object to a bbb
+object and then convert that bbb object to an xxx object using the operator xxx
+in class bbb. For some weird reasons, it simply looks at the class and as it
+has no operator xxx, it simply spews out an error. It does not look beyond the
+confines of class aaa thus proclaiming that it has a myopic view.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>By following the above approach,
+it makes it easier for the programmer who wrote the compiler, as he does not
+have to make it any more intelligent. We would have preferred a more
+intelligent companion or compiler on our side. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Before opting for a conversion
+method, the compiler follows a predefined set of rules. It first figures out
+the guest list. This is a list of classes that can contribute an operator. It
+comprises of the source and target classes as well as their base classes. From
+now on, unless otherwise stated, a struct can also be used seamlessly for a
+class. Then, to choose a user defined function, it has to match two conditions.
+First and foremost, the argument/parameter type of the source must match that
+of the operator and more important, the return value of the operator must be
+convertible to the target type. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Now comes the problem. The
+compiler needs to determine which conversion to use, if there are more than one
+matches. The one that most closely matches is the one chosen, bearing in mind,
+that we do not go astray and look into a million classes. Hence, a conversion
+may have to convert the source type to match the parameter of the operator,
+then execute the operator, and finally convert to the return type if necessary.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Some big words again. We want to
+convert from type A to type B both don't fall under interface types. If we use
+implicit conversion, then type A is said to be encompassed by type B and B
+encompasses type A. Very well said ! <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><b><span style='font-size:14.0pt;font-family:Tahoma;color:windowtext'>Numeric
+Promotions<o:p></o:p></span></b></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Take a look at this:<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>int operator *(int x, int y);uint
+operator *(uint x, uint y);long operator *(long x, long y);ulong operator
+*(ulong x, ulong y);float operator *(float x, float y);double operator *(double
+x, double y);decimal operator *(decimal x, decimal y);<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We cheated. We found out that the
+multiplication operator * is not defined once but overloaded seven times as
+seen above. If you observe the above seven carefully, you will realize that
+there is no overload to multiply a byte and a short. If we had all permutations
+and combinations of numeric types, we would have to write a million such
+operator overloads. Coming back to our earlier example. The compiler would
+convert our byte and short to an int as they both can be converted to ints. One
+more reason to this is that the first operator on the above list accepts two
+ints. However, if we had to multiply a double and an int, both would be
+converted to a double and the second last operator would be called. The
+compiler will try its best to find a match higher in the hierarchy in case of
+any in dissimilarities.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Unary operator promotions apply
+only to three operators +, - and ~. All that they do is convert sbyte, byte,
+short, ushort or char to an int. As simple as that. Thus if we write a unary
+plus operator on a byte, the byte gets automatically promoted to an int. The
+unary - goes a step further, it also converts a uint to a long.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Binary promotions also work in a
+similar way. There are however many more binary operators than any of the other
+two types of operators. To jog your memory, we<span style="mso-spacerun: yes"> 
+</span>reproduce the binary operators once again. +, -, *, /, %, &amp;, |, ^,
+==, !=, &gt;, &lt;, &gt;=, and &lt;=. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The rules of binary promotion are
+as follows in the order specified. First the compiler checks if any of the
+operands is of type decimal. If it is, the other operand is now converted to a
+decimal. But if the other operand happens to be float or a double, an error
+results. This concludes that we cannot have a binary operation performed on a
+decimal and a float or double. C# does not like the above potent combination.
+If you cast, all is forgiven. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The mystery as to why C# first
+checks for decimal operands is yet not resolved. If none of the operands is a
+decimal, the compiler checks with it can now see a double. If it does, it
+converts the other to a double. If none of the parameters are a double it
+checks if one of them is a float. If affirmative, then it gets converted to a
+float. This completes the numbers with decimal places. It then checks if the
+other parameter is a ulong. If yes, the other parameter is converted to a ulong,
+if and only if it is not a sbyte, short, int or long. If it is we get an error
+as usual. Then it checks for a long and converts the other operand to a long.
+No complications as in the case of a ulong. The compiler also checks for a uint
+as one parameter and the other a sbyte, short or int. If true, then hold your
+horses as both parameters are converted to a long and not a uint. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Whatever happened to rationality
+and consistency? Why did change only for a uint. If one of them is a uint
+and<span style="mso-spacerun: yes">  </span>the other not a decimal, float,
+short etc, then we follow the old golden rules and both are converted to a
+uint. This means a uint and byte in a binary operator, the byte becomes a uint.
+Finally, if none apply, both parameters become an int. This applies not to user
+defined operators but in expressions. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>To reiterate some of the
+restrictions; we cannot mix decimal with double and float types. A complete
+no-no as there are no implicit conversions defined between these type. We
+cannot mix and match a ulong with any signed integral type. The reason being
+there exists no third data type that can represent the range of a ulong and a
+signed data type at the same time. This explains the caveats mentioned earlier
+for a ulong.<span style="mso-spacerun: yes">       </span><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>double i = 1.3;<o:p></o:p></p>
+
+<p class=Cprg>decimal j = 1.2;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(i+j);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(6,13): error CS0664: Literal of type double cannot be
+implicitly converted to type 'decimal'; use an 'M' suffix to create a literal
+of this type<o:p></o:p></p>
+
+<p class=Coutput>a.cs(7,26): error CS0019: Operator '+' cannot be applied to
+operands of type 'double' and 'decimal'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>By default a number with a
+decimal place is a double. We cannot equate a double to a decimal or add a
+decimal and a double as discussed earlier. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>double i = 1.3;<o:p></o:p></p>
+
+<p class=Cprg>decimal j = 1.2m;<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(i+(double)j);<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine((decimal)i+j);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>2.5<o:p></o:p></p>
+
+<p class=Coutput>2.5<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>A number ending with m becomes a
+decimal number. Also, we can cast a decimal to a double and vice versa and the
+compiler shows thumbs up. Casting can accomplish anything you can dream up. It
+can convert raw dirt into gold only if you learn to say please the right way. <o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static int implicit operator (zzz f) <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,15): error CS1553: Declaration is not valid; use
+'implicit operator &lt;dest-type&gt; (...' instead<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The compiler loves things being placed in the right order.
+For a conversion operator, the order is access modifier, then static, followed
+by implicit or explicit and then the name of the operator to convert to. This
+order<span style="mso-spacerun: yes">  </span>cannot be changed under any circumstance.
+May be it's times for the compiler to get off its high horse, wot?</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:40:59 GMT -->
+</html>

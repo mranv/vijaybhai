@@ -1,0 +1,1330 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center">
+  <tr> 
+    <td height="24152" align="center" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC"> 
+            <div align="center"><b><font size="+1">2. Animation - Threads And 
+              Exceptions</font></b></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Introduction</p>
+      <p>In the previous chapter, we introduced you to the methods paint() and 
+        repaint() which are the foundation of graphical display in Java. These 
+        methods allow your Java programs to display images, shapes, colors etc. 
+        We saw how it can be used to draw a simple line. In this chapter, we will 
+        introduce you to Animation using Java. Animation has many uses, from dramatic 
+        web pages to exciting games. Java animation is superior to things like 
+        animated GIF files because it provides dynamic interaction instead of 
+        just a static performance. Here, you will learn how to animate image files. 
+        This chapter also introduces the concept of threads and exceptions.</p>
+      <p>But before we get down to animation, there are a few more functions that 
+        you need to learn.</p>
+      <p>The following program introduces a new function called getCodeBase.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        System.out.println(getCodeBase());<br>
+        }<br>
+        }</p>
+      <p><br>
+        The init function calls System.out.println. Here, instead of passing a 
+        string we are giving a function- getCodeBase as a parameter. getCodeBase 
+        already exists within the Applet class as a function. getCodeBase returns 
+        the location of the applet class i.e. the sub directory which contains 
+        the code of the applet.<br>
+        <br>
+        C:\javaprg&gt;javac zzz.java</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>file:/C:/javaprg/</p>
+      <p>We once came across graffiti that said, &quot;You can't fool me, I'm 
+        too stupid!!&quot; But we intend no folly here! </p>
+      <p>Let's understand the output. </p>
+      <p>Our applet is based on our local machine and hence it says file: We are 
+        on a windows machine in C: drive within the javaprg subdirectory. This 
+        is the location from where the applet code has been picked up. Had the 
+        applet been picked up from another site, getCodeBase would have returned 
+        a url (uniform resource locater). A url or a uri (uniform resource identifier) 
+        identifies some resource. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        java.util.Date d;<br>
+        d = new java.util.Date();<br>
+        System.out.println(d);<br>
+        }<br>
+        }</p>
+      <p>In the previous programs, when we declared a variable int ii, we were 
+        actually creating an object ii that looked like an int. In this program, 
+        java.util.Date d will create a variable called d that looks like java.util.Date. 
+        We decided not to have the import statement for Date, hence the longish 
+        name. You can rewrite the code with Date and the line import java.util.* 
+        on the top. </p>
+      <p>There is a difference between saying Date d and int i. A variable gets 
+        created as an object if its data type is int, char or long. These data 
+        types are built into programming languages like C and C++. In such a case 
+        the object is created at the time of its declaration. Anything other than 
+        the basic data types must be explicitly created. Java implements the same 
+        rules.</p>
+      <p>Thus when we say d looks like Date, we are not creating an object that 
+        looks like Date. Here the object is declared to be of Date type and will 
+        be created in the future. </p>
+      <p>Let's understand how we can create objects ourselves.</p>
+      <p>To create an object other than the basic types, languages like C++ utilized 
+        the word new. Java follows the same route and uses new as well. The next 
+        line in our program uses new to create the object d. The keyword new requires 
+        the name of the class which in this case is java.util.Date. </p>
+      <p>d now becomes an instance or an occurrence of the class Date. Date is 
+        given with the round brackets because that is part of Java's syntax. The 
+        println function with d as a parameter will display the current date and 
+        time at which we ran the applet. </p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>Fri Apr 28 19:52:31 GMT+05:30 2000</p>
+      <p>In the previous chapter, we used the paint function extensively. We also 
+        had g that looked like Graphics and if you recollect we did not use new 
+        Graphics() anywhere. The reason for this is that whoever called paint 
+        had already created an instance of Graphics and passed it as a parameter. 
+        Hence we were spared effort of doing so ourselves.<br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n;<br>
+        public void init()<br>
+        {<br>
+        n = getImage(getCodeBase(),&quot;T1.gif&quot;);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n,10,40,this);<br>
+        }<br>
+        }</p>
+      <p>This program introduces an additional class called Image. n looks like 
+        Image. Every class has code as does Image which has its own code and its 
+        own set of variables. This class handles images. getImage is a function 
+        that requires a location from where the image file can be picked up. So 
+        the first parameter is the location and the second parameter is the name 
+        of the graphics file. The function getCodeBase returns the location of 
+        the applet.</p>
+      <p>For this program, you need a gif file called T1.gif which must be placed 
+        in the same directory as that of the applet. T1.gif comes with the Java 
+        development kit. T1.gif can be found by doing the following: go to the 
+        jdk1.2.2 subdirectory, there you will find many directories one of which 
+        is named demo. From demo, go to applets, which will take you to animator. 
+        One of the subdirectories here is named images, which has beans and within 
+        beans lies T1.gif. The T series starts from T1 and goes up to T10. We 
+        recommend you copy all of them to your current directory, which in our 
+        case is c:\javaprg. <br>
+        getImage returns an image which is stored in n. That means this function 
+        internally performs a new Image and returns an object that looks like 
+        Image. In our current program, n represents an image T1.gif. Just as drawLine 
+        and drawString are functions in the Graphics class and to call them we 
+        say g.drawString and g.drawLine, the same applies to the drawImage function. 
+        It is also to be found within the Graphics class. drawImage takes 4 parameters. 
+        The dot separates the name of the object from the name of the function.</p>
+      <p>The first parameter to the drawImage function is an image, the second 
+        is the x coordinate, the third is the y coordinate and the last one is 
+        a instance of an object. n in our program represents the image T1.gif 
+        which is to be displayed. The next two are the locations on the screen 
+        where we want the image to appear and finally we have the word 'this'.</p>
+      <p>'this' is a reserved word; it is a part of the Java programming language. 
+        In our code it stands for two things, either zzz or applet. 'this' stands 
+        for the current class or the class that you are extending from. So if 
+        Applet has been extended from two or three or more classes then it stands 
+        for them too. drawImage requires an instance of a class i.e. an object 
+        and hence we provide it as the last parameter by saying 'this'; which 
+        means zzz or Applet.</p>
+      <p>After running the applet you will see the image T1.gif displayed in the 
+        appletviewer.<br>
+        <br>
+        The next program is similar to the earlier one. This program proves that 
+        strings and images are all treated in the same manner. This may seem strange 
+        at first, but you'll soon get used to the idea.</p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n;int x = 19,y=76;<br>
+        public void init()<br>
+        {<br>
+        n = getImage(getCodeBase(),&quot;T1.gif&quot;);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n,x,y,this);<br>
+        }<br>
+        public boolean mouseDown(Event e , int x1 ,int y1)<br>
+        {<br>
+        x = x1; y = y1;<br>
+        repaint();<br>
+        return true;<br>
+        }<br>
+        }<br>
+        In this program, we have used drawImage instead of drawString. Whenever 
+        the mouse is clicked in the window, x and y get initialized to the click 
+        position. repaint() calls the paint function which in turn draws the image 
+        where the mouse is clicked. Thus the image follows the mouse click.</p>
+      <p>Loops</p>
+      <p>The if statement is the bedrock of programming because it gives intelligence 
+        and decision power to a language. The second major part of any programming 
+        language is a looping construct. In Java, the for statement allows you 
+        to repeat computer programming statements. However, you already know that 
+        we can enclose statements within a block, thus it also allows repetition 
+        of multiple statements. </p>
+      <p>This next program should clarify this.<br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        int i;<br>
+        for ( i = 1; i&lt;= 10; i = i + 1)<br>
+        {<br>
+        System.out.println(&quot;Hi &quot;+i);<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>The for statement has 2 semicolons. The statement upto the first semicolon 
+        is executed only once. For the first time i.e. only once is i initialized 
+        to 1. The statement enclosed within the first and second semicolon is 
+        a condition. The condition checks whether i &lt;= 10 evaluates to true. 
+        Since this condition evaluates to true, the statements within the open 
+        and the close brackets will be executed. If the condition evaluates to 
+        false, all these statements are skipped and the loop terminates. Here, 
+        since the for loop is required to execute only a single statement, the 
+        '{}' brackets are optional. This rule is applicable here too. The variable 
+        i has a value 1 which is less than 10, so System.out.println will be called 
+        and it will display hi 1. After all the statements within the block are 
+        executed, the last part of the for is executed. i=i+1 will increase the 
+        value of i by 1, making its new value 2. The condition is checked again, 
+        is 2 &lt;= 10? The answer here is true so hi 2 is displayed. Now i is 
+        incremented once more and now becomes 3. The condition 3 &lt;= 10 is again 
+        evaluated to true or false and this goes on till the condition is false. 
+        When i has the value 11, the condition checked is, 11 &lt;= 10, which 
+        is false. The for terminates and the remaining lines of the program after 
+        the for block are executed. This is how the for statement enables the 
+        repetition of code. When we leave the for statement the value of i will 
+        be 11. </p>
+      <p>The while lopp is similar to the for loop. <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        int i;<br>
+        i = 1;<br>
+        while ( i&lt;= 10 ) <br>
+        {<br>
+        System.out.println(&quot;Hi &quot;+i);<br>
+        i = i + 1;<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>The while loop only takes a condition, hence the variable i is initialized 
+        to 1 before entering the loop. The condition checks if i &lt;= 10 evaluates 
+        to true. Currently the value of i is 1. The condition evaluates to true 
+        and the statements within the curly braces are executed. System.out.println 
+        is called with Hi and i. The next most important thing to do is increment 
+        the value of i or else it will have the same value and the loop will go 
+        on indefinitely.</p>
+      <p>You may ponder over the question, &quot;Should I use for or while?' After 
+        all, the for loop is similar to the while loop. To answer your question 
+        is &quot;On Mondays, Wednesdays, Fridays use for and on Tuesdays, Thursdays, 
+        Saturdays use while. Take a break on Sundays; nobody works on Sundays&quot;. 
+        Alternatively &quot;Toss a coin. If it's heads use while and if it's tails, 
+        don't use for&quot; ;-) </p>
+      <p>This is the biggest problem regarding computer programming. There are 
+        multiple ways of doing the same thing. Both while and for do the same 
+        thing. The middle parameter of the for statement and the condition in 
+        while loop are basically the same. It is entirely up to you to choose 
+        one.</p>
+      <p>The next program creates an infinite loop using the while statement. 
+      </p>
+      <p>The while condition simply says true. The condition will never evaluate 
+        to false and hence the loop will go on indefinitely. <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        int i;<br>
+        i = 1;<br>
+        while ( true ) <br>
+        {<br>
+        System.out.println(&quot;Hi &quot;+i);<br>
+        i = i + 1;<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>Arrays</p>
+      <p>All programming languages implement arrays. An array is just another 
+        entity. For e.g., all the people born in India can be said to belong to 
+        a single array named India. They are all parts of a single whole. The 
+        concept of an array is very flexible and like beauty, lies in the eyes 
+        of the beholder.</p>
+      <p>Here is the simplest example on arrays.<br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        int n[]; <br>
+        int i = 0;<br>
+        public void init()<br>
+        {<br>
+        n = new int[4];<br>
+        n[0] = 10;<br>
+        n[1] = 20;<br>
+        n[2] = 30;<br>
+        n[3] = 40;<br>
+        for (i=0; i &lt; 4; i++)<br>
+        System.out.println(n[i]);<br>
+        }<br>
+        }<br>
+        C:\javaprg&gt;javac zzz.java</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>10<br>
+        20<br>
+        30<br>
+        40</p>
+      <p>The init function contains int n[ ]. The [ ] tells us that the variable 
+        is an array. Here n is an array of ints. int i is another variable. At 
+        this point it is not known how large the array will be. So on the next 
+        line we give n = new int[4]. This will create 4 variables called n[0], 
+        n[1], n[2] and n[3]. These variables now need to be initialized and we 
+        do this by giving every variable its own value. n[0]is initialized to 
+        10, n[1] to 20 and so on. The only change from earlier programs is that 
+        we have created 4 int's in one step and they have names like n[0] and 
+        so on.</p>
+      <p>The for loop is used to display these variables. At first i is initialized 
+        to 0. The condition i&lt;4 indicates that the loop will execute 4 times. 
+        System.out.println (n[i]), for the first time, will be System.out.println(n[0]), 
+        hence it will display 10. In the next round, i will be 1 hence System.out.println(n[1]) 
+        will display 20 and so on. In System.out.println, it is not specifically 
+        stated which variable, instead we have said n[i]. There is no variable 
+        called n[i], but each time the loop executes i gets a new value ranging 
+        from 0 to 3. Arrays are thus suited for loops as we can use a variable 
+        i to decide the name of the array variable and thus its value. So one 
+        variable's value decides the name of another variable. This extra layer 
+        of abstraction allows us to create complex programs.</p>
+      <p>Doing this makes our programs more generic. We haven't specifically named 
+        each variable, instead we're using another variable to form the name.</p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n[]; int i = 0;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[4];<br>
+        n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);<br>
+        n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);<br>
+        n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);<br>
+        n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        }</p>
+      <p>This program creates an array name n of type Image. n is an array of 
+        images. But how many images? n= new Image[4] determines the number of 
+        images i.e. it creates an array 4 images. They are initialized individually. 
+        drawImage is given the first parameter as n[i]. Remember, the value of 
+        i is 0 thus we see the image which is stored in n[0]; in this case, T1.gif. 
+      </p>
+      <p>This goes to prove that what we did for ints is also applicable to images. 
+        The same rules apply. </p>
+      <p>In the following program, each time the mouse is clicked, i is incremented 
+        by 1 and then the paint function is called. </p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n[]; int i = 0;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[4];<br>
+        n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);<br>
+        n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);<br>
+        n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);<br>
+        n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public boolean mouseDown(Event e , int x1 ,int y1)<br>
+        {<br>
+        i++;<br>
+        repaint();<br>
+        return true;<br>
+        }<br>
+        }</p>
+      <p>The first time you see image n[0], then n[1], then n[2] and then n[3]. 
+        But the moment i becomes 4, drawImage takes the first parameter as n[4]. 
+        Since our array is not large enough, thus when you go back to the dos 
+        screen you will see a screen full of errors. </p>
+      <p>Let's see what we can do to prevent these errors.<br>
+        <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n[]; int i = 0;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[4];<br>
+        n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);<br>
+        n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);<br>
+        n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);<br>
+        n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public boolean mouseDown(Event e , int x1 ,int y1)<br>
+        {<br>
+        i++;<br>
+        if ( i == 4)<br>
+        i = 0;<br>
+        repaint();<br>
+        return true;<br>
+        }<br>
+        }</p>
+      <p>Here, we are making sure that when the variable i becomes 4, it is re-initialized 
+        to 0. Thus as you keep clicking in the window, i gets a new value which 
+        is within the limits of the array size and the images keep changing. </p>
+      <p>Using this concept, let's animate the 10 pictures that you copied into 
+        your current directory. The pictures range from T1 to T10. Since there 
+        are 10 pictures, if you click in the window fast enough you will see different 
+        pictures displayed each time, resulting in animation. The following program 
+        demonstrates this.</p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        Image n[]; int i = 0;int j = 1;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[10];<br>
+        for ( i = 0; i &lt;= 9 ; i++)<br>
+        {<br>
+        n[i] = getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);<br>
+        j++;<br>
+        }<br>
+        i = 0;<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public boolean mouseDown(Event e , int x1 ,int y1)<br>
+        {<br>
+        i++;<br>
+        if ( i == 10)<br>
+        i = 0;<br>
+        repaint();<br>
+        return true;<br>
+        }<br>
+        }</p>
+      <p>At first, an array of 10 images is created and n now stands for the array 
+        of 10 images. Initializing the variables individually is tedious, so we 
+        use a for statement. i is initialized to 0 at the start of the loop. The 
+        condition in the for statement evaluates to false when i becomes 10. Thus 
+        the value of i increases by 1 each time control enters the loop. There 
+        is no variable called n[i], thus when i is 0 the variable becomes n[0] 
+        and when i is 9 the variable becomes n[9]. </p>
+      <p>Another variable called j is used to change the filenames. When the variable 
+        name is n[0] the gif file will be T1.gif. Therefore, we initialize j to 
+        1 and each time j++ is encountered, its value is increased by 1. To give 
+        the filename, we simply use the + sign to add the different parts of the 
+        name. So when j is 1, the filename given as &quot;T&quot;+j+&quot;.gif&quot; 
+        will become T1.gif. We could have avoided the use of j and simply used 
+        i by initializing it to 1 instead of 0, but that leads to unnecessarily 
+        complicated code. Also remember that array variable names begin with 0 
+        and the images names start at 1. The rest of the code remains the same.</p>
+      <p><br>
+        In a nutshell, within the for we have initialized 10 variables to 10 different 
+        images and whenever we click with the mouse, paint is called with a new 
+        value in i. When i becomes 10, it is reinitialized to 0. Thus any code 
+        that is repeated can be replaced by a for statement.</p>
+      <p>Interface</p>
+      <p>Let's get back to the basics of Java. The first program had public class 
+        zzz extends Applet. Extends brings the existing code from Applet into 
+        zzz. zzz is called the derived class and Applet the base class.</p>
+      <p>In the code given below we are saying zzz implements runnable. The minute 
+        we say implements runnable and run javac, it comes back with an error 
+        saying 'class zzz must be declared abstract'. </p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:3: class zzz must be declared abstract. It does not define void 
+        run() from interface java.lang.Runnable.<br>
+        public class zzz extends Applet implements Runnable<br>
+        ^<br>
+        1 error</p>
+      <p>Let's keep this aside for the moment and create a new file yyy.java in 
+        the same sub directory. </p>
+      <p><br>
+        yyy.java<br>
+        public class yyy implements xxx<br>
+        {<br>
+        }</p>
+      <p>Here we have a class called yyy and we say implements xxx. Run the program 
+        by saying javac yyy.java. It returns with an error saying that while it 
+        doesn't know what xxx is, it suspects that xxx must be an interface. </p>
+      <p>C:\javaprg&gt;javac yyy.java</p>
+      <p>yyy.java:1: Interface xxx of class yyy not found.<br>
+        public class yyy implements xxx<br>
+        ^<br>
+        1 error</p>
+      <p>So create xxx.java and write the following code. Don't put anything between 
+        the curly braces. </p>
+      <p>xxx.java<br>
+        public interface xxx<br>
+        {<br>
+        }</p>
+      <p>Compile xxx.java. You won't see any errors. Now compile yyy.java. Surprisingly 
+        this time too you get no errors. But this does not seem to make things 
+        any clearer, so lets go back to xxx.java. </p>
+      <p>If you don't see the same output while trying out code, you will just 
+        have to set the classpath as follows. </p>
+      <p>c:\javaprg&gt;set classpath=.;%CLASSPATH%</p>
+      <p>The compiler looks into the directories specified in the classpath variable. 
+        The classpath tells the compiler where to look for xxx. If it doesn't 
+        find xxx, it gives an error. Here, by saying '.' we tell javac to look 
+        in the current directory. Classpath is an environmental variable which 
+        informs the java compiler about either the sub directories within which 
+        it should search for .class files or specifies the full names of the actual 
+        .class files. </p>
+      <p>In xxx.java, add public void abc(); within curly braces, just as we have 
+        done below. </p>
+      <p>xxx.java<br>
+        public interface xxx<br>
+        {<br>
+        public void abc();<br>
+        }</p>
+      <p>Note that function abc has public void in front of it and followed by 
+        a semicolon. This indicates that we are neither creating a function nor 
+        calling a function. Then what is it? This is a function prototype and 
+        we place them in interfaces, and elsewhere as well. When we compile xxx.java, 
+        it won't show any errors. A function prototype contains no code whatsoever. 
+        Compile xxx.java again.</p>
+      <p>Now go back to yyy.java and say javac yyy.java. This results in an error 
+        as shown before. </p>
+      <p>C:\javaprg&gt;javac yyy.java</p>
+      <p>yyy.java:1: class yyy must be declared abstract. It does not define void 
+        abc() from interface xxx.<br>
+        public class yyy implements xxx<br>
+        ^<br>
+        1 error</p>
+      <p>With implements runnable, the error message was</p>
+      <p>zzz.java:3: class zzz must be declared abstract. It does not define void 
+        run() from interface java.lang.Runnable.</p>
+      <p>An interface only contains function prototypes. When we use extends, 
+        we are merging the code of the extended class with the current class. 
+        With implements this does not happen. An implemented class may have one 
+        or a hundred function prototypes. All these functions must be included 
+        in the current class because it implements another class and if you don't 
+        do so, you will get an error.</p>
+      <p>xxx has the prototype of the function abc, so you have to write this 
+        function within zzz. You may or may not put any code in it. When you do 
+        so, the error vanishes. </p>
+      <p>yyy.java<br>
+        public class yyy implements xxx<br>
+        {<br>
+        public void abc()<br>
+        {<br>
+        }<br>
+        }</p>
+      <p>In the next program, xxx.java comprises of two function prototypes. The 
+        newly introduced function pqr takes one parameter which is int i. If you 
+        don't give the variable a name it will give an error. Compile the program 
+        and you will not get any errors.</p>
+      <p>yyy implements xxx hence pqr is included in yyy. But here the name of 
+        the variable can be different, it doesn't have to be called i. <br>
+        xxx.java<br>
+        public interface xxx<br>
+        {<br>
+        public void abc();<br>
+        public void pqr(int i);<br>
+        }</p>
+      <p>yyy.java<br>
+        public class yyy implements xxx<br>
+        {<br>
+        public void pqr(int j)<br>
+        {<br>
+        }<br>
+        public void abc()<br>
+        {<br>
+        }<br>
+        }</p>
+      <p>An interface must always be implemented and is thus different from a 
+        class. A class has function code whereas interfaces contain only function 
+        prototypes. Any class implementing an interface must have the code for 
+        the function whose prototype is specified in the interface. This is to 
+        guarantee that code is present for the interfaced functions within a class. 
+        When you extend a class you get stuff for free but when you use implements 
+        you have to write code yourself. If a person is an engineer, we know exactly 
+        what his capabilities are and he knows exactly what to do. Similarly, 
+        when you implement from a class it knows exactly what it has to do. </p>
+      <p>An interface is like a contract. Hence if Runnable as an interface has 
+        a 100 functions then we would have to write the code for all the 100 functions. 
+        If we do not, then the java compiler will give us errors.</p>
+      <p>Constructors</p>
+      <p>Make sure that your program matches the following where the class zzz 
+        calls new xxx(). Also create a public class called xxx in xxx.java </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        new xxx();<br>
+        }<br>
+        }</p>
+      <p><br>
+        xxx.java<br>
+        public class xxx<br>
+        {<br>
+        }</p>
+      <p>Compile both, first obviously xxx and then zzz. You won't see any errors. 
+        At times, you don't need to compile both the Java files. If you have the 
+        Java file then the compiler automatically compiles xxx.java if it is present 
+        in the current directory; but it is advisable to compile both. </p>
+      <p>Now add a function name xxx to the class xxx as we have done below. Run 
+        the applet and nothing spectacular will happen. However, when you close 
+        the window, &quot;In const&quot; is displayed in the DOS box.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        new xxx();<br>
+        }<br>
+        }</p>
+      <p>xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx()<br>
+        {<br>
+        System.out.println(&quot;In const&quot;);<br>
+        }<br>
+        }</p>
+      <p>The appletviewer calls init in zzz and executes new xxx( ). To execute 
+        this statement, it first loads xxx.class and checks for a function with 
+        the same name as the name of the class, in this case xxx. Since there 
+        is a function by that name, Java executes this function. So we see 'In 
+        const' on the screen. <br>
+        A constructor is a function whose name is the same as the name of the 
+        class. You can't call a constructor; it is called when an instance of 
+        the class is created with the new command. If you try to call the constructor 
+        directly, you will get an error.</p>
+      <p>Now rewrite the constructor as int xxx(). <br>
+        xxx.java<br>
+        public class xxx<br>
+        {<br>
+        int xxx()<br>
+        {<br>
+        System.out.println(&quot;In const&quot;);<br>
+        return 1;<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;javac xxx.java</p>
+      <p>xxx.java:6: 'return' with value from constructor: xxx()<br>
+        return 1;<br>
+        ^<br>
+        1 error</p>
+      <p>The program will now give an error because constructors can't return 
+        values. Ask yourself, when is the constructor called? The constructor 
+        is called at the time the object is being created. In our case it is called 
+        when we say new xxx. If the constructor is to return a value then to whom 
+        should it return the value? The object after all has not yet been created. 
+        As such constructors cannot return values. </p>
+      <p>Now within zzz.java, say new xxx(100), as we have done below. Don't make 
+        any changes to xxx.java as yet.<br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        new xxx(100);<br>
+        }<br>
+        }</p>
+      <p>xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx()<br>
+        {<br>
+        System.out.println(&quot;In const &quot;+h);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:7: Wrong number of arguments in constructor.<br>
+        new xxx(100);<br>
+        ^<br>
+        1 error</p>
+      <p>The constructor in class xxx takes no parameters. Hence we get an error. 
+        The only way to eliminate the error is by saying xxx(int h) i.e. we are 
+        creating a constructor with one parameter. We display the value of h by 
+        concatenating it with &quot;In const &quot;.<br>
+        xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx(int h)<br>
+        {<br>
+        System.out.println(&quot;In const &quot;+h);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>In const 100</p>
+      <p>Now go back to your program and say new xxx(); you will get an error. 
+        <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        new xxx();<br>
+        }<br>
+        }</p>
+      <p>xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx(int h)<br>
+        {<br>
+        System.out.println(&quot;In const &quot;+h);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;javac zzz.java<br>
+        zzz.java:7: No constructor matching xxx() found in class xxx.<br>
+        new xxx();<br>
+        ^<br>
+        1 error</p>
+      <p>Bet you didn't expect this error! Earlier when you had new xxx() without 
+        the constructor, there was no error triggered. In the second example, 
+        you added the constructor and the constructor was called. Now however, 
+        when you say new xxx(), and within the class xxx you have a constructor 
+        with one parameter, you get an error. The rule is that if you have no 
+        constructors then you will receive one for free, the compiler within the 
+        xxx class will actually write xxx() { } for you. But if you have even 
+        one constructor then the free one is taken away. In order to remove the 
+        error you will now need two constructors. This is shown in the following 
+        program.</p>
+      <p><br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        new xxx();<br>
+        }<br>
+        }</p>
+      <p>xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx()<br>
+        {<br>
+        }<br>
+        xxx(int h)<br>
+        {<br>
+        }<br>
+        }<br>
+        <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        xxx x;<br>
+        System.out.println(&quot;No&quot;);<br>
+        x=new xxx();<br>
+        }<br>
+        }</p>
+      <p>xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx()<br>
+        {<br>
+        System.out.println(&quot;In constructor&quot;);<br>
+        }<br>
+        }</p>
+      <p>Output<br>
+        No<br>
+        In constructor</p>
+      <p>In this program, we have an object x that looks like xxx. At this point, 
+        the constructor is not being called. System.out.println displays 'No'. 
+        Now we have x=new xxx(); This is the point where the constructor is called. 
+        It is only when we say new that the object is created. And only when the 
+        object is created is the constructor called. </p>
+      <p>Constructors cannot be called directly. In the following program we try 
+        to call the constructor by saying x.xxx(); This will give us an error.</p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        xxx x;<br>
+        System.out.println(&quot;No&quot;);<br>
+        x=new xxx();<br>
+        x.xxx();<br>
+        }<br>
+        }<br>
+        xxx.java<br>
+        public class xxx<br>
+        {<br>
+        xxx()<br>
+        {<br>
+        System.out.println(&quot;In constructor&quot;);<br>
+        }<br>
+        }<br>
+        It says that Method xxx() is not found in class xxx. Thus you cannot explicitly 
+        call a constructor.</p>
+      <p>The next program introduces threads. Here we have included Thread(this). 
+      </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        Thread t;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        }<br>
+        }</p>
+      <p>t is a variable that looks like Thread. new Thread (this) will create 
+        an object that looks like Thread and saves it in t. To create the object, 
+        the constructor with one parameter in the Thread class is called. This 
+        constructor is being passed one parameter called 'this'. 'this' in this 
+        case stands for zzz or Applet.</p>
+      <p>This program is similar to the earlier ones. On compiling, we get an 
+        error.</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:7: Incompatible type for constructor. Explicit cast needed to 
+        convert zzz to java.lang.Runnable.<br>
+        t = new Thread(this);<br>
+        ^<br>
+        1 error</p>
+      <p>The thread constructor requires Runnable as a parameter. 'this' in our 
+        program represented zzz or Applet, hence the error. The only option left 
+        is to extend the class from Applet and to implement Runnable. </p>
+      <p><br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Thread t;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:2: class zzz must be declared abstract. It does not define void 
+        run() from interface java.lang.Runnable.<br>
+        public class zzz extends Applet implements Runnable<br>
+        ^<br>
+        1 error</p>
+      <p>If you stop here you will get another error. Runnable is an interface 
+        and it has one function called run, which hasn't been implemented in the 
+        class. In the next program, we have added run and within it we are calling 
+        the System.out.println function. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Thread t;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        System.out.println(&quot;hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>This program doesn't give us any errors but when you run the program 
+        nothing happens either! </p>
+      <p>To call run, we have to say t.start() where start is a function in Thread. 
+        Add this function to your program. Now when you run the program you will 
+        see hi displayed in the dos box.</p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Thread t;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        System.out.println(&quot;hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>C:\javaprg&gt;appletviewer a.html</p>
+      <p>hi</p>
+      <p><br>
+        Here, the function run is called only once. If you use a while loop and 
+        give the condition as true, the loop will go on infinitely. This is demonstrated 
+        in the following program. <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Thread t;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        while ( true )<br>
+        {<br>
+        System.out.println(&quot;hi&quot;);<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>This also confirms that 'start' in the Thread class calls run(). </p>
+      <p>You have used a class called Thread in your program but what is a Thread? 
+        The following program will make this concept much clearer. </p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Thread t; int i = 0;Button b;<br>
+        public void init()<br>
+        {<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        b = new Button(&quot;No&quot;);<br>
+        add(b);<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawString(&quot;hi &quot; + i,1,20);<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        while ( true )<br>
+        {<br>
+        i++;<br>
+        repaint();<br>
+        }<br>
+        }<br>
+        public boolean mouseDown(Event e , int x , int y)<br>
+        {<br>
+        b.reshape(x,y,80,50);<br>
+        return true;<br>
+        }<br>
+        }</p>
+      <p>Let's walk through this code and examine how it works.</p>
+      <p>A thread called t is created; t.start will call run. run contains an 
+        infinite while loop which increments the value of i. The loop contains 
+        the repaint function and therefore the paint function will be called. 
+        In paint, drawString will display the value of i. Now that we have understood 
+        one part of the program, let's move onto the other.</p>
+      <p>Then we have b that looks like Button. We create this object by saying 
+        new Button (&quot;no&quot;); nothing happens here because we have simply 
+        created an object that looks like a button and given it a parameter 'no'. 
+        The add function is a part of Applet and it takes one parameter. So when 
+        you say add(b), you will see a button with the label 'no'. </p>
+      <p>Each time you click in the window, mouseDown will be called. This function 
+        calls reshape, which is part of the button class and hence we can say 
+        b.reshape. reshape takes 4 parameters; x,y is the location where the button 
+        will be drawn and the next two parameters, 80 and 50, specify the width 
+        and height of the button. Thus the button obediently follows every click 
+        in the window. Simultaneously, drawString also does its job of displaying 
+        the new value for i. </p>
+      <p>The crux of the program is that you can do two things at the same time 
+        and this is made possible by using threads.</p>
+      <p>Today, any computer in the world is by far faster than a human being 
+        in terms of thinking as well as work. It is a lot faster than a hard disk 
+        or a floppy disk.</p>
+      <p>Windows is said to be a multi-tasking operating system. In other words, 
+        it can handle multiple jobs at the same time, allowing you to run more 
+        than one program at a time.</p>
+      <p>Let us assume you are using Microsoft Word and have given the save command 
+        to save a file. If this file is a 50 megabytes large, Word will take a 
+        long time to save it. Assuming it takes half an hour, what should you 
+        do in the meantime? While the file is being saved, you should be able 
+        to run any other program. </p>
+      <p>To tackle these issues, every time you run a program under any operating 
+        system like Windows or Linux, the operating system will run it in its 
+        own thread. A thread is an abstract entity; it is code being executed. 
+        Let us assume that in one minute i.e. 60 seconds of time, and you have 
+        3 programs or 3 threads running simultaneously and each is allocated 20 
+        seconds. This is all hypothetical because in real life, no thread would 
+        be given 20 seconds at a stretch. The OS switches between threads so fast 
+        that you won't notice it at all, nor would you believe that the same computer 
+        is handling 3 different programs at the same time. </p>
+      <p>Thus when you save a file in Microsoft Word under MS Windows by clicking 
+        on File - Save, Word starts a new thread. If you have 3 programs running 
+        concurrently with the save command, there will now be 4 threads. Now the 
+        time slice will be 15 secs per minute to every program/thread. So while 
+        the thread saves the file, the main thread in which Word operates too 
+        can continue with its work. That is, you can use word as before.</p>
+      <p><br>
+        Our Java program already operates in a thread. The mouseDown event is 
+        captured in this thread. By creating an object that looks like Thread, 
+        a new thread is created which calls run. run calls paint which displays 
+        the values. This is how two jobs can be done at the same time. The run 
+        function is only called once, while the while loop will run on forever.</p>
+      <p>In the previous chapter, we had a program where the image followed the 
+        mouseclick. What we did earlier in mouseDown, we can do in the run function 
+        too. </p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Image n[]; int i = 0;int j = 1;Thread t;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[10];<br>
+        for ( i = 0; i &lt;= 9 ; i++)<br>
+        {<br>
+        n[i] = getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);<br>
+        j++;<br>
+        }<br>
+        i = 0;<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        while ( true)<br>
+        {<br>
+        i++;<br>
+        if ( i == 10)<br>
+        i = 0;<br>
+        repaint();<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>The code remains the same, the only difference being that this time we 
+        have put it in the run function. When you run this program using the appletviewer, 
+        the code starts animating by itself and at great speed. Amazing isn't 
+        it!!! </p>
+      <p>What we need to do is slow this down. Let's see how this can be done. 
+        <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        abc();<br>
+        }<br>
+        public void abc() throws InterruptedException<br>
+        {<br>
+        }<br>
+        }<br>
+        C:\javaprg&gt;javac zzz.java<br>
+        zzz.java:6: Exception java.lang.InterruptedException must be caught, or 
+        it must be declared in the throws clause of this method.<br>
+        abc();<br>
+        ^<br>
+        1 error</p>
+      <p>Here, init calls the abc function. The function code has throws Interruped 
+        Exception added to it. </p>
+      <p>Let us assume you opened a file and the operation returned an error. 
+        You then have to check for the error and write code for error handling. 
+        Suppose you are opening files from 20 different places in your program, 
+        you'll have to repeat the same error handling code 20 times. If you have 
+        6 different types of errors, you will have to check for all of them. That's 
+        a lot of code! </p>
+      <p>The second preoblem is with the constructor. If a constructor has an 
+        error, what should the constructor do? The constructor cannot return an 
+        error because, as discussed earlier, constructors do not return values. 
+      </p>
+      <p>The developers followed a new approach to error handling. This approach 
+        states that if a function has a problem, it should throw an exception 
+        and a handler should catch it. </p>
+      <p>The abc function throws an exception called InterruptedException. This 
+        is a exception that comes with java but you can create your own exceptions 
+        too. An exception is a class derived from Exception. The abc function 
+        throws an exception, hence when you are calling abc you have to catch 
+        it or else you will get an error. </p>
+      <p>The next program shows how you how to catch the error.<br>
+        <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        abc();<br>
+        }<br>
+        catch (InterruptedException i) {}<br>
+        catch (Exception i) {}<br>
+        }<br>
+        public void abc() throws InterruptedException<br>
+        {<br>
+        }<br>
+        }<br>
+        At first, we say 'try' and within this block we place the function that 
+        throws exceptions. At the end of the block, we use catch along with the 
+        type of exception to handle the exception. So within the {}'s we can put 
+        whatever code we want and it will be executed if that error occurs. </p>
+      <p>zzz.java<br>
+        iimport java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        abc();<br>
+        System.out.println(&quot;After abc&quot;);<br>
+        }<br>
+        catch (InterruptedException i) {System.out.println(&quot;I am Interrupted 
+        Exception&quot;);}<br>
+        catch (Exception i) {System.out.println(&quot;I am Exception&quot;);}<br>
+        System.out.println(&quot;After Exception&quot;);<br>
+        }<br>
+        public void abc() throws InterruptedException<br>
+        {<br>
+        throw new InterruptedException();<br>
+        }<br>
+        }<br>
+        Output<br>
+        I am Interrupted Exception<br>
+        After Exception</p>
+      <p>In this program, we have throw new InterruptedException. throw is a reserved 
+        word in Java. It is only when we use throw new InterruptedException that 
+        the exception is called. Within the try-catch, we call abc. abc throws 
+        InterruptedException and thus the code in catch which deals with InterruptedException 
+        is called. So println will display 'I am Interrupted Exception'. Once 
+        an exception occurs all the remaining code in the try block is skipped. 
+        Thus you will not see 'After abc' displayed. After the catch is called, 
+        any code after catch will be executed. Since we have a println statement 
+        after catch, it will display 'After Exception'.</p>
+      <p>In try, we can put as many functions as we want. We can also put as many 
+        catches as we like. Here, we are catching two exceptions, InterruptedException 
+        and Exception. So depending upon the exception that occurs, the relevant 
+        code is called. <br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        try<br>
+        {<br>
+        abc();<br>
+        }<br>
+        catch (Exception i)<br>
+        {}<br>
+        }<br>
+        public void abc() throws InterruptedException{}<br>
+        }</p>
+      <p>All code in the init function can be placed between the try and catch. 
+        We can be generic by having only one catch with Exception. Exception is 
+        the mother of all exceptions. All other exceptions are extended or derived 
+        from it, even InterruptedException. You decide the level of sophistication 
+        you like in your program. A function can throw as many exceptions as it 
+        wants using commas. </p>
+      <p>Similar to 'try-catch' is a throw. This entire exercise was conducted 
+        because our pictures were being displayed too fast. To slow it down, we 
+        will now call a function called sleep, which is part of thread. So we 
+        say t.sleep and then give 500, which is the time in milliseconds.</p>
+      <p><br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Image n[]; int i = 0;int j = 1;Thread t;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[10];<br>
+        for ( i = 0; i &lt;= 9 ; i++)<br>
+        {<br>
+        n[i] = getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);<br>
+        j++;<br>
+        }<br>
+        i = 0;<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        while ( true)<br>
+        {<br>
+        t.sleep(500);<br>
+        i++;<br>
+        if ( i == 10)<br>
+        i = 0;<br>
+        repaint();<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>'sleep' gives an error. This is because it throws an exception and we 
+        are not catching it.</p>
+      <p>C:\javaprg&gt;javac zzz.java</p>
+      <p>zzz.java:26: Exception java.lang.InterruptedException must be caught, 
+        or it must<br>
+        be declared in the throws clause of this method.<br>
+        t.sleep(500);<br>
+        ^<br>
+        1 error</p>
+      <p>Our next program is the last in this chapter; it is a working example 
+        showing animation. Here the sleep function is put in 'try-catch'. We have 
+        no code for error handling so we'll leave it blank.<br>
+        zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet implements Runnable<br>
+        {<br>
+        Image n[]; int i = 0;int j = 1;Thread t;<br>
+        public void init()<br>
+        {<br>
+        n = new Image[10];<br>
+        for ( i = 0; i &lt;= 9 ; i++)<br>
+        {<br>
+        n[i] = getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);<br>
+        j++;<br>
+        }<br>
+        i = 0;<br>
+        t = new Thread(this);<br>
+        t.start();<br>
+        }<br>
+        public void paint(Graphics g)<br>
+        {<br>
+        g.drawImage(n[i],1,10,this);<br>
+        }<br>
+        public void run()<br>
+        {<br>
+        while ( true)<br>
+        {<br>
+        try<br>
+        {<br>
+        t.sleep(500);<br>
+        }<br>
+        catch ( Exception e) {}<br>
+        i++;<br>
+        if ( i == 10)<br>
+        i = 0;<br>
+        repaint();<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>Conclusion</p>
+      <p>Thus, from this chapter it can be concluded that any program that displays 
+        animation necessarily requires the use of threads. We saw how the applet 
+        begins the animation cycle when it is activated and the animation is terminated 
+        when the applet is no longer active. But when you want the applet to provide 
+        functionality beyond animation, then you'll have to use threads. Often 
+        Animators are built within applets. Therefore, you need an interface. 
+        To accomplish this we implemented the Runnable interface. In the process, 
+        we also learnt how exceptions are handled with the help of the 'try-catch' 
+        statement. By now you are also well versed with the concepts of loops, 
+        arrays and constructors.<br>
+      </p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap2.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

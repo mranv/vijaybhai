@@ -1,0 +1,1417 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:47:54 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap6_files/filelist.html">
+<link rel=Edit-Time-Data href="chap6_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>8</o:TotalTime>
+  <o:Created>2001-11-06T18:56:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:08:00Z</o:LastSaved>
+  <o:Pages>11</o:Pages>
+  <o:Words>3466</o:Words>
+  <o:Characters>19757</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>164</o:Lines>
+  <o:Paragraphs>39</o:Paragraphs>
+  <o:CharactersWithSpaces>24262</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1028" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>6</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Printing</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One facility that every
+programmer in the world would want to provide through his program is that of
+printing. The .NET world has bestowed about ten important printer classes that ease
+our job of printing text and graphics to the printer. We shall grapple with
+some small programs to grasp the concepts of printing and conclude this chapter
+with a small word processor program that is provided along with the .NET
+samples. You should create a text file named a.txt in the current subdirectory,
+and thereafter, insert the following three lines:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.txt</u></p>
+
+<p class=ILprg>hi, how are you</p>
+
+<p class=ILprg>bye, take care</p>
+
+<p class=ILprg>end</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>Font f;</p>
+
+<p class=ILprg>StreamReader sr;</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>sr = new StreamReader (&quot;a.txt&quot;);</p>
+
+<p class=ILprg>f= new Font(&quot;Courier New&quot;, 14);</p>
+
+<p class=ILprg>PrintDocument pd = new PrintDocument(); </p>
+
+<p class=ILprg>pd.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>pd.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>float lpp = e.MarginBounds.Height<span style="mso-spacerun:
+yes">  </span>/ f.GetHeight(e.Graphics) ;</p>
+
+<p class=ILprg>int c = 0 ;</p>
+
+<p class=ILprg>String s=null;</p>
+
+<p class=ILprg>while (c &lt; lpp <span style='font-family:"Bookman Old Style"'>&amp;&amp;</span>
+((s=sr.ReadLine()) != null)) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>float y = e.MarginBounds.Top + (c * f.GetHeight(e.Graphics));</p>
+
+<p class=ILprg>e.Graphics.DrawString (s, f, Brushes.Black, e.MarginBounds.Left,
+y);</p>
+
+<p class=ILprg>c++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>if (s != null)</p>
+
+<p class=ILprg>e.HasMorePages = true ;</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>e.HasMorePages = false ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>} </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above program prints the
+contents of the text file a.txt to the default printer. In all our programs in
+this chapter, we shall create an object that is an instance of class zzz and
+call function abc off it. The code within this function will execute the actual
+task of printing.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We first create an object, sr,
+which is an instance of the class StreamReader. The constructor of this class
+is furnished with the name of the file that we want to print, i.e. a.txt. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The StreamReader class is
+derived from the class TextReader, which reads characters from a stream of
+bytes that have been encoded in a particular format. The TextReader class
+belongs to the System.IO namespace. The Stream class too forms a part of the
+same genre. This class is designed for reading byte streams. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The StreamReader class is optimised
+for reading lines of data from an ASCII or a text file. By default, the
+encoding used is UTF-8, but it can be changed to any other encoding format, if
+required. The UTF-8 encoding can comprehend Unicode characters. The
+StreamReader class, by default, is not thread safe, and neither does it belong
+to the Printing classes in the .NET family.<span style="mso-spacerun: yes"> 
+</span>The class is used in this program to read the file, one line at a time.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We want the printer to print our
+text file in a specific font. So, we create a Font object f, whose constructor
+is passed the Font Name 'Courier New' along with the size of '14 points'. We
+have plenty of choice of fonts from the innumerable fonts available. For the
+neophytes of the publishing world, it would be a revelation that 72 points makes
+an inch. If we specify a font name such as 'Vijay Mukhi', which does not exist,
+the printer uses the default font instead, which in this case, is Microsoft
+Sans Serif. Thus, the printer always receives a valid font type to work with.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We create one more object called
+pd, in our program, which is an instance of class PrintDocument. This class is
+the nucleus of all printing activities in the .NET world. It has an event
+called PrintPage, which requires an instance of a delegate PrintPageEventHandler.
+The delegate represents a method called pqr, which handles the PrintPage event.
+This event is generated by the Print function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, when we call the Print
+function, it in turn, calls the pqr function. This function is passed two
+parameters. The second parameter is a PrintPageEventArgs class, which carries
+data that is useful for printing. The PrintPageEventArgs class is derived from
+class EventArgs. The pqr function is not called explicitly, since this would
+entail creation of an object like PrintPageEventArgs.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Print function is a blocking
+function. This implies that not a single line of code will be executed after
+the Print function has been called, until the pqr function completes execution.
+If the pqr function goes into an indefinite loop, the code succeeding the Print
+function will never get executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As mentioned earlier, the second
+parameter e of data type PrintPageEventArgs contains the data that is to be
+printed. The member MarginBounds, which is of data type Rectangle, specifies the
+rectangular portion of the page, which falls within the margins. In our case,
+the various values of the Rectangle structure are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets>Height = 900, Width = 650, <span style='mso-tab-count:1'>        </span>Left
+= 100, Right = 750</p>
+
+<p class=ILbullets>Top = 100, Bottom = 1000, <span style='mso-tab-count:1'>          </span>X
+= 100, Y = 100. </p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before we initiate printing, we
+need to identify the number of lines that can be printed on a single page. To
+estimate this, we use the following calculation:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Height of our page in pixels divided
+by the height of the font in pixels. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, it works out to
+900 / 22.02691 = 40.85. This value is stored in the variable </span><span
+style='font-family:"Trebuchet MS";color:windowtext'>lpp</span><span
+style='color:windowtext'>, which signifies 'lines per page'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We then use another variable c,
+which has an initial value of zero. It is incremented in the while loop, once
+for every line that is printed. As soon as the value of c exceeds that of lpp,
+the program quits out of the 'while' loop. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ReadLine function of the
+StreamReader class fetches a new line from the file a.txt and stores it within
+a string variable s. If there are no more lines to be read from the file, this
+function returns a null. Thus, the while loop terminates when the number of
+lines printed exceed the total number of lines that can fit on a page or when
+there are no more lines to be read from the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A check must be performed to
+verify whether we have printed the maximum possible lines that can fit on a
+page, before we read the next line from the file. This is to forestall reading
+a line from the file and thereafter, realizing that it cannot be printed on the
+page due to lack of space. To perform this check, we determine the y position
+of each line on the page. All text is printed below the Top margin. So to
+calculate the y position of a line, we use the following calculation:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>(Height of the font used
+MULTIPLIED BY the number of lines printed so far) PLUS value of the Top margin.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this case, <o:p></o:p></span></p>
+
+<p class=ILbullets>The value of the top margin is 100</p>
+
+<p class=ILbullets>The height of the font is 22.02691</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the case of the first line to
+be printed, the number of lines printed so far is 0.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So, the value of the y
+co-ordinate for the first line is<o:p></o:p></span></p>
+
+<p class=ILbullets><span style="mso-spacerun: yes"> </span><span
+style='mso-tab-count:1'>    </span>=100+(22.02691 X 0) = 100. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value of the y co-ordinate
+for the second line is <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-tab-count:1'>     </span>=100+(22.02691 X
+1) = 122.0269. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The value of the y co-ordinate
+for the third line is<o:p></o:p></span></p>
+
+<p class=ILbullets><span style="mso-spacerun: yes"> </span><span
+style='mso-tab-count:1'>    </span>=100+(22.02691 X 2) = 144.0538. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We accessed these values using
+the WriteLine function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Graphics member in class
+PrintPageEventArgs is employed to write to the printer. This member contains
+the function DrawString. This function, which we had used earlier to write to
+the screen, is now utilized to write to the printer. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DrawString function accepts
+5 parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets>1) A string, s</p>
+
+<p class=ILbullets>2) A font, f</p>
+
+<p class=ILbullets>3) A color or brush, Black</p>
+
+<p class=ILbullets>4) The left margin for the x coordinate, MarginBounds.Left</p>
+
+<p class=ILbullets>5) The y co-ordinate</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As you may have noticed, the
+same DrawString function is used for printing to the printer and writing to the
+screen. Abstraction, therefore, enables us exploit and reuse concepts that we
+have learnt earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The while loop ends when any of
+the following two conditions is satisfied:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The number of lines printed exceeds
+the lines per page i.e. when we need to print on the next page. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The file has no more lines to print.
+</p>
+
+<p class=ILbase><span style='color:windowtext'>To figure out which of the above
+conditions has ended the 'while' loop, we verify the value contained in string
+s. If the value is null, it signifies that there are no more lines to print.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As soon as we exceed the maximum
+number of lines that can be printed on a page, and there are lines remaining to
+be printed, there has to be a mechanism to inform the PrintDocument class that
+the function pqr needs to be called again, to print the next page. To
+accomplish this, the HasMorePages member of the PrintPageEventArgs object e is
+either set to true or false. If it is set to true, the function pqr gets called
+again.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Font f;</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>f= new Font(&quot;Courier New&quot;, 14);</p>
+
+<p class=ILprg>PrintDocument pd = new PrintDocument(); </p>
+
+<p class=ILprg>pd.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>pd.PrintPage += new PrintPageEventHandler(xyz);</p>
+
+<p class=ILprg>pd.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Vijay Mukhi&quot;, f,
+Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void xyz(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, f, Brushes.Black
+, 200, 300);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Through this example, we once
+again demonstrate the power of events and delegates. We attach two methods, pqr
+and xyz, with the printing event. The first function pqr prints 'Vijay Mukhi'
+at X=100 and Y=200 and then, the method xyz prints 'Sonal Mukhi' at X=200 and
+Y=300. The HasMorePages property is initialized to false by the program, even
+though it has the value of false by default. Both these lines get printed on
+the same page.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each time we set HasMorePages to
+true, the .NET framework sends a 'form feed' signal to the printer that sets up
+a new page for printing. The only mechanism of printing text to a printer is by
+means of the Graphics object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the 'font' and the 'Brushes'
+parameters are set to null, a run-time exception is generated. Hence, they must
+be explicitly specified. Unlike a dot matrix printer that prints one line at a
+time, a laser printer first creates an entire page in memory and then sends it
+for printing. Thus, in the function pqr, if we change the Y coordinate from 200
+to 400, both lines get printed on the same page, since the page first gets
+created in the memory, and then it is sent to the printer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The PrintDocument class creates
+the PrintPageEventArgs object, since that is the sole mechanism of activating
+the printer. Then, it calls all the methods registered through the delegate.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy<span style="mso-spacerun: yes">  </span>y = new yyy(); </p>
+
+<p class=ILprg>y.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>y.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;pqr&quot;);</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy : PrintDocument</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Font f;</p>
+
+<p class=ILprg>protected override void
+OnQueryPageSettings(QueryPageSettingsEventArgs e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnQueryPageSettings(e) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;OnQueryPageSettings&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected override void OnBeginPrint(PrintEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnBeginPrint(e) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;OnBeginPrint&quot;);</p>
+
+<p class=ILprg>f = new Font(&quot;Courier New&quot;,14);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected override void OnEndPrint(PrintEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnEndPrint(e) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;OnEndPrint&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected override void OnPrintPage(PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnPrintPage(e) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;OnPrintPage&quot;);</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Vijay Mukhi&quot;, f,
+Brushes.Black, 100, 400);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>OnBeginPrint</p>
+
+<p class=ILoutput>OnQueryPageSettings</p>
+
+<p class=ILoutput>pqr</p>
+
+<p class=ILoutput>OnPrintPage</p>
+
+<p class=ILoutput>OnEndPrint</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, class yyy
+is derived from PrintDocument. Thus, all code embodied in the PrintDocument class
+is available to yyy. This also implies that any code in the class can be
+overridden. The Print method of the PrintDocument class had earlier called the
+methods registered with the delegate, whereas now, it calls a series of methods
+from the PrintDocument class. In the situation where we want to call our
+methods with the same name as in class yyy, the keyword 'override' has to be
+used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output confirms that the
+first function to be called is OnBeginPrint. This function is akin to an
+initialization function. All code that is to be executed only once must be
+placed in this function. It is a sage programming practice to always call the
+original function from the base class. Thus, we use the keyword base to call
+the original OnBeginPrint from the class PrintDocument. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Superior programming style
+decrees that, initially, the base functions should be called. It is not
+mandatory to do so, since even if this is not done, the class still behaves in
+a similar manner. The documentation too is silent on this issue, but we
+consider it prudent to do so and advise you also to call the original function
+first.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter PrintEventArgs
+passed to the function has no significant role to play in this release. The
+documentation clearly states that this PrintEventArgs has been designed for use
+in a future release. Thus, it cannot be put to any consequential use at
+present. We create a Font object in this function, since it is a one-time
+activity.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second function that gets
+called is OnQueryPageSettings, which will be elucidated in the next example.
+Following it, function pqr gets called, which facilitates printing.<span
+style="mso-spacerun: yes">  </span>Then, function OnPrintPage gets called with
+the same parameters as that of the function pqr. If we so desire, we can print
+in the delegate method. Other than the delegate method being called first,
+there is no apparent difference. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, the function OnEndPrint
+is called, in which, we are presented with the opportunity to clean up any
+resources created in the method OnBeginPrint. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy<span style="mso-spacerun: yes">  </span>y = new yyy(); </p>
+
+<p class=ILprg>y.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>y.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy : PrintDocument</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Font f;</p>
+
+<p class=ILprg>protected override void OnQueryPageSettings (QueryPageSettingsEventArgs
+e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnQueryPageSettings(e) ;</p>
+
+<p class=ILprg>e.PageSettings.Landscape = true;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected override void OnBeginPrint(PrintEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnBeginPrint(e) ;</p>
+
+<p class=ILprg>f = new Font(&quot;Courier New&quot;,14);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>protected override void OnPrintPage(PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnPrintPage(e) ;</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Vijay Mukhi&quot;, f,
+Brushes.Black, 100, 400);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each time we use the printer, we
+may be desirous of customizing the print settings for each page. To enable this,
+the framework calls the function OnQueryPageSettings before printing any page.
+In this function, we can change the page settings using the parameter e, which
+is of type QueryPageSettingsEventArgs. This class is derived from
+PrintEventArgs class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One of the members in
+QueryPageSettingEventArgs is PageSettings, which contains a large number of
+properties that control the printer settings. Here, we have only used the
+Landscape property and assigned it a boolean value of true. Had we assigned it
+a value of false, the property would have been set to Portrait mode, which is
+usually the default mode. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Other properties that can be
+modified are: the paper tray i.e. the source from where the paper is fed to the
+printer, the printer resolution, the page margins, the color etc. Any property
+of a printer that can be set manually can now be done using this function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy<span style="mso-spacerun: yes">  </span>y = new yyy(); </p>
+
+<p class=ILprg>y.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>y.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy : PrintDocument</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Font f;</p>
+
+<p class=ILprg>protected override void OnPrintPage(PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>base.OnPrintPage(e) ;</p>
+
+<p class=ILprg>e.Cancel = true;</p>
+
+<p class=ILprg>f = new Font(&quot;Arial&quot;,13);</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Vijay Mukhi&quot;, f,
+Brushes.Black, 100, 400);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this program, the Cancel
+property of PrintPageEventArgs is set to true, resulting in cancellation of the
+print job. The printing that was to be carried out by the delegate function
+also gets cancelled. All print jobs are aborted. The PageSettings object used
+in the earlier program is also a property of the PrintPageEventArgs class, and
+thus, can be used in this function too.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>PrintDocument y = new PrintDocument (); </p>
+
+<p class=ILprg>y.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>PrintDialog d = new PrintDialog() ;</p>
+
+<p class=ILprg>d.Document = y;</p>
+
+<p class=ILprg>DialogResult r = d.ShowDialog();</p>
+
+<p class=ILprg>if (r == DialogResult.OK) </p>
+
+<p class=ILprg>y.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In this example, we would like
+to display a dialog box to the user where he can change the printing options.
+Therefore, firstly we create an object d as an instance of class PrintDialog.
+Creating a PrintDialog object assigns default values to the following eight
+properties: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowSomePages is set to False, disabling
+the Pages option button. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowSelection is set to False,
+disabling the Selection option button.<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowPrintToFile is set to True,
+enabling Print to File check box. <span style='mso-bidi-font-size:12.0pt;
+font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Document, which is a reference to
+the PrintDocument object, is set to null. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>PrinterSettings is assigned the
+value of False, disabling the dialog box.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>PrintToFile decides whether the
+printer would print to disk or to the printer. If the value is null, it prints
+to the printer. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>ShowHelp is set to False, thus
+disabling the help button.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>ShowNetwork is set to True, thus
+enabling the network button. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We can modify any of these
+values to befit our requirements. We can also select specific parts of the
+document to print.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=556 height=410 id="_x0000_i1025"
+  src="chap6img/Image1.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>When we run the program, the
+normal Windows Printer Dialog box is displayed, allowing us to modify any of
+the properties. The ShowDialog function facilitates the display of the dialog
+box. This function waits until one of two the buttons, OK or Cancel, is
+clicked.The value returned on clicking one of these two buttons is stored in
+the DialogResult object r. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If the OK button is selected, it
+will start the printing, whereas if the Cancel button is selected, it will
+cancel or abort the printing.<span style="mso-spacerun: yes">  </span>When the
+OK button is selected, the function ShowDialog returns an enum DialogResult,
+with a value OK. The above enum can have as many as 8 different values,
+depending upon the type of buttons available in the Dialog Box. Thereafter, the
+Print function of the PrintDialog class is called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>One of the final actions of the
+function ShowDialog is to initialize the Document property supplied by
+PrintDocument object, i.e. y, to the printer settings chosen in the Dialog box.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>PrintDocument y = new PrintDocument (); </p>
+
+<p class=ILprg>y.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>PageSetupDialog p = new PageSetupDialog () ;</p>
+
+<p class=ILprg>PageSettings s = new PageSettings();</p>
+
+<p class=ILprg>p.PageSettings = s ;</p>
+
+<p class=ILprg>p.ShowDialog ();</p>
+
+<p class=ILprg>y.DefaultPageSettings = s; </p>
+
+<p class=ILprg>y.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example we usher in
+a new class, PageSetupDialog, which allows the user to change page settings
+such as the margins and the paper orientation. When we create a PageSetupDialog
+object, properties in the object get initialized to their default values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Some of the properties are : <o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowMargins: set to true, enables
+us to change the margins settings.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowOrentation:<span
+style="mso-spacerun: yes">  </span>set to true, enables the Portrait/Landscape
+radio buttons.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowPaper: set to true, so that we
+can choose the paper size and source.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>AllowPrinter: set to true, enables
+the printer button.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>MinMargins: set to null, so that the
+default margins of 1 inch are displayed.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>PageSettings: set to null.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>PrinterSettings: set to null.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is mandatory to initialise
+the PageSettings property to an actual object containing the settings selected
+by the user. Finally the function ShowDialog initializes the object s. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=488 height=553 id="_x0000_i1026"
+  src="chap6img/Image2.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, the property
+DefaultPageSettings of the PrintDocument class is initialised to the
+PageSettings object s, so that the printing framework uses the settings stored
+in this property. Thus, the two dialog boxes have their own unique purposes,
+and each of them fills up an object that is used by the PrintDocument class. In
+the Windows world, Dialog boxes are used to fill up properties/variables in an
+object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above two programs, the
+function pqr does not receive any values from the dialog boxes.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>PrintDocument pd = new PrintDocument(); </p>
+
+<p class=ILprg>pd.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>PrintPreviewDialog dlg = new PrintPreviewDialog() ;</p>
+
+<p class=ILprg>dlg.Document = pd;</p>
+
+<p class=ILprg>dlg.ShowDialog();</p>
+
+<p class=ILprg>pd.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 200);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=544 height=436 id="_x0000_i1027"
+  src="chap6img/Image3.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 6.3</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before we buy goods, we often like
+to preview them. The same analogy is true when we want to print a document. The
+class PrintPreviewDialog enables us to preview a document before printing it.
+The only property that is to be initialized here is Document property. This is
+mandatory since there is no other mechanism by which the Dialog box can receive
+the contents of the page. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We can safely assume that the
+ShowDialog function calls Print, which figures out the text to be printed on a
+page. It also has the ability to display the content in different magnification
+percentages and in multiple pages at a time. The Dialog contains a
+PrintPreviewControl, which has several members that can be toyed around with,
+in order to transform the appearance.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Drawing.Printing;</p>
+
+<p class=ILprg>using System.IO;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>PrintDocument pd = new PrintDocument(); </p>
+
+<p class=ILprg>pd.PrintPage += new PrintPageEventHandler(pqr);</p>
+
+<p class=ILprg>pd.Print();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>void pqr(object o, PrintPageEventArgs e) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Image i = Image.FromFile(&quot;Sample.jpg&quot;);</p>
+
+<p class=ILprg>Point p = new Point(100, 100);</p>
+
+<p class=ILprg>e.Graphics.DrawImage(i, p);</p>
+
+<p class=ILprg>e.Graphics.DrawString (&quot;Sonal Mukhi&quot;, new
+Font(&quot;Courier New&quot;,10), Brushes.Black, 100, 600);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A printer has the capability of
+not only printing text, but also lines, ellipses, curves and images. This
+program prints an image. Before you proceed, ensure that file sample.jpg
+resides in the current directory. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase>The Image class constructor is supplied with a jpg file, which
+we have picked up from the .NET samples. The Point object p represents the X, Y
+coordinates where the image is to be drawn. Then, using the DrawImage function
+from the Graphics class, the image is printed at the position specified. Using
+this procedure, all images displayed on the screen in the previous chapters can
+be sent to the printer for printing.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:47:59 GMT -->
+</html>

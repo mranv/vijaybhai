@@ -1,0 +1,65 @@
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.*;
+import javax.microedition.io.*;
+import javax.wireless.messaging.*;
+import java.io.IOException;
+public class aaa extends MIDlet implements CommandListener
+{
+Form mForm;Display mDisplay;
+Command c,c1;TextField t1,t2,t3;
+public void  startApp()
+{
+mForm = new Form("Vijay & Sonal");
+c = new Command("Quit",Command.EXIT,0);
+c1 = new Command("Send",Command.OK,0);
+t1 = new TextField(null,"9821896396",100,TextField.ANY);
+t2 = new TextField(null,"Hi its me Vijay Mukhi",255,TextField.ANY);
+t3 = new TextField(null,"2",255,TextField.ANY);
+mForm.append("Phone Number\n" );
+mForm.append(t1);
+mForm.append("SMS Text\n" );
+mForm.append(t2);
+mForm.append("Number of SMS's to be send\n" );
+mForm.append(t3);
+mForm.addCommand(c);
+mForm.addCommand(c1);
+mForm.setCommandListener(this);
+mDisplay = Display.getDisplay(this);
+mDisplay.setCurrent(mForm);
+}
+
+public void commandAction(Command cc , Displayable s)
+{
+
+if ( cc == c1)
+{
+try
+{
+MessageConnection smsconn = null;
+String address = "sms://" + t1.getString();
+smsconn = (MessageConnection)Connector.open(address);
+if ( smsconn == null )
+mForm.append("smsconn is null" );
+int i,cnt;
+cnt = Integer.parseInt(t3.getString());
+for(i = 1 ; i <= cnt ; i++)
+{
+TextMessage txtmessage = (TextMessage)smsconn.newMessage(MessageConnection.TEXT_MESSAGE);
+txtmessage.setAddress(address);
+txtmessage.setPayloadText(t2.getString());
+smsconn.send(txtmessage);
+mForm.append("Send SMS Number " + i + "\n");
+}
+smsconn.close();
+} catch (Throwable t){}
+mForm.append("All SMS Send\n " );
+}
+if ( cc == c)
+{
+notifyDestroyed();
+}
+}
+public void destroyApp(boolean unconditional) {}
+public void pauseApp() {}
+}
+

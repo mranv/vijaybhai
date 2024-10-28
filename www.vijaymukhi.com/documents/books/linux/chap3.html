@@ -1,0 +1,688 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap3.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>3</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=4><P>3. Linker - LD</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>So it's back to the basics once more. Here we have the simplest possible C program.</P>
+</FONT><P>a.c</P>
+<PRE>main()
+{
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We say main() { }. We run gcc and we check the size of a. </P>
+</FONT><PRE>gcc a.c -o a
+ls -l a
+-rwxr-xr-x 1 root root 11573 Dec 21 12:39 a
+</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This program under Linux is approximately 11k large. Now we add a function, print() and run the program through GCC again.</P>
+</FONT><PRE>a.c
+main()
+{
+printf("hi")
+}
+gcc a.c -o a
+ls -l a
+-rwxr-xr-x 1 root root 11679 Dec 21 12:41 a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Odd. We've just added a largish function and the program only increases in size by some 106 bytes? Is it possible to fit the functionality of printf() into that small a space? We'll have to dig a little deeper to understand this.</P>
+<P>You have to understand that we haven't written the code for printf. To be honest we don't even know how to write this function. That means somebody else has written this code and we don't know who he/she is. The entire code of the printf function will obviously not come into a. </P>
+<P>&nbsp;</P>
+<P>The second point is that whenever a function is called, a function does not know who is calling it, it doesn't know how it is called, and it doesn't know how many parameters it is called by. The function doesn't know anything about the program calling it.</P>
+<P>Let's assume that the code of printf() is say 5kb large and that all of this code is added to every program you write which calls printf(). If you had 10 programs running in memory, there would be 50kb of code in memory consisting only of copies of the function printf(). It would be quite a waste.</P>
+<P>Thankfully, this is not the way things work under Linux. When you call a function like printf() from within your code, the code for printf() is <I>not</I> added to your code. There is a single copy of printf() maintained in memory and the same code is shared by every program which needs to use printf().</P>
+<P>Let's prove this. We'll add another call to printf() in our code.</P>
+</FONT><PRE>main()
+{
+printf("hi");
+printf("bye");
+}
+#gcc a.c -o a
+#ls -l a
+-rwxr-xr-x 1 root root 11699 Dec 21 12:48 a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>You'd expect a 103-byte increase in code size, instead there is just a 20-byte increase. Stranger and stranger</P>
+<P>The code for printf() is in a file named libc.so.6. We've already spoken about 'gcc' calling 'collect2' and 'collect2' calling 'ld'. If you examine the parameters passed to 'ld', you'll see the name libc.so.6. This is a <I>shared library</I> which is similar to DLL's (Dynamic Link Library) under Windows.</P>
+<P>All of this is a little confusing so let's clear things up a bit by writing our own .so file.</P>
+</FONT><PRE>a.c
+main()
+{
+a1();
+}
+#gcc a.c
+/tmp/ccjwq11u.o: In function `main':
+/tmp/ccjwq11u.o(.text+0x4): undefined reference to `a1'
+collect2: ld returned 1 exit status</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now this would obviously give you an error because although we've called the function a1(), we haven't defined it anywhere. When 'collect2' calls 'ld', it looks at default shared libraries and searches for the function a1(). It doesn't find one there and so it flags and error and exits.</P>
+<P>No problem. We create another file named b.c and define our function there.</P>
+</FONT><PRE>
+b.c
+a1()
+{
+printf("hi\n");
+}
+#gcc -c b.c</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Using the switch -c, we tell 'gcc' to compile the program, but not to link it. Since no linking is performed, we're given the file the compiler/assembler pair output, an object file, b.o.</P>
+<P>To turn this object file into a shared library, we have to call 'ld' ourselves and pass it some new switches.</P>
+</FONT><PRE>
+#gcc -shared -o libb.so b.o
+#ls -l libb.so
+-rwxr-xr-x 1 root root 5263 Dec 21 13:10 libb.so</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>-shared tells 'ld' to create a shared library and -o specifies the name of the output file. All shared libraries <I>must</I> start with the letters 'lib' and they must end with .so . This is vital. If you don't do this, your shared library will <I>not</I> be accessed.</P>
+<P>Our .so file is around 5kb large and contains only function, a1(). We could have had a hundred had we so pleased. Is the code for printf() added to the .so file or is it a call to the function.</P>
+<P>&nbsp;</P>
+<P>#gcc a.c libb.so -o a</P>
+<P>We now recompile 'a.c' and also give 'gcc' the name of the .so file to use. We have no problems and the executable 'a' is produced. When we run 'a' however, we get an error.</P>
+<P>#./a</P>
+<P>./a: error in loading shared libraries: libb.so: cannot open shared object file: No such file or directory</P>
+<P>When compiling, we'd given the name of the .so file to use when a1() needed to be called. This .so file will be dynamically loaded (and unloaded) as and when the program is run. The name of the .so file is stored in 'a'.</P>
+<P>When we type in './a', the dynamic loader (ld-linux.so.2) is loaded into memory. The loader then examines the executable to run for the names of the .so files it needs and it then loads these files into memory. If they've already been loaded, it simply uses the previous copies.</P>
+<P>When the loader looks at 'a', it sees that it has to load libb.so into memory so that 'a' can call the function a1(). The loader examines certain predefined directories, searching for the correct .so file. Since we haven't placed libb.so in the proper place, the loader fails at its task and we're given an error. </P>
+</FONT><PRE>#gcc a.c ./libb.so -o a
+#./a
+hi
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The loader does not, by default, look at the current directory for the .so files. By placing a './' before the name of the shared library, we tell it to do so. We could also have given the entire pathname.</P>
+<P>We get no error this time.</P>
+<P>This means of course, that if 'a' is placed in another directory and run, it will not load, since that directory will not contain libb.so.</P>
+</FONT><PRE>a.c
+main()
+{
+a1();
+}
+b.c
+a1()
+{
+printf("hi 1\n");
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We never let up, do we? Here's another tiny program. All we've done is change the string to be printed from "hi" to "hi 1".</P>
+</FONT><PRE>./a
+./a: error in loading shared libraries: libb.so: cannot open shared object file: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We give 'gcc' the same options as before and just as before, we get an error when we run the program. We now copy libb.so into /usr/lib and run the program again. Since /usr/lib is one of the default locations the loader looks at, the program runs this time around. </P>
+</FONT><PRE>#cp libb.so /usr/lib
+./a
+hi 1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now change the code of a1() again and recompile as always.</P>
+</FONT><PRE>a1()
+{
+printf("hi 2\n");
+}
+gcc -c b.c
+gcc -shared -o libb.so b.o
+gcc a.c libb.so -o a
+(No errors)
+./a
+./a: error in loading shared libraries: libb.so: cannot open shared object file: No such file or directory
+#cp libb.so /usr/lib
+./a
+hi 1
+#cp libb.so /lib
+#./a
+hi 2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Run the program, and you'll see 'h1 1' because the loader looks into /usr/lib, picks up the 'libb.so' file it finds there and loads it into memory. Since we had not placed a './' before the name of the .so file, it's not picked up from the current directory. To make sure that our new .so file is used, we copy it to /lib and run the program once more. We now see 'hi 2'. That's because the loader looks in a range of directories and it looks at /lib before it looks at /usr/lib.</P>
+<P>On to 'hi 3' now.</P>
+</FONT><PRE>a1()
+{
+printf("hi 3\n");
+}
+gcc -c b.c
+gcc -shared -o libb.so b.o
+gcc a.c libb.so -o a
+(No errors)
+#mkdir /a614
+#cp libb.so /a614
+#./a
+hi 2
+# export LD_LIBRARY_PATH=/a614
+#./a
+hi 3
+#export LD_LIBRARY_PATH=</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This time we create a directory named /a614 (any name will do) and copy the newly created .so file into it. We the then run the program and not unsurprisingly it shows 'hi 2'.</P>
+<P>To remedy this situation we export an environmental variable named LD_LIBRARY_PATH with the name of the directory that contains the latest 'libb.so'.</P>
+<P>Run the program again and you get 'hi 3'. Obviously the environmental variable gets looked at first, even before the default directories.</P>
+<P>What we're trying to demonstrate here (besides the order of the locations the loader searches) is that there is <I>no</I>&gt; information in the executable which tells the loader the name of the .so file(s) to search for. The only information available to the loader is the name of the function to call. Using this information it looks at all the .so files it can reach, for a match. It then uses the <I>first</I> match that it finds and dynamically links that in.</P>
+<P>This can lead to problems. If there are two functions in two .so files which the same name, but different effects, then only <I>one</I> of these functions will ever be called. Only the first one that the loader finds will be used. This can lead to some subtle run time bugs. For example, if I were to write a shared library which had a function named printf() and if I specified the location of this library in the environmental variable LD_LIBRARY_PATH, then everytime a program tries to use printf(), <I>my</I> version of printf() would be called and not the original. Screwy but true. </P>
+<P>Onwards to 'hi 4'.</P>
+</FONT><PRE>a1()
+{
+printf("hi 4\n");
+}
+gcc -c b.c
+gcc -shared -o libb.so b.o
+gcc a.c libb.so -o a
+(No errors)
+#mkdir /a615
+#cp libb.so /a615
+#./a
+hi 2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Copy the .so file created to a new directory named /a615 (or something) and run the program. You get 'hi 2'.</P>
+<P>Surprised? </P>
+<P>But you shouldn't be if you've been paying attention. Look at the last line we typed earlier. We unset the value of LD_LIBRARY_PATH by exporting an empty string. This means that the loader will once more pick up the .so file from /lib.</P>
+<P>To ensure that the latest .so file is called will take some work.</P>
+<P>Skip over to /etc and edit a file there named ld.so.conf. You see a list of directories.</P>
+</FONT><PRE>#asedit /etc/ld.so.conf or #pico /etc/ld.so.conf
+/usr/X11R6/lib
+/usr/i486-linux-libc5/lib
+/usr/lib
+/usr/lib/qt-2.0.1/lib
+/usr/lib/qt-1.44/lib</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Add /a615 to the top of the list. </P>
+</FONT><PRE>/a615
+/usr/X11R6/lib
+/usr/i486-linux-libc5/lib
+/usr/lib
+/usr/lib/qt-2.0.1/lib
+/usr/lib/qt-1.44/lib</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Run 'a' once more and eyeball the output. It's still 'hi 2'. </P>
+</FONT><PRE>#./a
+hi 2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now run a program named 'ldconfig' and 'a' once more. There, we finally get 'hi 4'.</P>
+</FONT><PRE>#ldconfig
+#./a
+hi 4</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Simple enough.</P>
+<P>Now one to 'hi 5'&nbsp;</P>
+</FONT><PRE>a1()
+{
+printf("hi 5\n");
+}
+gcc -c b.c
+gcc -shared -o b.so b.o
+gcc a.c b.so -o a
+(No errors)
+#mkdir /a616
+#cp b.so /a616
+#asedit /etc/ld.so.conf
+/a616
+/usr/X11R6/lib
+/usr/i486-linux-libc5/lib
+/usr/lib
+/usr/lib/qt-2.0.1/lib
+/usr/lib/qt-1.44/lib</PRE>
+<FONT FACE="Courier New" SIZE=2><P>---------------------</P>
+</FONT><PRE>#ldconfig
+#./a
+hi 1
+#cp b.so /a616/libb.so
+#ldconfig
+#./a
+hi 5</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Use 'gcc' to create an .so file named b.so. and copy it to a new directory named /a616. Edit ld.so.conf and replace /a615 with /a616 and run 'ldconfig' and 'a' once again. </P>
+<P>There seems to be a problem here. We're getting 'hi 1', it should be Hi 2 again.</P>
+<P>Think back to what we'd said earlier in the chapter and it'll all be clear. Keep in mind that all shared libraries <I>must</I> begin with the letters 'lib'. Rename b.so to libb.so and everything works as before.</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Still more on shared libraries</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>What we do now may seem a bit like a repetition, but stick with us anyway.</P>
+</FONT><PRE>a.c
+main()
+{
+abc123();
+}
+#gcc a.c -o a
+/tmp/ccR5lJ3q.o: In function `main':
+/tmp/ccR5lJ3q.o(.text+0x4): undefined reference to `abc123'
+collect2: ld returned 1 exit status</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We compile, we get an error. Pop the code for abc123() into another file and recompile.</P>
+</FONT><PRE>bbb.c
+abc123()
+{
+printf("1\n");
+}
+&nbsp;
+#gcc -c bbb.c
+#gcc -shared -o libbbb.so bbb.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Earlier we'd gotten an error because the linker couldn't find abc123(). I know the output shows 'collect2' giving the error, but as we've already explained, 'collect2' is simply a wrapper for 'ld'. It's actually 'ld' which can't figure out what to do.</P>
+</FONT><PRE>#gcc a.c -o a -lbbb
+/usr/bin/ld: cannot open -lbbb: No such file or directory
+collect2: ld returned 1 exit status</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The -l switch adds the letters 'lib' before the name and '.so' after it. However, 'ld' still looks at some predefined directories, vainly searching for 'libbbb.so'. Since it's not there to be found, we get an error.</P>
+<P>The difference between using -l and typing in the name ourselves is that when -l is used, 'ld' looks at the predefined directory locations and when we type in the name ourselves, 'ld' looks at the current directory. Subtle, but important.</P>
+</FONT><PRE>#gcc a.c -o a libbbb.so</PRE>
+<FONT FACE="Courier New" SIZE=2><P>So this works, which -l doesn't. Now when we try to run the program it won't oblige. The loader can't find the appropriate function in any .so file it can reach.</P>
+</FONT><PRE>#./a
+./a: error in loading shared libraries: libbbb.so: cannot open shared object file: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Let's be clear about this. When we run a program, the linker is not involved at all. Yes, both the linker and loader muck about with .so files and that can get confusing, but they do so at different times. The linker's job is over once the executable is ready and the loader doesn't come into the picture at all before then (except to load 'ld' into memory).</P>
+<P>Now copy the .so file into /lib, giving us two copies of the same file. Run 'gcc' using the -l switch and then run the program. No errors at all.</P>
+</FONT><PRE>
+#cp libbbb.so /lib
+#gcc a.c -o a -lbbb
+#./a
+1
+All of this should be familiar to you by now and needs no explanation.
+Now we remove the file from /lib and copy it into /usr/lib. 
+#cp /lib/libbbb.so /usr/lib
+#rm /lib/libbbb.so
+#./a
+1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>No errors even now. Notice that we don't recompile anything here. That's because (as mentioned earlier) the location of the .so file is not to be found anywhere in the executable. Only the name of the function is preserved.</P>
+<P>This should make things even clearer than they already are. We create another .so file with the output changed to '2'. No need to recreate the executable. We copy this new .so file into /lib.</P>
+<P>Run the program and be amazed. Yes, the original .so file in /usr/lib is ignored, superceded by the upstart in /lib. </P>
+</FONT><PRE>
+bbb.c
+abc123()
+{
+printf("2\n");
+}
+#gcc -c bbb.c
+#gcc -shared -o libbbb.so bbb.o
+#cp libbbb.so /lib
+#./a
+2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Create another file with the output changed to '3' and place the .so file in /aaa. Export the environmental variable LD_LIBRARY_PATH pointing to /aaa and run. You get '3' now. Old hat, this.</P>
+</FONT><PRE>#asedit bbb.c
+abc123()
+{
+printf("3\n");
+}
+#gcc -c bbb.c
+#gcc -shared -o libbbb.so bbb.o
+#mkdir /aaa
+#cp libbbb.so /aaa
+#./a
+2
+#export LD_LIBRARY_PATH=/aaa
+#./a
+3</PRE>
+<FONT FACE="Courier New" SIZE=2><P>You can place several directories in LD_LIBRARY_PATH by colon separating them.</P>
+</FONT><PRE>#export LD_LIBRARY_PATH=
+#./a
+2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Wipe the slate clean by exporting a blank value and run 'a' once more. You get '2'.</P>
+<P>The loader looks at the environmental variable LD_LIBRARY_PATH first, /lib next and /usr/lib last.</P>
+<P>Run 'ldconfig' and then 'a' and you will get 1.</P>
+</FONT><PRE>
+&nbsp;#ldconfig
+#./a
+1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>/usr/lib contains the .so file with '1', /lib has the one with '2'. Therefore, the printf() from /usr/lib is being called and not the one from /lib!</P>
+<P>This needs more work.</P>
+</FONT><PRE>#cd /etc
+#ls -l ld.so.cache
+-rw-r--r-- 1 root root 19234 Dec 24 17:11 ld.so.cache</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>'rm' this file into bit heaven. Run 'ldconfig' once more and use 'ls' to confirm the demise of ld.so.cache.</P>
+
+</FONT><PRE>#rm ld.so.cache
+#ldconfig
+#ls -l ld.so.cache
+-rw-r--r-- 1 root root 15024 Dec 27 19:28 ld.so.cache</PRE>
+<FONT FACE="Courier New" SIZE=2><P>That didn't seem to work.</P>
+<P>So it seems that 'ldconfig' creates ld.so.cache. Delete it once more and run 'asedit' (or any other dynamically linked program, like Netscape). </P>
+<P>It doesn't work.</P>
+</FONT><PRE>#rm ld.so.cache
+#asedit
+asedit: error in loading shared libraries: libXpm.so.4: cannot open shared object file: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>There goes your system!</P>
+<P>!!!PANIC!!!</P>
+<P>Well not exactly. All you need to do is run 'ldconfig' again and everything will be back to normal. </P>
+<P>Back to the basics once more. Now we know that the loader looks at your executable for the name of the functions it has to dynamically link in. The names of the .so files are either absolute (e.g. /myprog/libfoo.so) or relative (e.g. ./libfoo.so). If these files exist at the location specified, then they're loaded into memory. If just the name of the .so file is to be found (e.g. libfoo.so) then the loader first looks at the environmental variable LD_LIBRARY_PATH, then /lib and finally /usr/lib. Now if these directories contain some 2000 .so files, the loaders in trouble. It's going to take some time to g through them all. A more efficient method is required.</P>
+<P>Besides, if you have some add on libraries (like QT) installed, they may install themselves in directories other than the default ones. There has to be a way (other than using LD_LIBRARY_PATH) to access these.</P>
+<P>This is where ld.so.cache comes in. This file contains the full path names of the shared library files.</P>
+<P>Delete all the lines in it except one, /usr/X11R6/lib and run 'ldconfig'.</P>
+</FONT><PRE>#cd /etc
+#cat &gt; ld.so.conf
+/usr/X11R6/lib
+#ldconfig</PRE>
+<FONT FACE="Courier New" SIZE=2><P>When 'ldconfig' is run, it examines ld.so.conf. It then goes to each of the directories specified (plus /lib and /usr/lib) and places information about all the .so files there in the file ld.so.cache. The information is stored in a special format (which we'll do a little later) which facilitates easy and quick retrieval.</P>
+<P>Each time the loader needs to find a particular directory, it first looks at LD_LIBRARY_PATH and then it examines 'ld.so.cache'. If the file does not exist, then /lib and /usr/lib are examined. So when we ran 'asedit', the libraries in /usr/X11R6/lib were called for. Since these are not in the default directories and since we had deleted 'ld.so.cache', we got that familiar run time error.</P>
+<P>When we run 'ldconfig', it recreates the cache file. This is important when we install software which places it's shared objects in different directories. Once the program is installed, the install script will add the location of the .so files to 'ld.so.conf' and rerun 'ldconfig' to create a fresh 'ld.so.cache'.</P>
+<P>If you've just installed some new package and it refuse to run, then try adding the subdirectories to 'ld.co.conf' and rerun 'ldconfig'. It just might work.</P>
+<P>Deleting the cache file is not fatal. It can be recreated later.</P>
+</FONT><PRE>#rm ld.so.cache
+#init 6
+#cd /etc
+#ls -l ld.so.cache
+(not present)
+#ldconfig</PRE>
+<B><FONT FACE="Arial" SIZE=4><P>The innards of ld.so.cache</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>Before we go any further, we should cover the cache file in some detail, if only for curiosity sake.</P>
+</FONT><PRE>#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;sys/mman.h&gt;
+struct header_t {
+&#9;char magic [6];
+&#9;char version [5];
+&#9;int nlibs;
+};
+struct libentry_t {
+&#9;int flags;
+&#9;int sooffset;
+&#9;int liboffset;
+};
+int fd;
+char *c;
+struct stat st;
+char *strs;
+struct header_t *header;
+struct libentry_t *libent;
+int i;
+main()
+{
+fd = fopen("./ld.so.cache", "r");
+stat("./ld.so.cache", &amp;st);
+c = malloc(st.st_size);
+fread(c,st.st_size,1,fd);
+header = (header_t *)c;
+printf("Magic %c %c %c %c %c %c ",header-&gt;magic[0],
+header-&gt;magic[1],header-&gt;magic[2],header-&gt;magic[3],header-&gt;magic[4],
+header-&gt;magic[5]);
+printf("Version %c %c %c %c %c ",header-&gt;version[0],
+header-&gt;version[1],header-&gt;version[2],header-&gt;version[3],header-&gt;version[4]);
+printf("\n%d libs found in cache `%s' \n",
+&#9; header-&gt;nlibs, "ld.so.cache");
+libent = (libentry_t *)(c + sizeof (header_t));
+strs = (char *)&amp;libent[header-&gt;nlibs];
+for (i = 0; i &lt; header-&gt;nlibs; i++)
+{
+printf("\t%s ", strs + libent[i].sooffset);
+printf(" =&gt; %s\n", strs + libent[i].liboffset);
+}
+}
+&nbsp;
+Output
+Magic l d . s o - Version 1 . 7 . 0 
+428 libs found in cache `ld.so.cache' 
+&#9;libzz.so =&gt; /usr/lib/libzz.so
+&#9;libzz.so =&gt; /lib/libzz.so
+&#9;libzvt.so.2 =&gt; /usr/lib/libzvt.so.2
+&#9;libzvt.so =&gt; /usr/lib/libzvt.so
+&#9;libz.so.1 =&gt; /usr/lib/libz.so.1
+&#9;libz.so =&gt; /usr/lib/libz.so
+&#9;libz.so =&gt; /lib/libz.so
+&#9;liby.so =&gt; /usr/lib/liby.so
+&#9;liby.so =&gt; /lib/liby.so
+&#9;libxmms.so.0 =&gt; /usr/X11R6/lib/libxmms.so.0
+&#9;libxmms.so =&gt; /usr/X11R6/lib/libxmms.so
+&#9;libxmltok.so.0 =&gt; /usr/lib/libxmltok.so.0
+&#9;libxmltok.so =&gt; /usr/lib/libxmltok.so
+&nbsp;
+
+struct header_t{
+&#9;char magic [6];
+&#9;char version [5];
+&#9;int nlibs;
+} ;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>The first thing about the cache file is that the first 6 bytes comprise the magic number, which is the string 'ld.so-'. A magic number uniquely identifies a file as belonging to a certain family. Most files today have some sort of magic number to help classify them. </P>
+<P>After that, we have the version number, which in this case is 1.7.0, a string 5 bytes long.</P>
+<P>Right after that, we have an int that contains the number of libraries that the cache file indexes. It's 428 in our case but the number may be different on your machine. Remember that this is the output from a cache file created with only one user defined directory in it, /usr/X11R6/lib, plus the two default directories of /lib and /usr/lib. Since we have 428 libraries, we're going to have 428 structures, each of the following format.</P>
+</FONT><PRE>struct libentry_t{
+&#9;int flags;
+&#9;int sooffset;
+&#9;int liboffset;
+};</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The first int is a flag that contains more information about the libraries. The next two int's contain the location within the cache file where the name and full pathname of the .so file is stored.</P>
+</FONT><PRE>fd = fopen("./ld.so.cache", "r");</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In the program, we use fopen() to open 'ld.so.cache' for reading.</P>
+</FONT><PRE>stat("./ld.so.cache", &amp;st);
+c = malloc(st.st_size);</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We then use stat() to get the size of the file in question. Using this information, we malloc() enough memory to hold the file and then load it into memory.</P>
+<P>We have a pointer to the structure header_t, named 'header', which we then point to the location in memory where we've loaded 'ld.so.cache'. We then display all the members of the first structure.</P>
+</FONT><PRE>fread(c,st.st_size,1,fd);
+header = (header_t *)c;
+printf("Magic %c %c %c %c %c %c ",header-&gt;magic[0],
+header-&gt;magic[1],header-&gt;magic[2],header-&gt;magic[3],header-&gt;magic[4],
+header-&gt;magic[5]);
+printf("Version %c %c %c %c %c ",header-&gt;version[0],
+header-&gt;version[1],header-&gt;version[2],header-&gt;version[3],header-&gt;version[4]);
+printf("\n%d libs found in cache `%s' \n",
+&#9; header-&gt;nlibs, "ld.so.cache");</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Output</P>
+</FONT><PRE>Magic l d . s o - Version 1 . 7 . 0 
+428 libs found in cache `ld.so.cache' </PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+</FONT><PRE>struct libentry_t *libent;
+libent = (libentry_t *)(c + sizeof (header_t));
+strs = (char *)&amp;libent[header-&gt;nlibs];
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now point libent (which is a pointer of type libentry) to the start of the next structure. It's 15 bytes away from the start of the file. We then store the number of .so files in a variable named strs and move on.</P>
+<P>strs contains the number of structures after this one, each with information about a certain .so file. We use a for() loop to examine each one of the structures and keep jumping to that part of the file where the name and path are stored. Since these are null terminated strings, we face no problems in printing them out.</P>
+</FONT><PRE>for (i = 0; i &lt; header-&gt;nlibs; i++)
+{
+printf("\t%s ", strs + libent[i].sooffset);
+printf(" =&gt; %s\n", strs + libent[i].liboffset);
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>And that's all there is to it!</P>
+<P>We didn't come up with all of this ourselves of course. The code for </P>
+<P>'ldconfig' is freely available. We both understood the structure and adapted the code from there.</P>
+<P>So does the executable file contain the names of the .so file to call or not?&nbsp;</P>
+<P>&nbsp;Here we a file with two functions, a1() and a2(). When we compile this program, 'gcc' spits out an error, telling us that we have undefined references in our code.</P>
+</FONT><PRE>&nbsp;d.c
+main()
+{
+a1();
+a2();
+}
+#gcc d.c -o d
+/tmp/cchlWs9M.o: In function `main':
+/tmp/cchlWs9M.o(.text+0x4): undefined reference to `a1'
+/tmp/cchlWs9M.o(.text+0x9): undefined reference to `a2'
+collect2: ld returned 1 exit status
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Now let's create a file, 'd1.c', with the code for a1() and compile it into a shared object, 'libd1.so'. </P>
+</FONT><PRE>d1.c
+a1()
+{
+printf("d1..a1\n");
+}
+#gcc -c d1.c
+#gcc -shared -o libd1.so d1.o
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We place the code for a2() into 'd2.c'. Compile and link as before.</P>
+</FONT><PRE>d2.c
+a2()
+{
+printf("d2..a2\n");
+}
+#gcc -c d2.c
+#gcc -shared -o libd2.so d2.o
+#gcc d.c -o d ./libd1.so ./libd2.so
+#./d
+d1..a1
+d2..a2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>It works as expected. No surprises here.</P>
+<P>Now let's do something a little odd. We'll place the code for a1() and a2() in 'd1.c' <I>and</I> 'd2.c'.</P>
+</FONT><PRE>d1.c
+a1()
+{
+printf("d1..a1\n");
+}
+a2()
+{
+printf("d1..a2\n");
+}
+#gcc -c d1.c
+#gcc -shared -o libd1.so d1.o
+d2.c
+a2()
+{
+printf("d2..a2\n");
+}
+a1()
+{
+printf("d2..a1\n");
+}
+#gcc -c d2.c
+#gcc -shared -o libd2.so d2.o
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We don't gcc d.c, but run it directly.</P>
+</FONT><PRE>#./d
+d1..a1
+d1..a2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Both a1() and a2() are now called from 'libd1.so'.</P>
+<P>We now reverse the order of the names when we run 'gcc'. Now the code is called from 'libd2.so'.</P>
+</FONT><PRE>#gcc d.c -o d ./libd2.so ./libd1.so
+#./d
+d2..a1
+d2..a2</PRE>
+<FONT FACE="Courier New" SIZE=2><P>What's the point of all this?</P>
+<P>'gcc' calls 'ld' to handle the shared libraries</P>
+<P>Gcc calls ld and gives it the shared libraries.</P>
+<P>All the shared objects specified at the command line are mentioned in the executable. When the loader loads the program into memory, it creates a linked list of all the functions that need to be resolved (i.e. all the functions mentioned in the executable whose code is to be found in shared libraries). The loader then figures out which .so file contains which function. When searching for the function, it looks at the .so files in the order given in the executable. When it finds a match, it links in the code and moves on to the next function to be relocated. So when you have two functions with the same name, the first one found will be used. Notice that we've specified the path of the .so files when linking. If we hadn't, the loader would have looked in the default directories.</P>
+<P>If you give the name of an .so file and it doesn't exist, you'll get an error (obviously).</P>
+</FONT><PRE>#gcc d.c -o d ./libd2.so ./libd3.so
+gcc: ./libd3.so: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>This despite the fact that we call no code from 'libd3.so'.</P>
+</FONT><PRE>#gcc d.c -o d ./libd2.so ./libd1.so
+#rm libd1.so
+#./d
+./d: error in loading shared libraries: ./libd1.so: cannot open shared object file: No such file or directory</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In the same way, since all the code will be called from 'libd2.so', we really don't need 'libd1.so'. Yet delete it, and the loader will complain petulantly.</P>
+</FONT><PRE>a.c
+main()
+{
+printf("Hello\n");
+}
+b.c
+printf()
+{
+exit(6);
+}
+#gcc -c b.c
+#gcc -o b.so b.o
+#gcc a.c -o a ./b.so
+#./a;echo $?
+6</PRE>
+<FONT FACE="Courier New" SIZE=2><P>This is an interesting one.</P>
+<P>Since we've specified the .so file, when the loader loads the program it will try and link in as many functions as it can from the file 'b.so'. It is not called libb.so and it yet works. This ensures that the standard function printf() isn't called and ours is instead.</P>
+<P>The next step in furthering our understanding of how programs work under Linux is to figure out the loader and that's what we'll do next.</P>
+</FONT><PRE>b.c
+abc()
+{
+printf("Hi\n");
+}
+#gcc -c b.c
+#gcc -shared -o b.so b.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Old stuff and you should be familiar with the above. We've dropped the 'lib' because right now we don't really care if 'ldconfig' can use our library or not.</P>
+</FONT><PRE>a.c
+#include &lt;dlfcn.h&gt;
+void *h;
+void (*p)();
+main()
+{
+h=dlopen("./b.so",RTLD_LAZY);
+p=dlsym(h,"abc");
+p();
+}</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we have a smallish program which calls two functions, dlopen() and dlsym(). dlopen() needs two parameters, the name of the .so file and some bit operators. The real meaning of the #define RTLD_LAZY shall remain a mystery for now because it deals with relocation and trust me, you <I>don't</I> want to open that particular can of worms just yet. So anyway, dlopen() loads 'b.so' into memory and it returns a handle to the library. To retrieve the address of the function abc(), we use dlsym(). We pass it two parameters, 'h' which is a handle to the library and 'abc', the name of the function we wish to locate. The address is stored in 'p', a pointer to a function. To call the function, all we have to do is say p(). If I were to jump to this location in memory, I'd see the code for abc().</P>
+<P>This is what the loader does, sort of. If loads the libraries required into memory and tracks down the location of the function in question using dlsym(). It then links in the call to the function in the executable to the code in the library. How exactly it goes about doing this is a little beyond the scope of this particular book, but we'll cover it in the next book in the series. The only problem with this program is that it won't compile. </P>
+</FONT><PRE>#gcc a.c -o a
+/tmp/cc1DjHfv.o: In function `main':
+/tmp/cc1DjHfv.o(.text+0xc): undefined reference to `dlopen'
+/tmp/cc1DjHfv.o(.text+0x26): undefined reference to `dlsym'
+collect2: ld returned 1 exit status
+#gcc a.c -o a -ldl
+#./a
+Hi</PRE>
+<FONT FACE="Courier New" SIZE=2><P>'gcc' can't find dlopen() and dlsym(). We need to link in 'libdl.so' for this to work. </P>
+<P>It works now.</P>
+<P>What if we had to pass a parameter to the function in question? No problem.</P>
+</FONT><PRE>b.c
+abc(int i)
+{
+printf("Hi..%d\n",i);
+}
+#gcc -c b.c
+#gcc -shared -o b.so b.o
+a.c
+#include &lt;dlfcn.h&gt;
+void *h;
+void (*p)(int);
+main()
+{
+h=dlopen("./b.so",RTLD_LAZY);
+p=dlsym(h,"abc");
+p(10);
+}
+#gcc a.c -o a -ldl
+#./a
+Hi..10</PRE>
+<FONT FACE="Courier New" SIZE=2><P>That's all there is to it.</P>
+<P>Now's the time to end this chapter with a potentially useful program. Let's write a very very simple function spy.</P>
+<P>We create an executable with a call to printf(). Nothing new here. We then create an .so file with the code for printf() where we exit(), returning the number 22.</P>
+</FONT><PRE>
+a.c
+main()
+{
+printf("hi\n");
+}
+#gcc a.c -o a
+#./a
+hi
+b.c
+printf()
+{
+exit(22);
+}
+#gcc -c b.c
+#gcc -shared -o b.so b.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Initialize the environmental variable LD_PRELOAD to ./b.so, i.e. the full pathname of the shared library to use.</P>
+</FONT><PRE>#export LD_PRELOAD=./b.so
+#./a</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Run 'a' and echo the return value. It's 22.</P>
+</FONT><PRE>#./a;echo $?
+22</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Unset the variable and run the program again. This time we get 'hi'. This means that the original printf() is now being called.</P>
+</FONT><PRE>#export LD_PRELOAD=
+#./a
+hi
+3
+#</PRE>
+<FONT FACE="Courier New" SIZE=2><P>LD_PRELOAD is the variable the loader looks at before anything else. So when it's initialized to 'b.so', our printf() code is called.</P>
+<P>A spy should log the call to the function and then call the original function. To do that we use execve(). We can't do it directly because we'll just end up recursing round and round. We have to bypass the spy from within the spy by using dlopen() and dlsym() to call the function directly from libc.so.6.</P>
+<P>This is about all we need to know to write a successful spy. </P>
+</FONT><PRE>b.c
+#include &lt;dlfcn.h&gt;
+void *h;
+int (*p)(char *p1,char **q1,char **r1);
+int execve(char *p1,char **q1,char **r1)
+{
+int i;
+printf("hi......\n");
+h = dlopen("/lib/libc.so.6",RTLD_LAZY);
+p = dlsym(h,"execve");
+printf("Hi \n");
+i = p(p1,q1,r1);
+return i;
+}
+#gcc -c b.c
+#gcc -shared -o b.so b.o -ldl
+#export LD_PRELOAD=./b.so
+a.c
+char *a[2];
+main()
+{
+int i;
+a[0]="ls";
+i=execve("/bin/ls",a,0);
+}
+#gcc a.c -o a
+#./a
+Hi
+a
+a.c
+a.c.bak
+a.c~
+b.c
+b.c.bak
+b.o
+b.so</PRE>
+<FONT FACE="Courier New" SIZE=2><P>'b.c' is the spy and 'a.c' the test program. In 'b.c', we write our own version of execve() where we log the call (by printing 'Hi') and then call the original. Notice that we carefully return the return value of execve(). Not doing so can lead to problems.</P>
+<P>In 'a.c', when execve() is used, the code in b.so is called. This logs the call and then calls the original code passing it the correct parameters. To log more functions, you'll have to write a shadow function for it in b.so. Icky code, but it works.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap3.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

@@ -1,0 +1,2644 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap13.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:25 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap13_files/filelist.html">
+<link rel=Edit-Time-Data href="chap13_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-01-27T20:42:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:43:00Z</o:LastSaved>
+  <o:Pages>21</o:Pages>
+  <o:Words>7677</o:Words>
+  <o:Characters>43762</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>364</o:Lines>
+  <o:Paragraphs>87</o:Paragraphs>
+  <o:CharactersWithSpaces>53742</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>13</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Remoting</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Remoting is the practice of
+calling code from a dll, located on another machine using a web server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Stipulated below are a few
+programs that unveil the concepts of remoting. After wading through the basic
+concept of remoting, we shall explain the same concept in the context of SOAP. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In remoting, a program or a
+client situated in some location in the world, executes a function or some code
+contained in a dll, which could be residing on a server, at some other
+geographical location in the world. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to achieve the above,
+two sub-directories, i.e. ss for server and cc for the client need to be
+created. As we proceed ahead, the programs become progressively complicated.
+Hence, we call upon you to create<span style="mso-spacerun: yes">  </span>the
+above mentioned directories, in exactly the same manner as we have stated. We
+have explained a few concepts of remoting in a nutshell, in the earlier
+chapter. However, there is no harm in re-iterating the salient features again.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the directories have been
+created, create the files s.cs and o.cs in the folder ss, and run the batch
+file a.bat. This will produce an exe file called s.exe, and a dll file named
+o.dll. Then in the folder cc, create two files named c.cs and o.cs, and again
+run the batch file named a.bat. This would create two more files, c.exe and
+o.dll. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, open up two DOS
+console boxes by using the Command Prompt option; and within one of the
+consoles, execute the server executable named s.exe, in the ss subdirectory.
+The program would neither show any output, nor would it quit. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, move on to the cc folder
+and run the client program c.exe. In this window, the value of 100 is
+displayed. Simultaneously, if you switch to the server window, you would notice
+that three lines have been displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><b>Server</b><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel(8080);<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>RemotingConfiguration.RegisterWellKnownServiceType
+(Type.GetType(&quot;yyy,o&quot;), &quot;abc&quot;, WellKnownObjectMode.SingleCall);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.ReadLine();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(&quot;yyy Constructor&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public int pqr(String a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(&quot;DLL &quot; + a);<o:p></o:p></p>
+
+<p class=ILprg>return 100;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library o.cs<o:p></o:p></p>
+
+<p class=ILprg>csc s.cs /r:o.dll<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><b>Client</b><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel();<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy), &quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>if (o == null) <o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Error&quot;);<o:p></o:p></p>
+
+<p class=ILprg>else <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>int i = o.pqr(&quot;vijay&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : MarshalByRefObject<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public yyy() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(&quot;yyy Constructor1&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public int pqr(String a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(&quot;DLL1 &quot; + a);<o:p></o:p></p>
+
+<p class=ILprg>return 1000;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library o.cs<o:p></o:p></p>
+
+<p class=ILprg>csc c.cs /r:o.dll<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in Server</u><o:p></o:p></p>
+
+<p class=ILoutput>yyy Constructor<o:p></o:p></p>
+
+<p class=ILoutput>yyy Constructor<o:p></o:p></p>
+
+<p class=ILoutput>DLL vijay<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in Client</u><o:p></o:p></p>
+
+<p class=ILoutput>100<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Curtly speaking, the file o.dll
+is present in the folder ss. The function pqr gets executed from this file. The
+return value of this function, i.e. 100, is displayed in the client window.
+There is a file named o.dll in the cc folder, but no code is executed from it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, let us attempt at
+understanding the programs more exhaustively.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We initially grapple with the
+server program named s.cs. As always, the file begins with the namespaces. The
+concept of namespaces is employed to evade clashes between names that are
+freely created and used by people in general. Then, an object c of type
+HttpChannel is created. The HttpChannel class uses the HTTP protocol, i.e. the
+Hyper Text Transfer Protocol, to transfer messages between the client and the
+server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the networking world, the
+hierarchy is as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>First comes IP, the Internet
+Protocol.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Next is the TCP or Transmission
+Control Protocol.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>This is followed by HTTP or Hyper
+Text Transfer Protocol, which is the very foundation of the World Wide Web.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The two email protocols of SMTP
+and POP3, and the File Transfer Protocol FTP are at the same level as HTTP.
+When two computers talk to each other, every packet that is transferred to and
+fro between them, is stamped with a number. This facilitates easy
+identification by various higher-level protocols. In the TCP/IP world, this
+number is known as a port number. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, we exploit the services of
+another class named ChannelServices, which is responsible for sending and
+receiving data on the specified Channel. The static RegisterChannel function,
+which accepts an IChannel interface as a parameter, is assigned a value of 'c'.
+Thus, we can safely infer that the HttpChannel class is derived from the
+IChannel interface. In place of HttpChannel, we could have used a TcpChannel. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we press into action,
+another static function named RegisterWellKnowServiceType, from the class
+RemotingConfiguration. This function unfurls the code that is to be executed,
+along with its whereabouts. The first parameter to this function is a data type
+called Type. To place a value in this parameter, we use the static function
+GetType, with a class name and a dll name. The values of 'yyy' and 'o' signify
+that the class yyy has to be obtained from the library o.dll. Thus, not only do
+we specify a class name yyy, but also the name of the dll that contains the
+class. The comma serves as a delimiter.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, our server that is
+listening on port 8080, will permit others to access code from the class yyy in
+the dll file named o. The next parameter identifies and locates the code that
+is to be executed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The URI specified here is 'abc'.
+The last parameter that is specified, can assume any of the two values of an
+enum: WellKnownObjectMode, SingleCall or Singleton. The value of SingleCall
+specified in the program, ensures that every time a client calls some code in
+the server, the server shall use a new instance of the class yyy. The ReadLine
+function freezes execution of all the code. As a consequence, the server does
+not quit out.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us now shift our focus to
+the class yyy, which exposes the function pqr.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file o.cs, class yyy is
+derived from the class MarshalByRefObject. If we fail to derive from this
+class, a runtime exception gets generated. This is because of the fact that,
+the class MarshalByRefObject is the base class for all objects that are to be
+remoted. In the class, we have a constructor yyy, whose sole task is to print a
+string. We also have a function pqr, which accepts a string and returns the
+number 100.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client c.cs in the cc folder
+starts with an HttpChannel object c. The constructor uses the default port
+number, unlike the case of the server, where we had to specify the number 8080.
+As is apparent from the server, a Channel object is registered. The object yyy
+that is located on the server machine and which is identified by the uri, is
+then activated on the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our simulation, the client
+and server are on two different dos boxes; although in real time, they could be
+located miles apart. Therefore, the object has to be activated on a remote
+machine. To accomplish this, the Activator class is used, which finally returns
+a handle to that object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To rephrase it in simple words,
+in order to create an object on a local machine, the 'new' keyword is used. On
+the other hand, to create an object remotely, so that it can be accessed on the
+machine as a local object, we use the static function GetObject from the
+Activator. This function accepts two parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first is yyy, the type of the
+object that is to be created.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second is a URL in a string
+format, which points to the location of the server.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>The URL starts with http, since
+the transport mechanism used is similar to the http protocol. After the colon
+and the two slashes, i.e. ://, the address of the server is specified. Since it
+is on our local machine, we specify the address as 'localhost'. The number 8080
+following the colon symbol, is the port number where the server awaits all
+calls. The name of our server or URI is specified as 'abc'. Therefore, we
+conclude the above string with the URI of abc.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The server actually has a URI of
+abc on port 8080. Thus, it returns a valid object, from which the function pqr
+is called. This function pqr is executed off the server, and returns 100 in the
+variable i. The value of i is then displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the server window, the yyy
+constructor gets called twice, while the pqr function gets called once. The
+code in o.dll gets called from the server and not from the client. The
+constructor gets called twice on account of the call to the pqr function, and
+not because of the GetObject function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we comment out the call of
+the pqr function in the client, no output is witnessed in the server window.
+This elucidates the indispensability of o.dll in both the dos boxes. This is
+the smallest remoting example possible, but we are not sure if you have been
+able to grasp it fully or not. The documentation states that Remoting uses
+SOAP, although we still have no clue as to how it does so. The point to be
+noted here is that, the client and the server interact with each other. As an
+upshot of this interaction, some code gets executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we write our own code,
+which divulges the communication between the client and the server. We make no
+alterations to the code in the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net.Sockets;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>class zzz<span style="mso-spacerun: yes">  </span>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); <o:p></o:p></p>
+
+<p class=ILprg>t.Start();<o:p></o:p></p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h1 = s.Receive(b);<o:p></o:p></p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=ILprg>byte [] c = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h2 = s.Receive(c);<o:p></o:p></p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a1);<o:p></o:p></p>
+
+<p class=ILprg>Console.ReadLine();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc a.cs<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output in the proxy</u><o:p></o:p></p>
+
+<p class=ILoutput>POST /abc HTTP/1.1<o:p></o:p></p>
+
+<p class=ILoutput>User-Agent: Mozilla/4.0+(compatible; MSIE 6.0; Windows
+5.0.2195.0; MS .NET Remoting; MS .NET CLR 1.0.2914.16 )<o:p></o:p></p>
+
+<p class=ILoutput>SOAPAction:
+&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o#pqr&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 477<o:p></o:p></p>
+
+<p class=ILoutput>Expect: 100-continue<o:p></o:p></p>
+
+<p class=ILoutput>Connection: Keep-Alive<o:p></o:p></p>
+
+<p class=ILoutput>Host: localhost<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot; http://schemas.xmlsoap.org/soap/envelope/ &quot;
+SOAP-ENV:encodingStyle =&quot; http://schemas.xmlsoap.org/soap/encoding/ &quot;
+xmlns:i2=&quot; http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a id=&quot;ref-3&quot;&gt;vijay&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>In addition to the existing
+folders, we now create one more folder named 'p', to accommodate the above
+program named a.cs. Then, we compile it to generate the file a.exe. Now, we
+would like you to run this program first, followed by the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After a few seconds, press
+Control-C in the client dos box and quit out of the waiting client. Now, switch
+over to the dos box where the a.exe program is running in the 'p' folder. You
+will notice the junk displayed above. Press enter and quit out of this program
+too.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The folder 'p' contains code for
+the proxy. The output seen in the dos box is a SOAP message. Before we launch
+forth into the SOAP world, a salient point to be noted is that, the server
+program was never executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We shall not dig any deeper and
+dissect the workings of the proxy program, as most of it has been expounded in
+the first chapter, while understanding the spy program. The client too has been
+explained earlier on. Hence, we shall not mull over it again. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It suffices to say that, the
+name of the function to be executed is pqr, and there also exists a tag with
+the same name. Now, to enable others to execute a function called pqr, the tag
+is prefaced with the unique namespace i2, created earlier in the code.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The pqr tag so formed, is now
+unique across the seven seas. It takes an attribute id, which has been assigned
+a value of ref-1. The id attribute is used to furnish the tag with a unique
+name. The function takes one parameter named 'a', with a value of 'vijay'.
+Therefore, there exists a child tag 'a' with an id attribute of ref-3. It
+appears as if they have missed out ref-2 ;-). The content given to this tag 'a'
+is 'vijay', because the function pqr is called with this value. Following this
+tag, are the three closing tags for pqr, Body and Envelope. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, to call any function, a
+tag with the name of the function is created, and the parameter values are
+passed as content between tags accepting the parameter name. This assists in
+identifying the different parameter values in a function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>s.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Tcp;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel(8081);<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(&quot;yyy,o&quot;),
+&quot;abc&quot;, WellKnownObjectMode.SingleCall);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.ReadLine();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net.Sockets;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>class zzz {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); <o:p></o:p></p>
+
+<p class=ILprg>t.Start();<o:p></o:p></p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h1 = s.Receive(b);<o:p></o:p></p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=ILprg>byte [] c = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h2 = s.Receive(c);<o:p></o:p></p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a1);<o:p></o:p></p>
+
+<p class=ILprg>TcpClient t1 = new TcpClient();<o:p></o:p></p>
+
+<p class=ILprg>t1.Connect(&quot;127.0.0.1&quot;, 8081);<o:p></o:p></p>
+
+<p class=ILprg>NetworkStream s1 = t1.GetStream();<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(b,0,h1);<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(c, 0,h2 );<o:p></o:p></p>
+
+<p class=ILprg>byte [] d = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h3 = s1.Read(d,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>String a2 = Encoding.ASCII.GetString(d);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d1 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>h3 = s1.Read(d1,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d1);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d2 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h4 = s1.Read(d2,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d2);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d1,h3,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d2,h4,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>POST /abc HTTP/1.1<o:p></o:p></p>
+
+<p class=ILoutput>User-Agent: Mozilla/4.0+(compatible; MSIE 6.0; Windows
+5.0.2195.0; MS .NET Remoting; MS .NET CLR 1.0.2914.16 )<o:p></o:p></p>
+
+<p class=ILoutput>SOAPAction:
+&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o#pqr&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 477<o:p></o:p></p>
+
+<p class=ILoutput>Expect: 100-continue<o:p></o:p></p>
+
+<p class=ILoutput>Connection: Keep-Alive<o:p></o:p></p>
+
+<p class=ILoutput>Host: localhost<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                               
+</span><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                                </span><span
+style="mso-spacerun:
+yes">                                                                                                                                                                                   </span><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a id=&quot;ref-3&quot;&gt;vijay&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput>HTTP/1.1 100 Continue<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>HTTP/1.1 200 OK<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Server: MS .NET Remoting, MS .NET CLR 1.0.2914.16<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 490<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqrResponse id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;return&gt;100&lt;/return&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqrResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the server program, the port
+number in the HttpChannel constructor has been changed to 8081. Thus, the
+server will now accept all packets that are destined for the port number 8081.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, to run the above program,
+we open up three dos boxes. The first one is for the proxy server called a.exe,
+in the folder p. The server program s.exe will be executed from the ss
+directory, in the second dos box. These two programs do not show any output at
+all. In the third dos box, we move on to the client folder cc and run the
+program c.exe, which initiates some process and generates the above output.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy console displays
+additional data that was not visible earlier. The newly introduced output is
+the SOAP message sent by the server to the client. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As is essentially the case, the
+SOAP payload sent by the server starts with the Envelope root, containing all
+the namespace definitions. The Envelope tag is followed by the Body tag, and
+since this is the Response of the pqr function, the tag is pqrResponse. It
+takes an id of ref-1. There can be only one return value, which is placed in
+the return tag. The value enclosed in this tag is the return value of 100. The
+namespace, as usual, is i2.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the proxy server, a
+considerable amount of code has been introduced. The proxy resembles the spy
+program that we had examined in the earlier chapter. In case you need to
+refresh your memory, you can flip through the pages and revise it once again.
+The program has been introduced to prove that, in the world of remoting, the
+client and server chat with each other using SOAP.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net.Sockets;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>class zzz <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); <o:p></o:p></p>
+
+<p class=ILprg>t.Start();<o:p></o:p></p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h1 = s.Receive(b);<o:p></o:p></p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=ILprg>byte [] c = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h2 = s.Receive(c);<o:p></o:p></p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a1);<o:p></o:p></p>
+
+<p class=ILprg>String s1 = &quot;HTTP/1.1 200 OK\nContent-Type: text/xml;
+charset=\&quot;utf-8\&quot;\nServer: MS .NET Remoting, MS .NET CLR
+1.0.2914.16\nContent-Length: 491\n\n&quot;;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] d1 = Encoding.ASCII.GetBytes(s1);<o:p></o:p></p>
+
+<p class=ILprg>String s2;<o:p></o:p></p>
+
+<p class=ILprg>s2 = &quot;&lt;SOAP-ENV:Envelope
+xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot;
+xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot;
+xmlns:SOAP-ENC=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot;
+xmlns:SOAP-ENV=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;
+SOAP-ENV:encodingStyle=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot;
+xmlns:i2=\&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o\&quot;&gt;&lt;SOAP-ENV:Body&gt;&lt;i2:pqrResponse
+id=\&quot;ref-1\&quot;&gt;&lt;return&gt;100&lt;/return&gt;&lt;/i2:pqrResponse&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;&quot;;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] d2 = Encoding.ASCII.GetBytes(s2);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d1);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d2);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>POST /abc HTTP/1.1<o:p></o:p></p>
+
+<p class=ILoutput>User-Agent: Mozilla/4.0+(compatible; MSIE 6.0; Windows
+5.0.2195.0; MS .NET Remoting; MS .NET CLR 1.0.2914.16 )<o:p></o:p></p>
+
+<p class=ILoutput>SOAPAction: &quot;http://schemas.microsoft.com/clr/nsassem/yyy/o#pqr&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 477<o:p></o:p></p>
+
+<p class=ILoutput>Expect: 100-continue<o:p></o:p></p>
+
+<p class=ILoutput>Connection: Keep-Alive<o:p></o:p></p>
+
+<p class=ILoutput>Host: localhost<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a id=&quot;ref-3&quot;&gt;vijay&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes">                                                                                                                                                                 
+</span><span style="mso-spacerun: yes">     </span><o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u><o:p></o:p></p>
+
+<p class=ILoutput>100<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Modify the proxy code in a.cs
+and then run the executable. There is no requirement of running the server.
+Therefore, we go ahead and run the client program 'c' from the folder cc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output shown in the proxy
+dos box is the message, sent by the client to the server. Surprisingly, in
+spite of not having a server running, the client console still exhibits a value
+of 100. This is due to the fact that the proxy code introduced here, deceives
+the client into believing that it is actually a remoting server, which in
+reality, it is not.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Let us unravel the code in the
+proxy program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The TcpListener, as always,
+listens on port 8080, which is the same port that the client wants to connect to.
+Then, there is a wait for a connection at the blocking function AcceptSocket.
+The data dispatched by the client is then displayed on the console, though it
+is not used anywhere.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The program introduces two
+strings, s1 and s2, which are initialized to values shown in the output of the
+earlier program. These were the bytes that the server had sent across, when it
+received a packet from the client. After these two strings have been
+initialised, the packet is sent across to the client. As a result, the value of
+100 is displayed on the screen, since it is enclosed within the return tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Therefore, there is no need for
+the client to be familiar with the identity of the sender of the packets. In
+any case, there is no way of determining this. The server could be a Java
+program, for all that the client cares.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Clients and servers talk to each
+other via SOAP. Therefore, they are not required to be cognizant of the
+intricacies of programming languages, Operating Systems, etc. SOAP messages are
+sent over HTTP, and software at the endpoint is of no prime concern. This is
+one of the several reasons why people are of the opinion that SOAP is
+revolutionizing the world of Distributed Computing.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net.Sockets;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>class zzz {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); <o:p></o:p></p>
+
+<p class=ILprg>t.Start();<o:p></o:p></p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h1 = s.Receive(b);<o:p></o:p></p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);<o:p></o:p></p>
+
+<p class=ILprg>string s5;<o:p></o:p></p>
+
+<p class=ILprg>s5 = &quot;&lt;SOAP-ENV:Envelope
+xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot;
+xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot;
+xmlns:SOAP-ENC=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot;
+xmlns:SOAP-ENV=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot; SOAP-ENV:encodingStyle=\&quot;http://schemas.xmlsoap.org/soap/encoding/\&quot;
+xmlns:i2=\&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o\&quot;&gt;\n&lt;SOAP-ENV:Body&gt;\n&lt;i2:pqr
+id=\&quot;ref-1\&quot;&gt;\n&lt;a id=\&quot;ref-3\&quot;&gt;vijay&lt;/a&gt;\n&lt;/i2:pqr&gt;\n&lt;/SOAP-ENV:Body&gt;\n&lt;/SOAP-ENV:Envelope&gt;\n\n\n\n\n\n\n\n&quot;;<o:p></o:p></p>
+
+<p class=ILprg>Byte[] l1 = Encoding.ASCII.GetBytes(s5);<o:p></o:p></p>
+
+<p class=ILprg>String ss1 = Encoding.ASCII.GetString(l1);<o:p></o:p></p>
+
+<p class=ILprg>byte [] c = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h2 = s.Receive(c);<o:p></o:p></p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);<o:p></o:p></p>
+
+<p class=ILprg>TcpClient t1 = new TcpClient();<o:p></o:p></p>
+
+<p class=ILprg>t1.Connect(&quot;127.0.0.1&quot;, 8081);<o:p></o:p></p>
+
+<p class=ILprg>NetworkStream s1 = t1.GetStream();<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(b, 0,h1 );<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(l1, 0,l1.Length );<o:p></o:p></p>
+
+<p class=ILprg>byte [] d = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h3 = s1.Read(d,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>String a2 = Encoding.ASCII.GetString(d);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d1 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>h3 = s1.Read(d1,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d1);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d2 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h4 = s1.Read(d2,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d2);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d1,h3,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d2,h4,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>The above-mentioned program is
+analogous to the first proxy server in the chapter. The proxy reads the two
+packets sent by the client. The only difference being, that the second packet
+from the client is not sent across in its original form. Instead, the proxy
+creates the packet and sends it to the server. Thus, the client and the server
+are merely interested in the SOAP payload, and not in the identity of its
+creator.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The presence of too many
+folders, leads to clutter and confusion. Thus, for the next program we have a
+single folder named 'rr', where we position the client c.cs, the server s.cs
+and the dll o.cs. We place them all in a single folder for the sake of convenience.
+In real life, they could be spread over different machines. The server program
+remains the same, and on careful scrutiny, you would notice that there is no
+mention of the pqr function in the server program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net;<o:p></o:p></p>
+
+<p class=ILprg>using System.Net.Sockets;<o:p></o:p></p>
+
+<p class=ILprg>using System.Text;<o:p></o:p></p>
+
+<p class=ILprg>using System.IO;<o:p></o:p></p>
+
+<p class=ILprg>class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>TcpListener t = new TcpListener(8080); <o:p></o:p></p>
+
+<p class=ILprg>t.Start();<o:p></o:p></p>
+
+<p class=ILprg>Socket s = t.AcceptSocket();<o:p></o:p></p>
+
+<p class=ILprg>byte [] b = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h1 = s.Receive(b);<o:p></o:p></p>
+
+<p class=ILprg>String a = Encoding.ASCII.GetString(b);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a);<o:p></o:p></p>
+
+<p class=ILprg>byte [] c = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h2 = s.Receive(c);<o:p></o:p></p>
+
+<p class=ILprg>String a1 = Encoding.ASCII.GetString(c);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a1);<o:p></o:p></p>
+
+<p class=ILprg>TcpClient t1 = new TcpClient();<o:p></o:p></p>
+
+<p class=ILprg>t1.Connect(&quot;127.0.0.1&quot;, 8081);<o:p></o:p></p>
+
+<p class=ILprg>NetworkStream s1 = t1.GetStream();<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(b,0,h1);<o:p></o:p></p>
+
+<p class=ILprg>s1.Write(c, 0,h2 );<o:p></o:p></p>
+
+<p class=ILprg>byte [] d = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h3 = s1.Read(d,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>String a2 = Encoding.ASCII.GetString(d);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d1 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>h3 = s1.Read(d1,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d1);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>byte [] d2 = new byte[1000];<o:p></o:p></p>
+
+<p class=ILprg>int h4 = s1.Read(d2,0,1000);<o:p></o:p></p>
+
+<p class=ILprg>a2 = Encoding.ASCII.GetString(d2);<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(a2);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d1,h3,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>s.Send(d2,h4,SocketFlags.None);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes">                                                                                                                                                  
+</span><o:p></o:p></p>
+
+<p class=ILprg><u>s.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel(8081);<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>RemotingConfiguration.RegisterWellKnownServiceType(Type.GetType(&quot;yyy,o&quot;),
+&quot;abc&quot;, WellKnownObjectMode.SingleCall);<o:p></o:p></p>
+
+<p class=ILprg>Console.ReadLine();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel();<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(100);<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int<span style="mso-spacerun: yes">  </span>a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library o.cs<o:p></o:p></p>
+
+<p class=ILprg>csc s.cs /r:o.dll<o:p></o:p></p>
+
+<p class=ILprg>csc c.cs /r:o.dll<o:p></o:p></p>
+
+<p class=ILprg>csc a.cs <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>POST /abc HTTP/1.1<o:p></o:p></p>
+
+<p class=ILoutput>User-Agent: Mozilla/4.0+(compatible; MSIE 6.0; Windows
+5.0.2195.0; MS .NET Remoting; MS .NET CLR 1.0.2914.16 )<o:p></o:p></p>
+
+<p class=ILoutput>SOAPAction: &quot;http://schemas.microsoft.com/clr/nsassem/yyy/o#pqr&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 464<o:p></o:p></p>
+
+<p class=ILoutput>Expect: 100-continue<o:p></o:p></p>
+
+<p class=ILoutput>Connection: Keep-Alive<o:p></o:p></p>
+
+<p class=ILoutput>Host: localhost<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;100&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>HTTP/1.1 200 OK<o:p></o:p></p>
+
+<p class=ILoutput>Content-Type: text/xml; charset=&quot;utf-8&quot;<o:p></o:p></p>
+
+<p class=ILoutput>Server: MS .NET Remoting, MS .NET CLR 1.0.2914.16<o:p></o:p></p>
+
+<p class=ILoutput>Content-Length: 468<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqrResponse id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqrResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program highlights one of
+the most important features of SOAP, i.e. functions with parameters. These
+parameters are packaged as an XML document and then sent across. The same
+process is followed for return values.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we shall demystify the
+mechanism by which SOAP packages the data types, which are passed with the
+parameters.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In our client program, the only
+change for next couple of programs is, call of the function pqr with different
+parameter types. In this example, the parameter has the datatype of int. As of
+now, there is no return value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We intend to showcase the varied
+types of calls that can be made. We will display only the modified code in the
+latter part of the c.cs file. The dll will have different iterations of the
+function being called. Also, no output is displayed either in the client, or in
+the server, or in the dll. Our objective is to figure out how the parameters
+are packaged as an XML document.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The a.bat file is a
+straightforward and an uncomplicated one. It creates the executables for the
+client and the server. In the first dos box, we run the proxy a.exe. Then, in
+the second dos box, we run the server 's'. Finally, in the last dos box, the
+client program 'c' is run. To quit out of the server, simply press the enter
+key.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the proxy console, we shall
+display the output from the point where the body tag begins, since everything
+upto this point, remains the same. The number 100 is packaged across, without
+the data type being specified anywhere. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As mentioned earlier, only the
+parameter name is sent across in the form of tag names. The data type of the
+parameter is not visible in the XML document. The same holds true for the
+response too. Since there is no return value, the return tag is also
+non-existent. Hence, the return packet also remains unchanged. Thus, for the
+time being, we shall not display the return SOAP payload too.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>o.pqr(100,&quot;vijay&quot;,false);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int<span style="mso-spacerun: yes">  </span>a ,
+string b, bool c) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;100&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;b id=&quot;ref-3&quot;&gt;vijay&lt;/b&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;c&gt;false&lt;/c&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client program, function
+pqr is called with three parameters - an int, a string and a bool. The int and
+bool are basic data types, and hence, are bereft of an id. However, the string
+being a complexType, has an id of ref-3. The data types follow the rules of XML
+Schemas. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The o.dll is modified to
+incorporate the parameters, as the parameter names are picked up from this
+library. Thus, simple types like int, do not possess any id attributes,
+whereas, complex types do.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Out Parameters</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Remoting.Channels.Http;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>HttpChannel c = new HttpChannel();<o:p></o:p></p>
+
+<p class=ILprg>ChannelServices.RegisterChannel(c);<o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int i,j;<o:p></o:p></p>
+
+<p class=ILprg>i = 1000;<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(out i, out j, 200);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(i + &quot; &quot; + j);<o:p></o:p></p>
+
+<p class=ILprg>} <o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(out int a, out int b, int p) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>a = 10;<o:p></o:p></p>
+
+<p class=ILprg>b = 20;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><span style='font-size:10.0pt;font-family:"Bookman Old Style";
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;p&gt;200&lt;/p&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">                            
+</span><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                                </span><span
+style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                           </span><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqrResponse id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;10&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;b&gt;20&lt;/b&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqrResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u><o:p></o:p></p>
+
+<p class=ILoutput>10 20<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The above example deals with the
+'out' parameter. For those of you who are not well acquainted with the 'out'
+parameter, we restate that it does not have to be initialized while calling the
+function. It is the responsibility of the function to initializes the 'out'
+parameter, or else, an error is generated. The function that is called, is also
+not entitled to access the value of the 'out' parameter, since its value does
+not have to be initialized before the function is called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the file c.cs, the function
+pqr has two 'out' parameters, i and j. The value of the variable i is set to
+1000, while j is not initialized. The last parameter is a simple by-value
+parameter. In o.dll, the variables of i and j are initialized to the values of
+10 and 20, respectively. If we do not initialize them, an error will be
+generated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output expressly reveals
+that the initial SOAP Message is under the assumption that there is a single
+parameter 'p', with a value of 200. There is no trace of the 'out' parameters,
+despite the fact that one of them has been initialized. As a matter of fact,
+there is no need for them to contain a value. Hence, sending a value over is
+merely an exercise in futility. In the return SOAP payload, the two 'out'
+parameters named 'a' and 'b' are visible as tags, with their values of 10 and
+20. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'out' parameters are sent
+back to the client, unlike the 'in' parameters, which are sent from the server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int i;<o:p></o:p></p>
+
+<p class=ILprg>i = 1000;<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(ref i);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(ref int a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>a = 10;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;1000&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                               
+</span><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                                </span><span
+style="mso-spacerun: yes">                       </span><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqrResponse id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a&gt;10&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqrResponse&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Client Output</u><o:p></o:p></p>
+
+<p class=ILoutput>10<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The 'ref' parameter must be
+initialized before it is assigned to a function. The called function may or may
+not change its value, but it can access it and use its value. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function pqr takes one ref
+parameter, which is initialized to 1000. In the server, the value is changed to
+10. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To recapitulate, in the initial
+SOAP payload, the value of 1000 is sent across; and in the return packet, the
+altered value of 10 is seen, with the parameter 'a'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the 'in' parameters, which
+are the default parameters, are present only in the packet that is sent from
+client to server. The 'out' parameters are sent from the server to the client.
+The 'ref' parameters are the only ones that are transmitted in both directions,
+from the client to the server, and also from the server to the client.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Arrays</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int [] z;<o:p></o:p></p>
+
+<p class=ILprg>z = new int[3]{10, 34, 56};<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(z);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int []<span style="mso-spacerun: yes">  </span>a
+) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a href=&quot;#ref-3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-3&quot;
+SOAP-ENC:arrayType=&quot;xsd:int[3]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;10&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;34&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;56&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function pqr now takes an
+array of ints. Therefore, in the client program, we create an array 'z' of
+three ints, and then assign it as a parameter to the function. In the dll, the
+function pqr accepts this array in a parameter called 'a'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The output reveals that in the
+Body element, tag 'a' contains an attribute href, with a value of #ref-3. This
+is the only information furnished along with the pqr function tag. Furthermore,
+for the first time, the Array tag from the SOAP-ENC namespace has been used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first attribute of the array
+tag is an id ref-3, which is used for the href attribute. Thus, the 'a' tag is
+now an array with an id of ref-3. The second attribute arrayType, also from the
+SOAP-ENC namespace, states that the array has a size of three, and its data
+type is an int from the namespace xsd. Following this is the item tag, which
+enumerates the three value of the array viz. 10, 34 and 56. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int [] z;<o:p></o:p></p>
+
+<p class=ILprg>z = new int[3]{10, 34, 56};<o:p></o:p></p>
+
+<p class=ILprg>string<span style="mso-spacerun: yes">  </span>[] y;<o:p></o:p></p>
+
+<p class=ILprg>y = new string[3]{&quot;Hi&quot;, &quot;bye&quot;,
+&quot;no&quot;};<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(z,y);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int []<span style="mso-spacerun: yes">  </span>a
+, string [] b) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a href=&quot;#ref-3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;b href=&quot;#ref-4&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-3&quot;
+SOAP-ENC:arrayType=&quot;xsd:int[3]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;10&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;34&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;56&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-4&quot;
+SOAP-ENC:arrayType=&quot;xsd:string[3]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item id=&quot;ref-5&quot;&gt;Hi&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item id=&quot;ref-6&quot;&gt;bye&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item id=&quot;ref-7&quot;&gt;no&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After having worked with an
+array of ints, we anatomize the two arrays, one of which is a string, and the
+other is an int. Thus, in the client program, we create an array named y, which
+has three strings. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then, we pass these two arrays
+'z' and 'y' to the pqr function. In the SOAP payload, there is a pqr tag, which
+has an attribute id with a value of ref-1. It contains two child elements a and
+b, which correspond to the names of the two parameters. Both of them have an
+href attribute each, which states the data type of these parameters that have
+been created elsewhere. The first Array element has an id of ref-3, and it
+specifies that the arrayType is an array of three ints. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second Array element has an
+id of ref-4. It is an array of three strings. The difference here is that the
+item tag now contains a string, an XML Schema complex type, and thus, has ids
+of ref-5, ref-6 and ref-7. This is the only known difference between an array
+of simple types and that of a complex type.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int[,] a = new int[3, 2] { {10, 20}, {30, 40}, {50, 60} };<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(a);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject {<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int [,] a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a href=&quot;#ref-3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-3&quot;
+SOAP-ENC:arrayType=&quot;xsd:int[3,2]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;10&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;20&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;30&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;40&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;50&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;60&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun:
+yes">                                                                                                                                                                                                                                                               
+</span><span style="mso-spacerun:
+yes">                                                                                        </span><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>Illustrated above is an example
+of a multi-dimensional array. A multi-dimensional array of size 3 by 2 is
+created, and simultaneously, it is initialized to some numbers. While passing
+the array to the function pqr, the size of the array is not mentioned. Only the
+fact that it is a multidimensional array, is specified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP payload displays a tag
+'a', which refers to the array having the id of ref-3. The Array tag has an
+array type of int, and its dimensions are 3 by 2. The item tag stores these
+values in the sequence, as was used while initializing the array.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, there is not much
+variation between the handling of single and multi-dimensional arrays.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Params parameters<o:p></o:p></span></b></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(&quot;hi&quot;,10,20,30);<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(string a, params int [] i) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>System.Console.WriteLine(i[0] +<span style="mso-spacerun: yes"> 
+</span>&quot; &quot; + i[1] + &quot; &quot; + i[2]);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a id=&quot;ref-3&quot;&gt;hi&lt;/a&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i href=&quot;#ref-4&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-4&quot;
+SOAP-ENC:arrayType=&quot;xsd:int[3]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;10&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;20&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;30&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above example, the
+function pqr takes one string and three ints. In the dll, the ints are consumed
+by a params parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP payload reveals the
+fact that the array of three ints is sent across as a single array, and not as
+individual int parameters. This is because, the prototype or code of the
+function specifies a params parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the three ints are first
+fused together into a single array, and then, the resultant array is sent
+across the wire. For some reason, the name ref-2 is never used. Maybe some
+people down there are superstitious. The string parameter 'a' has a reference
+to ref-3, which is not used at all. The arrayType attribute is made up of a
+simple array of three ints.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Jagged arrays</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>int[][] a = new int[2][] { new int[] {1,2,3}, new int[] {4,5} };<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(a);<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(int[][]a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:a1=&quot;http://schemas.microsoft.com/clr/ns/System&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a href=&quot;#ref-3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-3&quot; SOAP-ENC:arrayType=&quot;a1:Int32[][2]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item href=&quot;#ref-4&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item href=&quot;#ref-5&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-4&quot;
+SOAP-ENC:arrayType=&quot;xsd:int[3]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;1&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;2&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;3&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-5&quot; SOAP-ENC:arrayType=&quot;xsd:int[2]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;4&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item&gt;5&lt;/item&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The client file now has a jagged
+array containing two arrays. Once the jagged array has been created, the other
+two arrays are created, with each having three and two members, respectively.
+Thus, the jagged array has two arrays, which in turn, have arrays of different
+lengths. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Finally, it is the data type
+that matters the most. In this case, it is an int. When a jagged array is
+specified, the length parameter is never taken into consideration.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>With the introduction of the
+jagged array, the variation that we encounter is that, in the Envelope tag, an
+additional namespace prefix has been created. The namespace points to a regular
+namespace at Microsoft. In the body, the array is referred to as ref-3. While
+creating this array, the namespace of 'a1', and not 'xsd', is used. The Int32
+alias is used in lieu of int for the data type of the arrayType attribute. The
+id of ref-3 defines the first or outer array of the two members. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since there are two members, the
+SOAP payload shows two item tags, which in turn, define two items with a href
+value of ref-4 and ref-5, respectively. From here onwards, life proceeds
+normally. There are two arrays of ints, which have three and two members,
+respectively. This makes sense, since a jagged array is merely a collection of
+individual arrays of different sizes and shapes. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, the first array definition
+specifies the individual arrays, and the other array definitions specify the
+arrays that constitute the jagged array.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Passing Objects</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Change one line in the proxy
+program as given below: <o:p></o:p></span></p>
+
+<p class=ILprg>byte [] c = new byte[10000];<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This change has to be initiated
+because the SOAP payload is extremely bulky. We could have specified a bigger
+number at the initial stage itself, but then, the use of large numbers, would
+have resulted in the display of more blank lines.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>c.cs</u><o:p></o:p></p>
+
+<p class=ILprg>yyy o = (yyy) Activator.GetObject(typeof(yyy),
+&quot;http://localhost:8080/abc&quot;);<o:p></o:p></p>
+
+<p class=ILprg>ppp b;<o:p></o:p></p>
+
+<p class=ILprg>b = new ppp();<o:p></o:p></p>
+
+<p class=ILprg>o.pqr(b);<o:p></o:p></p>
+
+<p class=ILprg><u>o.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public class ppp : System. MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class yyy : System.MarshalByRefObject <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public void pqr(ppp a) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Envelope
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;
+SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;
+xmlns:a3=&quot;
+http://schemas.microsoft.com/clr/ns/System.Runtime.Remoting.Channels&quot;
+xmlns:a1=&quot;http://schemas.microsoft.com/clr/ns/System.Runtime.Remoting&quot;
+xmlns:i2=&quot;http://schemas.microsoft.com/clr/nsassem/yyy/o&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i2:pqr id=&quot;ref-1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a href=&quot;#ref-3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/i2:pqr&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1:ObjRef id=&quot;ref-3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;uri
+id=&quot;ref-4&quot;&gt;/c9c24653_7764_4ee5_a135_bbccc476795f/1.rem&lt;/uri&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;objrefFlags&gt;0&lt;/objrefFlags&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;typeInfo href=&quot;#ref-5&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;envoyInfo xsi:null=&quot;1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;channelInfo href=&quot;#ref-6&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a1:ObjRef&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1:TypeInfo id=&quot;ref-5&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;serverType id=&quot;ref-7&quot;&gt;ppp, o,
+Version=0.0.0.0, Culture=neutral, PublicKeyToken=null&lt;/serverType&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;serverHierarchy xsi:null=&quot;1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;interfacesImplemented xsi:null=&quot;1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a1:TypeInfo&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a1:ChannelInfo id=&quot;ref-6&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;channelData href=&quot;#ref-8&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a1:ChannelInfo&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;SOAP-ENC:Array id=&quot;ref-8&quot;
+SOAP-ENC:arrayType=&quot;xsd:ur-type[1]&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;item href=&quot;#ref-9&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENC:Array&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;a3:CrossAppDomainData id=&quot;ref-9&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;_ContextID&gt;1294864&lt;/_ContextID&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;_DomainID&gt;1&lt;/_DomainID&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;_processGuid
+id=&quot;ref-10&quot;&gt;5ae7cd65_b8a1_41bf_afdd_208f1d948096&lt;/_processGuid&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/a3:CrossAppDomainData&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Body&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/SOAP-ENV:Envelope&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the client, the object 'b' is
+created as an instance of class ppp. This object is then passed as a parameter
+to the function pqr. Effectively, we are passing a real-life object or a
+reference type to a function. The file o.cs defines the class ppp. It must be
+derived from the class MarshalByRefObject, or else, a runtime exception will be
+thrown. All remoting objects have to be derived from the above-mentioned class.
+There is absolutely no code in the class ppp. Despite this, the size of the
+SOAP payload increases, as an actual object is now being sent over. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As usual, the Envelope element
+shows the namespaces, but now 'a3' and 'a1' are also present. Unlike the
+namespace i2, both these namespaces are fixed, and are not related to the code.
+The Body element, like before, begins with the pqr element from the i2
+namespace, and consists of a single parameter 'a', having a href to ref-3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is not an array reference,
+but an ObjRef datatype, belonging to the namespace 'a1'. The
+System.Runtime.Remoting namespace, holding the class called ObjRef, represents
+the class ppp across the wire. Thus, an instance of an ObjRef class has been
+used, to send across an object of type ppp, from the client to the server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In remoting terminology, it is
+described as a transfer across an AppDomain boundary. Thus, an ObjRef object,
+as seen in the SOAP payload, represents the serialized version of the ppp
+object. This act of sending something over the wire is termed as 'marshaling'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We are not required to create an
+ObjRef object, since it is created by the remoting infrastructure, whenever we
+have to send across a reference object. This is not applicable to value
+objects, such as- int. This ObjRef object contains all the information about
+the object being remoted. This information describes entities like, the type
+and class of the object, its location and the pathway to reach the object
+stored on a remote server.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The class ppp that is derived
+from MarshalByRefObject, is converted into an ObjRef object, using a process
+called 'marshalling'. At the remote server, the ObjRef is converted into a
+proxy, or to be more accurate, a 'transparent proxy', which represents the
+remoted object. This process is known as 'un-marshaling'. The proxy is termed
+as a transparent proxy, since the client is given to believe that the proxy
+represents the actual object. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The original object resides only
+on the remote machine. Therefore, from the client's point of view, the proxy
+represents the actual object in its own memory space. It is like the relationship
+between a magician and a fool. It is the task of the proxy to forward all calls
+made on it, to the original object on the server, using the code provided by
+the remoting world.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The child element or a property
+of the ObjRef class called uri has an id attribute, which is of no significance
+right now. Its value is of type string, and it represents every unique instance
+of the object. We can thus identify every unique instance of the object by
+using this field. It is assigned an id of ref-4, and it contains a very large
+number, which is machine-generated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the computer world, in order
+to represent an entity uniquely across time and space, a 128-bit or a 16-byte
+number is used.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;uri id=&quot;ref-
+4&quot;&gt;/e6e488e0_0ef3_4204_9a80_cb9ced35dfe8/1.rem&lt; /uri&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;uri id=&quot;ref-
+4&quot;&gt;/ed1dc61f_911a_4a74_922a_8aed0cf44fd7/1.rem&lt; /uri&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Run the same program again, and
+observe that a different value is generated for the uri field. The value
+specified above becomes a handle, and uniquely represents the ppp object 'a'.
+We cannot explain the tag objrefFlags, whose value is 0, since it has not been
+documented anywhere. It appears as though the documentation is also at the beta
+stage. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, we have a tag typeInfo,
+which has a href to an element with an id of ref-5. This tag is a TypeInfo,
+from the 'a1' namespace, and it starts with the capital letter T. This element
+TypeInfo has three children or properties, as per the SOAP payload. The
+documentation specifies the datatype for this property to be an interface
+IremotingTypeInfo, which has only one property TypeName, of type string. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Though we are in no position to
+explain the above three child members, we shall still endeavour to do so. The
+TypeInfo object contains considerable information about the type of the remote
+object that the ObjRef represents. In our case, it is of type yyy. Also, the
+type hierarchy or the classes that it derives from, as well as the interfaces
+it implements, need to be ascertained. The proxy requires this data, to
+communicate with the client. The interfacesImplementated does not have any
+content, since the class ppp does not implement any interfaces. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The xsi:null attribute
+determines whether a null value can be used as the value of an element or not.
+If yes, then the element can have a value of null. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The serverType element is made
+up of a list of values, which are delimited by commas, as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>It starts with the class named ppp.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>This is followed by the name of the
+dll file 'o'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Next is the version number.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>This is followed by a Culture.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>After this, comes a Public key
+value. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The last two values can either be
+null or they may have no values at all. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The EnvoyInfo element too does
+not have any content. This class or element of type IEnvoyInfo contains
+'message sinks'. The element is required when runtime support is to be provided
+for transactions. The last child of ObjRef is a channelInfo element. This
+refers to a ChannelInfo with a capital letter C, having an id of ref-6. Its
+data type is the interface IChannelInfo. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This class handles different
+methods to communicate with the other side, using channels. It has one member
+channelData, which has a href attribute set to an element, with an id of
+href-8. This is an Array of type ur-type, and it has only one member. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>An ur-type is the type defined
+in the XML Schemas world. It is this class that deals with transport specific
+issues. The channel data is copied from the channel into the SOAP payload.
+Subsequently, at the time of un-marshalling at the server end, this data is
+required to create a transport sink and manage further transmission of messages
+between the proxy and the server. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This array has only one child
+element item, which leads to the last id of href-9. This member is of type
+CrossAppDomainData, and it stores the data for each channel. The Context
+creates an environment for objects. The ContextID and DomainID do not change at
+all.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last member processGuid
+embodies a different value, each time the program is executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&lt;_processGuid id=&quot;ref-
+10&quot;&gt;eb0d4161_43c4_4548_b0eb_4eda7c 4022d2&lt;/_processGuid&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>GUID, which is an acronym for a Globally Unique Identifier,
+is a 128-bit number, which is absolutely unique across time and space. The
+words GUID and UUID have originated from the world of ActiveX and OLE. This
+brings us to the end of our explanation of the SOAP payload.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap13.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:58:27 GMT -->
+</html>

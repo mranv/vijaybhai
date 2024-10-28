@@ -1,0 +1,2853 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/updatedbooks/j2ee/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:28 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap1_files/filelist.html">
+<title>Animation - Threads And Exceptions </title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Mr. Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>15</o:Revision>
+  <o:TotalTime>10</o:TotalTime>
+  <o:Created>2004-10-21T05:50:00Z</o:Created>
+  <o:LastSaved>2004-10-21T06:04:00Z</o:LastSaved>
+  <o:Pages>20</o:Pages>
+  <o:Words>6223</o:Words>
+  <o:Characters>35476</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>295</o:Lines>
+  <o:Paragraphs>70</o:Paragraphs>
+  <o:CharactersWithSpaces>43567</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>9.35 pt</w:DrawingGridHorizontalSpacing>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-font-kerning:0pt;
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+h2
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:15.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+h3
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:16.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	font-weight:bold;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:#FF6600;}
+p.MsoBodyText2, li.MsoBodyText2, div.MsoBodyText2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:11.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoBodyText3, li.MsoBodyText3, div.MsoBodyText3
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:595.45pt 841.7pt;
+	margin:.5in .5in .5in .5in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1 style='page-break-after:auto;mso-layout-grid-align:auto;punctuation-wrap:
+hanging;text-autospace:ideograph-numeric ideograph-other;mso-vertical-align-alt:
+auto'><span style='font-size:36.0pt;mso-bidi-font-size:12.0pt;font-family:"Times New Roman";
+font-weight:normal;text-decoration:none;text-underline:none'>Animation -
+Threads And Exceptions</span> </h1>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the previous section, we introduced you to the methods
+paint() and repaint() which are the foundation of graphical display in Java.
+These methods are used to display images, shapes, colors etc. Now we proceed to
+learn about Animation using Java. Animation has many uses, from dramatic web
+pages to exciting games. Java animation is superior to things like animated GIF
+files because it provides dynamic interaction instead of just a static
+performance. However a knowledge base of threads and exceptions is a must.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>And a few more functions that you need to learn.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The following program introduces a new function called
+getCodeBase.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(getCodeBase());</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The init function calls System.out.println. Here, instead of
+passing a string we are giving a function- getCodeBase as a parameter.
+getCodeBase already exists within the Applet class as a function. getCodeBase
+returns the location of the applet class i.e. the sub directory which contains
+the code of the applet.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>file:/C:/javaprg/</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We once came across graffiti that said, &quot;You can't fool
+me, I'm too stupid!!&quot; But we intend no folly here! </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's understand the output. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Our applet is based on our local machine and hence it says
+file: We are working on the windows operating system and the current directory
+is the javaprg subdirectory in C drive. Had the applet been picked up from
+another site, getCodeBase would have returned a url (uniform resource locater).
+A url or a uri (uniform resource identifier) identifies some resource. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>java.util.Date d;</p>
+
+<p class=programs>d = new java.util.Date();</p>
+
+<p class=programs>System.out.println(d);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the previous programs, when we declared a variable int
+ii, we were actually creating an object ii that looked like an int. In this
+program, java.util.Date d will create a variable called d that looks like
+java.util.Date. We decided not to have the import statement for Date, hence the
+longish name. You can rewrite the code with Date and the line import
+java.util.* on the top. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>There is a difference between saying Date d and int i. A
+variable gets created as an object if its data type is int, char or long. Since
+these data types are built into programming languages like C and C++, the
+object is created at the time of its declaration. Anything other than the basic
+data types must be explicitly created. Java implements the same rules.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus when we say d looks like Date, an object that looks
+like Date is still not created. Here the object is declared to be of Date type
+and will be created in the future. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's understand how we can create objects ourselves.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>To create an object other than the basic types, languages
+like C++ utilized the word new. Java follows the same route and uses the new
+keyword as well. The next line in our program uses new to create the object d.
+This keyword requires the name of the class which in this case is
+java.util.Date. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>d now becomes an instance or an occurrence of the class
+Date. Date is given with the round brackets because that is part of Java's
+syntax. The println function with d as a parameter will display the current
+date and time when the applet is executed. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs>Tue Aug 31 14:31:07 GMT+05:30 2004</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the previous chapter, we used the paint function
+extensively. We also had g that looked like Graphics and if you recollect we
+did not use new Graphics() anywhere. The reason for this is that whoever called
+paint had already created an instance of Graphics and passed it as a parameter.
+Hence we were spared the effort of doing so ourselves.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = getImage(getCodeBase(),&quot;T1.gif&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n,10,40,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program introduces an additional class called Image. n
+looks like Image. Every class has code and so does Image, which has its own
+code and its own set of variables. This class handles images. getImage is a
+function that requires a location from where the image file can be picked up.
+So the first parameter is the location and the second parameter is the name of
+the graphics file. The function getCodeBase returns the location of the applet.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>For this program, you need a gif file called T1.gif which
+must be placed in the same directory as that of the applet. T1.gif comes with
+the Java development kit. One of the subdirectories in the Java subdirectory is
+called images, which has beans and within beans lies T1.gif; </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>To be precise the gif files are in,
+C:\Sun\AppServer\jdk\demo\plugin\applets\Animator\images\Beans.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The T series starts from T1 and goes up to T10. We recommend
+you copy all of them to your current directory, which in our case is
+c:\javaprg. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>getImage returns an image which is stored in n. That means
+this function internally performs a new Image and returns an object that looks
+like Image. In our current program, n represents an image T1.gif. Just as
+drawLine and drawString are functions in the Graphics class and to call them we
+say g.drawString and g.drawLine, the same applies to the drawImage function. It
+is also to be found within the Graphics class. drawImage takes 4 parameters.
+The dot separates the name of the object from the name of the function.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The first parameter to the drawImage function is an image,
+the second is the x coordinate, the third is the y coordinate and the last one
+is an instance of an object. n in our program represents the image T1.gif to be
+displayed. The next two are the locations on the screen where we want the image
+to appear and finally we have the word 'this'.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>'this' is a reserved word; it is a part of the Java
+programming language. In our code it stands for two things, either zzz or
+applet. 'this' stands for the current class or the class that you are extending
+from. So if Applet has been extended from two or three or more classes then it
+stands for them too. drawImage requires an instance of a class i.e. an object
+and hence we provide it as the last parameter by saying 'this'; which means zzz
+or Applet.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>After running the applet you will see the image T1.gif
+displayed in the appletviewer window. Maximize the window to view it properly.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The next program is similar to the earlier one. This program
+proves that strings and images are all treated in the same manner. This may
+seem strange at first, but you'll soon get used to the idea.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n;int x = 19,y=76;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = getImage(getCodeBase(),&quot;T1.gif&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n,x,y,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public boolean mouseDown(Event e , int x1 ,int y1)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>x = x1; y = y1;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>return true;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program, we have used drawImage instead of
+drawString. Whenever the mouse is clicked in the window, x and y get
+initialized to the click position. repaint() calls the paint function which in
+turn draws the image where the mouse is clicked. Thus the image follows the
+mouse click.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Loops</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The if statement is the bedrock of programming because it
+gives intelligence and decision power to a language. The second major part of
+any programming language is a looping construct. In Java, the for statement
+allows you to repeat computer programming statements. Needless to say, you
+already know that we can enclose statements within a block, thus it also allows
+repetition of multiple statements. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This next program should clarify this.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>int i;</p>
+
+<p class=programs>for ( i = 1; i&lt;= 10; i = i + 1)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;Hi &quot;+i);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The for statement has 2 semicolons. The statement upto the
+first semicolon is executed only once. For the first time i.e. only once is i
+initialized to 1. The statement enclosed within the first and second semicolon
+is a condition. The condition checks whether i &lt;= 10 evaluates to true.
+Since this condition evaluates to true, the statements within the open and the
+close brackets are executed. If the condition evaluates to false, these
+statements are skipped and the loop terminates. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, since the for loop is required to execute only a
+single statement, the '{}' brackets are optional. This rule is applicable here
+too. The variable i has a value 1 which is less than 10, so System.out.println
+will be called and it will display hi 1. After all the statements within the
+block are executed, the last part of the for is executed. i=i+1 will increase
+the value of i by 1, making its new value 2. The condition is checked again, is
+2 &lt;= 10? The answer here is true so hi 2 is displayed. Now i is incremented
+once more and it becomes 3. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The condition 3 &lt;= 10 is again evaluated to true or false
+and this goes on till the condition is false. When i has the value 11, the
+condition checked is, 11 &lt;= 10, which is false. The for terminates and the
+remaining lines of the program after the for block are executed. In this
+manner, the for statement enables the repetition of code. When we leave the for
+statement the value of i will be 11. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The while loop is similar to the for loop. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>int i;</p>
+
+<p class=programs>i = 1;</p>
+
+<p class=programs>while ( i&lt;= 10 ) </p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;Hi &quot;+i);</p>
+
+<p class=programs>i = i + 1;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The while loop only takes a condition, hence the variable i
+is initialized to 1 before entering the loop. The condition checks if i &lt;=
+10 evaluates to true. Currently the value of i is 1. The condition evaluates to
+true and the statements within the curly braces are executed.
+System.out.println is called with Hi and i. The next most important thing to do
+is increment the value of i or else it will have the same value and the loop
+will go on indefinitely.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You may ponder over the question, &quot;Should I use for or
+while?' After all, the for loop is similar to the while loop. To answer your
+question is &quot;On Mondays, Wednesdays, Fridays use for and on Tuesdays,
+Thursdays, Saturdays use while. Take a break on Sundays; nobody works on
+Sundays&quot;. Alternatively &quot;Toss a coin. If it's heads use while and if
+it's tails, don't use for&quot; ;-) </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This is a prevalent problem with computer programming. There
+are multiple ways of doing the same thing. Both while and for do the same
+thing. The middle parameter of the for statement and the condition in while
+loop are basically the same, so it is entirely up to you to choose one.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The next program creates an infinite loop using the while
+statement. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The while condition simply says true. The condition will
+never evaluate to false and hence the loop will go on indefinitely. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>int i;</p>
+
+<p class=programs>i = 1;</p>
+
+<p class=programs>while ( true ) </p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;Hi &quot;+i);</p>
+
+<p class=programs>i = i + 1;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Press Ctrl-C in the dos console to end of the program</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Arrays</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>All programming languages implement arrays. An array is just
+another entity. For e.g., all the people born in India can be said to belong to
+a single array named India. They are all parts of a single whole. The concept
+of an array is very flexible and like beauty, it lies in the eyes of the
+beholder.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here is the simplest example on arrays.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>int n[]; </p>
+
+<p class=programs>int i = 0;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new int[4];</p>
+
+<p class=programs>n[0] = 10;</p>
+
+<p class=programs>n[1] = 20;</p>
+
+<p class=programs>n[2] = 30;</p>
+
+<p class=programs>n[3] = 40;</p>
+
+<p class=programs>for (i=0; i &lt; 4; i++)</p>
+
+<p class=programs>System.out.println(n[i]);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>10</p>
+
+<p class=programs>20</p>
+
+<p class=programs>30</p>
+
+<p class=programs>40</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The init function contains a different variable declaration,
+int n[ ]. The [ ] is indicative of the fact that the variable is an array. Here
+n is an array of ints. i is another variable of type int. At this point the
+size of the array is yet not ascertained. It is the next line, n = new int[4]
+that actually allots the size to the array. This statement creates 4 variables
+called n[0], n[1], n[2] and n[3]. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Once the variables are created they need to be initialized
+and this is achieved by giving every variable its own value. n[0]is initialized
+to 10, n[1] to 20 and so on. With this approach, we have created 4 int's in one
+step and given them names like n[0] and so on.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The for loop is used to display these variables. At first i
+is initialized to 0. The condition i&lt;4 indicates that the loop will execute
+4 times. System.out.println (n[i]), for the first time, will be
+System.out.println(n[0]), hence it will display 10. In the next round, i will
+be 1 hence System.out.println(n[1]) will display 20 and so on. In
+System.out.println, the variable is not explicitly state but the connotation of
+n[i]. There is no variable called n[i], but each time the loop executes i gets
+a new value ranging from 0 to 3. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Loops are thus apt for arrays as we can use a variable i to
+decide the name of the array variable and thus its value. In a sense, the value
+of one variable decides the name of another variable. This extra layer of
+abstraction thus gives the flexibility to write complex programs and makes the
+programs more generic.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[4];</p>
+
+<p class=programs>n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);</p>
+
+<p class=programs>n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);</p>
+
+<p class=programs>n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);</p>
+
+<p class=programs>n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program creates an array name n of type Image. n is an
+array of images. But how many images? n= new Image[4] gives the count of images
+i.e. 4. Thereafter each variable is initialized individually unlike the earlier
+program. The drawImage function is given the first parameter as n[i]. Remember,
+the value of i is 0 thus we see the image which is stored in n[0]; in this
+case, T1.gif. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This goes to prove that the rules applied to integer arrays
+are valid for images too. In the following program, each time the mouse is
+clicked, i is incremented by 1 and then the paint function is called. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[4];</p>
+
+<p class=programs>n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);</p>
+
+<p class=programs>n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);</p>
+
+<p class=programs>n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);</p>
+
+<p class=programs>n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public boolean mouseDown(Event e , int x1 ,int y1)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>return true;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The first time you click, the image in n[0] is displayed,
+then n[1], n[2] and n[3]. When you click again, i takes a value of 4, thus
+making the first parameter in drawImage as n[4]. Since our array size is not
+that large, the dos console shows a screen full of errors. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's see what we can do to prevent these errors.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[4];</p>
+
+<p class=programs>n[0] = getImage(getCodeBase(),&quot;T1.gif&quot;);</p>
+
+<p class=programs>n[1] = getImage(getCodeBase(),&quot;T2.gif&quot;);</p>
+
+<p class=programs>n[2] = getImage(getCodeBase(),&quot;T3.gif&quot;);</p>
+
+<p class=programs>n[3] = getImage(getCodeBase(),&quot;T4.gif&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public boolean mouseDown(Event e , int x1 ,int y1)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>if ( i == 4)</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>return true;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, we ensure that when the variable i becomes 4, it is
+re-initialized to 0. Thus as you keep clicking in the window, the images keep
+changing as i gets a new value which is well within the limits of the array
+size. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Using this concept, let's animate the 10 pictures that we
+copied into our current directory. The pictures range from T1 to T10. Since
+there are 10 pictures, when we click in the window fast enough we will see
+different pictures displayed each time, resulting in animation. The following
+program demonstrates this.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;int j = 1;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[10];</p>
+
+<p class=programs>for ( i = 0; i &lt;= 9 ; i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n[i] =
+getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);</p>
+
+<p class=programs>j++;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public boolean mouseDown(Event e , int x1 ,int y1)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>if ( i == 10)</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>return true;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>At first, an array of 10 images is created with n as a
+variable referring to them. Initializing the variables individually is tedious,
+so we use a for statement. i is initialized to 0 at the start of the loop. The
+condition in the for statement evaluates to false when i becomes 10. Thus the
+value of i increases by 1 with the loop. There is no variable called n[i], thus
+when i is 0 the variable becomes n[0] and when i is 9 the variable becomes
+n[9]. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Another variable called j is used to change the filenames.
+When the variable name is n[0] the gif file to be stored is called T1.gif.
+Therefore, we initialize j to 1 and each time j++ is encountered, its value is
+increased by 1. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The filename is created using the + sign to add the
+different parts of the name. So when j is 1, the filename given as
+&quot;T&quot;+j+&quot;.gif&quot; will in effect becomes T1.gif. We could have
+avoided the use of j and simply used i by initializing it to 1 instead of 0,
+but that leads to unnecessarily complicated code. It may be noted that array
+variable names begin with 0 and the image names start at 1. The rest of the
+code remains the same.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In a nutshell, within the for we have initialized 10
+variables to 10 different images. As a result, when we click with the mouse,
+paint is called with a new value in i. When i becomes 10, it is reinitialized
+to 0. </p>
+
+<p class=cbasetext>Thus any code that is repeated can be fitted in a loop
+construct.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Interfaces</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's get back to the basics of Java. The first program had
+public class zzz extends Applet. Extends brings the existing code from Applet
+into zzz. As we know, zzz is called the derived class and Applet the base
+class.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the code given below the class declaration has been
+changed with the addition of implements runnable. Blindly run javac and observe
+the error message. It says 'class zzz must be declared abstract'. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:3: zzz is not abstract and does not override
+abstract method run() in java.lang.Runnable</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs><span style="mso-spacerun: yes">       </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's keep this aside for the moment and create a new file
+yyy.java in the same sub directory. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>yyy.java</p>
+
+<p class=programs>public class yyy implements xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here we a class called yyy with implements xxx. Compile the
+code with javac as in javac yyy.java. It returns with an error suspecting xxx
+to be an interface. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac yyy.java</p>
+
+<p class=programs>yyy.java:1: cannot resolve symbol</p>
+
+<p class=programs>symbol<span style="mso-spacerun: yes">  </span>: class xxx</p>
+
+<p class=programs>location: class yyy</p>
+
+<p class=programs>public class yyy implements xxx</p>
+
+<p class=programs><span style="mso-spacerun: yes">                           
+</span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>So create xxx.java<span style="mso-spacerun: yes"> 
+</span>in the following manner. Don't put anything between the curly braces. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public interface xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Compile xxx.java. This shows no errors.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If you don't see the same output while trying out code, you
+will just have to set the classpath as follows. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>c:\javaprg&gt;set classpath=.;%CLASSPATH%</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The compiler looks into the directories specified in the
+classpath variable. The classpath tells the compiler where to look for xxx. If
+it doesn't find xxx, it gives an error. Here, by saying '.' we tell javac to
+look in the current directory. Classpath is an environmental variable which
+informs the java compiler about either the sub directories within which it
+should search for .class files or specifies the full names of the actual .class
+files. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Recompile yyy.java. You won't see any errors on compiling
+the above code. Though it may not clarify any thing, modify xxx.java to add the
+following lines. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public interface xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void abc();</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>It may be noted that function abc has public void in front
+of it and followed by a semicolon. This indicates that we are neither creating
+a function nor calling a function. Then what is it? This is a function
+prototype. A function prototype contains no code whatsoever. Function
+prototypes are placed in interfaces. When we compile xxx.java, it won't show
+any errors. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now compile yyy.java. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac yyy.java</p>
+
+<p class=programs>yyy.java:1: yyy is not abstract and does not override
+abstract method abc() in xxx</p>
+
+<p class=programs>public class yyy implements xxx</p>
+
+<p class=programs><span style="mso-spacerun: yes">       </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=programs>The error resembles the one seen with implements runnable:</p>
+
+<p class=programs>yyy.java:1: yyy is not abstract and does not override
+abstract method abc() in xxx</p>
+
+<p class=programs>zzz.java:3: zzz is not abstract and does not override
+abstract method run() in java.lang.Runnable</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An interface only contains function prototypes. With
+extends, we are merging the code of the extended class with the current class.
+With implements this does not happen. An implemented class may have one or a
+hundred function prototypes. All these functions must be included/created in
+the current class because it implements another class barring which you will
+get errors.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>xxx has the prototype of the function abc, so you have to
+define this function within zzz. The function may/may not have any program
+statements. When you do so, the error vanishes. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>yyy.java</p>
+
+<p class=programs>public class yyy implements xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void abc()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the next program, xxx.java comprises of two function
+prototypes. The newly introduced function pqr takes one parameter which is int
+i. The variable must have a name or it will give an error. Compile the program.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public interface xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void abc();</p>
+
+<p class=programs>public void pqr(int i);</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>yyy.java</p>
+
+<p class=programs>public class yyy implements xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void pqr(int j)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void abc()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>yyy implements xxx hence pqr is included in yyy. The name of
+the parameter can be different. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An interface must always be implemented and is thus different
+from a class. A class has function code whereas interfaces contain only
+function prototypes. Any class implementing an interface must have the code for
+the function whose prototype is specified in the interface. This is to
+guarantee that code is present for the interfaced functions within a class.
+When you extend a class you get stuff for free but when you use implements you
+have to write code yourself. If a person is an engineer, we know exactly what
+his capabilities are and he knows exactly what to do. Similarly, when you
+implement from a class it knows exactly what it has to do. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An interface is like a contract. Hence if Runnable as an
+interface has a 100 functions then we would have to write the code for all the
+100 functions. If we do not, then the compiler throws errors.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Constructors</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Make sure that your program matches the following where the
+class zzz calls new xxx(). Also create a public class called xxx in xxx.java </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>new xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><span style="mso-spacerun: yes"> </span></p>
+
+<p class=cbasetext>Compile both the files, first obviously xxx and then zzz. At
+times, you don't need to compile both the Java files. If you have the Java file
+then the compiler automatically compiles the co-related files if they is
+present in the current directory; but it is advisable to compile both. No
+errors get reported.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now add a function name xxx to the class xxx as we have done
+below. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>new xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Compile as indicated earlier and then run the applet.
+Nothing spectacular! However, when you close the window, &quot;In const&quot;
+is displayed in the DOS box.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The appletviewer calls init in zzz and then executes new
+xxx( ). To execute this statement, it first loads xxx.class in memory and
+checks for a function with the same name as the class, in this case xxx. Since
+there is a function by that name, it is executed . For this reason, 'In const'
+gets displayed on the screen. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A constructor is a function whose name is the same as the
+class name. You can't call a constructor; it is called when an instance of the
+class is created with the new command. However if you are adamant to call the
+constructor directly, be ready for an error. This is proved in one of the
+forthcoming examples.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now rewrite the constructor as int xxx(). </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>int xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const&quot;);</p>
+
+<p class=programs>return 1;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac xxx.java</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program in the earlier versions reported an error
+because constructors by nature can't return values. However in this new
+version, the function is not considered to be a constructor anymore, thus
+considering it to be an independent function of the class. Run the appletviewer
+and you will see no output in the dos screen.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The next scriptlet will clarify this point further.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const without int&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>int xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const&quot;);</p>
+
+<p class=programs>return 1;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs>In const without int</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Ask yourself, when is the constructor called? The
+constructor is called at the time the object is being created. In our case it
+is called when we say new xxx. If the constructor is to return a value then to
+whom should it return the value? The object after all has not yet been created.
+As such constructors cannot return values. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now within zzz.java, say new xxx(100), as we have done
+below. Don't make any changes to xxx.java as yet.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>new xxx(100);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const &quot;+h);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:6: cannot resolve symbol</p>
+
+<p class=programs>symbol<span style="mso-spacerun: yes">  </span>: constructor
+xxx (int)</p>
+
+<p class=programs>location: class xxx</p>
+
+<p class=programs>new xxx(100);</p>
+
+<p class=programs>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The constructor in class xxx takes no parameters, therefore
+the error. The only way to eliminate the error is by saying xxx(int h). This is
+creating a constructor with one parameter. The value of h is displayed by
+concatenating it with &quot;In const &quot;.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx(int h)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const &quot;+h);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>In const 100</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now go back to your program and say new xxx(); you will get
+an error. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>new xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx(int h)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In const &quot;+h);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:6: xxx(int) in xxx cannot be applied to ()</p>
+
+<p class=programs>new xxx();</p>
+
+<p class=programs>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Bet you didn't expect this error! Earlier when you had new
+xxx() without the constructor, there was no error triggered. In the second
+example, you added the constructor and the constructor was called. Now however,
+when you say new xxx(), and within the class xxx you have a constructor with
+one parameter, you get an error. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The rule is that if you have no constructors then you will
+receive one for free, the compiler within the xxx class will actually write
+xxx() { } for you. But if you have even one constructor then the free one is
+taken away. In order to neutralize the error, you will need two constructors.
+This is shown in the following program.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>new xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>xxx(int h)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx x;</p>
+
+<p class=programs>System.out.println(&quot;No&quot;);</p>
+
+<p class=programs>x=new xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In constructor&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>Output</p>
+
+<p class=programs>No</p>
+
+<p class=programs>In constructor</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program, we have an object x that looks like xxx. At
+this point, the constructor is not being called. System.out.println displays
+'No'. Now we have x=new xxx(); This is the point where the constructor is
+called. It is only when we say new that the object is created. And only when
+the object is created is the constructor called. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Constructors cannot be called directly. In the following
+program we try to call the constructor by saying x.xxx(); This will give us an
+error.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx x;</p>
+
+<p class=programs>System.out.println(&quot;No&quot;);</p>
+
+<p class=programs>x=new xxx();</p>
+
+<p class=programs>x.xxx();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>xxx.java</p>
+
+<p class=programs>public class xxx</p>
+
+<p class=programs>{</p>
+
+<p class=programs>xxx()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;In constructor&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:9: cannot resolve symbol</p>
+
+<p class=programs>symbol<span style="mso-spacerun: yes">  </span>: method xxx
+()</p>
+
+<p class=programs>location: class xxx</p>
+
+<p class=programs>x.xxx();</p>
+
+<p class=programs><span style="mso-spacerun: yes"> </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The error indicates that xxx() is not found in class xxx.
+Thus you cannot explicitly call a constructor.</p>
+
+<p class=cbasetext>The next program introduces threads. Here we have included
+Thread(this). </p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet </p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>t is a variable that looks like Thread. new Thread (this)
+will create an object that looks like Thread and saves it in t. To create the
+object, the constructor with one parameter in the Thread class is called. This
+constructor is being passed one parameter called 'this'. 'this' in this case
+stands for zzz or Applet.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program is similar to the earlier ones. On compiling,
+we get an error.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:7: cannot resolve symbol</p>
+
+<p class=programs>symbol<span style="mso-spacerun: yes">  </span>: constructor
+Thread (zzz)</p>
+
+<p class=programs>location: class java.lang.Thread</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs><span style="mso-spacerun: yes">    </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The thread constructor requires a different class as a
+parameter. 'this' in our program represented zzz or Applet, hence the error.
+Modify the class declaration to implement Runnable. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:2: zzz is not abstract and does not override
+abstract method run() in j</p>
+
+<p class=programs>ava.lang.Runnable</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs><span style="mso-spacerun: yes">       </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>If you stop here you will get another error. Runnable is an
+interface and it has one function called run, which hasn't been implemented in
+the class. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the next program, we have added run and within it we are
+calling the System.out.println function. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;hi&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program doesn't produce any errors but when you run the
+program nothing happens either! It may be thus concluded that the ‘this’
+parameter to the Thread constructor referred to the Runnable interface.
+Further, the interface has a function called run, thus it has been defined in
+the class.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>To call run, we have to say t.start() where start is a
+function in Thread. Add this function to your program. Now when you run the
+program you will see hi displayed in the dos box.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;hi&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;appletviewer a.html</p>
+
+<p class=programs>hi</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, the function run is called only once. If you use a
+while loop and give the condition as true, the loop will go on infinitely. This
+is demonstrated in the following program. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>while ( true )</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.out.println(&quot;hi&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This also confirms that 'start' in the Thread class calls
+run(). </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You have used a class called Thread in your program but what
+is a Thread? The following program will explain this concept. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Thread t; int i = 0;Button b;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>b = new Button(&quot;No&quot;);</p>
+
+<p class=programs>add(b);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawString(&quot;hi &quot; + i,1,20);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>while ( true )</p>
+
+<p class=programs>{</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public boolean mouseDown(Event e , int x , int y)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>b.reshape(x,y,80,50);</p>
+
+<p class=programs>return true;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's walk through this code and examine how it works.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A thread called t is created; t.start will call run. run
+contains an infinite while loop which increments the value of i. The loop
+contains the repaint function and therefore the paint function will be called.
+In paint, drawString will display the value of i. Now that we have understood
+one part of the program, let's move onto the other.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Then we have b that looks like Button. We create this object
+by saying new Button (&quot;no&quot;); nothing happens here because we have
+simply created an object that looks like a button and given it a parameter
+'no'. The add function is a part of Applet and it takes one parameter. So when
+you say add(b), you will see a button with the label 'no'. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Each time you click in the window, mouseDown will be called.
+This function calls reshape, which is part of the button class and hence we can
+say b.reshape. reshape takes 4 parameters; x,y is the location where the button
+will be drawn and the next two parameters, 80 and 50, specify the width and
+height of the button. Thus the button obediently follows every click in the
+window. Simultaneously, drawString also does its job of displaying the new
+value for i. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The crux of the program is that you can do two things at the
+same time and this is made possible by using threads.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Today, any computer in the world is by far faster than a
+human being in terms of thinking as well as work. It is a lot faster than a
+hard disk or a floppy disk.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Windows is said to be a multi-tasking operating system. In
+other words, it can handle multiple jobs at the same time, allowing you to run
+more than one program at a time.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let us assume you are using Microsoft Word and have given
+the save command to save a file. If this file is a 50 megabytes large, Word
+will take a long time to save it. Assuming it takes half an hour, what should
+you do in the meantime? While the file is being saved, you should be able to
+run any other program. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>To tackle these issues, every time you run a program under
+any operating system like Windows or Linux, the operating system will run it in
+its own thread. A thread is an abstract entity; it is code being executed. Let
+us assume that in one minute i.e. 60 seconds of time, and you have 3 programs
+or 3 threads running simultaneously and each is allocated 20 seconds. This is
+all hypothetical because in real life, no thread would be given 20 seconds at a
+stretch. The OS switches between threads so fast that you won't notice it at
+all, nor would you believe that the same computer is handling 3 different
+programs at the same time. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus when you save a file in Microsoft Word under MS Windows
+by clicking on File - Save, Word starts a new thread. If you have 3 programs
+running concurrently with the save command, there will now be 4 threads. Now
+the time slice will be 15 secs per minute to every program/thread. So while the
+thread saves the file, the main thread in which Word operates too can continue
+with its work. That is, you can use word as before.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Our Java program already operates in a thread. The mouseDown
+event is captured in this thread. By creating an object that looks like Thread,
+a new thread is created which calls run. run calls paint which displays the
+values. This is how two jobs can be done at the same time. The run function is
+only called once, while the while loop will run on forever.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the previous chapter, we had a program where the image
+followed the mouseclick. What we did earlier in mouseDown, can be easily
+implemented in the run function too. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;int j = 1;Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[10];</p>
+
+<p class=programs>for ( i = 0; i &lt;= 9 ; i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n[i] =
+getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);</p>
+
+<p class=programs>j++;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>while ( true)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>if ( i == 10)</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The code remains the same, the only difference being that
+this time it has been placed in the run function. When you run this program
+using the appletviewer, the code starts animating by itself and at great speed.
+Amazing isn't it!!! </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>What we need to do is slow this down. Let's see how this can
+be done, but before that some more concepts. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet </p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>abc();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void abc() throws InterruptedException</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:6: unreported exception
+java.lang.InterruptedException; must be caught or declared to be thrown</p>
+
+<p class=programs>abc();</p>
+
+<p class=programs><span style="mso-spacerun: yes">   </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, init calls the abc function. The function code has
+throws Interrupted Exception added to it. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let us assume you opened a file and the operation returned
+an error. You then have to check for the error and write code for error
+handling. Suppose you are opening files from 20 different places in your
+program, you'll have to repeat the same error handling code 20 times. If you
+have 6 different types of errors, you will have to check for all of them.
+That's a lot of code! </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The second problem is with the constructor. If a constructor
+has an error, what should the constructor do? The constructor cannot return an
+error because, as discussed earlier, constructors do not return values. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The developers followed a new approach to error handling.
+This approach states that if a function has a problem, it should throw an
+exception and a handler should catch it. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The abc function throws an exception called
+InterruptedException. This is an exception that comes with java but you can
+create your own exceptions too. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>An exception is a class derived from Exception. The abc
+function throws an exception, hence when you are calling abc you have to catch
+it or else you will get an error. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The next program shows you how to catch the error.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet </p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>try</p>
+
+<p class=programs>{</p>
+
+<p class=programs>abc();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>catch (InterruptedException i) {}</p>
+
+<p class=programs>catch (Exception i) {}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void abc() throws InterruptedException</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>At first, we say 'try' and within this block we place the
+function that throws exceptions. At the end of the block, we use catch along
+with the type of exception to handle the exception. So within the {}'s we can
+put any code, which will be executed if an error gets reported. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet </p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>try</p>
+
+<p class=programs>{</p>
+
+<p class=programs>abc();</p>
+
+<p class=programs>System.out.println(&quot;After abc&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>catch (InterruptedException i) {System.out.println(&quot;I am
+Interrupted Exception&quot;);}</p>
+
+<p class=programs>catch (Exception i) {System.out.println(&quot;I am
+Exception&quot;);}</p>
+
+<p class=programs>System.out.println(&quot;After Exception&quot;);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void abc() throws InterruptedException</p>
+
+<p class=programs>{</p>
+
+<p class=programs>throw new InterruptedException();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>Output</p>
+
+<p class=programs>I am Interrupted Exception</p>
+
+<p class=programs>After Exception</p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program, we have throw new InterruptedException.
+throw is a reserved word in Java. It is only when we use throw new
+InterruptedException that the exception is called. Within the try-catch, we
+call abc. abc throws InterruptedException and thus the code in catch which
+deals with InterruptedException is called. So println will display 'I am Interrupted
+Exception'. Once an exception occurs all the remaining code in the try block is
+skipped. Thus you will not see 'After abc' displayed. After the catch is
+called, any code after catch will be executed. Since we have a println
+statement after catch, it will display 'After Exception'.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In try, we can put as many functions as we want.
+Nevertheless we can place as many catches as we like. Here, we are catching two
+exceptions, InterruptedException and Exception. So depending upon the exception
+that occurs, the relevant code is called. </p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet </p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>try</p>
+
+<p class=programs>{</p>
+
+<p class=programs>abc();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>catch (Exception i)</p>
+
+<p class=programs>{}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void abc() throws InterruptedException{}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>All code in the init function can be placed between the try
+and catch. We can be generic by having only one catch with Exception. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Exception is the mother of all exceptions. All other
+exceptions are extended or derived from it, even InterruptedException. You
+decide the level of sophistication you like in your program. A function can
+throw as many exceptions as it wants that are given using commas. Similar to
+'try-catch' is a throw. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This entire exercise was conducted because our pictures were
+being displayed too fast. To slow it down, we will now call a function called
+sleep, which is part of thread. So we say t.sleep and then give 500, which is
+the time in milliseconds.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;int j = 1;Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[10];</p>
+
+<p class=programs>for ( i = 0; i &lt;= 9 ; i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n[i] =
+getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);</p>
+
+<p class=programs>j++;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>while ( true)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t.sleep(500);</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>if ( i == 10)</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>'sleep' gives an error. This is because it throws an
+exception and there is no corresponding catch for it.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>C:\javaprg&gt;javac zzz.java</p>
+
+<p class=programs>zzz.java:26: unreported exception
+java.lang.InterruptedException; must be caught or declared to be thrown</p>
+
+<p class=programs>t.sleep(500);</p>
+
+<p class=programs><span style="mso-spacerun: yes">       </span>^</p>
+
+<p class=programs>1 error</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Our next program is a working example showing animation.
+Here the sleep function is put in 'try-catch'. Also, we have no code for error
+handling so we leave it blank.</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>zzz.java</p>
+
+<p class=programs>import java.awt.*;</p>
+
+<p class=programs>import java.applet.*;</p>
+
+<p class=programs>public class zzz extends Applet implements Runnable</p>
+
+<p class=programs>{</p>
+
+<p class=programs>Image n[]; int i = 0;int j = 1;Thread t;</p>
+
+<p class=programs>public void init()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n = new Image[10];</p>
+
+<p class=programs>for ( i = 0; i &lt;= 9 ; i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>n[i] = getImage(getCodeBase(),&quot;T&quot;+j+&quot;.gif&quot;);</p>
+
+<p class=programs>j++;</p>
+
+<p class=programs>}</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>t = new Thread(this);</p>
+
+<p class=programs>t.start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void paint(Graphics g)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>g.drawImage(n[i],1,10,this);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void run()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>while ( true)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>try</p>
+
+<p class=programs>{</p>
+
+<p class=programs>t.sleep(500);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>catch ( Exception e) {}</p>
+
+<p class=programs>i++;</p>
+
+<p class=programs>if ( i == 10)</p>
+
+<p class=programs>i = 0;</p>
+
+<p class=programs>repaint();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Conclusion</p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus, from this chapter it can be concluded that any program
+relating to animation necessarily requires the use of threads. We saw how the
+applet begins the animation cycle when it is activated and the animation is
+terminated when the applet is no longer active. But when you want the applet to
+provide functionality beyond animation, then you'll have to use threads. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Often Animators are built within applets. For that reason,
+you need an interface. To accomplish this we implemented the Runnable
+interface. </p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the process, we also learnt how exceptions are handled
+with the help of the 'try-catch' statement. By now you are also well versed
+with the concepts of loops, arrays and constructors.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/updatedbooks/j2ee/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:29 GMT -->
+</html>

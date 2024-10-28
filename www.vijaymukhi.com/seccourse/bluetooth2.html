@@ -1,0 +1,89 @@
+import javax.microedition.lcdui.*;
+import javax.microedition.midlet.*;
+import javax.bluetooth.*;
+public class zzz extends MIDlet implements DiscoveryListener
+{
+Form mForm;Display mDisplay;
+RemoteDevice rd1;
+DiscoveryAgent d;
+public synchronized void  startApp()
+{
+try
+{
+mForm = new Form("Vijay & Sonal");
+LocalDevice l;
+l = LocalDevice.getLocalDevice();
+String s = l.getFriendlyName();
+mForm.append(s + ",");
+String s1 = l.getProperty("bluetooth.connected.devices.max");
+//mForm.append(s1 + ",");
+String s2 = l.getBluetoothAddress();
+mForm.append(s2 + ",");
+d = l.getDiscoveryAgent();
+d.startInquiry(DiscoveryAgent.GIAC,this);
+}
+catch(Exception e)
+{
+mForm.append("In catch " + e.toString());
+}
+//mForm.append("Out of catch");
+mDisplay = Display.getDisplay(this);
+mDisplay.setCurrent(mForm);
+try
+{
+wait();
+} catch (InterruptedException e) {}
+mForm.append("Inquiry Over");
+try
+{
+UUID[] uuids = new UUID[1];
+uuids[0] = new UUID(0x1002);
+//int[] attrs = {};
+int serviceSearch = d.searchServices(null, uuids, rd1, this);
+}
+catch (BluetoothStateException e)
+{
+mForm.append("Can't search services for: "  + rd1.getBluetoothAddress() + " due to " + e);
+}
+}
+public void deviceDiscovered(RemoteDevice rd, DeviceClass cod)
+{
+rd1 = rd;
+//mForm.append("deviceDiscovered");
+String s="",s1="";
+try
+{
+s = rd.getFriendlyName(false);
+} catch(Exception e) {}
+s1 = rd.getBluetoothAddress();
+int i,j,k;
+i = cod.getServiceClasses();
+j = cod.getMajorDeviceClass();
+k = cod.getMinorDeviceClass();
+mForm.append("deviceDiscovered" + "," + s + "," + s1);
+//mForm.append("Service class:"+ i + ":Major:" + j + ":Minor:" + k);
+}
+public void inquiryCompleted(int discType)
+{
+//mForm.append("inquiryCompleted " + discType);
+synchronized (this)
+{
+notify();
+}
+
+}
+public void servicesDiscovered(int transID, ServiceRecord[] servRecord)
+{
+DataElement nameElement = null;
+nameElement = (DataElement) servRecord[0].getAttributeValue(0x1);
+mForm.append("servicesDiscovered " + nameElement.getValue() + "\n");
+}
+public void serviceSearchCompleted(int transID, int respCode)
+{
+mForm.append("serviceSearchCompleted\n");
+}
+
+public void destroyApp(boolean unconditional) {}
+public void pauseApp() {}
+}
+

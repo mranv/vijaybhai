@@ -1,0 +1,2233 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:05 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap5_files/filelist.html">
+<link rel=Edit-Time-Data href="chap5_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Schema Definition - 5. Namespaces</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>vmukhi</o:Author>
+  <o:LastAuthor>vmukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>27</o:TotalTime>
+  <o:Created>2002-01-20T08:39:00Z</o:Created>
+  <o:LastSaved>2002-01-20T08:39:00Z</o:LastSaved>
+  <o:Pages>15</o:Pages>
+  <o:Words>5077</o:Words>
+  <o:Characters>28943</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>241</o:Lines>
+  <o:Paragraphs>57</o:Paragraphs>
+  <o:CharactersWithSpaces>35544</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.figure1, li.figure1, div.figure1
+	{mso-style-name:figure1;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:"Chap Name";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapName1, li.ChapName1, div.ChapName1
+	{mso-style-name:"Chap Name1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:ChapName;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><img width=103
+height=77 id="_x0000_i1027" src=bpb.gif><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>5.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>Namespaces </span><span
+style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The subject of
+namespace comes to the fore essentially when the tags created by one user need
+to be differentiated from the tags created by another user. This is achieved
+austerely by assigning a name to the tags. This name is the namespace prefix,
+i.e. the name of the namespace. In the earlier programs, we had come across a
+tag called xs:schema. Here, xs is the name of the namespace prefix, and schema
+is the tag name.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This topic could
+pack an entire chapter by itself, because every entity that is created in the
+schema world is always associated with a namespace. This does not hold credence
+in the DTD world. Thus, the concept of a namespace is of prime importance,
+since it is the solitary means of differentiating between the tags created by
+different users. DTDs have no concern with namespaces, since they were invented
+much before the concept of namespaces was conceived. The word 'namespace' is
+synonymous with 'namespace prefix'. Thus, for all practical purposes, they can
+be used interchangeably.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>For instance, the
+tag xs:schema is vastly at variance with vijay:schema, because the former stems
+from the namespace xs, while the latter originates from the namespace vijay.
+The xs namespace is present somewhere in this big mighty world, and its precise
+location is revealed by the xmlns:xs attribute.<o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:string&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xmlns entity
+is a reserved word, which is followed by a colon sign. The name of the
+namespace is specified after the colon. The value assigned to the namespace is
+known as a Uniform Resource Identifier or URI. It is similar to a URL, though
+some dissimilarities do exist between them. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Very often, the
+value assigned is http://www.w3.org/2001/XMLSchema . This site contains the
+rules that are applicable to this namespace. Technically speaking, this is
+merely a convention and not a rule.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>If the URI
+http://www.w3.org/2001/XMLSchema is designated as the default namespace, as has
+been done in the next program, and then, if a tag is specified without a
+namespace, it is assumed to belong to the default namespace. Here, the string
+need not be prefaced by the namespace prefix, since by default, all tags are
+considered to originate from the default namespace, unless stated otherwise.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;schema
+xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;aaa&quot; type=&quot;string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above example
+has been repeated for the sole purpose of clarifying a few intricate notions.
+The root element zzz has a child element aaa. Now, initiate a few changes in
+the xsd file as given below. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+targetNamespace=&quot;ttt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:string&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When the
+attribute targetNamespace is assigned a value of ttt, the following exceptions
+get generated:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Could not find schema information for the element 'zzz'. An
+error occurred at file:///c:/xmlprg/b.xml(2, 2).<o:p></o:p></p>
+
+<p class=ILoutput>Could not find schema information for the element 'aaa'. An
+error occurred at file:///c:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The data type of
+the targetNamespace is a string that represents a URI reference. This reference
+is the namespace that all the schema entities eventually relate to. The errors
+occur in the above case because the element zzz now belongs to the namespace
+ttt, which has not been implemented in the xml file.<span style="mso-spacerun:
+yes">  </span>Thus, the xml file has to be modified so that the element zzz
+originates from the ttt namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ttt:zzz &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ttt:zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.XmlException: 'ttt' is an
+undeclared namespace.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The first thought
+that crosses the mind is that ttt should be used as a prefix for the element
+zzz. However, on doing so, an error message is generated, which conveys that it
+is oblivious to the location of the ttt namespace. Modify the xml file to
+contain the following statements:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:zzz xmlns:uuu=&quot;ttt&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/uuu:zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The reserved
+xmlns namespace is used to point the prefix uuu to the URI ttt. Since the
+element zzz belongs to the ttt namespace, we have randomly chosen uuu as the
+namespace prefix with the URI of ttt. Now, both the targetNamespace and the uuu
+namespace prefix contain the same URI of ttt. Therefore, no errors are
+perceived.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The namespace URI
+ttt can now be packed with the types created in the xsd file. In order to refer
+to these types, the namespace prefix will have to be used to access them. This
+is akin to using the namespace xs: while referring to the types present in the
+XML Schema namespace. Thus, the same rules that we conform to currently, have
+to be observed while referring to the types created in other namespaces.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Everything in the
+XML world relates to a namespace. By specifying a namespace with the
+targetNamespace attribute, all the types created there on, now belong to the
+above namespace. Modify the aaa statement in the xml file to the following:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'ttt:zzz' has invalid child element 'ttt:aaa'.
+Expected 'aaa'. An error occurred at file:///C:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'ttt:aaa' element is not declared. An error occurred at
+file:///C://xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The aaa element
+reports an error when it is prefaced with the namespace prefix uuu. Read on
+further to lay bare the rationale behind this.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A schema is a
+collection of types and elements that belong to the namespace determined by the
+targetNamespace attribute. The default value is null. Therefore, in the xml
+file, it is possible to use the elements and types created in this schema
+without employing any prefix. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Without the
+targetNamespace attribute, it would be an arduous task to differentiate between
+types that have the same name, but have been created in different schema files.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+targetNamespace attribute identifies the XML Schema vocabulary to which the
+complexType element belongs. It is a very rudimentary task to create our own
+complexType element with the targetNamespace attribute set to another target. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This target can
+be completely at variance with the complexType created in the xsd namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;schema xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;<o:p></o:p></p>
+
+<p class=ILoutput>xmlns:vvv=&quot;http://www.sonal.com/&quot;
+targetNamespace=&quot;http://www.sonal.com/&quot; elementFormDefault=&quot;unqualified&quot;
+attributeFormDefault=&quot;unqualified&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;element name=&quot;zzz&quot; type=&quot;vvv:c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;element name=&quot;ddd&quot; type=&quot;string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;element name=&quot;bbb&quot; type=&quot;vvv:c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;element ref=&quot;vvv:ddd&quot;
+minOccurs=&quot;0&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;element name=&quot;ccc&quot; type=&quot;string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/schema&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;uuu:zzz xmlns:uuu=&quot;http://www.sonal.com/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;ccc&gt;Mukhi&lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;uuu:ddd&gt; Ha ha &lt;/uuu:ddd&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/uuu:zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+program, the default namespace represents the XML Schema. Hence, the schema and
+the other tags need not be prefaced. The namespace prefix vvv points to the URI
+http://www.sonal.com. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, elements or
+types prefaced by vvv belong to the above URI. The targetNamespace is also
+assigned the same URI. As stated earlier, a URI is similar to a URL.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On changing the
+vvv attribute to www.sonal1.com, the following exception gets thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Type 'http://www.sonal1.com/:c1' is not declared. An error occurred at
+file:///c:/xmlprg/b.xsd(4, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+elementFormDefault and attributeFormDefault are not required since they are set
+to their default value of 'unqualified'. As is customary, the document starts
+with the root element zzz, having the type c1. This type consists of an element
+bbb of type c1, which in turn has the elements ccc and ddd.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The element zzz
+refers to the type as vvv:c1 and not as c1, since the type c1 now belongs to
+the namespace vvv, which correspondingly points to the URI www.sonal.com. The
+element bbb also refers to the type as vvv:c2, and not as c2. The second
+element in the complex type refers to the element name ddd as vvv:ddd. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>You are requested
+to undo the errors prior to implementing the new updates. If we transform the
+type of element zzz from vvv:c1 to c1, the following exception gets thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;zzz&quot; type=&quot;c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Type 'http://www.w3.org/2001/XMLSchema:c1' is not declared. An error occurred
+at file:///c:/xmlprg/b.xsd(4, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This error occurs
+because the system expects the type c1 to originate from the XML namespace, but
+this is not the way things happen. Remember that xs is the default namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+only the child elements of the schema zzz and ddd are 'qualified'. The others,
+such as bbb and ccc, which are part of the complexType c1 and c2, are not
+qualified by the namespace prefix. If we do qualify them, as seen in the
+example below, an exception gets thrown.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:zzz xmlns:uuu=&quot;http://www.sonal.com/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:ccc&gt;Mukhi&lt;/uuu:ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/uuu:bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;uuu:ddd&gt; Ha ha &lt;/uuu:ddd&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/uuu:zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'http://www.sonal.com/:zzz' has invalid child element
+'http://www.sonal.com/:bbb'. Expected 'bbb'. An error occurred at
+file:///C:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:bbb' element is not declared. An
+error occurred at file:///C:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:ccc' element is not declared. An
+error occurred at file:///C:/xmlprg/b.xml(4, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The error states
+that the bbb and ccc elements are not declared. Now, dispose of the uuu prefix
+from the elements bbb and ccc, and alter the value of the attribute
+elementFormDefault from 'unqualified' to 'qualified'. On doing so, the
+following error is generated:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>elementFormDefault=&quot;qualified&quot;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'http://www.sonal.com/:zzz' has invalid child element
+'http://www.sonal.com/:bbb'. Expected 'bbb'. An error occurred at
+file:///C:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:bbb' element is not declared. An
+error occurred at file:///C:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:ccc' element is not declared. An
+error occurred at file:///C:/xmlprg/b.xml(4, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In order to purge
+the above error, prefix the elements bbb and ccc with uuu. This is reflected in
+the xml file that ensues.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz xmlns=&quot;http://www.sonal.com/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt;Mukhi&lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd&gt; Ha ha &lt;/ddd&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above xml
+file, the attribute elementFormDefault has been set to the value of
+&quot;qualified&quot;. Therefore, every element has to be prefixed with the
+name of the namespace. In order to evade repetition of this action for each and
+every element, the default namespace is set to www.sonal.com using the reserved
+xmlns attribute.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the
+elementFormDefault is applicable only to the xml file, which employs the
+elements, and not to the xsd file. The namespace prefix is obligatory, as in
+vvv:c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We reiterate that
+the attribute can be assigned only one of the two values of 'qualified' or
+'unqualified'. The default value is 'unqualified'. If the value of
+'unqualified' is employed, then the elements from the target namespace, such as
+bbb and ccc, need not be qualified by the namespace prefix. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On the contrary,
+the value of 'qualified' makes an imposition that the elements in the xml file
+have to be preceded by the namespace prefix. The names of the namespace prefix
+are inconsequential, as is amply evident in the xsd file. Here, vvv is used in
+the XSD file and uuu is used in the xml file. What is of prime significance is
+the URI, which must be identical in both the cases, or else, an exception will
+get thrown.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The global
+default value of 'qualified' can be modified, using the form attribute in the
+element statement.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;bbb&quot; type=&quot;vvv:c2&quot;
+form=&quot;unqualified&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'http://www.sonal.com/:zzz' has invalid child element
+'http://www.sonal.<o:p></o:p></p>
+
+<p class=ILoutput>com/:bbb'. Expected 'bbb'. An error occurred at
+file:///c:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:bbb' element is not declared. An
+error occurred at file:///c:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'http://www.sonal.com/:ccc' element is not declared. An
+error occurred at file:///c:/xmlprg/b.xml(4, 2).<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>For the element
+bbb, the value of the attribute form is set to 'unqualified'. This implies that
+the name of the element need not be qualified with the namespace prefix. The
+solitary means of eschewing the error is by knocking off the uuu prefix. Thus,
+any global level activity can be undone at the individual level.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+attributeFormDefault is to attributes what the elementFormDefault is to
+elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This attribute
+provides a direction or a rule for the xml file or the instance document. The
+rule states that if elements from a particular schema are to be used, the
+namespace prefix must be specified in the targetNamespace attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Now, let us
+revisit some of the finer aspects of namespaces. The fundamental objective of
+namespaces is to reference the definitions and declarations that have been
+created in disparate namespaces. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+illustration, the elements zzz and ddd are included in the schemas target
+namespace, whereas the string, the element and the complexType are not
+prefixed, since they belong to the default xs namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The default XML
+Schema is termed as the 'schema of schemas'. In both the files, viz xml and
+xsd, the namespace prefix is not as crucial as the URI. The URI need not
+necessarily point to any physical location. By default, the locally defined
+elements in the xsd file, such as bbb and ccc, do not require any namespace
+prefix, as we have seen earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The zzz and ddd
+elements are global elements. They are created as the schema or as the parent
+element. The bbb and ccc elements are created within the complexType element,
+and thus, they are its child elements. It is sagacious to create more local
+elements, since in their case, the xml file does not need a namespace prefix.
+Also, creation of valid xml files becomes a breeze.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Common sense
+dictates that the root element should be made global, whereas all others should
+be made local, so that only a single prefix becomes essential. Thus, in the
+above instance, the ddd element should be made local. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The other
+alternative is to make all the elements global and then, declare the default
+namespace as the target namespace in the xsd file. This obviates the need for
+the namespace prefix. The vital point is that you can either make all the
+elements or only a single element global; anything else would impose an
+excessive burden on the creator of the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the next
+example, all the elements have been made global, so that the namespace prefixes
+can be completely eluded.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;schema xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:vvv=&quot;http://www.sonal.com/&quot;
+targetNamespace=&quot;http://www.sonal.com/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;zzz&quot; type=&quot;vvv:c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;ddd&quot; type=&quot;string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;ccc&quot; type=&quot;string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;bbb&quot; type=&quot;vvv:c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element ref=&quot;vvv:bbb&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element ref=&quot;vvv:ddd&quot; minOccurs=&quot;0&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element ref=&quot;vvv:ccc&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz xmlns=&quot;http://www.sonal.com/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt;Mukhi&lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd&gt; Ha ha &lt;/ddd&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above
+instance is free of errors. The default namespace and the vvv prefix remain
+unaltered, but the elementFormDefault is eliminated, so that its value remains
+as 'unqualified'. Then, a global element zzz is created, which refers to the
+type c1 with the namespace prefix. In turn, this type refers to the two global
+elements of bbb and ddd.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The element bbb
+refers to the type vvv:c2, which in turn refers to the global element ccc. The
+point to be noted here is that all the elements are global. Moreover, none of
+the elements are created in the complexType. Had this been the case, then all
+the elements so created would have become local instead of global; also, the
+problems plaguing the namespace prefix would have cropped up here.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file has
+a simple default namespace. Hence, all the elements are global. The only
+drawback of a global element is that there can be only one instance of such an
+element, whereas a local element can have multiple instances. The name of a
+local element includes the name of the element that it belongs to.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot; type=&quot;xs:string&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot; type=&quot;xs:integer&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt;Mukhi&lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt;100&lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In order to
+corroborate the above point, the above example has a root element containing
+two child elements, viz. aaa of type c1 and bbb of type c2. Both these types
+have the same element ccc, but of type string and integer, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>There is no scope
+for ambiguity, since these elements belong to different types, and they appear
+under different parents viz. aaa and bbb, respectively. Also, there cannot be
+two global elements, both named ccc, as there would be no means of distinguishing
+one from the other.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;schema xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;<o:p></o:p></p>
+
+<p class=ILprg>xmlns:vvv=&quot;http://www.sonal.com/&quot;
+targetNamespace=&quot;http://www.sonal.com/&quot;
+elementFormDefault=&quot;qualified&quot;
+attributeFormDefault=&quot;unqualified&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;attribute name=&quot;a1&quot; type=&quot;string&quot;
+form=&quot;qualified&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz xmlns=&quot;http://www.sonal.com/&quot;
+a1=&quot;hi&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>The 'a1' attribute is not declared. An error occurred at
+file:///c:/xmlprg/b.xml(2, 36).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Attributes
+conduct themselves in a slightly different manner. In the above file, the root
+element zzz has an attribute named a1. The targetNamespace is assigned the
+value of sonal and the attributeFormDefault is specified as 'unqualified'.
+However, in the case of the attribute a1, the form attribute overrides the
+value of unqualified, and mandates that the attribute be qualified with the
+namespace prefix.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The error occurs
+in spite of having the default namespace of www.sonal.com. This occurs because
+the xmlns attribute for default namespaces applies only to elements and not to
+attributes. As is evident, the element zzz passes through serenely, but the
+attribute a1 has to be prefixed with the namespace; in the absence of which, an
+error is reported.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz xmlns=&quot;http://www.sonal.com/&quot;
+xmlns:ttt=&quot;http://www.sonal.com/&quot; ttt:a1=&quot;hi&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The error flees
+when a namespace prefix ttt pointing to the URI www.sonal.com is created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Here, the same
+rules of local and global apply. The XML-Namespaces specification does not
+assign a default namespace for the attributes. Here, neither an explicit nor an
+implicit default namespace is applied to the references. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='font-family:"Bookman Old Style"'>Schema
+Definitions across Files </span></u><span style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:include schemaLocation=&quot;b1.xsd&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c3&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>As always, the
+file b.xsd commences with the good old schema element, but without any extra
+attributes tagging along with it. Then a pristine element called 'include' is
+introduced, wherein the schemaLocation attribute is initialized to b1.xsd,
+which is the name of a file. The mission of the 'include' element is to merge
+the contents specified in the file with the current schema.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, the
+contents of the file b1.xsd can now be accessed in the current schema. The root
+element zzz in the file b.xsd is of type c1, which in turn contains an element
+aaa of type c2. There is an empty complexType c3, but there is no type named c2
+anywhere in the file b.xsd. However, if you look at the file b1.xsd, it
+contains a complexType c2, which in turn contains two elements named bbb and
+ccc. Hence, the file passes through successfully, without any error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>While
+programming, all types are practically placed in a separate file. Then, this
+file is simply assigned to the 'include' element in the xsd file, as a result
+of which, all the types are made available to the elements in the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b1.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot; type=&quot;c3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the b1.xsd
+file, change the definition of element ccc by assigning it the type c3 instead
+of xs:string. This does not generate any error even though the xsd file does
+not contain the type c3. This is because when the system encounters the
+'include' element, it simply merges the contents of that file with the current
+main schema. However, it does not resolve type references initially. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, all the
+types created in b.xsd can be accessed in the file b1.xsd, and vice-versa. We
+can have an infinite number of 'include' statements placed sequentially in the
+xsd file. But, ensure that they are not placed after the statement 'element
+name=&quot;zzz&quot;'. Further, they should be located ahead of the
+'complexType name=&quot;c1&quot;' statement. Nonconformity to these rules would
+lead to the following exception:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Exception</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+The include element cannot appear at this location. An error occurred at
+file:///c:/xmlprg/b.xsd(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Very often, all
+the 'include' statements in the xsd file are normally placed at the beginning.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:include schemaLocation=&quot;b1.xsd&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:include schemaLocation=&quot;b1.xsd&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Inclusion of the
+same file twice does not generate any errors. It appears as though one of them
+has simply been ignored. Moreover, even if we specify the name of an xsd file
+that does not exist in the schemaLocation, no error is tossed up. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Move the file
+b1.xsd to the folder, c:\inetpub\wwwroot. This is the root directory for IIS or
+Personal Web Server. On doing so, the statement given below shall execute
+flawlessly.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:include
+schemaLocation=&quot;http://localhost/b1.xsd&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:vvv=&quot;sonal&quot; targetNamespace=&quot;sonal&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:include schemaLocation=&quot;b1.xsd&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;vvv:c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;vvv:c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c3&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:vvv=&quot;sonal&quot; targetNamespace=&quot;sonal&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ttt:zzz xmlns:ttt=&quot;sonal&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/ttt:zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file b.xsd
+has been modified slightly. Firstly, the target namespace is changed to sonal.
+Then, a namespace prefix vvv is created, which points to the URI sonal.
+Resultantly, the type c1 now becomes vvv:c1. Also, unlike the earlier example,
+there is no default namespace in the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file b1.xsd
+remains unaltered, except for the namespace, which now points to sonal.
+Although it may be redundant, its presence in the file does not cause any
+tribulations. Moreover, since the namespace is vvv, the type c2 is referred to
+as vvv:c2 in the file b.xsd.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Since zzz is a
+global element in the xsd file, the newly created namespace prefix ttt has to
+be attached only to the zzz element in the xml file. </span><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>If the
+targetNamespace attribute is changed to sonal1 in the schema element within the
+b1.xsd file, an exception is generated. This stems from the fact that the
+'include' element can include a file only if it originates from the same
+namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In a case where
+the namespaces are dissimilar; i.e. one is sonal from the file b.xsd, while the
+other is sonal1 from the file b1.xsd, the include fails. This happens because
+the 'include' statement cannot possibly include anything from a schema that
+contains another namespace. To circumvent the above obstacle, the 'import'
+statement can be used in place of the 'include' statement. The 'import'
+statement is equipped to handle diverse namespaces. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Schemas spread
+over multiple files result in ease of maintenance as they restrict access and
+also enhance readability. Thus, all type declarations should be placed in their
+own files. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ddd&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;eee&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;fff&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This program
+indeed is a long drawn out one, but nonetheless, it is interesting and useful.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The root tag zzz
+contains two child elements aaa and bbb, both of which have the same user
+defined complexType c1. Thus, both aaa and bbb embody identical content that is
+contained in the type c1, viz. the elements ccc and ddd. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The complexType
+c2 commences with a complexContent element and then, it extends the type c1. It
+also appends a fresh element eee to the two existing elements ccc and ddd that
+come from the extended type.As a result, the type c2 has three elements, viz.
+bbb, ccc and eee. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Following the
+same modus operandi, we create a type c3, which also extends from type c1 and
+adds an element fff. Thus, the complexType c3 has three elements, viz. ccc, ddd
+and fff. For the time being, the types c2 and c3 are not being used at all. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file
+contains two child elements aaa and bbb, which correspondingly contain the tags
+ccc and ddd. Therefore, no errors are visible. After all, all's well that ends
+well!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>.....<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;eee /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'aaa' has invalid child element 'eee' . An error
+occurred at file:///c:/xmlprg/b.xml(6, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'eee' element is not declared. An error occurred at
+file:///c:/xmlprg/b.xml(6, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, adding
+the element eee within element aaa in the xml file b.xml, generates the above
+error. This is apparent since there is no element named eee in type c1. In
+fact, it is present in type c2.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml<o:p></o:p></u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa xsi:type=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;eee /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb xsi:type=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;fff /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The namespace
+prefix xsi is added to the xml file, and it points to its URI. Thereafter, in
+the element aaa, the type attribute from the xsi namespace is initialized to
+the type c2. This act permits the use of element eee in the element aaa.
+Similarly, the type attribute in the bbb element is initialized to c3. Thus,
+the addition of the fff element springs no error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>You would surely
+appreciate that it is easy to dynamically change the run type of the element as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>* From c1 to c2
+in the case of element aaa.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>* From c1 to c3
+in the case of element bbb. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILoutput>...<o:p></o:p></p>
+
+<p class=ILoutput>&lt;xs:complexType name=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;xs:element name=&quot;fff&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILoutput>...<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'bbb' has xsi:type derivation blocked. An error
+occurred at file:///c:/xmlprg/b.xml(8, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On rewriting the
+complexType c3 as shown in the preceding program, the above error is reported.
+The error lucidly apprizes us that unless the type is 'extended', the use of
+xsi:type is forbidden. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>To sum it up, an
+element can be derived from a certain type c1. Then, in the xml file, its type
+can be altered to another type by using the xsi:type attribute. This
+modification is possible only if the type that is used extends from the type
+c1, from which the element was originally created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ddd&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;eee&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;fff&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa xsi:type=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;eee /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;fff /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the element aaa has a type of c1, which contains the two elements ccc
+and ddd. Then, the type c2 is created, which extends c1 and also encloses the
+element eee. In addition to this, another type c3 is created, which now extends
+the type c2. The type c3 thus represents four child elements viz. ccc, ddd, eee
+and fff.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the type attribute is initialized to the type c3, and not to c2. No error is
+reported since the type c2 in turn extends type c1. Thus indirectly, type c3
+extends type c1. This is perfectly valid since the final type is c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This feature is
+visible where the base type is an Address.<span style="mso-spacerun: yes"> 
+</span>The type contains fields that comprise of addresses. Then, a distinctive
+type, enclosing the unique types that extend this base type, can be created for
+each country. This is a perfect instance of a base type and a derived type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The derived type
+is utilized either in the xml file or in the instance document, by implementing
+the xsi:type attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xs1=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above xsd
+file, the xs prefix as well as the xs1 prefix, both point to the same URI.
+Further, the default namespace also points to it. Despite considerable
+redundancy, no errors are reported. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:xs1=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd1:element name=&quot;zzz&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.XmlException: The 'xs:schema'
+start tag on line '1' doesn't match the end tag of 'schema' in file
+'file:///c:/xmlprg/b.xsd'. Line 3, position 3.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The use of xs1,
+or the absence of a namespace prefix in the xsd file, is legally permissible.
+But, commencing the schema element with an xs prefix and ending it without a
+prefix is not allowed, even though the default prefix is the XML Schema URI.
+Therefore, the above error is reported. The only rationale for this could be
+that the XML world is a stickler for rules. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Whenever a
+namespace prefix is omitted, the default namespace is referred to. This
+signifies that every schema belongs to some namespace or the other. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+targetNamespace attribute is used to set the value of the default namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+elementFormDefault=&quot;qualified&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>No errors are
+perceived, even when the attribute elementFormDefault is specified as
+'qualified' and the instance document or xml file do not use it. This is
+because the targetNamespace has a default value of null, i.e. an empty string. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Rewriting the
+above line as depicted in <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+elementFormDefault=&quot;qualified&quot; targetNamespace=&quot;&quot;&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>would accomplish
+the same result, since the targetNamespace is an empty string. However,
+modifying the tagetNamespace to hold a space, as demonstrated in <o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+elementFormDefault=&quot;qualified&quot; targetNamespace=&quot;<span
+style="mso-spacerun: yes">  </span>&quot;&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>throws the
+following exception<o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+TargetNamespace '<span style="mso-spacerun: yes">  </span>' is invalid URI. An
+error occurred at file:///c:/xmlprg/b.xsd(1, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XML world
+strictly abides by its rules. The specifying of spaces as the value of the URI
+generates the above error, because the file does not adhere to the rules
+related to the naming of a URI. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the instance
+document, whether the elementFormDefault attribute has been used or not, is
+insignificant, since all the elements get validated anyway. This attribute
+merely saves us the hassle of qualifying all the elements or just the global
+elements. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Let us now cast a
+fleeting glance at the virtues and weaknesses of specifying the
+elementFormDefault as qualified or unqualified. If the elementFormDefault is
+specified as unqualified, then only the global elements have to be qualified in
+the instance document. The complexities governing the namespaces in the xsd
+file are entirely concealed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, problems
+arise when changes are made to the schema, such as making the local
+declarations as global. In such cases, the instance document, i.e. the xml file
+must adapt to these changes. On the other hand, assigning the value of
+qualified to the attribute elementFormDefault mandates that all elements in the
+instance document must be qualified. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The silver lining
+is that the instance document is impervious to any changes made in the local or
+global declarations. However, the user gets exposed to the namespace
+complexities. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>One of the harsh
+realities of life is that, there is nothing like a perfect solution. So, it is
+left to each individual to decide for himself as to which of the two options of
+'qualified' and 'unqualified', is a better bet for the elementFormDefault
+attribute.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:07 GMT -->
+</html>

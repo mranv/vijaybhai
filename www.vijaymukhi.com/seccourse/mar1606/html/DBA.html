@@ -1,0 +1,3644 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/DBA.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:38 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="DBA_files/filelist.html">
+<title>Being a SQL Server DBA</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>468</o:TotalTime>
+  <o:Created>2006-03-17T10:05:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:05:00Z</o:LastSaved>
+  <o:Pages>25</o:Pages>
+  <o:Words>5789</o:Words>
+  <o:Characters>-32766</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DoNotHyphenateCaps/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridHorizontalSpacing>6 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>3</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+  </w:Compatibility>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+ /* Page Definitions */
+@page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:658584377;
+	mso-list-type:hybrid;
+	mso-list-template-ids:357960390 1164607336 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1
+	{mso-list-id:767894535;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-399347916 40022546 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2
+	{mso-list-id:992416280;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1030394168 -1706002078 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l2:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3
+	{mso-list-id:1159924498;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-275851654 -1112263216 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l3:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4
+	{mso-list-id:1380281128;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-612974782 349623078 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l4:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5
+	{mso-list-id:1482424811;
+	mso-list-type:hybrid;
+	mso-list-template-ids:899341994 2086584226 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l5:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l5:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6
+	{mso-list-id:1542203730;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1995848206 1507634760 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l6:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l6:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7
+	{mso-list-id:1560940494;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-962170340 989619514 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l7:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l7:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l8
+	{mso-list-id:1911308799;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-2030394380 -1366424884 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l8:level1
+	{mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l8:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l8:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l8:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l9
+	{mso-list-id:2052725533;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1699446988 560466222 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l9:level1
+	{mso-level-start-at:4;
+	mso-level-text:%1;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.5in;}
+@list l9:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l9:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l9:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in;text-justify-trim:punctuation'>
+
+<div class=Section1>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Being a
+SQL Server DBA<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We start
+the program SQL Query Analyzer which comes standard with SQL server. The
+equivalent program that lets you interact with a database in Oracle is called
+SqlPlus. We see two windows on our screen, the left pane tells us all the
+databases created and their contents, the right pane allows us to write sql
+commands and then allows us to run them. We create a table m1 as follows.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Create
+table m1 ( vno integer, name char(5))<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>This
+creates a table called m1 with two fields vno with data type integer and name
+with data type character with a maximum width of 5. Lets add some data here.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m1 values ( 1, 'vijay')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>This adds
+one record for us and if we run the select command <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from m1 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>we get
+the following output<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m1 values ( null , 'mukhi')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The value
+null is a reserved value in SQL and it means no value or we do not know what
+value to write at this point in time. Thus whenever we do know what value to
+place in a database we specify null. A zero means zero null means no value. Our
+table allows us to specify a null value for a fields. Lets change this.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Create
+table m2 ( vno integer not null, name char(5) null)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m2 values ( 1 , null)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m2 values ( null<span style="mso-spacerun: yes">  </span>, 'vijay')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Server:
+Msg 515, Level 16, State 2, Line 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Cannot
+insert the value NULL into column 'vno', table 'master.dbo.m2'; column does not
+allow nulls. INSERT fails.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The
+statement has been terminated.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We create
+a table m2 with some conditions.<span style="mso-spacerun: yes">  </span>The
+null identifier allows us to tell the system that values in this field can be
+null. Thus the name field can take null values. This is why the first insert
+statement gives us no errors. The not null identifier means that null values
+are not allowed for this field. When we execute the second insert statement we
+get an error as the vno field has a null value.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The point
+we are making is that we should build error checks or constraints at the data
+base level so that we do not have to code the error checks in our program. Thus
+whatever checks we can build at the create table level we should and as far
+possible avoid data entry checks in the code.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Create
+table m3 ( vno integer primary key, name char(5) )<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m3 values ( 1, 'hi')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m3 values ( null , 'bye')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Server:
+Msg 515, Level 16, State 2, Line 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Cannot
+insert the value NULL into column 'vno', table 'master.dbo.m3'; column does not
+allow nulls. INSERT fails.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The
+statement has been terminated.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m3 values ( 1 , 'hi')<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Server:
+Msg 2627, Level 14, State 1, Line 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Violation
+of PRIMARY KEY constraint 'PK__m3__1CFC3D38'. Cannot insert duplicate key in
+object 'm3'.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The
+statement has been terminated.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l1 level1 lfo1;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial'>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial'>hi<span
+style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Thus we
+see that only one record gets added as only the first insert statement is
+valid. The<span style="mso-spacerun: yes">  </span>second fails as we have
+given a value of null to vno. The third insert statement is in error as the vno
+field has the same value of 1. Thus nulls or duplicates are not allowed as
+valid values in a field that has the identifier primary key. This means that
+the system does the error checks not an external program written by a
+programmer. This also means that we do the error check only once at the level
+of the database.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table m4 ( vno integer, amt integer , check(amt &gt; 0))<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m4 values ( 1, 100)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m4 values ( 2, -100)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Server:
+Msg 547, Level 16, State 1, Line 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>INSERT
+statement conflicted with COLUMN CHECK constraint 'CK__m4__amt__155B1B70'. The
+conflict occurred in database 'master', table 'm4', column 'amt'.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l2 level1 lfo2;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]><span style='font-size:10.0pt;
+font-family:Arial'>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='font-size:10.0pt;font-family:Arial'>100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The check
+allows us to specify a condition which if not met gives us an error. The
+condition above says that the amt field must be larger than 0. The first insert
+passes the condition, the second fails as the amt field has a negative value. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table m5 ( vno integer, amt integer , amt1 integer ,<span style="mso-spacerun:
+yes">  </span>check(amt &gt; 0 and amt1 &gt; amt))<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m5 values ( 1, 10 , 20)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m5 values ( 1, 10 , 2)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>INSERT
+statement conflicted with TABLE CHECK constraint 'CK__m5__1837881B'. The
+conflict occurred in database 'master', table 'm5'.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into m5 values ( 1, -10 , 2)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>INSERT
+statement conflicted with TABLE CHECK constraint 'CK__m5__1837881B'. The
+conflict occurred in database 'master', table 'm5'.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>10<span style='mso-tab-count:1'>         </span>20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Our conditions or the check can be as complex as we like.
+In the case of table m5 we are using the and to combine two conditions. The
+first specifies that the amt field must be positive and the second the field
+amt1 must be larger than the field amt1. The first insert statement passes
+muster, the second fails as the amt1 filed is smaller than the amt field. The
+third insert statement fails the first condition as its value is negative.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m6 ( vno integer, name char(1), check (name
+in ('d' , 'c')) )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m6 values ( 1, 'd')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m6 values ( 1, 'C')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m6 values ( 2, 'E')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>INSERT statement conflicted with COLUMN CHECK constraint
+'CK__m6__name__1C0818FF'. The conflict occurred in database 'master', table
+'m6', column 'name'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>d</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l3 level1 lfo3;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>C</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The in identifier allows us to specify a range of fixed
+values. A financial transaction can either be debit or credit. Thus the only
+valid values for the name field are d or c, caps and small included. This is
+why the first two insert statements are ok, the third sets the value of the
+name field to E which is not valid.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m7 ( vno integer, name char(30), check (name
+like '[a-z][a-z]-[0-9][0-9][fm]'))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m7 values ( 1, 'ab-67f')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We are also allowed to use regular expressions to test the
+input. [a-z] in square brackets stands for any letter of the alphabet, [0-9]
+stands for a number, [fm] stands for a f or a m and the minus outside the
+square brackets for a minus. Thus in english we must type two characters,
+followed by a minus sign followed by two digits and then a f or a m. Anything
+else is an error.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l4 level1 lfo4;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>ab-67f<span style="mso-spacerun: yes">                       
+</span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>You cannot specify complex conditions using the + and the
+* as we can use with regular expressions. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m8 ( vno integer, name char(10)
+default('vijay'))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m8 values ( 1, 'hi')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m8( vno )<span style="mso-spacerun: yes"> 
+</span>values ( 2 )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m8<span style="mso-spacerun: yes"> 
+</span>values ( 3, null<span style="mso-spacerun: yes">  </span>)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>hi<span
+style="mso-spacerun: yes">        </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>vijay<span
+style="mso-spacerun: yes">     </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style="mso-spacerun: yes">         </span>NULL</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The default identifier allows us to specify a value for a
+field when the user does not specify one. In the first insert statement we get
+no error, the second we do not specify a value for field name, the value stored
+on disk becomes vijay. Nulls are valid values for a field. The name of the
+fields may appear after the name of the table. This is optional and we do not
+supply one, the default is the field names in the order that we have specified
+in the table. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m8 values ( 10)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Insert Error: Column name or number of supplied values
+does not match table definition.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>When we do not want to give values for all fields we
+cannot leave them blank as we will get an error. The way out is to then specify
+the names of the fields that we are specifying values for.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table banknames ( bankcode char(1) primary key,
+bankname char(20))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into banknames values ( 'b', 'Bank of Baroda')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into banknames values ( 'c', 'Citi Bank')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into banknames values ( 's', 'State Bank')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>b<span style='mso-tab-count:1'>          </span>Bank of
+Baroda<span style="mso-spacerun: yes">    </span><span style="mso-spacerun:
+yes">  </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>c<span style='mso-tab-count:1'>          </span>Citi
+Bank<span style="mso-spacerun: yes">           </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>s<span style='mso-tab-count:1'>           </span>State
+Bank<span style="mso-spacerun: yes">          </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style="mso-spacerun: yes"> </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We have created a table banknames that stores the bank
+codes of the banks we deal with and the name of the bank. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m9 ( vno integer, bankc char(1) references
+banknames(bankcode))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m9 values ( 1, 'b')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m9 values ( 1, 'z')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>INSERT statement conflicted with COLUMN FOREIGN KEY
+constraint 'FK__m9__bankc__2E26C93A'. The conflict occurred in database
+'master', table 'banknames', column 'bankcode'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>In table m9, the field bankc will have values that are
+already present in the table banknames. Thus we use the references keyword and
+supply the name of the table and the name of field within that table. This
+field will normally be the primary key of the table. Thus each time we key in a
+value for the field bankc in m9 it will check that this value is present in the
+table banknames field bankcode. The field bankcode has a value b but does not
+have a value of z and hence the second insert gives us an error. Any field in a
+table that references a primary field in another table is called a foreign key.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>b</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>delete from banknames where bankcode='b'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>DELETE statement conflicted with COLUMN REFERENCE
+constraint 'FK__m9__bankc__33DFA290'. The conflict occurred in database
+'master', table 'm9', column 'bankc'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We cannot delete from the table banknames as there are
+records that are referring to the primary key with a value of ‘b’. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>delete from banknames where bankcode='c'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>There is no record in table m9 that refers to the bankcode
+field of value c and hence we can delete this record with impunity. Thus the
+simple rule is that whenever the system delete a record, it checks, is there
+any table that refers to this records value. If the answer is yes, then it does
+not delete the record.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m10 ( vno integer, bankc char(1) references
+banknames(bankcode) on delete cascade ) </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m10 values ( 1, 'b’)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m10 values ( 2, 's')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>delete from banknames where bankcode = 's'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from m10</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l5 level1 lfo6;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>b</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * form m9</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>b</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>delete from banknames where bankcode = 'b'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>DELETE statement conflicted with COLUMN REFERENCE
+constraint 'FK__m9__bankc__33DFA290'. The conflict occurred in database
+'master', table 'm9', column 'bankc'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>b<span style='mso-tab-count:1'>          </span>Bank of
+Baroda<span style="mso-spacerun: yes">      </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>When we do not write anything after On delete, the default
+is no action. If we replace it with Cascade, all records in all tables that
+refer to this field value will also be deleted. Earlier we were not allowed to
+delete a record if somewhere a record referenced it. Now the system will delete
+all records that reference this value. We have record number 2 that refers to
+bank s. When we delete bank code s from banknames, this record automatically
+gets deleted. We cannot delete bank code b as table m9 refers to it. Thus cascade
+can be dangerous as if a 1000 records someplace references bank code s then
+deleting this record will delete all records that reference it.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m12 ( vno integer , name char(10) unique)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m12 values ( 1, 'vijay' )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m12 values ( 1, 'vijay' )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Violation of UNIQUE KEY constraint 'UQ__m12__37B03374'.
+Cannot insert duplicate key in object 'm12'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m12 values ( 1, 'Vijay' )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Same error</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m12 values ( 1, null )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m12 values ( 1, 'vijay1' )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>vijay<span
+style="mso-spacerun: yes">     </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>NULL</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l0 level1 lfo7;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>vijay1<span style="mso-spacerun: yes">    </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The unique constraint maintains the value of a field as
+unique. Does when we try and add another value of vijay with v in caps we get
+an error. Vijay1 is allowed as well as null values. The unique keyword creates
+a index for us.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m13 ( vno integer, amt integer , aa as vno *
+amt)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m13 values ( 10, 20)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>10<span style='mso-tab-count:1'>        </span>20<span
+style='mso-tab-count:1'>        </span>200</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We can also specify computed columns where field aa is the
+product of two fields vno and amt.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m13(vno, amt , aa) values ( 10, 20 , 200)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Column 'aa' cannot be modified because it is a computed
+column.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Once a field is computed we cannot supply it a value using
+the insert statement. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table m14 ( vno integer, name char(10))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into m14 values ( 1, USER_NAME())</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l7 level1 lfo8;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>dbo<span style="mso-spacerun: yes">       </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We get a large number of functions like USER_NAME that
+give us the current user who has added the record.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select user_name()</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>dbo</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We can directly call a function using the select
+statement.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select user_name(), host_name() , app_name() ,
+CURRENT_TIMESTAMP , @@MAX_CONNECTIONS , @@LANGUAGE , @@SERVICENAME ,@@VERSION</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>dbo<span style='mso-tab-count:1'>      </span>VMCI<span
+style='mso-tab-count:1'>  </span>SQL Query Analyzer<span style='mso-tab-count:
+1'>    </span>2005-08-29 11:55:50.233<span style='mso-tab-count:1'>        </span>32767<span
+style='mso-tab-count:1'>  </span>us_english<span style='mso-tab-count:1'>         </span>VMUKHI<span
+style='mso-tab-count:1'>        </span>Microsoft SQL Server<span
+style="mso-spacerun: yes">  </span>2000 - 8.00.194 (Intel X86)<span
+style="mso-spacerun: yes">   </span>Aug<span style="mso-spacerun: yes"> 
+</span>6 2000 00:57:48<span style="mso-spacerun: yes">   </span>Copyright (c)
+1988-2000 Microsoft Corporation<span style="mso-spacerun: yes"> 
+</span>Enterprise Evaluation Edition on Windows NT 5.0 (Build 2195: Service
+Pack 4)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Sql server has over a zillion functions that we can use.
+These comes under all types of flavors.<span style="mso-spacerun: yes"> 
+</span>We can also create our own functions.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Joins</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table cust1 ( custid char(10), custname char(20))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into cust1 values ( 'c1’ , 'vijay') </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into cust1 values ( 'c2' , 'sonal')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>c1<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>vijay<span style="mso-spacerun:
+yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>c2<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>sonal<span style="mso-spacerun:
+yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table prod1 ( pcode char(10) , pname char(20))</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into prod1 values ( 'p1' , 'copper')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into prod1 values ( 'p2' , 'silver')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into prod1 values ( 'p3' , 'gold')</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>p1<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>copper<span style="mso-spacerun:
+yes">              </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>p2<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>silver<span style="mso-spacerun:
+yes">              </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>p3<span style="mso-spacerun: yes">     </span><span
+style="mso-spacerun: yes">   </span><span style='mso-tab-count:1'>            </span>gold<span
+style="mso-spacerun: yes">                </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table sales1 ( vno integer, custc char(10) , pcode
+char(10), amt integer)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into sales1 values ( 1, 'c1' , 'p1' , 10)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into sales1 values ( 2, 'c2' , 'p2' , 20)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into sales1 values ( 3, 'c2' , 'p3' , 30)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into sales1 values (4, 'c1' , 'p3' , 40)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1 , cust1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun: yes">  
+</span><span style="mso-spacerun: yes">     </span><span style='mso-tab-count:
+1'>            </span>sonal<span style="mso-spacerun: yes">              
+</span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>For the first time we write the name of two tables after
+the from. All that sql does is gives us an output where we get 6 columns, an
+addition of the columns in the individual tables and a multiplication of rows.
+As sales1 has 4 rows and cust1 has 2, we get a total of 8 rows. Thus when we
+join two tables we get far too many records to handle. Thus we bring in the where
+to bring down the number of records. Also most joins are primary key – foreign
+key joins. In these cases the number of records is decide by the table that
+supplies the foreign key, the primary key simply adds to the number of columns.
+In the above case, the table cust1 and sales1 have a field custid and custc
+that come from the same domain. The table sales1 has custc as the FK as the
+table cust1 has custid as the PK. Thus the number of records will be 4 as the
+FK decides this number.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1, cust1 where custid = custc</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">   </span><span style="mso-spacerun:
+yes">            </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We thus get access to the customer name stored in another
+table as well as access to all columns of the FK. We can do the same for
+product id also.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1, cust1, prod1<span
+style="mso-spacerun: yes">  </span>where custid = custc and sales1.pcode =
+prod1.pcode</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1 <span
+style="mso-spacerun: yes">       </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span><span style='mso-tab-count:
+1'>  </span>p1<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>copper<span style="mso-spacerun:
+yes">              </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span><span style='mso-tab-count:
+1'> </span>p2<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>silver<span style="mso-spacerun:
+yes">              </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30<span
+style='mso-tab-count:1'>        </span>c2<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>sonal<span
+style="mso-spacerun: yes">               </span><span style='mso-tab-count:
+1'> </span>p3<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>gold<span style="mso-spacerun:
+yes">     </span><span style="mso-spacerun: yes">           </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40<span
+style='mso-tab-count:1'>        </span>c1<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>            </span>vijay<span
+style="mso-spacerun: yes">               </span><span style='mso-tab-count:
+1'>  </span>p3<span style="mso-spacerun: yes">        </span><span
+style='mso-tab-count:1'>            </span>gold<span style="mso-spacerun:
+yes">                </span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Same number of records as cust1 yet provides the PK. We
+now get the name of the products also. We can join as many tables as we like.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>View</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>A view is a select statement that looks and acts as a
+table. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create view zzz as select vno, custc , sales1.pcode, amt
+from sales1, cust1, prod1<span style="mso-spacerun: yes">  </span>where custid
+= custc and sales1.pcode = prod1.pcode</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from zzz</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">      </span><span style="mso-spacerun:
+yes">  </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>30</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p3<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>40</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>There is now way of knowing that zzz is a view or a table.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>To create a new user, we first start the program
+Enterprise manager. We then keep clicking on the plus in the left pane till we
+come to the security tab. Here we click on the plus and then right mouse button
+on Logins. Here we choose new logins. At the dialog box we specify our name as
+vijay and password vijay but we choose the radio button sql authentication.
+When we click on OK we are asked to confirm our new password. We now see our
+user name in the pane on the right.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We now log in as vijay but we are not allowed to access
+any tables from master. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>SELECT permission denied on object 'sales1', database 'master',
+owner 'dbo'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We next double click on our user name and then choose the
+tab server roles and click on the first role system adminstrator. This gives us
+all rights to the database. Now we can access any entity that sa can access.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>At the same level of security is option management that
+has an option sql server logs. This is where we can see a log of all that
+happens.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Choosing databases allows us to view all the tables, views
+etc that have been created. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Creating a database</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create database vijay</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The CREATE DATABASE process is allocating 0.63 MB on disk
+'vijay'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The CREATE DATABASE process is allocating 0.49 MB on disk
+'vijay_log'.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>A database is where we place all our tables. We use the
+create database command to create a database called vijay. We could have also
+carried out the above command using the enterprise manager. Now when we click
+on the down arrow for a list of database we see our name vijay. When we move to
+the enterprise manager and choose database and then vijay, right mouse button, properties,
+we can see and change all the properties of our database. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create table vijay.dbo.vij1 ( vno integer )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The name of a table is the name of the database, the name
+of the user and then the name of the table.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>insert into vijay.dbo.vij1 values (100)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from vijay.dbo.vij1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Thus we do not have to activate the database if we preface
+it with the full name of the database and the user. The system tables shows us
+the names of the tables the system creates. The user tables go into the user
+tables options. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We have a large number of procedures that allow us to do
+lots of common database tasks. One of them allows us to rename our database.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>sp_renamedb vijay , mukhi</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Simply running the above command renames database vijay to
+mukhi.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>If we click on master in the lest pane, then stored
+procedures, we see a zillion stored procedures. One of them is sp_renamedb. The
+power of a database is the number of functions and the number of stored
+procedures it offers us. Thus lets now create our own stored procedure in
+master.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a1 as select * from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We will now see that the first stored procedure is a1.
+When we write </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a1 </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>and press execute we see the data from sales 1. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a2</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from prod1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a2</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We now see data from two tables sales1 and prod1. We call
+use the exec command to execute a stored procedure.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>When we click on a1 right mouse button and then we choose
+open, we see that both a1 and a2 have no parameters. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a3</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>@prod varchar(20)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1 where pcode = @prod</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a3 'p1'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a3 'p2'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Whenever we create a procedure we can specify the names of
+parameters to be passed at run time. All these parameter names must come before
+the keyword as. We have created one parameter prod. All parameter names must
+start with a @ sign. In our sql statements we can refer to these parameters by
+the same name. When we call the stored procedure we specify the parameter names
+separated by commas. When we now click right mouse button on the procedure name
+a4 and then open we get a dialog box that allows us to interactively specify
+the parameters. We click on the name of the parameter and then give a value and
+then execute the sp. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a4</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>@prod varchar(20) , @vo int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1 where pcode = @prod and amt &gt; @vo</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print 'vijay mukhi'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a4 'p1',5</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>(1 row(s) affected)</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>vijay mukhi</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We now specify two parameters, prod as before and vo which
+is a int or integer. Now we supply two parameters to our select statement. The
+print command allows us to write a message that will be displayed in the
+messages tab which is at the bottom of your screen.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>If the edit option is on when we click on the right mouse
+button we can edit the sp and see how it was written.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a5</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>@prod varchar(20) ='p1' , @vo int = 5</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1 where pcode = @prod and amt &gt; @vo</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print 'vijay mukhi'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a5</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>1<span style='mso-tab-count:1'>          </span>c1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p1<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We can use the = sign to specify a default value if we do
+not specify a value. Thus when we run a5 with no parameters, the default values
+are p1 and 5. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a5 'p2'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>2<span style='mso-tab-count:1'>          </span>c2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>p2<span
+style="mso-spacerun: yes">        </span><span style='mso-tab-count:1'>            </span>20</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We have all the right to override these values by
+specifying them on the command line.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a6</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @@tot int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select @@tot = sum(amt) from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print @@tot</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a6</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>100</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We can declare a variable tot with two at signs, one is
+must, more than one is at your risk. We then store the value returned by
+sum(amt) which is 100 into tot which we display using the print. Thus we are
+allowed to create variables and use them later on in our code as we used input
+variables earlier.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a7</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @@tot int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select @@tot = sum(amt) from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>if @@tot &lt; 40</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>begin</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print 'tot less then 40' </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>end</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>else</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print 'tot larger than 40'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a7</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>tot larger than 40</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We have a if statement in sp. We specify a condition and
+then a begin and end if we have more than one line of code. If we do not then
+it is optional. The else in our case is true and as we have only one line of
+code, we do not use a begin and end. </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a8 with encryption </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select * from sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>Using the with encryption keyword, when we click on the
+right mouse button, the edit option is yet on but when we select it our select
+statement is not visible. This is how we prevent others from peeking at our
+code.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a9</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>return 100</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print 'hi'</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a10 </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @a1 int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>exec @a1 = a9 </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print @a1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a10</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>100</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We first create a procedure a9 which uses the keyword
+return to return a value 100. when we run the procedure a9, we see no output as
+the print after the return does not get executed. No code gets called after the
+return statement. We then create a procedure a10 where we first create a
+variable a1 of type int. We then execute the sp a9 using the exec command. The
+return value of this procedure is stored in the variable a1 which we print out.
+This is how a stored procedure can return back a value to us that we can use.
+We could have also passed parameters to the procedure a9 by specifying them
+after the name of the procedure.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>CREATE PROCEDURE a11 (@a1 int OUTPUT , @a2 int OUTPUT )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>AS</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>SELECT @a1 = Count(*) FROM sales1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>SELECT @a2 = Count(*) FROM cust1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>CREATE PROCEDURE a12</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>AS</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @a3 int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @a4 int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>EXEC a11 @a1 = @a3 OUTPUT, @a2 = @a4 OUTPUT</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>select @a3, @a4</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>a12</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-pagination:
+none;mso-list:l9 level1 lfo9;tab-stops:list .75in;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportLists]>4<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>2</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>We first create a procedure a11 which takes two variables
+a1 and a2 which we mark as output and input. We then use the count(*) function
+to store the number of records from the sales1 and cust1 table into a1 and a2.
+These variables being marked as output allow other programs to access them. We
+then create a procedure a12 which first declares a3 and a4 as variables and
+then initializes a3 to a1 and a4 to a2. We once again specify the output
+keyword. Thus exec run sp a11 and then sets a3 to a1 and a4 to a2 which we
+print out using the select statement. This does what a return does, a return
+returns a single value, output allows us to return multiple values.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>create procedure a13</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>as</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>declare @a1 int</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>set @a1 = 3</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>while ( @a1 &lt;= 7 )</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>begin</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>print @a1 </p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>set<span style="mso-spacerun: yes">  </span>@a1 = @a1 + 1</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>end</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>3</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>4</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>5</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>6</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>7</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'>The above sp demonstrates a while loop. We first create a
+variable a1, and then give it an initial value. The variable a1 has no initial
+value. We use the set command to give it a value of 3. We then use a while loop
+to iterate until the value of a1 is 7. In the while loop we use the begin and
+end to loop multiple statements. We first print out the value of a1 and then
+use the same old set to increase it value by 1. Thus sp’s have variables, if
+statements, loops and everything else that a programming language needs.</p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Stored procedure</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create table adummy1 ( vno integer, amt integer)</p>
+
+<p class=MsoNormal>insert into adummy1 values ( 1, 50)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b1</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>declare @amt int</p>
+
+<p class=MsoNormal>set @amt = 100</p>
+
+<p class=MsoNormal>if ( @amt &gt; (select sum(amt) from adummy1 ))</p>
+
+<p class=MsoNormal>print 'true'</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>print 'false'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b1</p>
+
+<p class=MsoNormal>true</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>insert into adummy1 values ( 2, 500)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b1</p>
+
+<p class=MsoNormal>false</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We create a table adummy1 with two fields and then add one
+record where the amt field has a value of 50. We next create a sp b1, if you
+have noticed we have changed the naming convention from the a series. We create
+a int variable amt and set its value to 0. The main point of this example is
+that we can use a select statement where ever a number is needed. Sum(amt)
+returns a number and the comparison operator &gt; requires a number. Whether we
+specify a number as a variable or a select statement is of no consequence to a
+stored procedure. We get true as the total sum of the amt field is less than
+100. We then add a record where the amt value is 500, the if statement becomes
+false. This is how we can write complex sp’s. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b2</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>declare @amt int</p>
+
+<p class=MsoNormal>set @amt = 20</p>
+
+<p class=MsoNormal>print 'value is ' + @amt</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Syntax error converting the varchar value 'value is ' to a
+column of data type int.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lots of times we need to display the value of a int
+variable. We cannot use the above syntax as we are using a string and a int
+data type. A sp tries to convert the string into a int. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b3</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>declare @amt int</p>
+
+<p class=MsoNormal>set @amt = 20</p>
+
+<p class=MsoNormal>print 'value is ' + convert(char(20) ,@amt) + 'AA'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b3</p>
+
+<p class=MsoNormal>value is 20<span style="mso-spacerun: yes">                 
+</span>AA</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The way out is to use the convert function which takes two
+parameters, the final data type we need to convert to , in our case a char
+which is 20 characters wide. The second parameter is the original variable
+whose data type needs to be converted. Thus we get the value of the amt
+variable as a string 20 characters large.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b4</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>print 'hi' + char(13) + 'bye'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b4</p>
+
+<p class=MsoNormal>hi</p>
+
+<p class=MsoNormal>bye</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The number 13 stands for a enter as 65 stands for a A. Using
+the char function we can convert a number into its ascii equivalent. Thus by
+using the char function we can introduce a enter in our print command. The \n
+of c does not work its magic here.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b5</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>begin transaction</p>
+
+<p class=MsoNormal>delete from adummy1</p>
+
+<p class=MsoNormal>rollback</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b5</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we run the sp b5 we see a message 2 records effected
+but when we display the records from adummy1 we see the records intact. A
+transaction is defined as a logical unit of work. A transaction allows us to
+tell the system that either do the following 6 sql statements for do none of
+them. We can now treat a bunch of sql statements as a group, either all get
+done or none. If a single one fails, they all fail.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus in sp b5, two records get deleted, but because we say
+rollback, the changes get undone. We have only one sql statement, the same
+holds good for multiple sql statements</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b6</p>
+
+<p class=MsoNormal>@a1 int</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>begin transaction</p>
+
+<p class=MsoNormal>delete from adummy1</p>
+
+<p class=MsoNormal>if ( @a1 = 1)</p>
+
+<p class=MsoNormal>rollback</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>commit</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b6 1</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b6 0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Our sp b6 now takes a int parameter<span
+style="mso-spacerun: yes">  </span>a1. If this value is 1, the keyword rollback
+gets called and thus the first time we run sp b6, no records get deleted.
+However the second time as we call b6 with 0, the command commit gets called
+which actually saves the data to disk. Commit is the opposite of rollback, once
+data gets committed, we cannot roll it back. Most of the time when we work with
+sql query a implicit commit is done at the end of every statement.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>insert into adummy1 values ( 1, 10)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>delete from adummy1</p>
+
+<p class=MsoNormal>rollback</p>
+
+<p class=MsoNormal>The ROLLBACK TRANSACTION request has no corresponding BEGIN
+TRANSACTION.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The rollback will only work if we use a begin transaction
+command. It s this command that signals the sql engine to allow our sql
+statements to be rolled back.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>insert into adummy1 values ( 1, 10)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>begin transaction</p>
+
+<p class=MsoNormal>delete from adummy1</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select * from adummy1</p>
+
+<p class=MsoNormal>no records</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>rollback</p>
+
+<p class=MsoNormal>select * from adummy1</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.5in;mso-list:l8 level1 lfo10;
+tab-stops:list .75in'><![if !supportLists]>1<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>10</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This is how we can rollback our transactions. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>begin transaction</p>
+
+<p class=MsoNormal>delete from adummy1</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select * from adummy1</p>
+
+<p class=MsoNormal>no records</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>commit</p>
+
+<p class=MsoNormal>select * from adummy1</p>
+
+<p class=MsoNormal>no records</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>rollback</p>
+
+<p class=MsoNormal>The ROLLBACK TRANSACTION request has no corresponding BEGIN
+TRANSACTION.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The minute we say commit, the begin transaction is closed
+and hence the rollback will not work. Thus the minute we use commit or rollback
+we cannot now change our mind at all.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b7</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>raiserror('vijay mukhi', 12, 4)</p>
+
+<p class=MsoNormal>print 'bye'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Server: Msg 50000, Level 12, State 4, Procedure b7, Line 3</p>
+
+<p class=MsoNormal>vijay mukhi</p>
+
+<p class=MsoNormal>bye</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The raiserror function allows us to display an error with a
+error message, followed by a level in our case 12 , followed by a State 4, The
+next two values the name of the procedure and line number are beyond our
+control. This is how we can display custom error messages. The flow of control
+does not stop as the bye also gets displayed. This is how we can create our own
+custom error messages like sql server does.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b8</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>raiserror(13001, 10, 4)</p>
+
+<p class=MsoNormal>print 'bye'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>data page</p>
+
+<p class=MsoNormal>bye</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select * from sysmessages</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can also specify a error message number instead of our
+own error message text. All error messages are stored in the table sysmessages.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b9</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>delete from adummy1 where vno &gt;= 10</p>
+
+<p class=MsoNormal>print @@error</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>B9</p>
+
+<p class=MsoNormal>0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The @@error is a system variable that tells us whether the
+last sql statement resulted in a error. A value of zero means no error. In this
+case even though no records got deleted, this is not a sql error.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>sp_helptext 'b1'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This sp will display for us the entire text of our sp b1. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>sp_helptext 'sp_addlogin'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>will display the entire text<span style="mso-spacerun:
+yes">  </span>for the sp_addlogin sp which is not encrypted. This is how we
+learnt what his stored procedures do. Encrypted stored procedures do not
+display their code.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b10</p>
+
+<p class=MsoNormal>@a1 int,</p>
+
+<p class=MsoNormal>@a2 int </p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>print @a1</p>
+
+<p class=MsoNormal>print @a2</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b10 1,2</p>
+
+<p class=MsoNormal>1</p>
+
+<p class=MsoNormal>2</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b10 @a2=7, @a1 = 8</p>
+
+<p class=MsoNormal>8</p>
+
+<p class=MsoNormal>7</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We do not have to specify the parameters in the order that
+we have created them. If we specify the name of the parameters, the order now
+does not matter.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b11</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>print 'hi'</p>
+
+<p class=MsoNormal>waitfor delay '00:00:30'</p>
+
+<p class=MsoNormal>print 'bye'</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>hi</p>
+
+<p class=MsoNormal>bye</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The waitfor does not work the way we thought. We thought the
+system would print hi, wait for 30 seconds and then print bye. It waited for 30
+seconds and then printed hi and bye together.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>insert into adummy1 values (1,10)</p>
+
+<p class=MsoNormal>insert into adummy1 values (2,20)</p>
+
+<p class=MsoNormal>insert into adummy1 values (3,30)</p>
+
+<p class=MsoNormal>1 10</p>
+
+<p class=MsoNormal>2 20</p>
+
+<p class=MsoNormal>3 30</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure b12</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>declare @tot int , @amt1 int</p>
+
+<p class=MsoNormal>set @tot = 0</p>
+
+<p class=MsoNormal>declare c cursor for select amt from adummy1</p>
+
+<p class=MsoNormal>open c</p>
+
+<p class=MsoNormal>fetch c into @amt1</p>
+
+<p class=MsoNormal>while ( @@fetch_status = 0) </p>
+
+<p class=MsoNormal>begin</p>
+
+<p class=MsoNormal>set @tot = @tot + @amt1</p>
+
+<p class=MsoNormal>print 'tot is ' + convert(char(5),@tot) + ' and amt is ' +
+convert(char(5),@amt1)</p>
+
+<p class=MsoNormal>fetch c into @amt1</p>
+
+<p class=MsoNormal>end</p>
+
+<p class=MsoNormal>print 'Final value of tot is ' + convert(char(5),@tot)</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b12</p>
+
+<p class=MsoNormal>tot is 10<span style="mso-spacerun: yes">    </span>and amt
+is 10<span style="mso-spacerun: yes">   </span></p>
+
+<p class=MsoNormal>tot is 30<span style="mso-spacerun: yes">    </span>and amt
+is 20<span style="mso-spacerun: yes">   </span></p>
+
+<p class=MsoNormal>tot is 60<span style="mso-spacerun: yes">    </span>and amt
+is 30<span style="mso-spacerun: yes">   </span></p>
+
+<p class=MsoNormal>Final value of tot is 60<span style="mso-spacerun: yes">  
+</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The most complex part of stored procedures is the concept of
+a cursor. We declare two int variables tot and amt1 and we set tot to 0. A
+cursor is nothing but an sql select statement. We create a cursor c using the
+same declare keyword and associating a select statement with it. We choose only
+one field amt from this table adummy1. We then open the cursor using the open
+statement. Unless we open a cursor we cannot access members from it. The fetch
+statement is used to access each record and we use it to store the first
+records amt value into variable amt1. As we were successful, the system
+variable FETCH_STATUS returns 0. We use this variables value in a while loop
+and quit when we get a non zero value. We use the tot variable to store the
+running total of the amt field. We display the values of tot and amt and then
+print them out. At the end of the loop we once again the next value from out
+table into the amt1 variable. The fetch command automatically moves the record
+pointer we do have to. A cursor is used in sql so that we can now have access
+to each and every record in the table. Using sql, we cannot get access to each
+and every record. What we do with each record is for us to decide. Oracle and
+all other databases also support the same syntax for cursors.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Triggers<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>A trigger
+is a stored procedure that get called by SQL server and not by us. We create a
+trigger in the same way that we create a stored procedure, but as said before
+we do not call it, the system calls it. We will first create a sinple table as
+follows<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table ab1 ( vno integer)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a1 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab1 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+insert <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>print
+'vijay mukhi'<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab1 values ( 1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Message
+Window<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>vijay
+mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>(1 row(s)
+affected)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We create
+a trigger a1 using the create trigger command. The on clause needs the name of
+a table ab1, The for clause needs the sql statement that will trigger off this
+stored procedure. VAlid options are insert, update or delete, we use insert.
+After the as clause we will write the code that will be called whenever a
+record is inserted into the table ab1. Thus when we execute the insert
+statement, we see vijay mukhi in the message window. Once again we could write
+any code that we<span style="mso-spacerun: yes">  </span>ahve learnt when we
+created stoored procedures. Normally we would write code that deletes data from
+data bases, create an audit trial etc. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab1 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+insert , update , delete <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>print
+'vijay mukhi1'<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab1 set vno = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>vijay
+mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>delete
+from ab1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>vijay
+mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Trigger
+a2 gets called whenever we run a insert , update or delete sql command on ab1. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from sysobjects where type ='TR'<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The table
+sysobjects stores all objects that we create . Each object has a field called
+type and TR stands for trigger. This is how we can view all teh triggers
+created.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table ab2 ( a1 integer, a2 integer , a3 integer , a4 integer)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab2 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+update <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>print
+COLUMNS_UPDATED()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab2 values ( 1, 2, 3, 4)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a1 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a2 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x02<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a3 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x04<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a4 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x08<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a1=2, a2 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x03<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a1=2, a2 = 2, a3 = 3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x07<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab2 set a1=2, a2 = 2, a3 = 3, a4 = 2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>0x0f<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>The
+columns_updated function tells us which fields have been updated. Each column
+that is changed will set a bit. Thus when we update the first column, bit 1
+will be set and the function returns 1, when we update the first columns, the
+firts two bits wil be set and the value returned is 3. When all four columns
+are updated, we get 0xf or 15 as the answer. This is how we can figure out
+which columns have changed.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table ab3 ( vno integer, name char(10) , age integer)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab3 values ( 1, 'vijay', 46)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab3 values ( 2, 'mukhi', 76)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a4 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+update <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from inserted<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from deleted <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We now
+create a table a3 with three fields and add two records. We create a trigger a4
+where we simply dispaly from two tables that we have not created from, inserted
+and deleted. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab3 set age = 100 where vno = 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>46<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from ab3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>2<span
+style='mso-tab-count:1'>          </span>mukhi<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'>          </span>76<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We then
+update the first record in ab3 changing the age from 43 to 100. The inserted
+table has one record, the newly added value and the deleted table has the old
+values of the record. Thus the system stores for us all the new data that has
+been added in teh inserted table and all the old data in the deleted table.
+There is only one record in each table as the number of records affected by the
+update is only one.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>update
+ab3 set age = 1000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>1000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>2<span
+style='mso-tab-count:1'>          </span>mukhi<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'>          </span>1000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>2<span
+style='mso-tab-count:1'>          </span>mukhi<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'>          </span>76<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We now
+write a update statement that changes two records, the inserted table gets both
+new records where the age is 1000 and the deleted table has the two old records.
+<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a5<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+insert , delete<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from inserted<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from deleted <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>delete
+from ab3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>inserted<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>no
+records<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>deleted <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<span
+style='mso-tab-count:1'>          </span>vijay<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'> </span>1000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>2<span
+style='mso-tab-count:1'>          </span>mukhi<span style="mso-spacerun:
+yes">     </span><span style='mso-tab-count:1'>          </span>1000<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We now
+create a fresh trigger a5 where we replace the update keyword with delete and
+insert. Now when we delete the two records, as we are not chaning any recirds,
+the inserted table is blank and the deleted table actually contains the two
+records we deleted. It now now acts as a table for deleted records. Deleted
+really stores records before teh change is made, inserted after the changes are
+being made.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab3 values ( 10 , 'hi', 100)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>inserted<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>10<span
+style='mso-tab-count:1'>         </span>hi<span style="mso-spacerun:
+yes">        </span><span style='mso-tab-count:1'>  </span>100<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>deleted<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>no
+records<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>Now when
+we add a records, teh inserted shows us teh record added, as we have made no
+changes in the rtable, deleetd shows us blank.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+table ab4 ( vno integer)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab4 values(1)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>create
+trigger a6<span style='mso-tab-count:2'>             </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>on ab4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>for
+insert , delete, update<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>begin
+transaction<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>rollback<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>delete
+from ab4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from ab4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>insert
+into ab4 values ( 2)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>select *
+from ab4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'>We create
+a table ab4 and add one record only. We then create a trigger a6 where we
+rollback for any insert, update or delete statement. Now whenever we try to
+insert update or delete we get no error but no changes are seen in our
+database. The idea is that whenever we do not want the changes to be made to
+our database we simply rollback the changes.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='mso-pagination:none;mso-layout-grid-align:none;
+text-autospace:none'><span style='font-size:10.0pt;font-family:Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Creating functions</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create function f1()</p>
+
+<p class=MsoNormal>returns int</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>begin</p>
+
+<p class=MsoNormal>return(100)</p>
+
+<p class=MsoNormal>end</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>SELECT f1()</p>
+
+<p class=MsoNormal>'f1' is not a recognized function name.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select dbo.f1()</p>
+
+<p class=MsoNormal>100</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We use the sql create function to create a function called
+f1. We start with the value it returns in our case int and place the code of
+the function within a begin and end. In our case we have no code at all and we
+simply return a value 100 using the return keyword. To call this function we
+use the select statement and get an error. The reason being that we need to
+specify the name of the user dbo along with the function name. A function can
+we used anywhere<span style="mso-spacerun: yes">  </span>and everywhere.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create procedure c1</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>print dbo.f1()</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>c1</p>
+
+<p class=MsoNormal>100</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We create a stored procedure c1 where we print out the
+return value of the function f1. As we said earlier anywhere and everywhere.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>create function f2(@a1 int , @a2 int)</p>
+
+<p class=MsoNormal>returns int</p>
+
+<p class=MsoNormal>as</p>
+
+<p class=MsoNormal>begin</p>
+
+<p class=MsoNormal>return(@a1+@a2)</p>
+
+<p class=MsoNormal>end</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select dbo.f2(amt,vno) from adummy1</p>
+
+<p class=MsoNormal>11</p>
+
+<p class=MsoNormal>22</p>
+
+<p class=MsoNormal>33</p>
+
+<p class=MsoNormal>We create a function f2 where we specify two parameters a1
+and a2 of type int. We return the sum of these values. We now use this function
+f2 in a select statement passing the field names amt and vno as parameters.
+Thus sp’s and triggers and functions use the same coding principles.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We have not seen the end of functions as we can return a
+table data type. The possibilities are unlimited at what we can do.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>CREATE FUNCTION f3 (@amt2 int)</p>
+
+<p class=MsoNormal>RETURNS @t1 TABLE (vno1 int, amt1 int)</p>
+
+<p class=MsoNormal>AS</p>
+
+<p class=MsoNormal>BEGIN</p>
+
+<p class=MsoNormal>DECLARE @tt1 TABLE (vno2 int, amt2 int)</p>
+
+<p class=MsoNormal>INSERT @tt1</p>
+
+<p class=MsoNormal>SELECT vno , amt FROM adummy1 WHERE amt &gt; @amt2</p>
+
+<p class=MsoNormal>INSERT @t1</p>
+
+<p class=MsoNormal>SELECT * FROM @tt1</p>
+
+<p class=MsoNormal>RETURN</p>
+
+<p class=MsoNormal>END</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>select * from dbo.f4(10)</p>
+
+<p class=MsoNormal>vno1<span style="mso-spacerun: yes">    </span>amt1</p>
+
+<p class=MsoNormal>2<span style='mso-tab-count:1'>          </span>20</p>
+
+<p class=MsoNormal>3<span style='mso-tab-count:1'>          </span>30</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The last example for functions. We create a function f3 that
+returns a table t1 which has two fields vno1 and amt1. The function f4 also
+takes a parameter amt2 and int. We first create a table tt1 by specifying the
+data type as table and specifying the field names. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We use the insert statement to fill up this table tt1 by
+using the select statement which uses the amt2 parameter passed to this
+function. We then once again copy all the data from tt1 to t1. This is not
+necessary but what we are trying to say is that we could iterate though the
+table tt1 and make whatever changes w want and then copy the data to t1. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The return statement knows that the table t1 has to be
+returned and we do not specify its name with the return keyword. We can iterate
+using the system variable @@ROWCOUNT which gives us the number of records
+copied into table tt1. Now that we return a table and not a value we can use
+this function f3 only in those places where we require a table. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus select dbo.f3(10) will give us an error. The above
+example simply shows us that a function can return a table which in turn can be
+used in place of a table name in a select select. Imagine what complex code we
+can now write. Thus being a dba means knowing programming if you want to be the
+best.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/DBA.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:39 GMT -->
+</html>

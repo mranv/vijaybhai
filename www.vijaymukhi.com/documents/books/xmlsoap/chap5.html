@@ -1,0 +1,1018 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:49 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap5_files/filelist.html">
+<link rel=Edit-Time-Data href="chap5_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2002-01-27T20:21:00Z</o:Created>
+  <o:LastSaved>2002-01-27T20:22:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>2678</o:Words>
+  <o:Characters>15266</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>127</o:Lines>
+  <o:Paragraphs>30</o:Paragraphs>
+  <o:CharactersWithSpaces>18747</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>5</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Webservices and Javascript</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Until recently, C# programs were
+pressed into action to execute the code contained in an asmx file</span><span
+style='color:red'>. </span>Since the scales are heavily tilted in favour of
+scripting languages, we considered it to be much more prudent to develop a
+convenient method of calling functions remotely, using a scripting language
+like JavaScript, within an html file.<span style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This chapter takes a small
+breather from the C# language, and immerses itself in the world of JavaScript,
+which is a scripting language. Javascript in an html file can be used to call
+functions remotely. The packets that flow to and from IE that loads the html
+file to the web service, are SOAP-based.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Before we embark on our journey,
+we need to download a file named webservice.htc from the Microsoft site, and
+place it in the root directory of IIS at C:\inetpub\wwwroot. The URL to
+download the file is
+http://msdn.microsoft.com/downloads/samples/internet/behaviors/library/webservice/webservice.htc.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This file has a size of 48714
+bytes. A file with the htc extension exhibits one of Microsoft's extended
+support to html files, where it enables you to write code and attach it to an
+html element. There is no need to decipher the code in this file for the
+moment. Therefore, let us actually get down to the task of calling code within
+a webservice named a.asmx, from an html file called a.html. The html file has
+to be placed in the root directory, i.e. c:\inetpub\wwwroot.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(int i, int j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i + j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.html</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>var n = 10;<o:p></o:p></p>
+
+<p class=ILprg>function init1()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/a.asmx?WSDL&quot;,&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.yyy.callService(&quot;abc&quot;,22,n);<o:p></o:p></p>
+
+<p class=ILprg>alert(&quot;Over&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function aaa()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>alert(event.result.value);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/SCRIPT&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;body onload=&quot;init1()&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input type=text id=&quot;s&quot;
+style=&quot;behavior:url(webservice.htc)&quot; onresult=&quot;aaa()&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Messagebox - over<o:p></o:p></p>
+
+<p class=ILoutput>Messagebox - 32<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Our asmx file is nothing to crow
+about! It merely contains a simple function abc, which accepts two int values.
+The values contained in the parameters are added up, and then, the sum is
+returned back. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The html file is where the real
+action lies. All script-related code, be it in JavaScript or Visual Basic
+script, is enclosed within the Script tag. Since we are using JavaScript- the
+scripting language invented by Netscape, the language attribute is assigned the
+value of 'JavaScript'. Thereafter, two functions named init1 and aaa are
+created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to create a function in
+JavaScript, the syntax that is followed is: the word 'function', followed by
+the 'name of the function', followed by the familiar () and {} braces. This
+syntax is similar to the one seen in the C# language. Nothing really changes in
+the world of programming languages after all!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is no dire necessity of
+creating a variable in JavaScript, but for those who are addicted to the
+traditional programming paradigm, the word 'var' is to be specified with the
+name of the variable, which in our case is 'n'. The variable n has been
+assigned a value of 10. In a scripting language like Java Script, there is no
+concept of a data type at all. There is no way of specifying the data type of
+the variable n, because most scripting languages are type-less. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Returning to the html file, we
+stumble upon the familiar html tag called 'body', which has an attribute of
+'onload'. Since it is initialized to init1, the function init1 gets executed
+when the html file is loaded into the browser. Thus, before the user gets
+control, this function gets called. But, before init1 can be called, the rest
+of the html file is evaluated. The textbox has an id of 's', and the code in
+the htc can now be accessed using this identifier. The html tag named 'input'
+displays a textbox in the browser window. The attribute of 'style' attaches an
+htc file to the element. Bear in mind that the name of the htc file has to be
+specified using the specific syntax. There is no necessity of using the 'div'
+tag, as has been the case in most of the Microsoft examples. Just any element
+can fit the bill. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute of 'onresult' is
+assigned a function name 'aaa', which shall be called, each time a result is
+made available from the remote server. This approach eliminates the possibility
+of an eternal wait while the server processing is in progress, since the server
+may take inordinately long to accomplish its task of executing a function and
+returning a value. When the response SOAP packet is received from the server,
+the function aaa gets called.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once the html file is rendered,
+the function init1 gets called. In init1, the first function to be called from
+the htc file is 'useservice'. You may open the htc file and view this function
+for your sheer personal satisfaction. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The first parameter is the WSDL
+representation of the asmx file. Hence, the URL is specified as
+http://localhost/a.asmx?WSDL. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Hereinafter, the WSDL file will
+be identified by the name 'yyy' throughout the rest of the program. This name
+is in no way related to any name in the asmx file. It is the abstract
+representation in the WSDL file that is taken into consideration, and not the
+actual code in the asmx file. You can switch on the SOAP trace utility program
+and bear witness to the entire wsdl file being received. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The second function to be called
+from the htc file is callService. In order to call this function, a predefined
+pattern needs to be followed. Here, the id 's' is first specified, followed by
+the name of the webservice 'yyy', and finally, by the function name
+'callService'. Thus, the resultant expression is s.yyy.callService. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The parameter supplied to this
+function, first accepts the function to be called in an asmx file, i.e. abc,
+followed by the list of parameters to be supplied to abc, viz. 22 and n. The
+parameters may either be the actual numbers or variables. The 'alert' function
+containing the text of 'over', displays a message box containing the text
+'over'.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>On entering the url of
+http://localhost/a.html in the browser address box, a textbox gets displayed
+initially, followed by two message boxes:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first one with the text of
+'over'.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second one with the value of 32.<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we have made an
+asynchronous call. What it signifies is that, the function 'callService' does
+not 'block' or 'wait'; it immediately executes the next line of code. Hence,
+the alert message box gets displayed. If and when, the return SOAP packet
+arrives, the function aaa is executed, which exhibits the return value of 32.
+This number 32 is displayed using the value member of the result object in the
+event object. The sequence of the alerts is of no significance.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next program, the a.asmx
+file remains unchanged. In addition to it, another asmx file named b.asmx makes
+an appearance.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public int pqr(int i, int j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i * j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.html</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>var n = 10;<o:p></o:p></p>
+
+<p class=ILprg>function init1()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/a.asmx?WSDL&quot;,&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/b.asmx?WSDL&quot;,&quot;xxx&quot;);<o:p></o:p></p>
+
+<p class=ILprg>i = s.yyy.callService(&quot;abc&quot;,22,n);<o:p></o:p></p>
+
+<p class=ILprg>j = s.xxx.callService(&quot;pqr&quot;,122,n);<o:p></o:p></p>
+
+<p class=ILprg>alert(&quot;Over &quot; + i + ' ' + j);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function aaa()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>alert(event.result.value + ' ' + event.result.id);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/SCRIPT&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;body onload=&quot;init1()&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input type=text id=&quot;s&quot;
+style=&quot;behavior:url(webservice.htc)&quot; onresult=&quot;aaa()&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Messagebox<span style="mso-spacerun: yes">  </span>Over<span
+style="mso-spacerun: yes">  </span>0 1<o:p></o:p></p>
+
+<p class=ILoutput>Messagebox<span style="mso-spacerun: yes">          </span>32
+0<o:p></o:p></p>
+
+<p class=ILoutput>Messagebox<span style="mso-spacerun: yes">         
+</span>1220 1<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function pqr in b.asmx simply
+multiplies the two parameters passed to it, and returns the result.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the html file, the init1
+function assigns the name yyy to the first webservice named a.asmx, and the
+name xxx to the second web service named b.asmx. A single element, which hereinafter
+is identified as 's', can be associated with multiple web services.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A hiatus at this point is that
+the function aaa gets called for both invocations of functions abc and pqr, in
+the two webservices. The question is- how does the system distinguish one web
+service call from the other? To ascertain this difference, the return value of
+the callService function is stored in two different variables,<span
+style="mso-spacerun: yes">  </span>i and j. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For the first alert containing
+the text of 'over', the value of i is zero, and that of j is one. The function
+aaa, when called, displays the result of the multiplication, which is stored in
+the value member. It also displays the id member of the result object, which
+belongs to the event object. Thus, the alert displays the values of 32 0,
+followed by 1220 1. Therefore, using this method, we can now identify the
+caller of the callback function aaa. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.html</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>function init1()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/a.asmx?WSDL&quot;,&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.yyy.callService(&quot;pqr&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function aaa() {<o:p></o:p></p>
+
+<p class=ILprg>a = event.result.errorDetail.code;<o:p></o:p></p>
+
+<p class=ILprg>b = event.result.errorDetail.string;<o:p></o:p></p>
+
+<p class=ILprg>c = event.result.errorDetail.raw;<o:p></o:p></p>
+
+<p class=ILprg>d = event.result.error;<o:p></o:p></p>
+
+<p class=ILprg>alert(a + ' ' + b + ' ' + c + ' ' + d);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/SCRIPT&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;body onload=&quot;init1()&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input type=text id=&quot;s&quot;
+style=&quot;behavior:url(webservice.htc)&quot; onresult=&quot;aaa()&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=ILoutput><u>Message Box</u><o:p></o:p></p>
+
+<p class=ILoutput>Client Invalid Argument null true<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above html file, we
+deliberately erred, by requesting the program to execute the function pqr. No
+function by this name exists in the a.asmx file. In spite of this error,
+function aaa got called, which then reported the error. The error member in the
+result object contained the value of true, and the code and string members in
+the errorDetail displayed the position and the error message, respectively. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, any error in the asmx file
+can easily be brought to light. In case of any error, the errorDetail member
+contains a non-null value; in the absence of all errors, the error member is
+false, and the errorDetail member contains a null value. Hence, comprehensive
+error checks can be performed, based merely on the value contained in this member.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.html</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>function init1()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/a.asmx?WSDL&quot;,&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=ILprg>s.yyy.callService( bbb, &quot;abc&quot;, 10 ,20);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function bbb(r)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>alert(r.value);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/SCRIPT&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;body onload=&quot;init1()&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input type=text id=&quot;s&quot;
+style=&quot;behavior:url(webservice.htc)&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>MessageBox </u><o:p></o:p></p>
+
+<p class=ILoutput>30<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program evinces the
+advantages of JavaScript over the C# language. By the way! I am no stranger to
+the fact that this is a C# book, but nonetheless, there are a few facts that
+need to be brought to light for your knowledge.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Remove the onresult attribute
+from the input. Then, specify a javascript function named bbb in the
+callService. Thereafter, follow it up with the parameters, starting with abc,
+which is the name of the function in the webservice, followed by the parameters
+to the function. Function bbb now gets called with a parameter 'r', which is
+the result object. The alert function displays the value contained in the value
+member, i.e. 30. There isn't much dissimilarity in the two approaches, other
+than the method used to obtain the result object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.html</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;SCRIPT language=&quot;JavaScript&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>function init1()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>var a<span style="mso-spacerun: yes">  </span>= new Object();<o:p></o:p></p>
+
+<p class=ILprg>a.funcName = &quot;abc&quot;;<o:p></o:p></p>
+
+<p class=ILprg>a.async = true;<o:p></o:p></p>
+
+<p class=ILprg>a.timeout = 120;<o:p></o:p></p>
+
+<p class=ILprg>s.useService(&quot;http://localhost/a.asmx?WSDL&quot;,&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=ILprg>i = s.yyy.callService( bbb , a<span style="mso-spacerun: yes"> 
+</span>, 10 ,20);<o:p></o:p></p>
+
+<p class=ILprg>alert(&quot;hi&quot; + i);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function bbb(r)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>alert( 'bbb' + r.value);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>function aaa()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>alert( 'aaa' + event.result.value);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>&lt;/SCRIPT&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;body onload=&quot;init1()&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;input type=text id=&quot;s&quot;
+style=&quot;behavior:url(webservice.htc)&quot; onresult=&quot;aaa()&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/body&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Messagebox hi0<o:p></o:p></p>
+
+<p class=ILoutput>Messagebox bbb30<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the above html file, the
+onresult attribute points to the aaa function, which shall be called when a
+SOAP message arrives. The init1 function creates a new object called 'a', and
+then initializes the funcName member to abc, which is the function to be
+called. Thereafter, the async member is set to true, thereby, making the call
+asynchronous. The 'timeout' determines the waiting period for the arrival of
+the response packet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The useService method remains
+unaltered. In callService, the name of the callback function is specified
+initially, followed by the object 'a', thereby, furnishing all the values in a
+single stroke. Finally, the parameters to the function in the object are
+supplied. You may have noticed that there are too many overheads for a single
+function named callService. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function bbb eventually gets
+called, and it overrides the onresult value, which is specified in the input
+element. Thus, we witness two message boxes. The first displays hi0, while the
+second displays bbb30. On modifying the value of the async property to
+false<span style="mso-spacerun: yes">                </span>(i.e. a.async =
+false), the client is prevented from proceeding further, until the SOAP packet
+returns. Therefore, the functions aaa and bbb shall never get called. It is
+advisable to use this type of synchronous behaviour sparingly and with
+deliberate care.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Asynchronous Execution</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;zzz&quot;
+%&gt;<o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Web.Services;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz {<o:p></o:p></p>
+
+<p class=ILprg>[WebMethod]<o:p></o:p></p>
+
+<p class=ILprg>public int abc(int i, int j)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return i + j;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The aa.wsdl file remains the
+same and hence is not displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>AsyncCallback c = new AsyncCallback(abc);<o:p></o:p></p>
+
+<p class=ILprg>IAsyncResult r = a.Beginabc(10,20,c,a);<o:p></o:p></p>
+
+<p class=ILprg>while (r.IsCompleted == false)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(DateTime.Now);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>Console.ReadLine();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public static void abc(IAsyncResult a)<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz d = (zzz) a.AsyncState;<o:p></o:p></p>
+
+<p class=ILprg>int r;<o:p></o:p></p>
+
+<p class=ILprg>r = d.Endabc(a);<o:p></o:p></p>
+
+<p class=ILprg>Console.Write(r);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u><o:p></o:p></p>
+
+<p class=ILprg>public System.IAsyncResult Beginabc(int i, int j,
+System.AsyncCallback callback, object asyncState) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>return this.BeginInvoke(&quot;abc&quot;, new object[] {i,j},
+callback, asyncState);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public int Endabc(System.IAsyncResult asyncResult) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>object[] results = this.EndInvoke(asyncResult);<o:p></o:p></p>
+
+<p class=ILprg>return ((int)(results[0]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>DatTime….<o:p></o:p></p>
+
+<p class=ILoutput>30<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>z.bat</u><o:p></o:p></p>
+
+<p class=ILprg>del *.exe<o:p></o:p></p>
+
+<p class=ILprg>del *.dll<o:p></o:p></p>
+
+<p class=ILprg>del zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>wsdl aa.wsdl<o:p></o:p></p>
+
+<p class=ILprg>csc /t:library zzz.cs<o:p></o:p></p>
+
+<p class=ILprg>csc a.cs /r:zzz.dll<o:p></o:p></p>
+
+<p class=ILprg>a<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP request</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abc xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;i&gt;10&lt;/i&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;j&gt;20&lt;/j&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abc&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>SOAP response</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;abcResult&gt;30&lt;/abcResult&gt; <o:p></o:p></p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We commence with the smallest
+asmx file, which has a single function named abc. The quandary that we may face
+at this juncture is that, if the function abc on the server-side uses up an
+hour to complete execution, the program would have to wait at the call, until
+the function finished execution, and thereby, bringing the execution of the
+remaining code to a grinding halt. So, would it not be a sagacious move to let
+the code execution continue, even after the function call is completed? Once
+the call has been completed, it could notify another function and pass it the
+return value. This program goes behind the scenes to reveal the mechanics of
+implementing an asynchronous call!<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Since the asmx file resides on
+the server, it displays the familiar abc function, devoid of any alteration.
+However, in the C# client, numerous modifications have been carried out.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object 'a' is an instance of
+the class zzz, and the object 'c' is an instance of class AsyncCallback. The
+name of a static function abc in class aaa, is passed to the constructor of the
+AsyncCallback delegate. Thereafter, in place of the function abc, the function
+Beginabc gets called with four parameters:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first two parameters are for the
+abc function.<o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The third parameter is c, which is
+the AsyncCallback object. This delegate calls the function abc, when the
+function abc on the remote server completes execution. <o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The fourth parameter is the zzz
+object itself. <o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><span style='mso-tab-count:1'>            </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is impossible to estimate the
+time frame in which the abc function is likely to accomplish its task.
+Therefore, the remaining code goes on with its execution. The IsCompleted
+property of type boolean contains the value of false, till the function on the
+server completes execution, or till the SOAP response packet has been received.
+Thus, we quit out of the loop when the IsCompleted member returns true. While
+the loop is in progress, the only code that is executed is the WriteLine
+function, which contains the DateTime value. Once the IsCompleted value changes
+to true, the abc function gets called. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The function abc is passed a
+parameter 'a', of type IAsyncResult, which contains a property called
+AsyncState. This property represents the zzz object. Using this zzz object, the
+function Endabc is called, which eventually returns the answer from the remoted
+function. This value is then displayed on the Console. Thus, the proxy
+generates two functions, viz. Beginabc and Endabc.<span style="mso-spacerun:
+yes">  </span>Instead of Invoke, a function named BeginInvoke is employed,
+which is passed the name of the function in a string form, followed by an array
+of objects for the parameters. This is followed by the name of the callback
+delegate, and finally, by the zzz object. The Endabc function uses the EndInvoke
+function to return an array of objects, from which, the first int is returned. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is highly improbable that you
+are able to discern the method of invocation that has been employed, by merely
+examining the SOAP packets. Therefore, in the SOAP world, mundane issues such
+as, synchronous and asynchronous calls, pale into insignificance. Thus, SOAP
+has to lean on various other infrastructural crutches, in order to work
+effectively. In the real world, it cannot be used by itself, as a standard.<span
+style="mso-spacerun: yes">  </span>However, issues regarding distributed
+computing are given due consideration by the SOAP standard.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>zzz a= new zzz();<o:p></o:p></p>
+
+<p class=ILprg>IAsyncResult r = a.Beginabc(10,20,null, null);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(&quot;Before&quot;);<o:p></o:p></p>
+
+<p class=ILprg>r.AsyncWaitHandle.WaitOne();<o:p></o:p></p>
+
+<p class=ILprg>int c;<o:p></o:p></p>
+
+<p class=ILprg>c = a.Endabc(r);<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(c);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u><o:p></o:p></p>
+
+<p class=ILoutput>Before<o:p></o:p></p>
+
+<p class=ILoutput>30<o:p></o:p></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There are myriad ways of
+implementing asynchronous behaviour. Since there is neither a callback function
+abc, nor any delegate, the last two parameters of the Beginabc function are
+assigned the value of null. When the Beginabc function is called, the WaitOne
+function is executed, which waits until the function abc completes execution. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>The program does not consume any resources; instead, it
+sleeps until a SOAP response is received. The familiar Endabc function is
+employed to obtain the answer. The mileage that you wish to derive, shall
+determine the most optimal mechanism of implementing asynchronous behaviour.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap5.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:53 GMT -->
+</html>

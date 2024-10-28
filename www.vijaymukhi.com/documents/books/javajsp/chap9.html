@@ -1,0 +1,1027 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap9.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center" height="0%">
+  <tr> 
+    <td height="5977" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC" height="16"> 
+            <div align="center"><font size="+1"><b>9. Cookies and a Shopping Cart</b></font></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Introduction</p>
+      <p>Cookies have a number of uses for Web application developers and one 
+        of them is to track user sessions. Cookies originate on the server, where 
+        they are sent as instructions in the header of the HTTP response. In this 
+        chapter, we will see how Cookies are put to use in conjunction with JSP. 
+        You will also be shown how a shopping cart can be created.</p>
+      <p>Remember that Java Server Pages are first turned into a servlet. In case 
+        there are any errors in your JSP script then they too are seen in the 
+        servlet. You may not see any error messages at this point but when you 
+        try to run the servlet and display the output in a browser, you will see 
+        the errors. You may get two types of errors. </p>
+      <p>c1.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%! int i=62745435354354353454354353454354353453454353434543543534543; 
+        %&gt;<br>
+        &lt;% out.println(i); %&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Consider this example where the variable i has been initialized to a 
+        very large number. The question here is, will the JSP engine give an error 
+        while generating a servlet or will it show an error while displaying the 
+        output?</p>
+      <p>---------------<br>
+        public class jsp_0005cc_00031_0002ejspc1_jsp_1 extends HttpJspBase {<br>
+        static char[][] _jspx_html_data = null;<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\c1.jsp&quot;;from=(2,3);to=(2,71)]<br>
+        int i=62745435354354353454354353454354353453454353434543543534543; <br>
+        // end<br>
+        ---------------</p>
+      <p>The browser shows you just a simple error whereas the web server DOS 
+        window tells you in detail what the error is.</p>
+      <p>Whenever you have a page directive 'buffer=kb', it should be a number 
+        because kb will be passed as a parameter, so when the servlet is compiled 
+        it gives an error. </p>
+      <p>c2.jsp<br>
+        &lt;%@ page buffer=&quot;kb&quot; %&gt;</p>
+      <p>This shows the same error as seen earlier. A bit of showing off now. 
+        Here we have a class called JSPTest.</p>
+      <p>c3.jsp<br>
+        &lt;%! public class JSPTest { <br>
+        public String getName() <br>
+        { return &quot;JSPTest&quot;; } <br>
+        class Inner extends JSPTest {<br>
+        public String getName() <br>
+        { return &quot;Inner&quot;;<br>
+        }<br>
+        }<br>
+        }<br>
+        %&gt;<br>
+        &lt;% JSPTest jspTest = new JSPTest(); <br>
+        JSPTest.Inner inn = jspTest.new Inner();<br>
+        out.println(&quot; Base name: &quot; + jspTest.getName()); <br>
+        out.println(&quot; Inner name: &quot; + inn.getName()); <br>
+        %&gt;<br>
+        -----------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\c3.jsp&quot;;from=(0,3);to=(10,0)]<br>
+        public class JSPTest {<br>
+        public String getName() {<br>
+        return &quot;JSPTest&quot;;<br>
+        }<br>
+        class Inner extends JSPTest {<br>
+        public String getName() {<br>
+        return &quot;Inner&quot;;<br>
+        }<br>
+        }<br>
+        }<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\c3.jsp&quot;;from=(11,2);to=(15,0)]<br>
+        JSPTest jt = new JSPTest(); <br>
+        JSPTest.Inner inn = jt.new Inner();<br>
+        out.println(&quot; Base name: &quot; + jt.getName()); <br>
+        out.println(&quot; Inner name: &quot; + inn.getName()); <br>
+        // end<br>
+        --------------</p>
+      <p>Output:<br>
+        Base name: JSPTest Inner name: Inner </p>
+      <p>C3.jsp has a public class named JSPTest. This class has a function named 
+        getName that returns a string. The string here is JSPTest. This class 
+        contains another class, which extends the same class. Class Inner is within 
+        JSPTest and it extends JSPTest. This is all legal. These types of classes 
+        are called inner classes. If Inner is an inner class then JSPTest should 
+        be an outer class! This is in one block of the script. In the next block, 
+        'jt' is a variable that looks like JSPTest. 'inn' is another variable 
+        that looks like JSPTest.Inner. You can refer to this class because inner 
+        is a class in JSPTest. In C++, they are called Nested Classes. jspTest.new 
+        inner() is used to initialize inn. </p>
+      <p>It is of significance to note that instead of 'new' we have used 'jt.new'. 
+        new is now part of jt. new ( ) is used to create the object and thus call 
+        the constructor. Therefore every time you have a class within a class, 
+        the outer class has its own new to create the inner classes. The function 
+        in the base class 'getName' returns JSPTest whereas the one in the inner 
+        class returns Inner. This has nothing to do with JSP. All Java code that 
+        you write in a Java program can be written in JSP too. </p>
+      <p>In one of the previous chapters, we tried the bean example where we clicked 
+        on a link and went to another page. This can be done in another way by 
+        using jsp:forward. This will also take us to another page and the same 
+        rules apply. </p>
+      <p>c4.jsp<br>
+        &lt;html&gt;<br>
+        &lt;jsp:plugin type=&quot;applet&quot; code=&quot;zzz.class&quot; width=&quot;160&quot; 
+        height=&quot;150&quot; codebase=&quot;/examples/jsp&quot; jreversion=&quot;1.2&quot; 
+        &gt;<br>
+        &lt;jsp:fallback&gt;<br>
+        Hell <br>
+        &lt;/jsp:fallback&gt;<br>
+        &lt;/jsp:plugin&gt;<br>
+        &lt;p&gt;<br>
+        Bye<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>The code of zzz.java is in c:\jswdk-1.0.1\examples\jsp</p>
+      <p>zzz.java<br>
+        import java.awt.*;<br>
+        import java.applet.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        int x,y;<br>
+        public void init()<br>
+        {<br>
+        x = 10 ; y = 20;<br>
+        }<br>
+        public void paint ( Graphics g)<br>
+        {<br>
+        g.drawString(&quot;Hi &quot;, x , y);<br>
+        }<br>
+        public boolean mouseDown(Event e, int x1 , int y1)<br>
+        {<br>
+        x = x1 ; y = y1;<br>
+        return true;<br>
+        }<br>
+        }</p>
+      <p>&gt;javac zzz.java</p>
+      <p>You can put any object you want along with jsp:plugin. A JSP page can 
+        have any plugin. Here we are giving type=applet, code=zzz.class along 
+        with the width and the height. In order to refresh your memory, the attribute 
+        width and height are given because the applet tag requires us to do so. 
+        This has already been explained in the first chapter. The jreversion is 
+        the version number of the Java runtime engine and the codebase attribute 
+        is the location from where the class file is to be picked up. In our case 
+        '/' is the JavaWebserver root directory and from there we are pointing 
+        to the examples/jsp subdirectory where the class file resides. </p>
+      <p>Jsp:fallback will be looked at only when the object or the plugin statement 
+        gives an error. This is a lot like the 'try-catch' in Java. There are 
+        many types and applet is just one of them. A list of all the types can 
+        be found in the documentation. Just another way to add more content to 
+        the JSP page. <br>
+        --------------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\c4.jsp&quot;;from=(1,0);to=(6,13)]<br>
+        /*Code generated for plugin*/<br>
+        out.println (&quot;&lt;OBJECT classid=\&quot;clsid:8AD9C840-044E-11D1-B3E9-00805F499D93\&quot; 
+        width=\&quot;160\&quot; height=\&quot;150\&quot; codebase=\&quot;http://java.sun.com/products/plugin/1.2.2/jinstall-1_2_2-win.cab#Version=1,2,2,0\&quot;&gt;&quot;);<br>
+        out.println (&quot;&lt;PARAM name=\&quot;java_code\&quot; value=\&quot;zzz.class\&quot;&gt;&quot;);<br>
+        out.println (&quot;&lt;PARAM name=\&quot;java_codebase\&quot; value=\&quot;/examples/jsp\&quot;&gt;&quot;);<br>
+        out.println (&quot;&lt;PARAM name=\&quot;type\&quot; value=\&quot;application/x-java-applet;version=1.2\&quot;&gt;&quot;);<br>
+        out.println (&quot;&lt;COMMENT&gt;&quot;);<br>
+        out.print (&quot;&lt;EMBED type=\&quot;application/x-java-applet;version=1.2\&quot; 
+        width=\&quot;160\&quot; height=\&quot;150\&quot; pluginspage=\&quot;http://java.sun.com/products/plugin/\&quot; 
+        java_code=\&quot;zzz.class\&quot; java_codebase=\&quot;/examples/jsp\&quot; 
+        &gt;&quot;);<br>
+        out.println (&quot;&lt;NOEMBED&gt;&quot;);<br>
+        out.println (&quot;&lt;/COMMENT&gt;&quot;);<br>
+        out.println (&quot;Hell \r\n&quot;);<br>
+        out.println (&quot;&lt;/NOEMBED&gt;&lt;/EMBED&gt;&quot;);<br>
+        out.println (&quot;&lt;/OBJECT&gt;&quot;);<br>
+        // end<br>
+        ------------------</p>
+      <p>The html file received by the browser is as follows</p>
+      <p>&lt;html&gt;<br>
+        &lt;OBJECT classid=&quot;clsid:8AD9C840-044E-11D1-B3E9-00805F499D93&quot; 
+        width=&quot;160&quot; height=&quot;150&quot; codebase=&quot;http://java.sun.com/products/plugin/1.2.2/jinstall-1_2_2-win.cab#Version=1,2,2,0&quot;&gt;<br>
+        &lt;PARAM name=&quot;java_code&quot; value=&quot;zzz.class&quot;&gt;<br>
+        &lt;PARAM name=&quot;java_codebase&quot; value=&quot;/examples/jsp&quot;&gt;<br>
+        &lt;PARAM name=&quot;type&quot; value=&quot;application/x-java-applet;version=1.2&quot;&gt;<br>
+        &lt;COMMENT&gt;<br>
+        &lt;EMBED type=&quot;application/x-java-applet;version=1.2&quot; width=&quot;160&quot; 
+        height=&quot;150&quot; pluginspage=&quot;http://java.sun.com/products/plugin/&quot; 
+        java_code=&quot;zzz.class&quot; java_codebase=&quot;/examples/jsp&quot; 
+        &gt;&lt;NOEMBED&gt;<br>
+        &lt;/COMMENT&gt;<br>
+        Hell <br>
+        &lt;/NOEMBED&gt;&lt;/EMBED&gt;<br>
+        &lt;/OBJECT&gt;<br>
+        &lt;p&gt;<br>
+        Bye<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Click anywhere and you will find the word 'hell' following the click. 
+        All that the servlet does here is sends across the html file. Since this 
+        file has the applet tag, the browser asks for the applet. So the JSP engine 
+        sends the tags across with the attributes. The browser receives it and 
+        works as per the tags in the file.</p>
+      <p>c5.jsp<br>
+        &lt;html&gt;&lt;jsp:forward page=&quot;e1.jsp&quot; /&gt;<br>
+        &lt;/html&gt;</p>
+      <p>--------------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\c5.jsp&quot;;from=(1,0);to=(1,29)]<br>
+        if (true) {<br>
+        out.clear();<br>
+        pageContext.forward(&quot;e1.jsp&quot;);<br>
+        return;<br>
+        }<br>
+        // end<br>
+        ------------------</p>
+      <p>You will directly come to another page, in this case you will come to 
+        e1.jsp.<br>
+        Let's see how we can call a servlet from JSP and then have the servlet 
+        load another JSP file.<br>
+        c.jsp<br>
+        &lt;html&gt;<br>
+        &lt;jsp:forward page=&quot;/servlet/yyy&quot; /&gt;<br>
+        &lt;/html&gt;<br>
+        c.jsp is located in c:\jswdk-1.0.1\examples\jsp subdirectory. It forwards 
+        to another page that the servlet yyy generates.</p>
+      <p>yyy.java is located in c:\jswdk-1.0.1\webpages\web-inf\servlets. To load 
+        this servlet the url should be given as http://127.0.0.1:8080/examples/jsp/c.jsp.</p>
+      <p>yyy.java<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class yyy extends HttpServlet {<br>
+        public void doGet (HttpServletRequest request, HttpServletResponse response)<br>
+        {<br>
+        try {<br>
+        request.setAttribute (&quot;servletName&quot;, &quot;vijay&quot;);<br>
+        ServletConfig a = getServletConfig();<br>
+        ServletContext b = a.getServletContext();<br>
+        RequestDispatcher c = b.getRequestDispatcher(&quot;/jsp/c6.jsp&quot;);<br>
+        c.forward(request, response);<br>
+        } catch (Exception ex) { ex.printStackTrace (); }<br>
+        }<br>
+        }</p>
+      <p>c6.jsp will be in the same directory as c.jsp i.e. c:\jswdk-1.0.1\examples\jsp.</p>
+      <p>c6.jsp<br>
+        &lt;html&gt;<br>
+        invoked by &lt;% out.print (request.getAttribute(&quot;servletName&quot;).toString()); 
+        %&gt;<br>
+        &lt;/html&gt;</p>
+      <p>c.jsp will load the servlet yyy, where the function doGet is called. 
+        request.setAttribute will set the attribute named servletName to vijay. 
+        This is how we can create a variable within the servlet. Now anyone who 
+        has access to the servlet can access this variable vijay. This implies 
+        that any servlet can access the attribute 'servletName'. Instead of calling 
+        it 'servletName' you could have called it aaa. </p>
+      <p>'a' is a servletconfig which is initialized to the return value of getServletConfig. 
+        It is a function in HttpServlet. This has one member named ServletContext. 
+        The context in which the servlet is acting is the ServletContext and this 
+        function's return value is stored in b. When we call getRequestDispatcher 
+        from ServletContext, it will return a requestdispatcher and the parameter 
+        passed to this function is the page we wish to view. Here, we give /jsp/c6.jsp, 
+        which will load c6.jsp from the current directory-jsp and then finally, 
+        we say forward with our request and response. Now c6.jsp will be called. 
+        This JSP file will be compiled on the fly i.e. it will be converted into 
+        a servlet. In c6.jsp, we have request.getAttribute for servletName and 
+        hence it will give us vijay. This is how servlets communicate internally. 
+      </p>
+      <p>In short, we have moved from one JSP page 'c.jsp', which became a servlet, 
+        to another servlet yyy which called a third servlet of c6.jsp and finally 
+        you see vijay displayed on the screen. Note that the first and the third 
+        servlet were originally JSP based </p>
+      <p>Let's consider a simple bean. </p>
+      <p>c7.jsp<br>
+        &lt;jsp:useBean id=&quot;cb&quot; scope=&quot;session&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;cb&quot; property=&quot;*&quot; /&gt;<br>
+        hi</p>
+      <p>c7.jsp starts with jsp:usebean and the id is given as cb. The scope here 
+        is not important. The name of the class is yyy.zzz. </p>
+      <p>Go to the web-inf directory and within the jsp\beans subdirectory create 
+        a new subdirectory yyy. Create a Java file called zzz.java here. It must 
+        contain the following code:</p>
+      <p>c:\jswdk-1.0.1\examples\Web-inf\jsp\beans\yyy&gt;edit zzz.java</p>
+      <p>zzz.java<br>
+        package yyy;<br>
+        public class zzz<br>
+        {<br>
+        public void setxx(String a)<br>
+        {<br>
+        System.out.println(&quot;setxx &quot; + a);<br>
+        }<br>
+        public void setyy(String a)<br>
+        {<br>
+        System.out.println(&quot;setyy&quot; + a);<br>
+        }<br>
+        public String getxx()<br>
+        {<br>
+        System.out.println(&quot;getxx&quot;);<br>
+        return &quot;&quot;;<br>
+        }<br>
+        public String getyy()<br>
+        {<br>
+        System.out.println(&quot;getyy&quot;);<br>
+        return &quot;&quot;;<br>
+        }<br>
+        }</p>
+      <p>run it in the browser as</p>
+      <p>http://127.0.0.1:8080/examples/jsp/c7.jsp?xx=hi&amp;yy=bye</p>
+      <p>The property for the bean cb is set by giving property='*'. This refers 
+        to the properties that are given in the form of name=value data in the 
+        url. Since the address given in the address bar has a '?' followed by 
+        xx=aaa&amp;yy=bbb, the properties to be set will be that of xx and yy. 
+        So the JSP engine will call setxx and setyy with aaa and bbb in the Java 
+        Bean. If you had just given xx=aaa then only setxx would be called. If 
+        you are a good Bean designer, you will first find out the number of parameters 
+        you will be accepting and then accordingly create the properties in the 
+        Bean. So if you are accepting 7 parameters, you must create 7 properties 
+        with the same name in your Bean. Every property in the Bean will have 
+        get and set preceding the property name. '*' in the property will initialize 
+        all the properties in the Bean. You don't have to set all the properties 
+        yourself and this example proves that.</p>
+      <p>The next program has been taken directly from the examples provided by 
+        Sun Microsystems. Here, we are considering an HTML file 'aa.html' within 
+        which there is code for creating a listbox. This file is to be placed 
+        in the examples/jsp subdirectory of jswdk-1.0.1.</p>
+      <p>aa.html<br>
+        &lt;html&gt;<br>
+        &lt;form method=POST action=&quot;http://127.0.0.1:8080/examples/jsp/c8.jsp&quot;&gt;<br>
+        Add Item:<br>
+        &lt;SELECT NAME=&quot;item&quot;&gt;<br>
+        &lt;OPTION&gt;Beavis &amp; Butt-head Video collection<br>
+        &lt;OPTION&gt;X-files movie<br>
+        &lt;OPTION&gt;Twin peaks tapes<br>
+        &lt;/SELECT&gt;<br>
+        &lt;INPUT TYPE=submit name=&quot;submit&quot; value=&quot;add&quot;&gt;<br>
+        &lt;INPUT TYPE=submit name=&quot;submit&quot; value=&quot;remove&quot;&gt;<br>
+        &lt;/form&gt;<br>
+        &lt;/html&gt;</p>
+      <p>We are create one listbox with three options. The first one is shown 
+        by default but you are allowed to choose any of them. When you click on 
+        the submit button the option selected will be given to the name 'item'. 
+        You will notice that here we have two submit buttons here, with the values 
+        add and remove respectively. Irrespective of the button clicked, the file 
+        that will be called is c8.jsp, which for the moment is on the same hard 
+        disk that we are operating from. The method given is post, items will 
+        be equal to the option selected and submit will be equal to either add 
+        or remove, these will go as parameters to the JSP file. <br>
+        Under normal circumstances submit isn't added as part of the parameter 
+        list, this happens only when there are two submits in the form. Once you 
+        click on submit, c8.jsp will be called. c8.jsp is stored in c:\jswdk-1.0.1\examples\jsp.</p>
+      <p>c8.jsp<br>
+        &lt;jsp:useBean id=&quot;cart&quot; scope=&quot;session&quot; class=&quot;ppp.qqq&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;cart&quot; property=&quot;*&quot; /&gt;<br>
+        &lt;%<br>
+        cart.processRequest(request);<br>
+        %&gt;<br>
+        &lt;FONT size = 5 COLOR=&quot;#CC0000&quot;&gt;<br>
+        &lt;br&gt; You have the following items in your cart:<br>
+        &lt;ol&gt;<br>
+        &lt;% <br>
+        String[] items = cart.getItems();<br>
+        for (int i=0; i&lt;items.length; i++) {<br>
+        %&gt;<br>
+        &lt;li&gt; &lt;%= items[i] %&gt; <br>
+        &lt;%<br>
+        }<br>
+        %&gt;<br>
+        &lt;/ol&gt;<br>
+        &lt;/FONT&gt;<br>
+        &lt;hr&gt;<br>
+        &lt;%@ include file =&quot;aa.html&quot; %&gt;<br>
+        &lt;/html&gt;</p>
+      <p>qqq.java<br>
+        package ppp;<br>
+        import javax.servlet.http.*;<br>
+        import java.util.Vector;<br>
+        import java.util.Enumeration;<br>
+        public class qqq {<br>
+        Vector v = new Vector();<br>
+        String submit = null;<br>
+        String item = null;<br>
+        private void addItem(String name) {<br>
+        v.addElement(name);<br>
+        }<br>
+        private void removeItem(String name) {<br>
+        v.removeElement(name);<br>
+        }<br>
+        public void setItem(String name) {<br>
+        item = name;<br>
+        }<br>
+        public void setSubmit(String s) {<br>
+        submit = s;<br>
+        }<br>
+        public String[] getItems() {<br>
+        String[] s = new String[v.size()];<br>
+        v.copyInto(s);<br>
+        return s;<br>
+        }<br>
+        public void processRequest(HttpServletRequest request) {<br>
+        if (submit == null) <br>
+        addItem(item);<br>
+        if (submit.equals(&quot;add&quot;))<br>
+        addItem(item);<br>
+        else if (submit.equals(&quot;remove&quot;)) <br>
+        removeItem(item);<br>
+        reset();<br>
+        }<br>
+        private void reset() {<br>
+        submit = null;<br>
+        item = null;<br>
+        }<br>
+        }</p>
+      <p>The bean that we are using is called ppp.qqq. At first the properties 
+        are set so setItem and setSubmit are called which initialize item and 
+        submit to the values from the html file after the user clicked on add. 
+        Then the cart.processRequest function in the bean is called with request 
+        as a parameter. (Remember request, like 'out', is a predefined object) 
+      </p>
+      <p><br>
+        If you click on add, then submit will have the value add. Hence the addItem 
+        function will be called with item as a parameter. In addItem, we have 
+        only one line, which is v.addElement. v is a vector and it has a function 
+        named addElement. A vector is like an array, made up of similar objects. 
+        Using v.addElement we add the item name to the vector.</p>
+      <p>String[] items = cart.getItems();<br>
+        for (int i=0; i&lt;items.length; i++) {<br>
+        %&gt;<br>
+        &lt;li&gt; &lt;%= items[i] %&gt; </p>
+      <p>In order to display the selected items, getItems in the Bean is called. 
+        This function copies elements of the vector into a string array, which 
+        is then returned. Hence items in the JSP file will now contain these elements. 
+        As you already know, every string contains a length, which gives you the 
+        number of elements in the string. Thus items.length will now be the number 
+        of elements in the vector. The for loop is used to display each member. 
+        In order to display it as a bulleted list we have used li with &lt;%=items[i]'. 
+        i is used along with the items to display every element.</p>
+      <p>v.size represents the number of elements in the vector. For example, 
+        if you have 5 elements then v.size will give the value 5. v.copyInto will 
+        copy from the vector into a string array named s. Then s, an array of 
+        strings, is returned.</p>
+      <p>This is how you can build a shopping cart. The concept of keeping the 
+        connection alive with a session in the servlet facilitates the creation 
+        of a virtual shopping mall. </p>
+      <p>At this point start afresh. There will be now two separate sessions. 
+        In case you had used application instead of session, the process would 
+        have run forever for every new user. If the session was request or page 
+        then this exercise would not have been valid. The best way to test the 
+        Bean is by trying out these other scopes. <br>
+        <br>
+        Cookies</p>
+      <p>The following example introduces the concept of Cookies. </p>
+      <p> e25.jsp<br>
+        &lt;%@ page session=&quot;true&quot; %&gt;<br>
+        &lt;%<br>
+        Integer num = new Integer(100);<br>
+        session.putValue(&quot;num&quot;,num);<br>
+        String url = response.encodeURL(&quot;a1.jsp&quot;);<br>
+        %&gt;<br>
+        &lt;a href='&lt;%=url%&gt;'&gt; a1.jsp &lt;/a&gt;</p>
+      <p>a1.jsp<br>
+        &lt;%@ page session=&quot;true&quot; %&gt;<br>
+        &lt;%<br>
+        Integer i = (Integer)session.getValue(&quot;num&quot;);<br>
+        out.println(&quot;Num is &quot; + i);<br>
+        %&gt;</p>
+      <p>In Internet Explorer, go to the menu option Tools and choose Internet 
+        Options. Then select the tabbed dialog option Security and click on the 
+        button labelled Custom Level. Finally, select prompt for the Cookie options. 
+        You must enable cookies in your browser. Also, select 'prompt'for the 
+        Cookies per-session option. You will now know when a cookie comes over 
+        since the browser will ask you for confirmation. </p>
+      <p>A Cookie is stored as a file on disk. It contains a certain finite number 
+        of characters and is very small in size. The second important point to 
+        remember is that the cookie is transferred as a header. It is sent as 
+        the cookie name and it's value. </p>
+      <p>The first line in the example is page session=true. It is not necessary 
+        to include this line because it is true by default. Then a variable named 
+        num is created which looks like integer. While calling the constructor, 
+        100 is passed as a parameter. So num now holds the number 100. The next 
+        line in the script is session.putValue. This function putValue will create 
+        a variable named num and give it a value 100. Then we create a string 
+        variable called url that will be assigned the absolute address of a1.jsp. 
+        Finally &lt;a href='%url%'&gt;a1.jsp&lt;/a&gt; will be evaluated to &lt;a 
+        href='http://127.0.0.1:8080/examples/jsp/a1.jsp'&gt;a1.jsp&lt;/a&gt;&quot; 
+        as it is pure html.</p>
+      <p>a1.jsp has a variable i of type integer. This variable is initialized 
+        to the return value of session.getValue(num). Remember, num was a variable 
+        created by session.putValue and it was initialized to 100. This object 
+        session remains active across the JSP pages and thus getValue of num returns 
+        100.</p>
+      <p>A user interacts with the web server in sessions. Thus, the session object 
+        allows you to create a variable in one file using putValue. You can then 
+        use this variable on another page. This method will work only if the page 
+        session is initialized to true.</p>
+      <p>This is how you can transfer values from one file to another. Hence a1.jsp 
+        will print the value of i as 100.</p>
+      <p>What are Cookies and how do Cookies work? Aha! You all know what Cookies 
+        are and how well they work for the stomach, but we are interested in a 
+        new type of Cookie, freshly baked from the Java shelf! So far you've only 
+        smelt the Cookie, now you get to taste it!</p>
+      <p>The first time you connect to the web server, it will send you a cookie. 
+        As we have changed our cookie option to prompt, we will see a message 
+        box where we will click on 'more info'. Here we will be told that our 
+        cookie name is SESSIONID. It expires at the End of session and also the 
+        Data is To1011mC8999595236320718At. The web server sends a header with 
+        Set-Cookie: SESSIONID = To1011mC8999595236320718At. Now if you start another 
+        browser session the cookie name will be the same but the data will be 
+        To1012mC22314797589282154At i.e. it will be different. Each time a browser 
+        receives a cookie, it sends a header to the server the next time it connects. 
+        This header contains Cookie: SESSIONID = To1011mC8999595236320718At. This 
+        is how the web server can recognize one browser instance from another. 
+        To sum up, the web server starts by sending a cookie and the browser will 
+        send the same cookie back when it connects to the server again. The cookies 
+        are stored on your hard disk. <br>
+        Num is null </p>
+      <p>If you disable cookies then you will get the output shown above as there 
+        is no way to distinguish one browser instance from another.</p>
+      <p> A Cookie is a small amount of information which is sent by a servlet 
+        to the web browser. The browser saves this information on the hard disk 
+        and later on it can also be sent back to the server. A Cookie's value 
+        can uniquely identify a client. Hence Cookies are commonly used for session 
+        management. A Cookie has a name, a single value and it has attributes 
+        like comment, path, domain qualifiers, maximum age and version number. 
+        A large number of web browsers have bugs in how they handle the optional 
+        attributes, so please use them sparingly. They improve the interoperability 
+        of the servlet. </p>
+      <p>Normally, a Cookie is sent to the browser one at a time and the browser 
+        is expected to support 20 Cookies for each web server, 300 Cookies in 
+        total and it may limit the Cookie size to 4k each. The browser is sent 
+        Cookies in the header and it returns Cookies to the servlet by adding 
+        fields to the http request header as mentioned earlier. Several Cookies 
+        might have the same name but different path attributes. Cookies affect 
+        the caching of the web pages that use them because HTTP 1.0 doesn't cache 
+        the pages with Cookies. There are two versions of the Cookies, version 
+        0 is by Netscape and version 1, which is documented in rfc2109, is the 
+        original one. By default, Cookies are created in version 0 to ensure the 
+        best operability and the Cookies class implements cloneable. By default, 
+        all Cookies are returned to the server that sent them. A Cookie is sent 
+        to the browser by the servlet in the headers. That means that if the browser 
+        ever receives a Cookie from the server then each time it connects to the 
+        server, it will send the cookie in the header. </p>
+      <p><br>
+        C:\jswdk-1.0.1\webpages\web-inf\servlets&gt; edit c1.java</p>
+      <p>c1.java<br>
+        import java.io.*;import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c1 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res)throws 
+        IOException, ServletException<br>
+        {<br>
+        Cookie c;<br>
+        c = new Cookie(&quot;zz7&quot;, &quot;mukhi&quot;);<br>
+        res.addCookie(c);<br>
+        PrintWriter out = res.getWriter();<br>
+        out.println(&quot;Hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>Let's consider this example. Here, c is an object that looks like Cookie. 
+        When we say c=new Cookie, we are passing two parameters to the constructor; 
+        one is a name 'zz7', which should be the name our cookie and the other 
+        is a value 'mukhi' i.e. the value of the cookie. Basically, we've created 
+        an object that looks like Cookie. res looks like HttpServletResponse and 
+        addCookie will add this cookie. The servlet uses HttpServletResponse whenever 
+        it wants to send some information to the server. All that the server does 
+        is, creates a header with the header variable Set-Cookie: and the value 
+        is given as zz7=mukhi. </p>
+      <p>Set-Cookie: zz7=mukhi</p>
+      <p>If you haven't enabled the Cookies option in your browser to Prompt, 
+        we suggest you do it now.</p>
+      <p>This program is called when you load it in the browser. Give the url 
+        as http://127.0.0.1:8080/servlet/c1. On doing so, a message box will be 
+        displayed. Before clicking on 'Yes' select 'More Info'. It will tell you 
+        that the Cookie name is zz7 and below that it will show mukhi. This proves 
+        that your browser did receive a Cookie. Having understood the above program, 
+        let's look at the next program.</p>
+      <p>c2.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c2 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws 
+        IOException, ServletException<br>
+        {<br>
+        PrintWriter out = res.getWriter();<br>
+        Cookie[] c = req.getCookies();<br>
+        for (int i = 0; i &lt; c.length; i++) <br>
+        out.println(&quot;cookie &quot; + c[i].getName() + &quot;=&quot; + c[i].getValue());<br>
+        out.println(&quot;Hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>cookie zz7=mukhi Hi </p>
+      <p>We sent one cookie and we received one cookie.</p>
+      <p>Here, c is an array of Cookies. request.getCookies returns an array of 
+        Cookies. So, in the for loop we have i=0; i &lt; c.length and then i++. 
+        Using getName and getValue, the name of the Cookie and the value given 
+        to it are printed. In our case c.length will be 1 because we have sent 
+        only one Cookie from the server. You can also send two Cookies at the 
+        same time. The next program demonstrates this.</p>
+      <p>c3.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c3 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws 
+        IOException, ServletException<br>
+        {<br>
+        Cookie c;<br>
+        c = new Cookie(&quot;zz9&quot;, &quot;mukhi&quot;);<br>
+        c.setComment(&quot;Will this get dropped?&quot;);<br>
+        c.setMaxAge(100);<br>
+        c.setPath(req.getServletPath());<br>
+        c.setSecure(true);<br>
+        res.addCookie(c);<br>
+        c = new Cookie(&quot;zz10&quot;, &quot;mukhi1&quot;);<br>
+        c.setComment(&quot;Will this get dropped?1&quot;);<br>
+        c.setMaxAge(10);<br>
+        c.setPath(req.getServletPath());<br>
+        res.addCookie(c);<br>
+        PrintWriter out = res.getWriter();<br>
+        out.println(&quot;H i&quot; + req.getServletPath());<br>
+        }<br>
+        }</p>
+      <p>In this program we have included Comment, which are some lines of text 
+        that you may want to add. setMaxAge decides how long the Cookie lives 
+        and setSecure is to use https - secure sockets layer to send this Cookie 
+        across. setPath means you are sending your computer path with your name 
+        and req.getServletPath will give the following : /examples/servlet/zzz. 
+      </p>
+      <p>Now click on 'More Info' and you will observe that the other values, 
+        which were not filled in earlier, are now filled in. setMaxAge indicates 
+        the time period that the Cookie will be alive for. setPath specifies the 
+        path for the cookie to which the client should return the cookie. A cookie 
+        is visible to all pages in the directory you specify, and its subdirectorys. 
+        A Cookie's path must include the servlet that sent the Cookie. For example, 
+        /catalog makes the Cookie visible to all the Cookies on the server under 
+        /catalog. </p>
+      <p>As we set the setMaxAge, the cookies 'expires' property now gives you 
+        an actual date and time. It is no longer a session cookie and netscape 
+        stores this information in a file named cookies.txt. The header now has 
+        an Expires=date added to it.</p>
+      <p>In order to do so, use setPath and then use setVersion. If you specify 
+        the version as 0, the Cookie should comply with the original Netscape 
+        specification, if it is 1, then it should comply with rfc2109. Since Cookies 
+        are returned to a server, all servlets running within a server share Cookies. 
+        The next program shows how the domain, the path and the version can be 
+        retrieved. </p>
+      <p>c4.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c4 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws 
+        IOException, ServletException<br>
+        {<br>
+        PrintWriter out = res.getWriter();<br>
+        Cookie[] d = req.getCookies();<br>
+        for (int i = 0; i &lt; d.length; i++) <br>
+        {<br>
+        Cookie c = d[i];<br>
+        out.println(&quot;cookie &quot; + c.getName() + &quot;=&quot; + c.getValue());<br>
+        out.print(c.getComment() + &quot; &quot; + c.getDomain() + &quot; &quot; 
+        + c.getMaxAge());<br>
+        out.println(&quot; &quot; + c.getPath() + &quot; &quot; + c.getSecure() 
+        + &quot; &quot; + c.getVersion());<br>
+        }<br>
+        out.println(&quot;Hi&quot;);<br>
+        }<br>
+        }</p>
+      <p>In this example, the first Cookie comes over because you didn't set the 
+        path, the next two Cookies don't come over because you have set the path 
+        and the path is different. <br>
+        But how can one write a program that determines whether the Cookies have 
+        been disabled or enabled? Run the following program, c5.java. </p>
+      <p>c5.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c5 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws 
+        IOException, ServletException<br>
+        {<br>
+        Cookie c;boolean h = false;<br>
+        String p = req.getParameter(&quot;ppp&quot;);<br>
+        if (p == null) {<br>
+        c = new Cookie(&quot;vij4&quot;, &quot;hi&quot;);<br>
+        res.addCookie(c);<br>
+        res.sendRedirect( &quot;/servlet/c5?ppp=no&quot; );<br>
+        }<br>
+        else if (p.equals(&quot;no&quot;)) {<br>
+        h = false;<br>
+        Cookie[] d = req.getCookies();<br>
+        for (int i = 0; i &lt; d.length; i++) {<br>
+        if (d[i].getName().equals (&quot;vij4&quot;)) {<br>
+        if (d[i].getValue().equals(&quot;hi&quot;)) {<br>
+        h = true;<br>
+        break;<br>
+        }<br>
+        }<br>
+        }<br>
+        if ( h == true)<br>
+        res.sendRedirect( &quot;/servlet/c6?aa=yes&quot; );<br>
+        else<br>
+        res.sendRedirect( &quot;/servlet/c6?aa=no&quot; );<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>c6.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c6 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res)throws 
+        IOException, ServletException<br>
+        {<br>
+        PrintWriter out = res.getWriter();<br>
+        String s = (String ) req.getParameter(&quot;aa&quot;);<br>
+        out.println(s);<br>
+        }<br>
+        }</p>
+      <p>c is a Cookie and h is a boolean with a value 'false'. p is a String 
+        that is initialized to the value given to ppp. ppp gets a value only when 
+        the user sends the url as http://127.0.0.1:8080/servlet/c5?ppp=xxx. Since 
+        we haven't given it in this manner, p will be null. The if condition becomes 
+        true and the control passes to the if statement. c is a Cookie where the 
+        variable vij4 is given the value 'hi'. This is added to the response and 
+        sendRedirect will redirect the browser to pick up another file from the 
+        disk. In the meantime the server will send the cookie to the browser and 
+        we can see that the value of the cookie vij4 is hi. The file is c5, the 
+        same servlet, but now with ppp having a value 'no'. Remember, the cookie 
+        is sent to the browser and redirect wrote the new url in the address bar 
+        of IE. The servlet gets called again but now the else statements are executed. 
+        Here, it is first checked whether the value of p is 'no'. This being true 
+        in our case, the statements within if are executed. The variable h is 
+        reinitialized to false and d is now declared as an array of Cookies. </p>
+      <p>req.getCookies will return an array of Cookies. This is given to d. Within 
+        the for loop, it is checked whether a Cookie named vij exists. If there 
+        is one, then we break from the loop after initializing h to the value 
+        true. In our case with cookies off, the name 'vij4' does not exist, so 
+        h remains false. When the loop terminates, it is checked whether the value 
+        of h is true or false. If it is false, then the browser is redirected 
+        to another servlet c6 with the value 'no' given to aa. The servlet c6 
+        now prints the value 'no' on the screen. If the value is 'yes', then the 
+        browser supports Cookies, because in that case it would already have a 
+        name 'vij4' stored. </p>
+      <p>c7.java<br>
+        import java.io.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class c7 extends HttpServlet {<br>
+        public void doGet(HttpServletRequest req, HttpServletResponse res) throws 
+        ServletException, IOException <br>
+        {<br>
+        res.setContentType(&quot;text/html&quot;);<br>
+        PrintWriter out = res.getWriter();<br>
+        out.println(&quot;&lt;HEAD&gt;&lt;TITLE&gt;Current Shopping Cart Items&lt;/TITLE&gt;&lt;/HEAD&gt;&quot;);<br>
+        out.println(&quot;&lt;BODY&gt;&quot;);<br>
+        String[] items = req.getParameterValues(&quot;item&quot;);<br>
+        out.println(&quot;You currently have the following items in your cart:&lt;BR&gt;&quot;);<br>
+        if (items == null) {<br>
+        out.println(&quot;&lt;B&gt;None&lt;/B&gt;&quot;);<br>
+        }<br>
+        else {<br>
+        out.println(&quot;&lt;UL&gt;&quot;);<br>
+        for (int i = 0; i &lt; items.length; i++) {<br>
+        out.println(&quot;&lt;LI&gt;&quot; + items[i]);<br>
+        }<br>
+        out.println(&quot;&lt;/UL&gt;&quot;);<br>
+        }<br>
+        out.println(&quot;&lt;FORM ACTION=\&quot;http://127.0.0.1:8080/servlet/c7\&quot; 
+        METHOD=GET&gt;&quot;);<br>
+        if (items != null) {<br>
+        for (int i = 0; i &lt; items.length; i++) {<br>
+        out.println(&quot;&lt;INPUT TYPE=HIDDEN NAME=item VALUE=\&quot;&quot; 
+        + items[i] + &quot;\&quot;&gt;&quot;); }<br>
+        }<br>
+        out.println(&quot;Would you like to&lt;BR&gt;&quot;);<br>
+        out.println(&quot;&lt;INPUT TYPE=SUBMIT VALUE=\&quot; Add More Items \&quot;&gt;&quot;);<br>
+        out.println(&quot;&lt;INPUT TYPE=TEXT NAME=item&gt;&quot;);<br>
+        out.println(&quot;&lt;/FORM&gt;&quot;);<br>
+        out.println(&quot;&lt;/BODY&gt;&lt;/HTML&gt;&quot;);<br>
+        }<br>
+        }</p>
+      <p>In c7.java, we are first printing the values of the array 'items' of 
+        type String. This variable is initialized to the value in the item parameter 
+        i.e. if the url contains ?item=hi , then the items array will contain 
+        one member named hi. If after the ? we had item=hi&amp;item=bye, then 
+        the items array would have 2 members, hi and bye. A parameter in a url 
+        can have the same name repeated multiple times. Since we have given the 
+        url as http://127.0.0.1:8080/servlet/c7 there is no parameter value given 
+        to this servlet. Hence no items exist and we see 'None' displayed on the 
+        screen. The else block isn't executed and hence no list is displayed. 
+        Then a form is displayed on the screen. The for loop will not be executed 
+        as there are no items.</p>
+      <p>Now within the text box, we want you to write aa and then click on the 
+        'Add More Items' Button. </p>
+      <p>req.getParameterValue(item) will now have the value as item=aa. With 
+        Java servlets and the HTTP protocol you can have items=hi&amp;items=bye 
+        given along with the url. Note that you can have as many values given 
+        to the same parameter. getParameterValue will now give you an array of 
+        strings. You can then display all the strings. </p>
+      <p>The servlet creates an html file along with a form. We have the input 
+        tag with type=hidden name =item and then the value of items. So if there 
+        are 6 items then we will have 6 input statements and all of them will 
+        be hidden. Hidden inputs will not be displayed on the screen. Now each 
+        time you say submit i.e. click on 'Add More Items' after writing in the 
+        text box, the program specified by action is called. Finally, we are calling 
+        the same servlet c7 and thus you see the same screen displayed again. 
+        This is one way of creating a shopping cart without using sessions.<br>
+        View Source</p>
+      <p>&lt;HEAD&gt;&lt;TITLE&gt;Current Shopping Cart Items&lt;/TITLE&gt;&lt;/HEAD&gt;<br>
+        &lt;BODY&gt;<br>
+        You currently have the following items in your cart:&lt;BR&gt;<br>
+        &lt;UL&gt;<br>
+        &lt;LI&gt;ggg<br>
+        &lt;LI&gt;ttt<br>
+        &lt;LI&gt;uuu<br>
+        &lt;/UL&gt;<br>
+        &lt;FORM ACTION=&quot;http://127.0.0.1:8080/servlet/c7&quot; METHOD=GET&gt;<br>
+        &lt;INPUT TYPE=HIDDEN NAME=item VALUE=&quot;ggg&quot;&gt;<br>
+        &lt;INPUT TYPE=HIDDEN NAME=item VALUE=&quot;ttt&quot;&gt;<br>
+        &lt;INPUT TYPE=HIDDEN NAME=item VALUE=&quot;uuu&quot;&gt;<br>
+        Would you like to&lt;BR&gt;<br>
+        &lt;INPUT TYPE=SUBMIT VALUE=&quot; Add More Items &quot;&gt;<br>
+        &lt;INPUT TYPE=TEXT NAME=item&gt;<br>
+        &lt;/FORM&gt;<br>
+        &lt;/BODY&gt;&lt;/HTML&gt;</p>
+      <p>URL<br>
+        http://127.0.0.1:8080/servlet/c7?item=ggg&amp;item=ttt&amp;item=uuu</p>
+      <p>A little more on Sessions......</p>
+      <p>This example will explain sessions once more.</p>
+      <p>C:\jswdk-1.0.1\webpages\web-inf\servlets&gt;edit xxx.java</p>
+      <p>xxx.java<br>
+        import java.io.*;<br>
+        import java.net.*;<br>
+        import java.util.*;<br>
+        import javax.servlet.*;<br>
+        import javax.servlet.http.*;<br>
+        public class xxx extends HttpServlet {<br>
+        int i = 0;<br>
+        public void doGet(HttpServletRequest<br>
+        request,HttpServletResponse response) throws<br>
+        ServletException, IOException {<br>
+        HttpSession s = request.getSession();<br>
+        response.setContentType(&quot;text/html&quot;);<br>
+        PrintWriter out = response.getWriter();<br>
+        String h=&quot; &quot;;<br>
+        Integer o,o1;<br>
+        if (s.isNew()) {<br>
+        o = new Integer(0);<br>
+        h = &quot;First Time&quot;;<br>
+        s.putValue(&quot;acc&quot;, o);<br>
+        }<br>
+        else {<br>
+        h = &quot;Once Again&quot;;<br>
+        o = (Integer)s.getValue(&quot;acc&quot;); <br>
+        o = new Integer(o.intValue() + 1);<br>
+        s.putValue(&quot;acc&quot;, o);<br>
+        }<br>
+        out.println(h + &quot;&lt;p&gt;&quot;);<br>
+        out.println(&quot;id &quot; + s.getId() + &quot; &lt;p&gt;&quot;);<br>
+        out.println(&quot;Creation Time &quot;+new<br>
+        Date(s.getCreationTime()) + &quot; &lt;p&gt;&quot;);<br>
+        out.println(&quot;Time of Last Access &quot;+ new<br>
+        Date(s.getLastAccessedTime())+&quot;&lt;p&gt;&quot;);<br>
+        out.println(&quot;Max Inactive Interval &quot;+<br>
+        s.getMaxInactiveInterval()+&quot;&lt;p&gt;&quot;);<br>
+        out.println(&quot;getValue &quot;+ s.getValue(&quot;acc&quot;)+&quot;&lt;p&gt;&quot;);<br>
+        out.println(&quot;Number of Previous Accesses &quot;+o+&quot;&lt;p&gt;&quot;);<br>
+        String e[];<br>
+        e = s.getValueNames();<br>
+        for(int i=0; i &lt;e.length; i++)<br>
+        out.println(&quot;Names &quot;+e[i]+ &quot;&lt;p&gt;&quot;);<br>
+        }<br>
+        }<br>
+        Output<br>
+        First Time <br>
+        id To1015mC6692480998335292At <br>
+        Creation Time Tue Dec 26 17:45:51 GMT+05:30 2000 <br>
+        Time of Last Access Tue Dec 26 17:45:51 GMT+05:30 2000 <br>
+        Max Inactive Interval -1 <br>
+        getValue 0 <br>
+        Number of Previous Accesses 0 <br>
+        Names acc</p>
+      <p>After clicking on the Refresh Button</p>
+      <p>Once Again <br>
+        id To1015mC6692480998335292At <br>
+        Creation Time Tue Dec 26 17:45:51 GMT+05:30 2000 <br>
+        Time of Last Access Tue Dec 26 17:45:51 GMT+05:30 2000 <br>
+        Max Inactive Interval -1 <br>
+        getValue 1 <br>
+        Number of Previous Accesses 1 <br>
+        Names acc</p>
+      <p>Once the servlet is loaded, the doGet function is called. A variable 
+        's' that looks like HttpSession is created. It is initialized to the session 
+        object returned by request.getsession. response.setContentType will set 
+        the content type header to text/html. Now out is a variable that will 
+        generate our html file. The variable 'h' is of type String and is initialized 
+        to a blank space. Also, we have created two other variables o and o1 of 
+        type Integer.</p>
+      <p>Every object that looks like session has a function named isNew. This 
+        function checks whether the session has been accessed in the past. At 
+        the moment, there has been no value given in this session, so isNew returns 
+        true. When the control enters the if statement, the variable o is given 
+        a value by calling the constructor with one parameter in Integer. Giving 
+        0 as the value in the constructor will initialize o to 0. </p>
+      <p>s.putvalue is one more function in HttpSession which takes the name of 
+        the variable and then the value to be given to this variable. The variable 
+        or the word here is 'acc'. Indirectly, acc is given the value 0. 'h', 
+        which is a string variable, is assigned the string 'First time'. At this 
+        point the else block will not be executed.</p>
+      <p>The values of a few variables or properties in this session are then 
+        displayed. </p>
+      <p>out.println with h will display 'First time'. Then we have s.getId. Every 
+        session is given a unique number. Thus, s.getId will display that unique 
+        id. The id is a number generated at random and is assigned only by the 
+        servlet container. It is implementation dependent. Then s.getCreationTime 
+        will return the time in milliseconds, i.e. the time when you last created 
+        the session. This is given to the Date constructor. This in turn will 
+        return a Date object which when displayed looks like the date format. 
+        The same rules apply for s.getLastAccessedTime. In our case the creation 
+        time and the date of last access will be similar. </p>
+      <p>MaxInactiveInterval will tell you how much time has elapsed since you 
+        last accessed the session. When a client doesn't access a running session 
+        within a certain period of time, the session is invalidated. That means 
+        the servlet will discontinue the session. Here, if you say 10 minutes 
+        and do not access the session within 10 min, it will show a timeout. This 
+        is to make sure that the session doesn't go on indefinitely. The reason 
+        being, a user may decide to visit the Amazon site and not 'check out', 
+        he may simply disappear, or go to another site as he may have changed 
+        his mind. Here, if you give -1, a negative time, then the session doesn't 
+        timeout.</p>
+      <p>s.getValue will give you the value of acc which is 0 at the moment. Thus 
+        it prints 0 along with the number of previous accesses, which again is 
+        the value of o i.e. 0. Remember, both are the same. </p>
+      <p>Session has a function named getValueNames, which returns an array of 
+        Strings for the attributes or words present in the session. Since it is 
+        an array, we put it in a for loop. The variable i is initialized to 0. 
+        The loop will go on till the value of i reaches the length of the array. 
+        In our case, since we have only one attribute, the control will enter 
+        the loop only once, display acc and then quit. </p>
+      <p>Now, when you click on the refresh button in IE, the session doesn't 
+        change but if you start a new copy of the browser then things will change.</p>
+      <p>When doGet is called again i.e. when we press refresh, isNew returns 
+        false since acc is an attribute with a value in the session. So now the 
+        else block of the if statement is called. Here the current value of h 
+        is changed to 'Once again'. Then, the value of acc is retrieved using 
+        getValue. The Integer class has a function named intValue which converts 
+        the value to an int. o is reinitialized to a new value which is the old 
+        value plus 1. Finally, putValue sets acc to this new value.</p>
+      <p>A session is an abstract entity created by the servlet. A servlet is 
+        loaded once and only once into memory whereas a session is created each 
+        time a new instance of a browser accesses the site. Thus a session is 
+        the same browser or the same user accessing different parts of the site. 
+        A new copy of IE would mean a new user and hence implies a new session. 
+        It is the cookie which distinguish one session from another.</p>
+      <p>Using this technique, you can now create a Shopping Cart. Remember, the 
+        servlet is loaded only once in memory.</p>
+      <p>Consider the following illustration- Each time you vist the Amazon site, 
+        if there is a servlet running on Amazon, you will be given a new session 
+        id. The session keeps track of what you buy. This is very similar to the 
+        value of acc, which keeps incrementing and yet remains unique to the current 
+        session. All the attributes are session wise, hence you can now store 
+        all the books that you have purchased in the shopping cart.<br>
+        <br>
+        The session provides a way to identify a user across more than one page 
+        or a visit to a website. In effect, you can now store information about 
+        the user. Until a client joins a session isNew() returns true and on joining 
+        the session a value is inserted in that session. The session information 
+        is scoped only to the current copy of the browser. Therefore, the information 
+        stored in one session will not be directly visible to another. </p>
+      <p>Conclusion</p>
+      <p>In this chapter, you have seen how a shopping cart can be created.<br>
+      </p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap9.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

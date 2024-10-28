@@ -1,0 +1,581 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/snglbythk2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:12 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="snglbythk2_files/filelist.html">
+<title>Single Byte Hooks II</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>55</o:TotalTime>
+  <o:Created>2006-06-26T12:02:00Z</o:Created>
+  <o:LastSaved>2006-06-26T12:02:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>1442</o:Words>
+  <o:Characters>8225</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>68</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>10100</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:14.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>Single Byte Hooks II</p>
+
+<p class=MsoBodyText>#include &lt;ntddk.h&gt;</p>
+
+<p class=MsoBodyText>extern PULONG *KeServiceDescriptorTable;</p>
+
+<p class=MsoBodyText>typedef NTSTATUS (NTAPI *NT_TERMINATE_PROCESS)(HANDLE
+ProcessHandle,NTSTATUS ExitStatus);</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtTerminateProcess(HANDLE
+ProcessHandle,NTSTATUS<span style="mso-spacerun: yes">    </span>ExitStatus);</p>
+
+<p class=MsoBodyText>typedef NTSTATUS (NTAPI *NT_CREATE_FILE)(PHANDLE<span
+style="mso-spacerun: yes">             </span>FileHandle,<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>ACCESS_MASK<span style="mso-spacerun: yes">         </span>DesiredAccess,<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>POBJECT_ATTRIBUTES<span style="mso-spacerun: yes"> 
+</span>ObjectAttributes,<span style="mso-spacerun: yes">    </span>OUT
+PIO_STATUS_BLOCK<span style="mso-spacerun: yes">    </span>IoStatusBlock,<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>PLARGE_INTEGER<span style="mso-spacerun: yes">     
+</span>AllocationSize, OPTIONAL<span style="mso-spacerun: yes">    </span>IN <span
+style="mso-spacerun: yes"> </span>ULONG<span style="mso-spacerun:
+yes">               </span>FileAttributes,<span style="mso-spacerun: yes">   
+</span>IN<span style="mso-spacerun: yes">  </span>ULONG<span
+style="mso-spacerun: yes">               </span>ShareAccess,<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>ULONG<span style="mso-spacerun: yes">              
+</span>CreateDisposition,<span style="mso-spacerun: yes">    </span>IN<span
+style="mso-spacerun: yes">  </span>ULONG<span style="mso-spacerun:
+yes">               </span>CreateOptions,<span style="mso-spacerun: yes">  
+</span>IN<span style="mso-spacerun: yes">  </span>PVOID<span
+style="mso-spacerun: yes">               </span>EaBuffer, OPTIONAL<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>ULONG<span style="mso-spacerun: yes">               </span>EaLength);</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtCreateFile(<span style="mso-spacerun:
+yes">    </span>OUT PHANDLE<span style="mso-spacerun: yes">            
+</span>FileHandle,<span style="mso-spacerun: yes">    </span>IN<span
+style="mso-spacerun: yes">  </span>ACCESS_MASK<span style="mso-spacerun:
+yes">         </span>DesiredAccess,<span style="mso-spacerun: yes">   
+</span>IN<span style="mso-spacerun: yes">  </span>POBJECT_ATTRIBUTES<span
+style="mso-spacerun: yes">  </span>ObjectAttributes,<span style="mso-spacerun:
+yes">    </span>OUT PIO_STATUS_BLOCK<span style="mso-spacerun: yes">   
+</span>IoStatusBlock,<span style="mso-spacerun: yes">    </span>IN<span
+style="mso-spacerun: yes">  </span>PLARGE_INTEGER<span style="mso-spacerun:
+yes">      </span>AllocationSize, OPTIONAL<span style="mso-spacerun: yes">   
+</span>IN<span style="mso-spacerun: yes">  </span>ULONG<span
+style="mso-spacerun: yes">   </span><span style="mso-spacerun:
+yes">            </span>FileAttributes,<span style="mso-spacerun: yes">   
+</span>IN<span style="mso-spacerun: yes">  </span>ULONG<span
+style="mso-spacerun: yes">               </span>ShareAccess,<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>ULONG<span style="mso-spacerun: yes">              
+</span>CreateDisposition,<span style="mso-spacerun: yes">    </span>IN<span
+style="mso-spacerun: yes">  </span>ULONG<span style="mso-spacerun:
+yes">               </span>CreateOptions,<span style="mso-spacerun: yes">   
+</span>IN<span style="mso-spacerun: yes">  </span>PVOID<span
+style="mso-spacerun: yes">               </span>EaBuffer, OPTIONAL<span
+style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun: yes"> 
+</span>ULONG<span style="mso-spacerun: yes">               </span>EaLength);</p>
+
+<p class=MsoBodyText>typedef NTSTATUS (NTAPI *NT_OPEN_FILE)(<span
+style="mso-spacerun: yes">    </span>PHANDLE<span style="mso-spacerun:
+yes">             </span>FileHandle,<span style="mso-spacerun: yes">   
+</span>ACCESS_MASK<span style="mso-spacerun: yes">        
+</span>DesiredAccess,<span style="mso-spacerun: yes">   
+</span>POBJECT_ATTRIBUTES<span style="mso-spacerun: yes"> 
+</span>ObjectAttributes,<span style="mso-spacerun: yes">   
+</span>PIO_STATUS_BLOCK<span style="mso-spacerun: yes">   
+</span>IoStatusBlock,<span style="mso-spacerun: yes">    </span>ULONG<span
+style="mso-spacerun: yes">               </span>ShareAccess,<span
+style="mso-spacerun: yes">    </span>ULONG<span style="mso-spacerun:
+yes">               </span>OpenOptions);</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtOpenFile(<span style="mso-spacerun:
+yes">    </span>PHANDLE<span style="mso-spacerun: yes">            
+</span>FileHandle,<span style="mso-spacerun: yes">    </span>ACCESS_MASK<span
+style="mso-spacerun: yes">         </span>DesiredAccess,<span
+style="mso-spacerun: yes">    </span>POBJECT_ATTRIBUTES<span
+style="mso-spacerun: yes">  </span>ObjectAttributes,<span style="mso-spacerun:
+yes">    </span>PIO_STATUS_BLOCK<span style="mso-spacerun: yes">   
+</span>IoStatusBlock,<span style="mso-spacerun: yes">    </span>ULONG<span
+style="mso-spacerun: yes">               </span>ShareAccess,<span
+style="mso-spacerun: yes">    </span>ULONG<span style="mso-spacerun:
+yes">               </span>OpenOptions);</p>
+
+<p class=MsoBodyText>typedef NTSTATUS (NTAPI *NT_CREATE_PROCESS)(<span
+style="mso-spacerun: yes">    </span>OUT PHANDLE<span style="mso-spacerun:
+yes">         </span>ProcessHandle,<span style="mso-spacerun: yes">    
+</span>IN<span style="mso-spacerun: yes">  </span>ACCESS_MASK<span
+style="mso-spacerun: yes">     </span>DesiredAccess,<span style="mso-spacerun:
+yes">     </span>IN<span style="mso-spacerun: yes">  </span>POBJECT_ATTRIBUTES
+ObjectAttributes, OPTIONAL<span style="mso-spacerun: yes">    </span>IN<span
+style="mso-spacerun: yes">  </span>HANDLE<span style="mso-spacerun:
+yes">          </span>ParentProcess,<span style="mso-spacerun: yes">    
+</span>IN<span style="mso-spacerun: yes">  </span>BOOLEAN<span
+style="mso-spacerun: yes">         </span>InheritObjectTable,<span
+style="mso-spacerun: yes">     </span>IN<span style="mso-spacerun: yes"> 
+</span>HANDLE<span style="mso-spacerun: yes">          </span>SectionHandle,
+OPTIONAL<span style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun:
+yes">  </span>HANDLE<span style="mso-spacerun: yes">          </span>DebugPort,
+OPTIONAL<span style="mso-spacerun: yes">    </span>IN<span style="mso-spacerun:
+yes">  </span>HANDLE<span style="mso-spacerun: yes">         
+</span>ExceptionPort OPTIONAL);</p>
+
+<p class=MsoBodyText>#define MAKELONG(a, b) ((unsigned long) (((unsigned short)
+(a)) | ((unsigned long) ((unsigned short) (b))) &lt;&lt; 16)) </p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtTerminateProcessHook(PHANDLE
+ProcessHandle,NTSTATUS ExitStatus);</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtCreateFileHook(PHANDLE
+FileHandle,ACCESS_MASK DesiredAccess,POBJECT_ATTRIBUTES ObjectAttributes,</p>
+
+<p class=MsoBodyText>PIO_STATUS_BLOCK IoStatusBlock,PLARGE_INTEGER
+AllocationSize,ULONG FileAttributes,ULONG ShareAccess,</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">  </span>ULONG
+CreateDisposition, ULONG CreateOptions, PVOID EaBuffer, ULONG EaLength);</p>
+
+<p class=MsoBodyText>NT_TERMINATE_PROCESS pNtTerminateProcess;</p>
+
+<p class=MsoBodyText>NT_CREATE_FILE pNtCreateFile;</p>
+
+<p class=MsoBodyText>PVOID pSavedIntHandler;</p>
+
+<p class=MsoBodyText>__declspec(naked) PVOID ByteHookIntHandler()</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes"> </span>__asm</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>pop<span
+style="mso-spacerun: yes">     </span>eax</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>add<span
+style="mso-spacerun: yes">     </span>esp,8</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>sti</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>cmp<span
+style="mso-spacerun: yes">     </span>eax,[pNtCreateFile]</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>jnz<span
+style="mso-spacerun: yes">     </span>NotNtCreateFile</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>jmp<span
+style="mso-spacerun: yes">     </span>[NtCreateFileHook]</p>
+
+<p class=MsoBodyText>NotNtCreateFile:</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>cmp<span
+style="mso-spacerun: yes">     </span>eax,[pNtTerminateProcess]</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>jnz<span
+style="mso-spacerun: yes">     </span>NotNtTerminateProcess</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>jmp<span
+style="mso-spacerun: yes">     </span>[NtTerminateProcessHook]</p>
+
+<p class=MsoBodyText>NotNtTerminateProcess:</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes">    </span>jmp<span
+style="mso-spacerun: yes">     </span>[pSavedIntHandler]</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>#pragma pack(1)</p>
+
+<p class=MsoBodyText>struct IDTENTRY</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>unsigned short LowOffset , selector;</p>
+
+<p class=MsoBodyText>unsigned char unused_lo,
+segment_type:4,system_segment_flag:1,DPL:2,P:1;</p>
+
+<p class=MsoBodyText>unsigned short HiOffset;</p>
+
+<p class=MsoBodyText>} ;</p>
+
+<p class=MsoBodyText>struct IDTINFO</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>unsigned short IDTLimit;</p>
+
+<p class=MsoBodyText>unsigned short LowIDTbase;</p>
+
+<p class=MsoBodyText>unsigned short HiIDTbase;</p>
+
+<p class=MsoBodyText>};</p>
+
+<p class=MsoBodyText>#pragma pack()</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtTerminateProcessHook(PHANDLE
+ProcessHandle,NTSTATUS ExitStatus)</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>DbgPrint(&quot;NtTerminateProcessHook: %p killing handle
+%p\n&quot;, PsGetCurrentProcess(), ProcessHandle );</p>
+
+<p class=MsoBodyText>return pNtTerminateProcess( ProcessHandle,ExitStatus);</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>NTSTATUS NTAPI NtCreateFileHook(PHANDLE FileHandle,
+ACCESS_MASK DesiredAccess,POBJECT_ATTRIBUTES ObjectAttributes,</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes"> </span>PIO_STATUS_BLOCK
+IoStatusBlock,PLARGE_INTEGER AllocationSize,LONG FileAttributes,ULONG
+ShareAccess,</p>
+
+<p class=MsoBodyText><span style="mso-spacerun: yes"> </span>ULONG
+CreateDisposition, ULONG CreateOptions, PVOID EaBuffer,ULONG EaLength)</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>DbgPrint( &quot;NtCreateFileHook: %wZ\n&quot;,
+ObjectAttributes ? ObjectAttributes-&gt;ObjectName : NULL<span
+style="mso-spacerun: yes">  </span>);</p>
+
+<p class=MsoBodyText>return pNtCreateFile(FileHandle,DesiredAccess,ObjectAttributes,IoStatusBlock,AllocationSize,FileAttributes,ShareAccess,</p>
+
+<p class=MsoBodyText><span style="mso-spacerun:
+yes">                           
+</span>CreateDisposition,CreateOptions,EaBuffer,EaLength );</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>void RtlCopyBytesProtected(PVOID DestBuffer,PVOID
+SrcBuffer,ULONG Length)</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>PMDL pMdl;</p>
+
+<p class=MsoBodyText>PUCHAR pBuffer;</p>
+
+<p class=MsoBodyText>pMdl = IoAllocateMdl( DestBuffer, Length, FALSE, FALSE,
+NULL );</p>
+
+<p class=MsoBodyText>MmBuildMdlForNonPagedPool( pMdl );</p>
+
+<p class=MsoBodyText>pBuffer = MmMapLockedPages( pMdl, KernelMode );</p>
+
+<p class=MsoBodyText>RtlCopyBytes( pBuffer, SrcBuffer, Length );</p>
+
+<p class=MsoBodyText>MmUnmapLockedPages( pBuffer, pMdl );</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>VOID DriverUnload(PDRIVER_OBJECT pDrvObj)</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>struct IDTINFO idt_info;</p>
+
+<p class=MsoBodyText>struct IDTENTRY *idt_entries;</p>
+
+<p class=MsoBodyText>PVOID pAddr =
+*(NT_CREATE_PROCESS*)(*KeServiceDescriptorTable+0x2f);</p>
+
+<p class=MsoBodyText>DbgPrint(&quot;Unload2&quot;);<span style="mso-spacerun:
+yes">   </span></p>
+
+<p class=MsoBodyText>*((PUCHAR)pNtTerminateProcess-2) = 0x8b;</p>
+
+<p class=MsoBodyText>*((PUCHAR)pNtCreateFile-2) = 0x8b;</p>
+
+<p class=MsoBodyText>RtlCopyBytesProtected( (PUCHAR)pAddr-5,
+&quot;\x90\x90\x90\x90\x90&quot;, 5 );</p>
+
+<p class=MsoBodyText>__asm<span style='mso-tab-count:1'>    </span>sidt<span
+style='mso-tab-count:1'> </span>idt_info<span style='mso-tab-count:1'> </span></p>
+
+<p class=MsoBodyText>idt_entries = (struct IDTENTRY*)
+MAKELONG(idt_info.LowIDTbase,idt_info.HiIDTbase);</p>
+
+<p class=MsoBodyText>__asm cli</p>
+
+<p class=MsoBodyText>idt_entries[255].LowOffset = (unsigned short)
+pSavedIntHandler;</p>
+
+<p class=MsoBodyText>idt_entries[255].HiOffset = (unsigned short)((unsigned
+long)pSavedIntHandler &gt;&gt; 16);</p>
+
+<p class=MsoBodyText>__asm sti</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText>NTSTATUS DriverEntry(PDRIVER_OBJECT
+pDrvObj,PUNICODE_STRING<span style="mso-spacerun: yes">  </span>pRegistry)</p>
+
+<p class=MsoBodyText>{</p>
+
+<p class=MsoBodyText>struct IDTINFO idt_info;</p>
+
+<p class=MsoBodyText>struct IDTENTRY *idt_entries,*i;</p>
+
+<p class=MsoBodyText>ULONG addr;</p>
+
+<p class=MsoBodyText>PVOID<span style="mso-spacerun: yes">  </span>pAddr =
+*(NT_CREATE_PROCESS*)(*KeServiceDescriptorTable+0x2f );</p>
+
+<p class=MsoBodyText>ULONG_PTR offset;</p>
+
+<p class=MsoBodyText>pDrvObj-&gt;DriverUnload = DriverUnload;</p>
+
+<p class=MsoBodyText>pNtTerminateProcess =
+*(NT_TERMINATE_PROCESS*)(*KeServiceDescriptorTable + 0x101);</p>
+
+<p class=MsoBodyText>pNtCreateFile =
+*(NT_CREATE_FILE*)(*KeServiceDescriptorTable + 0x25 );</p>
+
+<p class=MsoBodyText>DbgPrint(&quot;DriverEntry2 pAddr=%x
+pNtTerminateProcess=%x
+pNtCreateFile=%x&quot;,pAddr,pNtTerminateProcess,pNtCreateFile);</p>
+
+<p class=MsoBodyText>offset = (ULONG_PTR)ByteHookIntHandler - (ULONG_PTR)pAddr;</p>
+
+<p class=MsoBodyText>RtlCopyBytesProtected(
+(PUCHAR)pAddr-5,&quot;\xe9&quot;,1);</p>
+
+<p class=MsoBodyText>RtlCopyBytesProtected((PUCHAR)pAddr-4,&amp;offset,4);</p>
+
+<p class=MsoBodyText>__asm sidt idt_info</p>
+
+<p class=MsoBodyText>idt_entries = (struct IDTENTRY*)
+MAKELONG(idt_info.LowIDTbase,idt_info.HiIDTbase);</p>
+
+<p class=MsoBodyText>i = idt_entries + 0xff; </p>
+
+<p class=MsoBodyText>pSavedIntHandler = MAKELONG(i-&gt;LowOffset,
+i-&gt;HiOffset);</p>
+
+<p class=MsoBodyText>__asm cli</p>
+
+<p class=MsoBodyText>i-&gt;LowOffset = (unsigned short)((PUCHAR)pAddr-5) ;</p>
+
+<p class=MsoBodyText>i-&gt;HiOffset = (unsigned short)((unsigned
+long)((PUCHAR)pAddr-5)<span style="mso-spacerun: yes">  </span>&gt;&gt; 16);</p>
+
+<p class=MsoBodyText>__asm sti</p>
+
+<p class=MsoBodyText>(PUCHAR)pNtTerminateProcess = (PUCHAR)pNtTerminateProcess
++ 2;</p>
+
+<p class=MsoBodyText>(PUCHAR)pNtCreateFile = (PUCHAR)pNtCreateFile + 2;</p>
+
+<p class=MsoBodyText>*((PUCHAR)pNtTerminateProcess-2)= 0xCD;</p>
+
+<p class=MsoBodyText>*((PUCHAR)pNtCreateFile-2) = 0xCD;</p>
+
+<p class=MsoBodyText>return STATUS_SUCCESS;</p>
+
+<p class=MsoBodyText>}</p>
+
+<p class=MsoBodyText><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText>The method NtCreateProcess has its entry at offset 2f in
+the SSDT array. Its begins at location 805ad314 in memory. Using the u command
+in WinDbg gives us the confirmation we need.</p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>lkd&gt; u nt!NtCreateProcess<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>nt!NtCreateProcess:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>805ad314 8bff<span style="mso-spacerun:
+yes">             </span>mov<span style="mso-spacerun: yes">     </span>edi,edi<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>805ad316 55<span style="mso-spacerun:
+yes">               </span>push<span style="mso-spacerun: yes">    </span>ebp<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>805ad317 8bec<span style="mso-spacerun:
+yes">             </span>mov<span style="mso-spacerun: yes">     </span>ebp,esp<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>Thus pAddr gives us the address of NtCreateProcess
+and pNtTerminateProcess the address of NtTerminateProcess which is 80582c2b and
+pNtCreateFile the address of NtCreateFile which is <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>80570d48. Check it out yourselves. Thus we have the
+addresses of three functions in kernel memory.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>Fortunately for us the 5 bytes before the code of
+NtCreateProcess starts has 5 NOP’s in them. This means that we can safely
+override these bytes as no one is using them. WinDbg confirms this.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>lkd&gt; db 805ad314-5<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>805ad30f<span style="mso-spacerun: yes">  </span>90
+90 90 90 90 8b ff 55-8b ec 33 <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>Thus we have found an area of memory that has some
+empty space and we can now use this to our advantage. In part 1 we showed how
+we calculated the offset of our function that we wanted to be called which in
+our case is ByteHookIntHandler. We use the same variable offset to tell us the
+difference between the start of ByteHookHandler and the starting address of
+NtCreateProcess. We write the jmp instruction on these 5 bytes using the same
+Rtl functions that are optional.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>The key method is set_entry_idt which is passed the
+interrupt to be hooked 0xff and the starting point of this newly written jump
+instruction pAddr-5. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>The method set_entry_idt is written in assembler but
+could have been written in C. We simply want to change the address that gets
+called on interrupt 2f. This is the only part of the code we rewrote in C. We
+first found the address of the IDT which is a series of structures and then
+placed the<span style="mso-spacerun: yes">  </span>address pAddr-5 at the
+location 255 from the start. We save the original value and when we unload the
+driver we place the original value back.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>We then increase the two pointers to the method
+NtTerminateProcess and NtCreateFile by 2 and place 0xCd as the first byte. The
+opcode cd means call interrupt which becomes call interrupt FF as the second
+byte of every function is FF. Thus interrupt FF will get called each time we
+call these two functions. This in turn will call the jmp instruction at pAddr-5
+which will call our hook method ByteHookIntHandler. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>Now lets understand the handler method which calls
+one of the two functions. The calling convention is naked which means the
+compiler will generate no prologue or epilogue. This method is also called with
+no parameters whatsoever. When the user calls either of the two functions, int
+ff gets called which in turn calls the function ByteHookIntHandler. On the
+stack is the address of the function that is being called. This value we place
+in the eax register. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>We then add 8 to esp because we have a 8 byte ret
+value on the stack. We compare this value in eax with the value of
+pNtCreateFile, if it ss equal we call the function NtCreateFileHook which in
+turn calls the original plus 2. If not we check whether eax is equal to
+pNtTerminateProcess, if true we jmp to the method NtTerminateProcessHook. If
+none is true we finally call the original handler.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'>This is how we use a one byte hook to beat the SSDT table
+check and yet get our code to be called. We change the first byte of our
+functions to CD and then get the same code to be called each time the interrupt
+occurs. We then figure which of the two functions were called and then jump to
+them.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt;
+font-family:"Courier New"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/snglbythk2.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:13 GMT -->
+</html>

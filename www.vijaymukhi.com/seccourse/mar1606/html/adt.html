@@ -1,0 +1,214 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/adt.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:22 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="adt_files/filelist.html">
+<title>Anti Debugging Techniques</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>14</o:TotalTime>
+  <o:Created>2006-03-17T10:02:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:02:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>305</o:Words>
+  <o:Characters>1739</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>14</o:Lines>
+  <o:Paragraphs>3</o:Paragraphs>
+  <o:CharactersWithSpaces>2135</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Anti Debugging Techniques</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.c</p>
+
+<p class=MsoNormal>#define _WIN32_WINNT 0x0400</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>int i;</p>
+
+<p class=MsoNormal>i = IsDebuggerPresent();</p>
+
+<p class=MsoNormal>if ( i )</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;debugger present&quot;,&quot;vm&quot;,0);</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;debugger not
+present&quot;,&quot;vm&quot;,0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The Windows API has a simple function IsDebuggerPresent that
+returns true or 1 if we are running under a debugger, false otherwise. We first
+run our program through the command prompt and we get a message box that tells
+us that debugger not present. We then run the same program though three
+debuggers, OllyDbg, W32dasm and IDA Pro. All three tell us that a debugger is
+present.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>If we then a set a break point on the function MessageBoxA
+in softice. We then run the above program and fall into softice. When we press
+f12 to continue we get a MessageBox that says debugger not present. Thus this
+windows function cannot sense softice, it senses all the other debuggers. For
+some reason known only to Microsoft if we do not create the above macro
+__WIN32-WINNT the function prototype of the IsDebuggerPresent does not get
+included.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>int i;</p>
+
+<p class=MsoNormal>i = IsDebuggerPresent1();</p>
+
+<p class=MsoNormal>if ( i )</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;debugger present&quot;,&quot;vm&quot;,0);</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;debugger not
+present&quot;,&quot;vm&quot;,0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>int IsDebuggerPresent1()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>__asm</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>mov ebx , fs:[0x18]</p>
+
+<p class=MsoNormal>mov ebx , [ebx+0x30]</p>
+
+<p class=MsoNormal>mov eax, 0</p>
+
+<p class=MsoNormal>mov al , byte ptr [ebx+0x02]</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above program shows us how easy it is to write our own
+IsDebuggerPresent<span style="mso-spacerun: yes">  </span>function. The fs
+register at offset 18 points to a structure that is called the Thread
+Environment Block or TEB. We store this value into the ebx register using fs as
+the segment. 30 hex bytes from the start of the TEB is another structur PEB or
+Process Environment Block. We store this value into ebx. Two bytes from the
+start of this structure is a byte that tells us whether we have a debugger
+active while our program is running. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first place 0 in the eax register and then move this byte
+into al which becomes the return value. The TEB and PEB structures are not
+documented by Microsoft.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.c</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>__asm</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>nop</p>
+
+<p class=MsoNormal>nop</p>
+
+<p class=MsoNormal>nop</p>
+
+<p class=MsoNormal>mov eax, 0</p>
+
+<p class=MsoNormal>jmp a1</p>
+
+<p class=MsoNormal>_emit 0xf</p>
+
+<p class=MsoNormal>a1:</p>
+
+<p class=MsoNormal>mov eax , 1</p>
+
+<p class=MsoNormal>nop</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/adt.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:23 GMT -->
+</html>

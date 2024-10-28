@@ -1,0 +1,396 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/ownkeygen.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:25 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="ownkeygen_files/filelist.html">
+<title>Writing your own key generator</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>187</o:TotalTime>
+  <o:Created>2006-03-17T10:09:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:09:00Z</o:LastSaved>
+  <o:Pages>4</o:Pages>
+  <o:Words>1093</o:Words>
+  <o:Characters>6235</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>51</o:Lines>
+  <o:Paragraphs>12</o:Paragraphs>
+  <o:CharactersWithSpaces>7657</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Writing your own key generator</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>WinZip 7.0</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We downloaded a copy of<span style="mso-spacerun: yes"> 
+</span>WinZip 7.0 from the following Url. <a
+href="http://www.oldversion.com/download.php?idlong=2588aa9d564e0bdc60dacd33576800c7">http://www.oldversion.com/download.php?idlong=2588aa9d564e0bdc60dacd33576800c7</a>.<span
+style="mso-spacerun: yes">  </span>This is a site that keeps older versions of
+software for people like us who need to run a exploit on a certain version
+only. After installing winzip it keeps nagging us to pay for it. Good product
+and we recommend you should pay at least once for using it. We will now show
+you how to write a program that generates a key that winzip accepts as a valid
+key.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>There is a gentleman some where on the net that placed code
+that does the above magic. He goes by the name Lord Soth. He wrote the original
+code that displays a dialog box, we have simplified his code and explained it.
+No changes at all to what he has done. In this case we know his name but in
+lots of cases we have found great code on the net and do not know who has
+placed it there. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.cpp</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &quot;stdio.h&quot;</p>
+
+<p class=MsoNormal>#include &quot;string.h&quot;</p>
+
+<p class=MsoNormal>char username[255]=&quot;&quot;,
+serial[255]=&quot;&quot;,*upper;</p>
+
+<p class=MsoNormal>int i, j, length, con=4129,result1, current_letter,
+tmp_letter,result2;</p>
+
+<p class=MsoNormal>int main(int argc, char *argv[])</p>
+
+<p class=MsoNormal>{<span style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal>strcpy(username,argv[1]);</p>
+
+<p class=MsoNormal>length = strlen( username );</p>
+
+<p class=MsoNormal>for (i=0 ; i &lt; length ; i++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>current_letter = username[i];</p>
+
+<p class=MsoNormal>current_letter = current_letter &lt;&lt; 8;</p>
+
+<p class=MsoNormal>result1 += username[i]*i;</p>
+
+<p class=MsoNormal>for (j=0 ; j &lt; 8 ; j++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>tmp_letter = current_letter;</p>
+
+<p class=MsoNormal>tmp_letter = tmp_letter ^ result2;</p>
+
+<p class=MsoNormal>if ( (LOWORD(tmp_letter) &amp; 32768) )</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>result2 += result2;</p>
+
+<p class=MsoNormal>result2 = result2 ^ con;</p>
+
+<p class=MsoNormal>current_letter *= 2;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>current_letter *= 2;</p>
+
+<p class=MsoNormal>result2 *= 2;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>result2 += 99;</p>
+
+<p class=MsoNormal>printf(&quot;%x %x\n&quot;,result2,result1);</p>
+
+<p class=MsoNormal>sprintf ( serial, &quot;%x%4x&quot;, LOWORD(result2),
+result1);</p>
+
+<p class=MsoNormal>for (i=0 ; i &lt; strlen(serial) ; i++)</p>
+
+<p class=MsoNormal>if (serial[i] == ' ')</p>
+
+<p class=MsoNormal>serial[i] = '0';</p>
+
+<p class=MsoNormal>upper = _strupr (serial);</p>
+
+<p class=MsoNormal>printf(upper);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>As usual we have all our variables global and will pass the
+user name as a command line parameter to our program. The key generated depends
+upon the name of the user that we type into winzip when we register ourselves.
+We first use the strcpy function to copy the string in argv[1] to the array
+username. We then use the function strlen to give us the length of the string.
+Our user name is Vijay Mukhi so strlen returns us 11 which we store in the
+variable length.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then use a for loop to iterate the value of I from 0 to
+10, using I as an array offset into the username array, Thus the variable
+current_letter becomes each individual character of our user name. The ASCII
+value of V is 86. We then left shift this value eight times effectively
+multiplying 86 by 256 giving us a value 22016. We do this for every character
+we have typed as the user name. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then take each and every character that we have typed and
+multiply it by the position that it occupies in the string. Thus V get
+multiplied by 0, I by 1 and j by 2. We store a running total of all this in the
+variable result2. This gives us values 0, 105, 317, 608 etc. Remember this
+variable result2 contains running totals. The last value it contains is 5375. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We enter one last for loop where j goes from 0 to 7 for a
+total of 8. We set the value of<span style="mso-spacerun: yes"> 
+</span>variable tmp_letter to current_letter which was the value V multiplied
+by 256 or 22016. We then bit wise or this value with what is stored in variable
+result2 which as of now is 0. Bitwise oring makes a bit 1 if any of the bits is
+1, otherwise it keeps things the same.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now we come across an if else statement. The macro LOWORD
+simply gives us the first 16 bits of a number. Thus this macro will gives us
+value less that 65536. Any value above this will be truncated. The first value
+of tmp_letter is 22016 and LOWRD gives us the same value back. The third value
+is 88064 and LOWORD gives us 18465. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the if statement we bit wise and with 32768 which means
+that the 15<sup>th</sup> bit is 1 and the remaining bits are 0. Thus any value
+larger than 32768 will make the if statement true, a value smaller will give us
+false. Thus the first value is 22016 and the else gets called. Here we multiply
+result2 by 2 and current_letter which is 22016 doubles and becomes 44032 which
+is now used in the start of the for.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the second iteration of the loop the value of tmp_letter
+becomes larger than 32768 and the if is called. Here we simply add the values
+of result2 and not multiply it, we then bitwise or it with<span
+style="mso-spacerun: yes">  </span>a constant con whose value is 4129. We like
+in the else multiply current_letter by 2.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>At the end of the two for loops the value of result2 is
+736826306. We then add 99 to the value of result2. The final value of result2
+is 2beb1425 and result1 is 14ff. We then create a number taking the lower 16
+bits of result2 1425 and result1 14ff and get 142514ff the key.<span
+style="mso-spacerun: yes">  </span>We then introduce a check that does not apply
+in our case, if we come across a space or 32 we replace it with a 0. Finally we
+convert the entire string into upper case, the two small ff’s become all caps.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We then install the copy of winzip 7.0 and click on help
+enter registration info and write Vijay Mukhi and the above number. It works as
+advertised. Program name KeyWinzip70.exe and keywinzip70.cpp</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Mighty Fax 2.9</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We went to a site <a
+href="http://www.rkssoftware.com/mfntv29z.exe">http://www.rkssoftware.com/mfntv29z.exe</a>
+to download the above file that we installed. We then wrote a key generator for
+this program.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we start the program it gives us 30 day trial and also
+asks us for a serial number. We click on the button serial number instead of
+Continue and write Vijay Mukhi as the name and the serial number as
+RKS-5379914. When we click on OK it gives us a message box saying number
+accepted. Lets now write a program to generate such a serial number.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.cpp</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &quot;generic.h&quot;</p>
+
+<p class=MsoNormal>#include &quot;resource.h&quot;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdlib.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;string.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;time.h&gt;</p>
+
+<p class=MsoNormal>char username[255]=&quot;&quot;,
+serial[255]=&quot;RKS-&quot;;</p>
+
+<p class=MsoNormal>int seed,i;</p>
+
+<p class=MsoNormal>DWORD sn;</p>
+
+<p class=MsoNormal>int main(int argc, char *argv[])</p>
+
+<p class=MsoNormal>{<span style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal>srand( (unsigned) time(NULL));</p>
+
+<p class=MsoNormal>strcpy(username, argv[1]);</p>
+
+<p class=MsoNormal>_strupr( username);</p>
+
+<p class=MsoNormal>seed = rand();</p>
+
+<p class=MsoNormal>seed /= 8192;</p>
+
+<p class=MsoNormal>if (seed == 0)</p>
+
+<p class=MsoNormal>seed = 0x1b54;</p>
+
+<p class=MsoNormal>else if (seed == 1)</p>
+
+<p class=MsoNormal>seed = 0x1b1f;</p>
+
+<p class=MsoNormal>else if (seed == 2)</p>
+
+<p class=MsoNormal>seed = 0x1771;</p>
+
+<p class=MsoNormal>else </p>
+
+<p class=MsoNormal>seed = 0x17d9;</p>
+
+<p class=MsoNormal>for ( i=0 ; i &lt; lstrlen( username) ; i++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if ( username[i] != ' ')</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>sn += seed * username[i];</p>
+
+<p class=MsoNormal>sn--;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>sprintf( username, &quot;%d&quot;, sn);</p>
+
+<p class=MsoNormal>lstrcat( serial, username);</p>
+
+<p class=MsoNormal>printf(&quot;%s\n&quot;,serial);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The srand function initializes the random number generator
+with the current time as the seed. Time gives us the current time. If we use 1
+as a parameter to srand it reinitializes the random number generator. Any other
+value set it to some random starting point. As before we copy the username in
+argv[1] to the global array username<span style="mso-spacerun: yes"> 
+</span>and make the entire string uppercase by using the function strupr. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The rand function returns a random number from 0 to RAND_MAX
+which is defined as 32767. In our case we first got a value 6281 and then 6291.
+We then divide this value of seed by 8192 and in our case we get 0 as the
+answer.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Depending upon the value after dividing seed we give it a
+new value, there are four different value it can take. For us the value is the
+first 0x1bf4. Like before we pick up each and every character of our user name
+and simply multiply it by the seed we just chose. We store this running total
+in the variable sn. We also reduce sn by 1 in the loop. When we get out of the
+loop the value of sn is the key and w concatenate it with the words RKS. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Program name keymightyfax20.exe and keymightyfax29.cpp</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/ownkeygen.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:26 GMT -->
+</html>

@@ -1,0 +1,898 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap10.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:05 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap10_files/filelist.html">
+<link rel=Edit-Time-Data href="chap10_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-11-06T19:10:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:09:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>1490</o:Words>
+  <o:Characters>8497</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>70</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>10434</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>10</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>XML Documentation</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>XML is used extensively to
+document program code. Apart from its status of a mere acronym for eXtensible
+Markup Language, XML has a bounden duty to achieve miracles. However, in this chapter,
+we would be utilizing XML for the temporal task of documenting our code. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Run the compiler as<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>&gt;csc a.cs /doc:a.xml</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;doc&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;assembly&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>&lt;name&gt;a&lt;/name&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/assembly&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;members&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/members&gt;</p>
+
+<p class=ILprg>&lt;/doc&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is the smallest possible
+XML file that can be effectively generated by the compiler. The compiler with
+the /doc option, followed by a colon and filename, creates the XML file, which
+documents the C# program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Anything placed within the
+&lt;&gt; brackets is called a tag. At the expense of sounding tediously
+repetitive, we once again reiterate that, each and every XML file must
+necessarily start with a tag beginning with &lt;?xml&gt;. This has to be followed
+by an attribute called version. Presently, the only permissible value that can
+be assigned to version is 1.0. There may never be a version 1.1 or 2.0. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Subsequent to this, a root tag
+called 'doc' is specified, which envelopes all other tags within the file. We
+have a tag called 'assembly' which owns another tag called 'name' that encloses
+our assembly name 'a'. The name of our program file is 'a'. There are no
+members to be documented, therefore, no names are noticeable within the member
+tags. This is the basic structure of our XML file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>It is the bare minimum, no
+frills structure, created by the compiler. Now, let us refurbish and garnish it
+through our own contribution.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have added an XML tag in the
+.cs file. The documentation clearly states that an XML tag in a .cs file cannot
+begin with two slashes, since they are reserved for comments. It should instead
+have three slashes. The use of the two slashes generates the following warning:
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>a.cs(4,3): warning CS1570: XML comment on 'zzz.Main()' has
+badly formed XML -- 'End tag 'member' does not match the start tag
+'vijay'.'<span style="mso-spacerun: yes">     </span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>From now on, we shall only
+display the pertinent portions of the XML file, while ignoring the portion that
+is invariant, such as, the doc and the /doc tags. So in the file created as: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.xml</u></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;</p>
+
+<p class=ILprg>&lt;doc&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;assembly&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>&lt;name&gt;a&lt;/name&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/assembly&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;members&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;!-- Badly
+formed XML comment ignored for member &quot;M:zzz.Main&quot; --&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/members&gt;</p>
+
+<p class=ILprg>&lt;/doc&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>we will display only<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml fragment:</u></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;members&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;!-- Badly
+formed XML comment ignored for member &quot;M:zzz.Main&quot; --&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;/members&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the next program, a closing
+tag of 'vijay' is specified.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>/// Function Main gets called first</p>
+
+<p class=ILprg>/// &lt;/vijay&gt;</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;members&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>&lt;member
+name=&quot;M:zzz.Main&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;vijay&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>Function Main
+gets called first</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;/vijay&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">    </span>&lt;/member&gt;</p>
+
+<p class=ILoutput>&lt;/members&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The earlier program generated an
+error, since there was no corresponding end tag to the tag 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every tag in XML must
+necessarily have a start tag and an end tag. We are at liberty to choose any
+name for the tag. Therefore, we have chosen the name 'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The compiler creates a tag
+called 'member' under the tag members, and adds an attribute called 'name'.
+This attribute is initialized to the name of the C# entity, which is the
+position where the tag is placed. The value assigned to name is, as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The letter M, </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Followed by a colon separator, </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Followed by the name of the class
+zzz, </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Followed by a dot separator </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Finally, followed by the name of the
+function i.e. Main. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, it displays M:zzz.Main. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The tag 'vijay' and the text enclosed
+between the start and end tags of 'vijay' subsequently, get enclosed within the
+members tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>/// &lt;mukhi&gt;</p>
+
+<p class=ILprg>/// Our first class</p>
+
+<p class=ILprg>/// &lt;/mukhi&gt;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>/// Function Main gets called first</p>
+
+<p class=ILprg>/// &lt;/vijay&gt;</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;members&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;member
+name=&quot;T:zzz&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;mukhi&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>Our first
+class</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/mukhi&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>&lt;/member&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;member
+name=&quot;M:zzz.Main&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;vijay&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>Function
+Main gets called first</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/vijay&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span><span
+style="mso-spacerun: yes">      </span>&lt;/member&gt;</p>
+
+<p class=ILoutput>&lt;/members&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, we have added a tag called
+'mukhi' to the class. It is however, not added to the function. So presently,
+there are two member tags, and each has been assigned a name within the members
+tag. The value assigned to the member name, which encloses 'mukhi' is, T:zzz.
+This is created in a manner akin to that of a function, with the exception of
+the prefix M, which has now been replaced by T. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The rationale behind introducing
+XML tags is that, a program known as an XML Parser can interpret the above XML
+file, and subsequently, create legible output. But, the prime impediment that
+we have to confront and surmount is, the reluctance of programmers to document
+code in the first place. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;mukhi&gt;</p>
+
+<p class=ILprg>/// Our Instance Variable</p>
+
+<p class=ILprg>/// &lt;/mukhi&gt;</p>
+
+<p class=ILprg>public int i;</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>/// Our first variable ii</p>
+
+<p class=ILprg>/// &lt;/vijay&gt;</p>
+
+<p class=ILprg>int ii;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>a.cs(12,5): warning CS0168: The variable 'ii' is declared but
+never used</p>
+
+<p class=ILoutput>a.cs(9,1): warning CS1587: XML comment is not placed on a
+valid language element</p>
+
+<p class=ILoutput>a.cs(6,12): warning CS0649: Field 'zzz.i' is never assigned
+to, and will always have its default value 0</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;members&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">        </span>&lt;member
+name=&quot;F:zzz.i&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;mukhi&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>Our
+Instance Variable</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/mukhi&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">       
+</span>&lt;/member&gt;</p>
+
+<p class=ILoutput>&lt;/members&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Oops! The tags that we give
+within a function have not been reflected in the XML file. The instance
+variable i is flagged with an F, but the local variable ii is not reflected in
+the XML file at all. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We have carried this out on
+purpose, with the intention of demonstrating that it is not permissible to
+write XML tags within functions. Even though our preceding action would not
+produce any error, the compiler shall, in any case, ignore our work of art.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We will now dwell upon the names
+or string ids, which the compiler generates for names of entities. They are as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>N stands for a Namespace.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>T represents a type, class,
+interface, struct, enum and delegate. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>F denotes a field. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>P is indicative of either properties
+or indexers. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>M indicates all methods </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>E represents an event. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>! is indicative of an error.<span
+style="mso-spacerun: yes">  </span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>/// Our first variable ii</p>
+
+<p class=ILprg>/// &lt;/vijay&gt;</p>
+
+<p class=ILprg>namespace aaa</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>a.cs(1,1): warning CS1587: XML comment is not placed on a
+valid language element</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>We do not enjoy the license to
+place tags wherever we desire. Thus, a warning is issued when a tag is placed
+on a namespace, although no error is generated. In the earlier case too, a
+similar warning was issued, when we had placed the tags in a function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>/// &lt;vijay&gt;</p>
+
+<p class=ILprg>/// Our function &lt;c&gt;Main&lt;/c&gt; is the starting point </p>
+
+<p class=ILprg>/// &lt;/vijay&gt;</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;member name=&quot;M:zzz.Main&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>&lt;vijay&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>Our
+function &lt;c&gt;Main&lt;/c&gt; is the starting point </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;/member&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If we place the tag &lt;c&gt;
+and &lt;/c&gt; around some text in a tag, the tag gets copied verbatim, into
+the XML file. It is indicative of the fact that the text represents some code.
+To mark multiple lines of code, the code tag may be used instead. The example
+tag also works in a similar manner. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>/// &lt;exception cref=&quot;System.Exception&quot;&gt; Our
+exception class &lt;/exception&gt;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;member name=&quot;T:zzz&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;exception cref=&quot;T:System.Exception&quot;&gt; Our exception
+class &lt;/exception&gt;</p>
+
+<p class=ILoutput>&lt;/member&gt; </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The exception tag works as
+demonstrated above, with a single difference in that, the attribute cref is
+inspected for accuracy. This attribute should represent a valid C# entity,
+otherwise, the following warning is displayed:<span style="mso-spacerun:
+yes">   </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>/// &lt;exception
+cref=&quot;System.Exceptions&quot;&gt; Our exception class &lt;/exception&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>a.cs(2,22): warning CS1574: XML comment on 'zzz' has cref attribute
+'System.Exceptions' that could not be found.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml </u></p>
+
+<p class=ILoutput>&lt;member name=&quot;T:zzz&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;exception cref=&quot;!:System.Exceptions&quot;&gt; Our exception
+class &lt;/exception&gt;</p>
+
+<p class=ILoutput>&lt;/member&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>All the tags expounded by us so
+far, have a similar functionality. This surely must have kindled your curiosity
+to discover the rationale behind employing so many tags. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This is so, because each of
+these tags, documents different features of the language. Let us assume that we
+yearn for a bulleted list in our final documentation. We would have to use the
+following tags to accomplish it:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>/// &lt;list type=&quot;bullet&quot;&gt;</p>
+
+<p class=ILprg>/// &lt;item&gt;</p>
+
+<p class=ILprg>/// &lt;description&gt;One&lt;/description&gt;</p>
+
+<p class=ILprg>/// &lt;/item&gt;</p>
+
+<p class=ILprg>/// &lt;item&gt;</p>
+
+<p class=ILprg>/// &lt;description&gt;Two&lt;/description&gt;</p>
+
+<p class=ILprg>/// &lt;/item&gt;</p>
+
+<p class=ILprg>/// &lt;/list&gt;</p>
+
+<p class=ILprg>class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>xml fragment</u></p>
+
+<p class=ILoutput>&lt;member name=&quot;T:zzz&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">            </span>&lt;list
+type=&quot;bullet&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;item&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;description&gt;One&lt;/description&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/item&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;item&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;description&gt;Two&lt;/description&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/item&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">           
+</span>&lt;/list&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/member&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The attribute type can also be
+assigned the values of bullet, number or table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Bear in mind, that an external
+program will interpret the XML tags. Thus, the designers of the language
+standardized tags for describing different things. If the same tag had been
+utilized for documenting every feature, a single program would have sufficed to
+document the entire C# code. We have employed tags such as 'vijay' and 'mukhi'
+to document our classes. Chaos would reign supreme, if everyone decided to use his
+or her own names. Appended below is a brief summary of the various tags that
+can be employed in the XML file:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The param tag is used to document
+the parameters to a function.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The paramref tag is used to document
+a parameter name. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The permission tag is used to
+document the access allowed to a member. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The remarks tag is used to specify
+the overall information for a class. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The return tag has been introduced
+to document the return values of functions. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The seealso tag helps in
+implementing the 'see also' section at the bottom of help sections. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The summary tag documents all
+members of a type. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The value tag documents all the
+properties. </p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap10.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:48:07 GMT -->
+</html>

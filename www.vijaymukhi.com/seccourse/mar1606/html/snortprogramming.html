@@ -1,0 +1,1169 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/snortprogramming.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:33 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="snortprogramming_files/filelist.xml">
+<title>Creating our own keywords with snort</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>4</o:TotalTime>
+  <o:Created>2006-03-17T10:10:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:10:00Z</o:LastSaved>
+  <o:Pages>7</o:Pages>
+  <o:Words>2208</o:Words>
+  <o:Characters>12587</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>104</o:Lines>
+  <o:Paragraphs>25</o:Paragraphs>
+  <o:CharactersWithSpaces>15457</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:HyphenationZone>0</w:HyphenationZone>
+  <w:DoNotHyphenateCaps/>
+  <w:DrawingGridHorizontalSpacing>6 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>6 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayVerticalDrawingGridEvery>0</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:DoNotShadeFormData/>
+  <w:Compatibility>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:UsePrinterMetrics/>
+   <w:WW6BorderRules/>
+   <w:FootnoteLayoutLikeWW8/>
+   <w:ShapeLayoutLikeWW8/>
+   <w:AlignTablesRowByRow/>
+   <w:ForgetLastTabAlignment/>
+   <w:AutoSpaceLikeWord95/>
+   <w:LayoutRawTableWidth/>
+   <w:LayoutTableRowsApart/>
+  </w:Compatibility>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	mso-layout-grid-align:none;
+	punctuation-wrap:simple;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+ /* Page Definitions */
+@page
+	{mso-endnote-position:end-of-section;
+	mso-endnote-numbering-style:arabic;
+	mso-endnote-numbering-start:0;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.7in 1.25in .7in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-footer:url("snortprogramming_files/header.html") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Snort Programming<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Creating our own keywords with snort.
+We first went to the snort site www.snort.org and downloaded the latest snort
+version snort-2.3.3.tar.gz. We installed this file in C:\ and this created a
+zillion files. Water water everywhere, but no exe file to run. We haveno choice
+but to fire up our trusty Visual Studio 6.0 and compile snort. We first clicked
+on FIle, Open Workspace and we now have to file the project file which has a
+dsw extension. We first moved into the core snort-2.3.3 directory and then the
+src, win32, Win32-prj. Here we have the snort.dsw project file that we open.
+Before we build, we have a small chage to be made. Snort comes with data base
+support for Oracle, MySql and SqlServer. The only problem with oracle support
+is that we need a header file oci.h which we do not have as we have not
+installed the Oracle Call Interface. Thus we choose the Buiuld menu, set active
+configuration and choose the configuration SqlServer Debug. Then build by
+choosing Build, Build and wait for a long time for the compilation to take
+place. FOr some reason, it creates a sub directory
+snort___Win32_SqlServer_debug under C:\snort-2.3.3\src\win32\win32-prj. We get
+lots of warning also but at the end of the day snort.exe gets created.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We then create a conf file a.conf as<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>alert tcp any any -&gt; any any (msg:
+&quot;hi&quot;; vijay: 12;)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>This is the worst rule you can ever
+create but he have a keyword vijay which we want snort to understand. This
+keyword will check the ttl field. If it is 12, then the alert will get
+triggered. Thus we want to demonstrate how flexible snort is and how we are
+allowed to add on to the keywords of snort. This example also shows us how
+snort gives us access to the the packets it has. Also how we can trigger off an
+alert. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>After snort.exe gets created and we try
+and run it, we get an error as twi dlls. pcre.dll and libnetnt.dll are not in
+the path. These dlls reside in c:\snort-2.3.3\src\win32\win32-prj. We copy them
+into teh directory snort.exe resides.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We then run snort as <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>snort -dev -l vijay -c a.conf<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>It comes back to us saying that we have
+an errror as the keyword vijay it does not reconize. Thus we need a way to
+first undersatnd that vijay is a new keyword. In Visual Studio we use the File,
+Open menu and open the file plugbase.c which resides in the C:\snort-2.3.3\src
+directory.On line 127 there is a function void InitPlugIns. There are a series
+of function calls and we need to add our own function here which we be called
+once. The line has our function function call mukhi. Thus each time snort
+starts it will call mukhi. It would be a good idea to call teh function
+Setup... but we like to tell you that you decide the name of the function. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We cannot build now as the compiler
+will compile fine but the linker will give us an error. We thus create a
+directory sonal from the root and create vmci.c. We use these names to tell you
+that names do not matter. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>vmci.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void abc(char *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>FILE *fp =
+fopen(&quot;c:\\a.txt&quot;,&quot;a+&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fprintf(fp,&quot;%s\n&quot;,p);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fclose(fp);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void mukhi(void)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We create a simple function mukhi and
+then call our function abc. This function takes a string as a parameter and
+writes it to a file a.txt on C drive. Thus we will use the abc function to tell
+us what functions get called and when and with what. Thus if all goes well we
+snort will call the function mukhi. The only thing left is to add this file
+vmci.c to the existing snort project. In Visual Studio we click on Project, Add
+to Project and then Files. At the file dialog box we chose vmci.c from the<span
+style="mso-spacerun: yes">  </span>sonal directory. Build-Build will only
+compile plugbase.c and vmci.c. Now lets see what happens when we run snort.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>When we run snort again we get the same
+error but the only saying grace is that the file a.txt contains mukhi. This is
+proof that snort called the mukhi function.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &quot;plugbase.h&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void abc(char *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>FILE *fp =
+fopen(&quot;c:\\a.txt&quot;,&quot;a+&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fprintf(fp,&quot;%s\n&quot;,p);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fclose(fp);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void zzz(char *data, OptTreeNode *otn,
+int protocol)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[100];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>int i;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>i = atoi(data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;data=%s %d
+&quot;,data,i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void mukhi(void)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>RegisterPlugin(&quot;vijay&quot;, zzz);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>data= 12 12 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>When we run snort, we get no error at
+all this time. This is because the function RegisterPlugin takes two parameters,
+the first is the name of the keyword vijay and the second the name of a
+function. It then registers the keyword vijay for us. this is why we get no
+error this time around. The second parameter is the name of the function zzz
+that should be called each time we come across the keyword vijay. The first
+parameter is a pointer to a char of the data following vijay: in the conf file.
+In our case the space left after the : also gets send to us. We use the atoi
+function to convert it into a actual number. This is how we get the parameters
+we have been called with. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>vmci.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &quot;plugbase.h&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void abc(char *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>FILE *fp =
+fopen(&quot;c:\\a.txt&quot;,&quot;a+&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fprintf(fp,&quot;%s\n&quot;,p);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>fclose(fp);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>static int yyy(Packet *p, struct
+_OptTreeNode *otn, OptFpList *fp_list)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[100];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>int ttl;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;yyy&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;IP id=%d
+len=%d&quot;,htons(p-&gt;iph-&gt;ip_id),htons(p-&gt;iph-&gt;ip_len));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;Ports dp=%d %d sp=%d
+%d&quot;,p-&gt;dp,htons(p-&gt;tcph-&gt;th_dport),p-&gt;sp,htons(p-&gt;tcph-&gt;th_sport));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;Seq=%d
+Ack=%d&quot;,htonl(p-&gt;tcph-&gt;th_seq),htonl(p-&gt;tcph-&gt;th_ack));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>ttl = *(int *)fp_list-&gt;context;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;Context %d
+%d&quot;,ttl,p-&gt;iph-&gt;ip_ttl);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>if ( ttl == p-&gt;iph-&gt;ip_ttl)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>return
+fp_list-&gt;next-&gt;OptTestFunc(p,otn,fp_list-&gt;next);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>return 0;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void zzz(char *data, OptTreeNode *otn,
+int protocol)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[100];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>OptFpList *ofl;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>int *template_data;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>int i;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>i = atoi(data);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;data %s
+%d&quot;,data,i);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>template_data = SnortAlloc(4);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>*template_data = i;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>ofl = AddOptFuncToList(yyy,otn);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>ofl-&gt;context = template_data;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void mukhi(void)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>RegisterPlugin(&quot;vijay&quot;, zzz);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>data<span style="mso-spacerun: yes"> 
+</span>12 12<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>IP id=65286 len=40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Ports dp=2 2 sp=1 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Seq=3 Ack=4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Context 12 3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>IP id=65286 len=40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Ports dp=2 2 sp=1 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Seq=3 Ack=4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Context 12 12<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>alert.ids<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] [1:0:0] hi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[Priority: 0] <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/30-18:12:02.906260 0:0:E8:DF:60:57
+-&gt; 0:0:E8:D7:61:C4 type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>196.254.34.0:1 -&gt; 196.254.34.0:2 TCP
+TTL:12 TOS:0x0 ID:65286 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>******S* Seq: 0x3<span
+style="mso-spacerun: yes">  </span>Ack: 0x4<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>nemesis<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>nemesis tcp -x 1 -y 2 -v -s 3 -a 4 -T 3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>nemesis tcp -x 1 -y 2 -v -s 3 -a 4 -T
+12<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>alert tcp any any -&gt; any any (msg:
+&quot;hi&quot;; vijay: 12;)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>In our alert we use the keyword vijay
+with a value 10. We would like an alert to be generated whenever a packet comes
+with a ttl of 12. Using nemesis we send two packets one with ttl 3 and the
+other with ttl 12 using the -T option. When we run snort, we see in alert.ids
+one alert for a packet with ttl 12. Thus we have been able to duplicate the
+functionality of the keyword ttl using vijay. The initialization function mukhi
+gets called only once and this we have seen is before sniffing can start. Here
+we are supposed to carry out one time initialization tasks. The most important
+thing we do here is infor snort that vijay is a valid keyword and whenever it
+sees this keyword in a rule option it should call the zzz function. This
+function gets called once per rule that it appears in. If we had two rules that
+contained the keyword vijay, this function would get called twice. The first
+use of this function is that the first parameter is a string that continaed the
+argument that we specified to the keyword. In our case as there is no &gt; or
+&lt; operation, a straight comparision is to be made, we can use the atoi
+function to convert the string to a number. We then display both the string and
+number. If we use the keyword vijay in different rules, we will have a problem
+knowing which value to check for. Thus we allocate an area of memory totaling 4
+bytes as the parameter passed is a int. We use the function AnortAlloc to this
+this and then set the value stored here as 12 or the value we have been passed.
+Whenever we are now called with the packet data we can extract this value 12 as
+this memory location template_data will be passed to us. Thus we do not have to
+store teh parameters of every rule. In another situation, this memory could
+also store an entire structure if we are expecting some complex parameters. We
+then call another function AddOptFuncToList so that we canm receive the packet
+data and also tell snort to trigger off an alert. This function is passed the
+address of the function to be called, yyy and the otn linked list handle that
+we have been passed. The return value is of type OptFpList and we set the
+context member to the newly created memory that stores the parameter passed to
+us. Now for every packet function yyy gets called, and in our case it gets
+called twice. The first parameter is a pointer to a huge structure Packet that
+is present in decode.h. The packet structure has two main pointer to
+structures, one that carries ip data iph and the other tcp data tcph. The ip_id
+member carries the id field and the ip_len field the length of the total
+packet. These values are stored in big endian and hence we use htons to convert
+them into little endian. In the same vein the we first use the do member to get
+at the destination port but we could also use the th_dport member of the tcp
+structure. This membsr needs function htonl as it is a long. We also dispaly
+the sequence and ack number and then got tired and left the rest to you.<span
+style="mso-spacerun: yes">  </span>We now use the OptFpList member to extract
+the value of our parameter stored in the context member. We first cast it to an
+int and then re-reference. We then check the value stored in the ip_ttl memebr
+with this value, it it matches, then we need an alert to be sounded. We do this
+by calling the next function in the list using the OptTestFunc that is part of
+the next structure. We pass teh same three paarmeters that we are being called
+with. This does not really say teh alert passed, what we are saying is taht the
+alert passes from our point of view, call the next keyword and if that passes
+the alert, call teh next. If all pass, display the alert. If we fail, we return
+zero. If any one keyword, fails the test, no point checking with the others as
+all keywords make up a big and. This is how easy it is to extend snort.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Writing Preprocessors<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.conf<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>preprocessor mukhi: 32 hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>One of the things that make snort more
+intelligent is that it supports the concepts of preprocessors. We will explain
+how because of preprocessors snort knows that someone is conducting a port scan
+on our machine. One SYS on a port does not make a port scan, One SYS's send to
+different port being repeated makes a port scan. Does checking a single packet
+is not enough, we need a way to check multiple packets and then arrive at a
+conclusion. Also hackers may fragment packets. Thus if we check only a single
+fragment the content will never match. We neeed to get all the fragments
+together and then decide. Finally the smarter hackers do not gragment packets.
+they send the data as two different packets. We now need to join these packets.
+Thus we need to be smarter and the way to go is preprocessors. In our conf file
+we use the preprocessor keyword to activate a processor mukhi, but snort says
+that it does not know a preprocessor mukhi.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We go back to the plugbase.c file and
+add a function call mukhi1 in the function InitPreprocessors at line 395.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void InitPreprocessors()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi1();<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We then move into the sonal directory
+and create a file vmci1.c with the following lines.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>vmci1.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>#include &quot;plugbase.h&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void yyy (Packet *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;yyy&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>static void zzz(u_char *args)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[1000];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;zzz %s&quot;,args);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>AddFuncToPreprocList(yyy);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void mukhi1()<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>RegisterPreprocessor(&quot;mukhi&quot;,
+zzz);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;mukhi1&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>zzz 32 hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We then vmci1.c to the project by
+choosing menu Project, Add to Project and then files. We now move to sonal and
+this vmci1.c to the project. We then build again which builds both plugbase.c
+as well as vmci1.c. We get no error but we have to run snort with the log
+option, -l vijay. We see that mukhi getscalled and then in turn function zzz
+with 32 and hi as parameters. we then expected yyy to get called but it does
+not.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>zzz 32 hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We forgot to send any packets to snort
+and thus it did not call the yyy function at all. Now we send two packets and
+yyy gets called twice, one for the IP packet, twice for theARP request and
+reply. Thus for each packet we now get called.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>vmci1.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void yyy (Packet *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[1000];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;yyy
+%x&quot;,p-&gt;iph);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>zzz 32 hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy e700aa<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy e700aa<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Rules were easier to deal with as we
+knew the protocol we are dealing with. The problem with a preprocessor is that
+it gets called for arp, icmp, tcp everything. Thus when we have an arp
+protocol, the iph member is zero. This is a quick and dirtyway of knowing that
+wehave no IP packet. There are better ways, but that is what programming is all
+about.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void yyy (Packet *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>char aa[1000];<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;yyy
+%x&quot;,p-&gt;iph);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>if ( p-&gt;iph != 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;IP id=%d
+len=%d&quot;,htons(p-&gt;iph-&gt;ip_id),htons(p-&gt;iph-&gt;ip_len));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;Ports dp=%d %d sp=%d
+%d&quot;,p-&gt;dp,htons(p-&gt;tcph-&gt;th_dport),p-&gt;sp,htons(p-&gt;tcph-&gt;th_sport));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>sprintf(aa,&quot;Seq=%d
+Ack=%d&quot;,htonl(p-&gt;tcph-&gt;th_seq),htonl(p-&gt;tcph-&gt;th_ack));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(aa);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>p-&gt;iph-&gt;ip_ttl = 25;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>a.txt<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>mukhi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>zzz 32 hi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy e700ea<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>IP id=65286 len=40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Ports dp=2 2 sp=1 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Seq=3 Ack=4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>yyy e700ea<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>IP id=65286 len=40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Ports dp=2 2 sp=1 1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Seq=3 Ack=4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>We use the same code that we wrote
+earlier and print out the source and destination port numbers. We are not
+allowed to change any of the fields. We tries to change the IP ttl field but
+theoutput showed us the same. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>vmci1.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>void yyy (Packet *p)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>abc(&quot;yyy&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>GenerateSnortEvent(p,1,2,3,4,5,&quot;Vijay
+Mukhi&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>alert.ids<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] [1:2:3] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.758092 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] [1:2:3] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.862605 <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] [1:2:3] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.961677 0:0:E8:DF:60:57
+-&gt; FF:FF:FF:FF:FF:FF type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>196.254.34.0:1 -&gt; 196.254.34.0:2 TCP
+TTL:3 TOS:0x0 ID:65286 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>******S* Seq: 0x3<span
+style="mso-spacerun: yes">  </span>Ack: 0x4<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>ARP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.758092 ARP who-has
+196.254.34.0 (FF:FF:FF:FF:FF:FF) tell 70.0.0.3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.862605 ARP who-has
+0.0.0.0 (FF:FF:FF:FF:FF:FF) tell 70.0.0.3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>IP address<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>[**] Vijay Mukhi [**]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>05/31-11:20:12.961677 0:0:E8:DF:60:57
+-&gt; FF:FF:FF:FF:FF:FF type:0x800 len:0x36<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>196.254.34.0:1 -&gt; 196.254.34.0:2 TCP
+TTL:3 TOS:0x0 ID:65286 IpLen:20 DgmLen:40<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>******S* Seq: 0x3<span
+style="mso-spacerun: yes">  </span>Ack: 0x4<span style="mso-spacerun: yes"> 
+</span>Win: 0x1000<span style="mso-spacerun: yes">  </span>TcpLen: 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'>Generating an alert is childs play in
+snort. Internally the system uses a function GenerateSnortAlert that will write
+out the alert for us.The first three values are the gen id, sig id and revision
+id. Then we have the classification, followed by the priority. Finally a
+message. There is also a function LogTagData taht simply logs only.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-family:Tahoma;
+mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/snortprogramming.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:35 GMT -->
+</html>

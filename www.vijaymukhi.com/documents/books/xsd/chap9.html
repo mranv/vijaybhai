@@ -1,0 +1,2650 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:13 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap9_files/filelist.html">
+<link rel=Edit-Time-Data href="chap9_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Schema Definition - 9. The XSD Program</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>vmukhi</o:Author>
+  <o:LastAuthor>vmukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>32</o:TotalTime>
+  <o:Created>2002-01-20T08:44:00Z</o:Created>
+  <o:LastSaved>2002-01-20T08:44:00Z</o:LastSaved>
+  <o:Pages>18</o:Pages>
+  <o:Words>6294</o:Words>
+  <o:Characters>35879</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>298</o:Lines>
+  <o:Paragraphs>71</o:Paragraphs>
+  <o:CharactersWithSpaces>44061</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.figure1, li.figure1, div.figure1
+	{mso-style-name:figure1;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:"Chap Name";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapName1, li.ChapName1, div.ChapName1
+	{mso-style-name:"Chap Name1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:ChapName;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><img width=103
+height=77 id="_x0000_i1027" src=bpb.gif><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>9.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>The XSD Program </span><span
+style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This chapter
+acquaints you with the XML Schema Definition tool (XSD), which generates either
+the XML schema or the classes in diverse languages, such as C#, Visual Basic
+and JavaScript. The default language is C#. The input to XSD can be either one
+of the following files: XDR files, xml files or XSD files. Furthermore, the
+classes dwelling in a DLL file or an exe file can also be supplied to the XSD
+tool.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We cast off with
+the simplest form, wherein an xml file has to be converted into an xsd file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XSD command
+is executed as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>c:\xmlprg&gt;xsd b.xml<o:p></o:p></p>
+
+<p class=ILoutput>Microsoft (R) Xml Schemas/DataTypes support utility<o:p></o:p></p>
+
+<p class=ILoutput>[Microsoft (R) .NET Framework, Version 1.0.3328.4]<o:p></o:p></p>
+
+<p class=ILoutput>Copyright (C) Microsoft Corporation 1998-2001. All rights
+reserved.<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Error: There was an error processing 'b.xml'.<o:p></o:p></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>- The root element
+is missing.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>If you would like more help, please type &quot;xsd /?&quot;.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The program
+generates the above error. This error can be attributed to the fact that the
+file is devoid of the mandatory root or starting element, which every xml file
+must possess. The xml file is now modified to include a single root element
+named zzz.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;zzz&quot; xmlns=&quot;&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:choice maxOccurs=&quot;unbounded&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above file is
+generated by the XSD program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xsd file,
+the schema element has an id, which is similar to the root tag. The
+targetNamespace is left blank. The familiar old xs namespace prefix points to
+the default URI. The namespace prefix needs to be initialized appropriately,
+since the attributes are being used from the msdata namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This is followed
+by the root element zzz with the attribute IsDataSet set to true, since it is
+assumed to be a data set. Since there are no child items within the zzz root,
+the choice is left empty within the anonymous complex type.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; hi &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;NewDataSet&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:choice maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;zzz&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:choice&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file has
+two child elements named aaa and bbb within the root element zzz, containing
+'hi' and 10, respectively. In the xsd file, the schema id changes to the
+NewDataSet. A new element zzz gets created, which was not present earlier. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The sequence
+element now contains the two child elements named aaa and bbb. The IsDataSet
+element, which is contained in the element NewDataSet, is assigned the value of
+true and in the choice, it now refers to the element zzz. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above two
+examples amply substantiate the fact that an xsd file can be created from an
+existing Xml file. However, what is more imperative is the creation of a run
+time class from an xsd file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Create the
+smallest possible xsd file as depicted above, embodying<span
+style="mso-spacerun: yes">  </span>merely the schema element and the xs
+namespace prefix. Now, execute the XSD program as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput>c:\xmlprg&gt;xsd /d b.xsd<o:p></o:p></p>
+
+<p class=ILoutput>Microsoft (R) Xml Schemas/DataTypes support utility<o:p></o:p></p>
+
+<p class=ILoutput>[Microsoft (R) .NET Framework, Version 1.0.3328.4]<o:p></o:p></p>
+
+<p class=ILoutput>Copyright (C) Microsoft Corporation 1998-2001. All rights
+reserved.<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Writing file 'c:\xmlprg\b.cs'.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The /d option
+directs the XSD program to generate a Dataset class. The filename is b.cs,
+having contents as depicted below:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.cs</u><o:p></o:p></p>
+
+<p class=ILprg>//------------------------------------------------------------------------------<o:p></o:p></p>
+
+<p class=ILprg>// &lt;autogenerated&gt;<o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>This code was
+generated by a tool.<o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>Runtime Version:
+1.0.3328.4<o:p></o:p></p>
+
+<p class=ILprg>//<o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>Changes to this
+file may cause incorrect behavior and will be lost if <o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>the code is
+regenerated.<o:p></o:p></p>
+
+<p class=ILprg>// &lt;/autogenerated&gt;<o:p></o:p></p>
+
+<p class=ILprg>//------------------------------------------------------------------------------<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>// <o:p></o:p></p>
+
+<p class=ILprg>// This source code was auto-generated by xsd,
+Version=1.0.3328.4.<o:p></o:p></p>
+
+<p class=ILprg>// <o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Serialization;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>[Serializable()]<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.DesignerCategoryAttribute(&quot;code&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[System.Diagnostics.DebuggerStepThrough()]<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.ToolboxItem(true)]<o:p></o:p></p>
+
+<p class=ILprg>public class NewDataSet : DataSet {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>public NewDataSet() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.InitClass();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler
+= new System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.Tables.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.Relations.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>protected
+NewDataSet(SerializationInfo info, StreamingContext context) {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>string strSchema =
+((string)(info.GetValue(&quot;XmlSchema&quot;, typeof(string))));<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>if ((strSchema !=
+null)) {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">            </span>DataSet ds =
+new DataSet();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>ds.ReadXmlSchema(new XmlTextReader(new
+System.IO.StringReader(strSchema)));<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">            </span>this.DataSetName
+= ds.DataSetName;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">            </span>this.Prefix =
+ds.Prefix;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.Namespace = ds.Namespace;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">            </span>this.Locale =
+ds.Locale;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.CaseSensitive = ds.CaseSensitive;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.EnforceConstraints = ds.EnforceConstraints;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.Merge(ds, false, System.Data.MissingSchemaAction.Add);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>else {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.InitClass();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.GetSerializationData(info, context);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler
+= new System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.Tables.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.Relations.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span><span
+style="mso-spacerun: yes"> </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>public override
+DataSet Clone() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>NewDataSet cln =
+((NewDataSet)(base.Clone()));<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>cln.InitVars();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>return cln;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>protected override
+bool ShouldSerializeTables() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>return false;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>protected override
+bool ShouldSerializeRelations() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>return false;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>protected override
+void ReadXmlSerializable(XmlReader reader) <span style='mso-tab-count:2'>               </span>{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Reset();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>DataSet ds = new
+DataSet();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>ds.ReadXml(reader);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.DataSetName
+= ds.DataSetName;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Prefix =
+ds.Prefix;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Namespace =
+ds.Namespace;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Locale =
+ds.Locale;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.CaseSensitive = ds.CaseSensitive;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.EnforceConstraints = ds.EnforceConstraints;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Merge(ds,
+false, System.Data.MissingSchemaAction.Add);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>protected override
+System.Xml.Schema.XmlSchema GetSchemaSerializable() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>System.IO.MemoryStream stream = new System.IO.MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.WriteXmlSchema(new XmlTextWriter(stream, null));<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>stream.Position =
+0;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>return
+System.Xml.Schema.XmlSchema.Read(new XmlTextReader(stream), null);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>internal void
+InitVars() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>private void
+InitClass() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.DataSetName
+= &quot;NewDataSet&quot;;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Prefix =
+&quot;&quot;;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Namespace =
+&quot;&quot;;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>this.Locale = new
+System.Globalization.CultureInfo(&quot;en-US&quot;);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.CaseSensitive = false;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">       
+</span>this.EnforceConstraints = true;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>private void
+SchemaChanged(object sender, System.ComponentModel.CollectionChangeEventArgs e)
+{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>if ((e.Action ==
+System.ComponentModel.CollectionChangeAction.Remove)) {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">           
+</span>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>}<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file b.cs is
+a C# program, which commences with the 'using' statements for the namespaces.
+If you have read our books on C#, you would surely know why these 'using'
+statements can be safely overlooked. A class named NewDataSet is created, and
+this name is chosen as the default name, since no specific name has been
+assigned for the DataSet class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This class is
+also derived from the DataSet class because of the /d option that has been used
+with the XSD program. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>There are two
+attributes that qualify the NewDataSet class. The first attribute is
+Serializable, which is placed on a class that can be serialized, and thus, it
+can never be inherited. Classes that contain pointers should not possess the
+Serializable attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The second
+attribute is DesignerCategoryAttribute, which is associated with the class that
+is used to implement the design time services. In our case, the string
+parameter is the type that provides the design time services. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Both the
+constructors in the class NewDataSet call a function called InitClass. The
+'this' keyword is redundant. The program generated code generally contains
+substantial amount of superfluous material, which can be safely done away with.
+<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the function
+InitClass, the name of the DataSetName property is set to NewDataSet. This
+property stores the name of the current DataSet, which is the actual name of
+the DataSet and not the name of the class derived from the DataSet class. The
+Namespace property is set to 'null'. This property is utilized only while
+differentiating between attributes and elements from the XML data into a
+DataSet.<span style="mso-spacerun: yes">     </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The constructor
+that accepts two parameters calls a function named GetSerializationData. The
+SerializationInfo parameter contains the data essential to serialize or
+deserialize an object. The StreamingContext parameter stipulates the source and
+destination of a specified serialized stream. The above parameters are used
+while implementing an XmlSerializable interface, which is the task of the
+function GetSerializationData.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We shall be
+unraveling the remaining functions created by the XSD program in a short while,
+but first let us expound the xsd file in greater depth.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:schema id=&quot;zzz1&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:element name=&quot;Customers&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xsd:element
+name=&quot;CustomerID&quot; minOccurs=&quot;0&quot;
+type=&quot;xsd:string&quot;/</span>&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:element name=&quot;CompanyName&quot;
+minOccurs=&quot;0&quot; type=&quot;xsd:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:element name=&quot;zzz&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:choice maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xsd:element ref=&quot;Customers&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:choice&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xsd:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xsd file has
+the schema tag with the id attribute, that has a value of zzz1. Then ensues the
+element named zzz that represents a DataSet, since the attribute IsDataSet is
+set to true. The choice element has only one element that refers to Customers.
+The Customers element also has two fields named CustomerID and CompanyName. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We want you to
+visualize the xsd file as a DataSet zzz with a table Customers containing two
+fields named CustomerID and CompanyName.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&gt;xsd.exe /d /l:C# b.xsd<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XSD program
+utility is employed to create a file named b.cs with the /d option, thereby ensuring
+that the class is derived from a data set class. The other option of /l that
+exists for the language, is optional since the default language used is C#. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&gt;csc.exe /t:library b.cs <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The compiler is
+then called to create a dll file named b.dll from the file named b.cs.<o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data.SqlClient;<o:p></o:p></p>
+
+<p class=ILprg>public class aaa {<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() {<o:p></o:p></p>
+
+<p class=ILprg>zzz b = new zzz();<o:p></o:p></p>
+
+<p class=ILprg>SqlConnection s = new
+SqlConnection(&quot;server=(local)\\NetSDK;database=northwind;<o:p></o:p></p>
+
+<p class=ILprg>Trusted_Connection=yes&quot;);<o:p></o:p></p>
+
+<p class=ILprg>SqlDataAdapter a = new SqlDataAdapter(&quot;SELECT * FROM
+Customers&quot;,s);<o:p></o:p></p>
+
+<p class=ILprg>a.Fill(b, &quot;Customers&quot;);<o:p></o:p></p>
+
+<p class=ILprg>foreach(zzz.CustomersRow c in b.Customers)<o:p></o:p></p>
+
+<p class=ILprg>Console.WriteLine(c.CustomerID + &quot; &quot; + c.CompanyName);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>&gt;csc a.cs /r:b.dll<span style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The C# program
+above employs the code generated by the XSD program to retrieve data from a
+database. Firstly, the object 'b', which looks like class zzz, is created.
+Although the class zzz is not present anywhere in the file a.cs, no error
+emanates since it is present in the dll file named 'b'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XSD program
+creates the file b.cs, which is then used to create the file b.dll. Thus, the
+name of the element in the xsd file with the IsDataSet attribute set to true,
+determines the name of the class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The
+SqlDataAdapter class is used to specify the Select statement that will fetch
+all the records from the Customers table. The second parameter is the
+'connection' string that specifies the Data Source, which indicates that the
+server is located on the same machine.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The user id (uid)
+is 'sa' and the password is blank. The initial database or catalog is
+NorthWind, which contains the Customers table. The SqlDataAdapter class has a
+function called Fill that requires two parameters to do the mapping, viz. the
+dataset that is to be filled with data and the source table Customers. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Towards the
+culmination of this function call, the data set 'b' contains all the data from
+the SQL select statement. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The dataset
+object 'b' embodies a property called Customers, which returns an object that
+looks like the class CustomersRow from the zzz class. The 'foreach' statement
+is used to fetch the records. Thus, if there are 100 rows of data, the loop
+repeats a 100 times. In each iteration, 'c' represents a fresh record. The
+CustomersRow class has two properties, viz.<span style="mso-spacerun: yes"> 
+</span>CustomerID and CompanyName, whose values are displayed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When the program
+'a' is executed, the output that is generated provides a list of all the
+customer IDs, followed by the name of the company. Both of these are valid
+fields in the Customers table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A listing and
+explanation of the file b.cs now ensues.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.cs</u><o:p></o:p></p>
+
+<p class=ILprg>//------------------------------------------------------------------------------<o:p></o:p></p>
+
+<p class=ILprg>// &lt;autogenerated&gt;<o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>This code was
+generated by a tool.<o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>Runtime Version:
+1.0.3328.4<o:p></o:p></p>
+
+<p class=ILprg>//<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.0pt'>//<span style="mso-spacerun:
+yes">     </span>Changes to this file may cause incorrect behavior and will be
+lost if </span><o:p></o:p></p>
+
+<p class=ILprg>//<span style="mso-spacerun: yes">     </span>the code is
+regenerated.<o:p></o:p></p>
+
+<p class=ILprg>// &lt;/autogenerated&gt;<o:p></o:p></p>
+
+<p class=ILprg>//------------------------------------------------------------------------------<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>// <o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.0pt'>// This source code was
+auto-generated by xsd, Version=1.0.3328.4.</span><o:p></o:p></p>
+
+<p class=ILprg>// <o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data;<o:p></o:p></p>
+
+<p class=ILprg>using System.Xml;<o:p></o:p></p>
+
+<p class=ILprg>using System.Runtime.Serialization;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>[Serializable()]<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.DesignerCategoryAttribute(&quot;code&quot;)]<o:p></o:p></p>
+
+<p class=ILprg>[System.Diagnostics.DebuggerStepThrough()]<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.ToolboxItem(true)]<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : DataSet {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span><o:p></o:p></p>
+
+<p class=ILprg>private CustomersDataTable tableCustomers;<o:p></o:p></p>
+
+<p class=ILprg>public zzz() {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>this.InitClass();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun:
+yes"> </span>System.ComponentModel.CollectionChangeEventHandler<span
+style="mso-spacerun: yes">    </span>schemaChangedHandler = new
+System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> 
+</span>this.Tables.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> 
+</span>this.Relations.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected zzz(SerializationInfo info, StreamingContext context)
+{<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>string strSchema =
+((string)(info.GetValue(&quot;XmlSchema&quot;, typeof(string))));<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>if ((strSchema !=
+null)) {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>DataSet ds = new
+DataSet();<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>ds.ReadXmlSchema(new
+XmlTextReader(new System.IO.StringReader(strSchema)));<o:p></o:p></p>
+
+<p class=ILprg>if ((ds.Tables[&quot;Customers&quot;] != null)) {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   </span>this.Tables.Add(new
+CustomersDataTable(ds.Tables[&quot;Customers&quot;]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>this.DataSetName = ds.DataSetName;<o:p></o:p></p>
+
+<p class=ILprg>this.Prefix = ds.Prefix;<o:p></o:p></p>
+
+<p class=ILprg>this.Namespace = ds.Namespace;<o:p></o:p></p>
+
+<p class=ILprg>this.Locale = ds.Locale;<o:p></o:p></p>
+
+<p class=ILprg>this.CaseSensitive = ds.CaseSensitive;<o:p></o:p></p>
+
+<p class=ILprg>this.EnforceConstraints = ds.EnforceConstraints;<o:p></o:p></p>
+
+<p class=ILprg>this.Merge(ds, false, System.Data.MissingSchemaAction.Add);<o:p></o:p></p>
+
+<p class=ILprg>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>else {<o:p></o:p></p>
+
+<p class=ILprg>this.InitClass();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>this.GetSerializationData(info, context);<o:p></o:p></p>
+
+<p class=ILprg>System.ComponentModel.CollectionChangeEventHandler
+schemaChangedHandler = new
+System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);<o:p></o:p></p>
+
+<p class=ILprg>this.Tables.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg>this.Relations.CollectionChanged += schemaChangedHandler;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.Browsable(false)]<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.DesignerSerializationVisibilityAttribute<o:p></o:p></p>
+
+<p class=ILprg>(System.ComponentModel.DesignerSerializationVisibility.Content)]<o:p></o:p></p>
+
+<p class=ILprg>public CustomersDataTable Customers {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>return
+this.tableCustomers;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override DataSet Clone() {<o:p></o:p></p>
+
+<p class=ILprg>zzz cln = ((zzz)(base.Clone()));<o:p></o:p></p>
+
+<p class=ILprg>cln.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>return cln;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override bool ShouldSerializeTables() {<o:p></o:p></p>
+
+<p class=ILprg>return false;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override bool ShouldSerializeRelations() {<o:p></o:p></p>
+
+<p class=ILprg>return false;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override void ReadXmlSerializable(XmlReader reader) {<o:p></o:p></p>
+
+<p class=ILprg>this.Reset();<o:p></o:p></p>
+
+<p class=ILprg>DataSet ds = new DataSet();<o:p></o:p></p>
+
+<p class=ILprg>ds.ReadXml(reader);<o:p></o:p></p>
+
+<p class=ILprg>if ((ds.Tables[&quot;Customers&quot;] != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.Tables.Add(new
+CustomersDataTable(ds.Tables[&quot;Customers&quot;]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>this.DataSetName = ds.DataSetName;<o:p></o:p></p>
+
+<p class=ILprg>this.Prefix = ds.Prefix;<o:p></o:p></p>
+
+<p class=ILprg>this.Namespace = ds.Namespace;<o:p></o:p></p>
+
+<p class=ILprg>this.Locale = ds.Locale;<o:p></o:p></p>
+
+<p class=ILprg>this.CaseSensitive = ds.CaseSensitive;<o:p></o:p></p>
+
+<p class=ILprg>this.EnforceConstraints = ds.EnforceConstraints;<o:p></o:p></p>
+
+<p class=ILprg>this.Merge(ds, false, System.Data.MissingSchemaAction.Add);<o:p></o:p></p>
+
+<p class=ILprg>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override System.Xml.Schema.XmlSchema
+GetSchemaSerializable() {<o:p></o:p></p>
+
+<p class=ILprg>System.IO.MemoryStream stream = new System.IO.MemoryStream();<o:p></o:p></p>
+
+<p class=ILprg>this.WriteXmlSchema(new XmlTextWriter(stream, null));<o:p></o:p></p>
+
+<p class=ILprg>stream.Position = 0;<o:p></o:p></p>
+
+<p class=ILprg>return System.Xml.Schema.XmlSchema.Read(new XmlTextReader(stream),
+null);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>internal void InitVars() {<o:p></o:p></p>
+
+<p class=ILprg>this.tableCustomers =
+((CustomersDataTable)(this.Tables[&quot;Customers&quot;]));<o:p></o:p></p>
+
+<p class=ILprg>if ((this.tableCustomers != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.tableCustomers.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>private void InitClass() {<o:p></o:p></p>
+
+<p class=ILprg>this.DataSetName = &quot;zzz&quot;;<o:p></o:p></p>
+
+<p class=ILprg>this.Prefix = &quot;&quot;;<o:p></o:p></p>
+
+<p class=ILprg>this.Namespace = &quot;&quot;;<o:p></o:p></p>
+
+<p class=ILprg>this.Locale = new
+System.Globalization.CultureInfo(&quot;en-US&quot;);<o:p></o:p></p>
+
+<p class=ILprg>this.CaseSensitive = false;<o:p></o:p></p>
+
+<p class=ILprg>this.EnforceConstraints = true;<o:p></o:p></p>
+
+<p class=ILprg>this.tableCustomers = new CustomersDataTable();<o:p></o:p></p>
+
+<p class=ILprg>this.Tables.Add(this.tableCustomers);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>private bool ShouldSerializeCustomers() {<o:p></o:p></p>
+
+<p class=ILprg>return false;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>private void SchemaChanged(object sender,
+System.ComponentModel.CollectionChangeEventArgs e) {<o:p></o:p></p>
+
+<p class=ILprg>if ((e.Action ==
+System.ComponentModel.CollectionChangeAction.Remove)) {<o:p></o:p></p>
+
+<p class=ILprg>this.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public delegate void CustomersRowChangeEventHandler(object
+sender, CustomersRowChangeEvent e);<o:p></o:p></p>
+
+<p class=ILprg>[System.Diagnostics.DebuggerStepThrough()]<o:p></o:p></p>
+
+<p class=ILprg>public class CustomersDataTable : DataTable,
+System.Collections.IEnumerable {<o:p></o:p></p>
+
+<p class=ILprg>private DataColumn columnCustomerID;<o:p></o:p></p>
+
+<p class=ILprg>private DataColumn columnCompanyName;<o:p></o:p></p>
+
+<p class=ILprg>internal CustomersDataTable() : <o:p></o:p></p>
+
+<p class=ILprg>base(&quot;Customers&quot;) {<o:p></o:p></p>
+
+<p class=ILprg>this.InitClass();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>internal CustomersDataTable(DataTable table) : <o:p></o:p></p>
+
+<p class=ILprg>base(table.TableName) {<o:p></o:p></p>
+
+<p class=ILprg>if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {<o:p></o:p></p>
+
+<p class=ILprg>this.CaseSensitive = table.CaseSensitive;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ((table.Locale.ToString() !=
+table.DataSet.Locale.ToString())) {<o:p></o:p></p>
+
+<p class=ILprg>this.Locale = table.Locale;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>if ((table.Namespace != table.DataSet.Namespace)) {<o:p></o:p></p>
+
+<p class=ILprg>this.Namespace = table.Namespace;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>this.Prefix = table.Prefix;<o:p></o:p></p>
+
+<p class=ILprg>this.MinimumCapacity = table.MinimumCapacity;<o:p></o:p></p>
+
+<p class=ILprg>this.DisplayExpression = table.DisplayExpression;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.ComponentModel.Browsable(false)]<o:p></o:p></p>
+
+<p class=ILprg>public int Count {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return this.Rows.Count;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>internal DataColumn CustomerIDColumn {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return this.columnCustomerID;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>internal DataColumn CompanyNameColumn {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return this.columnCompanyName;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public CustomersRow this[int index] {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return ((CustomersRow)(this.Rows[index]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public event CustomersRowChangeEventHandler CustomersRowChanged;<o:p></o:p></p>
+
+<p class=ILprg>public event CustomersRowChangeEventHandler
+CustomersRowChanging;<o:p></o:p></p>
+
+<p class=ILprg>public event CustomersRowChangeEventHandler CustomersRowDeleted;<o:p></o:p></p>
+
+<p class=ILprg>public event CustomersRowChangeEventHandler
+CustomersRowDeleting;<o:p></o:p></p>
+
+<p class=ILprg>public void AddCustomersRow(CustomersRow row) {<o:p></o:p></p>
+
+<p class=ILprg>this.Rows.Add(row);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public CustomersRow AddCustomersRow(string CustomerID, string
+CompanyName) {<o:p></o:p></p>
+
+<p class=ILprg>CustomersRow rowCustomersRow = ((CustomersRow)(this.NewRow()));<o:p></o:p></p>
+
+<p class=ILprg>rowCustomersRow.ItemArray = new object[] {<o:p></o:p></p>
+
+<p class=ILprg>CustomerID,CompanyName};<o:p></o:p></p>
+
+<p class=ILprg>this.Rows.Add(rowCustomersRow);<o:p></o:p></p>
+
+<p class=ILprg>return rowCustomersRow;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public System.Collections.IEnumerator GetEnumerator() {<o:p></o:p></p>
+
+<p class=ILprg>return this.Rows.GetEnumerator();<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public override DataTable Clone() {<o:p></o:p></p>
+
+<p class=ILprg>CustomersDataTable cln = ((CustomersDataTable)(base.Clone()));<o:p></o:p></p>
+
+<p class=ILprg>cln.InitVars();<o:p></o:p></p>
+
+<p class=ILprg>return cln;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>internal void InitVars() {<o:p></o:p></p>
+
+<p class=ILprg>this.columnCustomerID = this.Columns[&quot;CustomerID&quot;];<o:p></o:p></p>
+
+<p class=ILprg>this.columnCompanyName = this.Columns[&quot;CompanyName&quot;];<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>private void InitClass() {<o:p></o:p></p>
+
+<p class=ILprg>this.columnCustomerID = new DataColumn(&quot;CustomerID&quot;,
+typeof(string), null, System.Data.MappingType.Element);<o:p></o:p></p>
+
+<p class=ILprg>this.Columns.Add(this.columnCustomerID);<o:p></o:p></p>
+
+<p class=ILprg>this.columnCompanyName = new DataColumn(&quot;CompanyName&quot;,
+typeof(string), null, System.Data.MappingType.Element);<o:p></o:p></p>
+
+<p class=ILprg>this.Columns.Add(this.columnCompanyName);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public CustomersRow NewCustomersRow() {<o:p></o:p></p>
+
+<p class=ILprg>return ((CustomersRow)(this.NewRow()));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override DataRow NewRowFromBuilder(DataRowBuilder
+builder) {<o:p></o:p></p>
+
+<p class=ILprg>return new CustomersRow(builder);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override System.Type GetRowType() {<o:p></o:p></p>
+
+<p class=ILprg>return typeof(CustomersRow);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override void OnRowChanged(DataRowChangeEventArgs e) {<o:p></o:p></p>
+
+<p class=ILprg>base.OnRowChanged(e);<o:p></o:p></p>
+
+<p class=ILprg>if ((this.CustomersRowChanged != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.CustomersRowChanged(this, new
+CustomersRowChangeEvent(((CustomersRow)(e.Row)), e.Action));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>protected override void OnRowChanging(DataRowChangeEventArgs e)
+{<o:p></o:p></p>
+
+<p class=ILprg>base.OnRowChanging(e);<o:p></o:p></p>
+
+<p class=ILprg>if ((this.CustomersRowChanging != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.CustomersRowChanging(this, new
+CustomersRowChangeEvent(((CustomersRow)(e.Row)), e.Action));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>protected override void
+OnRowDeleted(DataRowChangeEventArgs e) {</span><o:p></o:p></p>
+
+<p class=ILprg>base.OnRowDeleted(e);<o:p></o:p></p>
+
+<p class=ILprg>if ((this.CustomersRowDeleted != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.CustomersRowDeleted(this, new
+CustomersRowChangeEvent(((CustomersRow)(e.Row)), e.Action));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>protected override void
+OnRowDeleting(DataRowChangeEventArgs e) {<o:p></o:p></span></p>
+
+<p class=ILprg>base.OnRowDeleting(e);<o:p></o:p></p>
+
+<p class=ILprg>if ((this.CustomersRowDeleting != null)) {<o:p></o:p></p>
+
+<p class=ILprg>this.CustomersRowDeleting(this, new
+CustomersRowChangeEvent(((CustomersRow)(e.Row)), e.Action));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void RemoveCustomersRow(CustomersRow row) {<o:p></o:p></p>
+
+<p class=ILprg>this.Rows.Remove(row);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Diagnostics.DebuggerStepThrough()]<o:p></o:p></p>
+
+<p class=ILprg>public class CustomersRow : DataRow {<o:p></o:p></p>
+
+<p class=ILprg>private CustomersDataTable tableCustomers;<o:p></o:p></p>
+
+<p class=ILprg>internal CustomersRow(DataRowBuilder rb) : <o:p></o:p></p>
+
+<p class=ILprg>base(rb) {<o:p></o:p></p>
+
+<p class=ILprg>this.tableCustomers = ((CustomersDataTable)(this.Table));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public string CustomerID {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>try {<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(this[this.tableCustomers.CustomerIDColumn]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>catch (InvalidCastException e) {<o:p></o:p></p>
+
+<p class=ILprg>throw new StrongTypingException(&quot;Cannot get value because
+it is DBNull.&quot;, e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set {<o:p></o:p></p>
+
+<p class=ILprg>this[this.tableCustomers.CustomerIDColumn] = value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public string CompanyName {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>try {<o:p></o:p></p>
+
+<p class=ILprg>return ((string)(this[this.tableCustomers.CompanyNameColumn]));<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>catch (InvalidCastException e) {<o:p></o:p></p>
+
+<p class=ILprg>throw new StrongTypingException(&quot;Cannot get value because
+it is DBNull.&quot;, e);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>set {<o:p></o:p></p>
+
+<p class=ILprg>this[this.tableCustomers.CompanyNameColumn] = value;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public bool IsCustomerIDNull() {<o:p></o:p></p>
+
+<p class=ILprg>return this.IsNull(this.tableCustomers.CustomerIDColumn);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void SetCustomerIDNull() {<o:p></o:p></p>
+
+<p class=ILprg>this[this.tableCustomers.CustomerIDColumn] =
+System.Convert.DBNull;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public bool IsCompanyNameNull() {<o:p></o:p></p>
+
+<p class=ILprg>return this.IsNull(this.tableCustomers.CompanyNameColumn);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public void SetCompanyNameNull() {<o:p></o:p></p>
+
+<p class=ILprg>this[this.tableCustomers.CompanyNameColumn] =
+System.Convert.DBNull;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>[System.Diagnostics.DebuggerStepThrough()]<o:p></o:p></p>
+
+<p class=ILprg>public class CustomersRowChangeEvent : EventArgs {<o:p></o:p></p>
+
+<p class=ILprg>private CustomersRow eventRow;<o:p></o:p></p>
+
+<p class=ILprg>private DataRowAction eventAction;<o:p></o:p></p>
+
+<p class=ILprg>public CustomersRowChangeEvent(CustomersRow row, DataRowAction
+action) {<o:p></o:p></p>
+
+<p class=ILprg>this.eventRow = row;<o:p></o:p></p>
+
+<p class=ILprg>this.eventAction = action;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public CustomersRow Row {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return this.eventRow;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public DataRowAction Action {<o:p></o:p></p>
+
+<p class=ILprg>get {<o:p></o:p></p>
+
+<p class=ILprg>return this.eventAction;<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The file begins
+with the class zzz. Thus, the name of the element containing the attribute of
+IsDataSet, evolves not only into the name of the dataset but also into the name
+of the class. This class is referred to in the C# program named a.cs. The
+constructors do not initiate anything innovative; and therefore, they are not
+discussed here. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the InitClass
+function, the tableCustomers instance variable is initialized to a new
+CustomersDataTable object. The Tables property of type DataTableCollection
+maintains track of all the tables in the DataSet. As usual, the Add function is
+used to add the Customers table to the existing collection of tables in the
+DataSet.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XSD program
+creates the instance variable tableCustomers as an instance of a class
+CustomersDataTable. What is noteworthy in the xsd file is that if the element
+name is changed from Customer to Customer1, all occurrences of the word
+'Customer' in this file get modified to 'Customer1'. Thus, tableCustomers becomes
+tableCustomers1 and the class CustomersDataTable transforms into
+Customers1DataTable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the 'foreach'
+statement, the property of Customers in the class zzz is cited in order to
+return the object tableCustomers, since it represents a single record. This
+property is a 'read only' property, since it comprises of only the 'get'
+accessor. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>There are two
+attributes flanking this property. The first one is the Browsable attribute,
+which does not get displayed in the properties window, because it has a value
+of false. Normally, the 'read only' property is seldom showcased in a product
+like Visual Studio.Net.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The second
+property named DesignerSerializationVisibilityAttribute merely identifies the
+manner in which the property should be saved by a designer, such as Visual
+Studio.Net. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the normal
+course, products that boast of visual effects, save the values of all
+read/write properties by assigning the value directly to the property. This is
+exactly what the default value of Visible does. If the value is concealed, the
+designer does not serialize this property <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The last value of
+content allows the serializing of the contents of the property and not of the
+property itself. This is ideal in a situation wherein the items in a collection
+need to be accessed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The next class
+that gets created is the CustomersDataTable class. This class is derived from
+DataTable and it represents the actual data. This is because a dataset does not
+carry data; it only contains data tables, which in turn carry the data. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The IEnumerable
+interface that the class derives from, ushers in the property of a collection
+class. The two elements in the xsd file evolve into DataColumn objects in this
+class. The element CustomerID becomes columnCustomerID, i.e. the word 'column'
+gets added to the file or element name. The same holds true for the CompanyName
+too. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The constructor
+of this class first calls the base Constructor of the DataTable class, followed
+by a function named InitClass. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The function
+InitClass initializes the two DataColumn objects columnCustomerID and
+columnCompanyID. The following four parameters are passed to the constructor: <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The first is the
+ColumnName, which is the name of the column CustomerID.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The second is the
+data type that is lifted from the xsd file, string as a Type. <o:p></o:p></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The third parameter
+is an expression that can be used to create this column, which presently is
+assigned a value of null, since this value currently holds no significance. <o:p></o:p></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The fourth and
+final parameter is the MappingType parameter. This parameter determines how a DataColumn
+should be mapped on conversion to an Xml file. <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>There are four
+possible values that can be assigned to Attributes, to convert the value of
+this column into an attribute. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, if the
+CustomerID is assigned the name 'Vijay' in the XML, it will get converted into
+the attribute CustomerID=&quot;vijay&quot;. However, if it is assigned the
+value of Element instead, then it will get converted into &lt;CustomerID&gt;
+vijay &lt;/CustomerID&gt; in the Xml file. The third option is to assign the
+value of Hidden, in which case, it is mapped to an internal structure. The
+fourth possible option is the value of SimpleContent, which maps to an XmlText
+node. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>As witnessed in
+the case of a Tables collection, these two columns are appended to the
+DataColumnCollection using the Add function.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Next, the class
+called CustomersRow gets created. This class is derived from DataRow. The
+DataRow class represents a row of data in a DataTable. This class is used to
+pick up values from a Data Table. Since there are two fields in the xsd file, the
+file contains two properties with identical names.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The first
+property is CustomerID, which is a read/write property. In the 'get' accessor,
+the value of the CustomerIDColumn property that is present in the
+tableCustomers object, is duly returned.<span style="mso-spacerun: yes"> 
+</span>The CustomerIDColumn property is a 'read only' property. It simply
+returns the value of the DataColumn instance variable columnCustomerID. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The CustomerID
+value is used to refer into the indexer of the CustomersRow class and to fetch
+the actual value. The indexer of the parent DataRow class is brought into play,
+since there are no indexers in the class. Thereafter, the tableCustomers
+object, which is present in the class CustomersRow, is initialized by the
+constructor to the value stored in the Table property.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the present
+case, this property represents the Table Customers. If the value of the columns
+happens to be null, an exception will get thrown at runtime.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Now, let us
+examine the sequence of functions and try to comprehend the ones that have not
+been explicated so far. In the file b.cs, the WriteLine function is placed in
+every single function, and thereafter, the file is compiled into a dll. In this
+manner, every function that gets called is verified. Moreover, the sequence and
+the number of times that it can get called, are also verified.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The constructor
+with a single parameter is never called. The first function to be called is the
+no parameter constructor of the zzz class. This is followed by the function
+InitClass, which in turn creates an object like CustomersDataTable, whose
+constructor gets called next. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Here, the
+InitClass function is called again, which in turn creates two DataColumn
+objects. These functions are called by the constructor of the zzz class.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The next set of
+functions is called by the Fill function. The function GetRowType gets called,
+which returns the type of the row that exists in the Table. In our case, the
+typeof function that returns the type of row is CustomersRow, which has two
+columns. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thereafter, we
+encounter a series of six functions, each of which is called several times. It
+starts with the function NewRowFromBuilder. This function gets called whenever
+the builder wants a new row, having the same schema as the data table. It is
+but evident that all the rows are typed rows, but a new object that looks like
+CustomersRow is created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This results in a
+call to the constructor of the CustomersRow class. Then, the third function to
+be called is OnRowChanging. The duty of this function is to raise the event
+RowChanging. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This event is
+fired whenever a row is being changed. The first task performed by this
+function is the calling of the base class function. The value of the event CustomersRowChanging
+is null, by reason of which the 'if' statement turns out to be false, and
+resultantly, no code gets executed.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Then, the
+function OnRowChanged gets called, which fires the RowChanged event. This event
+gets called whenever a row is modified successfully. As always, the base class
+event is called first and since the event CustomersRowChanged is null, the 'if'
+statement leads to a value of false. The above two functions get called again
+for reasons unknown, and the same procedure iterates again.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>These functions
+get called in a loop, contingent upon the number of rows contained in the data
+table. In the 'foreach' loop, the Customers property gets called only once. The
+'foreach' loop calls a function named GetEnumerator, which returns an object of
+type IEnumerator. Then, using the Rows properties, GetEnumerator returns the
+IEnumerator object.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Now, in order to
+return the values of the two fields, four functions are summoned. The 'get'
+accessor of the CustomerID property uses the indexer to return the current
+value. But first, the value of the CustomerIDColumn, which is a property in the
+CustomersDataTable class, is required. It returns a columnCustomerID value.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data;<o:p></o:p></p>
+
+<p class=ILprg>using System.Drawing;<o:p></o:p></p>
+
+<p class=ILprg>using System.Windows.Forms;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data.SqlClient;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : Form <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public static void Main() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>ccc c = new ccc();<o:p></o:p></p>
+
+<p class=ILprg>c.DataSetName=&quot;ccc&quot;;<o:p></o:p></p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;uid=sa;<o:p></o:p></p>
+
+<p class=ILprg>pwd=;database=northwind;Trusted_Connection=yes&quot;);<o:p></o:p></p>
+
+<p class=ILprg>SqlDataAdapter Cust = new SqlDataAdapter (&quot;Select * from
+Customers&quot;, con);<o:p></o:p></p>
+
+<p class=ILprg>SqlDataAdapter Ord = new SqlDataAdapter (&quot;Select * from
+Orders&quot;, con);<o:p></o:p></p>
+
+<p class=ILprg>Cust.Fill(c, &quot;Customers&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Ord.Fill(c, &quot;Orders&quot;);<o:p></o:p></p>
+
+<p class=ILprg>c.WriteXmlSchema(&quot;b.xsd&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class ccc : DataSet <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>cus tc;<o:p></o:p></p>
+
+<p class=ILprg>Orders to;<o:p></o:p></p>
+
+<p class=ILprg>DataRelation r;<o:p></o:p></p>
+
+<p class=ILprg>public ccc() <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>tc= new cus(&quot;Customers&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Tables.Add(this.tc);<o:p></o:p></p>
+
+<p class=ILprg>to= new Orders(&quot;Orders&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Tables.Add(this.to);<o:p></o:p></p>
+
+<p class=ILprg>r = new DataRelation(&quot;custord&quot;,tc.cID,to.oID);<o:p></o:p></p>
+
+<p class=ILprg>Relations.Add(r);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class cus : DataTable<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public DataColumn cID;<o:p></o:p></p>
+
+<p class=ILprg>public cus(string name) : base(name) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>cID = new DataColumn(&quot;CustomerID&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Columns.Add(cID);<o:p></o:p></p>
+
+<p class=ILprg>PrimaryKey = new System.Data.DataColumn[] {cID};<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public class Orders : DataTable<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>public DataColumn oID;<o:p></o:p></p>
+
+<p class=ILprg>public Orders(string name) : base(name) <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>oID = new DataColumn(&quot;CustomerID&quot;);<o:p></o:p></p>
+
+<p class=ILprg>Columns.Add(oID);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In our book
+titled 'C# classes', we have devoted considerable time and effort in
+elucidating the data handling capabilities of the .Net world. The above program
+has been transshipped from that book, albeit with slight modifications. Here,
+we shall be explaining the program in a nutshell. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Firstly, an
+object 'c' is created, which is an instance of the class ccc and whose base
+class is Dataset. In the constructor, the object tc of type cus is initialized.
+The type cus in turn, derives from the DataTable class. The constructor is
+assigned the name of the table, which in this case is Customer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the
+constructor of cus, a DataColumn object cID is created with the column name of
+CustomerID. Using the Columns collection, this column is added to the
+DataTable. Further, the PrimaryKey property of the table is set to this newly
+created column of CustomerID.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the same
+manner, an object 'to' of type Orders is created. Orders is also derived from
+the DataTable class. In the constructor of the Orders class, a DataColumn
+object, which is also called CustomerID, is created and added to the column
+collection. The name assigned to this DataTable is Orders. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The final outcome
+is that two tables are assigned a column named CustomerID, which is also made
+as the primary key in the Customers table. The two tables are added to the
+DataSet using the Tables Collection.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Now, let us set a
+relationship between the two tables named tc and to. The constructor of the
+DataRelation class is passed three parameters: <o:p></o:p></span></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The first is the
+name of the relationship, i.e. custord.<o:p></o:p></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The second is the
+parent or the 'one' part of the relationship.<o:p></o:p></p>
+
+<p class=ILbullets>·<span style='mso-tab-count:1'>    </span>The third is the
+child or the 'many' part of the relationship. <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The CustomerID
+field in the Customers table is made the parent, while the CustomerID field
+from the Orders table is made the child. Thus, for every CustomerID in the
+Customers table, there could exist multiple CustomerID records in the child.
+This Relation object is then added to the Relations collection. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Bear in mind that
+all this action takes place in the constructor of the ccc class. The DataSet
+object is assigned the name ccc and then, a connection object to SQLServer and
+the database called Northwind is created. Then, using two SqlDataAdapter
+objects named Cust and Ord, all the records from the Customers and Orders
+tables that are present in the Northwind database, are associated with each
+other. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The Fill function
+fills up the dataset object c with records from the Customers and Orders
+tables, which are present in SQLServer. The WriteXmlSchema function is then
+used to write out only the Schema in the file b.XSD. The data part can be
+safely disregarded here.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema id=&quot;ccc&quot; xmlns=&quot;&quot;
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:choice maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Customers&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;CustomerID&quot;
+type=&quot;xs:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;CompanyName&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot;
+/&gt;<o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ContactName&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot;
+/&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ContactTitle&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Address&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;City&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Region&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;PostalCode&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Country&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Phone&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Fax&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Orders&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;CustomerID&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;OrderID&quot; type=&quot;xs:int&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;EmployeeID&quot;
+type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;OrderDate&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot;
+/&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;RequiredDate&quot;
+type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShippedDate&quot; type=&quot;xs:dateTime&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipVia&quot; type=&quot;xs:int&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;Freight&quot;
+type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipName&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipAddress&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipCity&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipRegion&quot;
+type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ShipPostalCode&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ShipCountry&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:choice&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:unique name=&quot;Constraint1&quot;
+msdata:PrimaryKey=&quot;true&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:selector xpath=&quot;.//Customers&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:field xpath=&quot;CustomerID&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:unique&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:keyref name=&quot;custord&quot;
+refer=&quot;Constraint1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:selector xpath=&quot;.//Orders&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:field xpath=&quot;CustomerID&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:keyref&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The schema file
+b.xsd unearths nothing original in the schema element. The dataset is named ccc
+due to the element ccc, and the IsDataSet attribute is set to true. A table
+called Customers is created in the data set. Therefore, it becomes the first
+element called Customers containing the complexType of the dataset ccc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The element
+Customers is followed by an anonymous complexType, which lists out all the
+fields of the Customers table in sequence. The table in the Customers dataset
+has one DataColumn. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The child
+elements depicted here originate from the table called Customers, which is
+present in the database. Since the CustomerID field is unique, the minOccurs
+remains at its default value of 1, whereas the other elements have a minOccurs
+value of 0, due to which, defaults are permissible.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The second table
+is called Orders. Therefore, the element is followed by the fields of the
+Orders table in the SQLServer. All the elements have a minOccurs value of zero.
+The first complexType is followed by a choice element having a maxOccurs value
+of 'unbounded'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The element
+unique is named as Constarint1, which is a name generated by the system. The
+PrimaryKey attribute is set to true since the Primary key is set to the column
+CustomerID in the Customers Table. This section of the xsd file has been added
+to the DataSet. It does not have any association with the dataset. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xpath
+attribute in the selector element points to the Customers element. Here, the
+field that is unique or is a primary key, is specified by the files element and
+the xpath attribute. The keyref element is used to specify the DataRelation
+class. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The Name
+attribute has a value that is specified in the DataRelation constructor. The
+primary key is the 'refer' attribute, which has the value of Constraint1 or the
+field CustomerID in the Customers table. In the selector element, the xpath
+points to the child table or orders, while the field element uses the xpath
+attribute to point to the child column CustomerID.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above xsd
+file is created with the function WriteXmlSchema, which uses the tables in the
+database and the relational information provided in the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&gt;xsd.exe /d b.xsd<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XSD program
+is then used to generate a C# program named b.cs from the file b.xsd. For all
+that the XSD program cares, this file could have even been written by hand.
+Since the file b.cs is in excess of 1000 lines, we have every reason to eschew
+displaying t. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We would advise
+you to scan through the code with a fine comb, to be able to understand the
+classes that get generated. The vital point not to be missed here is that the
+xsd file need not necessarily be generated by a program. Instead, even we can
+create it ourselves. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Therefore, it is
+entirely your prerogative to determine<span style="mso-spacerun: yes"> 
+</span>whether the relationship is to be built using the data relation class,
+and also whether you want a program to write the xsd file for you, or you wish
+to write it yourself manually.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The classes in
+the file b.cs are then compiled to transform the file into a library file named
+b.dll, using the following command<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>&gt;csc.exe /t:library
+b.cs<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a1.cs</u><o:p></o:p></p>
+
+<p class=ILprg>using System;<o:p></o:p></p>
+
+<p class=ILprg>using System.ComponentModel;<o:p></o:p></p>
+
+<p class=ILprg>using System.Drawing;<o:p></o:p></p>
+
+<p class=ILprg>using System.Windows.Forms;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data;<o:p></o:p></p>
+
+<p class=ILprg>using System.Data.SqlClient;<o:p></o:p></p>
+
+<p class=ILprg>public class zzz : Form <o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>ccc c;<o:p></o:p></p>
+
+<p class=ILprg>DataGrid d;<o:p></o:p></p>
+
+<p class=ILprg>public zzz()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>d = new System.Windows.Forms.DataGrid();<o:p></o:p></p>
+
+<p class=ILprg>c = new ccc();<o:p></o:p></p>
+
+<p class=ILprg>d.DataSource = c;<o:p></o:p></p>
+
+<p class=ILprg>d.DataMember = &quot;Customers&quot;;<o:p></o:p></p>
+
+<p class=ILprg>c.DataSetName = &quot;CustomersDataSet&quot;;<o:p></o:p></p>
+
+<p class=ILprg>d.Size = new System.Drawing.Size(784, 536);<o:p></o:p></p>
+
+<p class=ILprg>Controls.AddRange(new System.Windows.Forms.Control[] {d});<o:p></o:p></p>
+
+<p class=ILprg>SqlConnection con = new
+SqlConnection(&quot;server=(local)\\NetSDK;uid=sa;pwd=;database=northwind;
+Trusted_Connection=yes&quot;);<o:p></o:p></p>
+
+<p class=ILprg>SqlDataAdapter c1 = new SqlDataAdapter(&quot;Select * from
+Customers&quot;, con);<o:p></o:p></p>
+
+<p class=ILprg>SqlDataAdapter c2 = new SqlDataAdapter(&quot;Select * from
+Orders&quot;, con);<o:p></o:p></p>
+
+<p class=ILprg>c1.Fill(c, &quot;Customers&quot;);<o:p></o:p></p>
+
+<p class=ILprg>c2.Fill(c, &quot;Orders&quot;);<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>public static void Main()<o:p></o:p></p>
+
+<p class=ILprg>{<o:p></o:p></p>
+
+<p class=ILprg>Application.Run(new zzz());<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILprg>}<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&gt;csc.exe a1.cs /r:b.dll<o:p></o:p></p>
+
+<p class=ILprg>&gt;a1<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In a1.cs, it is
+the object 'c' of type ccc that is created first. This type is the name of the
+Dataset in the xsd file. Then, a new instance of the DataGrid object d is
+created, and some of the properties are initialized to specific values.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The first such
+property is the DataSource property, which not only sets the DataSet to the
+tables, but also establishes a relationship amongst the tables.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The next member
+is the DataMember property that is set to Customers, in order to initially
+display a list of records from the Customers table. Like before, the same SQL
+statements are used to retrieve data, and the Fill function is employed to
+populate the DataSet object 'c'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On running the
+above program named a1, a list of customers is discernible with a plus sign
+preceding every record. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Clicking on the
+plus sign results in the display of the name of the relationship object called
+custord. The relation is a hyperlink, which on being clicked, displays the
+records from the Orders table. These records contain the orders placed by the
+above customer.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Observe that a
+relationship between the Customers table and the Orders tables is not specified
+anywhere in the DataGrid. This information is stored in the class ccc. Thus, on
+using the XSD program, only the xsd file gets created. The classes generated by
+the program carry the internal relationships along with them.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap9.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:15 GMT -->
+</html>

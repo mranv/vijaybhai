@@ -1,0 +1,2721 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:18 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap3_files/filelist.html">
+<link rel=Edit-Time-Data href="chap3_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Constructors and Destructors - C# The Basics - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>2</o:TotalTime>
+  <o:Created>2001-09-27T10:49:00Z</o:Created>
+  <o:LastSaved>2001-09-27T10:49:00Z</o:LastSaved>
+  <o:Pages>19</o:Pages>
+  <o:Words>5600</o:Words>
+  <o:Characters>31920</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>266</o:Lines>
+  <o:Paragraphs>63</o:Paragraphs>
+  <o:CharactersWithSpaces>39200</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:Impact;
+	panose-1:2 11 8 6 3 9 2 5 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:36.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:Impact;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:ChapName;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"c\# base text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:"Chap Name";
+	mso-style-parent:"base text of the book";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"base text of the book";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-style:italic;}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:48.0pt'>3</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<h1>Constructors and Destructors</h1>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>New<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's consider the following program.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{&nbsp;<o:p></o:p></p>
+
+<p class=programs>yyy.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc() {<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(5,1) : error CS0120: An object reference is required
+for the nonstatic field, method or property 'yyy.abc()'<o:p></o:p></p>
+
+<p class=cbasetext>This program contains one class called yyy which has a
+function called abc. In Main() we are using the syntax yyy.abc() to call the
+abc function as we did earlier. Within the abc function we have the code for
+the function abc that will print the string &quot;abc&quot;. On compiling this
+program you will get an error as incomprehensible as ever! <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But how is it that when we ran this program earlier we didn't
+get an error? If you are still bewildered, wake up and smell the coffee! Didn't
+you notice we removed the word 'static' while saying public void abc(). Hence
+we get an error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In our earlier programs when we wrote the function abc we
+had written the word static which is missing now.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>No, we are not going to tell you to add the word static and
+execute the program. We are not that predictable! On the contrary, we shall do
+something quite different and interesting. Keeping that in mind let's consider
+the next program.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><span style='font-size:11.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(6,1): error CS0165: Use of unassigned local variable
+'a'<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Before we look into this program let's get our basics clear.
+We have often used the statement 'int i' meaning that i was a variable that
+looked like an int. When we used the statement 'string s', it meant that s was
+a variable that looked like string. Similarly, in this program we are saying
+yyy a. This implies that 'a' looks like yyy. What is yyy? It is the name of a
+class. Here we do not call 'a' a variable, we call it an object. An object and
+a variable can be used interchangeably.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Earlier, whenever we wanted to call a member from a class we
+would say yyy.abc(); i.e. class name dot function name. But in our current
+program we are saying a.abc(); We are using the same dot, but now it gives an
+error saying - 'Use of unassigned local variable'. Note that the word member is
+analogous with the word function.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But things still don't seem any clearer. So, let's go a step
+further and add another statement a=new yyy(); Match your code with the one
+below.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The word or keyword new must be followed by the name of a
+class; You cannot substitute it with anything else, it must be a class. In our
+case, we have given the statement as new yyy(). yyy is the name of an existing
+class. But why have round brackets after the class name? The '(' and ')'
+brackets are part of the syntax. And you very well know by now that you can't
+argue with syntax.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus it is at this point i.e. after saying new, that the
+object 'a' that looks like yyy is created.<span style="mso-spacerun: yes"> 
+</span>We could have also called the object 'a' an instance of the class yyy.
+Since the class yyy has only one function it will allocate memory for THAT one
+function ONLY. Now we have an object 'a' that looks like class yyy. Once the
+object is created, it can be used to access the function from class yyy. Hence,
+now if we say a.abc() we will not get an error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus an object is nothing but an instance or an occurrence
+of a class. Therefore, 'a' is an instance of the class yyy. This is how you can
+instantiate an object.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In order to create an object you must use the keyword 'new'.
+Our next program will help you gain a better understanding of this concept.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main() <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int i;<o:p></o:p></p>
+
+<p class=programs>i=new int();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>At first we have int i, meaning i looks like int. Then we
+have i=new int(); Executing this program will not generate any errors. But so
+far whenever we used int i we never created the object i using new int(). This
+is because C# does this internally for us. It saves us the trouble of doing so.
+Then why doesn't C# do so for all the other objects that we create? This is
+because C# recognizes only two types of classes. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The first type is one that the C# compiler knows of in
+advance. int, long, bool, and string are classes that fall into this category.
+These are predefined classes. But we call them data types because in C and C++
+they were called data types and C# has a legacy of C and C++. So technically, when
+we say int i it does i=new int(); internally.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The second type of classes that C# recognizes are the ones
+that we create i.e. user-defined classes. For user-defined classes we have to
+create objects ourselves. Thus anything other than the basic data-types must be
+explicitly created. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>So when we say 'yyy a' we are not creating the object at
+this point. We are only declaring the object to be of type yyy. It is only when
+we use the word 'new' that the object is created and memory is allocated for
+the same. Therefore, when we have our own classes, that's the time we use new.
+Without new you cannot create an object.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Static<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You are certainly going to benefit by the patience you have
+shown so far. To find out how, let's follow the next program. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc();<o:p></o:p></p>
+
+<p class=programs>yyy.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>abc<o:p></o:p></p>
+
+<p class=DOSPROMPT>pqr<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program we have two functions abc and pqr. It is of
+significance to note that the function pqr has the word static whereas abc does
+not. If you want to access the static function pqr you say yyy.pqr() and to
+access the non static function abc you say a.abc(); You can't do the reverse
+i.e. you cant say a.pqr() and yyy.abc().<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>yyy.abc();<o:p></o:p></p>
+
+<p class=programs>a.pqr();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;abc&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public static void pqr()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;pqr&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,1): error CS0120: An object reference is required for
+the nonstatic field, method, or property 'yyy.abc()'<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,1): error CS0176: Static member 'yyy.pqr()' cannot be
+accessed with an instance reference; qualify it with a type name instead<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The word 'static' implies 'free'. Static signifies that you
+can access a member or a function without creating an object. At last you are
+enjoying the fruits of patience!<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Observe that the function Main in zzz is static. This is
+because we are not creating any object that looks like zzz. The crux is that if
+you don't want to use 'new' and yet use the function then you must make the
+function static.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In both cases a dot is used to reference the function. The
+only difference is that a static member belongs to the class and as such we
+don't need to create an object to access it. On the other hand, a non-static
+member, that is the default, can be accessed only via an object of the class.
+Thus WriteLine is a static function in Console as we did not create an object
+that looks like Console to access it. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(yyy.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int i = 10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(5,26): error CS0120: An object reference is required
+for the nonstatic field, method, or property 'yyy.i'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Why did we get an error? Think for thinking is the hardest
+work there is, which is probably the reason why so few engage in it. If you
+still haven't got it, let us enlighten you. The same rules for static apply to
+functions as well as variables. Hence we get the above error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a = new yyy();<o:p></o:p></p>
+
+<p class=programs>yyy b = new yyy();<o:p></o:p></p>
+
+<p class=programs>a.j = 11;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a.j);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(b.j);<o:p></o:p></p>
+
+<p class=programs>yyy.i = 30;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(yyy.i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static int i = 10;<o:p></o:p></p>
+
+<p class=programs>public int j = 10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>11<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT>30<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A static variable belongs to the class. Hence if we create a
+static variable i, no matter how many objects we create that look like yyy,
+there will be one and only one value of i as there is only one variable i
+created in memory. Thus we access a static variable by prefacing with the name
+of the class and not name of object. If the variable is non-static like j then
+we have to use the syntax as explained earlier i.e. name of object dot name of
+variable. Thus each time we create an object that looks like yyy we are
+creating a new/another copy of the variable j in memory. We now have two j's in
+memory one for a and another for b. Thus j is called an instance variable
+unlike i. When we change the variable j of a to 11, the j of b remain at 10. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus functions are created in memory only once, irrespective
+of the word static. If a class has no instance or non static variables then it
+makes no sense to create multiple instances of the object as there will be no
+way of distinguishing between the copies created. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Constructors<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Main&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Main<o:p></o:p></p>
+
+<p class=DOSPROMPT>yyy<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In the above program we have a class called yyy. We also
+have a function called yyy which happens to be having the same name as the name
+of the class. We have a friend named Bunty. Coincidentally, the name of his pet
+dog is also Bunty! Similarly, it is absolutely legal to have a function by the
+same name as that of the class. In this case first we see Main and then we see
+yyy displayed on the screen which means that the function yyy() gets called
+automatically. Note, we have not called the function yyy explicitly.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This happens to be a special function and it is called a
+'constructor'.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Initially we are saying yyy a. By doing so we are specifying
+that 'a' looks like yyy. We are not creating an object that looks like yyy. The
+next statement has System.Console.WriteLine, which will print 'Main'.
+Thereafter, using new we are creating an object a. It is at this point that C#
+calls the constructor i.e. it calls the function yyy(). Now you will see 'yyy'
+displayed. This goes to prove that as soon as an object of a class is created,
+C# automatically calls the constructor. A constructor gets called at the time
+of birth or creation of the object. It has to have the same name as the name of
+the class.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Main&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,1): error CS0117: 'yyy' does not contain a definition
+for 'yyy'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, we are calling the function yyy using the appropriate
+syntax i.e. by saying a.yyy(). Now, run the compiler. Baffled by the
+error?<span style="mso-spacerun: yes">  </span>The error says 'yyy' does not contain
+a definition for 'yyy'. The class yyy does contain a function called yyy which
+got called in the previous example. Has C# developed amnesia all of a sudden?
+What went wrong? Well, you cannot call this function using a.yyy() or yyy.yyy()
+The catch is that when you have a function with the same name as that of the
+class you cannot call it at all. It gets called automatically. C# does not give
+anyone the authority to call such a function. It calls this function
+automatically only at birth. Seems abnormal doesn't it! <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But what is the purpose of having constructors?<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A constructor can be used in cases where every time an
+object gets created and you want some code to be automatically executed. The
+code that you want executed must be put in the constructor. That code could be
+anything, it could check for hard disk space, it could create a file or it
+could connect to the net and bring a file over. What that code will do shall
+vary from person to person.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>To understand how and when the constructor gets called, let's
+take into consideration our next example. Now remove the word 'public' in front
+of yyy() as we have done below.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy const&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,3): error CS0122: 'yyy.yyy()' is inaccessible due to
+its protection level.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Obviously, you will get an error. This is because without
+the word public the function is private property. And when you trespass on
+private property you have to face the consequences. In our case we are faced
+with an error. By making the function public every one can use it, it is now
+becomes public property! If the constructor is private then nobody can create
+an object that looks like yyy.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Do you think constructors can return values? Let's try it
+out and find out for ourselves.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy const&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(12,12): error CS0542: 'yyy': member names cannot be the
+same as their enclosing type<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Executing the above program generates an error. It says that
+member i.e yyy cannot be the same as the enclosing type i.e class yyy. Now,
+that is an error that you certainly didn't expect.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let us analyze why we got this error.<span
+style="mso-spacerun: yes">   </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here we are saying public int yyy implying that the function
+yyy() is returning an int. yyy() is a constructor and is called automatically
+at the time an object is created. If a constructor is to return a value then to
+whom should it return the value to? Since it is called automatically, there is
+nothing that can accept the return value. Thus constructors cannot return
+values. Also when a constructor gets called, an object is in the act of being
+created. It has not yet been created. The keyword new first allocates memory
+for the functions and the variables. After this it calls the constructor. When
+the constructor finishes, then we say that the object has been created. Thus
+the constructor has no one to return values to.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now that we know constructors don't return values let's
+return void instead.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy const&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>} <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(12,13): error CS0542: 'yyy': member names cannot be the
+same as their enclosing type<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Though we are returning void, we get the same error. This is
+because C# is very sure of what it says. When you borrow from other people you
+do so on the pretext that you will return it. It's a different story that you
+never do! You rarely mean what you say. But when C# says that constructors
+cannot return values it means 'constructors cannot return values', not even
+'void'. Remember, there is nothing that can accept the return values. Hence
+even void cannot be accepted. When a function returns a void we mean that it
+will return no value at all. For a constructor, the word return makes no sense
+at all.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Constructors with parameters<span style="mso-spacerun: yes"> 
+</span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Just as we pass parameters to other functions, you can also
+pass parameters to constructors.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy(&quot;no&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;yyy const&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(7,3): error CS1501: No overload for method 'yyy' takes
+'1' arguments<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>You are already aware of the fact that parameters are passed
+to functions while calling them. Similarly, we will pass a parameter to the
+constructor yyy while creating the object a; because it is at this point that
+the constructor gets called. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Hence we are saying a=new yyy(&quot;no&quot;). But on
+compiling this program you get an error. Here, the constructor is being called
+with a string 'no' as a parameter. But there is no variable in the constructor
+yyy to store the value 'no'. Add 'string s' in the constructor yyy and watch
+the error disappear.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy(&quot;no&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi<o:p></o:p></p>
+
+<p class=DOSPROMPT>no<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>At first WriteLine will display 'hi'. Then we have a
+constructor yyy that takes a string 'no' as a parameter and accepts it in a
+variable s. Thus the moment the constructor yyy is called 'no' will be
+displayed. This is because the constructor yyy contains code that will print
+the value stored in the variable s. This is how constructors with parameters
+are called.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>So far we created only one instance of the class yyy. In the
+following program we are creating two instances of the class yyy, 'a' and
+'b'.<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><span style="mso-spacerun: yes"> </span><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a,b;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy(&quot;no&quot;);<o:p></o:p></p>
+
+<p class=programs>b=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,3): error CS1501: No overload for method 'yyy' takes
+'0' arguments<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>While creating the object 'a' the constructor yyy is being
+passed a parameter 'hi'. In case of the object 'b' the constructor will be
+called without any parameters. But in our program we have code only for the
+constructor with parameters. Try executing this program and you will get an
+error saying that method yyy takes 0 arguments. This is because we do not have
+code for the constructor without parameters.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Let's understand the reason behind the error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In our earlier programs, we did not specify a constructor. A
+relevant question here would be - how did the objects get created then, without
+the constructor being called? C# is a Good Samaritan, at that time it inserted
+a free constructor. It does so internally. On its own it inserts a constructor
+without any parameters, without any code into the class. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>It looks like this-<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs>yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Point to ponder - in the above program, when we didn't
+create a constructor without parameters why didn't we get one free? Remember we
+said C# is a Good Samaritan? And Good Samaritans help the needy. On seeing that
+we already have a constructor with parameters, C# looks the other way i.e., it
+takes the free one away. However, it is only when you have no constructor at
+all that C# melts its heart and gives you one free. Remember, even if it finds
+that you have even one constructor it will take away the free one.<span
+style="mso-spacerun: yes">  </span>On the assumption that if you can provide
+one constructor, then with a little effort you can work towards providing the
+others too! <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now the only way to get rid of the error is to add the
+constructor yourself.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a,b;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=programs>a=new yyy(&quot;no&quot;);<o:p></o:p></p>
+
+<p class=programs>b=new yyy();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public yyy(string s)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public yyy()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;bad&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>hi<o:p></o:p></p>
+
+<p class=DOSPROMPT>no<o:p></o:p></p>
+
+<p class=DOSPROMPT>bad<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here, initially, the two objects 'a' and 'b' are declared.
+In the next statement we have WriteLine, which will display 'hi'. We are then
+creating the object a. At this point the constructor with a string as a
+parameter is called. It will now display the value stored in the variable s
+which is 'no'. Thereafter, the object b is created. At this point the
+constructor without the parameters will be called. This constructor contains
+the WriteLine statement, which will print 'bad'. Here, we have as many
+constructors as we are calling and hence we do not get any errors.<span
+style="mso-spacerun: yes">    </span><o:p></o:p></p>
+
+<p class=cbasetext>So, essentially, a constructor is a special function that
+gets called when an object is created. It does not return any values, not even
+void. As far as parameters go it behaves like a normal function. If no
+constructors are specified you get one free, otherwise, you need as many
+constructors as you are calling. Hence in the above case we cannot create an
+object as new yyy(100) as we do not have a constructor that accepts one int as
+a parameter.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Destructors<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>aa a = new aa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class aa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Constructor &quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>~aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Destructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>Constructor<o:p></o:p></p>
+
+<p class=DOSPROMPT>Destructor<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A destructor is a function with the same name as the name of
+a class but starting with the character ~. A constructor gets called at birth
+whereas a destructor gets called at death. In C# unlike other languages we do
+not know when an object dies as unlike James Bond, we do not have a license to
+kill. Thus even though the object a dies at the end of main, the destructor may
+not get called. Thus, in C# we cannot decide when the destructor gets called.
+This decision to call the destructor is made by a program within C# called the
+garbage collector. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The concept first gained currency with the advent of Java.
+In Java and C# we cannot remove our objects from memory. Thus it is for the
+garbage collector to decide when to call the destructor. The programming world
+was replete with errors mainly because programmers use new to allocate memory
+and then forget to deallocate it. This gave rise to a concept called memory
+leaks. On the flip side of the coin, programmers deallocated the memory, forgot
+about it and then accessed the object again. This generates an error occurring
+at random and difficult to pin down.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>aa a = new aa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class aa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public ~aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Destructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(14,9): error CS0106: The modifier 'public' is not valid
+for this item<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A destructor cannot have any modifiers like public preceding
+it. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>aa a = new aa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class aa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>~aa(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Destructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(14,5): error CS1026: ) expected<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(14,10): error CS1002: ; expected<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(16,25): error CS1519: Invalid token '(' in class,
+struct, or interface member declaration<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,1): error CS1022: Type or namespace definition, or
+end-of-file expected<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Constructors come in plenty with different numbers of
+arguments being passed to them. However, in the case of destructors, one size
+fits all, i.e., they come in only one size, with no parameters. Here we created
+a destructor with an int as a parameter thereby confusing the C# compiler
+completely.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>C# lacks true synchronous or deterministic destructors i.e.
+destructors being called at a certain point in time. You cannot have your life
+depend on when a destructor would be called. The common grouse against C# is
+that unlike C++ it does not support true destructors. <o:p></o:p></p>
+
+<p class=cbasetext><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>public class zzz <o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>aa a = new aa();<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>public class aa<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Constructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>~aa()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(&quot;Destructor&quot;);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>protected override void Finalize()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(18,25): error CS0111: Class 'aa' already defines a
+member called 'Finalize' with the same parameter types<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>We tried to create a function called Finalize. The compiler
+comes back and tells us that we already have a function called Finalize. This
+is weird as we have only one Finalize function. The reason for this error is that
+the compiler converts our destructor from<span style="mso-spacerun: yes"> 
+</span>~aa to Finalize. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Arrays <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>All programming languages embrace the concept of arrays. An
+array is nothing but more of one entity i.e., a multiple of the same type.
+Simply put, when we have five books, we don't just say we have five books.
+Instead we say we have an array of five books. So, whenever you want to store
+multiple values of variables you store them in an array.<o:p></o:p></p>
+
+<p class=programs><span style='font-size:11.0pt;font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int[] a;<o:p></o:p></p>
+
+<p class=programs>a= new int[3];<o:p></o:p></p>
+
+<p class=programs>a[0]= 1; a[1]= 10; a[2]= 20;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[0]);<o:p></o:p></p>
+
+<p class=programs>a[0]++;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[0]);<o:p></o:p></p>
+
+<p class=programs>int i;<o:p></o:p></p>
+
+<p class=programs>i=1;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[i]);<o:p></o:p></p>
+
+<p class=programs>i=2;<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[i]);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>1<o:p></o:p></p>
+
+<p class=DOSPROMPT>2<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT>20<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here 'a' is an array of ints. You declare arrays with a set
+of [] brackets. At this point it is not known how large the array will be. For
+that we have a=new int[3]; after new we have int meaning we want to create a
+variable of type int. We are putting 3 in the square brackets meaning we want
+to store 3 ints. This will create three ints a[0], a[1] and a[2]. They are then
+initialized to the values 1,10 and 20 respectively. To initialize an array
+variable we use the name, i.e. in this case a and follow it with the open and
+close [] brackets. Inside them we put the array number. The first variable is
+called a[0] , the second a[1] and so on. C# like most computer programming
+languages likes to start counting from 0 and not 1. Therefore, the last
+variable is a[2] and not a[3].<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Since an array is many of the same type, they all have the
+same name. In our earlier example, even if we have many books, all the books
+will be called books. However, to refer to them individually you can say book1,
+book2, book3 etc.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>WriteLine will display the value stored in a[0] which is 1.
+a[0]++ will increment the value stored in a[0] by one. WriteLine will now
+display 2. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thereafter, the variable i is declared as an int. It is then
+initialized to 1. Within the WriteLine function we have a[i]. It is not
+specifically stated which variable, instead we have said a[i]. There is no
+variable called a[i], but i has a value 1, so it is read as a[1]. Hence the
+value stored at a[1], which is 10, is displayed. The next WriteLine will
+display the value stored in a[2] as i is reinitialized to 2. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Doing this makes our program more generic. We haven't
+specifically stated which variable, we are letting a variable called i decide
+the name of the variable.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The next example demonstrates how arrays can be used within
+loops.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int[] a;<o:p></o:p></p>
+
+<p class=programs>a= new int[3];<o:p></o:p></p>
+
+<p class=programs>int i;<o:p></o:p></p>
+
+<p class=programs>for( i=0; i&lt;=2; i++)<o:p></o:p></p>
+
+<p class=programs>a[i]= i*10;<o:p></o:p></p>
+
+<p class=programs>for( i=0; i&lt;=2; i++)<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(a[i]);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>0<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT>20<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The advantage of using arrays is that you can decide the
+name of the variable later and they can also be used in loops. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here 'a' is an array of ints and i is a variable of type
+int. The array size is 3 i.e. it can store three ints. The first for loop is used
+to initialize the individual array items. Within the for loop, i is initialized
+to 0. The condition i&lt;=2 indicates that the loop will execute thrice. So,
+when the control enters the for loop, for the first time i is 0. Looking at the
+right hand side of the expression, i*10 will now read as 0*10, which is 0.
+Hence, a[i] which is read as a[0] will be initialized to 0. i++ increments the
+value of i to 1. The second time a[i] will be read as a[1] which will be
+initialized to 10. Thereafter, a[i] will be read as a[2] and initialized to 20
+as i is now 2. Now i will be 3, so the condition evaluates to false and the
+loop terminates. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The second for loop displays the values stored in the array.
+This is similar to the above loop. Here we are displaying the values of the
+individual array items. As the for loop executes, WriteLine will read a[i] as
+a[0], a[1] and a[2] in each case. As such, WriteLine displays 0,10,20. So,
+starting from the beginning and going upto the end, all the values stored in
+the array are displayed. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Arrays can also be used in a foreach statement. This is
+exemplified in the following program.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int[] a;<o:p></o:p></p>
+
+<p class=programs>a= new int[3];<o:p></o:p></p>
+
+<p class=programs>a[0]= 1; a[1]= 10; a[2]= 20;<o:p></o:p></p>
+
+<p class=programs>foreach ( int i in a)<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>1<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT>20<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>The foreach statement lists the elements of the array. It
+executes a statement for each element of the array or collection. 'a' is an
+array of type int that can store three items. a[0], a[1] and a[2] are the
+elements or items of the array. They have been initialized to 1, 10 and 20
+respectively. In the foreach statement we have ( int i in a ). <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>i is a variable of type int and a is the array created
+earlier. The first element of the array 'a' is a[0] and it holds the value 1.
+The foreach statement picks up this value and stores it in i. Since i now holds
+the value 1, WriteLine displays 1. The second element is a[1]. It picks up its
+value, which is 10 and stores it in i. Thus i now holds the value 10. WriteLine
+will now display 10. This goes on for all the elements of the array. Our array
+'a' comprises three elements. Hence the foreach will execute the WriteLine
+statement for each of them and display their values 1,10 and 20. The variable i
+is only available in the foreach. The foreach makes it easier for us to run
+through all the members of any array.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=SubTitle>Parameters Revisited with Out and Ref<span
+style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Variables are the cornerstone of programming languages. In a
+way, they are like items contained in a bag. You can put an item in a bag,
+remove it therefrom, or replace it with another. Our next few programs shall be
+explained along these lines.<o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int i=100;<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc(int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>100<o:p></o:p></p>
+
+<p class=DOSPROMPT>100<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>'a' is an object that looks yyy. The variable 'i' is
+initialized to a value 100. Then the object 'a' that looks like yyy is created.
+We are now calling the function abc with one parameter 'i'. Within the abc
+function we are printing the value of i. When we call the function abc from
+Main, i had a value 100. So the variable i in abc also has a value 100. Thus
+WriteLine will display the value 100. We are now assigning i a new value 10.
+But the i that changes is the parameter i in abc, and not the i of Main in zzz.
+It's like having two similar bags, where you change the contents of only one.
+So the WriteLine in Main will again print 100.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Thus the variable i within the abc function is temporary. It
+exists only within the '{' and '}' braces of the function. Therefore, this 'i'
+is local to the function. Its value is not available in Main. It's like your
+memory, temporary. It exists as long as you are reading this book. Once the
+book is over everything is forgotten! Thus please do not call the variable i in
+abc as i because it will confuse everyone. Thus i in abc has nothing to do with
+the i in Main. Ergo, changing i in abc will have no effect on the i in Main.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But a situation could arise wherein you would like the
+function abc to change the value of i. In this context you are saying, I am
+giving a variable to a function abc, use it, but I would also like the function
+abc to change it. And once its value is changed in the function, it i.e. the
+changed value should be available in Main. Let's see how we can handle a
+situation like that.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=100;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc( out int i)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs><span style="mso-spacerun: yes"> </span>i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,1): error CS1502: The best overloaded method match
+for 'yyy.abc(out int)' has some invalid arguments.<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,7): error CS1503: Argument '1':cannot convert from
+'int' to 'out int'.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program is exactly like the previous one. The only
+change is that we added the word 'out' in the function abc along with the
+parameter i. We get an error on compiling this program. You realize, we are
+saying a.abc(i) in Main, but in the function we are saying abc(out int i).
+'out' is the key to solving our previous problem. 'out' means whatever changes
+you will make in abc, they will be visible outside the function also.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Note that it doesn't matter what you call the variable in
+the function abc, the original will change. So, instead of saying abc(out int
+i) you could have used another variable. In that case, if you said abc(out int
+p) it would be absolutely legal. To do away with the error you must specify
+'out' while calling the function as well. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now we have rewritten the program with the above change.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=100;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(out i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<span style="mso-spacerun: yes">  </span>{<o:p></o:p></p>
+
+<p class=programs>public void abc( out int i) {<o:p></o:p></p>
+
+<p class=programs>i=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program, we now have 'out' in both cases: in the
+function call and the function itself.<span style="mso-spacerun: yes"> 
+</span>So by saying a.abc( out i) you are implying that you are allowing the
+function abc to change the value of i. Then in the function definition we also
+have the word 'out', so it knows i is going to change and hence i now changes
+in the original. Therefore, WriteLine will displays the new value 10.<o:p></o:p></p>
+
+<p class=cbasetext><span style="mso-spacerun: yes"> </span><o:p></o:p></p>
+
+<p class=cbasetext>We are now using the word 'ref' instead of 'out'. Let us see
+the effects of doing so.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=100;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(ref i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc( ref int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This program executes smoothly and gives the same output as
+previously. It displays the value 10. So in that sense 'ref' is like 'out'. In
+either case the original value of 'i' changes. Thus, if you are calling the
+function with 'ref' then state 'ref' in the function also. If you are calling
+the function with 'out' then give 'out' in the function also. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Game for some experimentation? Let's try to execute the
+above program without initializing the variable i.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(ref i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc(ref int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(8,11): error CS0165: Use of unassigned local variable
+'i'<o:p></o:p></p>
+
+<p class=DOSPROMPT><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Here we are saying int i. Note that we are <b>not</b>
+initializing i. We are using 'ref' which gives us an error. The error says 'use
+of possibly unassigned local variable i'. Here we didn't initialize i and yet
+we are trying to use it; hence we get an error.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Now, let's look at the next example. Here we have the same
+program only now we are using 'out' instead of ref.<u><o:p></o:p></u></p>
+
+<p class=cbasetext><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(out i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc(out int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program we haven't initialized i either but this
+time we don't get any error. This goes to show that when using 'ref' the
+variable must be initialized and only then can you change its value. In case of
+'out' you don't have to initialize the variable to change its value.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But why have this differentiation? This is because in case
+of 'ref' you can read the value of the variable as well as write to it.
+Therefore, if one has to read the value of the variable, it must be initialized
+before hand. But it is your discretion whether you want to change the value,
+read it or do both. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But in case of 'out' you can only write i.e., you can only
+change the value of the variable, you cannot read it. So, in case of 'out'
+since it does not read the variable it doesn't matter even if it is not
+initialized.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>This is further exemplified with the help of the next few
+programs. In the following program we have initialized i. Note here we are
+using 'out'. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=10;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(out i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc( out int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(j);<o:p></o:p></p>
+
+<p class=programs>j=10;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(16,26):error CS0165: Use of unassigned local variable
+'j'<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Within the function abc we are first printing the value of i
+using the WriteLine statement. That means we are trying to read the value of i
+which is passed to the variable j in the function abc. But with 'out' one
+cannot read values hence we get an error. Now if you try the same program with
+'ref' instead of 'out' you will not get any errors. This is because with 'ref'
+you can read the values as well as well as change them. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>However do note that all 'out' parameters must be
+initialized or else you will get an error form the compiler as follows.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=10;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc(out i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc( out int j)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Compiler Error<o:p></o:p></p>
+
+<p class=DOSPROMPT>a.cs(14,13): error CS0177: The out parameter 'j' must be
+assigned to before control leaves the current method<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>So where can we use 'out'? We can use 'out' if we want the
+function to make some calculations and fill up the variable. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=10;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>a.abc( out i );<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public void abc( out int i )<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>i= 20 * 20;<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>400<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In this program we are using 'out'. We are multiplying 20 by
+20 and storing the result 400 in i. Thereby the value of i is changed and
+WriteLine will now print 400. <o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>Our next example will make things as clear as daylight.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u><o:p></o:p></p>
+
+<p class=programs>class zzz<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public static void Main()<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>yyy a;<o:p></o:p></p>
+
+<p class=programs>int i=10;<o:p></o:p></p>
+
+<p class=programs>int k=20;<o:p></o:p></p>
+
+<p class=programs>int m;<o:p></o:p></p>
+
+<p class=programs>a=new yyy();<o:p></o:p></p>
+
+<p class=programs>m=a.abc( out i, out k );<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(i);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(k);<o:p></o:p></p>
+
+<p class=programs>System.Console.WriteLine(m);<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>class yyy<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>public int abc( out int x, out int y)<o:p></o:p></p>
+
+<p class=programs>{<o:p></o:p></p>
+
+<p class=programs>int j;<o:p></o:p></p>
+
+<p class=programs>x=30;y=10;<o:p></o:p></p>
+
+<p class=programs>j=x * y;<o:p></o:p></p>
+
+<p class=programs>return j; <o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=programs>}<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=DOSPROMPT>Output<o:p></o:p></p>
+
+<p class=DOSPROMPT>30<o:p></o:p></p>
+
+<p class=DOSPROMPT>10<o:p></o:p></p>
+
+<p class=DOSPROMPT>300<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>After specifying that a looks like yyy, the two variables i
+and k are initialized to the values 10 and 20 respectively. Then the object a
+is created. The third variable m is of type int and is used to store the return
+value of the function abc. By using 'out', the function abc is called with two
+parameters, i and k. The abc function has the variables x and y. Within the
+function another variable j is declared of type int. The variables x and y are
+assigned new values 30 and 10 respectively. Their values are multiplied and
+stored in j, i.e. 300. The next statement return j will yield the value of j,
+which is stored in m. Now WriteLine will display the value of i as 30. This is
+because with the abc function we filled up i with the value 30. Similarly, the
+next WriteLine statement will print the value of k, which is 10. Then we print
+the value of m, which is 300.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In a nutshell-<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>In case of both 'ref' and 'out' the original changes.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>A point to note is that when we say 'ref' it means we will
+initialize the variable. The abc function expects the variable to be
+initialized so that the function can use the value of the variable. When the
+variable changes the change is reflected outside. So, whenever you say 'ref'
+the variable has to be initialized, otherwise an error occurs. The function
+will assume that the variable is initialized because it expects to read the
+value. You may choose to read the value or change it or do both.<o:p></o:p></p>
+
+<p class=cbasetext><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=cbasetext>But when you say 'out' it implies that we are not going to
+initialize the variable, that the abc function is not going to use the value,
+it is only going to change the value. When there is an 'out', abc can use the
+variable even if it is not initialized. This is because you cannot read the
+value in case of an 'out' variable; the function can only change the value. In
+other words, it has to change the value of the variable to avoid any errors.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csbasics/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:38:20 GMT -->
+</html>

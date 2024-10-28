@@ -1,0 +1,1864 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap4.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:45 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap4_files/filelist.html">
+<link rel=Edit-Time-Data href="chap4_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Web Services and SOAP</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>8</o:TotalTime>
+  <o:Created>2002-01-27T20:07:00Z</o:Created>
+  <o:LastSaved>2002-01-27T21:59:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>4867</o:Words>
+  <o:Characters>27747</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>231</o:Lines>
+  <o:Paragraphs>55</o:Paragraphs>
+  <o:CharactersWithSpaces>34075</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>4</span></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>DataSets</span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The focus in this chapter once again
+veers on to web services, but in the context of DataSets. A DataSet is a
+collection of DataTable objects, which in turn, embody data.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataTable t = new DataTable(&quot;vijay&quot;);</p>
+
+<p class=ILprg>DataColumn c;</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.Int32&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c1&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.String&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c2&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>DataSet d = new DataSet();</p>
+
+<p class=ILprg>d.Tables.Add(t);</p>
+
+<p class=ILprg>return d;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The opening line in the abc
+function within the asmx file, creates a DataTable object called t. The parameter
+supplied to the constructor of the DataTable object is the name of the table,
+'vijay'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Every DataTable object is
+composed of columns, wherein, every single column is represented by a
+DataColumn object. After creating an instance c of the DataColumn class, the
+DataType property in the DataColumn class is initialized to the data type of
+the column, which in this case, is an int. Therefore, the static GetType
+function from the Type class is called with the full name of the type as its
+parameter. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The ColumnName property assigns
+a name to the column, which is c1 in this case. The DataTable has a Columns
+Collection property called Columns, which stores all the DataColumn objects.
+With the help of the Add function that is incorporated in it, the column named
+c1 is added to the Columns collection. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As a consequence, the Columns
+property now holds one column. A fresh instance of the DataColumn object is
+created with the DataType of string, and is named as c2. This DataColumn object
+too is added to the columns collection. Thus, the collection now is in
+possession of two columns, viz. c1 and c2. Finally, a DataSet d comprises of
+the Tables collection property Tables and employs the services of the Add
+function within it, to add the table t to the dataset.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>A Polite Reminder</span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The steps to be taken in the
+order of succession, are as follows:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Enter the url as
+http://localhost/a.asmx?WSDL in the browser. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Copy the contents displayed on the
+browser into the file aa.wsdl under the www subdirectory. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Ensure that the first line begins at
+the very first column. </p>
+
+<p class=ILbullets><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Change the url from
+http://localhost/a.asmx to http://localhost:8080/asmx. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Finally, start the Trace utility
+program from the SOAP toolkit program option, to view the SOAP request and the
+SOAP response packets. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>Run the batch file, z.bat,
+stipulated in the previous chapter, in order to obtain the output, as depicted
+in the chapter.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Now, let us closely scrutinize a
+DataSet representation in a wsdl file. We have displayed only the relevant portions
+of the file, which are adequate for corroborating our explanation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.wsdl</u></p>
+
+<p class=ILprg>&lt;s:schema attributeFormDefault=&quot;qualified&quot;
+elementFormDefault=&quot;qualified&quot;
+targetNamespace=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:import
+namespace=&quot;http://www.w3.org/2001/XMLSchema&quot; /&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abc&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:complexType /&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;abcResponse&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;</p>
+
+<p class=ILprg>&lt;s:element minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;
+name=&quot;abcResult&quot; nillable=&quot;true&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:complexType&gt;</p>
+
+<p class=ILprg>&lt;s:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+ref=&quot;s:schema&quot; /&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:any /&gt;</p>
+
+<p class=ILprg>&lt;/s:sequence&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:complexType&gt;</p>
+
+<p class=ILprg>&lt;/s:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;</p>
+
+<p class=ILprg>&lt;/s:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:element
+name=&quot;DataSet&quot; nillable=&quot;true&quot;&gt;</p>
+
+<p class=ILprg>&lt;s:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;s:sequence&gt;</p>
+
+<p class=ILprg>&lt;s:element ref=&quot;s:schema&quot; /&gt;</p>
+
+<p class=ILprg>&lt;s:any /&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:sequence&gt;</p>
+
+<p class=ILprg>&lt;/s:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/s:element&gt;</p>
+
+<p class=ILprg>&lt;/s:schema&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abc element is devoid of all
+content, as the function does not accept any parameters. Next, we stumble upon
+and encounter a new element called 'import', which introduces all the schema
+definitions in the XmlSchema document, thereby, facilitating references to them
+in the schema document. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the element abcResponse, the
+element of abcResult has a complexType. The complexType for the abcResult
+element contains two elements:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The first element is the sequence,
+followed by another element, which currently has no name or type. Instead, it
+has a ref attribute. By using the ref attribute, other elements that were
+created earlier, are now accessible. In this case, a reference is made to the
+'schema' element. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The second element in the complex
+type is the element<span style="mso-spacerun: yes">  </span>'any', which
+permits access to all elements from any namespace. </p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>There is yet another element
+called 'DataSet', which has the 'schema' element and the 'any' element, just like
+the earlier element. A salient point that needs to be emphasized here is that,
+in the wsdl representation of a DataSet object, there is neither any mention of
+a table named 'vijay', nor is there any sign of the columns or other details,
+such as the Primary Key, etc. The client program merely calls the abc function,
+without any parameters. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>public class aaa</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.abc();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The proxy code in zzz.cs
+dispatches back the Dataset that has been returned from the abc function. The
+DataSet is saved in the first member of the 'results' array. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>public System.Data.DataSet abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>object[] results = this.Invoke(&quot;abc&quot;, new object[0]);</p>
+
+<p class=ILprg>return ((System.Data.DataSet)(results[0]));</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u></p>
+
+<p class=ILoutput>&lt;abcResponse xmlns=&quot;http://tempuri.org/&quot;&gt;</p>
+
+<p class=ILoutput>&lt;abcResult&gt;</p>
+
+<p class=ILoutput>&lt;xsd:schema id=&quot;NewDataSet&quot;
+targetNamespace=&quot;&quot; xmlns=&quot;&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;NewDataSet&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:choice maxOccurs=&quot;unbounded&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;c1&quot; type=&quot;xsd:int&quot;
+minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;c2&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;/xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:choice&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/xsd:schema&gt;</p>
+
+<p class=ILoutput>&lt;diffgr:diffgram
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;
+xmlns:diffgr=&quot;urn:schemas-microsoft-com:xml-diffgram-v1&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;/abcResult&gt;</p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A DataSet, as is represented in
+a SOAP payload, embodies all the relevant information. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The abcResult element commences
+with a child element called schema from the XMLSchema namespace, as is
+indicated by the namespace prefix xsd. The msdata namespace prefix is
+initialized to a uri. The value currently assigned to it is the one furnished
+by Microsoft. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The schema element is normally
+assigned an id that represents the name of the DataSet. However, since we have
+not supplied an id, the default name of NewDataSet has been used. The
+targetNamespace and the default namespace are both set to null. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Within the schema, there exists
+an element with the same name of NewDataSet, but this refers to the name of the
+DataSet, since the IsDataSet attribute is set to true. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The complexType that defines the
+structure of the DataSet, contains a 'choice' element that allows the selection
+of only one of the many elements that are present. In this case, since there is
+only a single element named 'vijay', the choice element is of no utility at
+all. For the uninitiated reader, we reiterate that 'vijay' is the name of a
+DataTable, as specified in the asmx file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The DataTable element, i.e.
+'vijay' is capable of having multiple occurrences. It has a sequence with two
+column names, c1 and c2. Assigning the value of zero to minOccurs is indicative
+of the fact that it is not obligatory to specify their values. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The last element is called a
+diffgram. A diffgram is an XML serialization format that carries both, the original
+as well as, the current data. This is pressed into service for marshalling a
+dataset over. We shall delve deeper into this concept as we make a headway in
+the book. Here, we have merely declared two namespaces, as there is no data
+present in our table.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataTable t = new DataTable(&quot;vijay&quot;);</p>
+
+<p class=ILprg>DataColumn c;</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.Int32&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c1&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.String&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c2&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>DataRow r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;c1&quot;] = 1;</p>
+
+<p class=ILprg>r[&quot;c2&quot;] = &quot;hi&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;c1&quot;] = 100;</p>
+
+<p class=ILprg>r[&quot;c2&quot;] = &quot;Bye&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>DataSet d = new DataSet(&quot;sonal&quot;);</p>
+
+<p class=ILprg>d.Tables.Add(t);</p>
+
+<p class=ILprg>return d;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Here, we have not displayed the
+files named aa.wsdl, a.cs and zzz.cs since the code contained in them remains
+unaltered.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Soap response</u></p>
+
+<p class=ILoutput>&lt;abcResult&gt;</p>
+
+<p class=ILoutput>&lt;xsd:schema id=&quot;sonal&quot;
+targetNamespace=&quot;&quot; xmlns=&quot;&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;sonal&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:schema&gt;</p>
+
+<p class=ILoutput>&lt;diffgr:diffgram
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;
+xmlns:diffgr=&quot;urn:schemas-microsoft-com:xml-diffgram-v1&quot;&gt;</p>
+
+<p class=ILoutput>&lt;sonal xmlns=&quot;&quot;&gt;</p>
+
+<p class=ILoutput>&lt;vijay diffgr:id=&quot;vijay1&quot;
+msdata:rowOrder=&quot;0&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c1&gt;1&lt;/c1&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c2&gt;hi&lt;/c2&gt; </p>
+
+<p class=ILoutput>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;vijay diffgr:id=&quot;vijay2&quot;
+msdata:rowOrder=&quot;1&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c1&gt;100&lt;/c1&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c2&gt;Bye&lt;/c2&gt; </p>
+
+<p class=ILoutput>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;/sonal&gt;</p>
+
+<p class=ILoutput>&lt;/diffgr:diffgram&gt;</p>
+
+<p class=ILoutput>&lt;/abcResult&gt;</p>
+
+<p class=ILoutput>&lt;/abcResponse&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>After creating a DataRow object r,
+the NewRow function of the DataTable is put into operation in order to
+introduce a fresh row. The indexers, with the names of the columns c1 and c2,
+have been initialized to selected values, in order to fill up data in the two
+columns. Finally, by employing the Rows collection, this newly initialized row
+is added to the DataTable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This process is iterated to add
+another row to the DataTable 'vijay', thereby, resulting in two rows in the
+table. The name of the Dataset is also changed to 'sonal'. However, no
+variation is witnessed in either the wsdl file or the proxy or the server
+because, the only innovation effected was, the introduction of data into the
+DataTable.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In the SOAP response, the id of
+the schema and element reflect the new value of 'sonal'. We have not displayed
+the remaining portion of the schema file, since it remains unchanged. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file demonstrates that
+the abcResult element commences with a schema element, which may then be
+followed by any other element, from any namespace. Here, the SOAP response
+contains the diffgram element, which creates the namespace prefixes msdata and
+diffgr. A diffgram may contain data from multiple namespaces. The next element
+is the dataset name 'sonal'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A Dataset, in turn, is
+constituted of multiple tables. In addition to the above, there exists another
+dataset called 'vijay'. Hence, an element called 'vijay' is created. This
+element is assigned an id of vijay1, and the second record is allocated an id
+of vijay2. The rowOrder attribute is akin to a row number, where the first
+record is numbered as 0, the second as 1, and so on.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The hasChanges attribute is
+assigned the value of 'inserted'. This is followed by the data of the row,
+enclosed within tags, comprising of the names of the columns. Accordingly, a
+DataSet first dispatches the schema, followed by the actual data. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataTable t = new DataTable(&quot;vijay&quot;);</p>
+
+<p class=ILprg>DataColumn c;</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.Int32&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c1&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.String&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;c2&quot;;</p>
+
+<p class=ILprg>t.Columns.Add(c);</p>
+
+<p class=ILprg>DataRow r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;c1&quot;] = 1;</p>
+
+<p class=ILprg>r[&quot;c2&quot;] = &quot;hi&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>r = t.NewRow();</p>
+
+<p class=ILprg>r[&quot;c1&quot;] = 100;</p>
+
+<p class=ILprg>r[&quot;c2&quot;] = &quot;Bye&quot;;</p>
+
+<p class=ILprg>t.Rows.Add(r);</p>
+
+<p class=ILprg>DataTable t1 = new DataTable(&quot;mukhi&quot;);</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.Int32&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;d1&quot;;</p>
+
+<p class=ILprg>t1.Columns.Add(c);</p>
+
+<p class=ILprg>c = new DataColumn();</p>
+
+<p class=ILprg>c.DataType = System.Type.GetType(&quot;System.String&quot;);</p>
+
+<p class=ILprg>c.ColumnName = &quot;d2&quot;;</p>
+
+<p class=ILprg>t1.Columns.Add(c);</p>
+
+<p class=ILprg>r = t1.NewRow();</p>
+
+<p class=ILprg>r[&quot;d1&quot;] = 1000;</p>
+
+<p class=ILprg>r[&quot;d2&quot;] = &quot;hi23&quot;;</p>
+
+<p class=ILprg>t1.Rows.Add(r);</p>
+
+<p class=ILprg>r = t1.NewRow();</p>
+
+<p class=ILprg>r[&quot;d1&quot;] = 2000;</p>
+
+<p class=ILprg>r[&quot;d2&quot;] = &quot;Bye23&quot;;</p>
+
+<p class=ILprg>t1.Rows.Add(r);</p>
+
+<p class=ILprg>DataSet d = new DataSet(&quot;sonal&quot;);</p>
+
+<p class=ILprg>d.Tables.Add(t);</p>
+
+<p class=ILprg>d.Tables.Add(t1);</p>
+
+<p class=ILprg>return d;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Soap response</u></p>
+
+<p class=ILoutput>&lt;abcResult&gt;</p>
+
+<p class=ILoutput>&lt;xsd:schema id=&quot;sonal&quot;
+targetNamespace=&quot;&quot; xmlns=&quot;&quot;
+xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;sonal&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:choice maxOccurs=&quot;unbounded&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;vijay&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;c1&quot; type=&quot;xsd:int&quot;
+minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;c2&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;/xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;mukhi&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;d1&quot; type=&quot;xsd:int&quot;
+minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;d2&quot; type=&quot;xsd:string&quot;
+minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;/xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:choice&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput>&lt;/xsd:schema&gt;</p>
+
+<p class=ILoutput>&lt;diffgr:diffgram
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;
+xmlns:diffgr=&quot;urn:schemas-microsoft-com:xml-diffgram-v1&quot;&gt;</p>
+
+<p class=ILoutput>&lt;sonal xmlns=&quot;&quot;&gt;</p>
+
+<p class=ILoutput>&lt;vijay diffgr:id=&quot;vijay1&quot;
+msdata:rowOrder=&quot;0&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c1&gt;1&lt;/c1&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c2&gt;hi&lt;/c2&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;vijay diffgr:id=&quot;vijay2&quot;
+msdata:rowOrder=&quot;1&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;c1&gt;100&lt;/c1&gt;
+</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;c2&gt;Bye&lt;/c2&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;mukhi diffgr:id=&quot;mukhi1&quot;
+msdata:rowOrder=&quot;0&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;d1&gt;1000&lt;/d1&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;d2&gt;hi23&lt;/d2&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/mukhi&gt;</p>
+
+<p class=ILoutput>&lt;mukhi diffgr:id=&quot;mukhi2&quot;
+msdata:rowOrder=&quot;1&quot; diffgr:hasChanges=&quot;inserted&quot;&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;d1&gt;2000&lt;/d1&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;d2&gt;Bye23&lt;/d2&gt;
+</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/mukhi&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/sonal&gt;</p>
+
+<p class=ILoutput>&lt;/diffgr:diffgram&gt;</p>
+
+<p class=ILoutput>&lt;/abcResult&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As before, aa.wsdl, a.cs and
+zzz.cs remain unchanged. Therefore, they are not displayed again. The asmx
+file, which now incorporates a voluminous code, has an additional DataTable
+object named t1, which refers to the table named 'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Two columns named d1 and d2 are
+added to the table. They are of type int and string, respectively. Thereafter,
+two records are added to this table and eventually, the table is added to the
+table collections of the DataSet. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The wsdl file merely contains
+information about a DataSet. It does not embody any information about the
+schema or the data in the tables. The client and the proxy remain unaltered for
+the same reasons as specified in the earlier examples. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As is customary, the large SOAP
+packet that is sent across, commences with the schema element. The id and the
+name of the first child element are initialized to 'sonal', where 'sonal' represents
+a DataSet, since the IsDataSet attribute is set to true. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Then the complexType describes
+the DataSet object 'sonal'. It enjoys the discretion of selecting from amongst
+the two elements of 'vijay' and 'mukhi'. This is because the DataSet object contains
+two tables with these names. The choice element permits the selection of only
+one element from amongst available set of elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Each of the tables is followed
+by its data structure, comprising of the columns, along with their data types,
+represented as child elements. The minOccurs, with a value of zero, can be
+omitted in the SOAP payload, if so desired. The same rules also apply to the
+second table called 'Mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>As per convention, the diffgram
+starts with the name of the dataset i.e. 'sonal', with the default namespace
+set to null. Two child elements, beginning with 'vijay' are visible, since the
+table 'vijay' consists of two records or rows. The same holds good for the two
+records in the table 'mukhi', thus, resulting in the display of two child
+elements with the name of 'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>To begin with, in the case of
+both the tables, the 'rowOrder' has the value 0, and the 'hasChanges' is
+assigned the value of 'inserted', for each of the four records. Consequently,
+it is the rows of the table 'vijay' that are displayed first, followed by the
+rows of the table 'mukhi'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The rest of the diffgram, i.e.
+the content embodied in the column names, remains unchanged. The id field
+assigns a unique name to each and every record in the diffgram.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; Class=&quot;zzz&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class zzz </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataSet d ;</p>
+
+<p class=ILprg>SqlConnection c = new
+SqlConnection(&quot;server=(local)\\NetSDK;database=pubs;uid=sa;pwd=;&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter da = new SqlDataAdapter (&quot;select * from
+Authors where au_lname='White'&quot;,c);</p>
+
+<p class=ILprg>d = new DataSet(&quot;vijay&quot;);</p>
+
+<p class=ILprg>da.Fill(d, &quot;ppp&quot;);</p>
+
+<p class=ILprg>return d;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>SOAP response</u></p>
+
+<p class=ILoutput>&lt;abcResult&gt;</p>
+
+<p class=ILoutput>&lt;xsd:schema id=&quot;vijay&quot;
+targetNamespace=&quot;&quot; xmlns=&quot;&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;vijay&quot;
+msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:choice maxOccurs=&quot;unbounded&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;ppp&quot;&gt;</p>
+
+<p class=ILoutput>&lt;xsd:complexType&gt;</p>
+
+<p class=ILoutput>&lt;xsd:sequence&gt;</p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;au_id&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;au_lname&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;au_fname&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;phone&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;address&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;city&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;state&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;zip&quot;
+type=&quot;xsd:string&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput>&lt;xsd:element name=&quot;contract&quot;
+type=&quot;xsd:boolean&quot; minOccurs=&quot;0&quot; /&gt; </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>&lt;/xsd:sequence&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/xsd:choice&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> 
+</span>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">  </span>&lt;/xsd:schema&gt;</p>
+
+<p class=ILoutput>&lt;diffgr:diffgram
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot; xmlns:diffgr=&quot;urn:schemas-microsoft-com:xml-diffgram-v1&quot;&gt;</p>
+
+<p class=ILoutput>&lt;vijay xmlns=&quot;&quot;&gt;</p>
+
+<p class=ILoutput>&lt;ppp diffgr:id=&quot;ppp1&quot;
+msdata:rowOrder=&quot;0&quot;&gt;</p>
+
+<p class=ILoutput>&lt;au_id&gt;172-32-1176&lt;/au_id&gt; </p>
+
+<p class=ILoutput>&lt;au_lname&gt;White&lt;/au_lname&gt; </p>
+
+<p class=ILoutput>&lt;au_fname&gt;Johnson&lt;/au_fname&gt; </p>
+
+<p class=ILoutput>&lt;phone&gt;408 496-7223&lt;/phone&gt; </p>
+
+<p class=ILoutput>&lt;address&gt;10932 Bigge Rd.&lt;/address&gt; </p>
+
+<p class=ILoutput>&lt;city&gt;Menlo Park&lt;/city&gt; </p>
+
+<p class=ILoutput>&lt;state&gt;CA&lt;/state&gt; </p>
+
+<p class=ILoutput>&lt;zip&gt;94025&lt;/zip&gt; </p>
+
+<p class=ILoutput>&lt;contract&gt;true&lt;/contract&gt; </p>
+
+<p class=ILoutput>&lt;/ppp&gt;</p>
+
+<p class=ILoutput>&lt;/vijay&gt;</p>
+
+<p class=ILoutput>&lt;/diffgr:diffgram&gt;</p>
+
+<p class=ILoutput>&lt;/abcResult&gt;</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>So far, the DataTable has been
+created manually, which is not a very pragmatic way of working. An enhanced and
+workable mechanism would be, to have the DataSet created automatically, while
+records are being fetched from a database. The DataSet class and the classes
+related to it, originate from the 'System.Data' namespace, while the actual
+Data handling classes emanate from the 'System.Data.SqlCient' namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Firstly, d is created as an
+object that appears analogous to the DataSet class. Then, an SqlConnection
+object is created with the connection string as a parameter to the constructor.
+The string passed to the constructor, determines the table in the database on
+SQL Server, with which a connection is to be established. A database is a mere
+collection of tables. The tables that hold our interest are contained in a
+database called pubs. Finally, the userid and password are specified. These
+individual pieces of data are separated by semi-colons and contain the words
+'server', 'uid' and 'pwd', which are reserved by SQL Server. Thus, we are
+compelled to employ these words. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Authors table lies in the
+'pubs' database and is installed by the .NET samples. While the installation of
+the samples is in progress, the InstMSDE program installs a server on every
+machine. In our case, the server that has been installed is 'localhost'.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Next, an SqlDataAdapter object
+is created where the constructor accepts an SQL select statement and the newly
+created SqlConnection object. Further, the DataSet object is instantiated with
+the name 'vijay', provided through the constructor. The Fill function in the
+SqlDataAdapter initiates the retrieval of data from the database.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Firstly, a connection is
+actually made to the table in the database. Then, the select statement
+retrieves all the records from the Authors table, where the field au_lname in
+the record has a value of 'White'. If the 'where' clause is not been specified,
+it would result in the extirpation of all the records from the table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The Fill function fills up the
+DataSet object d, which is passed as the first parameter. The data retrieved
+from the Authors table is named as ppp, which is the second parameter. Finally,
+the DataSet contains a single table, which is despatched across the wire. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The SOAP response is not
+disconcerted about the source of the data, i.e. whether the data originates from
+a database or it has been entered manually. As always, it displays the name of
+the dataSet 'vijay', followed by the second parameter of the Fill function,
+i.e. ppp. This is followed by the innumerable names of the fields from the
+Authors table, comprising of the entire data schema. Details, such as the
+relationships amongst tables, the Primary Key etc., are not disclosed. The
+diffgram simply specifies the DataSet name 'vijay', and a single element ppp,
+with all the data posited within the columns. Now, we progress and press on to
+a simple example using a DataGrid.<o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;ccc&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class ccc : WebService {</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataSet d<span style="mso-spacerun: yes">  </span>= new
+DataSet();</p>
+
+<p class=ILprg>SqlConnection co = new
+SqlConnection(&quot;server=(local)\\NetSDK;database=northwind;Trusted_Connection=yes&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter c = new SqlDataAdapter(&quot;Select * from
+Customers&quot;, co);</p>
+
+<p class=ILprg>c.Fill(d, &quot;pqr&quot;);</p>
+
+<p class=ILprg>return d;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>public class zzz : Form {</p>
+
+<p class=ILprg>DataGrid d;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ClientSize = new Size(600, 413);</p>
+
+<p class=ILprg>ccc c = new ccc();</p>
+
+<p class=ILprg>DataSet ds = c.abc();</p>
+
+<p class=ILprg>d = new DataGrid();</p>
+
+<p class=ILprg>d.Size = new Size(584, 336);</p>
+
+<p class=ILprg>d.Location = new Point(8, 8);</p>
+
+<p class=ILprg>d.DataSource = ds;</p>
+
+<p class=ILprg>d.DataMember = &quot;pqr&quot;;</p>
+
+<p class=ILprg>Controls.Add(d);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main()<span style="mso-spacerun: yes"> 
+</span>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><u>s.bat</u></p>
+
+<p class=ILprg>del *.exe</p>
+
+<p class=ILprg>del *.dll</p>
+
+<p class=ILprg>wsdl.exe /l:CS aa.WSDL</p>
+
+<p class=ILprg>csc.exe /t:library ccc.cs</p>
+
+<p class=ILprg>csc.exe zzz.cs /r:ccc.dll</p>
+
+<p class=ILprg>zzz</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=347 id="_x0000_i1026"
+  src="chap4/image1.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 4.1</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Within this asmx file, there
+exists a function abc, which merely returns a DataSet that is loaded with the
+records from the Customers table. Thereafter, to create a wsdl file from the above
+asmx file, the URL of http://localhost/a.asmx?WSDL is specified in the browser.
+The file contents are saved in aa.wsdl. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Once this has been accomplished,
+the batch file s.bat is run, in order to execute a series of commands. The
+proxy code in the file ccc.cs contains a class ccc, which is referred to
+extensively in the client program zzz.cs. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>For those of you who have not
+read our book on WinForms, it is important to know that the client program
+zzz.cs is a Windows applications, which displays a DataGrid control in a
+window. This DataGrid object d has a property called DataSource, which is
+initialized to a DataSet object that contains the data displayed by the data
+grid. The DataMember property, when specified, refers to the name of the table
+in the data set, whose data is to be displayed. In this case, the name of the
+table is 'pqr'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, it is amply evident that
+the program is strikingly similar to the earlier programs; the only
+dissimilarity being that the DataSet feeds a DataGrid object. The code in the
+asmx file that actually fetches or creates the DataSet, remains unaltered when
+employed by any application. This is due to the fact that the DataSet ds gets
+initialized by the code in the abc function. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>If you are desirous of acquiring
+enhanced conceptual clarity, the most optimum technique would be to modify the
+port number of localhost to 8080, and then, view the packets in the output
+window of the Trace program. The SOAP response packet displays the data in a
+similar fashion, as was witnessed earlier.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><b><span style='color:windowtext'>Master-Detail
+Relationships:<span style="mso-spacerun: yes">  </span></span></b><span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>a.asmx</u></p>
+
+<p class=ILprg>&lt;%@ WebService Language=&quot;C#&quot; class=&quot;ccc&quot;
+%&gt;</p>
+
+<p class=ILprg>using System.Web.Services;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>using System.Data.SqlClient;</p>
+
+<p class=ILprg>public class ccc : WebService </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[WebMethod]</p>
+
+<p class=ILprg>public DataSet abc() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataSet c = new DataSet();</p>
+
+<p class=ILprg>SqlConnection co = new
+SqlConnection(&quot;server=(local)\\NetSDK;database=northwind;Trusted_Connection=yes&quot;);</p>
+
+<p class=ILprg>SqlDataAdapter a1 = new SqlDataAdapter(&quot;Select * from
+Customers&quot;, co);</p>
+
+<p class=ILprg>SqlDataAdapter a2 = new SqlDataAdapter(&quot;Select * from
+Orders&quot;, co);</p>
+
+<p class=ILprg>a1.Fill(c, &quot;Customers&quot;);</p>
+
+<p class=ILprg>a2.Fill(c, &quot;Orders&quot;);</p>
+
+<p class=ILprg>return c;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>aa.xsd</u></p>
+
+<p class=ILprg>&lt;xsd:schema id=&quot;d1&quot; targetNamespace=&quot;&quot;
+xmlns=&quot;&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xsd:element
+name=&quot;Customers&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:all&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;xsd:element
+name=&quot;CustomerID&quot; type=&quot;xsd:string&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;/xsd:all&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xsd:element
+name=&quot;Orders&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:all&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;xsd:element
+name=&quot;OrderID&quot; msdata:ReadOnly=&quot;True&quot;
+msdata:AutoIncrement=&quot;True&quot; type=&quot;xsd:int&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;xsd:element
+name=&quot;CustomerID&quot; minOccurs=&quot;0&quot;
+type=&quot;xsd:string&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;/xsd:all&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;xsd:element
+name=&quot;ddd&quot; msdata:IsDataSet=&quot;true&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:choice
+maxOccurs=&quot;unbounded&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;xsd:element
+ref=&quot;Customers&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">        </span>&lt;xsd:element
+ref=&quot;Orders&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;/xsd:choice&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">   
+</span>&lt;/xsd:complexType&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;xsd:unique
+name=&quot;Constraint1&quot; msdata:PrimaryKey=&quot;true&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:selector
+xpath=&quot;.//Customers&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:field
+xpath=&quot;CustomerID&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/xsd:unique&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;xsd:keyref
+name=&quot;ppp&quot; refer=&quot;Constraint1&quot;&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:selector
+xpath=&quot;.//Orders&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">      </span>&lt;xsd:field
+xpath=&quot;CustomerID&quot;/&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">    </span>&lt;/xsd:keyref&gt;</p>
+
+<p class=ILprg><span style="mso-spacerun: yes">  </span>&lt;/xsd:element&gt;</p>
+
+<p class=ILprg>&lt;/xsd:schema&gt;</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>zzz.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Windows.Forms;</p>
+
+<p class=ILprg>using System.Drawing;</p>
+
+<p class=ILprg>using System.Data;</p>
+
+<p class=ILprg>public class zzz : Form </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ddd d;</p>
+
+<p class=ILprg>DataGrid d2;</p>
+
+<p class=ILprg>DataGrid d1;</p>
+
+<p class=ILprg>public zzz() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>d2 = new DataGrid();</p>
+
+<p class=ILprg>d = new ddd();</p>
+
+<p class=ILprg>d1 = new DataGrid();</p>
+
+<p class=ILprg>d2.Location = new Point(8, 256);</p>
+
+<p class=ILprg>d2.Text = &quot;d2&quot;;</p>
+
+<p class=ILprg>d2.Size = new Size(584, 248);</p>
+
+<p class=ILprg>d2.ForeColor = System.Drawing.SystemColors.WindowText;</p>
+
+<p class=ILprg>d2.BackColor = System.Drawing.SystemColors.Window;</p>
+
+<p class=ILprg>d2.DataSource = d;</p>
+
+<p class=ILprg>d2.DataMember = &quot;Customers.ppp&quot;;</p>
+
+<p class=ILprg>d1.Location = new System.Drawing.Point(8, 8);</p>
+
+<p class=ILprg>d1.Text = &quot;d1&quot;;</p>
+
+<p class=ILprg>d1.Size = new Size(584, 240);</p>
+
+<p class=ILprg>d1.ForeColor = System.Drawing.SystemColors.WindowText;</p>
+
+<p class=ILprg>d1.BackColor = System.Drawing.SystemColors.Window;</p>
+
+<p class=ILprg>d1.DataSource = d;</p>
+
+<p class=ILprg>d1.DataMember = &quot;Customers&quot;;</p>
+
+<p class=ILprg>Text = &quot;Customer Orders&quot;;</p>
+
+<p class=ILprg>ClientSize = new Size(600, 581);</p>
+
+<p class=ILprg>Controls.AddRange(new Control[] {d2,d1});</p>
+
+<p class=ILprg>ccc c = new ccc();</p>
+
+<p class=ILprg>DataSet ds = c.abc();</p>
+
+<p class=ILprg>d.Merge(ds);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public static void Main(string[] args) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Application.Run(new zzz());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.bat</u></p>
+
+<p class=ILprg>del *.exe</p>
+
+<p class=ILprg>del *.dll</p>
+
+<p class=ILprg>del aa.cs</p>
+
+<p class=ILprg>xsd /d aa.xsd</p>
+
+<p class=ILprg>wsdl.exe /l:CS aa.WSDL</p>
+
+<p class=ILprg>csc /t:library ccc.cs</p>
+
+<p class=ILprg>csc /t:library aa.cs</p>
+
+<p class=ILprg>csc zzz.cs /r:ccc.dll /r:aa.dll</p>
+
+<p class=ILprg>zzz</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<table border=0 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal><img width=480 height=442 id="_x0000_i1027"
+  src="chap4/image2.jpg"></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal>Screen 4.2</p>
+  </td>
+ </tr>
+</table>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>This program displays data in
+datagrids, which functions on the foundation of a master-detail relationship. The
+application has two data-grids:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>One displays data from the Customers
+table.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The other displays data from the
+Orders table with regard to a specific customer. </p>
+
+<p class=ILbase><span style='color:windowtext'>The Orders table is comprised of
+a very large number of records, as all orders have been stored in a single
+file. While the above program is being employed, and when we click on an
+individual customer in the first data grid, the orders only of that particular
+customer get displayed in the second grid. To facilitate this, a parent-child
+or master-detail or one-to-many relationship has to be established between the
+Customers table and the Orders table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The zzz.cs file has two DataGrid
+objects, d1 and d2. The program is larger in size than the earlier ones, since
+properties like ForeColor and BackColor have been assigned specific values. The
+DataSource member for both the DataGrid objects is initialized to d, which is
+an instance of class ddd, whereas, the DataMember for the DataGrid d1 is
+Customers, and that for the DataGrid d2 is Customers.ppp. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The AddRange function is then
+used to add the two DataGrid objects d1 and d2 into an array. Finally, an
+object c is created, which is an instance of ccc. The class ccc is the
+WebService class from the file a.asmx. The abc function in this class is
+responsible for retrieving the data from the Customers and Orders table. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Within the abc function in the
+asmx file, two tables viz. Customers and Orders, are filled up with data by
+using the Fill function, and the dataset is then returned. Thus, the DataSet ds
+contains two tables. This DataSet ds is merged with the ddd object d. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The object of class ddd is used
+primarily for the data schema or rules. The DataSet object ds supplies the raw
+data. The relationship between the Orders table and the Customers table is
+stored in the ddd class. Therefore, it is mandatory on our part to figure out
+who creates the ddd class, and how it gets created. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>In order to accomplish this, we
+commence with the file aa.xsd. We shall not probe any deeper into the details
+of the XML Schema world, except to state that it is one of the three most
+salient pillars of the XML world. Schemas are basically used for documentation.
+In this particular case, it is used for a relationship between tables. It is
+employed to ensure that the XML file conforms to the rules that are imposed on
+it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The root tag is schema, with the
+xsd namespace pointing to a well-known URI. The targetNamespace and default
+namespace are null, while the other namespace prefix defined is msdata. The id
+attribute has no utility at this juncture. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The next tag or element in
+sequence is that of Customers. This name has been obtained from the name of our
+Table.<span style="mso-spacerun: yes">  </span>As every element needs a type,
+the Customers element is assigned the type 'complexType'. Within it, is
+ensconced a list of elements that constitute the definition of Customer. In our
+case, there is only one item named CustomerID, of type string. Normally, all
+the fields from the Customer table are listed out. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The same procedure is adopted
+for the Orders table too. Here, the two columns listed out are OrderID and
+CustomerID, consisting of the attributes ReadOnly and AutoIncrement, which are
+self-explanatory. The most crucial element is the one named ddd. Since the
+IsDataSet attribute has the value of true, therefore, using the xsd program on
+the aa.xsd file, it creates a class named ddd, which is derived from the class
+DataSet containing tons of code. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The complexType tag is followed
+by the choice element, which enables the user to select from amongst multiple
+elements that follow. There are two elements to choose from, and both of these
+refer to the Customers and Order elements, using the ref attribute. The keyref
+called ppp, refers to a constraint called Constraint1, which is created by
+using a unique element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The XPath expression of
+//Customers in the selector element indicates a 'node from anywhere'. This is
+so because the symbol // stands for 'any location'. An XPath expression is
+generally used when some data has to be located in a node. In our code, the
+field of interest is the CustomerID. Close on the heels of the selector, is one
+more XPath expression having the value of //Orders, bearing in mind that the
+Xpath field is now specified as CustomerID. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thus, we have been triumphant in
+building a relationship, where every CustomerID record in the Customer table is
+mapped to multiple CustomerID records in the Orders table. As an outcome of
+this, the DataMember of the second grid takes on the notation of Customers.ppp.
+It is so because ppp now is the keyref, which displays only those records that
+have the same Customer id as the active customer in the first grid. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>A snippet of code from the aa.cs
+file that is created by the xsd program, has been displayed below. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>aa.cs</u></p>
+
+<p class=ILprg>CustomersDataTable tableCustomers;</p>
+
+<p class=ILprg>OrdersDataTable tableOrders;</p>
+
+<p class=ILprg>DataRelation relationppp;</p>
+
+<p class=ILprg>private void InitClass() </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>DataSetName = &quot;ddd&quot;;</p>
+
+<p class=ILprg>Namespace = &quot;&quot;;</p>
+
+<p class=ILprg>tableCustomers = new CustomersDataTable();</p>
+
+<p class=ILprg>Tables.Add(tableCustomers);</p>
+
+<p class=ILprg>tableOrders = new OrdersDataTable();</p>
+
+<p class=ILprg>Tables.Add(this.tableOrders);</p>
+
+<p class=ILprg>tableOrders.Constraints.Add(new
+ForeignKeyConstraint(&quot;ppp&quot;, new DataColumn[] {
+tableCustomers.CustomerIDColumn}, new DataColumn[] {</p>
+
+<p class=ILprg>tableOrders.CustomerIDColumn}));</p>
+
+<p class=ILprg>relationppp = new DataRelation(&quot;ppp&quot;, new DataColumn[]
+{</p>
+
+<p class=ILprg>tableCustomers.CustomerIDColumn}, new DataColumn[] {</p>
+
+<p class=ILprg>tableOrders.CustomerIDColumn}, false);</p>
+
+<p class=ILprg>Relations.Add(this.relationppp);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The InitClass function gets
+called by the constructor of the ddd class, wherein, the DataSetName property
+is set to ddd and the Namespace is set to null.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>Thereafter, two tables named
+tableCustomers and tableOrders are created as instances of the classes derived
+from DataTable. Both the tables are added to the Tables collection. The most
+crucial statement here is the Foreign Key constraint called ppp. A foreign key
+of any table is always a Primary key of some other table. In our case,
+CustomerID is a primary key in the Customers table, whereas, it dons the mantle
+of a Foreign key in any other table that embodies it.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='color:windowtext'>The constructor of the Foreign
+Key Constraint is assigned two DataColumn objects:<o:p></o:p></span></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The CustomerID from the Customers
+table as the Primary key.</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>The CustomerID column from the
+Orders table as the Foreign key.</p>
+
+<p class=ILbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal>Once a DataRelation object has been created, it then becomes
+the bounden duty of the system to maintain this relation or Constraint.<span
+style="mso-spacerun: yes">  </span>This constraint will ensure that no record
+is added in the Order table, unless it contains a CustomerID that is present in
+the Customers table. The DataRelation retrieves records in a similar manner. If
+we bypass the xsd file, we would have to enter the above code manually, which
+is obviously a very tedious task.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xmlsoap/chap4.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:57:49 GMT -->
+</html>

@@ -1,0 +1,277 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/himptbl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:05 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="himptbl_files/filelist.html">
+<title>Hooking import table</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2006-06-26T11:58:00Z</o:Created>
+  <o:LastSaved>2006-06-26T11:58:00Z</o:LastSaved>
+  <o:Pages>3</o:Pages>
+  <o:Words>368</o:Words>
+  <o:Characters>2102</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>17</o:Lines>
+  <o:Paragraphs>4</o:Paragraphs>
+  <o:CharactersWithSpaces>2581</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Hooking import table</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>f.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>int main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;hi&quot;, &quot;hi&quot;, 0);</p>
+
+<p class=MsoNormal>MessageBox(0,&quot;bye&quot;, &quot;hi&quot;, 0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>void main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>HINSTANCE hDll=0;</p>
+
+<p class=MsoNormal>hDll = LoadLibrary(&quot;kSentinel.dll&quot;);</p>
+
+<p class=MsoNormal>printf(&quot;Hdll=%x\n&quot;,hDll);</p>
+
+<p class=MsoNormal>system(&quot;pause&quot;);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>z.bat</p>
+
+<p class=MsoNormal>del a.exe</p>
+
+<p class=MsoNormal>del *.dll</p>
+
+<p class=MsoNormal>del *.obj</p>
+
+<p class=MsoNormal>cl a.c</p>
+
+<p class=MsoNormal>cl -c -W0 b.c </p>
+
+<p class=MsoNormal>link /dll /out:ksentinel.dll b.obj user32.lib advapi32.lib
+imagehlp.lib</p>
+
+<p class=MsoNormal>a</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdio.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;imagehlp.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;stdlib.h&gt;</p>
+
+<p class=MsoNormal>typedef int<span style="mso-spacerun: yes">  </span>_stdcall
+MyNewFunctiontype(int i , char *j, char *k, int l);</p>
+
+<p class=MsoNormal>char<span style="mso-spacerun: yes"> 
+</span>aa[1000],ProcName[1024];</p>
+
+<p class=MsoNormal>HHOOK hHook;</p>
+
+<p class=MsoNormal>HMODULE hUser32;</p>
+
+<p class=MsoNormal>PIMAGE_IMPORT_DESCRIPTOR pImportDesc;</p>
+
+<p class=MsoNormal>MyNewFunctiontype *hMessageBoxAddr;</p>
+
+<p class=MsoNormal>DWORD size,ii,dwOldProtect;</p>
+
+<p class=MsoNormal>PIMAGE_THUNK_DATA pThunk;</p>
+
+<p class=MsoNormal>BOOL _stdcall MyMessageBox(int i , char *j, char *k, int l)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>int ret;</p>
+
+<p class=MsoNormal>ret = (hMessageBoxAddr)(i,j,&quot;Vijay Mukhi&quot;,l);</p>
+
+<p class=MsoNormal>return ret;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>LRESULT CALLBACK HookProc(int nCode, WPARAM wParam, LPARAM
+lParam) </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>return CallNextHookEx( hHook, nCode, wParam, lParam); </p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>BOOL APIENTRY DllMain(HINSTANCE hModule,DWORD<span
+style="mso-spacerun: yes">  </span>ul_reason_for_call,LPVOID lpReserved)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if(ul_reason_for_call==DLL_PROCESS_ATTACH)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>GetModuleFileName(0, ProcName, 1024);</p>
+
+<p class=MsoNormal>if(strstr(ProcName, &quot;a.exe&quot;))</p>
+
+<p class=MsoNormal>hHook = SetWindowsHookEx(WH_CBT,HookProc,hModule, 0 ); </p>
+
+<p class=MsoNormal>if(<span style="mso-spacerun: yes">  </span>strstr(ProcName,
+&quot;f.exe&quot;) || strstr(ProcName, &quot;g.exe&quot;)<span
+style="mso-spacerun: yes">  </span>)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>hUser32 = LoadLibrary(&quot;user32.dll&quot;);</p>
+
+<p class=MsoNormal>hMessageBoxAddr =
+GetProcAddress(hUser32,&quot;MessageBoxA&quot;);</p>
+
+<p class=MsoNormal>pImportDesc =
+(PIMAGE_IMPORT_DESCRIPTOR)ImageDirectoryEntryToData(0x400000,TRUE,IMAGE_DIRECTORY_ENTRY_IMPORT,&amp;size);</p>
+
+<p class=MsoNormal>sprintf(aa,&quot;pImportDesc=%x hUser32=%x
+hMessageBoxAddr=%x&quot;,pImportDesc,hUser32,hMessageBoxAddr);</p>
+
+<p class=MsoNormal>OutputDebugString(aa);</p>
+
+<p class=MsoNormal>while (pImportDesc-&gt;Name)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>PSTR pszModName = (PSTR)((PBYTE)0x400000 +
+pImportDesc-&gt;Name);</p>
+
+<p class=MsoNormal>OutputDebugString(pszModName);</p>
+
+<p class=MsoNormal>if (stricmp(pszModName, &quot;USER32.dll&quot;) == 0) </p>
+
+<p class=MsoNormal>break;</p>
+
+<p class=MsoNormal>pImportDesc++;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>pThunk = (PIMAGE_THUNK_DATA)( (PBYTE)0x400000 +
+pImportDesc-&gt;FirstThunk );</p>
+
+<p class=MsoNormal>while (pThunk-&gt;u1.Function)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>PROC* ppfn = (PROC*) &amp;pThunk-&gt;u1.Function;</p>
+
+<p class=MsoNormal>BOOL bFound = (*ppfn == hMessageBoxAddr);</p>
+
+<p class=MsoNormal>sprintf(aa , &quot;Found=%d hMessageBoxAddr=%x ppfn=%x
+*ppfn=%x&quot;,bFound,hMessageBoxAddr,ppfn , *ppfn);</p>
+
+<p class=MsoNormal>OutputDebugString(aa);</p>
+
+<p class=MsoNormal>if (bFound) </p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>MEMORY_BASIC_INFORMATION mbi;</p>
+
+<p class=MsoNormal>VirtualQuery(ppfn, &amp;mbi,
+sizeof(MEMORY_BASIC_INFORMATION));</p>
+
+<p class=MsoNormal>ii = VirtualProtect(mbi.BaseAddress,mbi.RegionSize,PAGE_READWRITE,&amp;mbi.Protect);</p>
+
+<p class=MsoNormal>sprintf(aa , &quot;mbi.BaseAddress=%x mbi.RegionSize=%x
+ii=%d MyMessageBox=%x&quot;,mbi.BaseAddress,mbi.RegionSize,ii,MyMessageBox);</p>
+
+<p class=MsoNormal>OutputDebugString(aa);</p>
+
+<p class=MsoNormal>*ppfn = MyMessageBox;</p>
+
+<p class=MsoNormal>break;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>pThunk++;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>return TRUE;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/june2606/himptbl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:43:06 GMT -->
+</html>

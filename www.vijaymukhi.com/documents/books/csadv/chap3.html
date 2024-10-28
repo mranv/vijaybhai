@@ -1,0 +1,1254 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:40:43 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="Chap3_files/filelist.html">
+<link rel=Edit-Time-Data href="Chap3_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>Enums - C# Nuts and Bolt - Beta2</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>1</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:Created>2001-09-27T11:57:00Z</o:Created>
+  <o:LastSaved>2001-09-27T11:58:00Z</o:LastSaved>
+  <o:Pages>10</o:Pages>
+  <o:Words>1748</o:Words>
+  <o:Characters>9969</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>83</o:Lines>
+  <o:Paragraphs>19</o:Paragraphs>
+  <o:CharactersWithSpaces>12242</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:Garamond;
+	panose-1:2 2 4 4 3 3 1 1 8 3;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.Cprg, li.Cprg, div.Cprg
+	{mso-style-name:"C\#prg";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Coutput, li.Coutput, div.Coutput
+	{mso-style-name:"C\#output";
+	mso-style-parent:"C\#base";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Cbase, li.Cbase, div.Cbase
+	{mso-style-name:"C\#base";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:15.0pt;font-family:Garamond;
+color:black'>Chapter 3</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:26.0pt;font-family:Garamond;
+color:black'>Enums</span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum is at the same level as a
+class, struct and interface. It performs a similar job of creating a new data
+type.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We have created a new datatype
+yyy using enum. It has three values, namely, a1, black and hell. The words we
+write within an enum can be anything, it is left entirely on us.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine((int)yyy.black);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>1<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum can be considered as a
+static object, hence black can be referred to as yyy.black. In the WriteLine
+method, when we cast yyy.black to int, the output returned is an integer value
+of 1. Without any cast, the output is displayed as black.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In a sense, it behaves like an
+array where a1 has a value of zero, black has a value of 1 and hell 2. Wherever
+we refer to yyy.black, it is like writing the number 1</span><span
+style='color:blue'>.</span> At one level an enum is a word that stands for a
+constant number. An enum type is called a distinct type with named constants.<span
+style='color:windowtext'><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine((byte)yyy.black);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy : byte<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>1<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>In the earlier example on enum,
+the data type for the members was int as we did not specify the underlying data
+type. Here we are specifying byte as the underlying data type. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The valid underlying types are
+byte, sbyte, short, ushort, int, uint, long or ulong respectively. A char
+cannot be the underlying type for an enum data object as a char stores Unicode
+characters and not numbers.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum xxx : yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(12,1): error CS1008: Type byte, sbyte, short, ushort,
+int, uint, long, or ulong expected<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Enums cannot derive from other
+enums and can only have the above mentioned types as the underlying data types.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class xxx : yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(11,7): error CS0509: 'xxx' : cannot inherit from sealed
+class 'yyy'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Internally, an enum is treated as
+a sealed class and thus follows all the rules pertaining to sealed classes.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs </u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,black,hell,a1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(6,15): error CS0102: The class 'yyy' already contains a
+definition for 'a1'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum cannot have two members
+with the same name. Every enum member has a value which if not specified starts
+with 0 and the next enum member increments it by 1.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine((int)yyy.a1 + &quot; &quot; +
+(int)yyy.black + &quot; &quot; + (int)yyy.hell + &quot; &quot; + (int)yyy.a2);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 4,black,hell = 9,a2<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>4 5 9 10<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We can, however, specify the
+constant values for the enum members. a1 starts at 4 and as we have not
+specified a value for black, it is 5. Hell, though, starts at 9 and a2, the
+next member, increases it by one thus getting a value of 10.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy : byte<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 400,black,hell = 9,a2<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(9,6): error CS0031: Constant value '400' cannot be
+converted to a 'byte'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>If we try and go beyond the range
+of values supported by the underlying data type, we receive an error similar to
+the one we'd get if we initialize a byte to a value beyond its capacity.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine((int)yyy.a1 + &quot; &quot; +
+(int)yyy.black + &quot; &quot; + (int)yyy.hell + &quot; &quot; + (int)yyy.a2);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 4,black,hell = 9,a2=a1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>4 5 9 4<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'>Nothing stops us from
+initializing more than one enum member to the same constant value.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main()<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy.a1 = 10;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 4,black,hell = 9,a2=a1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(5,1): error CS0131: The left-hand side of an assignment
+must be a variable, property or indexer<o:p></o:p></p>
+
+<p class=Coutput>a.cs(5,10): error CS0029: Cannot implicitly convert type 'int'
+to 'yyy'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum member behaves like a
+constant whose value cannot be changed.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>using System;<o:p></o:p></p>
+
+<p class=Cprg>enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red,green,blue = 3<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() {<o:p></o:p></p>
+
+<p class=Cprg>Console.WriteLine(xxx(yyy.blue));<o:p></o:p></p>
+
+<p class=Cprg>Console.WriteLine(xxx(yyy.green));<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>static string xxx(yyy c) {<o:p></o:p></p>
+
+<p class=Cprg>switch (c) {<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>case yyy.red: <o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>return
+&quot;red&quot;;<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>case yyy.blue: <o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>return
+&quot;blue&quot;;<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>case yyy.green: <o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>return
+&quot;green&quot;;<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>default:<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>return
+&quot;invalid&quot;;<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:2'>                        </span>}<o:p></o:p></p>
+
+<p class=Cprg><span style='mso-tab-count:1'>            </span>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>blue<o:p></o:p></p>
+
+<p class=Coutput>green<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Here we have created an enum that
+has three members. The switch statement can take any data type and the case
+statement uses the member names rather than numbers to compare for a match.
+This makes our program more readable and easier to document.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>enum yyy {<o:p></o:p></p>
+
+<p class=Cprg>red = green ,green<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,1): error CS0110: The evaluation of the constant value
+for 'yyy.red' involves a circular definition<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Similar to constants, we cannot
+have a circular definition. Here red depends on green and the value of green is
+one more than the value of red. This circular definition causes an error.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum refers to its own members
+without a qualifier whereas any external identifier<span style="mso-spacerun:
+yes">  </span>must precede it<span style="mso-spacerun: yes">  </span>with the
+name of the enum. By default, an enum and its members are public. We can
+explicitly use the public modifier if we so choose to. The same accessibility
+rules of classes apply here also.<o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy : System.Enum<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red ,green<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(8,1): error CS1008: Type byte, sbyte, short, ushort, int,
+uint, long, or ulong expected<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Every enum data type is
+automatically derived from System.Enum. However, we cannot derive from it
+explicitly. The enum class has also been derived from three interfaces,
+IComparable, IFormattable and IConvertible. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.green.CompareTo(yyy.blue));<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.green.CompareTo(yyy.red));<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.green.CompareTo(yyy.green));<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red,green,blue<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>-1<o:p></o:p></p>
+
+<p class=Coutput>1<o:p></o:p></p>
+
+<p class=Coutput>0<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Many a times we would like to
+compare between enums as we do with strings. We may want to know whether an
+enum member holds a value larger, equal to or smaller than another enum member.
+As all enums finally derive from the Enum class, they have a function called
+CompareTo. This function is not static so we have to execute it through a
+member. The member red has a value 0, green 1 and blue 2. Thus yyy.green is
+smaller than blue but larger than red. A negative answer is smaller and a
+positive value other than zero is larger.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz {<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.Format(typeof(yyy),yyy.green,&quot;X&quot;));<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.Format(typeof(yyy),yyy.green,&quot;d&quot;));<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red,green,blue<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Coutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>00000001<o:p></o:p></p>
+
+<p class=Coutput>1<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>Format is a freely available
+static function with every enumeration. Hence we can access it through the yyy
+class. The first parameter is the data type of<span style="mso-spacerun: yes"> 
+</span>enum, the second the value of the enum member and finally a string
+specifying the format i.e. hex or decimal.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>string [] a;<o:p></o:p></p>
+
+<p class=Cprg>a = yyy.GetNames(typeof(yyy));<o:p></o:p></p>
+
+<p class=Cprg>foreach ( string s in a)<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(s);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red,green,blue<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>red<o:p></o:p></p>
+
+<p class=Coutput>green<o:p></o:p></p>
+
+<p class=Coutput>blue<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The static function GetNames
+accepts an object of type Type and it returns an array of strings. In our case,
+the array has the length of 3 as yyy has 3 members. The foreach statement is
+used to displays them one by one.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.green.ToString());<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red,green,blue<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>green<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>We can use a large number of
+pre-defined conversion functions with enums to convert from one data type to
+another.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red ,green<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>int i = 1;<o:p></o:p></p>
+
+<p class=Cprg>if ( i == yyy.red)<o:p></o:p></p>
+
+<p class=Cprg>;<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(10,6): error CS0019: Operator '==' cannot be applied to
+operands of type 'int' and 'yyy'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>An enum is a distinct data type
+and it cannot be equated to an int. We need to overload the operator to perform
+comparisions<span style="mso-spacerun: yes">  </span>between them. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>red ,green<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>int i = 1;<o:p></o:p></p>
+
+<p class=Cprg>if ( i == (int)yyy.green)<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(&quot;hi&quot;);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>hi<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The only way to remove the
+earlier error is by casting yyy.green to int.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public enum aa : int<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,a2,a3<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(aa.a2 + 10);<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(10 + aa.a3);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>11<o:p></o:p></p>
+
+<p class=Coutput>12<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The + operator is internally
+overloaded to add a number to an enum. There are actually two such operators,
+the order of priority does not matter. These operators are available each time
+we create an enum. We now have a choice of using the earlier members of the
+enum class or the free operators.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>public enum aa : int<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1,a2,a3<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(aa.a2 + aa.a3);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(9,26): error CS0019: Operator '+' cannot be applied to
+operands of type 'aa' and 'aa'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>However, we cannot add two enums
+members even though they belong to the same enum family. Individually they are
+know to be numbers and can be added up with another number separately.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.a1 == yyy.a2);<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.a1 == yyy.a3);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 1,a2 = 4,a3=1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Output</u><o:p></o:p></p>
+
+<p class=Coutput>False<o:p></o:p></p>
+
+<p class=Coutput>True<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The comparison operators ==, !=
+etc. get automatically overloaded to work with the user defined enums. As
+mentioned earlier, enums are glorified numbers. <o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>System.Console.WriteLine(yyy.a1 == xxx.a1);<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum yyy<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 1,a2 = 4,a3=1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>enum xxx<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a1 = 1,a2 = 4,a3=1<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(5,26): error CS0019: Operator '==' cannot be applied to
+operands of type 'yyy' and 'xxx'<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'>The above error is a direct proof
+stating that enums may be glorified numbers but cannot be used to compare enums
+members from different families. All the other comparison operators work in
+exactly the same way.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>C# gives the same weight to the
+enum line of data types as provided to classes. Thus it goes to great extents
+to make life easier for us when working with the enum data types.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><b><span style='font-size:14.0pt;font-family:Tahoma;color:windowtext'>The
+Other Odds and Ends<o:p></o:p></span></b></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>enum yyy <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>class zzz<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>public static void Main() <o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>yyy i = (yyy) -1 ; <o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(8,10): error CS0118: 'yyy' denotes a 'class' where a
+'variable' was expected<o:p></o:p></p>
+
+<p class=Coutput>a.cs(8,9): error CS0075: To cast a negative value, you must
+enclose the value in parentheses<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>To cast a -ve value, it must be
+placed in parenthesis. This may be because of the fact that the unary minus is
+also an operator and may confuse the compiler. In doubt, always use
+parenthesis. An apple a day keeps the doctor away and an extra parenthesis has
+done no one any harm.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>enum eee<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>value__<o:p></o:p></p>
+
+<p class=Cprg>}<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,1): error CS0076: The enumerator name 'value__' is
+reserved and cannot be used<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'>The compiler has a large number
+of reserved words. It converts the code to a different form altogether. Only
+for an enum does it not allow us to use the reserved word value__ as it must be
+using the same word internally to keep track of the enum. That is what we think
+but the right answer is only with the people who designed the language. The
+long and short is that we are not allowed to use certain words in our code at
+certain places. It is like the charge of the light brigade. Ours is not to
+reason why, ours is but to do and die.<o:p></o:p></span></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cprg><u>a.cs</u><o:p></o:p></p>
+
+<p class=Cprg>enum eee : byte<o:p></o:p></p>
+
+<p class=Cprg>{<o:p></o:p></p>
+
+<p class=Cprg>a = 255,b<o:p></o:p></p>
+
+<p class=Cprg>}<span style="mso-spacerun: yes">  </span><o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Coutput><u>Compiler Error</u><o:p></o:p></p>
+
+<p class=Coutput>a.cs(3,9): error CS0543: 'eee.b': the enumerator value is too
+large to fit in its type<o:p></o:p></p>
+
+<p class=Cbase><span style='color:windowtext'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=Cbase>A byte can only store values from 0 to 255. In the case of an
+enum, the value of enum member a is 255 and that of b is 256. However, a byte
+cannot store such a large number. Thus the error is reported at b and not at a.
+Also if we try and equate a to say 300, we get a different error message. This
+overflow error is reserved exclusively for enums. Others not invited.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csadv/chap3.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:40:47 GMT -->
+</html>

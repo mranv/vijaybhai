@@ -1,0 +1,2974 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/rootkit/assemblylanguage.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:45 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="assemblylanguage_files/filelist.html">
+<title>Assembler</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Mr. Vijay Mukhi</o:LastAuthor>
+  <o:Revision>5</o:Revision>
+  <o:TotalTime>283</o:TotalTime>
+  <o:Created>2004-12-27T11:01:00Z</o:Created>
+  <o:LastSaved>2004-12-14T10:57:00Z</o:LastSaved>
+  <o:Pages>14</o:Pages>
+  <o:Words>5024</o:Words>
+  <o:Characters>28639</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>238</o:Lines>
+  <o:Paragraphs>57</o:Paragraphs>
+  <o:CharactersWithSpaces>35170</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+h6
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:6;
+	font-size:12.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:"Times New Roman";
+	color:#000066;
+	mso-text-raise:3.0pt;
+	letter-spacing:1.0pt;
+	font-weight:bold;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	color:windowtext;}
+p.MsoBodyText2, li.MsoBodyText2, div.MsoBodyText2
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	line-height:normal;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:windowtext;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-top:6.0pt;
+	margin-right:0in;
+	margin-bottom:12.0pt;
+	margin-left:0in;
+	line-height:18.0pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:595.45pt 841.7pt;
+	margin:.5in .5in .5in .5in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<table border=1 cellspacing=0 cellpadding=0 width="94%" bgcolor="#eeeeff"
+ style='width:94.8%;background:#EEEEFF;border-collapse:collapse;border:none;
+ mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+ <tr style='height:15.1pt'>
+  <td width="100%" valign=top style='width:100.0%;border:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.1pt'>
+  <h6><span style='font-size:10.0pt;font-family:"Bookman Old Style"'>Assembler</span><sup><span
+  style='font-size:11.0pt;mso-bidi-font-size:10.0pt;mso-text-raise:0pt'><o:p></o:p></span></sup></h6>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText2><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoBodyText2>One of our strongest beliefs is that every programmer
+worth his salt should understand assembler. Our view is however a minority view
+and 99.9999999% of all programmers in the world do not understand any assembly.
+So we thought why not reduce one 9 from the above percentage. Thus this chapter
+will teach you all about assembler assuming you know nothing about it. On a
+more serious note some great looking code for device drivers on the net is
+written only in assembler. So it makes sense to learn assembler. Also when it
+comes to hard core programming at times C gives way and we have to embed
+assembler in our C code. </p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>y.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#include &lt;windows.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#include &lt;malloc.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#include &lt;tlhelp32.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#include &lt;stdio.h&gt;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#define DRV_NAME &quot;vijayd&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#define DRV_FILENAME &quot;vijay.sys&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>#define DIRECTORY &quot;C:\\driverasm&quot;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>typedef struct<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><span style="mso-spacerun: yes">  </span>unsigned short<span
+style="mso-spacerun: yes">  </span>Length;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><span style="mso-spacerun: yes">  </span>unsigned short<span
+style="mso-spacerun: yes">  </span>MaximumLength;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>char * Buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>} ANSI_STRING, *PANSI_STRING;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>typedef struct <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><span style="mso-spacerun: yes">  </span>unsigned short<span
+style="mso-spacerun: yes">  </span>Length;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><span style="mso-spacerun: yes">  </span>unsigned short<span
+style="mso-spacerun: yes">  </span>MaximumLength;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><span style="mso-spacerun: yes">  </span>unsigned short *Buffer;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>} UNICODE_STRING, *PUNICODE_STRING;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>long (_stdcall * _RtlAnsiStringToUnicodeString)(PUNICODE_STRING<span
+style="mso-spacerun: yes">  </span>DestinationString,PANSI_STRING<span
+style="mso-spacerun: yes">  </span>SourceString,unsigned char);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>VOID (_stdcall *_RtlInitAnsiString)(PANSI_STRING<span
+style="mso-spacerun: yes">  </span>DestinationString,char *<span
+style="mso-spacerun: yes">  </span>SourceString);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>long (_stdcall * _ZwLoadDriver)(PUNICODE_STRING DriverServiceName);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>long (_stdcall * _ZwUnloadDriver)(PUNICODE_STRING DriverServiceName);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ANSI_STRING aStr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>UNICODE_STRING uStr;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>HMODULE hntdll;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>unsigned long byteRet;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>HANDLE hDevice;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>HKEY hkey;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DWORD val,b;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>char *imgName = &quot;System32\\DRIVERS\\&quot;DRV_FILENAME;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>void main(int argc, char* argv[])<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>hntdll = GetModuleHandle(&quot;ntdll.dll&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_ZwLoadDriver = GetProcAddress(hntdll, &quot;NtLoadDriver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_ZwUnloadDriver = GetProcAddress(hntdll, &quot;NtUnloadDriver&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlAnsiStringToUnicodeString = GetProcAddress(hntdll,
+&quot;RtlAnsiStringToUnicodeString&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlInitAnsiString = GetProcAddress(hntdll,
+&quot;RtlInitAnsiString&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>if ( strcmp(argv[1],&quot;-i&quot;) == 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CopyFile(DIRECTORY&quot;\\&quot;DRV_FILENAME,&quot;C:\\winnt\\system32\\drivers\\&quot;DRV_FILENAME,1);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegCreateKey(HKEY_LOCAL_MACHINE,&quot;System\\CurrentControlSet\\Services\\&quot;DRV_NAME,&amp;hkey);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>val = 1;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegSetValueEx(hkey, &quot;Type&quot;, 0, REG_DWORD, (PBYTE)&amp;val,
+sizeof(val));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegSetValueEx(hkey, &quot;ErrorControl&quot;, 0, REG_DWORD,
+(PBYTE)&amp;val, sizeof(val));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>val = 3;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegSetValueEx(hkey, &quot;Start&quot;, 0, REG_DWORD, (PBYTE)&amp;val,
+sizeof(val));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegSetValueEx(hkey,&quot;ImagePath&quot;,0,REG_EXPAND_SZ,(PBYTE)imgName,strlen(imgName));<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlInitAnsiString(&amp;aStr,&quot;\\Registry\\Machine\\System\\CurrentControlSet\\Services\\&quot;DRV_NAME);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlAnsiStringToUnicodeString(&amp;uStr, &amp;aStr, TRUE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>val = _ZwLoadDriver(&amp;uStr);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>//hDevice = CreateFile(&quot;\\\\.\\&quot;DRV_NAME, GENERIC_WRITE |
+GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,NULL, OPEN_EXISTING,
+FILE_ATTRIBUTE_NORMAL, NULL);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>//printf(&quot;Val=%d hDevice=%x&quot;,val,hDevice);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>//DeviceIoControl (hDevice, 2 &lt;&lt; 3 , 0, 0, 0, 0, &amp;b, 0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>if ( strcmp(argv[1],&quot;-u&quot;) == 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlInitAnsiString(&amp;aStr,&quot;\\Registry\\Machine\\System\\CurrentControlSet\\Services\\&quot;DRV_NAME);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_RtlAnsiStringToUnicodeString(&amp;uStr, &amp;aStr, TRUE);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_ZwUnloadDriver(&amp;uStr);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DeleteFile(&quot;C:\\winnt\\system32\\drivers\\&quot;DRV_FILENAME);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegDeleteKey(HKEY_LOCAL_MACHINE,
+&quot;System\\CurrentControlSet\\Services\\&quot;DRV_NAME&quot;\\Enum&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>RegDeleteKey(HKEY_LOCAL_MACHINE,
+&quot;System\\CurrentControlSet\\Services\\&quot;DRV_NAME);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The only change we have made in the loader program is to change the
+directory name to driverasm. The batch file z.bat also remains the same as
+before. We install and uninstall the driver as before, y –I and y –u.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>z.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>cl y.c advapi32.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DbgPrint PROTO C :DWORD, :VARARG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay2&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc d:DWORD , r:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Lets start with the smallest driver that displays my name in the
+DbgPrint program. To start with all assembler programs start with words that
+start with a dot. These are called directives. They change the mood or the type
+of code the assembler generates. Intel has introduced a zillion processors like
+the 386, 586, Pentium etc. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Each new family of microprocessors introduces some new instructions. The
+assembler would like to know which chip you want to run the final code on so
+that it can use the instruction set of that chip. Thus if we specify .586, the
+code generated may use instructions found on the 586 chip. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>This will make sure that our code will not run on machines less than a
+586 say a 386 chip. Thus the first directive is always the processor name. All
+code that we see uses /386 even though we do not know of anyone who uses a 386
+machine any more. Thus use the .586 or .686 directive for the Pentium class
+machines. The second directive .model tells us the assembler two things. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>First is the memory model that should be used. In the good old days of
+the 8086 processor, a pointer was denoted by a segment and a offset value.
+Today all this is history and thus we will use the word flat always with the
+model directive. The second value is the calling convention to be used for
+functions. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Two possible values are stdcall and C. In the Windows world we prefer
+the stdcall calling convention. This is not that important and optional but as
+normally if we call or create<span style="mso-spacerun: yes">  </span>a
+function and do not specify a calling convention, this directive helps the
+assembler to decide which calling convention to use. Thus the memory model can
+be tiny, small , large etc. We will always use flat. This is followed by the
+calling convention used, options here are pascal, syscall , stdcall, basic etc.
+Finally we can also specify a stack option.<span style="mso-spacerun: yes"> 
+</span>Only the memory model is mandatory and the default is C.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>As mentioned before we will be calling the function DbgPrint. We need to
+specify the function prototype by specifying the name followed by the
+parameters. The first parameter is a char * in C, but in assembler we use DWORD
+to specify 4. The point we are making is that in assembler we specify data
+types at a lower level. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We specify the number of bytes that data type occupies. Thus DWORD is
+another word for 4. The second parameter onwards for DbgPrint is variable and
+thus we use VARARG. In C we would have used three dots to specify a variable
+number of parameters. The reserved word PROTO is followed by the calling
+convention which we use<span style="mso-spacerun: yes">  </span>C. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Had we used stdcall, we would have got an error as we cannot use the
+stdcall calling convention when we have a variable number of arguments. This is
+because as the callee restores the stack it needs to know how many parameters
+it has been passed. This number is only available with the caller. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>If we do no specify the calling convention after proto, the default of
+stdcall gets used and we get an error. If we specify for the calling convention
+after the model directive, then we do have to specify PROTO but not the calling
+convention for the function prototype for DbgPrint.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Thus to sum up, a function prototype is a must for every function we are
+calling. The calling convention after PROTO is optional, the system will use
+the calling convention specified by the model directive. In this specific
+example we do not have to specify the VARARG as we are calling DbgPrint with
+only a single parameter.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Thus a prototype begins with a word or a label followed by the directive
+PROTO. Everything else is optional. The default calling convention is C. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>If we were asked to write a C compiler or an assembler we would choose a
+assembler as it is simpler.<span style="mso-spacerun: yes">  </span>When we use
+a programming language like C, we do specify what our data is placed and where
+is code. It is the job of the compiler to take all our data and place it in one
+section of the file and the code in another and the resources in the third. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>When our exe file is loaded into memory, data , code, resources are laid
+out in separate sections of memory. A section contains similar entities. Thus
+in our assembler program we have to use the data directive to specify that our
+data begins. All our variables are created here. Then we use the code directive
+to specify our code. These are the two most basic sections present in our exe
+file. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In our data section we create a variable by specifying its name first,
+in our case string1. We next specify its size, db means 1 bytes and then the
+actual value. As this is a string we are allowed to use double inverted commas
+but as we want to null terminate the string we end with a 0. As we need to
+create a single variable we then start with the code directive.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>To create a function we start with the name or label of the function. In
+our case we need a function called DriverEntry. This is followed by the
+directive proc. Then we specify the parameters to be passed to this function or
+procedure. Each parameter starts with a name then a colon and its data type. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We know that the driver entry function gets called with two parameters
+and as each one has a data type of<span style="mso-spacerun: yes">  </span>a
+pointer we specify DWORD or 4 bytes as their size. We call them d and r. Now we
+have to call a function DbgPrint. We use the Invoke directive where we specify
+the function name DbgPrint and a comma and then the parameters passed. Here we
+need the address of the string string1 to be passed. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The offset directive gives us the address of a variable or a function.
+We need to pass the address of the string string1 which the DbgPrint function
+will display. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In C the return statement simply places a value in the eax register and
+quits out. In assembler<span style="mso-spacerun: yes">  </span>we use the mov
+instruction to mov a value in a register. A register is nothing but a named
+area in a microprocessor. The syntax for mov is source first and then
+destination. This is how we move 0 into the eax register. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The OS will call the DriverEntry function of our driver, wait for it to finish
+and then look into the eax register to tell it whether the driver was
+successful or not. The value STATUS_SUCCESS equals 0. The ret instruction is
+needed at the end of every function in assembler. This internally denotes end
+of function. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We also need to specify that our function is over by using the endp
+directive. Thus we start a function with its name and its name. We end a
+function also with the same name and the directive endp. Finally we have to use
+the end directive to say end of module or program and also to specify that the
+first function to be called is DriverEntry. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>a.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>set path=c:\winddk\2600.1106\bin\x86;%PATH%<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>b.bat<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ml /c r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>link /driver /out:vijay.sys /subsystem:native r.obj
+c:\winddk\2600.1106\lib\wxp\i386\ntoskrnl.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We now have two bat files to be used. The first one simply sets the path
+variable to a certain winddk directory. This is because the program ml is
+stored there. Ml is the assembler that we will be using. We will run a.bat only
+the first time in the directory. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In b.bat we first run the assembler with one option /c to compile to obj
+and not call the linker which is the default behavior for cl also. We then call
+our good old linker link specifying the /driver option which is optional as we
+are specifying /subsystem:native that specifies that we want a device driver.
+Adding /driver makes no difference but most programs we see on the net use this
+option. The rest remain the same as before.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>When we run the driver using y –I, we see the DbgPrint output Vijay2 in
+DbgView, DeviceTree also shows our driver vijayd. The only problem is that it
+does not uninstall as our driver has no Driver Unload function. Lets set it
+right.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DbgPrint PROTO C :DWORD,:VARARG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay1&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad proc d:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc d:DWORD , r:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset<span style="mso-spacerun: yes">  </span>string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,d<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax+34h],offset DriverUnLoad<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We know that the first parameter passed to the DriverEntry function is
+the address of a pointer to a DRIVER_OBJECT structure. This structure has a
+member DriverUnLoad that we set to the address of a function. We looked at this
+structure in the ntddk header file and found it was at a offset 34h from the
+beginning. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>So all that we do is move this pointer d into the eax register using the
+mov instruction. To find out the address of a variable we use offset , to find
+out the address of a function we also use the directive offset. Thus offset
+DriverUnLoad will gives us the address of the function, and we want to place
+this in 34h from the start of the pointer d. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>So we add 34h to the variable d and wherever we use a * or a -&gt; in C,
+in assembler we use [] brackets. Thus [] means a indirection. This is how we
+set a member of a structure in assembler. To create the DriverUnLoad function,
+we start with a label DriverUnLoad and then the name proc followed by the name
+of the single parameter passed. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We have created one more string string2 and invoke function DbgPrint. If
+we forget the ret, the assembler does not complain but we get a blue screen of
+death.<span style="mso-spacerun: yes">  </span>Now both y –I and y –u work like
+before.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DbgPrint PROTO C :DWORD,:VARARG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay4&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad proc d:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc d:DWORD , r:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>push offset string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>call DbgPrint<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>add esp,4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,d<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax+34h],offset DriverUnLoad<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Back in the good old days of DOS, when we first started learning about
+assembler programming there was no invoke instruction. We would do things the
+hard way. Before we call a functions, it expects its parameters in a area of
+memory called the stack. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>To place something on the stack we use the push instruction. Thus we
+first push the address of the variable string1 on the stack using this push
+instruction. There is a register called esp that tracks the stack or tells us
+where the stack is currently. Thus the push instruction decrements the stack by
+4 as the stack moves downwards. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We then use the call instruction that actually calls the function whose
+name we specify. As function DbgPrint uses the C calling convention, we have to
+restore the stack by adding 4<span style="mso-spacerun: yes">  </span>to esp
+using the add instruction. If the stack is not restored all hell breaks loose.
+The invoke directive does all this for us. It pushes the parameters on the
+stack, calls the function and also restores the stack if the callee does not.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Thus from now on we will always use the invoke directive to call a
+function, but remember the way the oldies would do it. At times it takes fun
+out of assembler programming.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P5<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DbgPrint PROTO C :DWORD,:VARARG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PWSTR typedef PTR WORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>UNICODE_STRING STRUCT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_Length<span style="mso-spacerun: yes">         </span>WORD<span
+style="mso-spacerun: yes">    </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>MaximumLength<span style="mso-spacerun: yes">  </span>WORD<span
+style="mso-spacerun: yes">    </span>?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Buffer<span style="mso-spacerun: yes">         </span>PWSTR<span
+style="mso-spacerun: yes">   </span>?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>UNICODE_STRING ENDS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PUNICODE_STRING typedef PTR UNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay4&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string3 db &quot;%S&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad proc d:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnLoad endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc d:DWORD , r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,r<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string3 ,<span style="mso-spacerun: yes"> 
+</span>addr [eax].Buffer<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,d<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax+34h],offset DriverUnLoad<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The DriverEntry function is passed a pointer to a UNIOCDE_STRING. So far
+have treated it like a long and not a pointer to a structure. To create
+anything in assembler, we start with a label or name and then specify its type.
+Thus as we want to create a structure UNICODE_STRING, we start with this name
+followed by the reserved word struct. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We end the structure by the same name UNICODE_STRING followed by the
+reserved word ENDS. In between we specify all our members. Each member starts
+with its name, then the data type, the first two members have a data type of
+short or i.e. WORD. The last is Buffer whose type is PWSTR which is another
+type as we will explain later. Finally we have to specify a value for the
+members of the structure ? means no value or initializer. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Like the typedef of C we are allowed to create our own types. The
+internal PTR type means a pointer of C. To create our own type we start as
+always with the name PWSTR, followed with the obvious keyword typedef and then
+a list of predefined types. In the case of PWSTR we use PTR WORD which makes it
+a pointer to a short. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>This is the how we create the UNICODE_STRING structure in C also. The
+type PUNICODE_STRING is nothing but a PTR or pointer to a UNIOCDE_STRING
+structure. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In the DriverEntry function we replace the DWORD after the last
+parameter to a PUNICODE_STRING type. We place this value of r in the eax
+register. We then use the assume directive to type cast the value in the eax
+register to a PUNICODE_STRING type. The assume directive takes name of register
+colon followed by a type. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>From now on the assembler will assume that register eax contains a
+pointer to a structure UNICODE_STRING. The DbgPrint function is now passed 2
+parameters, the first is the address of a string string3 whose value is
+%S.<span style="mso-spacerun: yes">  </span>This is because we want to display
+the value of a Unicode string. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The last parameter is the Buffer member which stores the string. As we
+have cast the value in eax to a pointer to a structure, the [] brackets give us
+the actual structure. Then we use the dot notation to reference the actual
+member Buffer. This is not enough as we have to pass the address of this member
+and thus use the addr keyword. A slight confusion, for the address of a
+function use offset, for the address of a variable use offset or addr. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>For the address of a member of a structure use addr. Confusion
+personified. At the end we once again use the assume directive to set the type
+of eax to nothing which is the default value. If we do not, then the line where
+we mov the offset of the DriverUnLoad function will give us an error.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc d:DWORD , r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,r<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, offset string3 , addr (UNICODE_STRING<span
+style="mso-spacerun: yes">  </span>PTR [eax]).Buffer<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,d<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax+34h],offset<span style="mso-spacerun: yes"> 
+</span>DriverUnLoad<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>What if there was no assume keyword, then what would we do. We first get
+the structure the pointer is pointing to by using [eax]. The PTR tells the
+assembler it is a pointer and the UNIOCDE_STRING tells the assembler that we
+have a structure of a certain type. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Then we use a dot to get at the Buffer member and the addr keyword gives
+us the address of the buffer member. As there are many ways to skin a cat, we
+will use any of the above two ways depending upon the phases of the moon.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P7<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DbgPrint PROTO C :DWORD, :VARARG<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>IRP_MJ_MAXIMUM_FUNCTION equ 1Bh<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PWSTR typedef PTR WORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PVOID typedef PTR<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>UNICODE_STRING STRUCT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_Length<span style="mso-spacerun: yes">         </span>WORD<span
+style="mso-spacerun: yes">    </span>?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>MaximumLength<span style="mso-spacerun: yes">   </span>WORD<span
+style="mso-spacerun: yes">    </span>?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Buffer<span style="mso-spacerun: yes">          </span>PWSTR<span
+style="mso-spacerun: yes">   </span>?<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>UNICODE_STRING ENDS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PUNICODE_STRING typedef PTR UNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DRIVER_OBJECT STRUCT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_Type<span style="mso-spacerun: yes">                  
+</span>SWORD<span style="mso-spacerun: yes">           </span>?<span
+style="mso-spacerun: yes">   </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>_Size<span style="mso-spacerun: yes">                  
+</span>SWORD<span style="mso-spacerun: yes">           </span>?<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DeviceObject<span style="mso-spacerun: yes">           
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Flags<span style="mso-spacerun: yes">                  
+</span>DWORD<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverStart<span style="mso-spacerun: yes">            
+</span>PVOID<span style="mso-spacerun: yes">      </span><span
+style="mso-spacerun: yes">     </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverSize<span style="mso-spacerun: yes">             
+</span>DWORD<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverSection<span style="mso-spacerun: yes">          
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverExtension<span style="mso-spacerun: yes">        
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverName<span style="mso-spacerun: yes">             
+</span>UNICODE_STRING &lt;&gt; <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>HardwareDatabase<span style="mso-spacerun: yes">       
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>FastIoDispatch<span style="mso-spacerun: yes">         
+</span>PVOID<span style="mso-spacerun: yes">    </span><span
+style="mso-spacerun: yes">       </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverInit<span style="mso-spacerun: yes">             
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverStartIo<span style="mso-spacerun: yes">          
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload<span style="mso-spacerun: yes">           
+</span>PVOID<span style="mso-spacerun: yes">           </span>? <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>MajorFunction<span style="mso-spacerun: yes">          
+</span>PVOID<span style="mso-spacerun: yes">          
+</span>(IRP_MJ_MAXIMUM_FUNCTION + 1) dup(?)<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DRIVER_OBJECT ENDS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>PDRIVER_OBJECT typedef PTR DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.const<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay2&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string3 db &quot;%x&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload proc p:PDRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc p:DRIVER_OBJECT, registry:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].DriverUnload, offset DriverUnload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We now create a DRIVER_OBJECT structure using the Struct keyword. This is
+a pretty large structure and the PVOID type is nothing but a typedef for a PTR.
+If we do not specify a initializer for a structure member a ? is a must. For a
+structure within a structure we use &lt;&gt; instead. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The DriverUnLoad member is 34h bytes from the start and as we have set
+the type of eax to PDRIVER_OBJECT , we do not use the offset but a more decent
+dot DriverUnload instead. The last member is the MajorFunction array. We use a
+() brackets to supply a size. The word IRP_MJ_MAXIMUM_FUNCTION is no #define
+but a equ to a value 1B. This is how we have created an array 1c large. The
+dup(?) repeats the ? mark that many times.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P8<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntddk.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntoskrnl.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay2&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload proc p:PDRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc p:PDRIVER_OBJECT, r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].DriverUnload, offset DriverUnload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>If we start creating these structures ourselves, we will never ever
+write code in assembler. For some reason Microsoft choose not to gives us include
+files for ml. They have given us header files for C/C++. As we mentioned before
+rootkits is an international phenomena. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>There are a group of Russians at <a
+href="http://www.freewebs.com/four-f/">www.freewebs.com/four-f/</a>. Here you
+can download a file kmdkit17.zip. When you unzip this file in a directory and
+run install, it creates a directory masm32 in C drive root. Here we find a list
+of inc files that ml understands. We copied some fragments of the inc files
+where we displayed the structures UNICODE_STRING and DRIVER_OBJECT. Thus we
+have installed the above kit, we assume you also have.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The same code as above but now all our structure definitions are present
+in the inc files ntoskrnl.inc and ntddk.inc. Look at the time and effort that
+these guys put in to convert<span style="mso-spacerun: yes">  </span>header
+files from the ddk to assembler header files. They have also given us a set of
+lib files but we choose to use the ones from the ddk as lib files carry no
+code. The kmdkit also contains a 100 page tutorial in assembler. We read it, so
+should you.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P9<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>option casemap:none<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntstatus.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntddk.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntoskrnl.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>includelib \masm32\lib\w2k\ntoskrnl.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\Macros\Strings.mac<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.const<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\Device\\vijayd&quot;,
+g_usDeviceName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\DosDevices\\vijayd&quot;,
+g_usSymbolicLinkName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay6&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string3 db &quot;First If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string4 db &quot;Second If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload proc p:PDRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteSymbolicLink, addr g_usSymbolicLinkName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteDevice, (DRIVER_OBJECT PTR [eax]).DeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc p:PDRIVER_OBJECT, r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>local pDeviceObject:PDEVICE_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateDevice, p,0,addr
+g_usDeviceName,FILE_DEVICE_UNKNOWN,0,FALSE,addr pDeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateSymbolicLink, addr g_usSymbolicLinkName, addr
+g_usDeviceName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].DriverUnload, offset DriverUnload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Vijay6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>First If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Second If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Unload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The above program creates for us a symbolic link for use by CreateFile
+function and then deletes them. In C all variables that we create in a function
+are called local variables. We use the local keyword to create a variable
+pDeviceObject of type PDEVICE_OBJECT which is where we will store our newly
+created device object. This local keyword has to be present only at the
+beginning of our procedure. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We then use invoke to call our function IoCreateDevice. We pass it the
+DRIVER_OBJECT parameter p, then the extension size 0, our device name vijayd,
+our device number unknown, two zeroes and the last parameter being the address
+of a DEVICE_OBJECT pointer as we use the addr keyword. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>This function will create a Device for us and if successful return 0 in
+the eax register. We use the if keyword to check the value of the eax register.
+If it is STATUS_SUCCESS which is a equ for 0, we enter the if statement. In the
+good old days assembler programming was a pain as they was no if or while
+keywords. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In the if statement we execute a DbgPrint and then the function
+IoCreateSymbolicLink where we pass addresses of the<span style="mso-spacerun:
+yes">  </span>two names Symbolic and Device vijayd. If this function also
+returns 0 we display another DbgPrint statement. In the DriverUnLoad function
+we first call IoDeleteSymbolicLink passing the address of the Symbolic name.
+For the IoDeleteDevice we need the DeviceObject pointer and what we have a
+DRIVER_OBJECT pointer. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>So we move this value into eax. Cast it to a DRIVER_OBJECT pointer and
+then retrieve the DeviceObject member which we pass to the IoDeleteDevice
+function. All this without using assume.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In C programming we used to create a structure UNICODE_STRING and then
+use the Rtl functions to initialize this structure. In assembler we have the
+concept of macros that bring in lots of code and simplifies life for us. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The Russians gave us a macro CCOUNTED_UNICODE_STRING that does lots f
+things. It creates a structure UNICODE_STRING variable of the second parameter
+g_usDeviceName and sets it to the string we specify in the first. Even though
+we specify a ascii string the macro converts it into a Unicode string and<span
+style="mso-spacerun: yes">  </span>initializes the structure for us. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>All that we do is use this macro for creating our structure and then use
+addr variable name later in our code. The directive .const is like .data but we
+are not allowed to change the variable value ever again. The last parameter is
+the alignment which we will not explain now but keep it at 4 always. To see the
+effect we hope you have uncommented the last three lines of y.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P10<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>option casemap:none<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntstatus.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntddk.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntoskrnl.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>includelib \masm32\lib\w2k\ntoskrnl.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\Macros\Strings.mac<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.const<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\Device\\vijayd&quot;,
+g_usDeviceName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\DosDevices\\vijayd&quot;,
+g_usSymbolicLinkName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay6&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string3 db &quot;First If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string4 db &quot;Second If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string5 db &quot;DispatchFunction &quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string6 db &quot;DispatchIOCTLFunction &quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction proc pdo:PDEVICE_OBJECT, pIrp:PIRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, pIrp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr _IRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].IoStatus.Status, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>and [eax].IoStatus.Information, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>fastcall IofCompleteRequest, pIrp, IO_NO_INCREMENT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction proc pdo:PDEVICE_OBJECT, pIrp:PIRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string5<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, pIrp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr _IRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].IoStatus.Status, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>and [eax].IoStatus.Information, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>fastcall IofCompleteRequest, pIrp, IO_NO_INCREMENT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload proc p:PDRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteSymbolicLink, addr g_usSymbolicLinkName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteDevice, (DRIVER_OBJECT PTR [eax]).DeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc p:PDRIVER_OBJECT, r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>local pDeviceObject:PDEVICE_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateDevice, p,0,addr
+g_usDeviceName,FILE_DEVICE_UNKNOWN,0,FALSE,addr pDeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateSymbolicLink, addr g_usSymbolicLinkName, addr
+g_usDeviceName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].MajorFunction[IRP_MJ_CREATE*4], offset DispatchFunction<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].MajorFunction[IRP_MJ_DEVICE_CONTROL *4], offset
+DispatchIOCTLFunction<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].DriverUnload, offset DriverUnload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>First If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Second If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Unload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>In the second if statement we set the MajorFunction member IRP_MJ_CREATE
+like before to the address of a function DispatchFunction.<span
+style="mso-spacerun: yes">  </span>The only difference is that we have to
+multiply by 4 the offset as assembler unlike does not do pointer arithmetic for
+us. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We also set the IRP_MJ_DEVICE_CONTROL offset of the MajorFunction array
+to our function DispatchIOCTLFunction. This is why each time we called the
+DeviceIoControl function from user space, the above function gets called. The
+Create offset of the MajorFunction array has to be initialized or else
+CreateFile returns an error. The code for the moment in the two functions is
+identical.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The second parameter is a pointer to a IRP packet, the first to our
+device object. We place this value in a register eax and set its type to a
+pointer to a Irp structure. We move 0 to the IoStatus member and 0 in the
+Information member. We then call the function IofCompleteRequest. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The fastcall keyword calls the function using the fastcall calling
+convention which places parameter values in registers and not on the stack.
+This makes the function run a nanosecond faster as we do not have the overhead
+of creating and tearing down a stack. The function us passed a Irp pointer that
+we were passed. No change in the way we did it in C. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The keyword option casemap is used because we have used a typename and
+variable name to be the same in the dispatch functions pIrp and PIRP. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>P11<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>r.asm<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.386<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.model flat, stdcall<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>option casemap:none<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntstatus.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntddk.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\include\w2k\ntoskrnl.inc<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>includelib \masm32\lib\w2k\ntoskrnl.lib<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>include \masm32\Macros\Strings.mac<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.const<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\Device\\vijayd&quot;,
+g_usDeviceName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>CCOUNTED_UNICODE_STRING<span style='mso-tab-count:1'>         </span>&quot;\\DosDevices\\vijayd&quot;,
+g_usSymbolicLinkName, 4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.data<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string1 db &quot;Vijay6&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string2 db &quot;Unload&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string3 db &quot;First If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string4 db &quot;Second If&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string5 db &quot;DispatchFunction &quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string6 db &quot;DispatchIOCTLFunction &quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>string7 db &quot;%d %x&quot;,0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.code<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction proc uses esi edi pdo:PDEVICE_OBJECT, pIrp:PIRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>local pid:DWORD<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Invoke DbgPrint, addr string6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov esi, pIrp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume esi:ptr _IRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>IoGetCurrentIrpStackLocation esi<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov edi, eax<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume edi:ptr IO_STACK_LOCATION<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,[esi].AssociatedIrp.SystemBuffer<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov ebx, [eax]<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov ecx,[edi].Parameters.DeviceIoControl.IoControlCode<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint , addr string7 , ebx , ecx<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume edi:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume esi:ptr _IRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>fastcall IofCompleteRequest, esi, IO_NO_INCREMENT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction proc pdo:PDEVICE_OBJECT, pIrp:PIRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string5<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, pIrp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr _IRP<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].IoStatus.Status, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>and [eax].IoStatus.Information, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>fastcall IofCompleteRequest, pIrp, IO_NO_INCREMENT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload proc p:PDRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string2<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteSymbolicLink, addr g_usSymbolicLinkName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoDeleteDevice, (DRIVER_OBJECT PTR [eax]).DeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverUnload endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry proc p:PDRIVER_OBJECT, r:PUNICODE_STRING<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>local pDeviceObject:PDEVICE_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string1<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateDevice, p,0,addr
+g_usDeviceName,FILE_DEVICE_UNKNOWN,0,FALSE,addr pDeviceObject<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string3<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke IoCreateSymbolicLink, addr g_usSymbolicLinkName, addr
+g_usDeviceName<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.if eax == STATUS_SUCCESS<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>invoke DbgPrint, addr string4<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:ptr DRIVER_OBJECT<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].MajorFunction[IRP_MJ_CREATE*4], offset DispatchFunction<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].MajorFunction[IRP_MJ_DEVICE_CONTROL *4], offset
+DispatchIOCTLFunction<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov [eax].DriverUnload, offset DriverUnload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>.endif<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax,p<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>assume eax:nothing<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>mov eax, 0<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>ret<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DriverEntry endp<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>end DriverEntry<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>y.c<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>hDevice = CreateFile(&quot;\\\\.\\&quot;DRV_NAME, GENERIC_WRITE |
+GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,NULL, OPEN_EXISTING,
+FILE_ATTRIBUTE_NORMAL, NULL);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>printf(&quot;Val=%d hDevice=%x&quot;,val,hDevice);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>val = 7;<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DeviceIoControl(hDevice, 4 &lt;&lt; 3 , &amp;val , 4, 0, 0, &amp;b, 0);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Vijay6<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>First If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Second If<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchFunction <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>DispatchIOCTLFunction <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>7 20<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Unload<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We are following somewhat the same structure that we used when we
+explained how you could write device drivers in C. Looking at y.c we are
+passing the address of the val variable and before we set its value to 7. We
+have also set the control code to 0x20. We want to read these values in our
+driver. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Coming back to the driver, the only change we make is to the
+DispatchIOCTLFunction function. When we call a function good programming
+practice says that when the function exits, the registers should have the same
+value that they had when we entered the function. Thus every assembler function
+starts with pushing the value of registers it is going to change on the stack. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The last lines would then pop the registers off the stack. Saving
+registers is only something that is recommended and normally not followed.
+Instead of doing this drudgery ourselves, the proc keyword can be optionally followed
+by a uses and a list of registers that the function modifies. It is then the
+responsibility of the compiler to take add code that will save these registers
+on the stack and then restore them. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>Even though we change lots of registers in our code, we are only asking
+the function to save and restore two esi and edi. We first move the parameter
+pIrp into the esi register and then use the assume keyword to set esi as a
+pointer to a IRP structure. We then call the function
+IoGetCurrentIrpStackLocation passing it a parameter Irp and then move this
+value into the edi register. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>We cast this value into a IO_STACK_LOCATION pointer.<span
+style="mso-spacerun: yes">  </span>We want to access the SystemBuffer parameter
+and store this into the eax register. This SystemBuffer is actually a pointer
+to a long so we use the [] to access the four bytes it is pointing to into the
+ebx register. As edi is pointer to a stack location we move the IoControlCode
+member into the ecx register and display these values. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'>The same way we did it in C, a little extra hard work in assembler. <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p style='text-align:justify;tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
+class=MsoHyperlink><b><a href="../../security.html">Back to the main page</a></b></span><span
+style='color:#000066'><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:"Bookman Old Style";mso-bidi-font-family:
+Arial'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/security/rootkit/assemblylanguage.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:39:46 GMT -->
+</html>

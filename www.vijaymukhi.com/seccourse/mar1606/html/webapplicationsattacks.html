@@ -1,0 +1,830 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/webapplicationsattacks.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:27 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="webapplicationsattacks_files/filelist.html">
+<title>attacks</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>448</o:TotalTime>
+  <o:Created>2006-03-17T10:12:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:12:00Z</o:LastSaved>
+  <o:Pages>9</o:Pages>
+  <o:Words>2164</o:Words>
+  <o:Characters>12338</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>102</o:Lines>
+  <o:Paragraphs>24</o:Paragraphs>
+  <o:CharactersWithSpaces>15151</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>XSS</p>
+
+<p class=MsoNormal>Misc tips</p>
+
+<p class=MsoNormal>Url encoding</p>
+
+<p class=MsoNormal>Javascript goodies</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>XSS – Cross Site Scripting</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lets create a simple html file a.html in c:\ with the
+following contents.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form&gt;</p>
+
+<p class=MsoNormal>alert('hi')</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Even though alert is the first javascript function that we
+all know, html does not recognize it as such and displays it as a label. We see
+alert as text in our browser. Lets now teach our browser to understand
+javascript code.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form&gt;</p>
+
+<p class=MsoNormal>&lt;script&gt;alert('hi')&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Anything that we write within the tags &lt;script&gt; and
+&lt;/script&gt; is executed as javascript code. Thus we now see a message box.
+IE is very picky and if we remove the / from the script, we do not see a
+message box nor do we see the text alert. Neither here nor there. If we change
+the function name from alert to alert1 we get an error message box asking us if
+we want to debug our application.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form&gt;</p>
+
+<p class=MsoNormal>&amp;lt;script&gt;alert('hi')&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;script&gt;alert('hi') </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The escape the &lt; character we use the symbols &amp;lt;.
+Thus in the browser window we see the &lt;script but it does not get executed
+as javascript code. IE does a multiple pass though our code. It first checks
+for the tags &lt;script&gt; &lt;/script&gt;. It will finds these tags it
+executes what lies within as javascript code. This gets done first as
+javascript code can and does produce html which is merged with the rest of the
+html code. Then the html code gets rendered. As we have no script tags, our
+alert does not get executed as javascript. In the next round &amp;lt; gets converted
+to the less than sign.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The ending &lt;/script&gt; is there in the view source but
+does not displayed as<span style="mso-spacerun: yes">  </span>IE does not find
+a starting &lt;script&gt; tag. Thus we need to escape both &lt; characters to
+make them look like non tags. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form&gt;</p>
+
+<p class=MsoNormal>&amp;lt;script&gt;alert('hi')&amp;lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;script&gt;alert('hi')&lt;/script&gt; </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form&gt;</p>
+
+<p class=MsoNormal>&lt;script&gt;</p>
+
+<p class=MsoNormal>document.write(&quot;&lt;b&gt;Vijay&lt;/b&gt;&quot;);</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Vijay</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The write function in the document object is what we use to
+write html in place of javascript code. This is how javascript creates dynamic
+html pages. We see Vijay in bold.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot;<span style="mso-spacerun:
+yes">  </span>%&gt;</p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;script language=&quot;C#&quot;
+runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>void abc(Object o, EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>l.Text = t.Text;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot; &gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox id=&quot;t&quot; runat=&quot;server&quot;
+/&gt;</p>
+
+<p class=MsoNormal>&lt;asp:label id=&quot;l&quot; runat=&quot;server&quot;
+/&gt;</p>
+
+<p class=MsoNormal>&lt;asp:Button Text=&quot;Click&quot;
+runat=&quot;server&quot; OnClick=&quot;abc&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the above aspx file we have a text box and a label and
+button. We write some text in the text box<span style="mso-spacerun: yes"> 
+</span>and<span style="mso-spacerun: yes">  </span>then click on the button
+which calls the abc function. Here we simply set the value of the label field
+to whatever we wrote in the text box. Pretty innocuous code you say. This is
+the ideal program for exploiting XSS. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the text box we first write Vijay Mukhi and the label
+becomes Vijay Mukhi and the button shifts to the right. We then write the
+following text and click on the button.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;script&gt;alert(‘hi’)&lt;/script&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We are surprised we see an error page that says that the
+request is potentially dangerous. Thus ASP.Net 2.0 is a very smart cookie which
+traps a XSS exploits. This is why we always recommend using the latest version
+of software so that we do not have to write code ourselves. The system handles
+it for us. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>There may be cases where we would not like the system to do
+these checks for us. We ourselves do not know why you should disable the
+checks, but the option is there for you to do so. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot;
+validateRequest=&quot;false&quot; %&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>By default the attribute validateRequest is true and as we
+set it to false we get no error on the above input. We see the alert or message
+box and then the button gets rendered. Once again keep defaults values for
+attributes like validateRequest, you can only get burned if you change it.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot;
+validateRequest=&quot;false&quot; %&gt;</p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;script language=&quot;C#&quot;
+runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>void abc(Object o, EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>l.Text = Server.HtmlEncode(t.Text);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;span
+id=&quot;l&quot;&gt;&amp;lt;script&amp;gt;alert('hi1')&amp;lt;/script&amp;gt;&lt;/span&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>At all times do not set the value of a control to input
+taken from the user. Always use the function HtmlEncode which convert the
+characters &lt;&gt;<span style="mso-spacerun: yes">  </span>into their &amp;
+representation so that they are not executed as a script tag.<span
+style="mso-spacerun: yes">  </span>Thus we get the best of both worlds, we get
+the flexibility we want plus we also sanitize all input we get from the user.
+The span tag serves no useful purpose and evolution will some day take its
+toll.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.aspx</p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot;
+validaterequest=&quot;false&quot; %&gt;</p>
+
+<p class=MsoNormal>&lt;script language=&quot;C#&quot;
+runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>void Page_Load(object o,EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Response.Write(Request.QueryString[&quot;aa&quot;]);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>in a.aspx</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b.html</p>
+
+<p class=MsoNormal>&lt;a
+href=&quot;a.aspx?aa=&lt;script&gt;alert('hi')&lt;/script&gt;&quot;&gt; no
+&lt;/a&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The parameter aa in the hyperlink has java script code
+embedded in it. Thus the system gives us an error if we do not set the validate
+request off. We display the value of the field aa using the indexer QueryString
+and we see a Message Box. We are able to embed java script code anywhere.
+Normally we save values of form fields in a database or a log file. If we use a
+browser to read the log file, java script code can get executed where we least
+expect it. Thus anything send to the server by the browser must be thoroughly
+checked.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;
+AUTOCOMPLETE=&quot;OFF&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox id=&quot;vijay&quot;
+runat=&quot;server&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;img src=&quot;javascript:alert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot;
+runat=&quot;server&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Javascript can be embedded anywhere and everywhere. Wherever
+an attribute requires a value, we can use java script code instead. If we
+replace the words javascript with mocha or livescript in IE nothing happens,
+try it with netscape and see the difference. Livescript was the original name
+for javascript.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;
+AUTOCOMPLETE=&quot;OFF&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox id=&quot;vijay&quot;
+runat=&quot;server&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;img
+src=&quot;javascript:&amp;#010;alert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot;
+runat=&quot;server&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The carriage return character is 10, the line feed is 13.
+Using &amp;#010 we are embedding a enter in the code. We can write this
+anywhere and the system ignores enters in our code. We could also use the
+characters 9, 10, 11 12 and 13. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;img
+src=&quot;java&amp;#X0a;script:alert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can use hex characters wherever we use decimal but need
+an extra X to specify hex. Thus we must check for hex encodings also. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;img
+src=&quot;java&amp;#0000010;script:alert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Padding with up to 4 zeroes also gives us the same result.
+One more zero and the message box does not show. Does not make sense to us.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;img
+src=&quot;java&amp;#X00000a;script:alert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal>For hex numbers also 4 zeroes work well.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;img src=&quot;javascript:&amp;#065;lert('hi');&quot;&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>What does not work is replacing the a with a 65. The view
+source shows us the actual characters we have typed out. This only goes to
+prove that the browser does not first convert all decimal entities to their
+ascii equivalents. Fortunately placing javascript code in a style tag after
+changing its mime type to text/javascript does not get the browser to execute
+it as javascript code.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;html&gt;</p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot; &gt;</p>
+
+<p class=MsoNormal>&lt;style type=&quot;text/css&quot;&gt;</p>
+
+<p class=MsoNormal>@import url(javascript:alert('hi'));</p>
+
+<p class=MsoNormal>&lt;/style&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot; runat=&quot;server&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>What we are going to show you is a zillion different places
+where we can place javascript code. Cascading style sheets and the style tag
+are used to give a consistent look and feel to our web page. The whole idea is
+that we do not have to specify formatting tags for each and every control
+individually, write it once and let every control pick it up from the style. We
+change the mime type of the style to text/css and then use the @import feature
+of the css not to bring in the file but execute javascript code.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot; %&gt;</p>
+
+<p class=MsoNormal>&lt;script language=&quot;C#&quot;
+runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>void abc(object o,EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Regex r = new Regex(&quot;^[A-Za-z0-9]{10,16}$&quot;);</p>
+
+<p class=MsoNormal>bool b = r.IsMatch(t.Text);</p>
+
+<p class=MsoNormal>Response.Write(&quot;isMatch returns &quot; + b);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox runat=&quot;server&quot; id=&quot;t&quot;
+/&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot;
+runat=&quot;server&quot; onClick=&quot;abc&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The .net world gives us the Regex class that understands
+regular expressions like the Unix world does. The [] brackets let us specify a
+range, A-Z stands for all capital letter, the curly braces {} let us repeats
+the last pattern a certain number of times. {10,16} allows us to use from 10 to
+16 of the previous pattern. ^ means start of text, $ means end of text. This is
+why we have to key in from 10 to 16 caps, small or digits. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>It is the IsMatch function that really checks the text that
+we have keyed in matches the regular expression or not. A value of true means
+it does, false means a failure, the text contains invalid characters. All input
+taken from the user must be checked for sanity or else trouble is looming for
+the web application. As mom said trust no one.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Random Tips</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Use the Http fields send to us from the browser for error
+checks.</p>
+
+<p class=MsoNormal>a.html</p>
+
+<p class=MsoNormal>&lt;a href=&quot;a.aspx&quot;&gt; hi &lt;/a&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b.html</p>
+
+<p class=MsoNormal>&lt;a href=&quot;a.aspx&quot;&gt; no &lt;/a&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.aspx</p>
+
+<p class=MsoNormal>&lt;%@ language=&quot;C#&quot; %&gt;</p>
+
+<p class=MsoNormal>&lt;script language=&quot;C#&quot;
+runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>void Page_Load(object o,EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>if ( Request.ServerVariables[&quot;HTTP_REFERER&quot;] ==
+&quot;http://localhost/b.html&quot;)</p>
+
+<p class=MsoNormal>Response.Write(&quot;Allowed&quot;);</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>Response.Write(&quot;Not Allowed&quot;);</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;&gt;</p>
+
+<p class=MsoNormal>in a.aspx</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We create two html files a.html and b.html that simply allow
+us to click on a hyper link that takes us to a.aspx. Here in the function
+Page_Load we check for the field Http_referrer which tells us which url send
+us. ServerVariables is an Indexer that contains all the fields set by the
+browser. We use this wherever we know that a user can only come to this page
+say from a login page and not from any other page. Thus if the page that send
+us to a.aspx is not b.html, in Page_Load we can redirect the user to some other
+page.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This technique is useful whenever we want the user to follow
+an order of how he can navigate though our pages.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.aspx</p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes"> </span>&lt;form
+runat=&quot;server&quot; &gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox id=&quot;vijay&quot;
+runat=&quot;server&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot;
+runat=&quot;server&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The problem with today’s browsers are that they remember
+everything. Thus each time we type something into a text box called Vijay, the
+next time we press the down arrow on that text box we will see a list of items
+we have typed. We run a.aspx and type Vijay in the text box and click on the
+button. We close the browser and start another copy and call a.aspx. We now
+type Mukhi and click on the button. We once again close the browser and start a
+new copy and navigate to a.aspx. Here we choose the text box and click on the
+down arrow and see Vijay and Mukhi. This gets dangerous as people can see what
+we have typed at the text box in the past. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;form runat=&quot;server&quot;
+AUTOCOMPLETE=&quot;OFF&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;asp:TextBox id=&quot;vijay&quot;
+runat=&quot;server&quot; /&gt;</p>
+
+<p class=MsoNormal>&lt;asp:button Text=&quot;Click&quot;
+runat=&quot;server&quot;/&gt;</p>
+
+<p class=MsoNormal>&lt;/form&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We use the AUTOCOMPLETE attribute at the form level and set
+it to off so that for all the fields in the form our browser will not now
+remember the values we have keyed in. We can place the attribute for each field
+also. Thus it may make a users life easier if he does not have to key in the
+data for a field, but if multiple people use the same computer or we are using
+the form from a public machine, there could be issues of information leakage.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Url Encoding</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lets write the following URL in our browser</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/ab.html">http://localhost/ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The browser sends out a GET request to the server as GET
+/ab.html. As there are lots of ways of skinning a cat, there are lots of<span
+style="mso-spacerun: yes">  </span>ways of writing out a url. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Another way of evading an Ids is as follows</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/ab.html">http://localhost/././././ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A dot stands for the current directory and hence this url is
+identical to the above</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/ab.html">http://localhost/aaa/../ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Here we first move down into a directory aaa and from there
+we move up one back to where we are. The directory aaa does not have to be
+present on the server. This is how we can bypass a ids that is not smart.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/ab.html">http://localhost/aa/../asdf/hyuj/../../ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above url once again gives us ab.html and we can use a
+combination of . and .. as many times as we like. We must bear in mind that
+most smart security products today catch such simple url’s.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/Ab.html">http://localhost/%41b.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This gives us the same file ab.html. Hex characters are
+prefaced with a % sign and 41 is hex for decimal 65 the ASCII code for the
+letter A. Thus the GET request now changes and hence any self respecting IdS
+will first convert the hex digits to ASCII and then check the pattern. The
+latest version of snort does so.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/%2541b.html">http://localhost/%2541b.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>For some reason double hex coding does not work. The %25 hex
+becomes a % but the 41 does not become %41 and thus a A.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/.À¯ab.html">http://localhost/.%c0%afab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The characters %c0%af stands for a slash and hence the above
+url reads /ab.html. IDS’s also convert Unicode characters to ASCII. You can use
+Unicode characters instead of ASCII to obfuscate the path.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost//ab.html">http://localhost/.//ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Whenever a browser sees two slashes it converts it into a
+single slash. Another check for a IDS. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost////////////////////////ab.html">http://localhost/.////////////////////////ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>What applies to two applies to a zillion slashes, we never
+said decoding a url is simple.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/////////////////ab.html">http://localhost/.\\\\\\\\\\\\\\\\\ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We yet cannot figure out whether to use a slash or a
+backslash to separate directories and files. Thus we are allowed to use both.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost//////////////////////ab.html">http://localhost/.\\\\\\////////////////ab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>in any permutations and combinations.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost/ab.html%00vijay">http://localhost/ab.html%00vijay</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Most code under windows is written in C where a 0 or null
+byte indicates end of string. Thus whatever we write after the 0 is not
+considered as part of the url. We would advice you to see the server logs at
+C:\winnt\system32\logfiles\w3svc1. Here there is no Vijay anywhere in the url.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><a href="http://localhost%25co%afab.html/">http://localhost%co%afab.html</a></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The slash in Unicode is %c0%af whereas in ascii it is %2f. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Javascript goodies</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Ip.shtnl</p>
+
+<p class=MsoNormal>&lt;script language=&quot;javascript&quot;&gt;</p>
+
+<p class=MsoNormal>var ip = '&lt;!--#echo var=&quot;REMOTE_ADDR&quot;--&gt;'</p>
+
+<p class=MsoNormal>document.write(ip);</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The little script uses SSL to display the users current ip
+address. All that we do is extract the value of the variable REMOTE_ADDR and
+display it.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We could have written the above code as</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>&lt;script language=&quot;javascript&quot;&gt;</p>
+
+<p class=MsoNormal>document.write('&lt;!--#echo
+var=&quot;REMOTE_ADDR&quot;--&gt;');</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/webapplicationsattacks.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:28 GMT -->
+</html>

@@ -1,0 +1,1097 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap11.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center" height="0%">
+  <tr> 
+    <td height="17718" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC" height="16"> 
+            <div align="center"><font size="+1">11. JAVA FOUNDATION CLASSES</font></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>All mothers of the world love to boast about their new babies to the 
+        entire world. Oh, what a sweet child I have! At such a tender age, my 
+        child can do so many things! No other baby is as good looking as my own! 
+        And they would go on and on. It was the same story when, about five years 
+        ago, Sun Microsystems told us about their new baby, whom they had named 
+        Java. Java, they told us, was better than anything, anyone in the software 
+        industry had ever produced. The things it could do were absolutely incredible. 
+        Why, it could even work on any platform! Have you ever heard of anything 
+        like it before? Write a program once and it would work anywhere. And ofcourse, 
+        nothing looked as beautiful as Java. </p>
+      <p>We were hooked! We had heard other mothers boast about their babies but 
+        this seemed different. We fell in love with Sun's baby for the promise 
+        it held of ushering in a new paradigm in the world of Information technology. 
+        That promise, alas, remained just a promise. Our relationship with Java 
+        turned into one with many ups and downs, with more downs than ups. Simply 
+        because we realised there really wasn't a lot that we could do with Java. 
+        And as far as the looks department was concerned, well, Cindy Crawford 
+        wasn't about to feel threatened by Java. And that's probably one hell 
+        of an understatement. Because we actually thought that the output we got 
+        from Java looked quite ordinary. We felt let down. </p>
+      <p>But all that was before the Java Foundation Classes or the JFCs were 
+        released. When we first heard Sun talk about the JFCs, we wondered whether 
+        the people at Sun were referring to Jokes For Crossplatform workability. 
+        To tell you the truth, earlier, we had been so disappointed with Java 
+        that we defected to MicroSoft's ActiveX. We spent more than a year going 
+        ga-ga about the brilliant features of ActiveX. It not only looked good 
+        but also could actually do really great things. No longer. We are back 
+        home to where we belong. With Java. Infact, had Java been like this since 
+        the beginning, we would have never gone astray. </p>
+      <p>So let's move onto looking at a couple of programs in the JFCs. We hope 
+        that you will be convinced that this is definitely where our world is 
+        going to be heading. <br>
+        program 0<br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        Button b;<br>
+        b = new Button(&quot;Hi&quot;);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>If you do not understand this program, then refer to the chapter titled 
+        'Shlurrp Java'. We compile this program using javac and then using Appletviewer 
+        we open a.html to run this file.<br>
+        a.html<br>
+        &lt;applet code=zzz width=200 height=300&gt;&lt;/applet&gt;</p>
+      <p>All that this program does is place a Button on our screen,which says 
+        'Hi', This is the type of output we get when we use the original JDK1.x. 
+        Not very impressive. Which is why we called this program 0. </p>
+      <p>Another word for useless or dull. Time to get to the real thing. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        b = new JButton(&quot;Hi&quot;);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>In our first program, we have merely added a 'J' in front of Button to 
+        get the term JButton. Now when we say 'JButton b; ', we are merely informing 
+        the compiler that b looks like a JButton. Which means that it has all 
+        the properties and attributes of a JButton. We haven't as yet created 
+        a JButton in our program. </p>
+      <p>To do that, we have to actually say that b=new JButton() or call a function 
+        that returns an object that looks like a JButton. When we compile this 
+        program using the javac compiler, we get an error message that says 'class 
+        JButton not found in type declaration'. </p>
+      <p>&gt;javac zzz.java<br>
+        zzz.java:7: Class JButton not found.<br>
+        JButton b;<br>
+        ^<br>
+        zzz.java:8: Class JButton not found.<br>
+        b = new JButton(&quot;Hi&quot;);</p>
+      <p>There's a simple reason for this error. If you told me on the phone that 
+        your name is Bill, I wouldn't know who you were. Bill Clinton? Bill Gates? 
+        Billy The Kid? I wouldn't know until you told me your full name. I'd probably 
+        slam the phone down. But don't get depressed so soon. Precisely, what 
+        the compiler is doing right now is saying 'give me your full name or else 
+        how am I to know who you are?'.Write this full name and the compiler should 
+        be able to recognize you. However an easier method of doing things is 
+        to write the statement <br>
+        import javax.swing.*; <br>
+        The terms after the word 'import' and before the '*' will automatically 
+        become a prefix to JButton whenever needed. This is shown in the next 
+        program . </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        b = new JButton(&quot;Hi&quot;);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>You mean we went through that much trouble just to get something that 
+        looked as bad as the best that JDK1.x could offer. Oh no! That's why we 
+        ran away from java in the first place! And what about all those terms 
+        we kept on hearing about like ModelViewController, delegates, etc? Things 
+        that were supposed to make java better looking? </p>
+      <p>In case you are wondering whether to go further in this chapter, let 
+        me assure you that we shall get to all those terms at a relaxed pace. 
+        You probably won't even realise that we have run programs using 'delegates', 
+        'MVC', etc, until we actually point out to you that you have. And we solemnly 
+        promise to create better looking buttons in the future. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        ImageIcon i;<br>
+        i = new ImageIcon(&quot;buttonImage3.gif&quot;); <br>
+        b = new JButton(i);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>Before you run this program within your java subdirectory, move to demo\jfc\swingset\images 
+        and copy all the 'gif' files into your current directory. A .gif file 
+        merely contains an image. In this program we have the term ImageIcon. 
+        ImageIcon is an object that stands for an image. We can use any .gif file 
+        but right now we are using the files that Sun has given us. When we run 
+        this program, we see a button resembling a round circle with a bright 
+        green arrow in the centre. If you had worked with java earlier, you would 
+        have realised that this button looks a lot better than what buttons used 
+        to look like. And all that we have done is to create an ImageIcon using 
+        our .gif file and adding this ImageIcon to our button. The image contained 
+        in buttonImage3.gif file is pasted on to our button. </p>
+      <p>Earlier when we used button, all we could do was add text to it. Now 
+        in addition to plain text, we can also add images to our buttons. In the 
+        good old days, if we wanted to paste on images using java all we could 
+        do was to sit on our heads in some yoga style and meditate, waiting for 
+        the JFCs to be released. But, right now, we can stop meditating because 
+        the JFCs are here, and we have work to do. This is probably an easier 
+        way to paste an image onto the a button than when using the JFCs. That's 
+        also one of the major reasons why we have come back to Java. It's so simple 
+        to learn and work with. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        ImageIcon i , j;<br>
+        i = new ImageIcon (&quot;buttonImage3.gif&quot;); <br>
+        j = new ImageIcon (&quot;duke2.gif&quot;); <br>
+        b = new JButton (i);<br>
+        b.setPressedIcon (j);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>In this program, we have created two ImageIcons. The only thing new in 
+        this program is the line b.setPressedIcon(j). Here, we obviously mean 
+        that 'setPressedIcon' is a function in JButton. When we run our program, 
+        we see our image, namely 'buttonImage3.gif' on our button, as in our previous 
+        program. Now, due to this statement, when we keep the mouse depressed 
+        on our button, the first image is replaced by the second. So as long as 
+        we keep the mouse depressed, we see the image of a duke with a funny hat. 
+        When we release the mouse, we once again see our original image, that 
+        is in buttonImage3.gif. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        ImageIcon i , j;<br>
+        i = new ImageIcon (&quot;buttonImage3.gif&quot;); <br>
+        j = new ImageIcon (&quot;duke2.gif&quot;); <br>
+        b = new JButton (i);<br>
+        b.setRolloverIcon (j);<br>
+        add (b); <br>
+        }<br>
+        }<br>
+        This program is similar to the previous program, where we have two ImageIcons 
+        and want to replace one with the other. By now, however, we must have 
+        become pretty lazy. I mean, why take all the trouble to click on our JButton 
+        and keep it depressed to change the image, when we can achieve our objective 
+        by merely positioning the mouse over our JButton? Fortunately, we have 
+        some thing just for you . Something called setRolloverIcon( ) . So execute 
+        this program and just place the mouse over the Button. You will notice 
+        the change immediately. The first image has been replaced by the second. 
+        Move the mouse away from our JButton, and once again, we see the original 
+        image. </p>
+      <p>A point to be remembered here is that when we say b.setRolloverIcon( 
+        ) ,we obviously mean that the function setRolloverIcon is part of JButton. 
+        This may, however, not be the case, as JButton itself may be derived from 
+        something else which contains this particular function. Don't worry about 
+        this right now, as we shall be covering all this in greater detail later 
+        on. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        ImageIcon i , j;<br>
+        i = new ImageIcon (&quot;buttonImage3.gif&quot;); <br>
+        j = new ImageIcon (&quot;duke2.gif&quot;); <br>
+        b = new JButton (i);<br>
+        b.setEnabled (false);<br>
+        b.setDisabledIcon (j);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>In Java, most components, like JButtons, JCheckboxes,etc are all derived 
+        from the class, JComponent. They therefore, can make use of all the functions 
+        of JComponent. One of these is the function setEnabled(). This function 
+        requires a boolean as a parameter. When we say b.setEnabled(false), all 
+        that we are doing is disabling b, which is our JButton. The next line 
+        b.setDisabledIcon(j) simply says that when b has been disabled, replace 
+        the first ImageIcon with the one in 'j'. When we execute this program, 
+        we don't see the first image at all, as the button has been disabled immediately 
+        on execution. We directly get to see the second image. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        b = new JButton (&quot;Hello&quot;);<br>
+        Font f=new Font (&quot;Dialog&quot;,Font.BOLD,24); <br>
+        b.setFont (f);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>Maybe, we do not like the look of the text that we have placed in our 
+        JButton. Or maybe we just want to increase the size of the text to make 
+        it more prominent. All we have to do is to change the font. We first create 
+        an object that looks like a Font. While doing this, we have to give it 
+        three parameters. </p>
+      <p>The first is the name of the font. The second refers to the properties 
+        of the <br>
+        font, that is, whether the font is bold, italic, or underline or strikethrough. 
+        <br>
+        And finally we give the point size. We should know that 72 points make 
+        an inch. JButton has a function setFont( ) to set a particular font for 
+        whatever we have written. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        b = new JButton (&quot;Hello&quot;);<br>
+        b.add(Box.createRigidArea(new Dimension (100,50)));<br>
+        add (b); <br>
+        }<br>
+        }<br>
+        <br>
+        Sometimes, we might have too many buttons on a screen and they might appear 
+        too close to each other. To avoid any cluttering of buttons, we need to 
+        separate our buttons. Box is a static object. It has a static function 
+        called createRigidArea ( ). Due to this function, our JButton will now 
+        be allocated some area on the screen. Of course, we still have to specify 
+        how large we want this area to be. For this, we have to pass a Dimension 
+        function to it, which contains the width and the the height . Once we 
+        have created this area around our box, nothing else besides our JButton 
+        can occupy this area. Any new component will now be placed outside this 
+        area. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JCheckBox b;<br>
+        b = new JCheckBox(&quot;hi&quot;); <br>
+        add (b); <br>
+        }<br>
+        }<br>
+        Now that we have done JButtons, we shall realize that JCheckBoxes are 
+        almost exactly the same thing,except for the fact that the borders around 
+        a checkbox aren't clearly visible. Compared to earlier checkboxes in Java, 
+        we can now add an ImageIcon to our JCheckBoxes. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java. awt.event.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JCheckBox b;<br>
+        ImageIcon a = new ImageIcon (&quot;buttonImage3.gif&quot;);<br>
+        b = new JCheckBox(a); <br>
+        b.addItemListener (this);<br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>It is not sufficient to merely place a checkbox on our screen. When we 
+        click on our checkbox, we want to know if we have actually clicked or 
+        not. We may find out whether we have clicked by making use of the function 
+        addItemListener (), within which we pass the parameter 'this'. When we 
+        compile our program, we get some strange error message that says 'Incompatible 
+        type for method. Explicit cast needed...'. The parameter 'this' refers 
+        to our current object. In our case, the current object is zzz as well 
+        as Applet. The function addItemListener however, demands that it requires 
+        an object that is an ItemListener. This is now shown in the next program. 
+      </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*; <br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet implements ItemListener<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JCheckBox b;<br>
+        ImageIcon a = new ImageIcon (&quot;buttonImage3.gif&quot;);<br>
+        b = new JCheckBox(a); <br>
+        b.addItemListener(this); <br>
+        add (b); <br>
+        }<br>
+        }</p>
+      <p>In this program we have to make sure that our current object is an ItemListener. 
+        ItemListener is an interface so we use the term 'implements' to append 
+        ItemListener to our class. Now 'this' in addItemListener( ) refers to 
+        zzz, Applet as well as ItemListener. On compilation, we still get an error 
+        which tells us that we do not have some abstract function. This is because 
+        when we say 'implements ', we can be sure that whatever follows this term 
+        is an Interface. Within an Interface, all the functions are Virtual functions. 
+        These functions do not contain any code. To remove the errors in our program, 
+        all we have to do is to add these functions to the class that implements 
+        the interface. When we say our class extends another class, we mean that 
+        our class contains all the code that was present in the base class, but 
+        when we say that our class implements an interface, it means that our 
+        class will now contain all the functions that are present in the interface. 
+        The interface in our program, namely ItemListener, has only one virtual 
+        function 'itemStateChanged( )', which we have added in our next program. 
+      </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*; <br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet implements ItemListener<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JCheckBox b;<br>
+        ImageIcon a = new ImageIcon (&quot;buttonImage3.gif&quot;);<br>
+        b = new JCheckBox(a);<br>
+        b.addItemListener(this); <br>
+        add (b); <br>
+        }<br>
+        public void itemStateChanged(ItemEvent e)<br>
+        {<br>
+        System.out.println(&quot;function called&quot;);<br>
+        }<br>
+        }</p>
+      <p>When we now compile the program all the errors disappear, confirming 
+        that there is only one virtual function in ItemListener. As we said earlier, 
+        the only prerequisite is that the function must be present within our 
+        class. Within this function, we may add any code that we may want. Here, 
+        we have placed the statement System.out.println( ). When this function 
+        gets executed, whatever text we have written within the function appears 
+        at our dos prompt, for the number of times that we have clicked on our 
+        JCheckBox. System, by the way, is a static object. What we mean by that 
+        term is that we don't have to say 'new' to make use of it. At this point, 
+        we must realise that we may have more than one checkbox in our program, 
+        which may also call itemStateChanged. To distinguish between different 
+        components calling this function,we use ItemEvent. We also note that addItemListener 
+        is one of the new concepts of jdk1.x. Earlier, when we wanted to call 
+        a function we had to use handleEvent. Here, things have been made much 
+        simpler, as we can now call our own code. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*; <br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet implements ActionListener<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        ImageIcon a = new ImageIcon (&quot;buttonImage3.gif&quot;);<br>
+        b = new JButton(a);<br>
+        b.addActionListener(this); <br>
+        add (b); <br>
+        }<br>
+        public void actionPerformed(ActionEvent e)<br>
+        {<br>
+        System.out.println(&quot;function called&quot;);<br>
+        }<br>
+        }</p>
+      <p>An ItemListener is essentially meant for a JCheckbox. When we are working 
+        with buttons, we would rather use an Action Listener. This Interface, 
+        as well, has only one virtual function which we have to add within our 
+        class which implements ActionListener. This function is called actionPerformed. 
+        Also we use ActionEvent to distinguish between different JButtons. Now 
+        every time we click on JButton, our code which is in actionPerformed is 
+        called. This is how we handle events in the Java Foundation Classes. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JLabel l=new JLabel(&quot;hi&quot;);<br>
+        add( l);<br>
+        }<br>
+        }<br>
+        <br>
+        If we want to print any text on to our screen, we normally make use of 
+        a label. Here we use JLabel. The size of the label will vary according 
+        to the size of the text we have placed into it. Here, we have only written 
+        the word 'hi'. Short and sweet. This now appears at the top of our applet 
+        in the centre. <br>
+        zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        ImageIcon i=new ImageIcon(&quot;buttonImage3.gif&quot;);<br>
+        JLabel l=new JLabel(&quot;hi&quot;);<br>
+        l.setIcon( i); <br>
+        add( l);<br>
+        }<br>
+        }</p>
+      <p>A JLabel, as with everything else in the JFCs, can have two entities 
+        within it. What we mean to say is that within a JLabel, we can have an 
+        image as well as some text, both of which may be independent of each other. 
+        Here, when we created our JLabel, we associated a text 'hi' with it. We 
+        also create an ImageIcon. Every JLabel has a function setIcon( ). We place 
+        our Image Icon within this function. When we execute this program, our 
+        label now contains an image as well as the text, side by side. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        setLayout(new BorderLayout());<br>
+        ImageIcon i = new ImageIcon (&quot;BigTiger.gif&quot;);<br>
+        JLabel l=new JLabel(i);<br>
+        add(l);<br>
+        }<br>
+        }</p>
+      <p>In this program, we have created an ImageIcon as we had done earlier. 
+        We have added this ImageIcon to a JLabel. This JLabel has now been added 
+        to our screen. We have also created the simplest of borders for our applet 
+        when we said setLayout(new BorderLayout( )). The difference, in this program, 
+        is that the image we have in our .gif file is of a size much larger than 
+        any image that we have used before. When we run this program, if we get 
+        the feeling that we aren't really getting to see the entire image, we 
+        might probably just be right. Even if we increase the size of our applet 
+        to it's full size, we may still not see the full image. After all, the 
+        image in this .gif is probably larger than even our entire screen. Wouldn't 
+        it be great if we could just scroll through the image, just as we use 
+        a scrollbar to view a large text document ? Well, we are trying to do 
+        just that in our next program. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet<br>
+        {<br>
+        public void init()<br>
+        {<br>
+        setLayout(new BorderLayout());<br>
+        add(&quot;Center&quot;,new yyy());<br>
+        }<br>
+        }<br>
+        class yyy extends JScrollPane<br>
+        {<br>
+        public yyy()<br>
+        {<br>
+        ImageIcon i = new ImageIcon (&quot;BigTiger.gif&quot;);<br>
+        JLabel l=new JLabel(i);<br>
+        add(l);<br>
+        }<br>
+        }</p>
+      <p><br>
+        We create a new class which can now extend the particular class that we 
+        require, namely JScrollPane. JScrollPane contains functions that will 
+        enable us to create scrollbars within our Applet. We call the constructor 
+        of this class when we say new yyy( ), from init( ). However, when we now 
+        run this program, we find that only the border has been formed within 
+        our applet. We don't get any image unlike in one of the earlier programs 
+        , here we at least got to see half the image. We rectify this problem 
+        in the next program. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        setLayout(new BorderLayout());<br>
+        add(&quot;Center&quot;,new yyy());<br>
+        }<br>
+        }<br>
+        class yyy extends JScrollPane<br>
+        {<br>
+        public yyy()<br>
+        {<br>
+        ImageIcon i = new ImageIcon (&quot;BigTiger.gif&quot;);<br>
+        JLabel l=new JLabel(i);<br>
+        getViewport().add(l);<br>
+        }<br>
+        }</p>
+      <p>All that we have done out here is to write getViewport( ).add( l ) instead 
+        of <br>
+        just add( l ). Here, we are saying that getViewport() is a function within 
+        <br>
+        JScrollPane which ensures that scrollbars appear within our applet when 
+        we call the function add() from it. When we have an image that is too 
+        large to fit onto our screen, we need to create a smaller window to enable 
+        us to view just a portion of the image. This is done by getViewport(). 
+        If we now use the scrollbar, we may see another part of the image. All 
+        this assumes that the image within our gif file is large enough, otherwise 
+        we shall not see any scrollbars. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet implements ActionListener<br>
+        {<br>
+        JProgressBar p;<br>
+        public void init()<br>
+        {<br>
+        JButton b;<br>
+        b=new JButton(&quot;click&quot;);<br>
+        p=new JProgressBar(); <br>
+        b.addActionListener(this);<br>
+        p.setMinimum( 0);<br>
+        p.setMaximum( 100);<br>
+        p.setValue( 10);<br>
+        add( b);<br>
+        add( p);<br>
+        }<br>
+        public void actionPerformed( ActionEvent e)<br>
+        {<br>
+        int i=p.getValue()+10;<br>
+        p.setValue( i);<br>
+        System.out.println(&quot;hi&quot;);<br>
+        }<br>
+        } </p>
+      <p>Whenever software is in the process of being installed onto our computer, 
+        we see a progress bar which tells us how much of the process has been 
+        completed. The problem with most progressbars we have seen to date is 
+        that they are never accurate. Sometimes the pointer of the progress bar 
+        will move slowly in the beginning and then in a flash of a second, will 
+        reach the end. At other times, it moves quite fast, but stops just before 
+        the end of the bar for a time period that seems like infinity. Anyway, 
+        let's see how the Java Foundation Classes have implemented progressbars. 
+        We have added an ActionListener to the button in our program. The bare 
+        minimum information we need to give our progressbar are the values at 
+        the extreme left end and the extreme right end of the progressbar. For 
+        this we have two functions, setMinimum() and setMaximum() respectively 
+        in JProgressBar. The function setValue() tells the pointer of the progress 
+        bar where it should start from when it first starts executing. Here we 
+        have placed the initial position at 10 using this function. Whenever we 
+        click on the button, the current value of the progress bar is obtained 
+        by the function getValue(). We <br>
+        add 10 to this value, and place it in a variable i. The current value 
+        of the <br>
+        progressbar is now set to the the value in variable i. Thus each time 
+        we click on the button we increment the value of the progressbar by 10. 
+      </p>
+      <p>When we click on the button for the first time, the initial value is 
+        10, which is now incremented by 10 to become 20. The pointer of the progressbar 
+        now points to this value. In a practical progressbar, we may use something 
+        else besides a button to use the progressbar's pointer to increment by 
+        a fixed amount, but the concept remains the same. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        setLayout(new BorderLayout());<br>
+        add(&quot;Center&quot;,new sss());<br>
+        }<br>
+        }<br>
+        class sss extends JPanel<br>
+        {<br>
+        public sss()<br>
+        {<br>
+        JSlider s;<br>
+        this.setLayout(new BorderLayout()); <br>
+        s=new JSlider(JSlider.HORIZONTAL,100,1000,400);<br>
+        s.setPaintTicks(true);<br>
+        s.setMajorTickSpacing(20);<br>
+        this.add(s);<br>
+        }<br>
+        }</p>
+      <p>If you look at any music system, you'll notice that you can adjust the 
+        volume or the bass and other functions using a slider. A slider is normally 
+        used when we have a wide range of values and we want to choose a value 
+        within that range without typing in that value. When we have a sliderpanel, 
+        all we do is to move the slider to the required value. Earlier, it was 
+        almost impossible to obtain a slider in Java. In contrast, Windows allowed 
+        us to create a slider with great ease. Now, using the JFCs, this is possible 
+        in Java as well. We first create an object that looks like a JSlider. 
+        We have specified that it's alignment is horizontal. As we had done earlier 
+        with our progressbar, we specify the minimum and maximum values of the 
+        slider, as well as the value we want it to be set at initially. If we 
+        just write only the first three lines within the constructor and then 
+        say add(s), we shall obtain a slider which we can drag with a mouse from 
+        one end to another. The only problem is that we shall have difficulty 
+        placing the slider at any particular value we want it at. For this, we 
+        enable markers between the two ends. We also specify how much space should 
+        be there between each marker, using the function setMajorTickSpacing(). 
+        Around our slider, we also want a border with some title. So, here, we 
+        have put a border that looks like JTitledBorder(), with two parameters: 
+        s refers to our slider around which we want our titled border and the 
+        second parameter now becomes the title of our slider. If we say this.add() 
+        or this.setLayout(new BorderLayout()), 'this' merely refers to the current 
+        class we are in. It doesn't make a difference if we do no write 'this' 
+        before add(). </p>
+      <p></p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*; <br>
+        import javax.swing.event.*; <br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        setLayout(new BorderLayout());<br>
+        add(&quot;Center&quot;,new sss());<br>
+        }<br>
+        }<br>
+        class sss extends JPanel implements ChangeListener<br>
+        {<br>
+        JLabel tf; <br>
+        public sss()<br>
+        {<br>
+        JSlider s;<br>
+        setLayout(new BorderLayout()); <br>
+        tf=new JLabel(&quot;Slider value: &quot;);<br>
+        add(&quot;South&quot;,tf);<br>
+        s=new JSlider(JSlider.HORIZONTAL,100,1000,400);<br>
+        s.setPaintTicks(true);<br>
+        s.setMajorTickSpacing(20);<br>
+        s.addChangeListener(this); <br>
+        this.add(s);<br>
+        }<br>
+        public void stateChanged(ChangeEvent e)<br>
+        {<br>
+        JSlider s1 =(JSlider) e.getSource();<br>
+        tf.setText(&quot;Slider Value: &quot;+s1.getValue());<br>
+        } <br>
+        }</p>
+      <p>It's not possible for us to be totally satisfied by merely moving the 
+        slider from one end to another. We would also like to know the current 
+        position of the slider. To do this , we have created another JLabel and 
+        placed it in the south. Now all user interface tools have a listener associated 
+        with them. A slider has a ChangeListener. Here we have written s.addChangeListener(). 
+        The 'this' merely specifies that ChangeListener which is an interface 
+        is in in the very same class. We have a function called StateChange within 
+        Change Listener which will get called each time we move the slider up 
+        and down. </p>
+      <p>We have a parameter that looks like ChangeEvent that would allow us to 
+        distinguish between different sliders calling the function stateChanged 
+        (). But right now we have only one slider so that is not important. Here 
+        e.getSource will return the object that calls stateChanged(). In this 
+        case, we know that it is a JSlider, so that is what we are casting it 
+        to. The getValue() function will tell you the current position of the 
+        slider. Now setText() will allow this value to be seen on our label at 
+        runtime. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*;<br>
+        import java.lang.*;<br>
+        public class zzz extends Applet <br>
+        {<br>
+        public void init()<br>
+        {<br>
+        JButton b=new JButton(&quot;Hello, how are you&quot;);<br>
+        add(b);<br>
+        DebugGraphics.setFlashTime(10);<br>
+        b.setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);<br>
+        }<br>
+        }</p>
+      <p>To deal with problems that we may encounter with any graphics application 
+        in java, we have a static object named DebugGraphics. This static object 
+        has a function named setFlashTime(). Our image will be drawn on screen 
+        within a time duration that depends on the value we pass to this function. 
+        In the next statement, we have said <br>
+        setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION); </p>
+      <p>where FLASH_OPTION is another static variable in DebugGraphics. Each 
+        time a paint message comes, this is the function that will cause our image 
+        to be redrawn. Since we are redrawing our image very slowly, we can see, 
+        at what point in time, any errors in the drawing of the image, occur. 
+        In this program, we have only used DebugGraphics to check whether a button 
+        is being drawn properly. Normally, it is used for debugging complicated 
+        objects on screen when we want to see in slow motion what is happening 
+        at every stage. We could try this function with another component, or 
+        a User Interface. </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends JPanel <br>
+        {<br>
+        static JFrame frame;<br>
+        public static void main(String s[ ])<br>
+        {<br>
+        frame = new JFrame(&quot;zzz&quot;);<br>
+        frame.getContentPane().add(&quot;Center&quot;, new zzz());<br>
+        frame.pack();<br>
+        frame.setVisible(true);<br>
+        }<br>
+        }</p>
+      <p>We now get down to working with applications in java. When we run such 
+        an application, we don't use appletviewer, but instead say java zzz. All 
+        the <br>
+        programs that we shall be doing after this will be applications and not 
+        applets. </p>
+      <p>In an application, the first function to be called is always main(). 
+        The reason we have made main public is because we want every one to be 
+        able to access it. The function main() gets an array of strings, which 
+        are the parameters we may pass after the name of the program. We create 
+        a JFrame with the title zzz. </p>
+      <p>In this frame, we put all things together using the function pack(). 
+        Without <br>
+        setVisible( true), we shall not be able to see anything. Notice that we 
+        have <br>
+        declared frame to be of type static JFrame. We have to declare it as static 
+        to <br>
+        be able to use it in another function, in this case main(). Alternately, 
+        we <br>
+        could have put this statement within the function main(), in which case, 
+        we may avoid the use of the term static.To learn more about applications 
+        in java, refer to one of the earlier chapters . </p>
+      <p>zzz.java<br>
+        import java.applet.*;<br>
+        import java.awt.*;<br>
+        import javax.swing.*;<br>
+        public class zzz extends JPanel<br>
+        {<br>
+        public zzz()<br>
+        {<br>
+        JRadioButton b;<br>
+        b=new JRadioButton(&quot;hello&quot;);<br>
+        add(&quot;Center&quot;,b);<br>
+        }<br>
+        public static void main(String s[])<br>
+        {<br>
+        JFrame f = new JFrame(&quot;hi&quot;);<br>
+        f.getContentPane().add(new zzz());<br>
+        f.pack();<br>
+        f.setVisible(true);<br>
+        }<br>
+        }</p>
+      <p>A radiobutton functions in a manner similar to that of an ordinary button 
+        or a checkbox, only it is smaller and round in appearance. Each and everyone 
+        of these components have a function setKeyAccelerator(). Now when we write 
+        o in single quotes within this function, and now execute this program, 
+        we shall notice that the first occurance of the letter we have placed 
+        within this function is now underlined. If we now press the Alt key as 
+        well as the letter o, our radio button which contains this text is activated. 
+        The function setKeyAccelerator() enables Sun to implement, in part, a 
+        very crucial concept of almost all computers used today. A concept that 
+        says that even if our mouse is not working properly, we must be able to 
+        operate our computer using a keyboard. This is something of a standard 
+        across platforms and Sun has made it very clear that we shall be able 
+        to use the Java Foundation Classes using only a keyboard, without using 
+        a mouse. { Have you ever wondered what happens to a Mac user when his 
+        mouse is giving him problems ? Don't even ask !</p>
+      <p>zzz.java<br>
+        import java.applet.Applet;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends JPanel <br>
+        {<br>
+        static JFrame frame;<br>
+        public zzz() <br>
+        {<br>
+        JMenuBar m = new JMenuBar();<br>
+        JMenu f = new JMenu (&quot;File&quot;);<br>
+        f.setIcon(new ImageIcon(&quot;folder.gif&quot;));<br>
+        m.add(f);<br>
+        m.validate();<br>
+        add(m);<br>
+        }<br>
+        public static void main(String s[ ]) {<br>
+        frame = new JFrame(&quot;zzz&quot;);<br>
+        frame.getContentPane().add(&quot;Center&quot;, new zzz());<br>
+        frame.pack();<br>
+        frame.setVisible(true);<br>
+        }<br>
+        }</p>
+      <p>As we said earlier, the first function to be called in an application 
+        is main(). <br>
+        When we say new zzz(), we are calling the constructor of the function 
+        zzz. Here, we have created a menubar called m of type JMenuBar. Now to 
+        this menubar we are going to add our menus. Our first menu has been called 
+        f and has a text 'File' associated with it. Also in this menu, we have 
+        created an ImageIcon, which we add to our menu. When we say validate(), 
+        what we are doing is forcing the menubar to redraw itself. </p>
+      <p>zzz.java<br>
+        import java.applet.Applet;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*; <br>
+        public class zzz extends JPanel <br>
+        {<br>
+        static JFrame frame;<br>
+        public zzz() <br>
+        {<br>
+        JMenuBar m = new JMenuBar();<br>
+        JMenu f = new JMenu (&quot;File&quot;);<br>
+        f.setIcon(new ImageIcon(&quot;folder.gif&quot;));<br>
+        f.setHorizontalTextPosition(JButton.RIGHT);<br>
+        JMenuItem o=new JMenuItem(&quot;Open&quot;,new ImageIcon(&quot;open.gif&quot;));<br>
+        o.setHorizontalTextPosition(JButton.RIGHT);<br>
+        f.add(o);<br>
+        m.add(f);<br>
+        JMenu gg = new JMenu (&quot;Color&quot;);<br>
+        gg.setHorizontalTextPosition(JButton.RIGHT);<br>
+        JMenuItem red=new JMenuItem(&quot;Red&quot;);<br>
+        gg.add(red);<br>
+        red.setHorizontalTextPosition(JButton.RIGHT);<br>
+        JMenuItem blue=new JMenuItem(&quot;Blue&quot;);<br>
+        gg.add(blue);<br>
+        blue.setHorizontalTextPosition(JButton.RIGHT);<br>
+        m.add(gg);<br>
+        m.validate();<br>
+        add(m);<br>
+        }<br>
+        public static void main(String s[ ])<br>
+        {<br>
+        frame = new JFrame(&quot;hi&quot;);<br>
+        frame.getContentPane().add(&quot;Center&quot;, new zzz());<br>
+        frame.pack();<br>
+        frame.setVisible(true);<br>
+        }<br>
+        }</p>
+      <p>While doing these programs, we have to remember the heirarchy of the 
+        terms involved. At the top of this heirachy is the menubar. The menubar 
+        has to be filled with menus. There may be a number of menus within a menubar 
+        and they will all appear in the same line on the screen. Each menu may 
+        have a number of menu items which appear just below the menu, when we 
+        click on the menu. Here, a single menuitem called 'Open' is added to our 
+        first menu, 'File'. For our second menu 'Color', we have added two menuitems, 
+        namely red and blue. The entire procedure is the same as in the previous 
+        program. </p>
+      <p>zzz.java<br>
+        import java.applet.Applet;<br>
+        import java.awt.*;<br>
+        import java.awt.event.*;<br>
+        import javax.swing.*;<br>
+        public class zzz extends JPanel {<br>
+        static JFrame frame;<br>
+        public zzz() {<br>
+        JMenuBar m = new JMenuBar();<br>
+        JMenu f = new JMenu (&quot;File&quot;);<br>
+        f.setIcon(new ImageIcon(&quot;folder.gif&quot;));<br>
+        f.setHorizontalTextPosition(JButton.RIGHT);<br>
+        JMenuItem o=new JMenuItem(&quot;Open&quot;,new ImageIcon(&quot;open.gif&quot;));<br>
+        o.setHorizontalTextPosition(JButton.RIGHT);<br>
+        f.add(o);<br>
+        JMenuItem e=new JMenuItem(&quot;Exit&quot;);<br>
+        e.setHorizontalTextPosition(JButton.RIGHT);<br>
+        f.add(e);<br>
+        e.addActionListener(new aa());<br>
+        m.add(f);<br>
+        add(m);<br>
+        }<br>
+        public static void main(String s[ ])<br>
+        {<br>
+        frame = new JFrame(&quot;hi&quot;);<br>
+        frame.getContentPane().add(&quot;Center&quot;, new zzz());<br>
+        frame.pack();<br>
+        frame.setVisible(true);<br>
+        }<br>
+        }<br>
+        class aa implements ActionListener<br>
+        {<br>
+        public void actionPerformed(ActionEvent e)<br>
+        {<br>
+        System.exit(0);<br>
+        }<br>
+        }</p>
+      <p>As usual, we have a menubar to which we add menus. The menus themselves 
+        may consist of a number of menuitems. Until now, we have been only displaying 
+        these menuitems. Wouldn't it be useful if we were able to click on a menuitem 
+        and perform some task. For this, we shall obviously need an ActionListener. 
+        With our menuitem 'Exit', we say addActionListener (new aa()). aa has 
+        to implement ActionListener. This interface has one function, actionPerformed(), 
+        which contains the code System.exit(0). This results in us getting out 
+        of this application. We could, instead, have performed some other useful 
+        task using this function, with this type of an application. </p>
+      <p>Listboxes are the kind of examples that we were talking a lot about. 
+        In the<br>
+        previos program we only displayed numbers. However we have always said 
+        that the nice thing about the Java Foundation Classes is that where ever 
+        we display numbers ,we may also display pictures. Now, listbox has a function 
+        named setCellRenderer. Here, the statement, new te (), will obviously 
+        call the constructor of class te. Within the class te, all that we have 
+        done is a series of initialisations. Now te has to look like Renderer. 
+        Therefore we have said te implements Renderer. Renderer have two virtual 
+        functions. One is setValue () and the other is getComponent (). The first 
+        function to get called is getComponent(). The return value of getComponent() 
+        is of type Component. When we say 'return this', it means that it can 
+        return either a te or a JLabel or a Renderer. But here since we can return 
+        only a component, we return a JLabel. Now, setValue() gets called. Here, 
+        the Object is what we have returned in the function getComponent(), namely 
+        our JLabel. It is, however, not useful to us, as far as processing data 
+        is concerned, if the object is a component. This is why we are casting 
+        it to an Integer. The class Integer has a function, intValue(), which 
+        will return the object's value. . Therefore i will now have the current 
+        value of the item or cell within the listbox. The boolean parameter is 
+        used to find out whether we have selected that particular item or not. 
+        In case it has been selected, we also print the price along with the picture, 
+        otherwise we only display the picture. The actual displaying of the picture 
+        within each cell is done by setIcon(). We have to call our renderer each 
+        time a cell has to be painted, which is why we may notice setValue() and 
+        getComponent() being called a <br>
+        number of times from whatever System.out.println() displays out at our 
+        DOS prompt. </p>
+      <p>Assume we are using an Operating System like Windows and we are in the 
+        main Window. Take a case where a part of this window is overwritten by 
+        another window. At this point in time, Windows will claim that it is not 
+        its responsibility to draw whatever is in that window. Suppose we finish 
+        our work in the second window and if we come back to our original window. 
+        Then the Windows operating system will tell our window that a part of 
+        it has been dirtied. Therefore our window needs to be repainted. Windows 
+        does this by sending our window a paint message. Suppose we had some text 
+        on our screen. A part of this text was in the section that had been overwritten. 
+        Now we have to rewrite the text using the Windows SDK command TextOut. 
+        This command has to be given within the function paint. Windows is a very 
+        smart operating system and knows how to optimise time. This is, I suppose, 
+        for people who are forced to run Windows on 486s, but it does save on 
+        time when a number of complex items have <br>
+        to be redrawn. Getting back to our textout command in paint, the complete 
+        text is not rewriiten. Only the part of the text that had been overwritten 
+        is now redrawn. Notice that we have said 'redrawn' and not 'rewritten'. 
+        As far as Windows is concerned, it treats everything that has to go on 
+        to screen as a series of pixels. Therefore, text as well as images are 
+        treated the same way. There are a few new things that the java foundation 
+        classes have provided us that make our applets or applications better 
+        looking. Not only that, the way our applets look, can be changed, depending 
+        on what the user wants it to look like. </p>
+      <p>Take for instance the case of a button. People who use Windows will want 
+        a button that looks like a Windows button, while a person who is used 
+        to a Macintosh will want the same button to be in the Mac style. This 
+        poses a dilemma. Should we keep the button looking the same irrespective 
+        of the Operating System or should the button have the look and feel of 
+        the particular operating System it is running under. The JDK1.0 used the 
+        second option and what it did was to have the button drawn by the operating 
+        system itself. There was one problem with this approach. Suppose you had 
+        earlier worked on an application on the Mac, and now you switched on to 
+        say an Intel machine with Windows on it. </p>
+      <p>You will realise that the same application looks very different under 
+        your new operating system. So what the JFCs decided to do was a very simple 
+        thing. They gave the user the option of changing the look and feel. This 
+        was a very smart thing to do. After all, when we go to work, our dress 
+        is very formal. However, if we have to attend a party with friends, we 
+        won't go wearing the same clothes. We would rather change in to jeans 
+        and T-shirts. Something similar can be done with the JFCs. If our application 
+        is running under Windows, but if we do not like it's look and feel, we 
+        may change it to another look and feel that is either supplied by Sun 
+        or has been created by us. This option is available to us at runtime, 
+        and enables us to decide how our application will be displayed. </p>
+      <p>Earlier, if we were using Windows, we didn't have an option as to how 
+        our application would be displayed. Windows itself decided how it would 
+        be displayed. Now with the JFCs we have a very flexible look and feel. 
+        We call this the Plugable Look and Feel. </p>
+      <p>The Java Foundation Classes has the ability to change the look and feel 
+        of a component, according to what the user desires. To achieve this change 
+        in the user interface, we make use of a static object called UIManager. 
+        This has a static function called setLookAndFeel(). This will set the 
+        look and feel within our frame, to whatever we have specified. There are 
+        classes which refers to a Windows, Motif look and feel. Hence when we 
+        run the program, we see the objects displayed as per the platform we have 
+        selected. You can have these components show a neutral look too.</p>
+      <p>Now we come to the concept of 100% Pure Java. Right now we are using 
+        the JDK1.2.2 but underneath it all, is the JDK1.2. All that JDK1.2.2 did 
+        was to call code. This code if it had to run under Windows would have 
+        to be in a DLL. So that is where we call it from. This may further call 
+        code in other Windows DLLs which will finally call code in VxDs. Now when 
+        we say 100% Pure Java, we mean that our JFCs are basically .class files 
+        that are executed. In none of these .class files do we call native code. 
+        In other words, we do not call any 'C' code. We can however call code 
+        from the JDK1.2 which in turn may call native code. But the JFCs remain 
+        100% Pure Java. <br>
+      </p>
+      <p><br>
+      </p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap11.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

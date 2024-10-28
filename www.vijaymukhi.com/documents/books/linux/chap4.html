@@ -1,0 +1,2324 @@
+<HTML>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>INTRODUCTION</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=4><P>4. ELF File Format</P>
+</B></FONT><PRE>b.c
+abc()
+{
+}
+gcc -c b.c
+ls -l b.o
+-rw-r--r-- 1 root root 728 Nov 14 13:14 b.o</PRE>
+<FONT FACE="Courier New" SIZE=2><P>--------------------------------------------------------------------</P>
+<P>Here's our first program. Ambitious it isn't. It's got no main(), or anything else except an empty function named abc(). Notice that we don't try to link this program for doing so would fill our screen with a long list of errors. All we do is compile the program. Check out the file size.</P>
+<P>This program will be used by our other, slightly more complete program.</P>
+</FONT><PRE>1
+a.c
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+fp = fopen("b.o","r");
+printf("%x ",fgetc(fp));
+printf("%c",fgetc(fp));
+printf("%c",fgetc(fp));
+printf("%c",fgetc(fp));
+printf("\n");
+}
+gcc a.c -o a
+../a
+7f ELF
+--------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Right. This program is pretty simple as well. All we're doing here is opening up our file, b.o and printing out the first 4 bytes. Nearly all-binary files have some sort of unique identifier, called a magic number, embedded in them. Java .class files start off with CAFE BABE. DOS .exe files start with an MZ while under Windows, it's PE00. ELF files will always start off with 7fELF. Nothing to it.</P>
+</FONT><PRE>&nbsp;
+2
+a.c
+#include &lt;stdio.h&gt;
+main()
+{
+FILE *fp;
+fp = fopen("b.o","r");
+fseek(fp,4,0);
+printf("%d ",fgetc(fp));
+printf("%d ",fgetc(fp));
+printf("%d ",fgetc(fp));
+printf("\n");
+}
+Output
+1 1 1</PRE>
+<FONT FACE="Courier New" SIZE=2><P>-------------------------------------------------------------</P>
+<P>Here we're going to byte number 5 and reading three bytes from there. These give us some additional information about the file. They're switches, so 0 means OFF or NO and 1 means ON or YES. The first one tells us whether the file is 32 or 64 bit based. The second tells us about its endianess and the last is the version number.</P>
+</FONT><PRE>3
+a.c
+#include &lt;stdio.h&gt;
+char *class[]={"Invalid Class","32-bit objects", "64-bit objects"};
+char *endian[] = {"Invalid", "Little Endian","Big Endian"};
+char *version[] = {"Invalid Version","Current Version"};
+FILE *fp;
+main()
+{
+int i;
+fp = fopen("b.o","r");
+fseek(fp,4,0);
+i = fgetc(fp);
+printf("%s \n",class[i]);
+i = fgetc(fp);
+printf("%s \n",endian[i]);
+i = fgetc(fp);
+printf("%s \n",version[i]);
+}
+Output
+32-bit objects 
+Little Endian 
+Current Version </PRE>
+<FONT FACE="Courier New" SIZE=2><P>------------------------------------------------------------------</P>
+<P>Nothing spectacular here. We've just made the program a little friendlier. We're just printing out text strings instead of numbers.</P>
+</FONT><PRE>4
+a.c
+#include &lt;stdio.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elfhdr e;
+char *class[]={"Invalid Class","32-bit objects", "64-bit objects"};
+char *endian[] = {"Invalid", "Little Endian","Big Endian"};
+char *version[] = {"Invalid Version","Current Version"};
+char *filetype[] = {"None","Rel Obj","Executable","Dynamic","Core","Num"}; 
+char *machine[] = {
+"None","WE32100","SPARC","80386","MK68000","MK88000","80486","80860","MIPS"};
+FILE *fp;
+main()
+{
+fp = fopen("b.o","r");
+fread(&amp;e,52,1,fp);
+printf("%x %c%c%c %s %s %s\n",e.e_ident[0],e.e_ident[1],e.e_ident[2],
+e.e_ident[3],class[e.e_ident[4]],endian[e.e_ident[5]],version[e.e_ident[6]]);
+printf("Type &#9;&#9;:%d %s \n",e.e_type,filetype[e.e_type]);
+printf("Machine &#9;:%d %s \n",e.e_machine,machine[e.e_machine]);
+printf("Version &#9;:%d %s \n",e.e_version,version[e.e_version]);
+printf("Entry Point &#9;:%x\n",e.e_entry);
+printf("Size of Initial Structure &#9;:%d\n",e.e_ehsize);
+printf("Flags&#9;&#9; &#9;&#9;:%d\n",e.e_flags);
+printf("Program Header Offset &#9;&#9;:%d\n",e.e_phoff);
+printf("PHO : Structure Size %d No. of Entries %d\n",e.e_phentsize,e.e_phnum);
+printf("Section Header Offset &#9;&#9;:%d\n",e.e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e.e_shentsize,e.e_shnum);
+printf("String Table Section Number &#9;:%d\n",e.e_shstrndx);
+}
+&nbsp;
+Output
+7f ELF 32-bit objects Little Endian Current Version
+Type &#9;&#9;:1 Rel Obj 
+Machine &#9;:3 80386 
+Version &#9;:1 Current Version 
+Entry Point &#9;:0
+Size of Initial Structure &#9;:52
+Flags&#9;&#9; &#9;&#9;:0
+Program Header Offset &#9;&#9;:0
+PHO : Structure Size 0 No. of Entries 0
+Section Header Offset &#9;&#9;:200
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Okay, we're getting a little more ambitious here. We create a structure e which looks like the structure tag elfhdr and then read in the first 52 bytes of the ELF file into it. We then systematically print out the members of the structure. So fine, it looks a little messy, but that's the price one has to pay for intelligible output! The code itself is rather obvious and requires no real explanation.</P>
+<P>Notice that all the members of e_ident[16] are not fully utilized. They're left blank for future growth in the standard.</P>
+<P>A quick run through the various members.</P>
+<P>First we have the magic number and then the three bytes we've already covered. We're then told that this is a Relocatable Object (lots more on that later), that the file is for the 80386 processor and that the version number is 1. The entry point is 0 while the size of the initial structure is 52 (but we already knew that). The flags are currently set to 0 while the program header offset is 0 right now. It'll change later when we link the code. The program header structure size is 0 right now and so are the number of entries. The section header starts at 200 and has 9 entries, each 40 bytes large. The string table is the 6th section. More on all of this later.</P>
+</FONT><PRE>c.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+FILE *fp;
+struct stat st;
+main()
+{
+fp = fopen("b.o","r");
+printf("Fileno %d\n",fileno(fp));
+fstat(fileno(fp),&amp;st);
+printf("Size %d\n",st.st_size);
+}
+gcc -o c c.c
+../c
+Fileno 3
+Size 728
+&nbsp;
+ls -l b.o
+-rw-r--r-- 1 root root 728 Nov 14 13:14 b.o
+-------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here's a small diversion. We're using fstat() here to extract the file size. fstat() needs the file number and we use fileno() to get that. Then we print out the file size.</P>
+</FONT><PRE>5
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+char *class[]={"Invalid Class","32-bit objects", "64-bit objects"};
+char *endian[] = {"Invalid", "Little Endian","Big Endian"};
+char *version[] = {"Invalid Version","Current Version"};
+char *filetype[] = {"None","Rel Obj","Executable","Dynamic","Core","Num"}; 
+char *machine[] = {
+"None","WE32100","SPARC","80386","MK68000","MK88000","80486","80860","MIPS"};
+FILE *fp;struct stat st;
+struct elfhdr *e;
+char *p;
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("%x %c%c%c %s %s %s\n",e-&gt;e_ident[0],e-&gt;e_ident[1],e-&gt;e_ident[2],
+e-&gt;e_ident[3],class[e-&gt;e_ident[4]],endian[e-&gt;e_ident[5]],version[e-&gt;e_ident[6]]);
+printf("Type &#9;&#9;:%s \n",filetype[e-&gt;e_type]);
+printf("Machine &#9;:%s \n",machine[e-&gt;e_machine]);
+printf("Version &#9;:%s \n",version[e-&gt;e_version]);
+printf("Entry Point &#9;:%x\n",e-&gt;e_entry);
+printf("Size of Initial Structure &#9;:%d\n",e-&gt;e_ehsize);
+printf("Flags&#9;&#9; &#9;&#9;:%d\n",e-&gt;e_flags);
+printf("Program Header Offset &#9;&#9;:%d\n",e-&gt;e_phoff);
+printf("PHO : Structure Size %d No. of Entries %d\n",e-&gt;e_phentsize,e-&gt;e_phnum);
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+}
+Output
+7f ELF 32-bit objects Little Endian Current Version
+Type &#9;&#9;:Rel Obj 
+Machine &#9;:80386 
+Version &#9;:Current Version 
+Entry Point &#9;:0
+Size of Initial Structure &#9;:52
+Flags&#9;&#9; &#9;&#9;:0
+Program Header Offset &#9;&#9;:0
+PHO : Structure Size 0 No. of Entries 0
+Section Header Offset &#9;&#9;:200
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+--------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Things are getting a little more complicated. We're using malloc() to dynamically allocate memory as we need it. It's better programming practice. No other difference.</P>
+</FONT><PRE>6
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s;
+char *p;
+int i;
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+s = p + e-&gt;e_shoff;
+printf("\n");
+printf("%-3s %-15s %-5s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-6s\n",
+"No","Name","Type","Flags","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-3d %-15d %-5d %-5d %-8x %-8d %-5d %-5d %-5d %-5d %-6d\n",
+i,s-&gt;name,s-&gt;type,s-&gt;flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+}
+Output
+Section Header Offset &#9;&#9;:200
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+No Name Type Flags Address Offset Size Link Info Align Esize 
+0 0 0 0 0 0 0 0 0 0 0 
+1 27 1 6 0 52 5 0 0 4 0 
+2 33 1 3 0 60 0 0 0 4 0 
+3 39 8 3 0 60 0 0 0 4 0 
+4 44 7 0 0 60 20 0 0 1 0 
+5 50 1 0 0 80 61 0 0 1 0 
+6 17 3 0 0 141 59 0 0 1 0 
+7 1 2 0 0 560 144 8 8 4 16 
+8 9 3 0 0 704 24 0 0 1 0 
+----------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We're going a little deeper this time. What we're doing is going to the section headers and we're printing them out. Nothing too spectacular at this point. Just ogle at the numbers and drool. Take note of the for() loop where we do the actual printing. Similar code does the work of printing out other parts of the file as well.</P>
+</FONT><PRE>7
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*sh;
+char *p,*str;
+int i;
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+sh = p + e-&gt;e_shoff;
+s= sh;
+printf("\n");
+printf("%-3s %-15s %-5s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-6s\n",
+"No","Name","Type","Flags","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-3d %-15d %-5d %-5d %-8x %-8d %-5d %-5d %-5d %-5d %-6d\n",
+i,s-&gt;name,s-&gt;type,s-&gt;flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+for(i=0; i &lt; s-&gt;size; i++)
+{
+if ( i%6 == 0)
+printf("\n");
+if (str[i] == 0)
+printf("%2d) %3d 0 ",i,str[i]);
+else
+printf("%2d) %3d %2c ",i,str[i],str[i]);
+}
+printf("\n");
+}
+&nbsp;
+Output
+Section Header Offset &#9;&#9;:200
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+No Name Type Flags Address Offset Size Link Info Align Esize 
+0 0 0 0 0 0 0 0 0 0 0 
+1 27 1 6 0 52 5 0 0 4 0 
+2 33 1 3 0 60 0 0 0 4 0 
+3 39 8 3 0 60 0 0 0 4 0 
+4 44 7 0 0 60 20 0 0 1 0 
+5 50 1 0 0 80 61 0 0 1 0 
+6 17 3 0 0 141 59 0 0 1 0 
+7 1 2 0 0 560 144 8 8 4 16 
+8 9 3 0 0 704 24 0 0 1 0 
+0) 0 0 1) 46 . 2) 115 s 3) 121 y 4) 109 m 5) 116 t 
+6) 97 a 7) 98 b 8) 0 0 9) 46 . 10) 115 s 11) 116 t 
+12) 114 r 13) 116 t 14) 97 a 15) 98 b 16) 0 0 17) 46 . 
+18) 115 s 19) 104 h 20) 115 s 21) 116 t 22) 114 r 23) 116 t 
+24) 97 a 25) 98 b 26) 0 0 27) 46 . 28) 116 t 29) 101 e 
+30) 120 x 31) 116 t 32) 0 0 33) 46 . 34) 100 d 35) 97 a 
+36) 116 t 37) 97 a 38) 0 0 39) 46 . 40) 98 b 41) 115 s 
+42) 115 s 43) 0 0 44) 46 . 45) 110 n 46) 111 o 47) 116 t 
+48) 101 e 49) 0 0 50) 46 . 51) 99 c 52) 111 o 53) 109 m 
+54) 109 m 55) 101 e 56) 110 n 57) 116 t 58) 0 0 
+----------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Deeper and deeper. Here we jump down to the 6th section header, called the string table and print out it's contents. The string table contains, not surprisingly, strings and if you look carefully, you'll see that those strings are the names of the different sections. They all begin with a dot and are null terminated. </P>
+</FONT><PRE>8
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*sh;
+char *p,*str;
+int i;
+char flags[4];
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-12s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-12s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+}
+Output
+Section Header Offset &#9;&#9;:200
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .text PROGBITS AE 0 52 5 0 0 4 0 
+2 .data PROGBITS WA 0 60 0 0 0 4 0 
+3 .bss NOBITS WA 0 60 0 0 0 4 0 
+4 .note NOTE 0 60 20 0 0 1 0 
+5 .comment PROGBITS 0 80 61 0 0 1 0 
+6 .shstrtab STRTAB 0 141 59 0 0 1 0 
+7 .symtab SYMTAB 0 560 144 8 8 4 16 
+8 .strtab STRTAB 0 704 24 0 0 1 0 
+-----------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>What a spectacular break with tradition. We're getting positively user-friendly here! We're going to the string table and printing out the names. We're also placing the appropriate letter instead of a number in the flag field</P>
+<P>Now about those flags. They're actually a bit field of which only the first 3 bits are currently being used. When the first bit is on, the section is writable (e.g. the data section), when the second one is on, the section is to be allocated space in memory and when the third bit is on, the section is executable (e.g. the ,text section). We bitwise AND them to figure out if they're on. </P>
+<P>&nbsp;</P>
+</FONT><PRE>9
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+FILE *fp;struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*sh;
+char *p,*str;
+int i,j;
+char flags[4];
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("\nSTRTAB\n");
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+&#9;if(s-&gt;type == 3)
+&#9;{
+&#9;&#9;printf("\n%2d %-12s \n",i+1,str+s-&gt;name);
+&#9;&#9;str = p + s-&gt;offset;
+&#9;&#9;for(j = 0; j &lt; s-&gt;size; j++)
+&#9;&#9;if(str[j] == 0)
+&#9;&#9;&#9;printf("\n %-3d ",j+1);
+&#9;&#9;else
+&#9;&#9;&#9;printf("%c",str[j]);
+&#9;&#9;printf("\n");
+&#9;}
+&#9;s++;
+} 
+}
+Output
+STRTAB
+7 .shstrtab 
+1 .symtab
+9 .strtab
+17 .shstrtab
+27 .text
+33 .data
+39 .bss
+44 .note
+50 .comment
+59 
+9 .strtab 
+1 b.c
+5 gcc2_compiled.
+20 abc
+24 
+-------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+<P>Here we have e which is a pointer to a structure which looks like elfheader while p is a pointer to a char. We ferret out the location of the start of the section headers and the location of the string table. If there are 9 sections, the for() will loop 9 times.</P>
+<P>We use the offset from the start and display every byte found there. All the strings are null terminated, so we can use that to our advantage.</P>
+<P>Notice that you can see abc() here.</P>
+<P>In this program, we're just going to the string table (type 3) and printing out stuff.</P>
+<P>&nbsp;</P>
+</FONT><PRE>&nbsp;
+10
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+&nbsp;
+FILE *fp;struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("\nSYMTAB\n");
+sh=p + e-&gt;e_shoff;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 2)
+{
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("No of Symbols %d\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+}
+s++;
+} 
+}
+Output
+SYMTAB
+No of Symbols 9
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 b.c 0 0 0 -15 LOCAL FILE 
+2 0 0 0 1 LOCAL SECTION 
+3 0 0 0 2 LOCAL SECTION 
+4 0 0 0 3 LOCAL SECTION 
+5 gcc2_compiled. 0 0 0 1 LOCAL NOTYPE 
+6 0 0 0 4 LOCAL SECTION 
+7 0 0 0 5 LOCAL SECTION 
+8 abc 0 5 0 1 GLOBAL FUNC 
+------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we display the symbol table. Anything to do with the program (e.g. function names, variables etc.) is a symbol and they're noted down in this section. </P>
+<P>struct sym is the structure of the symbols.</P>
+<P>The names are actually offsets into the symbol table and that's where we get the text from. </P>
+</FONT><PRE>11
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+&nbsp;
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str,*str1;
+int i,j,k,l;
+char flags[4];
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh=p + e-&gt;e_shoff;
+s= sh;
+s1 = s + e-&gt;e_shstrndx;
+str = p + s1-&gt;offset;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".comment")== 0)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;if(str1[j] !=0)
+&#9;&#9;printf("%c",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+Output
+GCC: (GNU) egcs-2.91.66 19990314/Linux (egcs-1.1.2 release)
+--------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>The code should start looking a little familiar by now. We're following the same basic steps everywhere. It may look confusing, but a little inspection will clear most of your doubts. </P>
+<P>In this program, we go to the .comment section and print it out. </P>
+</FONT><PRE>12
+b.c
+int i=4;
+abc()
+{
+}
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+&nbsp;
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-12s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-12s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 2)
+{
+printf("\n\n");
+printf("%-2d %-12s \n",i,str+s-&gt;name);
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str1 = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("\nNo of Symbols %d\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str1+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+}
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".data")== 0)
+{
+&#9;printf("\n\n");
+&#9;printf("%-2d %-12s ",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02d ",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+gcc -c b.c
+gcc a.c -o a
+../a
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .text PROGBITS AE 0 52 5 0 0 4 0 
+2 .data PROGBITS WA 0 60 4 0 0 4 0 
+3 .bss NOBITS WA 0 64 0 0 0 4 0 
+4 .note NOTE 0 64 20 0 0 1 0 
+5 .comment PROGBITS 0 84 61 0 0 1 0 
+6 .shstrtab STRTAB 0 145 59 0 0 1 0 
+7 .symtab SYMTAB 0 564 160 8 8 4 16 
+8 .strtab STRTAB 0 724 26 0 0 1 0 
+&nbsp;
+2 .data 04 00 00 00 
+&nbsp;
+7 .symtab 
+No of Symbols 10
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 b.c 0 0 0 -15 LOCAL FILE 
+2 0 0 0 1 LOCAL SECTION 
+3 0 0 0 2 LOCAL SECTION 
+4 0 0 0 3 LOCAL SECTION 
+5 gcc2_compiled. 0 0 0 1 LOCAL NOTYPE 
+6 0 0 0 4 LOCAL SECTION 
+7 0 0 0 5 LOCAL SECTION 
+8 i 0 4 0 2 GLOBAL OBJECT 
+9 abc 0 5 0 1 GLOBAL FUNC 
+--------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here b.c has a variable initialized to 4 and a function as well.</P>
+<P>Notice the .data section. It has the value of the variable which is set to 4. Intel chips are little endian, so read the four bytes from the left.</P>
+<P>Notice that i also shows up in the .symtab.</P>
+<P>The size is 4 (for int) and the sect is 2. That means you will find the value in section no. 2 (the .data section).</P>
+<P>Notice that in .data, the number of bytes are 4. Just as we'd expect.</P>
+<P>Notice also that the size of abc is 5, and that consists of the function prolog and epilog. abc() is found in section number 1; i.e. .text. Thus we can see that the symbol table cross-references all the symbols.</P>
+<P>Basically, see if you can avoid this prog by having the guy run the prev prog on the new b.c file.</P>
+</FONT><PRE>13
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+&nbsp;
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+char *class[]={"Invalid Class","32-bit objects", "64-bit objects"};
+char *endian[] = {"Invalid", "Little Endian","Big Endian"};
+char *version[] = {"Invalid Version","Current Version"};
+char *filetype[] = {"None","Rel Obj","Executable","Dynamic","Core","Num"}; 
+char *machine[] = {
+"None","WE32100","SPARC","80386","MK68000","MK88000","80486","80860","MIPS"};
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("%x %c%c%c %s %s %s\n",e-&gt;e_ident[0],e-&gt;e_ident[1],e-&gt;e_ident[2],
+e-&gt;e_ident[3],class[e-&gt;e_ident[4]],endian[e-&gt;e_ident[5]],version[e-&gt;e_ident[6]]);
+printf("Type &#9;&#9;:%s \n",filetype[e-&gt;e_type]);
+printf("Machine &#9;:%s \n",machine[e-&gt;e_machine]);
+printf("Version &#9;:%s \n",version[e-&gt;e_version]);
+printf("Entry Point &#9;:%x\n",e-&gt;e_entry);
+printf("Size of Initial Structure &#9;:%d\n",e-&gt;e_ehsize);
+printf("Flags&#9;&#9; &#9;&#9;:%d\n",e-&gt;e_flags);
+printf("Program Header Offset &#9;&#9;:%d\n",e-&gt;e_phoff);
+printf("PHO : Structure Size %d No. of Entries %d\n",e-&gt;e_phentsize,e-&gt;e_phnum);
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-15s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("\n\n");
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+if(s-&gt;type == 3)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j = 0; j &lt; s-&gt;size; j++)
+&#9;if(str1[j] == 0)
+&#9;&#9;printf("\n %-3d ",j+1);
+&#9;else
+&#9;&#9;printf("%c",str1[j]);
+&#9;printf("\n");
+}
+if(s-&gt;type == 2)
+{
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str1 = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("\nNo of Symbols %d\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str1+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+}
+if(s-&gt;type == 7)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".comment")== 0)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;if(str1[j] !=0)
+&#9;&#9;printf("%c",str1[j]);
+printf("\n");
+}
+if(strcmp((str+s-&gt;name),".text")== 0)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+if(strcmp((str+s-&gt;name),".data")== 0)
+{
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02d ",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+Output
+7f ELF 32-bit objects Little Endian Current Version
+Type &#9;&#9;:Rel Obj 
+Machine &#9;:80386 
+Version &#9;:Current Version 
+Entry Point &#9;:0
+Size of Initial Structure &#9;:52
+Flags&#9;&#9; &#9;&#9;:0
+Program Header Offset &#9;&#9;:0
+PHO : Structure Size 0 No. of Entries 0
+Section Header Offset &#9;&#9;:204
+SHO: Structure Size 40 No. of Entries 9
+String Table Section Number &#9;:6
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .text PROGBITS AE 0 52 5 0 0 4 0 
+2 .data PROGBITS WA 0 60 4 0 0 4 0 
+3 .bss NOBITS WA 0 64 0 0 0 4 0 
+4 .note NOTE 0 64 20 0 0 1 0 
+5 .comment PROGBITS 0 84 61 0 0 1 0 
+6 .shstrtab STRTAB 0 145 59 0 0 1 0 
+7 .symtab SYMTAB 0 564 160 8 8 4 16 
+8 .strtab STRTAB 0 724 26 0 0 1 0 
+&nbsp;
+0 NULL 0 0 0 0 0 0 0 
+&nbsp;
+1 .text PROGBITS AE 0 52 5 0 0 4 0 
+55 89 e5 c9 c3 
+&nbsp;
+2 .data PROGBITS WA 0 60 4 0 0 4 0 
+04 00 00 00 
+&nbsp;
+3 .bss NOBITS WA 0 64 0 0 0 4 0 
+&nbsp;
+4 .note NOTE 0 64 20 0 0 1 0 
+08 00 00 00 00 00 00 00 01 00 00 00 30 31 2e 30 31 00 00 00 
+&nbsp;
+5 .comment PROGBITS 0 84 61 0 0 1 0 
+GCC: (GNU) egcs-2.91.66 19990314/Linux (egcs-1.1.2 release)
+&nbsp;
+6 .shstrtab STRTAB 0 145 59 0 0 1 0 
+1 .symtab
+9 .strtab
+17 .shstrtab
+27 .text
+33 .data
+39 .bss
+44 .note
+50 .comment
+59 
+&nbsp;
+7 .symtab SYMTAB 0 564 160 8 8 4 16 
+No of Symbols 10
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 b.c 0 0 0 -15 LOCAL FILE 
+2 0 0 0 1 LOCAL SECTION 
+3 0 0 0 2 LOCAL SECTION 
+4 0 0 0 3 LOCAL SECTION 
+5 gcc2_compiled. 0 0 0 1 LOCAL NOTYPE 
+6 0 0 0 4 LOCAL SECTION 
+7 0 0 0 5 LOCAL SECTION 
+8 i 0 4 0 2 GLOBAL OBJECT 
+9 abc 0 5 0 1 GLOBAL FUNC 
+&nbsp;
+8 .strtab STRTAB 0 724 26 0 0 1 0 
+1 b.c
+5 gcc2_compiled.
+20 i
+22 abc
+26 
+&nbsp;</PRE>
+<FONT FACE="Courier New" SIZE=2><P>------------------------------------------------</P>
+<P>This is an all in one program to wrap things up. It's just an amalgamation of all we've done so far. Here we're displaying the five bytes of the .text section as well. </P>
+<P>Remove or shift the prog around</P>
+</FONT><PRE>14
+b.c
+abc()
+{
+int j;
+}
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-12s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-12s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".text")== 0)
+{
+&#9;printf("\n\n%-2d %-12s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+Output
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .text PROGBITS AE 0 52 8 0 0 4 0 
+2 .data PROGBITS WA 0 60 0 0 0 4 0 
+3 .bss NOBITS WA 0 60 0 0 0 4 0 
+4 .note NOTE 0 60 20 0 0 1 0 
+5 .comment PROGBITS 0 80 61 0 0 1 0 
+6 .shstrtab STRTAB 0 141 59 0 0 1 0 
+7 .symtab SYMTAB 0 560 144 8 8 4 16 
+8 .strtab STRTAB 0 704 24 0 0 1 0 
+&nbsp;
+1 .text 
+55 89 e5 83 ec 04 c9 c3 
+-----------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>In b.c, we've added a variable to the function. </P>
+<P>We're displaying the .text section so that we can see the actual machine language opcodes. The size of the section is 8 bytes. c3 = ret. TODO:Decypher the opcodes</P>
+</FONT><PRE>15
+b.c
+abc()
+{
+pqr();
+}
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+&nbsp;
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+main()
+{
+fp = fopen("b.o","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-12s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-12s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 3)
+{
+if(strcmp(str+s-&gt;name,".strtab")==0)
+{
+printf("\n%-2d %-12s \n",i,str+s-&gt;name);
+&#9;str = p + s-&gt;offset;
+&#9;for(j = 0; j &lt; s-&gt;size; j++)
+&#9;if(str[j] == 0)
+&#9;&#9;printf("\n %-3d ",j+1);
+&#9;else
+&#9;&#9;printf("%c",str[j]);
+&#9;printf("\n");
+}&#9;
+}
+if(s-&gt;type == 2)
+{
+printf("\n%-2d %-12s\n ",i,str+s-&gt;name);
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str1 = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("\nNo of Symbols %d\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str1+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+}
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".text")== 0)
+{
+&#9;printf("\n%-2d %-12s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+Output
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .text PROGBITS AE 0 52 10 0 0 4 0 
+2 .rel.text REL 0 804 8 8 1 4 8 
+3 .data PROGBITS WA 0 64 0 0 0 4 0 
+4 .bss NOBITS WA 0 64 0 0 0 4 0 
+5 .note NOTE 0 64 20 0 0 1 0 
+6 .comment PROGBITS 0 84 61 0 0 1 0 
+7 .shstrtab STRTAB 0 145 69 0 0 1 0 
+8 .symtab SYMTAB 0 616 160 9 8 4 16 
+9 .strtab STRTAB 0 776 28 0 0 1 0 
+1 .text 
+55 89 e5 e8 fc ff ff ff c9 c3 
+8 .symtab 
+No of Symbols 10
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 b.c 0 0 0 -15 LOCAL FILE 
+2 0 0 0 1 LOCAL SECTION 
+3 0 0 0 3 LOCAL SECTION 
+4 0 0 0 4 LOCAL SECTION 
+5 gcc2_compiled. 0 0 0 1 LOCAL NOTYPE 
+6 0 0 0 5 LOCAL SECTION 
+7 0 0 0 6 LOCAL SECTION 
+8 abc 0 10 0 1 GLOBAL FUNC 
+9 pqr 0 0 0 0 GLOBAL NOTYPE 
+9 .strtab 
+1 b.c
+5 gcc2_compiled.
+20 abc
+24 pqr
+28 
+---------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>We now have a function being called by abc() in b.c.</P>
+<P>pqr() is present in the string and symbol table, but the section is 0. So it doesn't belong to any section as of yet. Notice the code in the ..text section. it now has a call. e8 =call. The function however has not yet been specified. This will happen when relocation takes place when the program is loaded into memory... but more on that later.</P>
+</FONT><PRE>16
+b.c
+abc()
+{
+printf("hello\n");
+}
+gcc -c b.c 
+ld -o b b.o -dynamic-linker /lib/ld-linux.so.2 -lc -e abc
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+&nbsp;
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i,j,k,l;
+char flags[4];
+struct sym *sy1;
+int no;
+char *class[]={"Invalid Class","32-bit objects", "64-bit objects"};
+char *endian[] = {"Invalid", "Little Endian","Big Endian"};
+char *version[] = {"Invalid Version","Current Version"};
+char *filetype[] = {"None","Rel Obj","Executable","Dynamic","Core","Num"}; 
+char *machine[] = {
+"None","WE32100","SPARC","80386","MK68000","MK88000","80486","80860","MIPS"};
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+main()
+{
+fp = fopen("b","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+printf("%x %c%c%c %s %s %s\n",e-&gt;e_ident[0],e-&gt;e_ident[1],e-&gt;e_ident[2],
+e-&gt;e_ident[3],class[e-&gt;e_ident[4]],endian[e-&gt;e_ident[5]],version[e-&gt;e_ident[6]]);
+printf("Type &#9;&#9;:%s \n",filetype[e-&gt;e_type]);
+printf("Machine &#9;:%s \n",machine[e-&gt;e_machine]);
+printf("Version &#9;:%s \n",version[e-&gt;e_version]);
+printf("Entry Point &#9;:%x\n",e-&gt;e_entry);
+printf("Size of Initial Structure &#9;:%d\n",e-&gt;e_ehsize);
+printf("Flags&#9;&#9; &#9;&#9;:%d\n",e-&gt;e_flags);
+printf("Program Header Offset &#9;&#9;:%d\n",e-&gt;e_phoff);
+printf("PHO : Structure Size %d No. of Entries %d\n",e-&gt;e_phentsize,e-&gt;e_phnum);
+printf("Section Header Offset &#9;&#9;:%d\n",e-&gt;e_shoff);
+printf("SHO: Structure Size %d No. of Entries %d\n",e-&gt;e_shentsize,e-&gt;e_shnum);
+printf("String Table Section Number &#9;:%d\n",e-&gt;e_shstrndx);
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n");
+printf("%-2s %-15s %-10s %-5s %-8s %-8s %-5s %-5s %-5s %-5s %-5s\n",
+"No","Name","Type","Flg","Address","Offset","Size","Link","Info","Align","Esize");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+s++;
+} 
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(s-&gt;type == 3)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j = 0; j &lt; s-&gt;size; j++)
+&#9;if(str1[j] == 0)
+&#9;&#9;printf("\n %-3d ",j+1);
+&#9;else
+&#9;&#9;printf("%c",str1[j]);
+&#9;printf("\n");
+}
+if(s-&gt;type == 2)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str1 = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("\nNo of Symbols %d\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str1+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+}
+if(s-&gt;type == 7)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+if(s-&gt;type == 1)
+{
+if(strcmp((str+s-&gt;name),".comment")== 0)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;if(str1[j] !=0)
+&#9;&#9;printf("%c",str1[j]);
+printf("\n");
+}
+if(strcmp((str+s-&gt;name),".text")== 0)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02x ",str1[j]);
+printf("\n");
+}
+if(strcmp((str+s-&gt;name),".data")== 0)
+{
+printf("\n%-2d %-15s \n",i,str+s-&gt;name);
+&#9;str1 = p + s-&gt;offset;
+&#9;for(j=0; j &lt; s-&gt;size; j++)
+&#9;&#9;printf(" %02d ",str1[j]);
+printf("\n");
+}
+}
+s++;
+} 
+}
+Output
+7f ELF 32-bit objects Little Endian Current Version
+Type &#9;&#9;:Executable 
+Machine &#9;:80386 
+Version &#9;:Current Version 
+Entry Point &#9;:8048184
+Size of Initial Structure &#9;:52
+Flags&#9;&#9; &#9;&#9;:0
+Program Header Offset &#9;&#9;:52
+PHO : Structure Size 32 No. of Entries 5
+Section Header Offset &#9;&#9;:788
+SHO: Structure Size 40 No. of Entries 20
+String Table Section Number &#9;:17
+No Name Type Flg Address Offset Size Link Info Align Esize
+0 NULL 0 0 0 0 0 0 0 
+1 .interp PROGBITS A 80480d4 212 19 0 0 1 0 
+2 .hash HASH A 80480e8 232 20 3 0 4 4 
+3 .dynsym DYNSYM A 80480fc 252 32 4 1 4 16 
+4 .dynstr STRTAB A 804811c 284 28 0 0 1 0 
+5 .gnu.version 6fffffff A 8048138 312 4 3 0 2 2 
+6 .gnu.version_r 6ffffffe A 804813c 316 32 4 1 4 0 
+7 .rel.plt REL A 804815c 348 8 3 8 4 8 
+8 .plt PROGBITS AE 8048164 356 32 0 0 4 4 
+9 .text PROGBITS AE 8048184 388 18 0 0 4 0 
+10 .rodata PROGBITS A 8048196 406 7 0 0 1 0 
+11 .data PROGBITS WA 80491a0 416 0 0 0 4 0 
+12 .got PROGBITS WA 80491a0 416 16 0 0 4 4 
+13 .dynamic DYNAMIC WA 80491b0 432 120 4 0 4 8 
+14 .bss NOBITS WA 8049228 552 0 0 0 4 0 
+15 .comment PROGBITS 0 552 61 0 0 1 0 
+16 .note NOTE 3d 613 20 0 0 1 0 
+17 .shstrtab STRTAB 0 633 153 0 0 1 0 
+18 .symtab SYMTAB 0 1588 480 19 22 4 16 
+19 .strtab STRTAB 0 2068 104 0 0 1 0 
+4 .dynstr 
+1 libc.so.6
+11 printf
+18 GLIBC_2.0
+28 
+9 .text 
+55 89 e5 68 96 81 04 08 e8 e3 ff ff ff 83 c4 04 c9 c3 
+11 .data 
+&nbsp;
+15 .comment 
+GCC: (GNU) egcs-2.91.66 19990314/Linux (egcs-1.1.2 release)
+16 .note 
+08 00 00 00 00 00 00 00 01 00 00 00 30 31 2e 30 31 00 00 00 
+17 .shstrtab 
+1 .symtab
+9 .strtab
+17 .shstrtab
+27 .interp
+35 .hash
+41 .dynsym
+49 .dynstr
+57 .gnu.version
+70 .gnu.version_r
+85 .rel.plt
+94 .plt
+99 .text
+105 .rodata
+113 .data
+119 .got
+124 .dynamic
+133 .bss
+138 .comment
+147 .note
+153 
+18 .symtab 
+No of Symbols 30
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 80480d4 0 0 1 LOCAL SECTION 
+2 80480e8 0 0 2 LOCAL SECTION 
+3 80480fc 0 0 3 LOCAL SECTION 
+4 804811c 0 0 4 LOCAL SECTION 
+5 8048138 0 0 5 LOCAL SECTION 
+6 804813c 0 0 6 LOCAL SECTION 
+7 804815c 0 0 7 LOCAL SECTION 
+8 8048164 0 0 8 LOCAL SECTION 
+9 8048184 0 0 9 LOCAL SECTION 
+10 8048196 0 0 10 LOCAL SECTION 
+11 80491a0 0 0 11 LOCAL SECTION 
+12 80491a0 0 0 12 LOCAL SECTION 
+13 80491b0 0 0 13 LOCAL SECTION 
+14 8049228 0 0 14 LOCAL SECTION 
+15 0 0 0 15 LOCAL SECTION 
+16 3d 0 0 16 LOCAL SECTION 
+17 0 0 0 17 LOCAL SECTION 
+18 0 0 0 18 LOCAL SECTION 
+19 0 0 0 19 LOCAL SECTION 
+20 b.c 0 0 0 -15 LOCAL FILE 
+21 gcc2_compiled. 8048184 0 0 9 LOCAL NOTYPE 
+22 _DYNAMIC 80491b0 0 0 13 GLOBAL OBJECT 
+23 _etext 8048196 0 0 -15 GLOBAL OBJECT 
+24 abc 8048184 18 0 9 GLOBAL FUNC 
+25 __bss_start 8049228 0 0 -15 GLOBAL OBJECT 
+26 printf@@GLIBC_2.0 8048174 41 0 0 GLOBAL FUNC 
+27 _edata 8049228 0 0 -15 GLOBAL OBJECT 
+28 _GLOBAL_OFFSET_TABLE_ 80491a0 0 0 12 GLOBAL OBJECT 
+29 _end 8049228 0 0 -15 GLOBAL OBJECT 
+19 .strtab 
+1 b.c
+5 gcc2_compiled.
+20 _DYNAMIC
+29 _etext
+36 abc
+40 __bss_start
+52 printf@@GLIBC_2.0
+70 _edata
+77 _GLOBAL_OFFSET_TABLE_
+99 _end
+104 
+-------------------------------
+gcc -c b.c 
+ld -o b b.o -dynamic-linker /lib/ld-linux.so.2 -lc -e abc</PRE>
+<FONT FACE="Courier New" SIZE=2><P>b.c now has a call to printf(); just one however. In the call to the linker, we specify the entry point as abc() because if you've noticed, we have no main(). main() calls in a lot of initialization code which is necessary if you want a working program. However, that would add complexity and make the output even larger than it already is. Besides, we don't intend to run these programs anyway.</P>
+<P>In the main program, we open up b, the actual executable rather than the ..o file. We're through with those.</P>
+<P>Most of the code used to generate the output is the same and the output itself is remarkably similar to what weave been doing so far. The file type is now Executable however.</P>
+<P>Notice the Entry Point is now 0x8048184. The file is loaded in at 0x8048000. So the real code starts 0x184 bytes into the file. Notice that in the section header output, .text has an offset of 388 (0x184) bytes into the program. So the Entry Point points to the first byte of ..text.</P>
+<P>If there are no flags shown next to a section, then it doesn't have to be loaded into memory. 'Progbits' is a message for the linker or loader and it's not supposed parse such sections. Only .text and ..plt are AE which means they're to be loaded into memory (A) and that they're executable (E) as well. </P>
+<P>The compiler is now no longer important. All the information in the file is for the benefit of the loader.</P>
+<P>So we have 52 bytes of the init header. </P>
+<P>Then the PHO, (32*5) = 160 bytes of program headers</P>
+<P>Then we have data of the program headers.</P>
+<P>From offset 788, we get the section headers.</P>
+<P>Then we have (40*20) = 800 bytes of section headers.</P>
+<P>Take look at .interp, which starts at offset 212 (52+160). It is the first program header. Simple huh? The memory location it's supposed to be loaded at is 0x80480d4 and d4=212. So it's a straight load into memory.</P>
+<P>..interp itself contains nothing more than the name of the loader. </P>
+<P>The column Align means align on the byte boundary. 1 means align on a byte boundary, 4 implies that it's aligned on a 4 bytes basis etc.</P>
+<P>..hash contains a hash of the symbols. LINK means "applied to which". It is 3 here, so the .hash applies to the 3rd section, the .dynsym. Notice that everything matches up and is connected to everything else.</P>
+<P>..dynsym has two structures of 16 bytes each adding up to a total of 32 bytes. It is the dynamic sym table.</P>
+<P>..gunu.stuff is gnu's stuff. :-) We're not supposed to touch it.</P>
+<P>..rodata is read only data and its size is 07. hello\n\0 is 7 bytes.</P>
+<P>..shstrtab is the section table for strings. </P>
+</FONT><PRE>
+b.c
+abc()
+{
+printf("hello\n");
+}
+gcc -c b.c
+ld -o b b.o --dynamic-linker /lib/ld-linux.so.2 -lc -e abc 
+-----------------------------------------------------------
+1
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i;
+char flags[4];
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+main()
+{
+fp = fopen("b","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n\n");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(strcmp(str+s-&gt;name,".interp") == 0)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+str1 = p + s-&gt;offset;
+printf("%s\n",str1);
+}
+s++;
+} 
+}
+gcc a.c -o a
+../a
+&nbsp;
+1 .interp PROGBITS A 80480d4 212 19 0 0 1 0 
+/lib/ld-linux.so.2
+---------------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Since we're done with the linker, all information we now process is for the loader and the OS. It's time to tackle the actual executable. Here we're printing .interp which contains the path and name of the loader this program will use. It's the same string we used as a parameter to 'ld'. From byte 212, the next 19 bytes contain the information that we're printing out.</P>
+<P>The linker doesn't place the addresses of the function calls in the code. That's done dynamically at loading by the loader and it's called relocation. The loader has to come in later and link up the incomplete call with the actual library code when the program is loaded in.</P>
+</FONT><PRE>2
+hash
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i;
+char flags[4];
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+int flg=0;
+int j,no;
+long *hs;
+main()
+{
+fp = fopen("b","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n\n");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(strcmp(str+s-&gt;name,".hash") == 0)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+hs = (long *) (p + s-&gt;offset);
+no = s-&gt;size/s-&gt;esize;
+printf("\n");
+for(j = 1; j &lt;= no; j++ )
+{
+&#9;printf("%ld\n",*hs);
+&#9;hs++;
+}
+}
+s++;
+} 
+}
+Output
+&nbsp;
+2 .hash HASH A 80480e8 232 20 3 0 4 4 
+1
+2
+1
+0
+0
+-------------------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we're printing out the section named .hash which contains a hash table with information we'll need a little later. The size of each entry is 4 and the total size is 20, so each entry must be 5 bytes large, starting at 232. </P>
+<P>We'll do the hash in detail a little later. It's used to store data in a format from where it can be retrieved real fast.</P>
+</FONT><PRE>3.
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+struct sym
+{
+int name;
+unsigned int value;
+int size;
+unsigned char info;
+unsigned char other;
+short int shndx;
+};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i;
+char flags[4];
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+char *bind[] = {"LOCAL", "GLOBAL","WEAK"}; 
+char *type[] = {"NOTYPE","OBJECT","FUNC","SECTION","FILE"};
+int flg=0;
+int j,no,k,l;
+struct sym *sy1;
+main()
+{
+fp = fopen("b","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n\n");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(strcmp(str+s-&gt;name,".dynsym") == 0)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+sy1= p+s-&gt;offset;
+s1 = sh + s-&gt;link;
+str = p + s1-&gt;offset;
+no = s-&gt;size/s-&gt;esize;
+printf("\nNo of Symbols %d\n\n",no);
+printf("%-3s %-20s %-8s %-5s %-5s %-10s %-5s\n","No","Name","Value","Size",
+"Other", "Sect Index","Info");
+for(j = 0; j &lt; no; j++)
+{
+printf("%-3d %-20s %-8x %-5d %-5d %-10d ",j,str+sy1-&gt;name,sy1-&gt;value,sy1-&gt;size,
+sy1-&gt;other,sy1-&gt;shndx);
+k = sy1-&gt;info; 
+k = k &gt;&gt; 4;
+printf("%-6s ",bind[k]);
+l = sy1-&gt;info; 
+l = l &amp; 0xF;
+printf("%-7s \n",type[l]);
+sy1++;
+}
+printf("\n");
+}
+s++;
+} 
+}
+Output
+&nbsp;
+3 .dynsym DYNSYM A 80480fc 252 32 4 1 4 16 
+No of Symbols 2
+No Name Value Size Other Sect Index Info 
+0 0 0 0 0 LOCAL NOTYPE 
+1 printf 8048174 41 0 0 GLOBAL FUNC 
+-----------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>&nbsp;</P>
+</FONT><PRE>4.
+a.c
+#include &lt;stdio.h&gt;
+#include &lt;sys/stat.h&gt;
+struct elfhdr
+{
+char e_ident[16];
+short int e_type;
+short int e_machine;
+int e_version;
+char *e_entry;
+int e_phoff;
+int e_shoff;
+int e_flags;
+short int e_ehsize;
+short int e_phentsize;
+short int e_phnum;
+short int e_shentsize;
+short int e_shnum;
+short int e_shstrndx;
+};
+struct elf_shdr
+{
+int name;
+int type;
+int flags;
+int addr;
+int offset;
+int size;
+int link;
+int info;
+int align;
+int esize;
+};
+FILE *fp;
+struct stat st;
+struct elfhdr *e;
+struct elf_shdr *s,*s1,*sh;
+char *p,*str;
+unsigned char *str1;
+int i;
+char flags[4];
+char *stype[] ={"NULL","PROGBITS","SYMTAB","STRTAB","RELA","HASH","DYNAMIC",
+"NOTE","NOBITS","REL","SHLIB","DYNSYM","NUM"};
+int flg=0;
+int j,no,k,l;
+main()
+{
+fp = fopen("b","r");
+fstat(fileno(fp),&amp;st);
+p = (char *) malloc(st.st_size);
+fread(p,st.st_size,1,fp);
+e = (struct elfhdr *)p;
+sh = p + e-&gt;e_shoff;
+s = sh + e-&gt;e_shstrndx;
+str = p + s-&gt;offset;
+s= sh;
+printf("\n\n");
+for(i = 0; i &lt; e-&gt;e_shnum; i++)
+{
+if(strcmp(str+s-&gt;name,".dynstr") == 0)
+{
+printf("%-2d %-15s ",i,str+s-&gt;name);
+if(s-&gt;type &lt;= 12)
+printf("%-10s",stype[s-&gt;type]);
+else
+printf("%-10x",s-&gt;type);
+strcpy(flags,"");
+if((s-&gt;flags &amp; 0x01) == 1)
+strcat(flags,"W");
+if((s-&gt;flags &amp; 0x02) == 2)
+strcat(flags,"A");
+if((s-&gt;flags &amp; 0x04) == 4)
+strcat(flags,"E");
+printf(" %-5s %-8x %-8d %-5d %-5d %-5d %-5d %-5d\n",
+flags,s-&gt;addr,s-&gt;offset,s-&gt;size,s-&gt;link,s-&gt;info,s-&gt;align,s-&gt;esize);
+str1 = p + s-&gt;offset;
+for(j=0;j &lt; s-&gt;size; j++ )
+{
+if(str1[j]== 0)
+printf("\n");
+else
+printf("%c",str1[j]);
+}
+}
+s++;
+} 
+}
+&nbsp;
+Output
+4 .dynstr STRTAB A 804811c 284 28 0 0 1 0 
+libc.so.6
+printf
+GLIBC_2.0
+------------------------------------------------------------------</PRE>
+<FONT FACE="Courier New" SIZE=2><P>Here we've put everything we've done uptil now into one big program. Notice that our test program now contains a main().</P>
+<P>In the code, we're just doing strncmp() again and again to find sections and when we do, we just printing them out in a neat manner.</P>
+<P>&nbsp;</P>
+<P>The first 52 bytes are the header. Upto String Section 26.</P>
+<P>Now we have the 6 program headers, each 32 bytes large. Section and program section headers may point to the same data.</P>
+<P>PHDR starts from 52 and the size is 192 (6*32). This gives us the limit of the program headers themselves. .interp is 244 (52+192), so it's right up after the program headers. V(irtual) and P(physical)addresses are usually the same. This is so the file can be loaded quickly into memory. This is why the file and memory size is also usually the same.</P>
+<P>Align is set for byte alignment. </P>
+<P>..interp's data is at 244 and it contains the name of the loader.</P>
+<P>The two loads are the program.</P>
+<P>We can only understand all the program headers if we look at the section headers. Check out .interp in the section headers. The size is F4(244). So this too points to the same place as the program header.</P>
+<P>..note.ABI-tag is a note from the linker which we just print out. It's for others to look at. It's optional, so if we remove it the prog will still work.</P>
+<P>..hash is the hash table.</P>
+<P>DYNSYM contains the list of dynamic symbols which have been added by the linker. Notice that printf() is present here.</P>
+<P>..strtab is present as well.</P>
+<P>..re.got and .rel.plt are for relocation, so we'll tackle them later.</P>
+<P>..init is the initilization code called even before the startup code of main(). The startup code is the bit which sets up argc and argv and handles other little details.</P>
+<P>..text is the code.</P>
+<P>In the DYNAMIC section, the smaller numbers are sizes and the larger numbers are actual memory addresses, not offsets.</P>
+<P>..stab is also code</P>
+<P>And all of this is followed by a boatload of strings.</P>
+<P>&nbsp;</P></FONT></BODY>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/linux/chap4.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:21:48 GMT -->
+</HTML>

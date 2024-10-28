@@ -1,0 +1,543 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/codeaxesssec.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:30 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="codeaxesssec_files/filelist.html">
+<title>Code Access Security</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>165</o:TotalTime>
+  <o:Created>2006-03-17T10:04:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:04:00Z</o:LastSaved>
+  <o:Pages>6</o:Pages>
+  <o:Words>1589</o:Words>
+  <o:Characters>9059</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>75</o:Lines>
+  <o:Paragraphs>18</o:Paragraphs>
+  <o:CharactersWithSpaces>11125</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Code Access Security - B</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Lets first write the simplest console application a.cs in
+the directory c:\g5.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.cs</p>
+
+<p class=MsoNormal>using System.IO;</p>
+
+<p class=MsoNormal>public class zzz</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>System.Console.WriteLine(&quot;Start&quot;);</p>
+
+<p class=MsoNormal>StreamReader s = new StreamReader(&quot;C:\\a.txt&quot;);</p>
+
+<p class=MsoNormal>string s1 = s.ReadLine();</p>
+
+<p class=MsoNormal>System.Console.WriteLine(&quot;End &quot; + s1);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Start</p>
+
+<p class=MsoNormal>End hell</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The above program uses the StreamReader class to read a file
+whose name is passed in the constructor and using the ReadLine function to read
+a line of the file. This function returns in our case the first line of the
+file which is stored in variable s1 and also displayed. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>All programs that we write are allowed to execute without
+any restrictions on them. Lets now add some rules to what our programs are
+allowed to do. Each time our code wants to access some resource, it must have
+permission to do so. A resource can be accessing a file, registry, event log
+anything.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We have a program called strong name or sn that is part of
+the security tools available with the .net framework. We will run this program
+so that it can create a public key, private key pair for us.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Sn –k a.snk</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The –k option creates a file a.snk whose size is 596 bytes
+and is created in the current directory. We now need to add this public key
+into the a.exe file. We will use the C# compiler to do this job for us.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>csc /keyfile:a.snk a.cs</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We see no change in our program as it runs a usual, all that
+we have added using the /keyfile option is the public key in the file. When we
+install the .net framework we also install the .net 2.0 configuration manager
+which is a Microsoft Management Console snap in. All configurations look and
+feel the same way as Microsoft has clear cut rules on how they should be
+written. We click on menu start, programs, Administrative Tools. .net 2.0
+configuration. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first select the plus of my computer, then the plus of
+runtime security policy, plus of machine, plus of permissions sets where we see
+a list of all permissions. We click on this option permissions sets with the
+right mouse button and then choose menu option new to create a new permission
+set. For the name we write p1, for description we forgot and then click on the
+button next. At the next window which is where we supply the actual permissions
+that make up p1 we do nothing and click on the button finish.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Thus our permission set p1 is empty. We now click on the
+plus of Code Groups and right mouse button on All_Code. Here we again choose
+menu option new, and for the name we write c1 and keep the description blank
+and click on the button next. For the condition we choose strong name which
+opens up some more text boxes for us. We click on the button import and
+navigate to c:\g5 where we choose a.exe. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The public key text box gets filled up by a very large
+number and we click on next. Here we see a drop down list box which contains
+all the permissions that we have created. We choose our empty permission set
+p1. We click on button next followed by button finish. When we run the a.exe
+file, it runs as if nothing ever happened. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Even though we called our code group c1, the actual name is
+Copy of c1 and we choose with the right mouse button and then menu option
+properties. Here we select the first of the two check boxes, this policy level
+will only have permissions… We then click on ok and once again run the a.exe
+file. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This time we get a zillion errors one them saying that we
+have no IO<span style="mso-spacerun: yes">  </span>permissions and hence an
+exception gets thrown. All that we need to do is simply give our program a.exe
+read rights on the file c:\a.txt. We choose the permission p1 in the
+configuration<span style="mso-spacerun: yes">  </span>manager, right mouse
+button, chose first option change permissions, choose File IO from first pane
+and then click on button Add &gt;&gt;. Here we come into another dialog box
+where we write the name of file c:\a.txt in the first text box and select the
+check box read by clicking on it twice. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We click on the button OK and then Finish and run a.exe once
+again and all works well now as our e.exe has the File IO rights on a.txt. We
+go back to our code and change the name from a.txt to b.txt like</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>StreamReader s = new StreamReader(&quot;C:\\b.txt&quot;);</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We get the same exception thrown as our assembly has no
+rights on the file b.txt. We add this file as the second entry in the File IO
+permissions for p1 and the exception vanishes. We choose p1, right mouse
+button, Change permissions and then at the dialog box choose File IO in the
+right pane and then choose button properties. Now our code can access two file
+a.txt and b.txt.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>using System.IO;</p>
+
+<p class=MsoNormal>using System.Security.Permissions;</p>
+
+<p class=MsoNormal>[assembly:
+FileIOPermission(SecurityAction.RequestMinimum,Read = @&quot;C:\c.txt&quot;)]</p>
+
+<p class=MsoNormal>public class zzz</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>System.Console.WriteLine(&quot;Start&quot;);</p>
+
+<p class=MsoNormal>StreamReader s = new StreamReader(&quot;C:\\c.txt&quot;);</p>
+
+<p class=MsoNormal>string s1 = s.ReadLine();</p>
+
+<p class=MsoNormal>System.Console.WriteLine(&quot;End &quot; + s1);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>The problem with the example earlier was that our WriteLine
+function gets called and then we see the exception. This could get pretty
+unnerving for the user where he is working on something and in the middle he
+gets an exception thrown at him. What we should do is before our program can
+start, someone should check for all permissions that we require and throw an
+exception at the start if we do have the required permissions.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We use the attribute FileIOPermission from the
+System.Security.Permissions namespace. The only problem is that this attribute
+cannot be used on types and methods so we preface it with assembly:, so that
+the attribute<span style="mso-spacerun: yes">  </span>is used not on the type
+zzz but on the assembly. The enum RequestMinimum from the<span
+style="mso-spacerun: yes">  </span>type SecurityMinimum does what the name
+specifies, what follows is the minimum permissions that we require. The only
+permission we require is Read rights on the file c.txt.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>When we run the above program, we see no output of the
+WriteLine function displayed at all only an exception This is because before a
+single line of our code can get called, the system checks whether our assembly
+has the permissions that the attributes demand. As our attribute requires read
+rights on c:\c.txt, our assembly does not have such a right, we get an
+exception thrown but no code from our side gets called.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We go back to permission p1 and change the properties of the
+IO permission by adding c.txt to the two files already present. Now our program
+runs as normal.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>[assembly: FileIOPermission(SecurityAction.RequestMinimum,Read
+= @&quot;C:\c.txt&quot;)]</p>
+
+<p class=MsoNormal>[assembly:
+FileIOPermission(SecurityAction.RequestMinimum,Read = @&quot;C:\d.txt&quot;)]</p>
+
+<p class=MsoNormal>public class zzz</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can specify the attributes as many times as we like and
+we will get an error as we have no read rights on file d.txt. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>using System.Windows.Forms;</p>
+
+<p class=MsoNormal>public class zzz :Form</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Application.Run(new zzz());</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>So far we worked with Console Applications, the above is a
+simple windows application. When we run it we get an error say that we have no
+user interface permissions. We go back to our permission p1, right mouse
+button, change permissions, and then choose User Interface from the left pane
+and click on button Add &gt;&gt;. At the dialog box the first lox box has the
+option No Windows, we choose the option Safe top level windows. We click on
+button OK and then button finish and run our program a.exe.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We see a nice window and a message from Microsoft that our
+application has security associated with it. Lets now add a button and some
+code that gets called when we click on the button.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>using System.Windows.Forms;</p>
+
+<p class=MsoNormal>using System.Drawing;</p>
+
+<p class=MsoNormal>using System.IO;</p>
+
+<p class=MsoNormal>public class zzz :Form</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Button b;</p>
+
+<p class=MsoNormal>TextBox t;</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Application.Run(new zzz());</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>public zzz()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>b = new Button();</p>
+
+<p class=MsoNormal>t = new TextBox();</p>
+
+<p class=MsoNormal>b.Location = new Point(78, 59);</p>
+
+<p class=MsoNormal>b.Text = &quot;Click&quot;;</p>
+
+<p class=MsoNormal>b.Click += new System.EventHandler(abc);</p>
+
+<p class=MsoNormal>Controls.Add(b);</p>
+
+<p class=MsoNormal>Controls.Add(t);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>private void abc(object o, System.EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>StreamReader f = new StreamReader(t.Text);</p>
+
+<p class=MsoNormal>b.Text = f.ReadLine();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Most of the above program is placing a button and textbox on
+the screen. We write something in the textbox and then click on the button
+which calls the abc function. Here we open the file for reading and store the
+first line as the text of the button. If we write any of the three file names
+a, b and c.txt we get the button contents change, anything else and a exception
+gets thrown. This can get unnerving for a first time user and hence we must
+handle the exceptions ourselves.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>private void abc(object o, System.EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>try</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>StreamReader f = new StreamReader(t.Text);</p>
+
+<p class=MsoNormal>b.Text = f.ReadLine();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>catch (System.Exception ee)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>MessageBox.Show(ee.Message);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We now simply add a try and catch to our code and type in
+d.txt. We now see our message box telling us of an error. We click on ok and
+are allowed to type another file name. More graceful.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>private void abc(object o, System.EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>try</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>string s =
+Environment.GetEnvironmentVariable(&quot;PATH&quot;);</p>
+
+<p class=MsoNormal>MessageBox.Show(s);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>catch (System.Exception ee)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>MessageBox.Show(ee.Message);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We now try and read the value of the Environment variable
+PATH and then display it in a MessageBox. We use the static function
+GetEnvironmentVariable passing it the name of the variable to read. When we run
+the program we get an error as we have no permission to read this resource.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We go back to our permission p1 and choose Environment
+Variables in the first pane and then click on Add &gt;&gt;. In the dialog box
+we write the name of the environment variable Path and then select the check
+box under read. The other check box is if we want to write or change the value.
+We click on OK and Finish and our program now works like a charm.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>[System.STAThread]</p>
+
+<p class=MsoNormal>public static void Main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>Application.Run(new zzz());</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>private void abc(object o, System.EventArgs e)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>try</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>OpenFileDialog f = new OpenFileDialog();</p>
+
+<p class=MsoNormal>f.ShowDialog();</p>
+
+<p class=MsoNormal>MessageBox.Show(f.FileName);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>catch (System.Exception ee)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>MessageBox.Show(ee.Message);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We first added the attribute STAThread where STA stands for
+Single Thread Apartment as we are using OLE calls. We create a instance of the
+OpenFileDialog class and then call ShowDialog to display the dialog box.
+Instead of seeing the dialog box we get an exception thrown at us as we do not
+have permissions to use file dialog boxes.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We once go to the p1 permission set and choose File Dialog
+in the first pane and then click on button Add&gt;&gt;. We have only two types
+of dialog boxes Open and Save. The default is none and we choose Open. We click
+on OK and then finish and now when we run our program does not work as
+advertised. We see the dialog box but when we choose any file including a.txt
+and click on Ok we get an exception thrown.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>This is because we need to give all IO rights Read, Write
+Append and Directory to<span style="mso-spacerun: yes">  </span>the files or
+else we get an error. Thus we go back to the IO permissions of p1 and select
+all four check boxes.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>As an exercise use the same permission class as an attribute
+so that no code of ours gets called until we have all the required permissions.
+</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/codeaxesssec.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:31 GMT -->
+</html>

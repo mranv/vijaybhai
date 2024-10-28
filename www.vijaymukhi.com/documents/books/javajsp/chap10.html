@@ -1,0 +1,1335 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap10.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center" height="0%">
+  <tr> 
+    <td height="5977" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC" height="16"> 
+            <div align="center"><font size="+1"><b>10. The Jakarta-Tomcat Project</b></font></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Create a simple JSP file in any subdirectory. We have created a new directory 
+        'myprg' in c:\jakarta-tomcat-3.2.1\webapps\examples\jsp and written our 
+        programs there.</p>
+      <p>d1.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Output in Browser<br>
+        Vijay Mukhi </p>
+      <p>View Source<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;<br>
+        <br>
+        This program introduces the tag &lt;pp:log1&gt;. This tag is similar to 
+        the jsp:tag which you are already familiar with. pp is not a predefined 
+        tag, it is our own custom tag. A custom tag allows you to extend a tag 
+        rather than use an existing tag. <br>
+        For those who need to have their memory refreshed, type in the following 
+        in the IE address bar. </p>
+      <p>http://127.0.0.1:8080/examples/jsp/myprg/d1.jsp</p>
+      <p>You will observe that the tag is ignored, since neither the browser nor 
+        the server understands &lt;pp:log1&gt;. All that we see in IE or any browser 
+        is Vijay Mukhi and in View Source, we see the jsp file unchanged. The 
+        Java Web Server ignored the tag. The Java Web Server takes a long time 
+        to send back any output but the important thing to note is that the web 
+        server and the browser, both, ignored the tag as they don't understand 
+        it. There is no output in tha Java Server window and it is the servlet 
+        generated which send the jsp file over unchanged.<br>
+        <br>
+        Our next program includes minor changes.</p>
+      <p>d2.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;http://java.apache.org/tomcat/examples-taglib&quot; 
+        prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Output in Browser</p>
+      <p>org.apache.jasper.JasperException: No such tag log1 in the tag library 
+        imported with prefix pp </p>
+      <p>It shows an error in the browser. The first statement within the body 
+        tag is a directive named taglib, followed by uri, an attribute, which 
+        stands for 'universal resource identifier'. The uri attribute is given 
+        a specific url. Another attribute required named prefix is initialized 
+        to pp, which is the name of our tag. When you try to load this JSP file, 
+        the browser shows you an error. The error says that it is an internal 
+        server error which means that we've upset the Java Web Server. The error 
+        clearly indicates that there is no tag log1 with the pp prefix. It does 
+        not recognize pp as a valid tag. </p>
+      <p>In order to validate it, go to the following subdirectory- C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF. 
+        Here, you will find a file by the name of web.xml. The file web.xml and 
+        the WEB-INF subdirectory have now been standardized by the java servlet 
+        specification. In the earlier days, you could put whatever you wanted 
+        in whichever file and that could be located in any subdirectory. A major 
+        part of the Java servlet specification deals with the directories, their 
+        names and the files they should contain. </p>
+      <p>web.xml talks about the web server. We have reproduced a part of the 
+        file that is relevant to our discussion.</p>
+      <p>web.xml<br>
+        &lt;taglib&gt;<br>
+        &lt;taglib-uri&gt;<br>
+        http://java.apache.org/tomcat/examples-taglib<br>
+        &lt;/taglib-uri&gt;<br>
+        &lt;taglib-location&gt;<br>
+        /WEB-INF/jsp/example-taglib.tld<br>
+        &lt;/taglib-location&gt;<br>
+        &lt;/taglib&gt;</p>
+      <p>It starts with &lt;taglib&gt; within which is &lt;taglib-uri&gt;,this 
+        is the same url or name that we have given in the JSP file. The location 
+        it points to is /WEB-INF/jsp/example-taglib.tld.</p>
+      <p>The uri is mapped to the location. The file example-taglib.tld contains 
+        the taglib description. Open this file by giving the path as follows: 
+      </p>
+      <p>&gt;edit C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\jsp\example-taglib.tld.</p>
+      <p>example-taglib.tld<br>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;</p>
+      <p>&lt;!- a tag library descriptor -&gt;<br>
+        &lt;taglib&gt;<br>
+        &lt;!- after this the default space is<br>
+        &quot;http://java.sun.com/j2ee/dtds/jsptaglibrary_1_2.dtd&quot;<br>
+        -&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;jspversion&gt;1.1&lt;/jspversion&gt;<br>
+        &lt;shortname&gt;simple&lt;/shortname&gt;<br>
+        &lt;uri&gt;&lt;/uri&gt;<br>
+        &lt;info&gt;<br>
+        A simple tab library for the examples<br>
+        &lt;/info&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;ShowSource&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.ShowSource&lt;/tagclass&gt;<br>
+        &lt;info&gt; Display JSP sources &lt;/info&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;jspFile&lt;/name&gt;<br>
+        &lt;required&gt;true&lt;/required&gt;<br>
+        &lt;rtexprvalue&gt;true&lt;/rtexprvalue&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>Since this file does not contain pp , we see an error. Now, we will add 
+        our own uri 'vijay' to the xml file and the tag pp in a tld file. </p>
+      <p>d3.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>web.xml<br>
+        ..<br>
+        ..<br>
+        &lt;taglib&gt;<br>
+        &lt; taglib-uri &gt;<br>
+        vijay<br>
+        &lt;/taglib-uri&gt;<br>
+        &lt; taglib-location &gt;<br>
+        /WEB-INF/jsp/ea.tld<br>
+        &lt;/taglib-location&gt;<br>
+        &lt;/taglib&gt;</p>
+      <p>Add the following lines in web.xml somewhere at the bottom. Now you must 
+        restart the web server because web.xml is only read at startup time. </p>
+      <p>Truncated Output in Browser<br>
+        org.apache.jasper.compiler.CompileException: C:\jakarta-tomcat-3.2.1\webapps\examples\jsp\myprg\d3.jsp(2,0) 
+        Unable to open taglibrary vijay : C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\jsp\ea.tld 
+        (The system cannot find the file specified) </p>
+      <p>The web server starts fine but when we load d3.jsp in the browser we 
+        get the error as shown above. When the Java Web Server starts, it reads 
+        web.xml. There it meets a tag named taglib. Within that it finds a tag 
+        taglib-uri which encloses a name, vijay. Then it looks at another tag 
+        taglib-location, which holds the name of the file /WEB-INF/jsp/ea.tld. 
+        It looks for ea.tld as the details of vijay are stored in it. </p>
+      <p>When the server encounters a jsp tag starting with pp, it looks at one 
+        of the earlier lines to check for a uri associated with this tag. This 
+        is done by using the taglib directive where we have given the uri as vijay 
+        and the prefix as pp.<br>
+        Vijay in web.xml points to a file named ea.tld. The file ea.tld is not 
+        present in the directory because we didn't create it. Hence the error.</p>
+      <p>Create this file in the location specified in the web.xml file but leave 
+        it empty.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\jsp&gt;copy con ea.tld<br>
+        <br>
+        .............................................leave a blankline press {Enter}<br>
+        ^Z<br>
+        1 file(s) copied</p>
+      <p>Shutdown and restart the Java Web Server. Once again, we get errors again.</p>
+      <p>Let's go back and load d3.jsp </p>
+      <p>Output in Browser<br>
+        org.apache.jasper.compiler.CompileException: C:\jakarta-tomcat-3.2.1\webapps\examples\jsp\myprg\d3.jsp(2,0) 
+        Unable to open taglibrary vijay : Parse Error in the tag library descriptor: 
+        Document root element is missing. </p>
+      <p>You get the error since the file ea.tld is empty, although the error 
+        does say this. The tld extension is a short form for tag library description. 
+        It is an xml file and every xml file must begin with xml version=1.0. 
+        As of now the only version that xml understands is version 1.0 . Key in 
+        the following few lines in the tld file to have this error disappear. 
+        What we are now learning are the rules of xml.</p>
+      <p> ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib<br>
+        PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag<br>
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;</p>
+      <p>The second line that contains DOCTYPE taglib.... The word following DOCTYPE 
+        - taglib, is the starting tag or the first tag or the document root. It 
+        indicates the beginning and an end of the xml document. In other words 
+        it is the first tag we will encounter. PUBLIC is some sort of an identifier 
+        and the rules of this document are stored in web-jsptaglibrary_1_1.dtd. 
+        These rules decide on the other tags to be allowed in the document, their 
+        order and how many times they can appear. It is like a syntax check which 
+        HTML desn't have. This also means that we can't write just anything in 
+        a tld file, it has to follow the rules which are specified in the dtd. 
+        XML is called the eXtensible Markup Language because it is used to write 
+        other markup languages. These rule are specified through the dtd which 
+        is also an xml file</p>
+      <p>Truncated Output in Browser<br>
+        org.apache.jasper.compiler.CompileException: C:\jakarta-tomcat-3.2.1\webapps\examples\jsp\myprg\d3.jsp(2,0) 
+        Unable to open taglibrary vijay : Parse Error in the tag library descriptor: 
+        Element taglib requires additional elements </p>
+      <p>The error is now different from the earlier one where there was no mention 
+        of a tag taglib in the file. The document type is taglib, but it needs 
+        more elements and one of them is a tag named pp.</p>
+      <p>ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;<br>
+        &lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>Truncated Output in Browser<br>
+        javax.servlet.ServletException: examples/xxx <br>
+        Root Cause<br>
+        java.lang.NoClassDefFoundError: examples/xxx</p>
+      <p>The error tells us that we need a class named examples.xxx.</p>
+      <p>The taglibrary is pp and has the version 1.0 which can be any number 
+        that we like. This library has a tag named log1. The tagclass associated 
+        with this name will be loaded or called when some action has to be taken 
+        on the tag. Since we do not have this class, we get the error.</p>
+      <p>tagclass refers to the Java file that contains the code. Since everything 
+        is bundled in a package, xxx.java is included in the package 'examples; 
+        and hence the first line is package examples;</p>
+      <p>The directory where xxx.class would be searched for by default is C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes 
+        and because of the package statement, we have to move down into the examples 
+        sub-directory.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes &gt;cd examples<br>
+        C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;edit 
+        xxx.java</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        public class xxx<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        }</p>
+      <p>The first line is package examples. This directory will be searched for 
+        from the classpath. The servlet specification says that all your class 
+        files should be in web-inf\classes and all jar files in web-inf\jar. Hence 
+        examples is created in web-inf\classes. Compile the java file and reload 
+        the jsp file in yur browswe. The java file will give you an error.</p>
+      <p>Truncated Output in Browser<br>
+        javax.servlet.ServletException: (class: jsp/myprg/_0002fjsp_0002fmyprg_0002fd_00033_0002ejspd3_jsp_0, 
+        method: _jspService signature: (Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V) 
+        Incompatible object argument for function call </p>
+      <p>In english, this error means that we have to derive xxx from some class 
+        as there are some functions which are being called by the Java Web Server 
+        and they do not seem to exist in our servlet. </p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;javac 
+        xxx.java</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        }</p>
+      <p>We get 2 errors. The first one is at the import statement. Whenever we 
+        get an error at an import it means that we have not specified a jar file 
+        in our classpath.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;set 
+        CLASSPATH=c:\jakarta-tomcat.3.2.1\lib\servlet.jar;%CLASSPATH%</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;javac 
+        xxx.java</p>
+      <p>Now the earlier import error disappears and we get another one stating 
+        that ExampleTagBase cannot be found. Once again we have to set classpath 
+        to the sub directory before examples, i.e. upto classes.</p>
+      <p>Set classpath=C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes;%CLASSPATH%</p>
+      <p>Now javac does not give us any errors.</p>
+      <p>If our Java file or class file has to represent a tag, then it should 
+        extend a class that contains all the code to represent a tag. Hence we 
+        have extended xxx from ExampleTagBase. This class is in the same subdirectory 
+        but it in turn refers to other classes.</p>
+      <p>In case you don't see the same results as we do, then shutdown the server 
+        and restart it. Load d3.jsp in your browser and the Java Web Server dos 
+        box will show 'In Constructor xxx'. This means that the JSP engine on 
+        seeing pp:log1, instantiated xxx. Hence the constructor is called. </p>
+      <p>In addition, the View Source now shows us the following. This proves 
+        that the Java Web Server has now changed the file and then sent it across.</p>
+      <p>View Source<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>A look at the next program<br>
+        xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return SKIP_BODY;<br>
+        }<br>
+        }</p>
+      <p>This program implements a function named doStartTag. The return value 
+        is SKIP_BODY. This is a number which we will concern ourselves with it 
+        a little later. In the web server console we will now see two lines of 
+        output which tell us that the function doStartTag is called.</p>
+      <p>Let's add one more function named doEndTag. </p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        }</p>
+      <p><br>
+        The output in the dos box clearly tells us that at first the JSP engine 
+        calls doStartTag and then doEndTag. This implies that the tags used in 
+        the JSP file are calling Java code in xxx. doStartTag returns SKIP_BODY 
+        whereas doEndTag returns EVAL_PAGE. These return values are numbers or 
+        ints. We still do not see any output in the IE window.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        }</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;javac 
+        xxx.java<br>
+        xxx.java:11: Undefined variable: EVAL_BODY_TAG<br>
+        return EVAL_BODY_TAG;<br>
+        ^<br>
+        1 error</p>
+      <p>On compiling, we get an error. This is because we have used EVAL_BODY_TAG, 
+        a variable that the compiler does not understand. We thought it would 
+        exist in ExampleTagBase but it is a member of BodyTag. To get rid of this 
+        error we have to implement an interface named BodyTag. This is demonstrated 
+        in the next example.<br>
+        xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        }</p>
+      <p>When you implement from an interface, the interface either contains variables 
+        that have been given values or it can contain function prototypes. Since 
+        the interface BodyTag also contains variables, the error disappears. In 
+        IE, we see no errors provided we shutdown the server, move one directory 
+        up, deltree work, md work, go back to bin and then run startup again.</p>
+      <p>In the next program, we have added a function named doAfterBody. </p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx<br>
+        extends ExampleTagBase<br>
+        implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        return SKIP_BODY;<br>
+        }<br>
+        }</p>
+      <p>At first doStartTag is called and because this function returns EVAL_BODY_TAG, 
+        the JSP engine will now call doAfterBody. But if you replace EVAL_BODY_TAG 
+        with SKIP_BODY, the function doAfterBody will not be called. </p>
+      <p>Thus the JSP engine/Java web server will first call doStartTag and depending 
+        on what it returns it will or will not call doAfterBody.</p>
+      <p>Tags in html can either have some content or they can be empty. In our 
+        case we have vijay mukhi, which is our body. This can be retrieved in 
+        doAfterBody. Let's understand how this is done.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        return SKIP_BODY;<br>
+        }<br>
+        }</p>
+      <p>In order to do this, use bodyOut.getString in doAfterBody. bodyOut is 
+        an object in ExampleTagBase and getString is a function in bodyOut which 
+        returns the string of the body, which in our case is Vijay Mukhi. </p>
+      <p>A quick look at d3.jsp in case you have forgotten</p>
+      <p>d3.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>BodyOut is an object which is an instance of BodyContent. This string 
+        will only be dispalyed in the web server console window. To see it in 
+        the browser, we have to use some more functions like writeOut and getEnclosingWriter() 
+        in bodyOut. These functions throw an exception. Merely saying 'doAfterBody 
+        throws IOException' will not work because the signature changes. So, we 
+        must put the code of doAfterBody in a try and catch.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements BodyTag {<br>
+        public xxx() {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        try {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return SKIP_BODY;<br>
+        } <br>
+        }</p>
+      <p>Output in Browser<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>The function bodyOut.getEnclosingWriter returns an object that looks 
+        like java.io.Writer and bodyOut.writeOut requires a java.io.Writer. writeOut 
+        will write the entire body as an html page. In doAfterBody, you can actually 
+        write into your html page which will then be sent over. Thus, writeOut 
+        will actually send the contents between our tag log1 in our jsp file, 
+        which was Vijay Mukhi, over to the web server.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements BodyTag {<br>
+        public xxx() {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public void doInitBody() {<br>
+        System.out.println(&quot;doInitBody &quot; );<br>
+        } <br>
+        }</p>
+      <p>As you can see in your dos box, doStartTag is called first, then doInitBody 
+        is called and finally doAfterBody. This happens because we return EVAL_BODY_TAG 
+        in doStartTag. </p>
+      <p>Since doAfterBody returns SKIP_BODY, the process terminates. If it were 
+        to return EVAL_BODY_TAG then you would keep seeing Vijay Mukhi indefinitely.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx<br>
+        extends ExampleTagBase<br>
+        implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody () {<br>
+        try<br>
+        {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public void doInitBody()<br>
+        {<br>
+        System.out.println(&quot;doInitBody &quot; );<br>
+        }<br>
+        }</p>
+      <p>This means doAfterBody is invoked after each body evaluation. On returning 
+        EVAL_BODY_TAG, a new evaluation of the body will start and it will follow 
+        the same procedure i.e. calling doAfterBody. The entire roller coaster 
+        stops it sees get SKIP_BODY. </p>
+      <p>The JSP engine calls these function for us to execute certain tasks in 
+        them. doInitBody is called only once and if we have any one time tasks 
+        to perform, we place them in doInitBody. In doAfterBody we receive the 
+        content the tag encloses and can create an html file which will be sent 
+        across to the browser.</p>
+      <p>We have now learnt that when there is a tag in a JSP file, certain code 
+        in the class file gets called. Note that these tags can also have attributes. 
+        The next example deals with an attribute in the tag.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\jsp\myprg&gt;edit d4.jsp</p>
+      <p>d4.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1 aa=&quot;hell&quot;&gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements<br>
+        BodyTag {<br>
+        public xxx() {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        try {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public void doInitBody() {<br>
+        System.out.println(&quot;doInitBody &quot; );<br>
+        }<br>
+        public void setAa(String v) {<br>
+        System.out.println(&quot;setaa &quot; + v);<br>
+        }<br>
+        }</p>
+      <p>Here, we have an attribute named aa which is initialized to hell. If 
+        we stop here, we will not get an error even though in ea.tld we have not 
+        specified the attributes that are allowed with our tag log1, and a prefix 
+        of pp. In the browser run d4.jsp and not d3.jsp.</p>
+      <p>If we remove the function named setaa from xxx then we will get the following 
+        error in our browser.</p>
+      <p>Truncated Output in Browser<br>
+        javax.servlet.ServletException: examples.xxx: method setAa(Ljava/lang/String;)V 
+        not found </p>
+      <p>So in ea.tld, we have to say attribute /attribute within the tag and 
+        within it we specify the name of our attribute i.e. aa.</p>
+      <p> C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\jsp&gt;edit ea.tld<br>
+        ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;<br>
+        &lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;aa&lt;/name&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>aa now becomes an attribute. For it to be an attribute, you need a function 
+        named setaa in xxx.java. This function takes one string as a parameter, 
+        named v in this case. The value of v is hell.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;edit 
+        xxx.java<br>
+        xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx extends ExampleTagBase implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public int doAfterBody() {<br>
+        try<br>
+        {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public void doInitBody()<br>
+        {<br>
+        System.out.println(&quot;doInitBody &quot; );<br>
+        }<br>
+        public void setaa(String v) {<br>
+        System.out.println(&quot;setaa &quot; + v);<br>
+        }<br>
+        }</p>
+      <p>When you see the dos screen, you will realize that the attributes are 
+        called after the constructor. The value of v is hell, the same value that 
+        the attribute had. There is no getaa in the class file. In a way, this 
+        class file resembles a Java Bean that has a set and a get for the attributes.</p>
+      <p>A tag can have a subtag named required. When you say that the tag required 
+        encloses a value true, then you have to have to have that attribute as 
+        part of the tag. It is mandatory and not having it present will get us 
+        an error.</p>
+      <p>ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt; 
+        <br>
+        &lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;aa&lt;/name&gt;<br>
+        &lt;required&gt;true&lt;/required&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>d5.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1 &gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>We do not have an attribute named aa which is mandatory in the ea.tld 
+        file.</p>
+      <p>The error is as follows</p>
+      <p><br>
+        Truncated Output in Browser<br>
+        org.apache.jasper.compiler.CompileException: C:\jakarta-tomcat-3.2.1\webapps\examples\jsp\myprg\d4.jsp(3,0) 
+        According to the TLD attribute aa is mandatory for tag log1 </p>
+      <p>Now that we have learnt how we can have tags and how a class file is 
+        loaded to work with tags, let's go back to the basics again. </p>
+      <p>The class Tag is a base class. All the other tags are derived from Tag. 
+        The class BodyTag adds two more methods. If you want support tags then 
+        you will have to implement Tag. Let's start with the smallest one. Here 
+        we say public class xxx implements tag. </p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx implements Tag<br>
+        {<br>
+        }</p>
+      <p>&gt;javac zzz.java<br>
+        xxx.java:3: class examples.xxx must be declared<br>
+        abstract. It does not define void release() from interface<br>
+        javax.servlet.jsp.tagext.Tag.<br>
+        public class xxx implements Tag<br>
+        ^<br>
+        xxx.java:3: class examples.xxx must be declared<br>
+        abstract. It does not define int doEndTag() from interface<br>
+        javax.servlet.jsp.tagext.Tag.<br>
+        public class xxx implements Tag<br>
+        ^<br>
+        xxx.java:3: class examples.xxx must be declared<br>
+        abstract. It does not define void setPageContext(javax.servlet.jsp.PageContext) 
+        from<br>
+        interface javax.servlet.jsp<br>
+        .tagext.Tag.<br>
+        public class xxx implements Tag<br>
+        ^<br>
+        xxx.java:3: class examples.xxx must be declared<br>
+        abstract. It does not define javax.servlet.jsp.tagext.Tag getParent() 
+        from interface javax.servlet.jsp.tagext.Tag.<br>
+        public class xxx implements Tag<br>
+        ^<br>
+        xxx.java:3: class examples.xxx must be declared abstract. It does not 
+        define void setParent(javax.servlet.jsp.tagext.Tag) from interface javax.servlet.jsp.tagext.Tag.<br>
+        public class xxx implements Tag<br>
+        ^<br>
+        6 errors</p>
+      <p>On compiling, you will get 6 errors. You can get rid of the errors by 
+        including the word abstract. </p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public abstract class xxx implements Tag<br>
+        {<br>
+        }</p>
+      <p>But if someone derives from xxx, he will get errors. Basically, there 
+        are 6 functions in tag that have to be implemented. So, we remove abstract 
+        and place these 6 functions one by one. The 6 functions are: release, 
+        doEndTag, setParent ,getParent, setPageContext and doStartTag.<br>
+        <br>
+        d6.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1 &gt;<br>
+        Vijay Mukhi<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p><br>
+        ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;<br>
+        &lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.*;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx implements Tag<br>
+        {<br>
+        protected Tag parent;<br>
+        public void release() {<br>
+        System.out.println(&quot;release&quot;);<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        public void setParent(Tag parent) {<br>
+        System.out.println(&quot;setParent&quot;);<br>
+        this.parent = parent;<br>
+        }<br>
+        public Tag getParent() {<br>
+        System.out.println(&quot;getParent&quot;);<br>
+        return this.parent;<br>
+        }<br>
+        public void setPageContext(PageContext pageContext) {<br>
+        System.out.println(&quot;setPageContext&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag&quot;);<br>
+        return SKIP_BODY;<br>
+        } <br>
+        }</p>
+      <p>When you open d6.jsp in the browser you will get the following error</p>
+      <p>Truncated Output in Browser<br>
+        javax.servlet.ServletException: examples/xxx</p>
+      <p>The reason we get the error is because the jsp engine expects the class 
+        to implement from both Tag and BodyTag.</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;edit 
+        xxx.java</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.*;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx implements Tag,BodyTag<br>
+        {<br>
+        protected Tag parent;<br>
+        public void release() {<br>
+        System.out.println(&quot;release&quot;);<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        public void setParent(Tag parent) {<br>
+        System.out.println(&quot;setParent&quot;);<br>
+        this.parent = parent;<br>
+        }<br>
+        public Tag getParent() {<br>
+        System.out.println(&quot;getParent&quot;);<br>
+        return this.parent;<br>
+        }<br>
+        public void setPageContext(PageContext<br>
+        pageContext) {<br>
+        System.out.println(&quot;setPageContext&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag&quot;);<br>
+        return SKIP_BODY;<br>
+        }<br>
+        }</p>
+      <p>C:\jakarta-tomcat-3.2.1\webapps\examples\WEB-INF\classes\examples&gt;javac 
+        xxx.java</p>
+      <p>xxx.java:5: class examples.xxx must be declared<br>
+        abstract. It does not define void setBodyContent(javax.servlet.jsp.tagext.BodyContent)<br>
+        from interface javax.servlet.jsp.tagext.BodyTag.<br>
+        public class xxx implements Tag,BodyTag<br>
+        ^<br>
+        xxx.java:5: class examples.xxx must be declared<br>
+        abstract. It does not define void doInitBody() from interface<br>
+        javax.servlet.jsp.tagext.BodyTag.<br>
+        public class xxx implements Tag,BodyTag<br>
+        ^<br>
+        xxx.java:5: class examples.xxx must be declared abstract. It does not 
+        define int<br>
+        doAfterBody() from interface javax.servlet.jsp.tagext.BodyTag.<br>
+        public class xxx implements Tag,BodyTag<br>
+        ^<br>
+        3 errors</p>
+      <p>Once again the error appears because of the interface.</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.*;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx implements Tag,BodyTag<br>
+        {<br>
+        protected Tag parent;<br>
+        protected BodyContent bodyOut;<br>
+        protected PageContext pageContext;</p>
+      <p> public void release() {<br>
+        System.out.println(&quot;release&quot;);<br>
+        }<br>
+        public int doEndTag() {<br>
+        System.out.println(&quot;doEndTag&quot;);<br>
+        return EVAL_PAGE;<br>
+        }<br>
+        public void setParent(Tag parent) {<br>
+        System.out.println(&quot;setParent&quot;);<br>
+        this.parent = parent;<br>
+        }<br>
+        public Tag getParent() {<br>
+        System.out.println(&quot;getParent&quot;);<br>
+        return this.parent;<br>
+        }<br>
+        public void setPageContext(PageContext pageContext) {<br>
+        this.pageContext = pageContext;<br>
+        System.out.println(&quot;setPageContext&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag&quot;);<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public void doInitBody() throws JspException {<br>
+        System.out.println(&quot;doInitBody&quot;);<br>
+        }<br>
+        public int doAfterBody() throws JspException {<br>
+        System.out.println(&quot;doAfterBody&quot;);<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public void setBodyContent(BodyContent bodyOut) {<br>
+        System.out.println(&quot;setBodyContent&quot;);<br>
+        this.bodyOut = bodyOut;<br>
+        }<br>
+        }</p>
+      <p>Output in Server window<br>
+        setPageContext<br>
+        setParent<br>
+        doStartTag<br>
+        setBodyContent<br>
+        doInitBody<br>
+        doAfterBody<br>
+        doEndTag<br>
+        release</p>
+      <p>8 functions are called in all. The first function that is called is setPageContext. 
+        This function receives a parameter named pageContext. It takes this object 
+        that looks like PageContext and stores it in a public variable of the 
+        same name i.e. pageContext. If we use this.pageContext we are referring 
+        to the public variable. Without this, pageContext refers to the parameter 
+        passed to the function. This is how we initialize the first of the three 
+        public variables in our class. Recall how we used bodyOut earlier.</p>
+      <p>The next function to be called is setParent, which as the name suggests, 
+        refers to the parent Tag which it is passes as a parameter and initializes 
+        the public variable parent.</p>
+      <p>Thereafter, doStartTag and doEndTag are called and then finally, release 
+        is called. getParent doesn't ever get called. This is the only function 
+        that isn't called and the order in which they are called remains constant. 
+        In addition, three more functions which refer to the body are also called. 
+        They are doInitBody, doAfterBody and setBodyContent. </p>
+      <p>The function setBodyContent is the one that initializes bodyOut, which 
+        we use to reference our tag. First doStartTag is called and if we returns 
+        EVAL_BODY_TAG in this function, then SetBodyContent, doInitBody and doAfterTag 
+        are called. </p>
+      <p>The exampleTagClass, which we derived from in the earlier examples has 
+        two to three variables - Parent, bodyOut, pageContext. These were initialized 
+        in the functions and were mandatory in the required classes.</p>
+      <p>That means if you want to create your own class then you can name it 
+        anything you like. So you don't have to use ExampleTagClass. All that 
+        you have to do is derive from Tag and BodyTag and make sure that the functions 
+        do what we have done. ExampleTagClass is useful because we do not want 
+        to implement so many functions and we can call it a helper class.</p>
+      <p>In doStartTag, if you return SKIP_BODY, then setBodyContent isn't called. 
+        so you don't require an object that looks like BodyContent. </p>
+      <p>BodyContent is a subclass of jspwriter. If doStartTag returns SKIP_BODY 
+        then none of the tags from BodyTag will ever be called. It is only if 
+        doStartTag returns EVAL_BODY_TAG that the rest of them are called.</p>
+      <p>Let's consider another set of examples.</p>
+      <p>We will keep reminding you that attributes and methods are called before 
+        any other function.</p>
+      <p>Here, we have the same old tag pp:log1. A JSP tag starts with &lt;% and 
+        here we use the same = with a name memb.<br>
+        d6.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1 &gt;<br>
+        Vijay &lt;%= memb %&gt;<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>On doing so, you will get the following error. </p>
+      <p>Output in Browser<br>
+        org.apache.jasper.JasperException: Unable to compile class for JSPC:\jakarta-tomcat-3.2.1\work\localhost_8080%2Fexamples\_0002fjsp_0002fmyprg_0002fd_00036_0002ejspd6_jsp_1.java:79: 
+        Undefined variable: memb out.print( memb );</p>
+      <p>This is an error because the jsp engine cannot find a variable named 
+        memb.</p>
+      <p>In our next program, we have the same doStartTag, doAfterBody, doInitBody 
+        and are doing exactly the same thing as earlier. But we have made an addition; 
+        we have added one more line where we are calling a function pageContext.setAttribute(). 
+        So in other words, we are creating a variable named memb and initializing 
+        it to Sonal. </p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class xxx<br>
+        extends ExampleTagBase<br>
+        implements BodyTag<br>
+        {<br>
+        public xxx()<br>
+        {<br>
+        System.out.println(&quot;In Constructor xxx&quot;);<br>
+        }<br>
+        public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag1 &quot; );<br>
+        return EVAL_BODY_TAG;<br>
+        }</p>
+      <p>public int doAfterBody() {<br>
+        try<br>
+        {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return SKIP_BODY;<br>
+        }<br>
+        public void doInitBody()<br>
+        {<br>
+        System.out.println(&quot;doInitBody &quot; );<br>
+        pageContext.setAttribute(&quot;memb&quot;, &quot;Sonal&quot;);<br>
+        }<br>
+        }</p>
+      <p>You see the same error as before. </p>
+      <p>This means that we now have to go back to our ea.tld file, and introduce 
+        a new tag named a teiclass. </p>
+      <p>ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;</p>
+      <p>&lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;teiclass&gt;examples.yyy&lt;/teiclass&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>yyy.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class yyy extends TagExtraInfo {<br>
+        public VariableInfo[] getVariableInfo(TagData data) {<br>
+        return new VariableInfo[] <br>
+        {<br>
+        new<br>
+        VariableInfo(&quot;memb&quot;,&quot;String&quot;,true,VariableInfo.NESTED)<br>
+        };<br>
+        }<br>
+        }<br>
+        &gt;javac yyy.java</p>
+      <p>In the yyy class, which is derived from the TagExtraInfo tag, we once 
+        again start with the package examples. Class yyy extends TagExtraInfo. 
+        getVariableInfo is a member of this class, which returns an array of VariableInfo. 
+        Here, we're returning an object that looks like an array of VariableInfo. 
+        Instead of giving a semicolon to end the statement, we are giving an open 
+        curly bracket. At this point, we are creating the array VariableInfo and 
+        initializing it at the same time. The syntax is important. Since it is 
+        an array, you can say new as many times as you want, one below the other 
+        for each member of the array. Here, we are creating memb, a variable of 
+        type string, and VariableInfo.NESTED indicates that it is nested one within 
+        the other. It will display Vijay Sonal in the browser and in the Java 
+        Web Server, and of course no errors! </p>
+      <p>What if, in doStartTag, we give pageContext.setAttribute(&quot;memb&quot;, 
+        Sonal2&quot;) and in doAfterBody we give pageContext.setAttribute(&quot;memb&quot;, 
+        Sonal3&quot;), as shown below.</p>
+      <p>public int doStartTag() {<br>
+        System.out.println(&quot;doStartTag2 &quot; );<br>
+        pageContext.setAttribute(&quot;memb&quot;, &quot;Sonal2&quot;);<br>
+        return EVAL_BODY_TAG;<br>
+        }</p>
+      <p>public int doAfterBody() {<br>
+        try<br>
+        {<br>
+        System.out.println(&quot;doAfterBody1 &quot; );<br>
+        pageContext.setAttribute(&quot;memb&quot;, &quot;Sonal3&quot;);<br>
+        String s = bodyOut.getString();<br>
+        System.out.println(s);<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        }<br>
+        catch (Exception e) {}<br>
+        return SKIP_BODY;<br>
+        }</p>
+      <p>We have initialized memb in three differnet places. Yet we see Sonal. 
+        The doStartTag function is called right at the beginning. Here, memb should 
+        have been initialized to Sonal2, but it is in doAfterBody that we say 
+        bodyout.write. doAfterBody has a setattribute too. In such a case, doAfterBody 
+        has no effect. Therefore, as the setattribute in doafterbody is ignored, 
+        Sonal will be displayed. Hence you should not use setAttribute everywhere 
+        as it will be ignored.</p>
+      <p>NESTED is the scope for the variable. If you say nested then the variable 
+        is available between the start and the end tag. If you change nested to 
+        AT_BEGIN, then it is available from that tag to the end of the page. But 
+        if you use AT_END, then it is available from the end of the tag to the 
+        end of the page.</p>
+      <p>In the following example, we have used memb twice. <br>
+        d8.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;pp:log1&gt;<br>
+        Vijay &lt;%= memb %&gt;<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;p&gt; Vijay1 &lt;%=memb %&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>xxx.java remains the same as before</p>
+      <p>yyy.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class yyy extends TagExtraInfo {<br>
+        public VariableInfo[] getVariableInfo(TagData data) {<br>
+        return new VariableInfo[] <br>
+        {<br>
+        new<br>
+        VariableInfo(&quot;memb&quot;,&quot;String&quot;,true,VariableInfo.NESTED)<br>
+        };<br>
+        }<br>
+        }</p>
+      <p>Truncated Output in Browser<br>
+        org.apache.jasper.JasperException: Unable to compile class for JSPc:\jakarta-tomcat-3.2.1\work\localhost_8080%2Fexamples\_0002fjsp_0002fmyprg_0002fd_00036_0002ejspd6_jsp_1.java:109: 
+        Undefined variable: memb out.print( memb ); </p>
+      <p>If you use NESTED, then you will get an error as shown above.</p>
+      <p>yyy.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class yyy extends TagExtraInfo {<br>
+        public VariableInfo[] getVariableInfo(TagData data) {<br>
+        return new VariableInfo[] <br>
+        {<br>
+        new<br>
+        VariableInfo(&quot;memb&quot;,&quot;String&quot;,true,VariableInfo.AT_BEGIN)<br>
+        };<br>
+        }<br>
+        }</p>
+      <p>Output in Browser<br>
+        Vijay Mukhi Sonal <br>
+        Vijay1 Sonal3 </p>
+      <p>In the Server Window<br>
+        Vijay Mukhi Sonal </p>
+      <p>AT_BEGIN means that they are now 2 different values to the same variable 
+        memb.</p>
+      <p>yyy.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class yyy extends TagExtraInfo <br>
+        {<br>
+        public VariableInfo[] getVariableInfo(TagData data) <br>
+        {<br>
+        return new VariableInfo[] {<br>
+        new VariableInfo(&quot;memb&quot;,&quot;String&quot;,true,VariableInfo.AT_END)<br>
+        };<br>
+        }<br>
+        }</p>
+      <p>When we use AT_END we will get the same error as before</p>
+      <p>The scope of a variable decides where the variable will be created and 
+        where it will be allowed.</p>
+      <p>Our next few examples will further expand on this concept.</p>
+      <p>d9.jsp<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;%@ taglib uri=&quot;vijay&quot; prefix=&quot;pp&quot; %&gt;<br>
+        &lt;ul&gt;<br>
+        &lt;pp:log1 att1=&quot;98.5&quot; att2=&quot;92.3&quot; att3=&quot;107.7&quot;&gt;<br>
+        &lt;li&gt;&lt;%= memb %&gt;&lt;/li&gt;<br>
+        &lt;/pp:log1&gt;<br>
+        &lt;/ul&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>ea.tld<br>
+        &lt;?xml version=&quot;1.0&quot; ?&gt;<br>
+        &lt;!DOCTYPE taglib PUBLIC &quot;-//Sun Microsystems, Inc.//DTD JSP Tag 
+        Library 1.1//EN&quot; &quot;http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd&quot;&gt;<br>
+        &lt;taglib&gt;<br>
+        &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;<br>
+        &lt;shortname&gt;pp&lt;/shortname&gt;<br>
+        &lt;tag&gt;<br>
+        &lt;name&gt;log1&lt;/name&gt;<br>
+        &lt;tagclass&gt;examples.xxx&lt;/tagclass&gt;<br>
+        &lt;teiclass&gt;examples.yyy&lt;/teiclass&gt;<br>
+        &lt;bodycontent&gt;JSP&lt;/bodycontent&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;att1&lt;/name&gt;<br>
+        &lt;required&gt;true&lt;/required&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;att2&lt;/name&gt;<br>
+        &lt;required&gt;true&lt;/required&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;attribute&gt;<br>
+        &lt;name&gt;att3&lt;/name&gt;<br>
+        &lt;required&gt;true&lt;/required&gt;<br>
+        &lt;/attribute&gt;<br>
+        &lt;/tag&gt; <br>
+        &lt;/taglib&gt;</p>
+      <p>xxx.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.*;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        import java.util.Hashtable;<br>
+        import java.io.Writer;<br>
+        import java.io.IOException;<br>
+        public class xxx extends ExampleTagBase implements<br>
+        BodyTag <br>
+        {<br>
+        private String atts[] = new String[3];<br>
+        int i = 0;<br>
+        public void setAtt1(String value) {<br>
+        System.out.println(&quot;setAtt1 &quot; + value);<br>
+        atts[0] = value;<br>
+        }<br>
+        public void setAtt2(String value) {<br>
+        System.out.println(&quot;setAtt2 &quot; + value);<br>
+        atts[1] = value;<br>
+        }<br>
+        public void setAtt3(String value) {<br>
+        System.out.println(&quot;setAtt3 &quot; + value);<br>
+        atts[2] = value;<br>
+        }<br>
+        public int doStartTag() throws JspException {<br>
+        System.out.println(&quot;doStartTag &quot;);<br>
+        return EVAL_BODY_TAG;<br>
+        }<br>
+        public void doInitBody() throws JspException {<br>
+        System.out.println(&quot;doInitBody &quot;);<br>
+        pageContext.setAttribute(&quot;memb&quot;, atts[i]);<br>
+        i++;<br>
+        }<br>
+        public int doAfterBody() throws JspException {<br>
+        System.out.println(&quot;doAfterBody &quot; + i);<br>
+        try {<br>
+        if (i == 3) {<br>
+        bodyOut.writeOut(bodyOut.getEnclosingWriter());<br>
+        return SKIP_BODY;<br>
+        } else<br>
+        pageContext.setAttribute(&quot;memb&quot;, atts[i]);<br>
+        i++;<br>
+        return EVAL_BODY_TAG;<br>
+        } catch (IOException ex) {<br>
+        throw new JspTagException(ex.toString());<br>
+        }<br>
+        }<br>
+        }</p>
+      <p>yyy.java<br>
+        package examples;<br>
+        import javax.servlet.jsp.tagext.*;<br>
+        public class yyy extends TagExtraInfo {<br>
+        public VariableInfo[] getVariableInfo(TagData data) {<br>
+        return new VariableInfo[] { <br>
+        new VariableInfo(&quot;memb&quot;,&quot;String&quot;,true,VariableInfo.AT_BEGIN)<br>
+        };<br>
+        }<br>
+        }</p>
+      <p>Output in Browser Window</p>
+      <p>* 98.5 <br>
+        * 92.3 <br>
+        * 107.7 </p>
+      <p>Lets sum up everything now. Nearly everything remains the same. At first, 
+        let's take a look at the jsp file. As usual we have tags like html and 
+        then body. Here log1 has a prefix pp and it has three attributes; att1, 
+        att2 and att3 with values 98.5, 92.3 and 107.7 respectively. The &lt;ul&gt; 
+        tag is to display an unordered list and it needs &lt;li&gt; which stands 
+        for the start of the list and &lt;/li&gt; means the end of the list. These 
+        tags i.e. ul and li are only meant for ornamental purposes. Memb is a 
+        variable which is enclosed in % and angle brackets i.e. it is a jsp tag. 
+      </p>
+      <p>As we have memb and 3 attributes, we should change the tld file to include 
+        these attributes. The attributes and methods have the first preference. 
+        Hence the setAtt1, setAtt2 and setAtt3 functions will be called first. 
+        These three functions accept only one string parameter. We have created 
+        an array atts of type String. In these functions, we are initializing 
+        the array atts to the values passed on to the Java program by jsp. Since 
+        this is done first, before any other function is called, you will see 
+        setAtt1, setAtt2 and setAtt3 with their values displayed using System.out.println 
+        in you server dos screen.</p>
+      <p>Once this is done, the next function to be called is doStartTag. This 
+        function displays 'doStartTag' and then we return EVAL_BODY_TAG. It is 
+        because of this return value that the JSP Engine now calls doInitBody.</p>
+      <p>In this function, the value of i is 0 and we then call pageContext.setAttribute. 
+        This creates memb as a variable and initializes it to the value stored 
+        in atts[0]. The value of i is incremented by 1 and the next function to 
+        be called is doAfterBody. Here, we check whether the value of i equals 
+        3. As this condition evaluates to false, the else is called. Now pageContext.setAttribute 
+        will initialize memb to the value in atts[1]. Again the value of i is 
+        incremented but now we return EVAL_BODY_TAG. This will call doAfterBody 
+        once again and since the if condition is false again, it will initialize 
+        memb to the value in atts[2]. On adding 1 to i, ii now becomes 3. EVAL_BODY_TAG 
+        will call doAfterBody once again. Now the value of i is 3, so the function 
+        bodyOut.writeOut(bodyOut.getEnclosingWriter()) will write these values 
+        of memb on the browser screen and return SKIP_BODY. Thus it will now skip 
+        the body functions. </p>
+      <p>In this example, comment out the i++ and then see the results. Remove 
+        the comments and you will understand the flow of doAfterBody. <br>
+      </p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap10.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

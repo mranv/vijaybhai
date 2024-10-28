@@ -1,0 +1,4938 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:51 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap1_files/filelist.html">
+<link rel=Edit-Time-Data href="chap1_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>C# Classes-Threads,WinForms and XML</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:LastAuthor>Vijay Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>11</o:TotalTime>
+  <o:Created>2001-11-05T20:36:00Z</o:Created>
+  <o:LastSaved>2001-11-06T21:07:00Z</o:LastSaved>
+  <o:Pages>9</o:Pages>
+  <o:Words>10771</o:Words>
+  <o:Characters>61397</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>511</o:Lines>
+  <o:Paragraphs>122</o:Paragraphs>
+  <o:CharactersWithSpaces>75399</o:CharactersWithSpaces>
+  <o:Version>9.3821</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Monotype Corsiva";
+	panose-1:3 1 1 1 1 2 1 1 1 1;
+	mso-font-charset:0;
+	mso-generic-font-family:script;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	color:black;}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"c\# base text";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.5pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal><img width=64 height=48 id="_x0000_i1025" src=bpb.jpg></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>1</span></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><span style='font-size:24.0pt;font-family:"Monotype Corsiva";
+color:black'>Threads, Events and Mutexes</span></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Threads operate on the premise that the computer is definitely
+more expeditious than a human at executing tasks, resulting in the computer
+idling away most of its processing time, waiting for the human operator.
+Threads are a means of overcoming this wastage of processing time. They perform
+multiple tasks on a computer in rapid succession, thereby, creating the
+illusion of these tasks being executed simultaneously. No application can ever
+be comprehensive without employing threads. Before we try to infer what a
+thread does in the programming context, let us rummage through a few examples
+given below.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Without being discursive, let us venture out on our odyssey of
+understanding the concept of a thread with the assistance of a very diminutive
+program.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Hi&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ThreadStart ts = new ThreadStart(yyy.abc);</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(ts);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before Start&quot;);</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before Start</p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>This one is bound to leave you astonished because, we had
+earlier talked about starting out with a 'dimunitive' program. However, by no stretch
+of the imagination can the above program qualify as miniscule. Besides, the
+only work accomplished by this function is that it calls the static function
+abc, which in turn displays 'Hi'. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In Main, we create an object ts, which is an instance of the
+class<span style="mso-spacerun: yes">  </span>ThreadStart, which is derived
+from Delegate. Therefore, even though ThreadStart is a class, it also happens
+to be a delegate, whose constructor is given a static function called abc.
+Function abc is placed in the yyy class so that other classes can also use it.
+The program will work in a similar manner even if the static function is placed
+in class zzz.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Next, we create another object t, which is an instance of
+Thread. The constructor of this object is given a ThreadStart object ts.
+Indirectly, ts stands for the static function yyy.abc since it is a delegate. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>So far, tranquility prevails and nothing transpires. The
+function yyy.abc too does not get called. But, as soon as we call Start off the
+thread, the function abc gets catapulted into action. Thus, the function abc is
+called only when the Start function is called. This is really no big deal. Note
+that classes beginning with Thread belong to the System.Threading namespace.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Hi&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The above program is similar to the previous one and resembles the
+samples supplied by Microsoft. The function abc to be called, is non-static and
+hence, an object name is needed to reference it. The ThreadStart delegate
+object is directly passed as a parameter to the Thread constructor.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i+ &quot;...&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.pqr));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0 1 2 3 0...1...2...3...</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The example embodies a very large amount of code. However, it
+does not create any fresh ripples in our pond of knowledge. We have merely
+created two Thread objects t and t1, and passed their constructors a different
+delegate or function name, i.e. abc and pqr, respectively. Thereafter, the
+Start function has been called in t and t1. Here, the function abc gets called,
+which displays four numbers. Thereafter, the function pqr gets called, which
+also displays four numbers, but with three dots. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>You may wonder with trepidation as to when you will bite into
+the real meat. Keep your impatience in abeyance for a little while !</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u></p>
+
+<p class=programs>using System.Threading;</p>
+
+<p class=programs>public class yyy</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public void abc()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.Console.Write(i + &quot; &quot;);</p>
+
+<p class=programs>Thread.Sleep(1);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public void pqr()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=programs>{</p>
+
+<p class=programs>System.Console.Write(i+ &quot;...&quot;);</p>
+
+<p class=programs>Thread.Sleep(1);</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=programs>public class zzz</p>
+
+<p class=programs>{</p>
+
+<p class=programs>public static void Main()</p>
+
+<p class=programs>{</p>
+
+<p class=programs>yyy a = new yyy();</p>
+
+<p class=programs>Thread<span style='mso-tab-count:1'>  </span>t = new
+Thread(new ThreadStart(a.abc));</p>
+
+<p class=programs>Thread<span style='mso-tab-count:1'>  </span>t1 = new
+Thread(new ThreadStart(a.pqr));</p>
+
+<p class=programs>t.Start();</p>
+
+<p class=programs>t1.Start();</p>
+
+<p class=programs>}</p>
+
+<p class=programs>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0 0...1 1...2 2...3 3...</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now, we are at the threshold of excitement. By adding the
+function Sleep, which is a static function in the Thread class, the functions
+abc and pqr get called simultaneously, although not sequentially. This is how
+the concept of a thread is implemented, i.e. it empowers your computer to
+accomplish multiple jobs at the same time. This process is also termed as
+multi-tasking. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Take the case of Microsoft Word. When you attempt to save a
+file, irrespective of the size of the file, Word appears to consume the same
+amount of time in completing this task. To expect it to save a 10MB file within
+a very short time period is a thought fraught with absurdity and contrary to
+reason. Actually, what the Word program does is that it creates a thread and
+then solicits the thread to save the file. While the thread is saving that
+file, another thread waits for the user to type something. Hence, the user is
+emancipated to continue working with Word. Thus, in effect, two tasks are being
+executed concurrently without the user being cognizant of it ! The same
+mechanism is employed by Excel and other similar products. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Any application under Windows runs in its own thread. Thus, if
+two programs are launched, there will be two threads running. The operating
+system refrains from playing favorites and gives an equal amount of time to
+each thread to execute. If there are two threads co-existing, then, out of
+every minute of processing time available, each of them will be allotted 30
+seconds to execute. If a third program is now executed, a new thread will be
+launched and each of the three threads will be allotted only 20 seconds of the
+processor time per minute to execute. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If, instead of running a third program, what if the second program
+itself creates a thread ? As before, this will result in the creation of a
+third thread and each thread will be allotted 20 seconds of time. The resultant
+effect would be that that the first program will be allotted 20 seconds of
+time, whereas the second program will get 40 seconds per minute of the
+processor time. Thus, the larger number of threads that a program creates, more
+will be the processor time allotted to it. If you crave for more time and
+attention from your computer, desist from throwing a tantrum. Instead, generate
+greater number of threads. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The computer allots a specific amount of time to each thread
+and then puts it to sleep. Thereafter, it executes another thread. The time
+given to each thread to execute its code is designated as a Time Slice. This
+allocation of Time Slices occurs so swiftly that each thread suffers from the
+hallucination that it enjoys the undivided attention of the computer. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The static function Sleep in the Thread class facilitates this
+process. Sleep is like the sandman. It puts the thread to sleep for a certain
+number of milliseconds, as specified in its parameter. In this case, it is 1
+millisecond. In the earlier example, in a single time slice, the Thread
+executed all the code and the function completed execution. In this case, the
+Sleep delays it long enough for the next thread to execute, and thus, the code
+in the functions get called one after the other.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread t2 = Thread.CurrentThread;</p>
+
+<p class=ILprg>System.Console.Write(i + &quot;.&quot; + t2.Name + &quot;
+&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Name=&quot;One&quot;;</p>
+
+<p class=ILprg>t1.Name=&quot;Two&quot;;</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0.One 0.Two 1.One 1.Two 2.One 2.Two 3.One 3.Two</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Here, we have provided mental catharsis by simplifying the
+program. What we actually have done is given the same function name abc to our delegate.
+We have also used the property Name of the Thread class to assign a distinct
+name to each thread, i.e. One and Two respectively. Under normal circumstances,
+the names assigned are pre-ordained by the system. Now, both the threads will
+call the same function abc. How do we determine as to which thread is calling
+the function abc? </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Thread class can have members, which are either static or
+instance. CurrentThread is a static read-only property that returns a thread
+object, which represents the thread that has currently called the function.
+Here, Thread t2 will either represent t or t1, and the property Name will
+display the name of the thread executing the function.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=programs><u>a.cs</u></p>
+
+<p class=programs>using System.Threading;</p>
+
+<p class=programs>public class zzz : Thread</p>
+
+<p class=programs>{</p>
+
+<p class=programs>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Compiler Error</u></p>
+
+<p class=ILoutput>a.cs(2,14): error CS0509: 'zzz' : cannot inherit from sealed
+class 'System.Threading.Thread'</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Thread class is a sealed class, therefore we cannot derive
+from it. The designers of the Thread class at Microsoft have held very
+doctrinaire opinions, in that, they believe that they have envisaged all the
+possible features required in this class. Thus, they have not provided any
+facility to override or modify it. Therefore, we are constrained to use the
+Thread class exactly as provided, without introducing any code that will
+complement or add to or subtract from the code of the Thread class. For your
+information, the Thread class in turn is derived from the interface
+ISerializable.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Hi&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>System.Console.WriteLine(t.IsAlive);</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(t.IsAlive);</p>
+
+<p class=ILprg>t.Abort();</p>
+
+<p class=ILprg>System.Console.WriteLine(t.IsAlive);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>False</p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILoutput>False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Thread class has a property called IsAlive that reveals the
+current state of the Thread. When we create an object that looks like Thread,
+the thread is in a dead state and hence, the IsAlive property has a value of
+False. Start breathes life into the thread and executes through the delegate
+abc. The thread now comes alive, but the code in the thread function gets
+executed only after the subsequent WriteLine function, which displays the value
+of IsAlive as True. When we stop or Abort the Thread, the thread dies and the
+value of the property IsAlive reverts back to False. Thus, IsAlive can hold
+only one of the two values, False for dead or True for alive.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Hi&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>while ( !t.IsAlive )</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hi1&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Hi</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In today's world, we are working on extremely fast machines.
+When we execute t.Start(), the thread is brought to life in a fraction of a
+second. Hence, the while loop is not executed because the condition becomes
+false immediately. Had the machine been slower, the while loop may have got
+called a few times, as it would have taken some time before the thread could
+have been brought to life. Thus, the speed of execution may vary, depending
+upon the speed of the machine. Whenever the sample code creates a thread, it
+always contains this while loop.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3 ; i++)</p>
+
+<p class=ILprg>System.Console.Write(&quot;Hi &quot; + i + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Over</p>
+
+<p class=ILoutput>Hi 0 Hi 1 Hi 2 Hi 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The executable, a.exe, runs in its own thread. So, before
+calling the function Start, we already have one thread running. On calling the
+function Start, two threads run concurrently, independent of each other. The
+second thread executes the function abc independent of the first thread. The
+first thread executes the last WriteLine function and then stops, whereas the
+second thread continues executing the function abc till there is no more code
+to call. If, on your machine, the first thread's time slice gets over before
+executing the WriteLine function, then some code of the function abc may get
+executed before Over gets displayed in the function Main. It is reiterated yet
+again that, in case of threads, there can be no guarantee as to when the time
+slice of a thread will get over. Even the operating system is not sagacious
+enough to offer any guarantees in this regard.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3 ; i++)</p>
+
+<p class=ILprg>System.Console.Write(&quot;Hi &quot; + i + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t.Join();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Hi 0 Hi 1 Hi 2 Hi 3 Over</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The function Join is a blocking function. It makes the program
+linger at the function Join till the thread finishes execution. Any code after
+the Join, in this case the WriteLine function, will be executed only after the
+thread dies. A blocking function will wait until the purpose it is waiting for
+has reached fructification. Thus, if we want to wait for a thread to complete
+execution, we use a Join. Join behaves like a party host, who is always the
+last to leave.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( ; ; ) ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>bool b = t.Join(10000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Over &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Over False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Join function accepts a number as a parameter, which
+represents the maximum duration in milliseconds that it should wait for the
+thread to complete execution. In our example, the function abc will never end.
+Thus, the thread t will go on forever. Therefore, the Join function waits for
+10 seconds, gives up and finally returns a False.</p>
+
+<p class=ILbase>Therefore, we are empowered to decide the duration for which we
+want to wait for the thread to complete execution. Let us not forget that our
+application has not yet terminated and is still hanging around in memory. At
+this stage, if you press Ctrl-Alt-Del, you will see a list of programs running.
+Now, select the End Task option for the program called 'a'. An alternative
+approach could be to add the Abort function t.Abort() after the WriteLine
+function.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( ; ; ) ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Join();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unhandled Exception: System.Threading.ThreadStateException:
+Thread has not been started.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.Thread.Join()</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If there is no thread running, the Join function will throw
+the<span style="mso-spacerun: yes">  </span>exception of ThreadStateException. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Thread.Sleep(3);</p>
+
+<p class=ILprg>t.Abort();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Over&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(100);</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>abc</p>
+
+<p class=ILoutput>Over</p>
+
+<p class=ILoutput>Unhandled Exception: System.Threading.ThreadStateException: Thread
+is running or terminated. Cannot restart.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.Thread.StartInternal(IPrincipal principal, StackCrawlMark
+&amp; stackMark)</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.Thread.Start()</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>At first, we start the thread t by calling the Start function.
+Thereafter, we make the main thread sleep for a little while. Then, we abort
+the thread and again sleep for a little while, in order to enable the thread to
+fulfill its last wishes and finally die. Now that the thread is dead, we try
+and infuse life into it by calling Start again. A thread, which has died cannot
+be resuscitated. Since we have had the audacity to attempt this, the results
+are nearly cataclysmic, resulting in the generation of an exception which has
+to be caught.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Thread.Sleep(3);</p>
+
+<p class=ILprg>t.Abort();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Over&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(100);</p>
+
+<p class=ILprg>try<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>{<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>t.Start();<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>}<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>catch (ThreadStateException e)<span style="mso-spacerun: yes"> 
+</span></p>
+
+<p class=ILprg>{<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;In Exception&quot;);<span
+style="mso-spacerun: yes">  </span></p>
+
+<p class=ILprg>} </p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>abc</p>
+
+<p class=ILoutput>Over</p>
+
+<p class=ILoutput>In Exception</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The exception thrown is ThreadStateException, which needs to be
+caught in our code. Otherwise, the runtime message box is<span
+style="mso-spacerun: yes">  </span>displayed to the user.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Thread class constructor can throw two types of
+exceptions:- </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>ArgumentNullException -<span
+style="mso-spacerun: yes">  </span>When it is called without a delegate in the
+constructor. </p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>SecurityException - When the program
+does not have permission to create a thread.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>System.Console.WriteLine(t.ApartmentState);</p>
+
+<p class=ILprg>t.ApartmentState = ApartmentState.STA;</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(t.ApartmentState);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Unknown</p>
+
+<p class=ILoutput>STA</p>
+
+<p class=ILoutput>abc</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We all have our own apartments, which are normally done up as
+per our preferences i.e. 'We are the kings of our castles'. Threads also have
+apartments. Any thread can be asked to execute either in a single-threaded
+apartment or in a multi-threaded apartment. These values can be established
+using the property ApartmentState, either once at the beginning, or while the
+thread is running. The various values that ApartmentState can assume are as
+follows:</p>
+
+<p class=ILbullets>· STA<span style='mso-tab-count:2'>                    </span>:
+Single Threaded Apartment.</p>
+
+<p class=ILbullets>· MTA<span style='mso-tab-count:2'>                   </span>:
+Multi Threaded Apartment. </p>
+
+<p class=ILbullets>· Unknown<span style='mso-tab-count:1'>           </span>:
+Default value assigned when no value is<span style="mso-spacerun:
+yes">                            </span>set. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We, however, cannot use numbers for a string. Thus, an enum
+called ApartmentState has been used. It holds three values i.e. 0, 1 and 2
+corresponding to STA, MTA and Unknown respectively. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc &quot; +
+Thread.CurrentThread.IsBackground);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Main &quot; +
+Thread.CurrentThread.IsBackground);</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Main False</p>
+
+<p class=ILoutput>abc False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A thread executes either in the background or in the foreground.
+The property IsBackground indicates the mode in which the thread will run. An
+important point to be noted here is that, a thread which executes in the
+background automatically shuts down when its main program quits.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0 ; i&lt;=100; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc &quot; + i);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Main &quot; +
+Thread.CurrentThread.IsBackground);</p>
+
+<p class=ILprg>t.IsBackground = true;</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Thread.Sleep(10);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output </u>(t.IsBackground = true)</p>
+
+<p class=ILoutput>Main False</p>
+
+<p class=ILoutput>abc 0 </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u>(t.IsBackground = false)</p>
+
+<p class=ILoutput>Main False</p>
+
+<p class=ILoutput>abc 0</p>
+
+<p class=ILoutput>abc 1</p>
+
+<p class=ILoutput>abc 2</p>
+
+<p class=ILoutput>..</p>
+
+<p class=ILoutput>..</p>
+
+<p class=ILoutput>abc 100</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>When you change the true to false in t.IsBackground, the output
+shows the code of function abc being executed. The for loop displays values
+from 0 to 100.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>By changing the property IsBackground of a thread to true, the
+thread terminates when the main program stops. Thus, the for loop does not have
+the time to display values upto 100. At times, the program displays abc with a
+value of 0.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The sleeps are used to demonstrate the effect of the first
+thread shutting down and the second carrying on execution. On changing the
+property IsBackground to false, the thread takes its own sweet time to execute
+its code without any regard for the first thread, which may or may not have
+completed its job. So, the foreground threads behave exactly in the same manner
+as the background threads, when the property is initialized to true.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=10;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i + &quot; &quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=10;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i+ &quot;...&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.pqr));</p>
+
+<p class=ILprg>System.Console.WriteLine(t.Priority);</p>
+
+<p class=ILprg>t.Priority = ThreadPriority.Highest;</p>
+
+<p class=ILprg>t1.Priority = ThreadPriority.Lowest;</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Normal</p>
+
+<p class=ILoutput>0 1 2 3 4 0...5 1...6 2...7 3...8 4...9 5...10
+6...7...8...9...10...</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We are at liberty to decide the duration of the time-slice to
+be allotted to our thread vis-a-vis other threads. This can be achieved by
+setting the Priority property accordingly. By default, the priority level is 2.
+Hence, we see<span style="mso-spacerun: yes">  </span>'Normal' displayed as the
+output. All threads start at this priority level. The ThreadPriority enum
+comprises of five levels of priority, which are as follows:</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>0 - Zero</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>1 - BelowNormal</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>2 - Normal</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>3 - AboveNormal</p>
+
+<p class=ILbullets><span style='mso-bidi-font-size:12.0pt;font-family:"Times New Roman"'>•<span
+style='mso-tab-count:1'>     </span></span>4 - Highest</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In our program, we have changed the priority of thread t to the
+highest possible and that of thread t1 to the lowest. As a result, Thread t is
+accorded more time than thread t1, and it finishes its for loop much before
+thread t1 can do so.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>try</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc&quot;);</p>
+
+<p class=ILprg>for ( ; ; ) ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>catch ( System.Exception e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc Exception &quot;
++e.ToString() );</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>finally</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc Finally&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Thread.Sleep(10);</p>
+
+<p class=ILprg>t.Abort();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>in abc</p>
+
+<p class=ILoutput>in abc Exception System.Threading.ThreadAbortException:
+Thread was being aborted.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at yyy.abc()</p>
+
+<p class=ILoutput>in abc Finally </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Aborting a Thread while it is busy executing some code
+generates an exception. Thus, the function abc will be sent an exception,
+resulting in a call to the 'catch' and 'finally' clauses. The thread will be
+terminated after executing the code in the Catch and the Finally clause. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>try</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc&quot;);</p>
+
+<p class=ILprg>for ( ; ; ) ;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>catch ( System.Exception e)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc Exception &quot;
++e.ToString() );</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>finally</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;in abc Finally&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Abort();</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>(no output)</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Aborting a thread before it has started execution does not
+generate<span style="mso-spacerun: yes">  </span>any exceptions, since the
+thread is in a dead state. Hence, no code in abc ever gets called. This
+situation is akin to the one where you don your best attire to watch cricket
+live at the stadium, but the show gets ruined due to heavy downpour, resulting
+in the match being abandoned without a ball being bowled ! </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for (int i = 1 ; i&lt;= 10 ; i++ ) </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i + &quot; &quot; );</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>Thread.Sleep(10);</p>
+
+<p class=ILprg>t.Suspend();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;\n After Suspend&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(10);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before Resume&quot;);</p>
+
+<p class=ILprg>t.Resume();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1 </p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>After Suspend</p>
+
+<p class=ILoutput>Before Resume</p>
+
+<p class=ILoutput>2 3 4 5 6 7 8 9 10</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We are allowed to Suspend a thread executing its code, at any
+point in time. In the above program, we let the thread run for a little while
+and then Suspend it. Thereafter, we Resume it. Thus, the thread is like a
+puppet in our hands. We can decide when and which strings to pull and the
+thread does our biding. If the thread has already been suspended, then
+Suspending it once again has no effect, and thus, it does not result in an
+error. A single Resume is enough to undo a million Suspends.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 0; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread t2 = Thread.CurrentThread;</p>
+
+<p class=ILprg>System.Console.Write(i + &quot; &quot; + t2.GetHashCode() +
+&quot; &quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>0 2 0 3 1 2 1 3 2 2 2 3 3 2 3 3 </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Every thread is assigned a number internally. This number is
+called the HashCode. Hashing is the process of assigning a number to an entity
+so that it can easily be located from a long list. This hash number is useful
+and is pressed into service when we are required to keep track of a large
+number of threads internally.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(this);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=5;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.Write(i + &quot; &quot; +
+Thread.CurrentThread.GetHashCode() + &quot; &quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(this);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1 2 2 2 3 2 4 2 5 2 1 3 2 3 3 3 4 3 5 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us now clarify the abstract concept of the life of a thread
+with the help of an example. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Any resource that many people desire is called a shared resource.
+Imagine the chaos that would be caused if five programs tried to simultaneously
+use a single network printer for printing, during their respectively
+time-slices. This would result in the printer printing a few pages for program
+1, then a few pages for program 2, and so on. The printer will keep printing
+merrily, but the printed output will all be jumbled up.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Thus, ideally, one program should use a shared resource at a
+time, till its job is complete. For this, a method has to be implemented by
+means of which, unless one program finishes executing some specific code in a
+function, no other program should be allowed to execute it. Thus, all other
+programs would have to wait until the first thread finishes execution. </p>
+
+<p class=ILbase>Let us assume that function abc contains code which sends a
+request to the printer to print. The thread t gets the first shot at running
+abc. The second thread t1 has to wait until thread t finishes execution, even
+if the duration of executing abc takes more time than one time slice, due to a
+large value being assigned as a parameter to the sleep function. This is
+achieved by using the static function Enter of the class Monitor.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The function Enter is given an object which refers to the class
+in which the function resides.<span style="mso-spacerun: yes">  </span>From that
+point onwards, every thread has to wait at Enter. The barrier lowers only when
+Exit is called from the Monitor class. Enter acts as a fussy security guard who
+decides as to which thread is to be prohibited and which one is to be permitted
+to execute code. No two threads can ever enter the Enter function together. It
+is a rigid one way lane from Enter to Exit. One car is allowed in at one time
+and another car can pass through only after the first car leaves Exit. You can
+see that the names Enter and Exit have been chosen very aptly. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class ggg</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public ggg g1;</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(g1);</p>
+
+<p class=ILprg>for ( int i = 1; i &lt;= 3; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.Write(&quot; Hell &quot; + i);</p>
+
+<p class=ILprg>Monitor.Wait(g1);</p>
+
+<p class=ILprg>Console.Write(&quot; Waitabc &quot; + i);</p>
+
+<p class=ILprg>Monitor.Pulse(g1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(g1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class xxx</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public ggg g1;</p>
+
+<p class=ILprg>public void pqr( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(g1);</p>
+
+<p class=ILprg>for ( int i = 1; i &lt;= 3; i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot; Everyone &quot; + i);</p>
+
+<p class=ILprg>Monitor.Pulse(g1);</p>
+
+<p class=ILprg>Monitor.Wait(g1);</p>
+
+<p class=ILprg>Console.Write(&quot; Waitpqr &quot; + i);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(g1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main(String[] args)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ggg<span style="mso-spacerun: yes">  </span>g = new ggg( );</p>
+
+<p class=ILprg>yyy a = new yyy( );</p>
+
+<p class=ILprg>a.g1 = g;</p>
+
+<p class=ILprg>Thread<span style="mso-spacerun: yes">  </span>t = new
+Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start( );</p>
+
+<p class=ILprg>xxx b = new xxx();</p>
+
+<p class=ILprg>b.g1 = g;</p>
+
+<p class=ILprg>Thread<span style="mso-spacerun: yes">  </span>t1 = new
+Thread(new ThreadStart(b.pqr));</p>
+
+<p class=ILprg>t1.Start( );</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Hell 1 Everyone 1</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>Waitabc 1 Hell 2
+Waitpqr 1 Everyone 2</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>Waitabc 2 Hell 3
+Waitpqr 2 Everyone 3</p>
+
+<p class=ILoutput>cs Waitabc 3 Waitpqr 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The above example may be a protracted one, yet it is fascinating.</p>
+
+<p class=ILbase>The world has never been able to work with each other. The only
+global body we have is the UNO. People are mostly loners. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In the entry point function Main, we create an object g, which
+is an instance of a class ggg, having no code or variable. It embodies the
+emptiness of space. This is a class that is incapable of doing any good or bad.
+We then create two objects that look like yyy and xxx respectively, and pass
+them as delegates, so that the threads can call functions abc and pqr. We also
+initialize the object g1, an instance of ggg, in each of them to g. This is
+crucial. The g1's in yyy and xxx represent the same g that is created in Main. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>After initializing the requisite members, we activate the two
+threads. As earlier, let us assume that the function abc gets called first. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Monitor.Enter considers taking a handle to any object, which is
+to be synchronized between multiple instances of threads, as its first
+parameter. This function needs an Exit function to release its handle. Thus,
+the number of Exits in the program must correspond to the number of Enters.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>It prints &quot;Hell&quot;, and then due to the Wait function,
+it waits indefinitely, till it finally receives runtime notification. However,
+the thread accomplishes nothing significant. Thus, we do not see the Waitabc
+displayed, since it is entered after the Wait function.</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILbase>The second thread starts executing the function pqr.
+Monitor.Enter uses the same synchronized object, and now it displays Everyone.
+The next function to be called in pqr is Monitor.Pulse. Pulse does a very
+simple thing. It wakes up any thread having the same handle, which happens to
+be waiting at a Wait. Thus, the thread in abc wakes up. However, the one in pqr
+waits for someone to Pulse it.<span style="mso-spacerun: yes">  </span></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>By using Wait and Pulse, we can easily play a game of tag. The
+thread t performs some work and waits for thread t1 to wrap up whatever work it
+is preoccupied with. Thread t does not know how long thread t1 will take to
+fulfill its side of the bargain. But no sweat! Thread t waits at a Wait for the
+thread t1 to Pulse it. Then, thread t1 waits at a Wait for thread t to do some
+work. When thread t concludes, it Pulses thread t1, and so on. This can go on
+and may involve some other threads too. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The threads use the handle g, which is the synchronized region.
+It is akin to being an integral part of a clandestine social group. The
+parameter to these Monitor functions clubs them together as a group. If you
+change the handle, the group breaks up, leaving your thread in a lurch. The
+Wait function can also be made to wait for a specified time period.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If we change the line Monitor.Wait(g1) to Monitor.Wait(g1,0),
+the output changes dramatically. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A monitor is associated with an object on demand and it cannot
+be instantiated at all. If the constructor is private, we can never create an
+object. But, the static functions of that object can be used. The Monitor
+functions can be called from anywhere since they are unbound. There are no
+restrictions on the sources of the object to be called. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy </p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(this);</p>
+
+<p class=ILprg>Monitor.Enter(this);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(i + &quot; &quot; +
+Thread.CurrentThread.GetHashCode() + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(this);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1 2 </p>
+
+<p class=ILoutput>2 2 </p>
+
+<p class=ILoutput>3 2</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Exit function can be called as often as one desires. In
+this program, we have two threads, t and t1. Let us assume that thread t has
+the first go. At this time, it will pass through the first Monitor.Enter, as
+well as the second Monitor.Enter, without waiting at all. However, thread t1
+will have to wait at the first Monitor.Enter, since the thread t called the
+Enter function twice, but Exited only once. Thus, the program never quits out.
+Had it called Exit twice, the thread t1 too would have woken up. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy {</p>
+
+<p class=ILprg>public int j=1;</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(j);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(i + &quot; &quot; +
+Thread.CurrentThread.GetHashCode() + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(j);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1 2 </p>
+
+<p class=ILoutput>2 2 </p>
+
+<p class=ILoutput>3 2</p>
+
+<p class=ILoutput>Unhandled Exception:
+System.Threading.SynchronizationLockException: Exception of type
+System.Threading.SynchronizationLockException was thrown.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at yyy.abc()</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Monitor.Enter takes an object, and not a variable, as a
+parameter. This is the reason why we used this parameter or some reference
+object, in the earlier programs. If a variable or a value object is used, an
+exception will be thrown. Thus, value types or null objects are not allowed as
+parameters to Monitor.Enter.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class xxx</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class ttt</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static int p = 1;</p>
+
+<p class=ILprg>xxx x<span style="mso-spacerun: yes">  </span>= new xxx();</p>
+
+<p class=ILprg>ttt t<span style="mso-spacerun: yes">  </span>= new ttt();</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>if ( p == 1)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Monitor.Enter(x);</p>
+
+<p class=ILprg>p++;</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>else</p>
+
+<p class=ILprg>Monitor.Enter(t);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(i + &quot; &quot; +
+Thread.CurrentThread.GetHashCode() + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(x);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1 2 </p>
+
+<p class=ILoutput>1 3 </p>
+
+<p class=ILoutput>2 2 </p>
+
+<p class=ILoutput>2 3 </p>
+
+<p class=ILoutput>3 2 </p>
+
+<p class=ILoutput>3 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Enter function must be used with some caution. The variable
+p initially has a value of 1. The first thread t sees the value of p as 1.
+Hence, the 'if' statement is true. Thus, it crosses Monitor.Enter with x as a
+parameter. It then takes a snooze at the Sleep function, while the second
+thread t1 executes function abc, where it sees the value of variable p as 2.
+This thread now meets the Monitor.Enter function, with t as the parameter. The
+object reference given to this Enter is entirely at variance with the object
+given to the earlier one. Thus, both the threads execute the Enter function,
+which fails the very objective of the Enter function. For Enter to work as
+expected, it should be provided with the same object as a parameter to itself. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The concept of a Lock is normally used to explain the Monitor
+class. One thread gets a Lock, while the others wait until the lock is
+released.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bool b = Monitor.TryEnter(this);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(i + &quot; &quot; + Thread.CurrentThread.GetHashCode()
++ &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(this);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILoutput>False</p>
+
+<p class=ILoutput>1 2 </p>
+
+<p class=ILoutput>1 3 </p>
+
+<p class=ILoutput>2 2 </p>
+
+<p class=ILoutput>2 3 </p>
+
+<p class=ILoutput>3 2 </p>
+
+<p class=ILoutput>3 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The TryEnter function is similar to the Enter function, but it
+does not block. If the thread enters successfully, TryEnter returns a true. This
+is what happens the first time. But in the case of the second thread t, it
+returns a false, even when it enters the critical section.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>bool b = Monitor.TryEnter(this,1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(b);</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(i + &quot; &quot; +
+Thread.CurrentThread.GetHashCode() + &quot; &quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>Monitor.Exit(this);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>True</p>
+
+<p class=ILoutput>False</p>
+
+<p class=ILoutput>1 2 </p>
+
+<p class=ILoutput>1 3 </p>
+
+<p class=ILoutput>2 2 </p>
+
+<p class=ILoutput>2 3 </p>
+
+<p class=ILoutput>3 2 </p>
+
+<p class=ILoutput>3 3</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The TryEnter function is overloaded to accept a number as a
+parameter, which represents the time duration for which the TryEnter function
+should block or wait. In our case, the timeout exceeds the time that thread t
+spends in the function. Hence, we get a value of False. If we add an extra zero
+to the time parameter, it will return a true instead. If the value of the
+parameter is infinite, the behaviour of the TryEnter becomes akin to that of
+Enter.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Thread Attributes</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>[System.ThreadStaticAttribute ()]</p>
+
+<p class=ILprg>public static int j = 1;</p>
+
+<p class=ILprg>public static int k = 1;</p>
+
+<p class=ILprg>public void abc()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>for ( int i = 1; i&lt;=3;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Thread t2 = Thread.CurrentThread;</p>
+
+<p class=ILprg>j++;k++;</p>
+
+<p class=ILprg>System.Console.Write(i + &quot;.&quot; + t2.Name + &quot;
+j=&quot; + j + &quot; k=&quot; + k + &quot; &quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>yyy a = new yyy();</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>Thread<span style='mso-tab-count:1'>  </span>t1 = new Thread(new
+ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Name=&quot;One&quot;;</p>
+
+<p class=ILprg>t1.Name=&quot;Two&quot;;</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>t1.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>1.One j=1 k=2 1.Two j=1 k=3 2.One j=2 k=4 2.Two j=2 k=5 3.One
+j=3 k=6 3.Two j=3 k=7</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A static variable is a loner, as reiterated by us on numerous
+occasions. It belongs to the class and not to an object. Thus, there will
+always be a single static variable. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us consider a case where we have two threads t and t1 executing
+code in the same function abc, that also contains static variables j and k. The
+first question that strikes us is 'Will each of the threads see the same static
+variable or a different one?' Also, if we assume that both threads cater to the
+same static variable, when one thread increments the variable, will the other
+thread see the new value? And if not, then, is the compiler creating a separate
+static variable for each thread?</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Too many questions that need answers! </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We want to possess the best of both the worlds. At times, we
+need the threads to work on the same static variable, while at other times, we
+need the threads to access separate copies of the static variable. The default
+behaviour is that of the static variable being shared. Thus, the variable k is
+incremented by both the threads, and each thread sees the same value. The value
+of k finally reaches 7 at the end. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The variable j has an attribute ThreadStaticAttribute above it.
+This attribute may have a fancy name, but it merely creates a separate variable
+for each thread executing the function. Thus, we have two static variables j,
+one for each thread t and t1. Any changes made to the value of the variable j
+by t, does not get reflected in the static variable j of the thread t1.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>1.One j=2 k=2 1.Two j=3 k=3 2.Two j=4 k=4 2.One j=5 k=5 3.Two
+j=6 k=6 3.One j=7 k=7</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The above attribute only acts on static variables. We see the
+above output when we remove static from the variables j and k. The compiler is
+very clear. The attribute ThreadStaticAttribute is only to be used on static
+variables, but when applied on non-static variables, the compiler does not
+generate any error or warning. It simply ignores the attribute. Thus, instance
+variables are shared across threads, whereas, local variables like i are
+independent of threads. Thus, a variable can either be shared across threads or
+may be independent of the thread. No in-between options are allowed.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Events</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>ManualResetEvent a;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne &quot; );</p>
+
+<p class=ILprg>bool b = a.WaitOne(1000,false);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitOne </p>
+
+<p class=ILoutput>After WaitOne False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We have created an object a that is an instance of a
+ManualResetEvent class. The constructor is assigned a value of false. Then, we
+call a function WaitOne from this class with a number as the first parameter,
+and a boolean value as the second parameter. This number, 1000, is the number
+of milliseconds for which we want the thread to wait at the function WaitOne.
+The thread therefore waits for one second before quitting out, and then returns
+a False. Had we used the enum Timeout.Infinite that has a value of -1, we could
+have made the function wait forever. Thus, we can keep a thread waiting either
+for a specified duration of time or forever.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a;</p>
+
+<p class=ILprg>a = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne &quot; );</p>
+
+<p class=ILprg>bool b = a.WaitOne(1000,false);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitOne </p>
+
+<p class=ILoutput>After WaitOne True</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>By changing the value in the constructor to true, the thread
+just refuses to wait for anyone. It just whizzes past, without even
+acknowledging the presence of the function WaitOne. Further, the return value
+of WaitOne i.e. b returns a True. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us delve a little deeper into this mystery. A
+ManualResetEvent is like a boolean variable. It can possess only one of the two
+values, true or false. When we first created such an object, we gave it a value
+of false. So, the function WaitOne waited till the Event object turned into
+True or the time value expired. Since the time duration got over while waiting,
+and the value of the Event object was not set to True, it stopped blocking and
+returned with a value of false. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In the next example, the event object already has a value true and
+hence, there is no wait. Here, the function WaitOne returns true because the
+non-blocking in this case, cannot be attributed to a timeout. Thus, a
+ManualResetEvent has two states, true or false; or in technical lingo, signaled
+or non-signaled. A value of true implies a signaled state, while a false would
+mean that it is in the non-signaled state.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a;</p>
+
+<p class=ILprg>a = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne &quot; );</p>
+
+<p class=ILprg>bool b = a.WaitOne(1000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + b);</p>
+
+<p class=ILprg>b = a.WaitOne(10000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After second WaitOne &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitOne </p>
+
+<p class=ILoutput>After WaitOne True</p>
+
+<p class=ILoutput>After second WaitOne True</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Since we do not consider ourselves to be very cerebral, we
+shall desist from using fancy terminology like signaled or non-signaled.
+Instead, we shall stick to the simple true and false. We initially created the
+object a to be true or signaled (Oops! There we go again!). It then passed the
+first and the second WaitOne without waiting. This occurred because it is a
+Manual ResetEvent (as the name itself suggests), and not automatic. Once it is
+set to true, the event cannot change to false automatically. This has to be
+accomplished manually.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a;</p>
+
+<p class=ILprg>a = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne &quot; );</p>
+
+<p class=ILprg>bool b = a.WaitOne(1000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + b);</p>
+
+<p class=ILprg>a.Reset();</p>
+
+<p class=ILprg>b = a.WaitOne(10000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After second WaitOne &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitOne </p>
+
+<p class=ILoutput>After WaitOne True</p>
+
+<p class=ILoutput>After second WaitOne False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Reset function can be used to change the state from true to
+false as it changes the state to false. Hence, it has to wait in queue like a
+commoner, since the event ignores the earlier WaitOne. After some time, it gets
+activated due to a timeout and the function WaitOne returns a False.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne &quot; );</p>
+
+<p class=ILprg>a.Set();</p>
+
+<p class=ILprg>bool b = a.WaitOne(1000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + b);</p>
+
+<p class=ILprg>b = a.WaitOne(10000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After second WaitOne &quot; + b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitOne </p>
+
+<p class=ILoutput>After WaitOne True</p>
+
+<p class=ILoutput>After second WaitOne True</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now, despite the fact that that the Event is originally false
+or non-signaled, the Set function sets it to true or the signaled state. At
+this stage, no power on earth is equipped to stop the event as it surges past
+the WaitOnes, treating them with disdain. It is not in the least concerned
+about stopping-by to pay homage to them. Such arrogance !</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The class ManualResetEvent is a sealed class, like most other
+classes belonging to the Thread family. The developers at Microsoft were of the
+belief that no one would be able to add any more value to the class, and thus
+forbade any changes. This class is also derived from another class called
+WaitHandle, which in fact, embodies functions like WaitOne etc. The constructor
+has to be passed a parameter that affirms the initial state of the Event
+object. No default state is available. The Set and Reset methods return a
+boolean value, which indicates whether the change has taken place successfully
+or otherwise.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>WaitHandle is a class from which ManualResetEvent is derived. A
+class that offers functions which are polite, is called a synchronization
+class. People who are polite, wait for others to finish doing their work, and
+it is only then that they proceed with their own work. Any class that waits for
+another is called a synchronization class. All synchronization objects derive
+from WaitHandle, and so does ManualResetEvent. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We are cautioned not to use this class directly, since it is
+the other classes that use this class. The documentation very clearly specifies
+that the CLR i.e. the Common Language Runtime or code written by Microsoft,
+calls the constructor of WaitHandle. Therefore, do not use this class directly.
+You are being forewarned!</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a,b;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>b = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>WaitHandle [] w = new WaitHandle[2];</p>
+
+<p class=ILprg>w[0] = a; w[1] = b; </p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>bool c = WaitHandle.WaitAll(w,10000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitAll &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILoutput>After WaitAll False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We can complicate life as much as we like. Similarly, we can
+complicate the WaitOne, by introducing its elder brother, WaitAll. This
+function will wait for all the event objects to become true or signaled, or it
+will stay there till the timeout occurs. In this manner, life can be made as
+complicated as we like. Until all the events reach the signaled state, the
+WaitAll remains extremely stubborn and does not budge from its vantage
+position. It does not take cognizance if a few of the events are signaled. All
+the events should be signaled. This could be a number approaching infinity.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a,b;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>b = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>WaitHandle [] w = new WaitHandle[2];</p>
+
+<p class=ILprg>w[0] = a; w[1] = b; </p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>bool c = WaitHandle.WaitAll(w);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitAll &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The number of functions in the class WaitHandle may be numerous,
+but most of them are only helper functions, which make life tranquil. The
+WaitAll function, if called with a single parameter, assumes that the second
+parameter is Timeout.Infinite or -1. These overloads can be ignored safely. It
+is the same for the WaitOne method.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a,b;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>b = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>WaitHandle [] w = new WaitHandle[2];</p>
+
+<p class=ILprg>w[0] = a; w[1] = a; </p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>bool c = WaitHandle.WaitAll(w);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitAll &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.DuplicateWaitObjectException:
+Exception of type System.DuplicateWaitObjectException was thrown.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.WaitHandle.WaitMultiple(WaitHandle[] waitHandles, Int32
+millisecondsTimeout, Boolean exitContext, Boolean WaitAll)</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.WaitHandle.WaitAll(WaitHandle[] waitHandles, Int32 millisecondsTimeout,
+Boolean exitContext)</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.WaitHandle.WaitAll(WaitHandle[] waitHandles)</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.Main()</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The CLR (Common Language Runtime, if you have forgotten) never
+sleeps, but the compiler can be caught dozing at times. C# hates duplicates,
+and thus, we cannot pass the same handle to the WaitHandle array. If you
+attempt to do so, a runtime exception will be thrown even when there was no
+reason to throw an exception. The runtime could have simply ignored the
+duplicate, but it chose not to.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a,b;</p>
+
+<p class=ILprg>a = new ManualResetEvent(false) ;</p>
+
+<p class=ILprg>b = new ManualResetEvent(true) ;</p>
+
+<p class=ILprg>WaitHandle [] w = new WaitHandle[2];</p>
+
+<p class=ILprg>w[0] = b; w[1] = a; </p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>int c = WaitHandle.WaitAny(w);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitAll &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILoutput>After WaitAll 0</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Change line containing w[0] = b; w[1] = a; to w[0] = a; w[1] =
+b; and the output changes to the following:-</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILoutput>After WaitAll 1</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The WaitAny function waits till any of the events change to
+signaled or true. When this occurs, it returns the array index of the event
+which caused the exit. In this case, object b is in the signaled state, and since
+it is the first member of the array, the return value is 0. On interchanging
+the object to b, which is the second array member, the return value becomes 1.
+If both events are in the signaled state, then the lower array index is
+returned. If a timeout occurs, the value returned is 258.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>AutoResetEvent Class</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>AutoResetEvent a;</p>
+
+<p class=ILprg>a = new AutoResetEvent(false) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>bool c = a.WaitOne(1000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILoutput>After WaitOne False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Let us now move up the value chain. The AutoResetEvent class
+works in the same way like a ManualResetEvent class in the above example. It
+simply waits for the timeout to take place or the Event to be signaled.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>AutoResetEvent a;</p>
+
+<p class=ILprg>a = new AutoResetEvent(true) ;</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitAll &quot; );</p>
+
+<p class=ILprg>bool c = a.WaitOne(1000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne &quot; + c);</p>
+
+<p class=ILprg>c = a.WaitOne(10000,true);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After WaitOne1 &quot; + c);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before WaitAll </p>
+
+<p class=ILoutput>After WaitOne True</p>
+
+<p class=ILoutput>After WaitOne1 False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Ah! Again the wait. The AutoResetEvent object safely crosses
+the first WaitOne. But there is one major variation now in that, the state of
+the object changes from true to false or signaled to non-signaled. Thus, it is
+obliged to pay homage for some time at the second Wait. The name here is Auto
+and not Manual. Just as we would change color if we saw a wild boar charging at
+us, the AutoResetEvent changes state at the Wait. Everything else remains
+identical.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Mutexes</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.WaitOne( );</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If the boolean value of true in the Mutex constructor is
+changed to false, the output will change to the following:-</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput>abc end</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A mutex is a synchronization object derived from the class
+WaitHandle. A Mutex is, in some sense, similar to the other Event classes. </p>
+
+<p class=ILbase>We commence by creating a mutex and assigning it a boolean
+value of either true or false. In this context, these values have a slightly
+different connotation. They decide whether the creating thread owns the object
+or not. True allows the thread to own it, whereas False does not. Thus, with a
+mutex, we need to become very materialistic and start taking ownership of
+things. The current thread owns the mutex while the other threads are inclined
+to own it.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>True or false, signaled or non-signaled, own it or not, are all
+the same concepts. The main thread already owns the mutex, which is named as
+vijay. The name is optional and is used mostly to refer to the mutex.
+Thereafter, we create a thread which calls the function abc. After displaying a
+message, the function WaitOne is called. This function will now stake a claim
+for ownership of the mutex, but since the main thread owns it, thread t cannot
+proceed beyond this function until the original thread gives up ownership. If
+we change the True in the constructor to False, then the ownership is not
+claimed. Thus, the thread t will not have to wait at the WaitOne as there is no
+owner.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.ReleaseMutex();</p>
+
+<p class=ILprg>m.WaitOne( );</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.ApplicationException: Attempt to
+release mutex not owned by caller.</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.Mutex.ReleaseMutexNative(IntPtr handle)</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at
+System.Threading.Mutex.ReleaseMutex()</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes">   </span>at zzz.abc()</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The main thread becomes the owner of the mutex as the boolean
+value supplied in the mutex constructor is True. Then, in the function abc, we
+try to release the ownership of the mutex by using the function ReleaseMutex.
+The thread t does not own the mutex. Hence, we get a runtime error as only the
+owner i.e. the main thread, can release the ownership of a mutex and pass it on
+to another thread.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before Thread Sleep&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(10000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After Thread Sleep&quot;);</p>
+
+<p class=ILprg>m.ReleaseMutex();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;All over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.WaitOne( );</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before Thread Sleep</p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput>After Thread Sleep</p>
+
+<p class=ILoutput>abc end</p>
+
+<p class=ILoutput>All over</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Now alls well that ends well. The main thread sleeps for a little
+while and then calls ReleaseMutex. This awakens the thread t, and thus, the
+function abc now quits out. Remember that you cannot give away what you do not
+own.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before Thread Sleep&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After Thread Sleep&quot;);</p>
+
+<p class=ILprg>m.ReleaseMutex();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne&quot;);</p>
+
+<p class=ILprg>m.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;All over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc before sleep&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(100000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>Before Thread Sleep</p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput>After Thread Sleep</p>
+
+<p class=ILoutput>abc before sleep</p>
+
+<p class=ILoutput>Before WaitOne</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>There is a long sleep in the function abc. The mutex is still
+owned by the thread t, while the main thread is trying to regain its ownership.
+It can only gain ownership if the thread t releases the mutex or dies. Thus,
+until the thread t dies, we will not see All Over displayed at all. We could
+have had another sleep in abc and we could have released the mutex before that
+sleep. The choice is ours. Thus, a mutex is fully concerned with ownership
+issues. Either you own a mutex or you do not.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>static Mutex n;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>n = new Mutex(true);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;All over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>Mutex [] g<span style="mso-spacerun: yes">  </span>= new
+Mutex[2];</p>
+
+<p class=ILprg>g[0] = m;g[1] = n;</p>
+
+<p class=ILprg>Mutex.WaitAll(g);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>All over</p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The program will hang. This is because we have two mutexses
+that have to be waited upon. Both m and n fill up the array g, and since both
+are true, the function abc will wait forever. Same rules of event classes apply
+to a mutex object.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(true,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>Thread t= new Thread(new ThreadStart(a.abc));</p>
+
+<p class=ILprg>t.Start();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before Thread Sleep&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;After Thread Sleep&quot;);</p>
+
+<p class=ILprg>m.ReleaseMutex();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;Before WaitOne&quot;);</p>
+
+<p class=ILprg>m.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;All over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void abc( )</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc after Wait&quot;);</p>
+
+<p class=ILprg>m.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc after second Wait&quot;);</p>
+
+<p class=ILprg>Thread.Sleep(10000);</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;End&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>Before Thread Sleep</p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput>After Thread Sleep</p>
+
+<p class=ILoutput>abc after Wait</p>
+
+<p class=ILoutput>abc after second Wait</p>
+
+<p class=ILoutput>Before WaitOne</p>
+
+<p class=ILoutput>End</p>
+
+<p class=ILoutput>All over</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The same rules about mutex ownership as mentioned earlier are
+discussed here. There may be two WaitOne functions, but the first WaitOne that gets
+the ownership, retains it. Thus, there was no wait between the first and the
+second wait. The concept of a mutex is extremely simple. A particular thread
+owns it. It can cross a wait without waiting and only when it releases the
+mutex can another thread claim and possess its ownership. Other threads cannot
+own it and they will have to wait at a wait. Dual ownership is not allowed.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>static Mutex m;</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>m = new Mutex(false,&quot;vijay&quot;);</p>
+
+<p class=ILprg>zzz a=new zzz( );</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc start&quot;);</p>
+
+<p class=ILprg>m.WaitOne( );</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;abc end&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>abc start</p>
+
+<p class=ILoutput>abc end</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>A Mutex only works with multiple threads.<span
+style="mso-spacerun: yes">  </span>So, using a mutex with a single thread is
+futile, because a mutex is concerned with determining as to which thread owns
+it. Therefore, there must be at least two threads.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Timers</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main() {</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100,0);</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Timers are time-related. We have created a timer object and have
+passed it 4 values in its constructor. The first parameter is the delegate
+object which represents the function that should be called after a certain
+interval elapses. The second parameter is the object to be passed to the timer
+function. The third and fourth parameters are numbers representing time i.e.
+time and period. If the thread is not asked to sleep, the main thread will quit
+out and there will be no thread running. The entire program will halt and all
+the unfired timers will die. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Thus, if we remove the last Sleep, the word 'hell' does not get
+displayed. The timer delegate has to receive an object as a parameter since it
+is part of the delegate signature. The timer also has to wait for a specified
+time which is stated in the constructor, before it can call the function. This
+wait is accomplished using a thread in a thread pool. Needless to say, the
+Timer class is a sealed class.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100,0);</p>
+
+<p class=ILprg>t.Dispose();</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>(none)</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>If we ever desire to cancel the timer for whatever reasons, we
+can call the Dispose method to kill the timer. The timer dies and the function
+to be called does not get called at all.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>ManualResetEvent e = new ManualResetEvent(false); </p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,10000,300);</p>
+
+<p class=ILprg>t.Dispose(e);</p>
+
+<p class=ILprg>e.WaitOne();</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;All Over&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>All Over</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Dispose function can also take a parameter which is an
+event that gets signaled when the timer dies. Thus, the program that would have
+waited indefinitely now quits out because, removing the timer from the timer
+queue instantly signals an event.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100,1);</p>
+
+<p class=ILprg>Thread.Sleep(500);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>and so on</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The third parameter to the timer constructor is the duration in
+milliseconds after which the timer should be fired. The second number can be
+either a 0 or any other number. Zero means the timer fires once and any other
+number signifies it as a periodic timer. This periodic timer keeps executing
+the function abc every 100 milliseconds, until told to do otherwise.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100,1);</p>
+
+<p class=ILprg>Thread.Sleep(115);</p>
+
+<p class=ILprg>t.Change(100,0);</p>
+
+<p class=ILprg>Thread.Sleep(1300);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Change function is used to stop a periodic timer. Thus, the
+timer can be made to run for some time in a periodic manner and thereafter, the
+Change can be used to stop it from executing repeatedly.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100000,1);</p>
+
+<p class=ILprg>Thread.Sleep(115);</p>
+
+<p class=ILprg>t.Change(100,0);</p>
+
+<p class=ILprg>Thread.Sleep(1300);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The timer initially is set to go off after a very long time. We
+let the main thread sleep for a little while but then change the due time of
+the timer to a smaller value. Thus, we can use the Change function to alter the
+initial settings of the timer.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>zzz a = new zzz();</p>
+
+<p class=ILprg>a.pqr();</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public void pqr()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Timer t;</p>
+
+<p class=ILprg>yyy b = new yyy();</p>
+
+<p class=ILprg>t = new Timer(new TimerCallback(b.abc),this,100,300);</p>
+
+<p class=ILprg>Thread.Sleep(1000);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object o)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>System.Console.WriteLine(&quot;hell&quot;);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILoutput>hell</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Our dictum has always been to understand things one step at a
+time. The last parameter to the timer constructor can either be zero or any
+other value. If the value is 100, it means that every hundred seconds the timer
+will go off, until it is stopped by a Change or a Dispose. Earlier, we had used
+the number 1 to signify that the timer should be called every 1 second. You are
+free to decide these timer values depending upon what you intend to use the
+timer for. The values cannot be negative and cannot exceed 4294967294 either.
+If you do so, an exception will occur. Exceptions, lest you have forgotten, are
+generated at runtime only.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Thread Pool</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy {</p>
+
+<p class=ILprg>public ManualResetEvent a = new ManualResetEvent(false);</p>
+
+<p class=ILprg>public void abc(Object s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>a.WaitOne(10,true);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} &quot;,
+Thread.CurrentThread.GetHashCode());</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz {</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main() {</p>
+
+<p class=ILprg>ManualResetEvent b = new ManualResetEvent(false);</p>
+
+<p class=ILprg>yyy y = new yyy();</p>
+
+<p class=ILprg>for (int i=1;i&lt;=5;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ThreadPool.QueueUserWorkItem(new WaitCallback(y.abc),1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>b.WaitOne(10000,true);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput>2</p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILbase>The rationale of a thread pool is that the decision makers at
+Microsoft did not want us to spend time taking care of threads like mothers
+take care of babies. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We will first explain the above program and then delve into the
+nitty-gritty of thread pools. Since we are lazy, we use a for statement to
+avoid repeating the same code over and over again. The function
+QueueUserWorkItem will be called at least five times because it is placed in
+this for loop.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>QueueUserWorkItem function requires one, or at the most, two
+parameters. The first parameter, which is the name of a function, is most
+crucial. The name is never ever assigned directly, but indirectly, using a
+WaitCallback object. The function to be called is y.abc. Hence, it is passed a
+parameter to WaitCallback. The second parameter to the function
+QueueUserWorkItem is the number 1. As a result, the function abc has to accept
+a parameter of type object which will contain the value 1. A parameter of type
+object does not have any useful code and by itself is totally useless. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Every entity in C# is finally derived from the object class.
+Thus, every entity is of an object type. Whenever we are not aware of the parameter
+type to be received in a function, or in cases where we want to receive
+multiple data types, the data type of object is used. Object is like a rubber
+man; it can fit anywhere and everywhere. By giving the function name abc to the
+function QueueUserWorkItem, abc will be called five times by a thread. The
+function waits for a small amount of time at an event and then uses the
+function GetHashCode to print the name/id of the thread. This function will
+print the thread id that is calling abc. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>From our output, we can conclude that only two threads execute
+the function abc. Commenting the Wait statement will display the same id for
+the thread. This means that no new thread executes the function. Thus, instead
+of two threads, only a single thread is used. Efficiency, thy name is Thread
+Pool. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>We are thus posting work items to a common place or thread
+pool. Then, a thread is allocated to execute the work item or function. The
+first available thread from the thread pool executes the function. We are only using
+one thread pool per program. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>There is a lot of overhead in managing threads. A lot of time
+is spent figuring out which thread is sleeping, i.e. waiting for an event to
+occur. Most of the time, threads are in this inert state. At times, threads
+wake up to check/poll for a change that is expected to occur, such as a key
+press, or to update some counter or status information and fall asleep again.
+Threads are like bears, they love sleeping. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Thread Pooling is a means of managing threads more efficiently.
+This is done by providing your application with a pool of threads that are
+managed by the system. All threads that do work are called worker threads.
+There is a thread that monitors the status of threads waiting at any of the
+wait functions. When the wait is over, the callback function will be executed. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The next program demonstrates how a function can be called
+after a specified time duration has elapsed. There is no way to cancel a
+function from being executed once it has gone into the thread pool. A prayer
+will also not help. Timers and Waits use the thread pool without our knowledge.
+</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The thread pool is created when we call the function
+QueueUserWorkItem for the first time or when we use a timer function. The
+number of threads that form part of a thread pool is limited by the amount of
+memory available. By today's standards, this means that more threads can be
+made available than we would ever need. These threads receive the default stack
+size and run at the default priority. No special priority is accorded. For the
+trivia fans, a thread can handle up to 63 wait operations. No concept is
+perfect. Thus, one significant disadvantage of a thread pool is that it
+involves a long calculation.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void abc(object s, bool b)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} {1}&quot;,
+Thread.CurrentThread.GetHashCode(),b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a = new ManualResetEvent(false);</p>
+
+<p class=ILprg>ManualResetEvent b = new ManualResetEvent(false);</p>
+
+<p class=ILprg>yyy y = new yyy();</p>
+
+<p class=ILprg>ThreadPool.RegisterWaitForSingleObject(a,new
+WaitOrTimerCallback(y.abc),1,1000,true);</p>
+
+<p class=ILprg>b.WaitOne(10000,true);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>2 True</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>As mentioned earlier, we would like our function to be called
+after a certain wait. To accomplish this, we use a function with a very large
+name called RegisterWaitForSingleObject. The first parameter is the handle of
+an event. This has been set to false or non signaled. The second parameter is a
+delegate of type WaitOrTimerCallback which is similar to a WaitCallback. The
+difference is that the signature of the function given to this function, which
+is abc, has to have two parameters, viz. an object and a boolean variable. The
+third parameter is the object that is to be passed to the function. The second
+last parameter is a timer that decides the duration after which the function
+should be called. Finally, the last parameter decides whether the function is
+to be executed only once or every time the timer expires. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>As our event object is set to false, the function gets called
+after 1000 milliseconds. When the timer expires, the function abc obtains a
+value of true. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>By merely changing one line in the above example, the event can
+be changed to a signaled state. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>ManualResetEvent a = new ManualResetEvent(true);</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput><span style="mso-spacerun: yes"> </span>2 False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The function abc gets called immediately, unlike in the earlier
+program. Also, there is no wait as the event is true or signaled. The function
+abc also knows why it has been called since the bool parameter has a value of
+false, which was true in the earlier case. Thus, the function abc can look at
+the value of its second parameter, which indicates whether the timer has
+elapsed or the event has been signaled.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs </u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public void Beta(object s, bool b)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} {1}&quot;,
+Thread.CurrentThread.GetHashCode(),b);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent a = new ManualResetEvent(false);</p>
+
+<p class=ILprg>ManualResetEvent b = new ManualResetEvent(false);</p>
+
+<p class=ILprg>yyy y = new yyy();</p>
+
+<p class=ILprg>ThreadPool.RegisterWaitForSingleObject(a,new
+WaitOrTimerCallback(y.Beta),1,10000,true);</p>
+
+<p class=ILprg>a.Set();</p>
+
+<p class=ILprg>b.WaitOne(10000,true);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>2 False</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>In this program, initially we set the event to false and then,
+using the Set function, we set it to true immediately. Thus, the function gets
+called instantly. You would remember that the function gets called whenever the
+event is in a signaled state or the timer expires. This function first checks
+whether the wait object is signaled or not. If it is signaled, it executes the
+function. If it is not, it waits for the timer to elapse or the wait object to
+come into the signaled state, whichever occurs first.<span style="mso-spacerun:
+yes">  </span></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><u><span style='mso-bidi-font-size:12.0pt'>Interlocked</span></u></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public ManualResetEvent a = new ManualResetEvent(false);</p>
+
+<p class=ILprg>int i = 10;</p>
+
+<p class=ILprg>public void abc(Object s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>Interlocked.Increment(ref i);</p>
+
+<p class=ILprg>Console.WriteLine(&quot;{0} {1}&quot;,
+Thread.CurrentThread.GetHashCode(),i);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main() {</p>
+
+<p class=ILprg>ManualResetEvent b = new ManualResetEvent(false);</p>
+
+<p class=ILprg>yyy y = new yyy();</p>
+
+<p class=ILprg>for (int i=1;i&lt;=5;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ThreadPool.QueueUserWorkItem(new WaitCallback(y.abc),1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>b.WaitOne(10000,true);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><span style="mso-spacerun: yes"> </span></p>
+
+<p class=ILoutput><u>Output</u></p>
+
+<p class=ILoutput>2 11</p>
+
+<p class=ILoutput>2 12</p>
+
+<p class=ILoutput>2 13</p>
+
+<p class=ILoutput>2 14</p>
+
+<p class=ILoutput>2 15</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Threads can be dangerous for the unwary. The function abc gets
+called five times by the same or a different thread. Consider a case where one
+thread may be incrementing the line i = i + 1. To do so, it will start by
+asking what is the value of i. Let us suppose that it is 10. It then increments
+the value by 1 to make it 11. It may so happen that just as it is about to read
+its value, its time slice may get over and another thread may increment the
+variable i by 1 to make its value 12. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>When the first thread receives its next time slice and checks the
+value of i, it will see the value as 12 and not 11. Thus, the variable would
+have been incremented twice instead of once. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The Interlocked class has a sole purpose in life, i.e. to
+ensure that the variables are not incremented more than once. In a sense, it
+synchronizes access to a variable that is being shared by a number of threads.
+The operation will either be done in a single time slice or not done at all. It
+will not be carried over into another time slice ever. These operations, which
+are guaranteed to be finished in a single time slice, are called atomic
+operations.</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>a.cs</u></p>
+
+<p class=ILprg>using System;</p>
+
+<p class=ILprg>using System.Threading;</p>
+
+<p class=ILprg>public class yyy</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public ManualResetEvent a = new ManualResetEvent(false);</p>
+
+<p class=ILprg>public int i = 10;</p>
+
+<p class=ILprg>public void abc(Object s)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>i++;</p>
+
+<p class=ILprg>Interlocked.CompareExchange(ref i,100,12);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>};</p>
+
+<p class=ILprg>public class zzz</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>public static void<span style="mso-spacerun: yes"> 
+</span>Main()</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ManualResetEvent b = new ManualResetEvent(false);</p>
+
+<p class=ILprg>yyy y = new yyy();</p>
+
+<p class=ILprg>for (int i=1;i&lt;=5;i++)</p>
+
+<p class=ILprg>{</p>
+
+<p class=ILprg>ThreadPool.QueueUserWorkItem(new WaitCallback(y.abc),1);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>b.WaitOne(1000,true);</p>
+
+<p class=ILprg>Console.WriteLine(y.i);</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILprg>}</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Output </u></p>
+
+<p class=ILoutput>103</p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>The function abc gets called five times. If we intend to carry
+out comparisons, we would face the above dilemma. Thus, we use a simple function
+called CompareExchange. This functions checks the value of the first parameter
+that is passed as a reference, with the third parameter, which in our case is
+12. If it matches the value, the first parameter i.e. i is assigned the value
+of the second parameter i.e. 100. All this is done in a single time slice.
+Thus, whenever variable i becomes 12, its value shoots up to 100, and as a
+result, the final answer becomes 103. </p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase>Like the Increment, there is a Decrement function also that
+reduces the value of a variable by one. As an aside, a ref parameter cannot be
+replaced by an out parameter. In the same vein, the Exchange function changes
+the value of two variables passed to it as ref parameters. This is done in an
+atomic manner.</p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/csclasses/chap1.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 13:45:53 GMT -->
+</html>

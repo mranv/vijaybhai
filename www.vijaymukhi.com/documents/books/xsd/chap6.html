@@ -1,0 +1,2977 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:07 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="chap6_files/filelist.html">
+<link rel=Edit-Time-Data href="chap6_files/editdata.html">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>XML Schema Definition - 6. Restrictions and Substitutions</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>vmukhi</o:Author>
+  <o:LastAuthor>vmukhi</o:LastAuthor>
+  <o:Revision>3</o:Revision>
+  <o:TotalTime>28</o:TotalTime>
+  <o:Created>2002-01-20T08:40:00Z</o:Created>
+  <o:LastSaved>2002-01-20T08:40:00Z</o:LastSaved>
+  <o:Pages>20</o:Pages>
+  <o:Words>6052</o:Words>
+  <o:Characters>34501</o:Characters>
+  <o:Company>V.M.C.I.</o:Company>
+  <o:Lines>287</o:Lines>
+  <o:Paragraphs>69</o:Paragraphs>
+  <o:CharactersWithSpaces>42369</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
+@font-face
+	{font-family:"Bookman Old Style";
+	panose-1:2 5 6 4 5 5 5 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+@font-face
+	{font-family:"Trebuchet MS";
+	panose-1:2 11 6 3 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:7 0 0 0 19 0;}
+@font-face
+	{font-family:"Book Antiqua";
+	panose-1:2 4 6 2 5 3 5 3 3 4;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-pitch:variable;
+	mso-font-signature:647 0 0 0 159 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:8.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	letter-spacing:10.0pt;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:right;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:24.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.5pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.programs, li.programs, div.programs
+	{mso-style-name:programs;
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.figure, li.figure, div.figure
+	{mso-style-name:figure;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.figure1, li.figure1, div.figure1
+	{mso-style-name:figure1;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILbullets, li.ILbullets, div.ILbullets
+	{mso-style-name:ILbullets;
+	mso-style-parent:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Bookman Old Style";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName, li.ChapName, div.ChapName
+	{mso-style-name:"Chap Name";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ChapName1, li.ChapName1, div.ChapName1
+	{mso-style-name:"Chap Name1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.ILoutput, li.ILoutput, div.ILoutput
+	{mso-style-name:ILoutput;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";}
+p.ILprg, li.ILprg, div.ILprg
+	{mso-style-name:ILprg;
+	mso-style-parent:ILbase;
+	mso-style-next:ILbase;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.3in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ILbase, li.ILbase, div.ILbase
+	{mso-style-name:ILbase;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Book Antiqua";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook, li.basetextofthebook, div.basetextofthebook
+	{mso-style-name:"base text of the book";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.basetextofthebook1, li.basetextofthebook1, div.basetextofthebook1
+	{mso-style-name:"base text of the book1";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapName0, li.ChapName0, div.ChapName0
+	{mso-style-name:ChapName;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.SubTitle, li.SubTitle, div.SubTitle
+	{mso-style-name:SubTitle;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:14.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.DOSPROMPT, li.DOSPROMPT, div.DOSPROMPT
+	{mso-style-name:"DOS PROMPT";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.cbasetext, li.cbasetext, div.cbasetext
+	{mso-style-name:"c\# base text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.ChapIntro, li.ChapIntro, div.ChapIntro
+	{mso-style-name:"Chap Intro";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:42.65pt;
+	margin-bottom:0in;
+	margin-left:1.25in;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:11.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-style:italic;}
+p.PageNo, li.PageNo, div.PageNo
+	{mso-style-name:"Page No";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-align:center;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:9.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Subhead2, li.Subhead2, div.Subhead2
+	{mso-style-name:"Subhead 2";
+	mso-style-parent:"Subhead 1";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Subhead1, li.Subhead1, div.Subhead1
+	{mso-style-name:"Subhead 1";
+	mso-style-parent:Headline;
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:18.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Headline, li.Headline, div.Headline
+	{mso-style-name:Headline;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:30.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	font-weight:bold;}
+p.Hangingindent, li.Hangingindent, div.Hangingindent
+	{mso-style-name:"Hanging indent";
+	mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:12.0pt;
+	margin-bottom:.0001pt;
+	text-indent:-12.0pt;
+	mso-pagination:widow-orphan;
+	tab-stops:12.0pt;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.Bodytext, li.Bodytext, div.Bodytext
+	{mso-style-name:"Body text";
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	text-indent:24.0pt;
+	mso-pagination:widow-orphan;
+	mso-layout-grid-align:none;
+	text-autospace:none;
+	font-size:12.0pt;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Trebuchet MS";
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><img width=103
+height=77 id="_x0000_i1027" src=bpb.gif><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>6.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-size:24.0pt'>Restrictions and Substitutions </span><span
+style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The restriction
+element comes into play while deriving new types from the base type. It merely
+regulates or reduces the tasks that are performed in the base type for the new
+type. Thus, it is imperative to first create the base type. Then, while
+creating the new type, the values can be curbed using the restriction element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The restriction
+element was touched upon cursorily in the earlier chapter, but the primary
+focus then in that chapter was on simple types. In this chapter, we shall
+scrutinize the nuances of restricting the complexType element, in considerable
+detail.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;1&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The root element
+zzz is allotted the type c2. This type starts with a complexContent element,
+followed by the restriction element, with its base initialized to the type c1.
+This lays certain restrictions on the type c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The type c1 has
+an element aaa with the minOccurs attribute having the value of 0. In addition,
+there exists a string element bbb. The type c2 has the same elements of aaa and
+bbb, but with the minOccurs value of 1. This ensures the presence of at least
+one occurrence of the element aaa in the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Uprooting the
+element aaa from the xml file would obviously flag an error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'zzz' has invalid child element 'bbb'. Expected
+'aaa'.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However, on
+eliminating aaa from the xml file and changing the type of element zzz from c2
+to c1, would eliminate all errors. This is because, the element aaa becomes
+optional in the type c1.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd<o:p></o:p></u></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;1&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Invalid particle derivation by restriction. An error occurred at
+file:///c:/xmlprg/b.xsd(9, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above
+exception is thrown because the element ccc has been added after the element
+bbb in complexType c2. We are not allowed to add or subtract anything from the
+type c1. All the original members must remain unaltered. Also, the names of the
+elements can neither be changed nor removed. The only permissible action is
+that of restricting the existing elements. However, the base type cannot be
+changed or extended; only the elements can be restricted.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:integer&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:integer&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:maxExclusive value=&quot;100&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above xsd
+program, the root element zzz is based on type c2. This type restricts type c1,
+which consists of two elements: element aaa, which is an integer, and element
+bbb, which is a string. In type c2, another element aaa is created, whose value
+is restricted to a maximum of 100. In this manner, the value of an element can
+be restricted. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:integer&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:maxExclusive value=&quot;100&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:integer&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:maxExclusive value=&quot;100&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c3&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:integer&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the root element zzz is assigned the type c2. This complexType c2
+contains the complexContent. Then, using the restriction element, it restricts
+its type to c3. This type c3 is very elementary. It has an integer element aaa
+and a string element bbb. In type c3, the simpleType element is used together
+with restriction, to further restrict the value of the type aa to less than
+100. This explains why the xml file passes validation.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The type c1 is
+created with two elements aaa and bbb. For the element aaa, a combination of
+simpleType and restriction has been used, wherein the restriction element
+regulates the integer value of the type to be less than 100. To authenticate
+this, change the type of zzz from c2 to c1, and you shall surely not encounter
+any errors. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Now, carry out
+one more minor amendment to the xsd file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>..<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the
+complexType definition for type c2, the restriction is now based on the type
+c1, instead of c3. However, even though c1 is a perfectly valid type, the
+following exception is thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Invalid particle derivation by restriction. An error occurred at
+file:///c:/xmlprg/b.xsd(15, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, it is not
+permissible to restrict an element that has already been restricted in the
+parent class. Consequently, the type c1 cannot be used as a base for
+restriction any more. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><span
+style='mso-tab-count:1'>            </span><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;1&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The first xsd
+program of this chapter has been replicated here with a few modifications. The
+value of the minOccurs attribute in type c1 has been changed from 0 to 1, thus
+mandating at least one occurrence of this type in the file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On similar lines,
+the type c2, which extends from type c1, is assigned a minOccurs value of 0.
+This triggers off an error, because the element has been made less restrictive,
+rather than being made more restrictive. The exception that is generated is the
+same as the one witnessed in the previous program.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Modify the type
+c1 to the following:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;0&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot; fixed=&quot;hi&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>An error erupts
+because the element aaa in the type c1, has been assigned a fixed value of
+'hi'. Now, modify the statement in type c2 to the following:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; minOccurs=&quot;1&quot;
+maxOccurs=&quot;unbounded&quot; type=&quot;xs:string&quot;
+fixed=&quot;hi1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the type c2,
+the fixed attribute is added to the element aaa, and a value of 'hi' is
+assigned to it. Nevertheless, this is not sufficient, since a value of 'hi'
+must be specified in the xml file to get rid of the error. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On changing the
+value of the fixed attribute to 'hi1', which is different from the value
+assigned to the element aaa, the same particle error gets reported. Thus to
+summarize, when we create a new type, it should be more restrictive rather than
+being less restrictive.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='font-family:"Bookman Old Style"'>The Redefine
+element</span></u><span style='font-family:"Bookman Old Style"'><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:redefine schemaLocation=&quot;b1.xsd&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:redefine&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:integer&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xsd file is
+now assigned a new element called 'redefine'. The schemaLocation attribute is
+initialized to a different xsd file named b1.xsd. The file b1.xsd has a type
+called c1, which contains a simple element called aaa of type string. In the
+file b.xsd, the root element zzz is assigned the type c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>No errors are
+visible, despite the fact that the type c1 has been created in another file.
+Thus, the 'redefine' element acts analogous to an 'include' or an 'import'
+statement. All the types that are present in the schemaLocation file can now be
+used in the main xsd file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the root element zzz has a child element named aaa. The 'redefine' element
+works in a same manner corresponding to an 'include' or an 'import' statement,
+which differ from one another only with respect to the namespaces. If this is
+the case, then what is the necessity of having another element that behaves in
+a similar manner? Read on to unravel the mystery.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:redefine schemaLocation=&quot;b1.xsd&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:integer&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:redefine&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b1.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:integer&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This example
+illustrates the use of the redefine element. The 'include' or 'import' elements
+introduce a truck-load of types which could require some modifications to suit
+the requirements. This is attainable by utilizing the redefine element. Thus,
+the redefine element allows redefining or altering of the existing types. The
+above program demonstrates how this can be achieved. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A type called c1
+is created within a complexType element, even though this type is already
+present in the file b1.xsd. This newly created type c1 extends from the
+original type c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Specifying c1 in
+the complexType hints at the fact that the existing definition of type c1,
+which is present in the file b1.xsd, needs to be changed. In the extension
+element, the base refers to the original c1 present in the file b1.xsd, and not
+to the type c1 that is being defined. Hence, no circular definition error is
+instigated. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The type c1 is
+extended with the help of the extension element. Thus, in addition to the
+existing element aaa from the original c1, another element bbb is introduced.
+The end-result is that the xml file can now have the two elements of aaa and
+bbb.<span style="mso-spacerun: yes">  </span>In the above program, the redefine
+element is used to add an element to a type, which is created in another file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In file b.xsd,
+change the element name bbb to aaa as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:integer&quot;/&gt; <o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Also, change the
+contents in the file b.XML as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 20 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>To our amazement,
+no errors meet the eye. This is because, the first element aaa originates from
+the original type c1 based in file b1.xsd, while the second comes from the
+newly defined type c1, which is defined in file b.xsd. The XML framework is
+able to distinguish between the two identically named elements, both named aaa.
+But as always, there is a minor caveat. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the file
+b.xsd, change the data type of the element aaa from integer to string as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This modification
+results in the following exception:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>Error</u><o:p></o:p></p>
+
+<p class=ILprg>Unhandled Exception: System.Xml.Schema.XmlSchemaException: In
+the same scope elements with the same name have to have the same type. An error
+occurred at file:///c:/xmlprg/b.xsd(7, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This elucidates
+the fact that a file can have multiple elements sharing same name, provided
+they have the same data type. Redefining the original aaa of type integer to
+the newly added element aaa of type string, leads to the above error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:redefine schemaLocation=&quot;b1.xsd&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:integer&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:redefine&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>Error</u><o:p></o:p></p>
+
+<p class=ILprg>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Invalid particle derivation by restriction. An error occurred at
+file:///c:/xmlprg/b.xsd(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+program, the 'extension' element is altered to 'restriction'. This generates
+the familiar ‘Invalid particle’ error. This exception is expected, since the
+basic rules of restriction have been flouted. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A restriction
+element can delimit the existing elements, but it cannot permit any additions
+to them. The 'redefine' element cannot alter the rules of the other elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:integer&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xsd file,
+the element name is reverted to aaa. Further, the additional element aaa is
+removed from the xml file. Now, everything returns back to normal. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The extension and
+the restriction elements can be used to redefine the types, provided that the
+rules pertaining to them are not tampered with in the least. On replacing the
+'redefine' element with the 'include' statement and eliminating the closing
+'redefine' element, the following error is encountered:<o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:include schemaLocation=&quot;b1.xsd&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>Error</u><o:p></o:p></p>
+
+<p class=ILprg>Unhandled Exception: System.Xml.Schema.XmlSchemaException: <o:p></o:p></p>
+
+<p class=ILprg>Unhandled Exception: System.Xml.Schema.XmlSchemaException: The
+'http://www.w3.org/2001/XMLSchema:complexType' element is not supported in this
+context. An error occurred at file:///c:/xmlprg/b.xsd(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The 'import' or
+'include' elements cannot be used to redefine the existing types. However, the
+'redefine' element can be used as a super-set of either an 'include' or an
+'import' element, to either modify or change existing elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd </u><o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:redefine schemaLocation=&quot;b1.xsd&quot; &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>....<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:redefine&gt;<o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException: No
+complex type to redefine. An error occurred at file:///c:/xmlprg/b.xsd(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The 'redefine'
+element redefines an existing type, but it does not create a new one. In the
+b1.xsd file, only one type exists, viz. the type c1. The above error emerges
+when we attempt at creating a new type c2 using the 'redefine' element. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The 'redefine'
+element works in the same way as the 'include' element. Here, the schema being
+introduced must either exist in the same namespace as the redefining schema, or
+it should not belong to any namespace. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The type c1 in
+b1.xsd does not belong to any namespace, since the target namespace is empty.
+If the file b.xsd belongs to a namespace, such as abc, then the redefined type
+c1 would also fall in the abc namespace.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:redefine schemaLocation=&quot;b1.xsd&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>..<o:p></o:p></p>
+
+<p class=ILprg>..<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException: If
+type is being redefined the base type has to be self-rereference. An error
+occurred at file:///c:/xmlprg/b.xsd(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>To redefine an
+existing type, the base attribute in the extension or the restriction element
+must also have the same type as the type that is being redefined. Redefining c1
+with the base as c2 results in an exception. Note the word ‘self-rereference’
+in the error message, a mistake committed by the developers at Microsoft. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, by using
+redefine, the existent definition has now been annihilated, and only the new
+type definition i.e. c1, prevails. There is no means of accessing the old
+definition. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><u><span style='font-family:"Bookman Old Style"'>Substitution
+Groups<o:p></o:p></span></u></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;bbb&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot; substitutionGroup=&quot;aaa&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ddd&quot; type=&quot;xs:string&quot; substitutionGroup
+=&quot;bbb&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above example
+has a root element zzz with an anonymous complexType. This type has two string
+type elements that refer to elements aaa and bbb, respectively. The elements
+aaa and bbb are placed as children to the schema. In the xml file, the zzz
+element is followed by the elements aaa and a bbb, in sequence.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt; 10 &lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above xml
+file gives no error, even though aaa has been replaced by ccc. This comes about
+because the element ccc is provided with a substitutionGroup attribute, which
+is initialized to the element aaa. Thus, the aaa element can always be replaced
+with ccc. In other words, the element ccc can be used in place of aaa anywhere
+in the file.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt; 10 &lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd&gt; 10 &lt;/ddd&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Along the same
+lines, the ddd element has the attribute of the substitution group initialized
+to bbb, as a result of which, the bbb tag can now be replaced with the ddd tag
+in the xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u><span style="mso-spacerun: yes"> </span>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt; 10 &lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.XmlException: The 'ddd' start
+tag on line '4' doesn't match the end tag of 'bbb' in file
+'file:///c:/xmlprg/b.xml'. Line 4, position 12.<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>What is not
+permitted is the fifty-fifty combination, i.e. element ddd cannot be the
+starting tag and the element bbb as the ending tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+program, the tag ddd has been used as the starting tag, whereas the tag bbb has
+been used as the ending tag. The above exception is bound to occur, since the
+creator of the xml file is not expected to use mismatched tags. He/She would
+not be aware that a substitution group is being dealt with, and not a normal
+tag.<o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg style='margin-left:.1in'>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:integer&quot; substitutionGroup=&quot;aaa&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+'ccc' cannot be a member of substitution group with head element 'aaa'. An
+error occurred at file:///C:/xmlprg/b.xsd(12, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The element aaa
+is of a string type. However, while creating the element ccc with the attribute
+of substitutionGroup initialized to aaa, the type is altered to integer. If an
+element is substituted for another, then both, the original and the substitute
+elements must have the same features, or else an error will result. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:integer&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:maxExclusive value=&quot;100&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ccc&quot; type=&quot;xs:integer&quot;
+substitutionGroup=&quot;aaa&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+'ccc' cannot be a member of substitution group with head element 'aaa'. An
+error occurred at file:///C:/xmlprg/b.xsd(12, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the element aaa is of simpleType and the base type is integer. It uses
+the restriction element to limit the range of the values to 100.<span
+style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above error
+occurs when we attempt to make the element ccc as part of the aaa group.<span
+style="mso-spacerun: yes">  </span>Thus, only simple elements can be
+substituted by other elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:integer&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ccc&quot; type=&quot;xs:integer&quot;
+substitutionGroup=&quot;aaa&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Reference to undeclared substitution group affiliation. An error occurred at
+file:///c:/xmlprg/b.xsd(9, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Earlier, we had
+succinctly mentioned that the element name that is used in the substitutionGroup,
+must necessarily be a global one. In the above case, the element aaa is a local
+element, but it is part of the complexType element. Thus, the local elements
+can use the 'ref' attribute to refer to the global elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;bbb&quot; type=&quot;xs:string&quot;
+substitutionGroup=&quot;aaa&quot; /&gt;<o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ccc&quot; type=&quot;xs:string&quot;
+substitutionGroup=&quot;aaa&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc&gt; 10 &lt;/ccc&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the sequence has the maxOccurs attribute set to 'unbounded'. Thus, its
+contents can occur as many times as desired. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The sequence
+contains an element that refers to the element aaa, which is of type string.
+Besides the element aaa, which is declared to be of type string, there are two
+more elements, viz. bbb and ccc. Both these elements use the substitutionGroup
+attribute with the value of aaa. Thus, they can replace the element aaa in the
+xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xml file has
+the three elements aaa, bbb and ccc, placed in a sequence. Since the elements
+bbb and ccc can replace aaa, no errors are displayed. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;bbb&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;bbb&quot; type=&quot;xs:string&quot;
+substitutionGroup=&quot;aaa&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt; 10 &lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt; 10 &lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'zzz' has invalid child element 'aaa'. Expected
+'bbb'. An error occurred at file:///c:/xmlprg/b.xml(4, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The substitution
+group allows the use of the element bbb as the 'ref' value for an element.
+However, the reverse is not permitted. The element aaa can be replaced by bbb,
+but vice-versa is not permissible. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>..<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;aaa&quot; type=&quot;xs:string&quot;
+substitutionGroup=&quot;bbb&quot;/&gt;<o:p></o:p></span></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Circular substitution group affiliation. An error occurred at
+file:///c:/xmlprg/b.xsd(10, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xsd file,
+the element aaa constitutes a part of the substitutionGroup bbb. Even though
+the element aaa has not been referred to anywhere in the file, an exception
+shows up. This is because the XML framework detects certain circular
+references, which are not acceptable in the least. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The main intent
+here is to have the element aaa replace the element bbb, and vice-versa.
+However, in XML, circular references are totally debarred.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence maxOccurs=&quot;unbounded&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot; type=&quot;c2&quot;
+substitutionGroup=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ddd&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/bbb&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above example
+works in an accomplished manner, since the root element zzz has an element that
+refers to the element aaa. This element aaa has a type c1, which holds only the
+element ccc. This represents one of the simplest types that can ever be
+created. Thereafter, we encounter an element bbb of type c2, and a substitution
+group that points to aaa. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>No error shows up
+when the type c2 derives from the type c1, and when it uses the extension
+mechanism to add the element ddd to the type c2. Thus, the type c1 contains
+only a single element ccc, whereas the type c2 has the two elements ccc and
+ddd. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the element aaa has one child element ccc. Then, since the element bbb can
+replace the element aaa, the element bbb is specified with its two constituent
+elements of ccc and ddd.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ddd /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'aaa' has invalid child element 'ddd'. An error
+occurred at file:///C:/xmlprg/b.xml(5, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'ddd' element is not declared. An error occurred at
+file:///C:/xmlprg/b.xml(5, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above error
+emanates from the fact that the element aaa cannot have a child element ddd.
+The element bbb can replace aaa, which in turn can enclose the tag ddd. Thus,
+using the substitutable element, we can place multiple child elements within
+the tag. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In XML parlance,
+the element that can be replaced is called a 'head element'. Thus, substitution
+allows one element to replace another.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;color&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;colour&quot;
+substitutionGroup=&quot;color&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;color&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;american&quot; type=&quot;c1&quot;
+/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;british&quot;
+substitutionGroup=&quot;american&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;american&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;color/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/american&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;british&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;colour/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/british&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;british&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;color/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/british&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Using the
+substitution group, applications that cater to a wider audience, can be
+created. For instance, the Americans spell the word colour as 'color', whereas
+the British spell it as 'colour'. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>To accommodate
+both these spellings, we firstly create two global elements named 'color' and
+'colour'. We make the element color as the group for the element of colour. As
+mentioned earlier, only global elements can be used in a substitutionGroup. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Then, a type c1
+is created, which has an element that references color. Here, colour can also
+be used in place of color, because of the substitution group. The root element
+is specified as american having the type c1, so that it encloses both 'color'
+and 'colour' as its child elements.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Finally, one more
+global element called british is created. It has the same substitution group as
+american. Thus, now american and british are uniformly applicable in all
+circumstances. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Three XML files
+with different permutations and combinations have been stipulated above, though
+there could have been more. Thus, more the number of substitution groups, the
+larger would be the possible combinations. The applications of the substitution
+group are curtailed only by your imagination. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>...<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;colour&quot;
+substitutionGroup=&quot;color&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Since both the
+elements of 'colour' belong to the substitution group named color, they have
+the same type by default. Hence, the type attribute can be eliminated, as shown
+above.<o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></u></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;bbb&quot; type=&quot;xs:string&quot; substitutionGroup=&quot;aaa&quot;
+/&gt;<o:p></o:p></span></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;ccc&quot; type=&quot;xs:string&quot;
+substitutionGroup=&quot;bbb&quot; /&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;ccc/&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, aaa is the head element, and the element bbb is used to substitute it.
+Next, the element ccc is used to substitute the element bbb. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, wherever
+aaa can be used, bbb can be used too; and wherever bbb can be used, the element
+of ccc can be used too. Resultantly, wherever aaa can be used, ccc too can be
+used, as is evident in the above xml file. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>If you replace
+ccc with aaa or bbb in the xml file, no errors will result.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element ref=&quot;aaa&quot;
+maxOccurs=&quot;unbounded&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; abstract=&quot;true&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg><span style='font-size:9.5pt'>&lt;xs:element
+name=&quot;bbb&quot; substitutionGroup=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;</span><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot; substitutionGroup=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The abstract
+attribute used in one of the previous chapters is used here too, with
+substitution groups.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The root element
+zzz has a child element that refers to aaa. But, this element aaa cannot be
+used since the abstract attribute is set to 'true'. Its maxOccurs attribute is
+set to 'unbounded' to facilitate the multiple occurrences of the element. Then,
+two more global elements named bbb and ccc are created, both of which have
+their substitution groups as aaa. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This allows the
+replacement of the element aaa with the element bbb or ccc, as many times as
+desired as clearly depicted in the xml file. Whenever the abstract property of
+an element is set to true, it cannot be used directly, though some other
+element can be used in its place.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><span
+style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the root element zzz contains an element aaa of type c2. This type c2
+in turn derives from type c1, which has an element bbb. The type c2 has the
+type c1 as its base type. It adds one more element ccc to the type c2. This is
+nothing different from what we already know.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Modify the
+complexType definition for c1 by adding the attribute 'final' with a value of
+'extension' assigned to it. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;
+final=&quot;extension&quot;&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On doing so, the
+following exception is thrown:<o:p></o:p></span></p>
+
+<p class=ILoutput><span style='font-family:"Bookman Old Style";mso-bidi-font-family:
+"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Base type is final extension. An error occurred at file:///c:/xmlprg/b.xsd(14,
+2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The 'final'
+attribute determines the constraints to be applied to the type while deriving
+other types.<span style="mso-spacerun: yes">  </span>Since the value assigned
+to 'final' is 'extension', the type cannot be used to extend other types. Thus,
+no type can now extend from this type.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Change the
+attribute value from 'extension' to 'restriction' and rewrite complexType c2 as
+follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The restriction
+element is used to restrict the entities. However, on modifying the complex
+type, the following exception is thrown:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Base type is final restriction. An error occurred at
+file:///c:/xmlprg/b.xsd(14, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, a type can
+be extended or restricted by another type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;
+final=&quot;#all&quot;&gt;: <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The #all value
+applies to both, extension as well as restriction. And the same error is
+reported for both extension and restriction.<o:p></o:p></span></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+finalDefault=&quot;#all&quot;&gt;<o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the original
+program, add the attribute of finalDefault. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This attribute
+has the same functionality as the final attribute. However, 'finalDefault'
+works at the element level, whereas<span style="mso-spacerun: yes"> 
+</span>'final' operates on the global level. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The ensuing
+effect of the attribute finalDefault on the schema is that, the attribute
+final=#all is added to all the elements that can accept such an attribute.
+Everything that can be done at a global level, can however be undone at the
+element level.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>We had briefly
+touched upon the 'fixed' attribute earlier with reference to an element. Now,
+let us use 'fixed' in the context of derivations and data facets. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:length value=&quot;3&quot; fixed=&quot;true&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:pattern value=&quot;[A-Z]{3}&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa&gt;ABC&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The above xsd
+file has a root element zzz, which has a child element aaa of type c1. This
+type is a simple type. It uses restriction to restrict the length to 3. There
+is one more type c2, which again is a simpleType and derives from the type c1. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The pattern
+restricts the values that the type c2 can handle, upto 3 capital letters only.
+We do not use this type at all. In the xml file, since the element aaa contains
+3 capital letters, all is hunky-dory.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Modify the type
+c2 as follows:<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:pattern value=&quot;[A-Z]{3}&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:length value=&quot;3&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Unhandled Exception: System.Xml.Schema.XmlSchemaException:
+Base type has {fixed} equal to true. An error occurred at
+file:///c:/xmlprg/b.xsd(17, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On adding the
+data facet to the simpleType c2, an error occurs. This ensues because in the
+type c1, the fixed parameter is assigned the value of 'true', which signifies
+that no derived type can change the data facet value. The error occurs despite
+the length remaining the same. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>A derived type
+cannot modify the value of the data facets. It can change all the other data
+facets, except the one having the attribute of fixed=true. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c2&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;xs:string&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:length value=&quot;3&quot; fixed=&quot;true&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:simpleType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:pattern value=&quot;[A-Z]{4}&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:simpleType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;aaa&gt;ABC&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILoutput>&lt;?xml version=&quot;1.0&quot; ?&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;aaa&gt;ABCD&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILoutput>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>The 'aaa' element has an invalid value according to its data
+type. An error occurred at file:///c:/xmlprg/b.xml(3, 12).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The glitch with
+the XML Schema world is that it does not perform any error checks for
+inconsistency. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above
+example, the element is derived from the type c2, which in turn restricts the
+type c1. In the type c1, the length is restricted to 3, while in the type c2,
+the pattern is restricted to four capital letters. Both these conditions need
+to be satisfied simultaneously. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Since both these
+conditions cannot be true concurrently, the above two XML files generate
+errors. This is because, each of them satisfy only one condition at a time. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The XML Schema
+world does not validate such logically inconsistent behaviour. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;c1&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:element&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot; &gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:extension base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;ccc&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:extension&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz
+xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;aaa xsi:type=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;ccc /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/aaa&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the above xsd
+file, the root element zzz has a child element aaa of type c1, which in turn
+has an element bbb. Moreover, there exists a complexType c2 that extends the
+type c1 and the element ccc. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the xml file,
+the xsi:type is used to change the type of aaa from c1 to c2. If the above
+program does not appear comprehensible and logical to you, please refer to the
+programs explained earlier. The pertinent question at this stage is - How do we
+prevent the XML user from changing the type c1 to the type c2 at runtime, or at
+the time of creating the xml file?<o:p></o:p></span></p>
+
+<p class=ILoutput><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILoutput><u>Error</u><o:p></o:p></p>
+
+<p class=ILoutput>Element 'aaa' has xsi:type derivation blocked. An error
+occurred at file:///c:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILoutput>The 'aaa' element is not declared. An error occurred at
+file:///c:/xmlprg/b.xml(3, 2).<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>This can be
+achieved by adding the attribute block=extension in the xsd file. This ensures
+that the xsi:type feature is blocked in the xml file. Thus, the user is
+forbidden from changing the run time type of the element.<span
+style="mso-spacerun: yes">  </span>Every feature offered by the XML world can
+be 'blocked', by implementing the blocking facility.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>The xsi:type can
+also be initialized to the derived type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Changing the
+above line to <o:p></o:p></span></p>
+
+<p class=ILprg><span style="mso-spacerun: yes"> </span>&lt;xs:complexType
+name=&quot;c1&quot; block=&quot;restriction&quot;&gt; <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><span
+style="mso-spacerun: yes"> </span>generates no errors, since the block applies
+to 'restriction' only. The #all blocks the usage of both, the extension as well
+as the restriction in a type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;
+block=&quot;extension&quot;&gt; <o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>On eliminating
+the block attribute from the type c1 and assigning it to the type c2, no errors
+are reported. This is because the block attribute does not work with
+retrospective effect. An exception would have occured in the xml file, had we
+created an element with the type of c2 and then, extended the type c3 from the
+type c2, followed by a change in the type to c3. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+blockDefault=&quot;extension&quot;&gt; <o:p></o:p></p>
+
+<p class=ILbase><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>In the XML world,
+there exists an attribute called blockDefault at the schema level. Initializing
+this attribute to 'all' is akin to setting the block attribute individually for
+all elements, wherever it is applicable. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:schema
+xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;zzz&quot; type=&quot;c2&quot; /&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot; type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:schema&gt;<o:p></o:p></p>
+
+<p class=ILprg><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=ILprg><u>b.xml</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;?xml version=&quot;1.0&quot;?&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;zzz&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;bbb/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/zzz&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>When the
+restriction clause is used, it must be implemented for all the elements that
+are present in the base type. In the above example, even though the aaa element
+is not repeated, all goes well. This happens because the attribute minOccurs
+has a value of 0 by default. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, it does not
+have to occur in the base type c1. The default elements do not require to be placed
+in the derived type. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt; <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Removal of the
+minOccurs attribute from the element aaa, as shown above, results in the
+particle error.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot; type=&quot;xs:string&quot;
+minOccurs=&quot;0&quot; maxOccurs=&quot;0&quot;/&gt; <o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>If the elements
+are disabled, i.e. if the minOccurs and maxOccurs are both assigned a value of
+0, then they still have to appear in the type c2, using the restriction
+mechanism.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILprg><u>b.xsd</u><o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexType name=&quot;c2&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:restriction base=&quot;c1&quot;&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;aaa&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;xs:element name=&quot;bbb&quot;
+type=&quot;xs:string&quot;/&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:sequence&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:restriction&gt; <o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexContent&gt;<o:p></o:p></p>
+
+<p class=ILprg>&lt;/xs:complexType&gt;<o:p></o:p></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>However,
+introducing the element aaa in type c2, as seen above, displays the same old
+particle error. Thus, nobody can ever use an element whose minOccurs and
+maxOccurs, both have a value of 0. In the world of restriction, each and every
+element that is present in the base type, must be repeated in the derived type
+also, whether we like it or not.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>At this juncture,
+let us clear the air with regard to declarations and definitions. A declaration
+is used for creating elements and attributes. These declarations are visible in
+the xml file or in the instance document. Whatever does not find a place in the
+instance document is called a definition. <o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'>Thus, simple
+types, complex types, attribute groups, et al, that are not present in the
+instance document, fall in the realm of definitions. In our book, both these
+terms have been used interchangeably.<o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=ILbase><span style='font-family:"Bookman Old Style"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/xsd/chap6.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:06:09 GMT -->
+</html>

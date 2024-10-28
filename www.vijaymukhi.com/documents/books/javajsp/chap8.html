@@ -1,0 +1,385 @@
+<html>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap8.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+<head>
+<title>Java-Servlets-JSP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript">
+<!-- hide the script from old browsers
+
+if((navigator.appName == "Netscape" && parseInt(navigator.appVersion) >= 3 && navigator.userAgent.indexOf("Opera") == -1 && navigator.userAgent.indexOf("WebTV") == -1) || (navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion) >= 4)) {
+
+  for(i = 0; i < parent.frames.length; i++) {
+    if(parent.frames[i].name == "code" && parent.frames[i].MTMLoaded) {
+      parent.frames[i].MTMTrack = true;
+      setTimeout("parent.frames[" + i + "].MTMDisplayMenu()", 250);
+      break;
+    }
+  }
+}
+
+// End of script hiding -->
+</script>
+<link rel="stylesheet" href="css.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF">
+<table border="0" cellspacing="0" cellpadding="0" width="90%" align="center" height="0%">
+  <tr> 
+    <td height="5977" align="left" valign="top"> 
+      <table border="0" cellspacing="3" cellpadding="0" width="100%">
+        <tr>
+          <td bgcolor="#FFFFCC" height="16"> 
+            <div align="center"><font size="+1"><b>8. Java Beans and Java Server 
+              Pages</b></font></div>
+          </td>
+        </tr>
+      </table>
+      <hr>
+      <p>Introduction</p>
+      <p>The word Java Beans conjures up images of Coffee Beans or even Beanbags, 
+        but the Java Beans that we are talking about are related to Java.</p>
+      <p>Java beans play a large role in JSP documents. A Java Bean is a Java 
+        component that works on any Java Virtual Machine.</p>
+      <p>Packages</p>
+      <p>If you had a class called Applet and if another user also called his 
+        class Applet, then whose Applet gets called, yours or his? To prevent 
+        a name clash, sun invented the concept of a package. They said that all 
+        classes created by Sun would start with java. Unfortunately this does 
+        nothing for a grouping. We would like all classes that deal with GUI issues 
+        to be grouped together. Thus we have one more level i.e. all GUI classes 
+        are part of java.awt and applet classes are a part of java.applet. Hence 
+        the full name of the class Applet is java.applet.Applet and java.applet 
+        is the package name which can be part of the import statement.</p>
+      <p>Beans</p>
+      <p>Before we get down to telling you what beans are, we would like you to 
+        do the following:</p>
+      <p>We want you to change to c:\jswdk-1.0.1\examples\web-inf\jsp and there 
+        you will find a subdirectory called beans. Within this directory, create 
+        a subdirectory called yyy. Now create a file called zzz.java and enter 
+        the code given below.</p>
+      <p>C:\jswdk-1.0.1\examples\web-inf\jsp\beans\yyy&gt;edit zzz.java</p>
+      <p>zzz.java<br>
+        package yyy;<br>
+        public class zzz {<br>
+        private String username = &quot;mukhi&quot;;<br>
+        public zzz()<br>
+        {<br>
+        System.out.println(&quot;Constructor&quot;);<br>
+        }</p>
+      <p>public void setusername(String name) {<br>
+        username = name;<br>
+        System.out.println(&quot;setusername &quot; + username);<br>
+        }<br>
+        public String getusername() {<br>
+        System.out.println(&quot;getusername&quot; + username);<br>
+        return username;<br>
+        }<br>
+        }</p>
+      <p>C:\jswdk-1.0.1\examples\web-inf\jsp\beans\yyy&gt;javac zzz.java</p>
+      <p>Since the first line is package yyy, in the beans directory you must 
+        create a subdirectory named yyy. The reason being, for the compiler to 
+        find packages, all the files that hold the classes contained in a package 
+        must reside in a directory bearing the package name. </p>
+      <p>A Java Bean is a normal program. As we've seen in the previous chapter,it 
+        is a simple Java program; an applet can also be called a Java Bean. The 
+        only difference is that in a Bean some functions start with either a set 
+        or get, which is why we have setusername and getusername. Whenever a function 
+        begins with set or get, it relates to a property. That's what a Java Bean 
+        is made up of.<br>
+        The property here is username and not setusername or getusername. A variable 
+        or a property can either be used on the left or the right of the = sign. 
+        If it is on the left, then it gets a value, hence it takes one string 
+        as a parameter. Once you receive the value, what you do with it is up 
+        to you. In our program we store it in a public variable. Get is used with 
+        functions. When it is on the right hand side of the = sign, it returns 
+        a value and hence we are returning a string. </p>
+      <p>C:\jswdk-1.0.1\examples\jsp&gt;edit b1.jsp</p>
+      <p>b1.jsp<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;page&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>b1.jsp has an action called useBean followed by id=pp. pp is the id, 
+        we will use it to refer to our bean in the future. The actual name can 
+        be anything and there is nothing special about pp and class=yyy.zzz is 
+        because our bean zzz is in a package yyy. It is assumed that the bean 
+        will be in the sub-directory C:\jswdk-1.0.1\examples\web-inf\jsp\beans\ 
+        and the package yyy starts from this beans subdirectory onwards. </p>
+      <p>Run the jsp file in the browser as before.</p>
+      <p>You get no errors. Check the dos screen of the Java Web Server where 
+        it will print 'Constructor' and then let's look at the generated code. 
+        <br>
+        -----------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b1.jsp&quot;;from=(0,0);to=(0,52)]<br>
+        // end</p>
+      <p>// begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b1.jsp&quot;;from=(0,0);to=(0,52)]<br>
+        yyy.zzz pp = null;<br>
+        boolean _jspx_specialpp = false;<br>
+        synchronized (pageContext) {<br>
+        pp= (yyy.zzz)pageContext.getAttribute(&quot;pp&quot;,PageContext.PAGE_SCOPE);<br>
+        if ( pp == null ) {<br>
+        _jspx_specialpp = true;<br>
+        try {<br>
+        pp = (yyy.zzz) Beans.instantiate(getClassLoader(), &quot;yyy.zzz&quot;);<br>
+        } catch (Exception exc) {<br>
+        throw new ServletException (&quot; Cannot create bean of class &quot;+&quot;yyy.zzz&quot;);<br>
+        }<br>
+        pageContext.setAttribute(&quot;pp&quot;, pp, PageContext.PAGE_SCOPE);<br>
+        }<br>
+        } <br>
+        if(_jspx_specialpp == true) {<br>
+        // end<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b1.jsp&quot;;from=(0,0);to=(0,52)]<br>
+        }<br>
+        // end<br>
+        out.print(_jspx_html_data[1]);<br>
+        ----------------------</p>
+      <p>pp looks like yyy.zzz where yyy is the name of the package and zzz the 
+        name of the class. This is because in the JSP file the id was given as 
+        pp. pageContext has members like getAttribute, setAttribute and so on. 
+        pp is initialized using the getAttribute function. The second parameter 
+        is PageContext.PAGE_SCOPE, since that is what we had given in the JSP 
+        file. The next thing that you do is check if pp has a value. If it is 
+        Null, then Beans.instantiate will instantiate or create the bean. That 
+        means if the Bean is already loaded then you get a handle to it, if not 
+        then it is created. Instantiate is a static member in the Beans class. 
+        One of the parameters is the name of the Bean. We have given a very short 
+        explanation here; let's look at the next example to understand a lot more 
+        on Beans with JSP.<br>
+        zzz.java<br>
+        package yyy;<br>
+        public class zzz {<br>
+        private String username = &quot;mukhi&quot;;<br>
+        public zzz()<br>
+        {<br>
+        System.out.println(&quot;Constructor&quot;);<br>
+        }<br>
+        public void setusername(String name) {<br>
+        username = name;<br>
+        System.out.println(&quot;setusername &quot; + username);<br>
+        }<br>
+        public String getusername() {<br>
+        System.out.println(&quot;getusername&quot; + username);<br>
+        return username;<br>
+        }<br>
+        }</p>
+      <p>b2.jsp<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;page&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        hello , &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;html&gt;</p>
+      <p>Output in browser<br>
+        hello , mukhi </p>
+      <p>In the next example, we have a new action named getProperty with a name 
+        and a property. In our JSP file the property is username. This line will 
+        be replaced by the word mukhi. Look in the dos window and you'll see that 
+        the function getusername is called. This function returns the value of 
+        the variable username which is initialized to mukhi. Thus the tag &lt;jsp:getProperty 
+        name=&quot;pp&quot; property=&quot;username&quot; /&gt; is replaced by 
+        the string mukhi.</p>
+      <p><br>
+        --------------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b2.jsp&quot;;from=(3,8);to=(3,57)]<br>
+        out.print(JspRuntimeLibrary.toString(pp.getusername()));<br>
+        // end<br>
+        ---------------- </p>
+      <p>getproperty in the java generated code will become pp.getusername. setproperty 
+        is a function which is related to getproperty and is used in the next 
+        example.<br>
+        b3.jsp<br>
+        &lt;%@ page import=&quot;yyy.zzz&quot; %&gt;<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;page&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        hello, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        value=&quot;no&quot; /&gt;<br>
+        &lt;p&gt; hi, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Output in browser<br>
+        hello, mukhi <br>
+        hi, no </p>
+      <p>----------<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b3.jsp&quot;;from=(5,0);to=(5,60)]<br>
+        pp.setusername(&quot;no&quot;);<br>
+        // end<br>
+        out.print(_jspx_html_data[4]);<br>
+        // begin [file=&quot;C:\\jswdk-1.0.1\\examples\\jsp\\b3.jsp&quot;;from=(6,8);to=(6,57)]<br>
+        out.print(JspRuntimeLibrary.toString(pp.getusername()));<br>
+        // end<br>
+        -----------<br>
+        With setusername, you give the name of the property and then the value. 
+        The value given here is 'no'. So you see mukhi and then no. The code is 
+        exactly the same. setusername is also called with the parameter having 
+        a value no and we initialize username with it.</p>
+      <p>Scopes</p>
+      <p>Let's talk about scopes in greater detail.</p>
+      <p>There are four scopes, request, page, session and application. Each time 
+        you give the scope as session or request, the PageContext variable changes. 
+      </p>
+      <p>b4.jsp<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;session&quot; class=&quot;yyy.zzz&quot; 
+        /&gt; </p>
+      <p>-------------<br>
+        java file<br>
+        synchronized (session) {<br>
+        pp= (yyy.zzz)<br>
+        pageContext.getAttribute(&quot;pp&quot;,PageContext.SESSION_SCOPE);<br>
+        if ( pp == null ) {<br>
+        _jspx_specialpp = true;<br>
+        try {<br>
+        pp = (yyy.zzz) Beans.instantiate(getClassLoader(), &quot;yyy.zzz&quot;);<br>
+        } catch (Exception exc) {<br>
+        throw new ServletException (&quot; Cannot create bean of class &quot;+&quot;yyy.zzz&quot;);<br>
+        }<br>
+        pageContext.setAttribute(&quot;pp&quot;, pp, PageContext.SESSION_SCOPE);<br>
+        }<br>
+        ------------------</p>
+      <p>With scope as session, pageContext.getAttribute and setAttribute will 
+        have PageContext.SESSION_SCOPE.<br>
+        b5.jsp<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;request&quot; class=&quot;yyy.zzz&quot; 
+        /&gt; </p>
+      <p>-------------<br>
+        java file<br>
+        synchronized (request) {<br>
+        pp= (yyy.zzz) pageContext.getAttribute(&quot;pp&quot;,PageContext.REQUEST_SCOPE);<br>
+        if ( pp == null ) {<br>
+        _jspx_specialpp = true;<br>
+        try {<br>
+        pp = (yyy.zzz) Beans.instantiate(getClassLoader(), &quot;yyy.zzz&quot;);<br>
+        } catch (Exception exc) {<br>
+        throw new ServletException (&quot; Cannot create bean of class &quot;+&quot;yyy.zzz&quot;);<br>
+        }<br>
+        pageContext.setAttribute(&quot;pp&quot;, pp, PageContext.REQUEST_SCOPE);<br>
+        }<br>
+        -----------</p>
+      <p>With the scope as request, pageContext.getAttribute and setAttribute 
+        will have PageContext.REQUEST_SCOPE.</p>
+      <p>Now we will consider two programs at a time b6.jsp and b7.jsp.</p>
+      <p>b6.jsp<br>
+        &lt;%@ page import=&quot;yyy.zzz&quot; %&gt;<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;request&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        b6 , ello, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        value=&quot;no&quot; /&gt;<br>
+        &lt;p&gt; llo, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;a href=&quot;b7.jsp&quot;&gt; click here &lt;/a&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>b7.jsp<br>
+        &lt;%@ page import=&quot;yyy.zzz&quot; %&gt;<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;request&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        b7 , ello, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        value=&quot;no&quot; /&gt;<br>
+        &lt;p&gt; llo, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Here, we have two JSP files, b6 and b7. We are using the same Bean in 
+        both of them and the scope is request. The first file contains &lt;a href=&quot;b7.jsp&quot;&gt; 
+        which will take us to the second page i.e. b7.jsp.</p>
+      <p>When we click on the first page, yyy.zzz gets created, and the constructor 
+        is called. When we click on href, we move to b7. Since the scope in both 
+        is request, the constructor is called once more. The values are reinitialized 
+        and the variables are created from scratch. </p>
+      <p>In this case, the page behaves like request. The bean is created each 
+        time, which means that it cannot remember its earlier values.</p>
+      <p>Let's see an example where we give the scope as session.<br>
+        b8.jsp</p>
+      <p>&lt;%@ page import=&quot;yyy.zzz&quot; %&gt;<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;session&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        b8 , &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        value=&quot;no&quot; /&gt;<br>
+        &lt;p&gt; llo, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;a href=&quot;b9.jsp&quot;&gt; click here &lt;/a&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>b9.jsp<br>
+        &lt;%@ page import=&quot;yyy.zzz&quot; %&gt;<br>
+        &lt;jsp:useBean id=&quot;pp&quot; scope=&quot;session&quot; class=&quot;yyy.zzz&quot; 
+        /&gt;<br>
+        &lt;html&gt;<br>
+        &lt;body&gt;<br>
+        b9 , ello, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;jsp:setProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        value=&quot;no&quot; /&gt;<br>
+        &lt;p&gt; llo, &lt;jsp:getProperty name=&quot;pp&quot; property=&quot;username&quot; 
+        /&gt;<br>
+        &lt;/body&gt;<br>
+        &lt;/html&gt;</p>
+      <p>Here, the constructor is called only once and that happens when the Bean 
+        is loaded for the first time. When you click on the link, the constructor 
+        is not called. The Bean is not instantiated and the variables are not 
+        created again. They are persistent for that entire session. If you start 
+        a new browser, then a new session is created. </p>
+      <p>When you give the scope as application, then the Bean and the variables 
+        retain their values till the server is shut down. Any client coming from 
+        any other site will see the values as they are on the server. It's like 
+        a page counter that keeps increasing on every visit to the page.</p>
+      <p>Try it out with another copy of IE to understand it better.</p>
+      <p>pageContext.getAttribute decides, depending upon the scope, whether the 
+        Bean should be instantiated or not. You decide on the scope depending 
+        upon the functionality of the JSP code. If the page scope is application, 
+        then everybody will be able to use it forever, but in case of session, 
+        it depends upon how you want to share the Bean. </p>
+      <p>Conclusion</p>
+      <p>In this chapter we have shown you how Java Server Pages receive from 
+        and send data to Java Beans. At the same time we also showed you how to 
+        create your own package. You are now also aware that setting the scope 
+        to the four different options will generate different results. </p>
+      <p></p>
+      <p></p>
+      <hr>
+    </td>
+  </tr>
+</table>
+  
+<table border="0" cellspacing="3" cellpadding="0" align="center">
+  <tr> 
+    <td> 
+      <div align="center"><font size="-1"><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><a href="contents.html">Contents</a> 
+        | <a href="foreword.html">Foreword</a> | <a href="about.html">About the 
+        Authors</a> | <a href="intro.html">Introduction</a> |</font></font><font size="-2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+        <a href="chap0-2.html">Appendix</a> |<a href="chap1.html">Chapter 1</a> |<a href="chap2.html">Chapter 
+        2</a> |<a href="chap3.html">Chapter 3</a> |<a href="chap4.html">Chapter 
+        4</a> |<a href="chap5.html">Chapter 5</a> |<a href="chap6.html">Chapter 
+        6</a> |<br>
+        <a href="chap7.html">Chapter 7</a> |<a href="chap8.html">Chapter 8</a> 
+        |<a href="chap9.html">Chapter 9</a> |<a href="chap10.html">Chapter 10</a> 
+        |<a href="chap11.html">Chapter 11</a></font></div>
+    </td>
+  </tr>
+</table>
+</body>
+
+<!-- Mirrored from www.vijaymukhi.com/documents/books/javajsp/chap8.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:13:21 GMT -->
+</html>

